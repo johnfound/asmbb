@@ -1,0 +1,38 @@
+body * {
+  border: 1px solid red;
+  box-sizing: border-box;
+  padding: 16px;
+  background-color: white;
+}
+
+
+div.threadlist {
+
+}
+
+div.thread_summary {
+}
+
+div.post_count {
+  float: left;
+}
+
+
+a.thread_link {
+  display: block;
+}
+
+
+div.userinfo {
+  float: left;
+  margin-right: 16px;
+  width: 200px;
+}
+
+
+div.post {
+}
+
+p {
+  border: 0px;
+}
