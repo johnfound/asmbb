@@ -61,15 +61,32 @@ begin
         DebugMsg "FCGI thread started"
 
 
+        mov     [.requestParams], 0
+
+.main_loop:
+        xor     eax, eax
+
+        cmp     [.requestParams], eax
+        je      .params_ok
+
+        stdcall FreeNameValueArray, [.requestParams]
+        mov     [.requestParams], eax
+
+.params_ok:
+
+        mov     [.requestFlags], eax
+        mov     [.requestID], eax
+
 .pack_loop:
+        DebugMsg "Now wait for some package"
+
         stdcall FCGI_read_pack, [.hSocket]
-        jc      .finish1
+        jc      .finish
 
         mov     esi, eax
         movzx   eax, [esi+FCGI_Header.type]
 
         OutputValue "Package received. Type = ", eax, 10, -1
-
 
         cmp     eax, FCGI_BEGIN_REQUEST
         je      .begin_request
@@ -77,6 +94,8 @@ begin
         cmp     eax, FCGI_PARAMS
         je      .get_params
 
+        cmp     eax, FCGI_ABORT_REQUEST
+        je      .abort_request
 
 ; send back unknown type record.
 
@@ -90,10 +109,6 @@ begin
 .free_pack:
         stdcall FreeMem, esi
         jmp     .pack_loop
-
-
-
-
 
 
 
@@ -124,14 +139,31 @@ begin
 
 .unknown_role:
 
+        DebugMsg "Unknown role!"
+
         stdcall FCGI_send_end_request, [.hSocket], eax, FCGI_UNKNOWN_ROLE
         jmp     .free_pack
 
 
 .mx_disabled:
 
+        DebugMsg "MX disabled!"
+
         stdcall FCGI_send_end_request, [.hSocket], eax, FCGI_CANT_MPX_CONN
         jmp     .free_pack
+
+
+.abort_request:
+
+        DebugMsg "Abort request received!"
+
+        xor     eax, eax
+        mov     ax, [esi+FCGI_Header.requestId]
+        xchg    al, ah
+
+        stdcall FCGI_send_end_request, [.hSocket], eax, FCGI_REQUEST_COMPLETE
+
+        jmp     .main_loop
 
 
 ; Processing of FCGI_PARAMS
@@ -139,41 +171,46 @@ begin
 
 .get_params:
 
-
-
-
-
-
-; Processing of the request response.
-
-
-.request:
         xor     eax, eax
-        mov     al, [esi+FCGI_Header.requestIdB0]
-        mov     ah, [esi+FCGI_Header.requestIdB1]
+        mov     ax, [esi+FCGI_Header.requestId]
+        xchg    al, ah
 
-        mov     [.requestID], eax
+        cmp     eax, [.requestID]
+        jne     .mx_disabled
 
-        stdcall StrDupMem, <"Status: 200 OK", 13, 10, "Content-type: text/plain", 13, 10, 13, 10, "Test FCGI!", 13, 10, 13, 10, "Environment variables:", 13, 10, 13, 10>
+        xor     edx, edx
+        mov     dx, [esi+FCGI_Header.contentLength]
+        xchg    dl, dh
 
-        stdcall EnvironmentToStr, eax
+        OutputValue "Params length: ", edx, 10, -1
 
-        stdcall FCGI_output, [.hSocket], [.requestID], eax
-        stdcall StrDel, eax
-        jc      .finish2
+
+        test    edx, edx
+        jz      .serve_request          ; this is the last part of FCGI_PARAMS stream, so go to serve the request.
+
+; add the package to the name/value pairs list.
+
+        lea     edi, [esi+sizeof.FCGI_Header]
+
+        stdcall FCGI_Decode_name_value_pairs, [.requestParams], edi, edx
+        mov     [.requestParams], eax
+
+        jmp     .free_pack
+
+
+; Processing of the request. Here all data is ready, so serve the request!
+
+.serve_request:
+
+        stdcall FreeMem, esi
+
+        stdcall ServeOneRequest, [.hSocket], [.requestID], [.requestParams]
+        jc      .finish
 
         stdcall FCGI_send_end_request, [.hSocket], [.requestID], FCGI_REQUEST_COMPLETE
-        jnc     .pack_loop
 
-        DebugMsg "Error send end request"
-        jmp      .finish
-
-.finish2:
-        DebugMsg "Error send output"
-        jmp      .finish
-
-.finish1:
-        DebugMsg "Error read FCGI pack"
+        test    [.requestFlags], FCGI_KEEP_CONN
+        jnz     .main_loop
 
 .finish:
         DebugMsg "Terminate thread FCGI"
@@ -183,6 +220,50 @@ begin
         return
 
 endp
+
+
+
+
+
+
+proc ServeOneRequest, .hSocket, .requestID, .pParams
+begin
+        pushad
+
+        stdcall StrDupMem, <"Status: 200 OK", 13, 10, "Content-type: text/plain", 13, 10, 13, 10, "Test FCGI!", 13, 10, 13, 10, "Environment variables:", 13, 10, 13, 10>
+        mov     edi, eax
+
+        stdcall EnvironmentToStr, edi
+
+        stdcall StrCat, edi, <"The FCGI_PARAMS stream parsed:", 13, 10, 13, 10>
+
+        mov     esi, [.pParams]
+        xor     ecx, ecx
+
+.loop_params:
+        cmp     ecx, [esi+TArray.count]
+        jae     .end_params
+
+        stdcall StrCat, edi, [esi+TArray.array+8*ecx]   ; name
+        stdcall StrCharCat, edi, " = "
+        stdcall StrCat, edi, [esi+TArray.array+8*ecx+4] ; value
+        stdcall StrCharCat, edi, $0a0d
+
+        inc     ecx
+        jmp     .loop_params
+
+.end_params:
+        stdcall FCGI_output, [.hSocket], [.requestID], edi
+        stdcall StrDel, edi
+
+        popad
+        return
+endp
+
+
+
+
+
 
 
 
@@ -490,8 +571,7 @@ begin
         stdcall FreeMem ; from the stack
 
 .finish_env:
-        stdcall StrCharCat, [.hString], $0a0d
-        stdcall StrCharCat, [.hString], $0a0d
+        stdcall StrCharCat, [.hString], $0a0d0a0d
 
         stdcall StrCat, [.hString], 'Current directory: '
 
@@ -501,7 +581,7 @@ begin
         stdcall StrCat, [.hString], eax
         stdcall StrDel, eax
 
-        stdcall StrCharCat, [.hString], $0a0d
+        stdcall StrCharCat, [.hString], $0a0d0a0d
 
 .finish:
 

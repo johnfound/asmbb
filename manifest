@@ -1,10 +1,10 @@
-C More\sstructured\sprocessing\sof\sthe\sFastCGI\srecords.
-D 2016-03-07T18:46:07.051
-F source/commands.asm 510fba085fa647848b65c3d23d5fbd57af325027
+C The\swhole\sFastCGI\sprotocol\sinfrastructure\sis\sdone\snow.
+D 2016-03-07T22:30:39.875
+F source/commands.asm c4329da92fec032fc7861b598a8d6d5138cec3b1
 F source/create.sql 7b31ea31b255809f38d295df3663a8163a0f7058
-F source/fcgi.asm 8dccabba8d29a603a45eb749cdca2df7bbf3a9fe
+F source/fcgi.asm 3310d568d7323acfd88865438a878a9a5bf4a1f3
 F source/get.asm f80ad70c313ac923154282293ec4a5b83e21f3cd
-F source/index.asm f282df29972d00be68f1b37136c97fee6aad3796
+F source/index.asm 0023273cc5a8615f8f2bac21ddf858eec5b30483
 F source/index.fpr ef044477567c836d4af7dacb73b14f30fae847d7
 F source/render.asm add79e5785c6796a16023e03239648dc5ad50da4
 F source/sqlite3.asm 9ea6342ffa2820dd35348c07965fa90c75c715ec
@@ -15,7 +15,7 @@ F www/ld-musl-i386.so 4d44786b8676115c7df45c45ceb051c11ce14ffd x
 F www/libsqlite3.so b219b02c71d515698b2086be2edc104e5c8997a7 x
 F www/lighttpd.conf 0096891c43040c24097ac2978d0e00e94ef05311
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
-P eaadfa8d98b501b6651358e3fd427924aa0fd1ca
-R 9e0dd0b1c77de327a32b47e421b7c1d2
+P 15d7963c33fa6e4ad38a68c839250f4699ef7152
+R ec294f9e6441d82e6c4eb24dd0277c87
 U johnfound
-Z 0f89ca65d6e784c37450edc1234d6bfa
+Z a85d4d3ca22fedde8411bb3246866fa4

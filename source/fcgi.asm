@@ -102,6 +102,57 @@ ends
 
 
 
+struct FCGI_NameValuePair11
+  .nameLengthB0   db ?
+  .valueLengthB0  db ?
+  .data:
+ends
+
+
+
+struct FCGI_NameValuePair14
+  .nameLengthB0   db ?
+  .valueLengthB3  db ?
+  .valueLengthB2  db ?
+  .valueLengthB1  db ?
+  .valueLengthB0  db ?
+  .data:
+ends
+
+
+struct FCGI_NameValuePair41
+  .nameLengthB3   db ?
+  .nameLengthB2   db ?
+  .nameLengthB1   db ?
+  .nameLengthB0   db ?
+  .valueLengthB0  db ?
+  .data:
+ends
+
+
+struct FCGI_NameValuePair44
+  .nameLengthB3   db ?
+  .nameLengthB2   db ?
+  .nameLengthB1   db ?
+  .nameLengthB0   db ?
+  .valueLengthB3  db ?
+  .valueLengthB2  db ?
+  .valueLengthB1  db ?
+  .valueLengthB0  db ?
+  .data:
+ends
+
+
+
+
+
+
+
+
+
+
+
+
 proc FCGI_output, .hSocket, .RequestID, .hString
 
 .header FCGI_Header
@@ -210,9 +261,9 @@ begin
 
         lea     eax, [.header]
         stdcall SocketReceive, [.hSocket], eax, sizeof.FCGI_Header, 0
+        jc      .error
         test    eax, eax
         jz      .error
-        jc      .error
 
         mov     al, [.header.contentLengthB0]
         mov     ah, [.header.contentLengthB1]
@@ -231,6 +282,9 @@ begin
         mov     ecx, sizeof.FCGI_Header/4
         rep movsd
 
+        test    ebx, ebx
+        jz      .finish
+
 .read_data:
         stdcall SocketReceive, [.hSocket], edi, ebx, 0
         jc      .error2
@@ -241,16 +295,142 @@ begin
         sub     ebx, eax
         jnz     .read_data
 
+
+.finish:
         popad
         mov     eax, [.ptr]
         clc
         return
 
 .error2:
+        DebugMsg "Read pack: error2"
+
         stdcall FreeMem, [.ptr]
 
 .error:
+        DebugMsg "Read pack: error1"
+
         stc
+        popad
+        return
+endp
+
+
+
+
+
+
+
+proc FCGI_Decode_name_value_pairs, .pArray, .pData, .size
+.name  dd ?
+.value dd ?
+begin
+        pushad
+
+
+        mov     esi, [.pData]
+        mov     edx, [.pArray]
+        test    edx, edx
+        jnz     .array_ok
+
+        stdcall CreateArray, 8
+        mov     edx, eax
+
+.array_ok:
+
+.loop:
+        call    .get_length              ; name length
+        mov     ecx, eax
+
+        call    .get_length              ; value length
+        push    eax
+
+        stdcall StrNew
+        mov     [.name], eax
+
+        stdcall StrSetCapacity, eax, ecx
+        mov     [eax+string.len], ecx
+        sub     [.size], ecx
+
+        mov     edi, eax
+        rep movsb
+        xor     eax, eax
+        stosd
+
+        pop     ecx
+        stdcall StrNew
+        mov     [.value], eax
+
+        stdcall StrSetCapacity, eax, ecx
+        mov     [eax+string.len], ecx
+        sub     [.size], ecx
+
+        mov     edi, eax
+        rep movsb
+        xor     eax, eax
+        stosd
+
+        stdcall AddArrayItems, edx, 1
+
+        pushd   [.value] [.name]
+        popd    [eax] [eax+4]
+
+        cmp     [.size], 0
+        jg      .loop
+
+
+        mov     [esp+4*regEAX], edx
+        popad
+        return
+
+
+.get_length:
+
+        test    byte [esi], $80
+        jz      .one_byte
+
+; four byte length
+        mov     eax, [esi]
+        and     al, $7f
+
+        bswap   eax
+        add     esi, 4
+        sub     [.size], 4
+        retn
+
+.one_byte:
+        movzx   eax, byte [esi]
+        inc     esi
+        dec     [.size]
+        retn
+
+endp
+
+
+
+
+proc FreeNameValueArray, .pArray
+begin
+        pushad
+
+        mov     esi, [.pArray]
+        test    esi, esi
+        jz      .finish
+
+        mov     ecx, [esi+TArray.count]
+
+.loop:
+        dec     ecx
+        js      .free_array
+
+        stdcall StrDel, [esi+TArray.array+8*ecx]
+        stdcall StrDel, [esi+TArray.array+8*ecx+4]
+        jmp     .loop
+
+.free_array:
+        stdcall FreeMem, [.pArray]
+
+.finish:
         popad
         return
 endp

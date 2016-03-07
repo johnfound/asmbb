@@ -61,7 +61,7 @@ cmdSavePost    = 2
 cmdMax         = 2
 
 
-rb 273
+rb 173
 
 start:
         stdcall GetTimestamp
