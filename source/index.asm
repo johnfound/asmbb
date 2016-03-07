@@ -21,21 +21,23 @@ LINUX_INTERPRETER equ './ld-musl-i386.so'   ;'./ld-linux.so.2'
 options.ShowSkipped = 0
 options.ShowSizes = 1
 
-options.DebugMode = 1
+options.DebugMode = 0
 options.AlignCode = 0
 options.ShowImported = 1
 
 HeapManager  equ ASM
+;LinuxThreads equ native
 
 
 include "%lib%/freshlib.asm"
 
-uses sqlite3:"sqlite3.inc"
+;uses sqlite3:"sqlite3.inc"
 
-include "sqlite3.asm"   ; sqlite utility functions.
+;include "sqlite3.asm"   ; sqlite utility functions.
 include "get.asm"
 include "commands.asm"
 include "render.asm"
+include "fcgi.asm"
 
 
 iglobal
@@ -59,50 +61,58 @@ cmdSavePost    = 2
 cmdMax         = 2
 
 
+rb 273
+
 start:
         stdcall GetTimestamp
         mov     [StartTime], eax
 
         InitializeAll
 
-        stdcall InitScriptVariables
 
-        mov     ebx, [Command]
-        cmp     ebx, cmdMax
-        ja      .err400
+        stdcall Listen
+        jmp     .finish
 
-; command in range, so open the database.
 
-        stdcall StrDup, [hDocRoot]
-        push    eax
-        stdcall StrCat, eax, cDatabaseFilename
-        stdcall StrPtr, eax
-
-        stdcall OpenOrCreate, eax, hMainDatabase, sqlCreateDB
-        stdcall StrDel ; from the stack
-        jc      .err400
-
-; execute the command
-
-        stdcall [procCommands+4*ebx]
-
-; close the database
-
-        cinvoke sqliteClose, [hMainDatabase]
+;        stdcall InitScriptVariables
+;
+;
+;        mov     ebx, [Command]
+;        cmp     ebx, cmdMax
+;        ja      .err400
+;
+;; command in range, so open the database.
+;
+;        stdcall StrDup, [hDocRoot]
+;        push    eax
+;        stdcall StrCat, eax, cDatabaseFilename
+;        stdcall StrPtr, eax
+;
+;        stdcall OpenOrCreate, eax, hMainDatabase, sqlCreateDB
+;        stdcall StrDel ; from the stack
+;        jc      .err400
+;
+;; execute the command
+;
+;        stdcall [procCommands+4*ebx]
+;
+;; close the database
+;
+;        cinvoke sqliteClose, [hMainDatabase]
 
 .finish:
         FinalizeAll
         stdcall TerminateAll, 0
 
 
-.err400:
-        stdcall ReturnError, "400 Bad Request"
-        jmp     .finish
+;.err400:
+;        stdcall ReturnError, "400 Bad Request"
+;        jmp     .finish
 
 
 
 
-procCommands dd ListThreads, ShowThread, SavePost
+;procCommands dd ListThreads, ShowThread, SavePost
 
 
 

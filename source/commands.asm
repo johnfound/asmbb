@@ -1,5 +1,101 @@
 
 
+
+
+proc Listen
+begin
+
+.loop:
+        stdcall SocketAccept, [STDIN], 0
+        jc      .finish
+
+
+        stdcall ThreadCreate, procServeRequest, eax
+
+        jmp     .loop
+
+
+.finish:
+
+        return
+endp
+
+
+
+
+
+
+
+cStreamBufferSize = 256 ; keep this constant small in order to test the proper work
+                        ; of the stream processing code. Set big (4096) for better
+                        ; performance.
+
+
+proc procServeRequest, .hSocket
+
+.requestID dd ?
+
+begin
+        pushad
+
+        DebugMsg "FCGI thread started"
+
+.pack_loop:
+        stdcall FCGI_read_pack, [.hSocket]
+        jc      .finish1
+
+        mov     esi, eax
+        movzx   eax, [esi+FCGI_Header.type]
+
+        OutputValue "Packege received. Type = ", eax, 10, -1
+
+        cmp     eax, FCGI_BEGIN_REQUEST
+        je      .request
+
+        stdcall FreeMem, esi
+        jmp     .pack_loop
+
+.request:
+        xor     eax, eax
+        mov     al, [esi+FCGI_Header.requestIdB0]
+        mov     ah, [esi+FCGI_Header.requestIdB1]
+
+        mov     [.requestID], eax
+
+        stdcall StrDupMem, <"Status: 200 OK", 13, 10, "Content-type: text/plain", 13, 10, 13, 10, "Test FCGI!", 13, 10, 13, 10, "Environment variables:", 13, 10, 13, 10>
+
+        stdcall EnvironmentToStr, eax
+
+        stdcall FCGI_output, [.hSocket], [.requestID], eax
+        stdcall StrDel, eax
+        jc      .finish2
+
+        stdcall FCGI_end_request, [.hSocket], [.requestID]
+        jnc     .pack_loop
+
+        DebugMsg "Error send end request"
+        jmp      .finish
+
+.finish2:
+        DebugMsg "Error send output"
+        jmp      .finish
+
+.finish1:
+        DebugMsg "Error read FCGI pack"
+
+.finish:
+        DebugMsg "Terminate thread FCGI"
+
+        stdcall SocketClose, [.hSocket]
+        popad
+        return
+endp
+
+
+
+
+
+
 sqlSelectThreads text "select *, (select count() from posts where threadid = Threads.id) as PostCount from Threads limit 20 offset ?"
 
 
@@ -183,7 +279,7 @@ begin
 
         stdcall RenderPostContent, edi, eax
 
-        stdcall StrCat, edi, "</div>"            ; div.post
+        stdcall StrCat, edi, "</div>"                   ; div.post
 
         jmp     .loop
 
@@ -253,5 +349,62 @@ begin
 
         stdcall FileWriteString, [STDOUT], txt 'ms</p>'
 
+        return
+endp
+
+
+
+
+
+
+proc EnvironmentToStr, .hString
+begin
+        pushad
+
+        stdcall GetAllEnvironment
+        test    eax, eax
+        jz      .finish_env
+
+        push    eax
+        mov     esi, eax
+
+.env_out:
+        mov     ebx, esi
+
+.env_in:
+        mov     cl, [esi]
+        lea     esi, [esi+1]
+        test    cl, cl
+        jnz     .env_in
+
+        stc
+        mov     eax, esi
+        sbb     eax, ebx
+        jz      .end_env
+
+        stdcall StrCat, [.hString], ebx
+        stdcall StrCharCat, [.hString], $0a0d
+        jmp     .env_out
+
+.end_env:
+        stdcall FreeMem ; from the stack
+
+.finish_env:
+        stdcall StrCharCat, [.hString], $0a0d
+        stdcall StrCharCat, [.hString], $0a0d
+
+        stdcall StrCat, [.hString], 'Current directory: '
+
+        stdcall GetCurrentDir
+        jc      .finish
+
+        stdcall StrCat, [.hString], eax
+        stdcall StrDel, eax
+
+        stdcall StrCharCat, [.hString], $0a0d
+
+.finish:
+
+        popad
         return
 endp

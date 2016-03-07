@@ -96,3 +96,5 @@ begin
         stdcall StrCat, [.html], '<div class="usernull">NULL user</div>'
         jmp     .finish
 endp
+
+
