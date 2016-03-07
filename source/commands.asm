@@ -1,4 +1,6 @@
 
+interface FCGI_pack_processor, .pPack, .pList
+
 
 
 
@@ -9,36 +11,55 @@ begin
         stdcall SocketAccept, [STDIN], 0
         jc      .finish
 
-
         stdcall ThreadCreate, procServeRequest, eax
-
         jmp     .loop
 
-
 .finish:
-
         return
 endp
 
 
 
 
+;        mov     ebx, [Command]
+;        cmp     ebx, cmdMax
+;        ja      .err400
+;
+;; command in range, so open the database.
+;
+;        stdcall StrDup, [hDocRoot]
+;        push    eax
+;        stdcall StrCat, eax, cDatabaseFilename
+;        stdcall StrPtr, eax
+;
+;        stdcall OpenOrCreate, eax, hMainDatabase, sqlCreateDB
+;        stdcall StrDel ; from the stack
+;        jc      .err400
+;
+;; execute the command
+;
+;        stdcall [procCommands+4*ebx]
+;
+;; close the database
+;
+;        cinvoke sqliteClose, [hMainDatabase]
 
+;procCommands dd ListThreads, ShowThread, SavePost
 
-
-cStreamBufferSize = 256 ; keep this constant small in order to test the proper work
-                        ; of the stream processing code. Set big (4096) for better
-                        ; performance.
 
 
 proc procServeRequest, .hSocket
 
-.requestID dd ?
+.requestID     dd ?
+.requestFlags  dd ?
+.requestParams dd ?
+
 
 begin
         pushad
 
         DebugMsg "FCGI thread started"
+
 
 .pack_loop:
         stdcall FCGI_read_pack, [.hSocket]
@@ -47,13 +68,84 @@ begin
         mov     esi, eax
         movzx   eax, [esi+FCGI_Header.type]
 
-        OutputValue "Packege received. Type = ", eax, 10, -1
+        OutputValue "Package received. Type = ", eax, 10, -1
+
 
         cmp     eax, FCGI_BEGIN_REQUEST
-        je      .request
+        je      .begin_request
 
+        cmp     eax, FCGI_PARAMS
+        je      .get_params
+
+
+; send back unknown type record.
+
+        xor     edx, edx
+        mov     dx, word [esi+FCGI_Header.requestIdB1]
+        xchg    dl, dh
+
+        stdcall FCGI_send_unknown_type, [.hSocket], edx, eax
+
+
+.free_pack:
         stdcall FreeMem, esi
         jmp     .pack_loop
+
+
+
+
+
+
+
+; Processing of FCGI_BEGIN_REQUEST
+
+.begin_request:
+
+        xor     eax, eax
+        xor     edx, edx
+        mov     ax, [esi+FCGI_BeginRequest.header.requestId]
+        mov     dx, [esi+FCGI_BeginRequest.body.role]
+        xchg    al, ah
+        xchg    dl, dh
+
+        cmp     dx, FCGI_RESPONDER
+        jne     .unknown_role
+
+        cmp     [.requestID], 0
+        jne     .mx_disabled
+
+        mov     [.requestID], eax
+
+        movzx   ecx, [esi+FCGI_BeginRequest.body.flags]
+        mov     [.requestFlags], ecx
+
+        jmp     .free_pack
+
+
+.unknown_role:
+
+        stdcall FCGI_send_end_request, [.hSocket], eax, FCGI_UNKNOWN_ROLE
+        jmp     .free_pack
+
+
+.mx_disabled:
+
+        stdcall FCGI_send_end_request, [.hSocket], eax, FCGI_CANT_MPX_CONN
+        jmp     .free_pack
+
+
+; Processing of FCGI_PARAMS
+
+
+.get_params:
+
+
+
+
+
+
+; Processing of the request response.
+
 
 .request:
         xor     eax, eax
@@ -70,7 +162,7 @@ begin
         stdcall StrDel, eax
         jc      .finish2
 
-        stdcall FCGI_end_request, [.hSocket], [.requestID]
+        stdcall FCGI_send_end_request, [.hSocket], [.requestID], FCGI_REQUEST_COMPLETE
         jnc     .pack_loop
 
         DebugMsg "Error send end request"
@@ -89,6 +181,7 @@ begin
         stdcall SocketClose, [.hSocket]
         popad
         return
+
 endp
 
 
@@ -335,6 +428,8 @@ endp
 
 
 
+
+
 proc WriteTimestamp
 begin
 
@@ -355,6 +450,11 @@ endp
 
 
 
+
+
+
+
+; some utility procedures for debug and testing.
 
 
 proc EnvironmentToStr, .hString
@@ -406,5 +506,42 @@ begin
 .finish:
 
         popad
+        return
+endp
+
+
+
+
+
+
+
+errorHeader  text '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>HTTP response</title><link rel="stylesheet" href="/error.css"></head><body>'
+errorFooter  text '</body></html>'
+
+
+
+
+proc ReturnError, .code
+begin
+        stdcall FileWriteString, [STDOUT], "Status: "
+        stdcall FileWriteString, [STDOUT], [.code]
+        stdcall FileWrite,       [STDOUT], <txt 13, 10>, 2
+        stdcall FileWriteString, [STDOUT], <"Content-type: text/html", 13, 10, 13, 10>
+        stdcall FileWrite,       [STDOUT], errorHeader, errorHeader.length
+        stdcall FileWriteString, [STDOUT], txt "<h1>"
+
+
+        stdcall FileWriteString, [STDOUT], [.code]
+
+        stdcall FileWriteString, [STDOUT], "</h1><p>Time:"
+
+        stdcall GetTimestamp
+        sub     eax, [StartTime]
+
+        stdcall NumToStr, eax, ntsDec or ntsUnsigned
+        stdcall FileWriteString, [STDOUT], eax
+        stdcall FileWriteString, [STDOUT], " ms</p>"
+
+        stdcall FileWrite,       [STDOUT], errorFooter, errorFooter.length
         return
 endp

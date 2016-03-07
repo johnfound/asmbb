@@ -1,11 +1,11 @@
-C Started\swork\son\sFastCGI\simplementation.\sThe\swork\sis\sin\svery\searly\sstage\s\nand\sserves\smainly\sas\san\sexperimental\ssetup\sfor\sunderstanding\show\sFastCGI\s\nworks.
-D 2016-03-07T14:15:52.941
-F source/commands.asm 90d48a534dd73ffdb70853d83f7fb5c9206c2f2e
+C More\sstructured\sprocessing\sof\sthe\sFastCGI\srecords.
+D 2016-03-07T18:46:07.051
+F source/commands.asm 510fba085fa647848b65c3d23d5fbd57af325027
 F source/create.sql 7b31ea31b255809f38d295df3663a8163a0f7058
-F source/fcgi.asm 2d27bb00ea66899c87dd1603832611c0c6697a11
+F source/fcgi.asm 8dccabba8d29a603a45eb749cdca2df7bbf3a9fe
 F source/get.asm f80ad70c313ac923154282293ec4a5b83e21f3cd
-F source/index.asm 627bde2b13ca9deacfe72610f44c2abe25cadcf5
-F source/index.fpr 0e0ebc3dde54afe2ed685b67a70776cb63a40971
+F source/index.asm f282df29972d00be68f1b37136c97fee6aad3796
+F source/index.fpr ef044477567c836d4af7dacb73b14f30fae847d7
 F source/render.asm add79e5785c6796a16023e03239648dc5ad50da4
 F source/sqlite3.asm 9ea6342ffa2820dd35348c07965fa90c75c715ec
 F source/sqlite3.inc f9221a234b424eac0cbf4ad99a1aa289591db75f
@@ -15,7 +15,7 @@ F www/ld-musl-i386.so 4d44786b8676115c7df45c45ceb051c11ce14ffd x
 F www/libsqlite3.so b219b02c71d515698b2086be2edc104e5c8997a7 x
 F www/lighttpd.conf 0096891c43040c24097ac2978d0e00e94ef05311
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
-P 16aa42d5565a429f1144a6d744be451b6375ccb6
-R 0fc3f61b5076ef922f9351a7c4a267d2
+P eaadfa8d98b501b6651358e3fd427924aa0fd1ca
+R 9e0dd0b1c77de327a32b47e421b7c1d2
 U johnfound
-Z 7a5143a0742d698bf9e7b11dee39ac73
+Z 0f89ca65d6e784c37450edc1234d6bfa

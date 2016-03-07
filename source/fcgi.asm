@@ -1,29 +1,3 @@
-
-struct FCGI_Header
-  .version              db ?
-  .type                 db ?
-  .requestIdB1          db ?
-  .requestIdB0          db ?
-  .contentLengthB1      db ?
-  .contentLengthB0      db ?
-  .paddingLength        db ?
-  .reserved             db ?
-ends
-
-
-
-
-struct FCGI_EndRequestBody
-  .appStatusB3          db ?
-  .appStatusB2          db ?
-  .appStatusB1          db ?
-  .appStatusB0          db ?
-  .protocolStatus       db ?
-  .reserved             rb 3
-ends
-
-
-
 ; The types for FCGI_Header.type
 
 FCGI_BEGIN_REQUEST      =  1
@@ -40,6 +14,52 @@ FCGI_UNKNOWN_TYPE       = 11
 FCGI_MAXTYPE            = FCGI_UNKNOWN_TYPE
 
 
+struct FCGI_Header
+  .version              db ?
+  .type                 db ?
+
+  .requestIdB1          db ?
+  .requestIdB0          db ?
+     label .requestId word at .requestIdB1
+
+  .contentLengthB1      db ?
+  .contentLengthB0      db ?
+     label .contentLength word at .contentLengthB1
+
+  .paddingLength        db ?
+  .reserved             db ?
+ends
+
+
+
+; Values for role component of FCGI_BeginRequestBody
+
+FCGI_RESPONDER   = 1
+FCGI_AUTHORIZER  = 2
+FCGI_FILTER      = 3
+
+
+; Mask for flags component of FCGI_BeginRequestBody
+
+FCGI_KEEP_CONN   = 1
+
+
+struct FCGI_BeginRequestBody
+  .roleB1   db ?
+  .roleB0   db ?
+     label .role word at .roleB1
+
+  .flags    db ?
+  .reserved rb 5
+ends
+
+
+struct FCGI_BeginRequest
+  .header FCGI_Header
+  .body   FCGI_BeginRequestBody
+ends
+
+
 
 ; Values for protocolStatus component of FCGI_EndRequestBody
 
@@ -47,6 +67,39 @@ FCGI_REQUEST_COMPLETE   =  0
 FCGI_CANT_MPX_CONN      =  1
 FCGI_OVERLOADED         =  2
 FCGI_UNKNOWN_ROLE       =  3
+
+
+
+struct FCGI_EndRequestBody
+  .appStatusB3          db ?
+  .appStatusB2          db ?
+  .appStatusB1          db ?
+  .appStatusB0          db ?
+  .protocolStatus       db ?
+  .reserved             rb 3
+ends
+
+
+struct FCGI_EndRequest
+  .header FCGI_Header
+  .body   FCGI_EndRequestBody
+ends
+
+
+
+struct FCGI_UnknownTypeBody
+  .type         db  ?          ; the unknown type that can't be processed.
+  .reserved     rb  7
+ends
+
+
+struct FCGI_UnknownType
+  .header  FCGI_Header
+  .body    FCGI_UnknownTypeBody
+ends
+
+
+
 
 
 proc FCGI_output, .hSocket, .RequestID, .hString
@@ -87,35 +140,65 @@ endp
 
 
 
-proc FCGI_end_request, .hSocket, .RequestID
+proc FCGI_send_end_request, .hSocket, .RequestID, .status
 
-.header FCGI_Header
-.body   FCGI_EndRequestBody
+.rec    FCGI_EndRequest
 
 begin
         pushad
 
-        mov     [.header.version], 1
-        mov     [.header.type], FCGI_END_REQUEST
+        mov     [.rec.header.version], 1
+        mov     [.rec.header.type], FCGI_END_REQUEST
 
         mov     eax, [.RequestID]
-        mov     [.header.requestIdB1], ah
-        mov     [.header.requestIdB0], al
+        mov     [.rec.header.requestIdB1], ah
+        mov     [.rec.header.requestIdB0], al
 
-        mov     [.header.contentLengthB1], 0
-        mov     [.header.contentLengthB0], sizeof.FCGI_EndRequestBody
-        mov     [.header.paddingLength], 0
+        mov     [.rec.header.contentLengthB1], 0
+        mov     [.rec.header.contentLengthB0], sizeof.FCGI_EndRequestBody
+        mov     [.rec.header.paddingLength], 0
 
-        mov     dword [.body.appStatusB3], 0
-        mov     [.body.protocolStatus], FCGI_REQUEST_COMPLETE
+        mov     dword [.rec.body.appStatusB3], 0
+        mov     al, byte [.status]
+        mov     [.rec.body.protocolStatus], al
 
-        lea     eax, [.header]
-        stdcall SocketSend, [.hSocket], eax, sizeof.FCGI_Header + sizeof.FCGI_EndRequestBody, 0
+        lea     eax, [.rec]
+        stdcall SocketSend, [.hSocket], eax, sizeof.FCGI_EndRequest, 0
 
         popad
         return
 endp
 
+
+
+
+proc FCGI_send_unknown_type, .hSocket, .RequestID, .unknown_type
+
+.rec FCGI_UnknownType
+
+begin
+        pushad
+
+        mov     [.rec.header.version], 1
+        mov     [.rec.header.type], FCGI_UNKNOWN_TYPE
+
+        mov     eax, [.RequestID]
+        mov     [.rec.header.requestIdB1], ah
+        mov     [.rec.header.requestIdB0], al
+
+        mov     [.rec.header.contentLengthB1], 0
+        mov     [.rec.header.contentLengthB0], sizeof.FCGI_UnknownType
+        mov     [.rec.header.paddingLength], 0
+
+        mov     al, byte [.unknown_type]
+        mov     [.rec.body.type], al
+
+        lea     eax, [.rec]
+        stdcall SocketSend, [.hSocket], eax, sizeof.FCGI_UnknownType, 0
+
+        popad
+        return
+endp
 
 
 

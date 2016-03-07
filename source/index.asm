@@ -74,75 +74,10 @@ start:
         jmp     .finish
 
 
-;        stdcall InitScriptVariables
-;
-;
-;        mov     ebx, [Command]
-;        cmp     ebx, cmdMax
-;        ja      .err400
-;
-;; command in range, so open the database.
-;
-;        stdcall StrDup, [hDocRoot]
-;        push    eax
-;        stdcall StrCat, eax, cDatabaseFilename
-;        stdcall StrPtr, eax
-;
-;        stdcall OpenOrCreate, eax, hMainDatabase, sqlCreateDB
-;        stdcall StrDel ; from the stack
-;        jc      .err400
-;
-;; execute the command
-;
-;        stdcall [procCommands+4*ebx]
-;
-;; close the database
-;
-;        cinvoke sqliteClose, [hMainDatabase]
 
 .finish:
         FinalizeAll
         stdcall TerminateAll, 0
 
 
-;.err400:
-;        stdcall ReturnError, "400 Bad Request"
-;        jmp     .finish
 
-
-
-
-;procCommands dd ListThreads, ShowThread, SavePost
-
-
-
-errorHeader  text '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>HTTP response</title><link rel="stylesheet" href="/error.css"></head><body>'
-errorFooter  text '</body></html>'
-
-
-
-
-proc ReturnError, .code
-begin
-        stdcall FileWriteString, [STDOUT], "Status: "
-        stdcall FileWriteString, [STDOUT], [.code]
-        stdcall FileWrite,       [STDOUT], <txt 13, 10>, 2
-        stdcall FileWriteString, [STDOUT], <"Content-type: text/html", 13, 10, 13, 10>
-        stdcall FileWrite,       [STDOUT], errorHeader, errorHeader.length
-        stdcall FileWriteString, [STDOUT], txt "<h1>"
-
-
-        stdcall FileWriteString, [STDOUT], [.code]
-
-        stdcall FileWriteString, [STDOUT], "</h1><p>Time:"
-
-        stdcall GetTimestamp
-        sub     eax, [StartTime]
-
-        stdcall NumToStr, eax, ntsDec or ntsUnsigned
-        stdcall FileWriteString, [STDOUT], eax
-        stdcall FileWriteString, [STDOUT], " ms</p>"
-
-        stdcall FileWrite,       [STDOUT], errorFooter, errorFooter.length
-        return
-endp
