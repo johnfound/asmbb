@@ -1,10 +1,10 @@
-C Handling\sof\sthe\sPOST\sHTTP\srequests.\sProper\shandling\sof\slong\sdata\sresponses\son\sFCGI_STDOUT.\nCode\sarranging\sand\srestructuring\sin\sorder\sto\sseparate\sthe\sFastCGI\sframework\sfrom\sthe\napplication\scode,\sthat\simplements\sspecific\sweb\sapplication.
-D 2016-03-08T09:51:55.199
-F source/commands.asm 96fee3e1fb39be47e6101a92b2afb17ebdb3442d
+C Back\sto\sthe\sforum\sengine\sand\sSQLite\swith\ssome\sdebugging\sand\sbug\sfixing.
+D 2016-03-08T14:24:52.893
+F source/commands.asm fcf31d2c266d6c7a4ed88c429e93c795e6585f51
 F source/create.sql 7b31ea31b255809f38d295df3663a8163a0f7058
-F source/fcgi.asm 8d3aa739c70010d95440fcd452d8a2092e29a97b
+F source/fcgi.asm 8a098936dfd46835d750dce3f747683507ccae7d
 F source/get.asm f80ad70c313ac923154282293ec4a5b83e21f3cd
-F source/index.asm 9c13a6e2d6d562d09b8e1858165a9c629709c312
+F source/index.asm 2c8337ca3623c99c7eaa4e43f927e0c568b5635d
 F source/index.fpr ef044477567c836d4af7dacb73b14f30fae847d7
 F source/render.asm add79e5785c6796a16023e03239648dc5ad50da4
 F source/sqlite3.asm 9ea6342ffa2820dd35348c07965fa90c75c715ec
@@ -16,7 +16,7 @@ F www/libsqlite3.so b219b02c71d515698b2086be2edc104e5c8997a7 x
 F www/lighttpd.conf 0096891c43040c24097ac2978d0e00e94ef05311
 F www/post.html 02bb34d32b2b7ebfa83ec640c01aeccfa11b3b13
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
-P 41bde42d1045af074620a6365ace2c1324459fec
-R 1b3b133201fcb5a92e42ccebf2d78e67
+P 8e4746b9b863af6328c293669d088a23ba7d7ca9
+R c066dae2ee38ef5071d05bf3a2407770
 U johnfound
-Z 9a41b075131ef7ea986f19f96d96d232
+Z c892b4c0351de464e55274cabef267a9

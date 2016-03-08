@@ -1,3 +1,218 @@
+proc ServeOneRequest, .hSocket, .requestID, .pParams, .pPost
+
+.root dd ?
+.uri  dd ?
+
+begin
+        pushad
+
+        mov     [.root], 0
+        mov     [.uri], 0
+
+
+        stdcall StrNew
+        mov     edi, eax
+
+        DebugMsg "Get document root."
+
+        stdcall ValueByName, [.pParams], "DOCUMENT_ROOT"
+        jc      .error400
+
+        stdcall StrDup, eax
+        mov     [.root], eax
+
+        stdcall StrPtr, [.root]
+        mov     ebx, eax
+        mov     eax, [ebx+string.len]
+
+        test    eax, eax
+        jz      .root_ok
+
+        dec     eax
+        cmp     byte [ebx+eax], "/"
+        jne     .root_ok
+
+        mov     byte [ebx+eax], 0
+        mov     [ebx+string.len], eax
+
+.root_ok:
+        DebugMsg "Get request URI."
+
+        stdcall ValueByName, [.pParams], "REQUEST_URI"
+        jc      .error400
+
+        stdcall StrDup, eax
+        mov     [.uri], eax
+
+; first check for supported file format.
+
+        DebugMsg "Get request URI."
+
+        stdcall StrDup, [.root]
+        stdcall StrCat, eax, [.uri]
+        mov     esi, eax
+
+if defined options.DebugMode & options.DebugMode
+
+        stdcall Output, "Filename to be check:"
+
+        stdcall StrPtr, esi
+        stdcall Output, eax
+        DebugMsg
+
+end if
+
+        stdcall FileExists, esi
+        jnc     .serve_real_file
+
+
+        DebugMsg "File not exists. So, send 404 not found."
+
+        stdcall AppendError, edi, "Status: 404 Not Found"
+
+
+.send_simple_result:
+
+        DebugMsg "Send simple string result!"
+
+        stdcall StrPtr, edi
+        stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], TRUE
+        stdcall StrDel, edi
+
+
+.final_clean:
+
+        xor     eax, eax
+        cmp     [.root], eax
+        je      @f
+
+        stdcall StrDel, [.root]
+
+@@:
+        cmp     [.uri], eax
+        je      @f
+
+        stdcall StrDel, [.uri]
+@@:
+        clc
+        popad
+        return
+
+
+
+
+.serve_real_file:
+
+        DebugMsg "File exists. So, serve it maybe."
+
+        stdcall GetMimeType, esi
+        jc      .error403
+
+        stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Content-type: ">
+        stdcall StrCat, edi, eax
+        stdcall StrDel, eax
+        stdcall StrCharCat, edi, $0a0d0a0d
+
+        stdcall StrPtr, edi
+        stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], FALSE
+        stdcall StrDel, edi
+
+        stdcall LoadBinaryFile, esi
+        stdcall FCGI_output, [.hSocket], [.requestID], eax, ecx, TRUE
+        stdcall FreeMem, eax
+
+        clc
+        popad
+        return
+
+
+.error403:
+        stdcall AppendError, edi, "Status: 403 Forbidden"
+        jmp     .send_simple_result
+
+
+.error400:
+        stdcall AppendError, edi, "Status: 400 Bad Request"
+        jmp     .send_simple_result
+
+
+endp
+
+
+
+
+
+proc GetMimeType, .filename
+begin
+        pushad
+
+        stdcall StrExtractExt, [.filename]
+        jc      .error                         ; no extension. Such files are not to be served!
+
+        mov     esi, eax
+
+        mov     ebx, mimeIcon
+        stdcall StrCompNoCase, esi, txt ".ico"
+        jc      .mime_ok
+
+        mov     ebx, mimeHTML
+        stdcall StrCompNoCase, esi, txt ".html"
+        jc      .mime_ok
+
+        stdcall StrCompNoCase, esi, txt ".html"
+        jc      .mime_ok
+
+        mov     ebx, mimeCSS
+        stdcall StrCompNoCase, esi, txt ".css"
+        jc      .mime_ok
+
+        mov     ebx, mimePNG
+        stdcall StrCompNoCase, esi, txt ".png"
+        jc      .mime_ok
+
+        mov     ebx, mimeJPEG
+        stdcall StrCompNoCase, esi, txt ".jpg"
+        jc      .mime_ok
+
+        stdcall StrCompNoCase, esi, txt ".jpeg"
+        jc      .mime_ok
+
+        mov     ebx, mimeSVG
+        stdcall StrCompNoCase, esi, txt ".svg"
+        jc      .mime_ok
+
+        mov     ebx, mimeGIF
+        stdcall StrCompNoCase, esi, txt ".gif"
+        jc      .mime_ok
+
+        jmp     .error
+
+.mime_ok:
+        stdcall StrDupMem, "Content-type: "
+        stdcall StrCat, eax, ebx
+        mov     [esp+4*regEAX], eax
+        clc
+
+.finish:
+        stdcall StrDel, esi
+        popad
+        return
+
+.error:
+        stc
+        jmp     .finish
+endp
+
+
+mimeIcon  text "image/x-icon"
+mimeHTML  text "text/html"
+mimeText  text "text/plain"
+mimeCSS   text "text/css"
+mimePNG   text "image/png"
+mimeJPEG  text "image/jpeg"
+mimeSVG   text "image/svg+xml"
+mimeGIF   text "image/gif"
+
 
 
 
@@ -39,7 +254,7 @@
 ; generate only the output stream.
 ;
 
-proc ServeOneRequest, .hSocket, .requestID, .pParams, .pPost
+proc ServeOneRequestTest, .hSocket, .requestID, .pParams, .pPost
 begin
         pushad
 
@@ -438,27 +653,18 @@ errorFooter  text '</body></html>'
 
 
 
-proc ReturnError, .code
+proc AppendError, .hString, .code
 begin
-        stdcall FileWriteString, [STDOUT], "Status: "
-        stdcall FileWriteString, [STDOUT], [.code]
-        stdcall FileWrite,       [STDOUT], <txt 13, 10>, 2
-        stdcall FileWriteString, [STDOUT], <"Content-type: text/html", 13, 10, 13, 10>
-        stdcall FileWrite,       [STDOUT], errorHeader, errorHeader.length
-        stdcall FileWriteString, [STDOUT], txt "<h1>"
+        stdcall StrCat, [.hString], "Status: "
+        stdcall StrCat, [.hString], [.code]
+        stdcall StrCharCat, [.hString], $0a0d
+        stdcall StrCat, [.hString], <"Content-type: text/html", 13, 10, 13, 10>
 
+        stdcall StrCat, [.hString], errorHeader
+        stdcall StrCat, [.hString], txt "<h1>"
+        stdcall StrCat, [.hString], [.code]
+        stdcall StrCat, [.hString], txt "</h1>"
 
-        stdcall FileWriteString, [STDOUT], [.code]
-
-        stdcall FileWriteString, [STDOUT], "</h1><p>Time:"
-
-        stdcall GetTimestamp
-        sub     eax, [StartTime]
-
-        stdcall NumToStr, eax, ntsDec or ntsUnsigned
-        stdcall FileWriteString, [STDOUT], eax
-        stdcall FileWriteString, [STDOUT], " ms</p>"
-
-        stdcall FileWrite,       [STDOUT], errorFooter, errorFooter.length
+        stdcall StrCat, [.hString], errorFooter
         return
 endp

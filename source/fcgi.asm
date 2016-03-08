@@ -356,8 +356,12 @@ begin
         stdcall ValueByName, [.requestParams], "REQUEST_METHOD"
         jc      .serve_request                                          ; not found method
 
+        DebugMsg "Method is?"
+
         stdcall StrCompNoCase, eax, txt "POST"
         jnc     .serve_request                          ; it is not the POST request, so no need to wait for more data.
+
+        DebugMsg "Method is POST!"
 
         or      [.requestFlags], ffcgiExpectStdIn
         jmp     .free_pack
@@ -423,8 +427,12 @@ begin
 
         stdcall FreeMem, esi
 
+        DebugMsg "Going to call ServeOneRequest"
+
         stdcall ServeOneRequest, [.hSocket], [.requestID], [.requestParams], [.requestPost]
         jc      .finish
+
+        DebugMsg "ServeOneRequest returned"
 
         stdcall FCGI_send_end_request, [.hSocket], [.requestID], FCGI_REQUEST_COMPLETE
         jc      .finish
@@ -453,15 +461,20 @@ endp
 
 
 
-proc FCGI_output, .hSocket, .RequestID, .pData, .Size
+proc FCGI_output, .hSocket, .RequestID, .pData, .Size, .final
 
 .header FCGI_Header
+.buffer rb 16
 
 begin
         pushad
 
         mov     [.header.version], 1
         mov     [.header.type], FCGI_STDOUT
+
+        xor     eax, eax
+        mov     dword [.buffer], eax
+        mov     dword [.buffer+4], eax
 
         mov     eax, [.RequestID]
         mov     [.header.requestIdB1], ah
@@ -472,6 +485,14 @@ begin
 
 
 .data_loop:
+        cmp     [.final], 0
+        jne     .final_ok
+
+        test    edx, edx
+        jz      .end_ok
+
+
+.final_ok:
         mov     ecx, edx
         cmp     ecx, $10000
         jb      .size_ok
@@ -498,27 +519,43 @@ begin
         stdcall SocketSend, [.hSocket], eax, sizeof.FCGI_Header, 0
         jc      .finish
 
+        DebugMsg "Header sent"
+
+        test    ecx, ecx
+        jz      .end_ok
+
 .send_part:
+
+        OutputValue "Count to send:", ecx, 10, -1
+
         stdcall SocketSend, [.hSocket], esi, ecx, 0
         jc      .finish
+
+        OutputValue "Count really sent:", eax, 10, -1
 
         add     esi, eax
         sub     ecx, eax
         jnz     .send_part
 
+        OutputValue "Padding to sent:", ebx, 10, -1
+
         test    ebx, ebx
         jz      .padding_ok
 
-        xor     eax, eax
-        mov     dword [.header], eax
-        mov     dword [.header+4], eax
-        lea     eax, [.header]
-        stdcall SocketSend, [.hSocket], eax, ebx, 0     ; send garbage as a padding bytes.
+        lea     eax, [.buffer]
+        stdcall SocketSend, [.hSocket], eax, ebx, 0     ; send 0 as a padding bytes.
+        jc      .finish
 
 .padding_ok:
-        test    edx, edx
-        jnz     .data_loop
+        OutputValue "More date to loop?", edx, 10, -1
 
+        jmp     .data_loop
+
+;        test    edx, edx
+;        jnz     .data_loop
+
+
+.end_ok:
         clc
 
 .finish:

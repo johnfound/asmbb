@@ -31,9 +31,9 @@ HeapManager  equ ASM
 
 include "%lib%/freshlib.asm"
 
-;uses sqlite3:"sqlite3.inc"
+uses sqlite3:"sqlite3.inc"
 
-;include "sqlite3.asm"   ; sqlite utility functions.
+include "sqlite3.asm"   ; sqlite utility functions.
 include "get.asm"
 include "commands.asm"
 include "render.asm"
@@ -69,14 +69,14 @@ start:
 
         InitializeAll
 
-;        stdcall OpenOrCreate, cDatabaseFilename, hMainDatabase, sqlCreateDB
-;        jc      .finish
+        stdcall OpenOrCreate, cDatabaseFilename, hMainDatabase, sqlCreateDB
+        jc      .finish
 
         stdcall Listen
 
 ; close the database
 
-;        cinvoke sqliteClose, [hMainDatabase]
+        cinvoke sqliteClose, [hMainDatabase]
 
 .finish:
         FinalizeAll
