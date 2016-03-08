@@ -21,7 +21,7 @@ LINUX_INTERPRETER equ './ld-musl-i386.so'   ;'./ld-linux.so.2'
 options.ShowSkipped = 0
 options.ShowSizes = 1
 
-options.DebugMode = 0
+options.DebugMode = 1
 options.AlignCode = 0
 options.ShowImported = 1
 
@@ -44,7 +44,7 @@ iglobal
   sqlCreateDB file 'create.sql'
               dd   0
 
-  cDatabaseFilename text "board.sqlite"
+  cDatabaseFilename text "./board.sqlite"
 endg
 
 uglobal
@@ -61,7 +61,7 @@ cmdSavePost    = 2
 cmdMax         = 2
 
 
-rb 173
+rb 273
 
 start:
         stdcall GetTimestamp
@@ -69,11 +69,14 @@ start:
 
         InitializeAll
 
+;        stdcall OpenOrCreate, cDatabaseFilename, hMainDatabase, sqlCreateDB
+;        jc      .finish
 
         stdcall Listen
-        jmp     .finish
 
+; close the database
 
+;        cinvoke sqliteClose, [hMainDatabase]
 
 .finish:
         FinalizeAll

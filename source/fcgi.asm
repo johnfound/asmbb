@@ -143,6 +143,303 @@ struct FCGI_NameValuePair44
 ends
 
 
+;
+; The main FastCGI listening loop.
+;
+; On accepting connection, starts a new thread in the procedure procServeRequest
+; and continues to listen for new connections.
+;
+
+proc Listen
+begin
+
+.loop:
+        stdcall SocketAccept, [STDIN], 0
+        jc      .finish
+
+        stdcall ThreadCreate, procServeRequest, eax
+        jmp     .loop
+
+.finish:
+        return
+endp
+
+
+
+
+
+
+; One connection serving thread procedure.
+
+
+ffcgiExpectStdIn  = $80000000
+ffcgiExpectParams = $40000000
+
+
+proc procServeRequest, .hSocket
+
+.requestID      dd ?
+.requestFlags   dd ?
+.requestParams  dd ?
+.requestPost    dd ?    ; pointer to TByteStream
+
+begin
+        pushad
+
+        DebugMsg "FCGI thread started"
+
+
+        xor     eax, eax
+        mov     [.requestParams], eax
+        mov     [.requestPost], eax
+
+.main_loop:
+        DebugMsg "Main loop enter."
+
+        xor     eax, eax
+
+        cmp     [.requestParams], eax
+        je      .params_ok
+
+        stdcall FreeNameValueArray, [.requestParams]
+        mov     [.requestParams], eax
+
+.params_ok:
+        cmp     [.requestPost], eax
+        je      .post_ok
+
+        stdcall FreeMem, [.requestPost]
+        mov     [.requestPost], 0
+
+.post_ok:
+
+        mov     [.requestFlags], eax
+        mov     [.requestID], eax
+
+
+.pack_loop:
+        DebugMsg "Now wait for some package"
+
+        stdcall FCGI_read_pack, [.hSocket]
+        jc      .finish
+
+        mov     esi, eax
+        movzx   eax, [esi+FCGI_Header.type]
+
+        OutputValue "Package received. Type = ", eax, 10, -1
+
+        cmp     eax, FCGI_BEGIN_REQUEST
+        je      .begin_request
+
+        cmp     eax, FCGI_PARAMS
+        je      .get_params
+
+        cmp     eax, FCGI_STDIN
+        je      .get_stdin
+
+        cmp     eax, FCGI_ABORT_REQUEST
+        je      .abort_request
+
+; send back unknown type record.
+
+        xor     edx, edx
+        mov     dx, word [esi+FCGI_Header.requestIdB1]
+        xchg    dl, dh
+
+        stdcall FCGI_send_unknown_type, [.hSocket], edx, eax
+
+
+.free_pack:
+        stdcall FreeMem, esi
+        jmp     .pack_loop
+
+
+
+; Processing of FCGI_BEGIN_REQUEST
+
+.begin_request:
+
+        xor     eax, eax
+        xor     edx, edx
+        mov     ax, [esi+FCGI_BeginRequest.header.requestId]
+        mov     dx, [esi+FCGI_BeginRequest.body.role]
+        xchg    al, ah
+        xchg    dl, dh
+
+        cmp     dx, FCGI_RESPONDER
+        jne     .unknown_role
+
+        cmp     [.requestID], 0
+        jne     .mx_disabled
+
+        mov     [.requestID], eax
+        or      [.requestFlags], ffcgiExpectParams
+
+        movzx   ecx, [esi+FCGI_BeginRequest.body.flags]
+        or      [.requestFlags], ecx
+
+        jmp     .free_pack
+
+
+.unknown_role:
+
+        DebugMsg "Unknown role!"
+
+        stdcall FCGI_send_end_request, [.hSocket], eax, FCGI_UNKNOWN_ROLE
+        jmp     .free_pack
+
+
+.mx_disabled:
+
+        DebugMsg "MX disabled!"
+
+        stdcall FCGI_send_end_request, [.hSocket], eax, FCGI_CANT_MPX_CONN
+        jmp     .free_pack
+
+
+.abort_request:
+
+        DebugMsg "Abort request received!"
+
+        xor     eax, eax
+        mov     ax, [esi+FCGI_Header.requestId]
+        xchg    al, ah
+
+        stdcall FCGI_send_end_request, [.hSocket], eax, FCGI_REQUEST_COMPLETE
+
+        jmp     .main_loop
+
+
+; Processing of FCGI_PARAMS
+
+
+.get_params:
+
+        xor     eax, eax
+        mov     ax, [esi+FCGI_Header.requestId]
+        xchg    al, ah
+
+        cmp     eax, [.requestID]
+        jne     .mx_disabled
+
+        xor     edx, edx
+        mov     dx, [esi+FCGI_Header.contentLength]
+        xchg    dl, dh
+
+        OutputValue "Params length: ", edx, 10, -1
+
+
+        test    edx, edx
+        jz      .param_received          ; this is the last part of FCGI_PARAMS stream, so go to serve the request.
+
+; add the package to the name/value pairs list.
+
+        lea     edi, [esi+sizeof.FCGI_Header]
+
+        stdcall FCGI_Decode_name_value_pairs, [.requestParams], edi, edx
+        mov     [.requestParams], eax
+
+        jmp     .free_pack
+
+
+.param_received:
+
+        DebugMsg "All FCGI_PARAMS blocks received."
+
+        and     [.requestFlags], not ffcgiExpectParams
+
+        test    [.requestFlags], ffcgiExpectStdIn
+        jnz     .free_pack
+
+        DebugMsg "Still no FCGI_STDIN blocks, so check the method."
+
+        stdcall ValueByName, [.requestParams], "REQUEST_METHOD"
+        jc      .serve_request                                          ; not found method
+
+        stdcall StrCompNoCase, eax, txt "POST"
+        jnc     .serve_request                          ; it is not the POST request, so no need to wait for more data.
+
+        or      [.requestFlags], ffcgiExpectStdIn
+        jmp     .free_pack
+
+
+
+; Processing FCGI_STDIN data stream on the post requests.
+
+.get_stdin:
+
+        xor     eax, eax
+        mov     ax, [esi+FCGI_Header.requestId]
+        xchg    al, ah
+
+        cmp     eax, [.requestID]
+        jne     .mx_disabled
+
+        xor     ecx, ecx
+        mov     cx, [esi+FCGI_Header.contentLength]
+        xchg    cl, ch
+
+        OutputValue "STDIN length: ", ecx, 10, -1
+
+        test    ecx, ecx
+        jz      .stdin_received           ; no more packages to wait for FCGI_STDIN
+
+; add the package to the name/value pairs list.
+
+        push    esi
+
+        cmp     [.requestPost], 0
+        jne     .bytes_ok
+
+        stdcall BytesCreate, 1024
+        mov     [.requestPost], eax
+
+.bytes_ok:
+
+        lea     esi, [esi+sizeof.FCGI_Header]
+
+        stdcall BytesGetRoom, [.requestPost], ecx
+        mov     [.requestPost], ebx
+
+        rep movsb
+        xor     eax, eax
+        stosd
+
+        pop     esi
+        jmp     .free_pack
+
+.stdin_received:
+        and     [.requestFlags], not ffcgiExpectStdIn
+
+        test    [.requestFlags], ffcgiExpectParams
+        jz      .serve_request
+
+        jmp     .free_pack
+
+
+; Processing of the request. Here all data is ready, so serve the request!
+
+.serve_request:
+
+        stdcall FreeMem, esi
+
+        stdcall ServeOneRequest, [.hSocket], [.requestID], [.requestParams], [.requestPost]
+        jc      .finish
+
+        stdcall FCGI_send_end_request, [.hSocket], [.requestID], FCGI_REQUEST_COMPLETE
+        jc      .finish
+
+        test    [.requestFlags], FCGI_KEEP_CONN
+        jnz     .main_loop
+
+.finish:
+        DebugMsg "Terminate thread FCGI"
+
+        stdcall SocketClose, [.hSocket]
+        popad
+        return
+
+endp
 
 
 
@@ -153,7 +450,10 @@ ends
 
 
 
-proc FCGI_output, .hSocket, .RequestID, .hString
+
+
+
+proc FCGI_output, .hSocket, .RequestID, .pData, .Size
 
 .header FCGI_Header
 
@@ -167,22 +467,59 @@ begin
         mov     [.header.requestIdB1], ah
         mov     [.header.requestIdB0], al
 
-        stdcall StrLen, [.hString]
-        mov     edx, eax
+        mov     edx, [.Size]
+        mov     esi, [.pData]
 
-        stdcall StrPtr, [.hString]
-        mov     esi, eax
 
-        mov     [.header.contentLengthB1], dh
-        mov     [.header.contentLengthB0], dl
+.data_loop:
+        mov     ecx, edx
+        cmp     ecx, $10000
+        jb      .size_ok
 
-        mov     [.header.paddingLength], 0
+        mov     ecx, $ffff
+
+.size_ok:
+        sub     edx, ecx
+
+        OutputValue "Output STDOUT length:", ecx, 10, -1
+
+        mov     [.header.contentLengthB1], ch
+        mov     [.header.contentLengthB0], cl
+
+        lea     ebx, [ecx+7]
+        and     ebx, $fffffff8
+        sub     ebx, ecx
+
+        OutputValue "Output STDOUT padding:", ebx, 10, -1
+
+        mov     [.header.paddingLength], bl
 
         lea     eax, [.header]
         stdcall SocketSend, [.hSocket], eax, sizeof.FCGI_Header, 0
         jc      .finish
 
-        stdcall SocketSend, [.hSocket], esi, edx, 0
+.send_part:
+        stdcall SocketSend, [.hSocket], esi, ecx, 0
+        jc      .finish
+
+        add     esi, eax
+        sub     ecx, eax
+        jnz     .send_part
+
+        test    ebx, ebx
+        jz      .padding_ok
+
+        xor     eax, eax
+        mov     dword [.header], eax
+        mov     dword [.header+4], eax
+        lea     eax, [.header]
+        stdcall SocketSend, [.hSocket], eax, ebx, 0     ; send garbage as a padding bytes.
+
+.padding_ok:
+        test    edx, edx
+        jnz     .data_loop
+
+        clc
 
 .finish:
         popad
@@ -432,5 +769,42 @@ begin
 
 .finish:
         popad
+        return
+endp
+
+
+
+
+
+
+
+
+proc ValueByName, .pArray, .name
+begin
+        pushad
+
+        mov     esi, [.pArray]
+        xor     ecx, ecx
+
+.loop:
+        cmp     ecx, [esi+TArray.count]
+        jae     .not_found
+
+        stdcall StrCompNoCase, [esi+TArray.array+8*ecx], [.name]
+        jc      .found
+
+        inc     ecx
+        jmp     .loop
+
+.not_found:
+        stc
+        popad
+        return
+
+.found:
+        mov     eax, [esi+TArray.array+8*ecx+4] ; the value
+        mov     [esp+4*regEAX], eax
+        popad
+        clc
         return
 endp

@@ -1,10 +1,10 @@
-C The\swhole\sFastCGI\sprotocol\sinfrastructure\sis\sdone\snow.
-D 2016-03-07T22:30:39.875
-F source/commands.asm c4329da92fec032fc7861b598a8d6d5138cec3b1
+C Handling\sof\sthe\sPOST\sHTTP\srequests.\sProper\shandling\sof\slong\sdata\sresponses\son\sFCGI_STDOUT.\nCode\sarranging\sand\srestructuring\sin\sorder\sto\sseparate\sthe\sFastCGI\sframework\sfrom\sthe\napplication\scode,\sthat\simplements\sspecific\sweb\sapplication.
+D 2016-03-08T09:51:55.199
+F source/commands.asm 96fee3e1fb39be47e6101a92b2afb17ebdb3442d
 F source/create.sql 7b31ea31b255809f38d295df3663a8163a0f7058
-F source/fcgi.asm 3310d568d7323acfd88865438a878a9a5bf4a1f3
+F source/fcgi.asm 8d3aa739c70010d95440fcd452d8a2092e29a97b
 F source/get.asm f80ad70c313ac923154282293ec4a5b83e21f3cd
-F source/index.asm 0023273cc5a8615f8f2bac21ddf858eec5b30483
+F source/index.asm 9c13a6e2d6d562d09b8e1858165a9c629709c312
 F source/index.fpr ef044477567c836d4af7dacb73b14f30fae847d7
 F source/render.asm add79e5785c6796a16023e03239648dc5ad50da4
 F source/sqlite3.asm 9ea6342ffa2820dd35348c07965fa90c75c715ec
@@ -14,8 +14,9 @@ F www/all.css d018bd97508b60419e29ae169df1e36b666905e7
 F www/ld-musl-i386.so 4d44786b8676115c7df45c45ceb051c11ce14ffd x
 F www/libsqlite3.so b219b02c71d515698b2086be2edc104e5c8997a7 x
 F www/lighttpd.conf 0096891c43040c24097ac2978d0e00e94ef05311
+F www/post.html 02bb34d32b2b7ebfa83ec640c01aeccfa11b3b13
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
-P 15d7963c33fa6e4ad38a68c839250f4699ef7152
-R ec294f9e6441d82e6c4eb24dd0277c87
+P 41bde42d1045af074620a6365ace2c1324459fec
+R 1b3b133201fcb5a92e42ccebf2d78e67
 U johnfound
-Z a85d4d3ca22fedde8411bb3246866fa4
+Z 9a41b075131ef7ea986f19f96d96d232
