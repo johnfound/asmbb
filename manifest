@@ -1,12 +1,12 @@
-C Back\sto\sthe\sforum\sengine\sand\sSQLite\swith\ssome\sdebugging\sand\sbug\sfixing.
-D 2016-03-08T14:24:52.893
-F source/commands.asm fcf31d2c266d6c7a4ed88c429e93c795e6585f51
+C Big\scode\scleanup.\sA\slot\sof\smemory\sleaks\sfixed\s(including\sin\sFreshLibDev).\sNow\sthere\sare\svirtually\snone.
+D 2016-03-08T21:48:46.261
+F source/commands.asm 0212e990749aa77019047843f2e21b4fa40de073
 F source/create.sql 7b31ea31b255809f38d295df3663a8163a0f7058
-F source/fcgi.asm 8a098936dfd46835d750dce3f747683507ccae7d
-F source/get.asm f80ad70c313ac923154282293ec4a5b83e21f3cd
-F source/index.asm 2c8337ca3623c99c7eaa4e43f927e0c568b5635d
+F source/fcgi.asm 5df5e6eadb2de19afc483980a31a217cd21bf372
+F source/get.asm c751c43827d5e67c813aab812adba6534d8a9eb3
+F source/index.asm b88d3ba09c3b76dd78bce2c14b26cbeb764a7a85
 F source/index.fpr ef044477567c836d4af7dacb73b14f30fae847d7
-F source/render.asm add79e5785c6796a16023e03239648dc5ad50da4
+F source/render.asm bced09fe258dcbfbddd8fc6be1077809a76941cd
 F source/sqlite3.asm 9ea6342ffa2820dd35348c07965fa90c75c715ec
 F source/sqlite3.inc f9221a234b424eac0cbf4ad99a1aa289591db75f
 F www/.htaccess e3d61615a5f5b289f09966a72e7f02777d0b1c60
@@ -16,7 +16,7 @@ F www/libsqlite3.so b219b02c71d515698b2086be2edc104e5c8997a7 x
 F www/lighttpd.conf 0096891c43040c24097ac2978d0e00e94ef05311
 F www/post.html 02bb34d32b2b7ebfa83ec640c01aeccfa11b3b13
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
-P 8e4746b9b863af6328c293669d088a23ba7d7ca9
-R c066dae2ee38ef5071d05bf3a2407770
+P c831710e4ccac22607d8501783e0b8afa01e6d9f
+R 8d2f74ce706ff24eec5f370321dfc979
 U johnfound
-Z c892b4c0351de464e55274cabef267a9
+Z a321f7a42766e2602021639655166e02

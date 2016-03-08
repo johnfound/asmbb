@@ -183,50 +183,28 @@ proc procServeRequest, .hSocket
 .requestParams  dd ?
 .requestPost    dd ?    ; pointer to TByteStream
 
+
 begin
         pushad
-
-        DebugMsg "FCGI thread started"
-
 
         xor     eax, eax
         mov     [.requestParams], eax
         mov     [.requestPost], eax
+        xor     esi, esi
 
 .main_loop:
-        DebugMsg "Main loop enter."
 
-        xor     eax, eax
-
-        cmp     [.requestParams], eax
-        je      .params_ok
-
-        stdcall FreeNameValueArray, [.requestParams]
-        mov     [.requestParams], eax
-
-.params_ok:
-        cmp     [.requestPost], eax
-        je      .post_ok
-
-        stdcall FreeMem, [.requestPost]
-        mov     [.requestPost], 0
-
-.post_ok:
-
-        mov     [.requestFlags], eax
-        mov     [.requestID], eax
-
+        call    .FreeAllocations
 
 .pack_loop:
-        DebugMsg "Now wait for some package"
+        stdcall FreeMem, esi
+        xor     esi, esi
 
         stdcall FCGI_read_pack, [.hSocket]
         jc      .finish
 
         mov     esi, eax
         movzx   eax, [esi+FCGI_Header.type]
-
-        OutputValue "Package received. Type = ", eax, 10, -1
 
         cmp     eax, FCGI_BEGIN_REQUEST
         je      .begin_request
@@ -248,11 +226,7 @@ begin
 
         stdcall FCGI_send_unknown_type, [.hSocket], edx, eax
 
-
-.free_pack:
-        stdcall FreeMem, esi
         jmp     .pack_loop
-
 
 
 ; Processing of FCGI_BEGIN_REQUEST
@@ -278,28 +252,22 @@ begin
         movzx   ecx, [esi+FCGI_BeginRequest.body.flags]
         or      [.requestFlags], ecx
 
-        jmp     .free_pack
+        jmp     .pack_loop
 
 
 .unknown_role:
 
-        DebugMsg "Unknown role!"
-
         stdcall FCGI_send_end_request, [.hSocket], eax, FCGI_UNKNOWN_ROLE
-        jmp     .free_pack
+        jmp     .pack_loop
 
 
 .mx_disabled:
 
-        DebugMsg "MX disabled!"
-
         stdcall FCGI_send_end_request, [.hSocket], eax, FCGI_CANT_MPX_CONN
-        jmp     .free_pack
+        jmp     .pack_loop
 
 
 .abort_request:
-
-        DebugMsg "Abort request received!"
 
         xor     eax, eax
         mov     ax, [esi+FCGI_Header.requestId]
@@ -326,9 +294,6 @@ begin
         mov     dx, [esi+FCGI_Header.contentLength]
         xchg    dl, dh
 
-        OutputValue "Params length: ", edx, 10, -1
-
-
         test    edx, edx
         jz      .param_received          ; this is the last part of FCGI_PARAMS stream, so go to serve the request.
 
@@ -339,32 +304,23 @@ begin
         stdcall FCGI_Decode_name_value_pairs, [.requestParams], edi, edx
         mov     [.requestParams], eax
 
-        jmp     .free_pack
+        jmp     .pack_loop
 
 
 .param_received:
-
-        DebugMsg "All FCGI_PARAMS blocks received."
-
         and     [.requestFlags], not ffcgiExpectParams
 
         test    [.requestFlags], ffcgiExpectStdIn
-        jnz     .free_pack
-
-        DebugMsg "Still no FCGI_STDIN blocks, so check the method."
+        jnz     .pack_loop
 
         stdcall ValueByName, [.requestParams], "REQUEST_METHOD"
         jc      .serve_request                                          ; not found method
 
-        DebugMsg "Method is?"
-
         stdcall StrCompNoCase, eax, txt "POST"
         jnc     .serve_request                          ; it is not the POST request, so no need to wait for more data.
 
-        DebugMsg "Method is POST!"
-
         or      [.requestFlags], ffcgiExpectStdIn
-        jmp     .free_pack
+        jmp     .pack_loop
 
 
 
@@ -382,8 +338,6 @@ begin
         xor     ecx, ecx
         mov     cx, [esi+FCGI_Header.contentLength]
         xchg    cl, ch
-
-        OutputValue "STDIN length: ", ecx, 10, -1
 
         test    ecx, ecx
         jz      .stdin_received           ; no more packages to wait for FCGI_STDIN
@@ -410,7 +364,8 @@ begin
         stosd
 
         pop     esi
-        jmp     .free_pack
+        jmp     .pack_loop
+
 
 .stdin_received:
         and     [.requestFlags], not ffcgiExpectStdIn
@@ -418,21 +373,15 @@ begin
         test    [.requestFlags], ffcgiExpectParams
         jz      .serve_request
 
-        jmp     .free_pack
+        jmp     .pack_loop
 
 
 ; Processing of the request. Here all data is ready, so serve the request!
 
 .serve_request:
 
-        stdcall FreeMem, esi
-
-        DebugMsg "Going to call ServeOneRequest"
-
         stdcall ServeOneRequest, [.hSocket], [.requestID], [.requestParams], [.requestPost]
         jc      .finish
-
-        DebugMsg "ServeOneRequest returned"
 
         stdcall FCGI_send_end_request, [.hSocket], [.requestID], FCGI_REQUEST_COMPLETE
         jc      .finish
@@ -440,12 +389,40 @@ begin
         test    [.requestFlags], FCGI_KEEP_CONN
         jnz     .main_loop
 
-.finish:
-        DebugMsg "Terminate thread FCGI"
 
+.finish:
+        stdcall FreeMem, esi
+        call    .FreeAllocations
         stdcall SocketClose, [.hSocket]
+
+        xor     eax, eax
         popad
         return
+
+
+
+.FreeAllocations:
+        xor     eax, eax
+
+        cmp     [.requestParams], eax
+        je      .params_ok
+
+        stdcall FreeNameValueArray, [.requestParams]
+        mov     [.requestParams], eax
+
+.params_ok:
+        cmp     [.requestPost], eax
+        je      .post_ok
+
+        stdcall FreeMem, [.requestPost]
+        mov     [.requestPost], 0
+
+.post_ok:
+        mov     [.requestFlags], eax
+        mov     [.requestID], eax
+
+        retn
+
 
 endp
 
@@ -455,11 +432,26 @@ endp
 
 
 
-
-
-
-
-
+;_______________________________________________________________________________________________
+;
+; proc FCGI_output
+;
+; Outputs data to the FCGI_STDOUT stream. The data can be split among multiply FCGI records
+; with maximal size of 65535 bytes.
+;
+; Arguments:
+;
+;  .hSocket   - The socket where the data will be streamed.
+;  .RequestID - The ID of the request the data belongs to.
+;  .pData     - Pointer to the data buffer.
+;  .Size      - The size of the data. 0 is valid size and causes the stream to be closed.
+;  .final     - boolean flag, specifying whether this is the final block of the stream.
+;
+; Returns:
+;  CF = 0 The transmission completed successfuly.
+;  CF = 1 Some error occured.
+;
+;_______________________________________________________________________________________________
 
 proc FCGI_output, .hSocket, .RequestID, .pData, .Size, .final
 
@@ -485,75 +477,36 @@ begin
 
 
 .data_loop:
-        cmp     [.final], 0
-        jne     .final_ok
-
-        test    edx, edx
-        jz      .end_ok
-
-
-.final_ok:
-        mov     ecx, edx
-        cmp     ecx, $10000
-        jb      .size_ok
-
         mov     ecx, $ffff
-
-.size_ok:
-        sub     edx, ecx
-
-        OutputValue "Output STDOUT length:", ecx, 10, -1
-
-        mov     [.header.contentLengthB1], ch
-        mov     [.header.contentLengthB0], cl
+        cmp     edx, ecx
+        cmovb   ecx, edx        ; ecx = min($ffff, edx)
 
         lea     ebx, [ecx+7]
         and     ebx, $fffffff8
-        sub     ebx, ecx
+        sub     ebx, ecx                        ; ebx = padding bytes count.
 
-        OutputValue "Output STDOUT padding:", ebx, 10, -1
-
+        mov     [.header.contentLengthB1], ch
+        mov     [.header.contentLengthB0], cl
         mov     [.header.paddingLength], bl
 
+        mov     eax, [.final]
+        or      eax, ecx
+        jz      .end_ok         ; exit without finalizing the stream.
+
         lea     eax, [.header]
-        stdcall SocketSend, [.hSocket], eax, sizeof.FCGI_Header, 0
+        stdcall SocketSendAll, [.hSocket], eax, sizeof.FCGI_Header
         jc      .finish
 
-        DebugMsg "Header sent"
-
-        test    ecx, ecx
-        jz      .end_ok
-
-.send_part:
-
-        OutputValue "Count to send:", ecx, 10, -1
-
-        stdcall SocketSend, [.hSocket], esi, ecx, 0
+        stdcall SocketSendAll, [.hSocket], esi, ecx
         jc      .finish
-
-        OutputValue "Count really sent:", eax, 10, -1
-
-        add     esi, eax
-        sub     ecx, eax
-        jnz     .send_part
-
-        OutputValue "Padding to sent:", ebx, 10, -1
-
-        test    ebx, ebx
-        jz      .padding_ok
 
         lea     eax, [.buffer]
-        stdcall SocketSend, [.hSocket], eax, ebx, 0     ; send 0 as a padding bytes.
+        stdcall SocketSendAll, [.hSocket], eax, ebx   ; send 0 as a padding bytes.
         jc      .finish
 
-.padding_ok:
-        OutputValue "More date to loop?", edx, 10, -1
-
-        jmp     .data_loop
-
-;        test    edx, edx
-;        jnz     .data_loop
-
+        add     esi, ecx
+        sub     edx, ecx
+        jnz     .data_loop
 
 .end_ok:
         clc
@@ -562,6 +515,7 @@ begin
         popad
         return
 endp
+
 
 
 
@@ -588,7 +542,7 @@ begin
         mov     [.rec.body.protocolStatus], al
 
         lea     eax, [.rec]
-        stdcall SocketSend, [.hSocket], eax, sizeof.FCGI_EndRequest, 0
+        stdcall SocketSendAll, [.hSocket], eax, sizeof.FCGI_EndRequest
 
         popad
         return
@@ -619,11 +573,12 @@ begin
         mov     [.rec.body.type], al
 
         lea     eax, [.rec]
-        stdcall SocketSend, [.hSocket], eax, sizeof.FCGI_UnknownType, 0
+        stdcall SocketSendAll, [.hSocket], eax, sizeof.FCGI_UnknownType
 
         popad
         return
 endp
+
 
 
 
@@ -649,7 +604,7 @@ begin
         lea     ecx, [ebx+sizeof.FCGI_Header]
 
         stdcall GetMem, ecx
-        mov     edi, eax
+        mov             edi, eax
         mov     [.ptr], eax
 
         lea     esi, [.header]
@@ -677,12 +632,12 @@ begin
         return
 
 .error2:
-        DebugMsg "Read pack: error2"
+;        DebugMsg "Read pack: error2"
 
         stdcall FreeMem, [.ptr]
 
 .error:
-        DebugMsg "Read pack: error1"
+;        DebugMsg "Read pack: error1"
 
         stc
         popad
@@ -845,3 +800,9 @@ begin
         clc
         return
 endp
+
+
+
+
+
+

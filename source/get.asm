@@ -1,12 +1,4 @@
 
-uglobal
-  hDocRoot  dd ?
-  hQuery    dd ?
-
-  Command   dd ?
-endg
-
-
 
 proc InitScriptVariables
 begin

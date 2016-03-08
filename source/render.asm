@@ -62,11 +62,17 @@ begin
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUserInfo, sqlUserInfo.length, eax, 0
+
         cinvoke sqliteBindInt, [.stmt], 1, [.Uid]
+
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
-        jne     .invalid_user
+        je      .user_ok
 
+        stdcall StrCat, [.html], '<div class="usernull">NULL user</div>'
+        jmp     .finish
+
+.user_ok:
         stdcall StrCat, [.html], '<div class="username">'
 
         cinvoke sqliteColumnText, [.stmt], 0
@@ -84,17 +90,12 @@ begin
 
         stdcall StrCat, [.html], '</div>'  ; div.userpcnt
 
-        cinvoke sqliteFinalize, [.stmt]
-
 .finish:
         stdcall StrCat, [.html], '</div>'  ; div.userinfo
 
+        cinvoke sqliteFinalize, [.stmt]
         popad
         return
-
-.invalid_user:
-        stdcall StrCat, [.html], '<div class="usernull">NULL user</div>'
-        jmp     .finish
 endp
 
 

@@ -21,11 +21,11 @@ LINUX_INTERPRETER equ './ld-musl-i386.so'   ;'./ld-linux.so.2'
 options.ShowSkipped = 0
 options.ShowSizes = 1
 
-options.DebugMode = 1
+options.DebugMode = 0
 options.AlignCode = 0
 options.ShowImported = 1
 
-HeapManager  equ ASM
+;HeapManager  equ ASM
 ;LinuxThreads equ native
 
 
@@ -61,7 +61,7 @@ cmdSavePost    = 2
 cmdMax         = 2
 
 
-rb 273
+rb 173
 
 start:
         stdcall GetTimestamp
@@ -69,14 +69,22 @@ start:
 
         InitializeAll
 
+        cinvoke sqliteConfig, SQLITE_CONFIG_SERIALIZED
+        cinvoke sqliteInitialize
+
         stdcall OpenOrCreate, cDatabaseFilename, hMainDatabase, sqlCreateDB
         jc      .finish
+
+        cinvoke sqliteThreadsafe
+        OutputValue "SQLite thread safety level:", eax, 10, -1
+
 
         stdcall Listen
 
 ; close the database
 
         cinvoke sqliteClose, [hMainDatabase]
+        cinvoke sqliteShutdown
 
 .finish:
         FinalizeAll
