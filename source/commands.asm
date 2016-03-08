@@ -66,7 +66,7 @@ begin
         jc      .analize_uri
 
         stdcall FileExists, [.filename]
-        jc      .analize_uri
+        jc      .error404
 
 ; serve the file.
 
@@ -145,7 +145,7 @@ endl
 .end_forum_request:
 
         stdcall ListFree, esi, StrDel
-        jmp     .final_clean
+        jmp     .error400
 
 
 

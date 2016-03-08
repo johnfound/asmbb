@@ -1,6 +1,6 @@
-C Big\scode\scleanup.\sA\slot\sof\smemory\sleaks\sfixed\s(including\sin\sFreshLibDev).\sNow\sthere\sare\svirtually\snone.
-D 2016-03-08T21:48:46.261
-F source/commands.asm 0212e990749aa77019047843f2e21b4fa40de073
+C Small\sregression\sfixed.
+D 2016-03-08T22:37:17.494
+F source/commands.asm aa17fbe645d0ac7ba8227c6b76f1e065d27e45b9
 F source/create.sql 7b31ea31b255809f38d295df3663a8163a0f7058
 F source/fcgi.asm 5df5e6eadb2de19afc483980a31a217cd21bf372
 F source/get.asm c751c43827d5e67c813aab812adba6534d8a9eb3
@@ -16,7 +16,7 @@ F www/libsqlite3.so b219b02c71d515698b2086be2edc104e5c8997a7 x
 F www/lighttpd.conf 0096891c43040c24097ac2978d0e00e94ef05311
 F www/post.html 02bb34d32b2b7ebfa83ec640c01aeccfa11b3b13
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
-P c831710e4ccac22607d8501783e0b8afa01e6d9f
-R 8d2f74ce706ff24eec5f370321dfc979
+P fcc3c4b1a0d07f764f68659514d21dad0b20e9e5
+R 5fc6e843a203d4023cdc49e34bb18436
 U johnfound
-Z a321f7a42766e2602021639655166e02
+Z 17e815d099e85fc7934698116f9b6061
