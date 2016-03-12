@@ -183,6 +183,7 @@ proc procServeRequest, .hSocket
 .requestParams  dd ?
 .requestPost    dd ?    ; pointer to TByteStream
 
+.start_time     dd ?
 
 begin
         pushad
@@ -251,6 +252,9 @@ begin
 
         movzx   ecx, [esi+FCGI_BeginRequest.body.flags]
         or      [.requestFlags], ecx
+
+        stdcall GetTimestamp
+        mov     [.start_time], eax
 
         jmp     .pack_loop
 
@@ -380,7 +384,7 @@ begin
 
 .serve_request:
 
-        stdcall ServeOneRequest, [.hSocket], [.requestID], [.requestParams], [.requestPost]
+        stdcall ServeOneRequest, [.hSocket], [.requestID], [.requestParams], [.requestPost], [.start_time]
         jc      .finish
 
         stdcall FCGI_send_end_request, [.hSocket], [.requestID], FCGI_REQUEST_COMPLETE

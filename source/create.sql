@@ -12,17 +12,23 @@ create table if not exists Users (
 );
 
 
-INSERT INTO Users VALUES (1,'johnfound','',NULL,NULL,'johnfound@asm32.info');
+INSERT INTO Users VALUES
+ (1,'johnfound','',NULL,NULL,'johnfound@asm32.info'),
+ (2,'asm_newbee','','','','newbee@asm32.info'),
+ (3,'Troll','','','','troll@somewhere.invalid');
 
 
 create table if not exists Threads (
   id	    integer primary key autoincrement,
+  Slug	    text,			-- slugifyed version of the caption. Can be set independently.
   Caption   text,
   StartPost integer references Posts(id)
 );
 
 
-INSERT INTO Threads VALUES (1,'Welcome',1);
+INSERT INTO Threads VALUES
+ (1,'welcome', 'Welcome',1),
+ (2,'how_to_program_assembly', 'How to program assembly',2);
 
 
 create table if not exists Posts (
@@ -35,7 +41,11 @@ create table if not exists Posts (
 );
 
 
-INSERT INTO Posts VALUES (1,1,1,1457118799,'Welcome in AsmBB. This is forum engine implemented using assembly language.');
+INSERT INTO Posts VALUES
+ (1,1,1,1457118799,'Welcome in AsmBB. This is forum engine implemented using assembly language.'),
+ (2,2,2,1457118900,'I want to ask a question, about how to program in assembly language.'),
+ (3,2,1,1457119000,'It is easy, just install Fresh IDE and start from the examples.'),
+ (4,2,3,1457120000,'Asm is dead! Learn better some Java! Java rulez! But C# is also OK.');
 
 
 create table if not exists Tags (
@@ -44,9 +54,10 @@ create table if not exists Tags (
   Description text
 );
 
-INSERT INTO Tags VALUES (1,'asm,assembly language,асемблер','The most advanced programming language.');
-INSERT INTO Tags VALUES (2,'chat,free talk,heap',"Talks for everything");
-INSERT INTO Tags VALUES (3,'C,C++,C#',"Talks about C/C++/C# languages");
+INSERT INTO `Tags` VALUES
+ (1,'asm,assembly language,асемблер','The most advanced programming language.'),
+ (2,'chat,free talk,heap','Talks for everything'),
+ (3,'C,C++,C#','Talks about C/C++/C# languages');
 
 
 /* Relation tables */
@@ -57,8 +68,9 @@ create table if not exists ThreadTags (
 );
 
 
-INSERT INTO ThreadTags VALUES (1,2);
-INSERT INTO ThreadTags VALUES (1,1);
+INSERT INTO `ThreadTags` VALUES
+ (1,2),
+ (1,1);
 
 
 create table if not exists UnreadPosts (
@@ -66,7 +78,6 @@ create table if not exists UnreadPosts (
   PostID integer references Posts(id),
   Time	 integer
 );
-
 
 
 create table if not exists Attachements (

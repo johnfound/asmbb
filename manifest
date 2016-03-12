@@ -1,22 +1,23 @@
-C Small\sregression\sfixed.
-D 2016-03-08T22:37:17.494
-F source/commands.asm aa17fbe645d0ac7ba8227c6b76f1e065d27e45b9
-F source/create.sql 7b31ea31b255809f38d295df3663a8163a0f7058
-F source/fcgi.asm 5df5e6eadb2de19afc483980a31a217cd21bf372
+C A\slot\sof\schanges,\safter\simporting\ssome\sreal-world\sposts\sto\sthe\sdatabase.\sAdded\spage\slinks,\sscript\sruntime\sindication,\nfixed\ssome\sbugs\s(and\ssome\smajor\sfixes\shas\sbeen\smade\sto\sFreshLib\sas\swell,\sso\sit\swill\sneed\supdating\sFreshLibDev\sin\s\norder\sto\swork\sproperly.\sAll\sHTML\scode\sgeneration\sis\sby\stemplates\snow,\sbut\sthe\stemplates\sare\sstill\shardcoded.\s\nSome\sCSS\sdesign\shas\sbeen\sadded.
+D 2016-03-12T11:45:17.695
+F source/commands.asm 18d713ea091645845e1296c95204c98c8ccec730
+F source/create.sql fce9bdb93c1980cc93a5c6d4c55226a490208944
+F source/fcgi.asm aabf1287df53c46646c0d0004c8761b1b63a457c
 F source/get.asm c751c43827d5e67c813aab812adba6534d8a9eb3
-F source/index.asm b88d3ba09c3b76dd78bce2c14b26cbeb764a7a85
+F source/index.asm 3e978410f16d52759b717457478d5746c2dbe6a0
 F source/index.fpr ef044477567c836d4af7dacb73b14f30fae847d7
-F source/render.asm bced09fe258dcbfbddd8fc6be1077809a76941cd
+F source/render.asm ff1419951992b7e71c7c62773e33a4c78f098716
 F source/sqlite3.asm 9ea6342ffa2820dd35348c07965fa90c75c715ec
 F source/sqlite3.inc f9221a234b424eac0cbf4ad99a1aa289591db75f
 F www/.htaccess e3d61615a5f5b289f09966a72e7f02777d0b1c60
-F www/all.css d018bd97508b60419e29ae169df1e36b666905e7
+F www/all.css 7a46eb3125525498f9edb57c6126b5a9f892d6e0
+F www/error.css 51294ab459d163a2642ed8d56ce7caceb052ebc9
 F www/ld-musl-i386.so 4d44786b8676115c7df45c45ceb051c11ce14ffd x
 F www/libsqlite3.so b219b02c71d515698b2086be2edc104e5c8997a7 x
-F www/lighttpd.conf 0096891c43040c24097ac2978d0e00e94ef05311
+F www/lighttpd.conf e1b4c0e56430345d661af93ebf82862d21aa2fac
 F www/post.html 02bb34d32b2b7ebfa83ec640c01aeccfa11b3b13
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
-P fcc3c4b1a0d07f764f68659514d21dad0b20e9e5
-R 5fc6e843a203d4023cdc49e34bb18436
+P efd3e7d3c631f46a83143fc258d9bfc5cf74033c
+R 4c90021fc3195f805111e67d937e2e6e
 U johnfound
-Z 17e815d099e85fc7934698116f9b6061
+Z b702ba775a1a82f6941b18119bc32a9e

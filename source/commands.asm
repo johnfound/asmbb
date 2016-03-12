@@ -1,13 +1,17 @@
 
 
 
+PAGE_LENGTH = 20
 
 
 
+struct TSpecialParams
+  .start_time dd ?
+ends
 
 
 
-proc ServeOneRequest, .hSocket, .requestID, .pParams, .pPost
+proc ServeOneRequest, .hSocket, .requestID, .pParams, .pPost, .start_time
 
 .root dd ?
 .uri  dd ?
@@ -131,15 +135,28 @@ endl
         cmp     [esi+TArray.count], 0
         je      .show_thread_list               ; default behavior on the main page
 
-        cmp     [esi+TArray.count], 2
-        jne     .end_forum_request
+        cmp     [esi+TArray.count], 1
+        jne     .check_for_thread_show
+
+        stdcall StrToNum, [esi+TArray.array]
+        cmp     eax, -1
+        je      .end_forum_request
+
+        mov     [.start], eax
+        jmp     .show_thread_list
+
+
+
+.check_for_thread_show:
+;        cmp     [esi+TArray.count], 2
+;        jne     .end_forum_request
 
         stdcall StrCompNoCase, [esi+TArray.array], "threads"
-        jnc     .end_forum_request
+        jc      .show_one_thread
 
-        stdcall StrToNum, [esi+TArray.array+4]
-        cmp     eax, -1
-        jne     .show_one_thread
+
+.no_thread_request:
+; maybe thread list request?
 
 
 .end_forum_request:
@@ -151,16 +168,20 @@ endl
 
 
 .show_thread_list:
-
-        stdcall  ListThreads, [.start]
+        lea     eax, [.start_time]
+        stdcall ListThreads, [.start], eax
 
 
 .output_forum_html:
 
         stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Content-type: text/html", 13, 10, 13, 10>
-        stdcall StrCat, edi, htmlHeader
+
+        lea     edx, [.start_time]
+        stdcall StrCatTemplate, edi, htmlHeader, 0, edx
+
         stdcall StrCat, edi, eax
-        stdcall StrCat, edi, htmlFooter
+
+        stdcall StrCatTemplate, edi, htmlFooter, 0, edx
 
         stdcall StrDel, eax
 
@@ -169,8 +190,15 @@ endl
 
 
 .show_one_thread:
+        cmp     [esi+TArray.count], 3
+        jb      .show_thread
 
-        stdcall ShowThread, eax, [.start]
+        stdcall StrToNum, [esi+TArray.array+8]
+        mov     [.start], eax
+
+.show_thread:
+        lea     eax, [.start_time]
+        stdcall ShowThread, [esi+TArray.array+4], [.start], eax
 
         jmp     .output_forum_html
 
@@ -179,19 +207,27 @@ endp
 
 
 
-htmlHeader  text '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Thread list</title><link rel="stylesheet" href="/all.css"></head><body><h1>This is simply experiment. Better go to <a href="http://asm32.info">my home page</a></h1>'
-htmlFooter  text '</body></html>'
+htmlHeader  text '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>FastCGI in assembly language</title>',  \
+                 '<link rel="stylesheet" href="/all.css"></head><body>',                                                    \
+                 '<h1>This is simply an experimental page. If you look for real content go ',                               \
+                 '<a href="http://asm32.info">here</a> or <a href="http://fresh.flatassembler.net">here</a></h1>'
+
+htmlFooter  text '$special:timestamp$</body></html>'
 
 
 
 
 
-sqlSelectThreads text "select *, (select count() from posts where threadid = Threads.id) as PostCount from Threads limit 20 offset ?"
+sqlSelectThreads text "select id, Slug, Caption, StartPost, (select count() from posts where threadid = Threads.id) as PostCount from Threads limit ? offset ?"
+sqlThreadsCount  text "select count() from Threads"
+
+threadInfoTemplate text '<div class="thread_summary"><div class="thread_info">Posts:<br>$PostCount$</div><div class="thread_link"><a class="thread_link" href="/threads/$Slug$/">$Caption$</a></div></div>'
 
 
-proc ListThreads, .start
+proc ListThreads, .start, .p_special
 
 .stmt  dd ?
+.list  dd ?
 
 begin
         pushad
@@ -199,59 +235,46 @@ begin
         stdcall StrNew
         mov     edi, eax
 
-        stdcall StrCat, edi, '<div class="threadlist">'
+        stdcall StrCat, edi, '<div class="threads_list">'
+
+; links to the pages.
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlThreadsCount, -1, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteColumnInt, [.stmt], 0
+        mov     ebx, eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        stdcall CreatePagesLinks, txt "/", [.start], ebx
+        mov     [.list], eax
+
+        stdcall StrCat, edi, eax
+
+; now append the list itself.
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectThreads, -1, eax, 0
 
-        cinvoke sqliteBindInt, [.stmt], 1, [.start]
+        cinvoke sqliteBindInt, [.stmt], 1, PAGE_LENGTH
+
+        mov     eax, [.start]
+        imul    eax, PAGE_LENGTH
+        cinvoke sqliteBindInt, [.stmt], 2, eax
 
 .loop:
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
         jne     .finish
 
-; now make the HTML
-
-        stdcall StrCat, edi, '<div class="thread_summary">'
-
-; thread posts count
-
-        stdcall StrCat, edi, '<div class="post_count">'
-
-        cinvoke sqliteColumnInt, [.stmt], 3
-
-        stdcall NumToStr, eax, ntsDec or ntsUnsigned
-        stdcall StrCat, edi, eax
-        stdcall StrDel, eax
-
-        stdcall StrCat, edi, '</div>'   ; div.post_count
-
-; link to the thread
-
-        stdcall StrCat, edi, '<a class="thread_link" href="/threads/'
-
-        cinvoke sqliteColumnInt, [.stmt], 0    ; threadID
-
-        stdcall NumToStr, eax, ntsDec or ntsUnsigned
-        stdcall StrCat, edi, eax
-        stdcall StrDel, eax
-
-        stdcall StrCharCat, edi, '">'
-
-
-        cinvoke sqliteColumnText, [.stmt], 1    ; thread caption
-
-        stdcall StrCat, edi, eax                ; thread caption
-        stdcall StrCat, edi, txt '</a>'
-
-        stdcall StrCat, edi, "</div>"   ; thread_summary.
+        stdcall StrCatTemplate, edi, threadInfoTemplate, [.stmt], [.p_special]
 
         jmp     .loop
 
 
 .finish:
-        stdcall StrCat, edi, "</div>"   ; threadlist
+        stdcall StrCat, edi, [.list]
+        stdcall StrDel, [.list]
+        stdcall StrCat, edi, "</div>"   ; div.threads_list
 
         cinvoke sqliteFinalize, [.stmt]
 
@@ -267,12 +290,26 @@ endp
 
 
 
-sqlSelectPosts text "select * from Posts where threadID = ? limit 20 offset ?"
+sqlSelectPosts   text "select Posts.id, Posts.threadID, datetime(Posts.postTime) as PostTime, Posts.Content, Users.id as UserID, Users.nick as UserName,",            \
+                      "(select count() from Posts as X where X.userID = Posts.UserID) as UserPostCount from Posts left join Users on Users.id = Posts.userID where threadID = ? limit ? offset ?"
+
+sqlGetPostCount text "select count() from Posts where ThreadID = ?"
+
+sqlGetThreadInfo text "select id, Caption from Threads where Slug = ? limit 1"
 
 
-proc ShowThread, .threadID, .start
+templatePost    text '<div class="post"><div class="user_info"><div class="user_name">$UserName$</div><div class="user_pcnt">Posts: $UserPostCount$</div></div>', \
+                     '<div class="post_info">Posted: $PostTime$</div><div class="post_text">$Content$</div></div>'
+
+
+
+proc ShowThread, .threadSlug, .start, .p_special
 
 .stmt  dd ?
+
+.threadID dd ?
+
+.list dd ?
 
 begin
         pushad
@@ -280,100 +317,236 @@ begin
         stdcall StrNew
         mov     edi, eax
 
-        stdcall StrCat, edi, '<div class="thread">'
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, -1, eax, 0
+
+        stdcall StrPtr, [.threadSlug]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .error
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        mov     [.threadID], eax
+
+
+        stdcall StrCat, edi, '<div class="thread"><a href="/">goto thread list</a><h1 class="thread_caption">'
+
+        cinvoke sqliteColumnText, [.stmt], 1
+
+        stdcall StrDupMem, eax
+        stdcall StrCat, edi, eax
+        stdcall StrDel, eax
+
+        stdcall StrCat, edi, '</h1>'
+
+        cinvoke sqliteFinalize, [.stmt]
+
+
+; pages links
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetPostCount, -1, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteColumnInt, [.stmt], 0
+        mov     ebx, eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        stdcall StrDup, txt "/threads/"
+        stdcall StrCat, eax, [.threadSlug]
+        stdcall StrCharCat, eax, "/"
+
+        stdcall CreatePagesLinks, eax, [.start], ebx
+        mov     [.list], eax
+
+        stdcall StrCat, edi, [.list]
+
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectPosts, -1, eax, 0
 
-        OutputValue "SQL prepare:", eax, 10, -1
+        stdcall StrPtr, [.threadSlug]
 
         cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
-        OutputValue "SQL bind:", eax, 10, -1
+        cinvoke sqliteBindInt, [.stmt], 2, PAGE_LENGTH
 
-        cinvoke sqliteBindInt, [.stmt], 2, [.start]
-        OutputValue "SQL bind:", eax, 10, -1
+        mov     eax, [.start]
+        imul    eax, PAGE_LENGTH
+        cinvoke sqliteBindInt, [.stmt], 3, eax
 
 .loop:
-        DebugMsg "SQL step"
-
         cinvoke sqliteStep, [.stmt]
-
-        OutputValue "sql step result:", eax, 10, -1
-
         cmp     eax, SQLITE_ROW
         jne     .finish
 
-        stdcall StrCat, edi, '<div class="post">'
-
-        cinvoke sqliteColumnInt, [.stmt], 2             ; userID
-
-        stdcall RenderUserInfo, edi, eax
-
-        cinvoke sqliteColumnInt, [.stmt], 3             ; post time
-
-        stdcall RenderPostTime, edi, eax
-
-        cinvoke sqliteColumnText, [.stmt], 4            ; Content
-
-        stdcall RenderPostContent, edi, eax
-
-        stdcall StrCat, edi, "</div>"                   ; div.post
+        stdcall StrCatTemplate, edi, templatePost, [.stmt], [.p_special]
 
         jmp     .loop
 
 
 .finish:
-        stdcall StrCat, edi, "</div>"   ; dic.thread
+        stdcall StrCat, edi, [.list]
+        stdcall StrCat, edi, "</div>"   ; div.thread
 
         cinvoke sqliteFinalize, [.stmt]
 
         mov     [esp+4*regEAX], edi
+        clc
+        popad
+        return
+
+.error:
+        DebugMsg "Error show thread."
+
+        cinvoke sqliteFinalize, [.stmt]
+        stdcall StrDel, edi
+        stc
+        popad
+        return
+
+endp
+
+
+
+
+
+
+
+
+proc CreatePagesLinks, .prefix, .current, .count
+begin
+        pushad
+
+        stdcall StrDupMem, '<div class="page_row">'
+        mov     edi, eax
+
+        mov     eax, [.count]
+        cdq
+        mov     ecx, PAGE_LENGTH
+        div     ecx
+
+        test    edx, edx
+        jz      @f
+        inc     eax
+@@:
+        cmp     eax, 1
+        je      .finish
+
+        mov     ebx, eax        ; pages count
+        xor     ecx, ecx
+
+        xor     esi, esi
+
+.loop:
+        cmp     ecx, ebx
+        jae     .finish
+
+        cmp     [.count], 30
+        jbe     .regular
+
+; first 5
+        cmp     ecx, 5
+        jb      .regular
+
+; last 5
+        mov     eax, ebx
+        sub     eax, 5
+        cmp     ecx, eax
+        jae     .regular
+
+; 5 around the current
+        mov     eax, [.current]
+        lea     edx, [eax-2]
+        lea     eax, [eax+2]
+
+        cmp     ecx, edx
+        jb      .middle_left
+
+        cmp     ecx, eax
+        jbe     .regular
+
+; 5 in the middle between current and beginning
+.middle_left:
+        mov     eax, [.current]
+        shr     eax, 1
+        lea     edx, [eax-2]
+        lea     eax, [eax+2]
+
+        cmp     ecx, edx
+        jb      .middle_right
+
+        cmp     ecx, eax
+        jbe     .regular
+
+; 5 in the middle beween current and the end
+.middle_right:
+        mov     eax, [.current]
+        add     eax, ebx
+        shr     eax, 1
+        lea     edx, [eax-2]
+        lea     eax, [eax+2]
+
+        cmp     ecx, edx
+        jb      .skip
+
+        cmp     ecx, eax
+        ja      .skip
+
+
+.regular:
+        inc     esi
+
+        stdcall NumToStr, ecx, ntsDec or ntsUnsigned
+
+        cmp     ecx, [.current]
+        jne     .current_ok
+
+        stdcall StrCat, edi, '<span class="current_page">'
+        jmp     .link_ok
+
+.current_ok:
+        stdcall StrCat, edi, '<a class="page_link" href="'
+        stdcall StrCat, edi, [.prefix]
+
+        stdcall StrCat, edi, eax
+        stdcall StrCharCat, edi, '/">'
+
+.link_ok:
+        stdcall StrCat, edi, eax
+        stdcall StrDel, eax
+
+        cmp     ecx, [.current]
+        jne     .current_ok2
+
+        stdcall StrCat, edi, '</span> '
+        jmp     .next
+
+.current_ok2:
+        stdcall StrCat, edi, "</a> "
+
+.next:
+        inc     ecx
+        jmp     .loop
+
+
+.skip:
+        test    esi, esi
+        jz      .next
+
+        stdcall StrCat, edi, '<span class="page_hole">....</span>'
+
+        xor     esi, esi
+        jmp     .next
+
+
+.finish:
+        stdcall StrCat, edi, "</div>"
+        mov     [esp+4*regEAX], edi
         popad
         return
 endp
-
-
-
-
-
-
-
-proc SavePost
-begin
-
-        stdcall FileWriteString, [STDOUT], <"Status: 200 OK", 13, 10>
-        stdcall FileWriteString, [STDOUT], <"Content-type: text/plain", 13, 10, 13, 10>
-
-        stdcall FileWriteString, [STDOUT], "Not implemented!"
-
-        return
-endp
-
-
-
-
-proc WriteTimestamp
-begin
-
-        stdcall FileWriteString, [STDOUT], '<p class="timestamp">Script runtime: '
-
-        stdcall GetTimestamp
-        sub     eax, [StartTime]
-        stdcall NumToStr, eax, ntsDec or ntsUnsigned
-        push    eax
-        stdcall FileWriteString, [STDOUT], eax
-        stdcall StrDel ; from the stack
-
-        stdcall FileWriteString, [STDOUT], txt 'ms</p>'
-
-        return
-endp
-
-
-
-
-
-
 
 
 
@@ -500,7 +673,7 @@ mimeGIF   text "image/gif"
 ; FCGI_PARAMS stream, etc.
 ;
 
-proc ServeOneRequestTest, .hSocket, .requestID, .pParams, .pPost
+proc ServeOneRequestTest, .hSocket, .requestID, .pParams, .pPost, .p_special
 begin
         pushad
 
@@ -616,3 +789,113 @@ begin
 endp
 
 
+
+proc StrSlugify, .hString
+begin
+        stdcall Utf8ToAnsi, [.hString], KOI8R
+
+        stdcall StrMaskBytes, eax, $0, $7f
+        stdcall StrLCase2, eax
+
+        stdcall StrConvertWhiteSpace, eax, " "
+        stdcall StrConvertPunctuation, eax
+
+        stdcall StrCleanDupSpaces, eax
+        stdcall StrClipSpacesR, eax
+        stdcall StrClipSpacesL, eax
+
+        stdcall StrConvertWhiteSpace, eax, "_"
+
+        return
+endp
+
+
+
+proc StrConvertWhiteSpace, .hString, .toChar
+begin
+        pushad
+
+        stdcall StrLen, [.hString]
+        mov     ecx, eax
+        jecxz   .finish
+
+        stdcall StrPtr, [.hString]
+        mov     esi, eax
+
+        mov     edx, [.toChar]
+
+.loop:
+        mov     al, [esi]
+        cmp     al, " "
+        ja      .next
+
+        mov     [esi], dl
+
+.next:
+        inc     esi
+        loop    .loop
+
+.finish:
+        popad
+        return
+endp
+
+
+proc StrConvertPunctuation, .hString
+begin
+        pushad
+
+        stdcall StrLen, [.hString]
+        mov     ecx, eax
+        jecxz   .finish
+
+        stdcall StrPtr, [.hString]
+        mov     esi, eax
+
+.loop:
+        mov     al, [esi]
+        cmp     al, "a"
+        jb      .convert
+        cmp     al, "z"
+        jbe     .next
+
+.convert:
+        mov     byte [esi], " "
+
+.next:
+        inc     esi
+        loop    .loop
+
+.finish:
+        popad
+        return
+endp
+
+
+
+proc StrMaskBytes, .hString, .orMask, .andMask
+begin
+        pushad
+
+        stdcall StrLen, [.hString]
+        mov     ecx, eax
+        jecxz   .finish
+
+        stdcall StrPtr, [.hString]
+        mov     esi, eax
+
+        mov     dl, byte [.orMask]
+        mov     dh, byte [.andMask]
+
+.loop:
+        mov     al, [esi]
+        or      al, dl
+        and     al, dh
+        mov     [esi], al
+        inc     esi
+        loop    .loop
+
+.finish:
+        popad
+        return
+endp

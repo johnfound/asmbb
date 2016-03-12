@@ -14,7 +14,7 @@
 
 include "%lib%/freshlib.inc"
 
-LINUX_INTERPRETER equ './ld-musl-i386.so'   ;'./ld-linux.so.2'
+LINUX_INTERPRETER equ './ld-musl-i386.so'
 
 @BinaryType console, compact
 
@@ -49,24 +49,12 @@ endg
 
 uglobal
   hMainDatabase dd ?
-
-  StartTime     dd ?
 endg
-
-
-cmdListThreads = 0
-cmdShowThread  = 1
-cmdSavePost    = 2
-
-cmdMax         = 2
 
 
 rb 173
 
 start:
-        stdcall GetTimestamp
-        mov     [StartTime], eax
-
         InitializeAll
 
         cinvoke sqliteConfig, SQLITE_CONFIG_SERIALIZED
@@ -75,8 +63,7 @@ start:
         stdcall OpenOrCreate, cDatabaseFilename, hMainDatabase, sqlCreateDB
         jc      .finish
 
-        cinvoke sqliteThreadsafe
-        OutputValue "SQLite thread safety level:", eax, 10, -1
+        cinvoke sqliteExec, [hMainDatabase], "PRAGMA journal_mode = WAL", 0, 0, 0
 
 
         stdcall Listen
