@@ -1,11 +1,11 @@
 body {
   font-size: 16px;
   font-family: Verdana,sans-serif;
+  background-color: #d0c0ff;
 }
 
 body * {
   box-sizing: border-box;
-  background-color: white;
   padding: 0px;
 }
 
@@ -61,7 +61,7 @@ div.thread_info {
 div.thread_link {
   margin-left: 200px;
   padding: 8px;
-  background-color: #d0c0ff;
+  background-color: white;
   min-height: 64px;
 
   display: flex;
@@ -75,7 +75,6 @@ div.thread_link {
 a.thread_link {
   font-size: 16px;
   font-weight: bold;
-  background-color: #d0c0ff;
 }
 
 
@@ -152,11 +151,10 @@ div.post_info {
 div.post_text {
   margin-left: 200px;
   padding: 8px;
-  background-color: #d0c0ff;
+  background-color: white;
 }
 
 div.post_text p {
-  background-color: #d0c0ff;
 }
 
 div.post_text img {
@@ -190,6 +188,158 @@ span.current_page {
   min-width: 32px;
   font-weight: bold;
   color: white;
+}
+
+
+/* login page styles */
+
+.login-block {
+    width: 320px;
+    padding: 20px;
+    background: #fff;
+    border-top: 16px solid #f06060;
+    margin: 96px auto;
+}
+
+
+.register-block {
+    width: 320px;
+    padding: 20px;
+    background: #fff;
+    border-top: 16px solid #f06060;
+    margin: 32px auto;
+}
+
+
+.login-block h1, .register-block h1 {
+    text-align: center;
+    color: #000;
+    font-size: 18px;
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.login-block input, .register-block input {
+    width: 100%;
+    height: 42px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    font-size: 14px;
+    padding: 0 20px 0 50px;
+    outline: none;
+}
+
+.login-block input#username, .register-block input#username {
+    background-image: url('/images/user.png');
+}
+
+.login-block input#email, .register-block input#email {
+    background-image: url('/images/email.png');
+}
+
+.login-block input#password, .login-block input#password2,
+.register-block input#password, .register-block input#password2 {
+    background-image: url('/images/pass.png');
+}
+
+.login-block input, .register-block input {
+    background-color: white;
+    background-position: 20px top;
+    background-repeat: no-repeat;
+    background-size: 16px 80px;
+}
+
+.login-block input:active, .login-block input:focus,
+.register-block input:active, .register-block input:focus  {
+    background-color: white;
+    background-position: 20px bottom;
+    border: 1px solid #ff656c;
+}
+
+.login-block input#submit, .register-block input#submit {
+    height: 40px;
+    background: #ff656c;
+    box-sizing: border-box;
+    border: 1px solid #e15960;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+    outline: none; 
+    cursor: pointer;
+    text-align: center;
+    padding: 0px;
+}
+
+.login-block input#submit:hover, .register-block input#submit:hover {
+    background: #ff7b81;
+}
+
+/* login/logout info on the pages */
+
+div.login_interface {
+  width: 90%;
+  max-width: 1280px;
+  background-color: #f0f060;
+  text-align: right;
+  padding: 8px;
+  margin: 32px auto;
+}
+
+span.separator {
+  width: 32px;
+  display: inline-block;
+}
+
+
+/* Error messages screen */
+
+div.error_block {
+  font-size: 20px;
+  width: 640px;
+  background: white;
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  padding-bottom: 28px;
+}
+
+div.error_block h1 {
+  font-size: 21px;
+  background: #f06060;
+  text-align: center;
+  padding: 4px;
+  margin-bottom: 32px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+div.error_block a {
+  display: inline-block;
+  padding: 4px 16px 4px 16px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  outline: none;
+}
+
+div.error_block a:hover {
+  background-color: #f06060;
+  color: white;
+}
+
+
+div.error_msg {
+  white-space: pre-line;
+  padding: 32px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  color: black;
+  display: inline-block;
 }
 
 

@@ -175,6 +175,15 @@ begin
         stdcall StrCompNoCase, edi, "special:timestamp"
         jc      .cat_timestamp
 
+        stdcall StrCompNoCase, edi, "special:environment"
+        jc      .cat_environment
+
+        stdcall StrCompNoCase, edi, "special:username"
+        jc      .cat_username
+
+        stdcall StrCompNoCase, edi, "special:loglink"
+        jc      .cat_loglink
+
         cmp     [.statement], 0
         je      .finish
 
@@ -225,5 +234,68 @@ begin
         stdcall StrCat, [.string], txt 'ms</p>'
 
         jmp     .finish
+
+.cat_environment:
+; this is only for special purposes.
+
+if defined options.DebugMode & options.DebugMode
+
+
+        mov     esi, [.p_special]
+        mov     edx, [esi+TSpecialParams.params]
+
+        xor     ecx, ecx
+
+.loop_env:
+        cmp     ecx, [edx+TArray.count]
+        jae     .finish
+
+        stdcall StrCat,     [.string], [edx+TArray.array+8*ecx]
+        stdcall StrCharCat, [.string], " = "
+        stdcall StrCat,     [.string], [edx+TArray.array+8*ecx+4]
+        stdcall StrCharCat, [.string], $0a0d
+
+        inc     ecx
+        jmp     .loop_env
+
+else
+        jmp     .finish
+
+end if
+
+
+.cat_username:
+        mov     esi, [.p_special]
+        mov     edx, [esi+TSpecialParams.userName]
+        test    edx, edx
+        jz      .finish
+
+        stdcall StrCat, [.string], edx
+        jmp     .finish
+
+
+
+
+.cat_loglink:
+
+        mov     esi, [.p_special]
+        mov     edx, [esi+TSpecialParams.userName]
+        test    edx, edx
+        jz      .login
+
+; log out:
+        stdcall StrCat, [.string], '<a class="logout" target="_self" href="/logout/">Logout ['
+        stdcall StrCat, [.string], edx
+        stdcall StrCat, [.string], ']</a>'
+        jmp     .common
+
+
+.login:
+        stdcall StrCat, [.string], '<a class="login" target="_self" href="/login/">Login</a>'
+
+.common:
+        stdcall StrCat, [.string], '<span class="separator"></span><a class="register" target="_self" href="/register/">Register</a>'
+        jmp     .finish
+
 
 endp

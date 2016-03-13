@@ -3,11 +3,26 @@
 
 PAGE_LENGTH = 20
 
+; User permissions flags:
+
+permLogin       = 1
+permRead        = 2
+permPost        = 4
+permThreadStart = 8
+permEditOwn     = 16
+permEditAll     = 32
+permAdmin       = $80000000
+
 
 
 struct TSpecialParams
   .start_time dd ?
+  .params     dd ?
+  .userID     dd ?
+  .userName   dd ?
+  .session    dd ?
 ends
+
 
 
 
@@ -17,6 +32,8 @@ proc ServeOneRequest, .hSocket, .requestID, .pParams, .pPost, .start_time
 .uri  dd ?
 .filename dd ?
 
+.special TSpecialParams
+
 begin
         pushad
 
@@ -25,6 +42,14 @@ begin
         mov     [.uri], eax
         mov     [.filename], eax
 
+        mov     eax, [.start_time]
+        mov     [.special.start_time], eax
+
+        mov     eax, [.pParams]
+        mov     [.special.params], eax
+
+        lea     eax, [.special]
+        stdcall GetLoggedUser, [.pParams], eax
 
         stdcall StrNew
         mov     edi, eax
@@ -100,6 +125,24 @@ begin
 
 .error404:
         stdcall AppendError, edi, "404 Not Found"
+        jmp     .send_simple_result
+
+
+
+.output_forum_html:     ; Status: 200 OK
+
+        stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Content-type: text/html", 13, 10, 13, 10>
+
+        lea     edx, [.special]
+        stdcall StrCatTemplate, edi, htmlHeader, 0, edx
+
+        stdcall StrCat, edi, eax
+
+        stdcall StrCatTemplate, edi, htmlFooter, 0, edx
+
+        stdcall StrDel, eax
+
+        stdcall ListFree, esi, StrDel
 
 
 .send_simple_result:    ; it is a result containing only a string data in EDI
@@ -115,48 +158,43 @@ begin
         stdcall StrDelNull, [.uri]
         stdcall StrDelNull, [.filename]
 
+        stdcall StrDelNull, [.special.userName]
+
         clc
         popad
         return
 
 
-locals
-  .start  dd  ?
-endl
-
 
 .analize_uri:
-
-        mov     [.start], 0
 
         stdcall StrSplitList, [.uri], '/', FALSE
         mov     esi, eax
 
         cmp     [esi+TArray.count], 0
-        je      .show_thread_list               ; default behavior on the main page
+        je      .redirect_to_the_list
 
-        cmp     [esi+TArray.count], 1
-        jne     .check_for_thread_show
-
-        stdcall StrToNum, [esi+TArray.array]
-        cmp     eax, -1
-        je      .end_forum_request
-
-        mov     [.start], eax
-        jmp     .show_thread_list
-
-
-
-.check_for_thread_show:
-;        cmp     [esi+TArray.count], 2
-;        jne     .end_forum_request
-
-        stdcall StrCompNoCase, [esi+TArray.array], "threads"
+        stdcall StrCompNoCase, [esi+TArray.array], txt "threads"
         jc      .show_one_thread
 
+        stdcall StrCompNoCase, [esi+TArray.array], txt "list"
+        jc      .show_thread_list
 
-.no_thread_request:
-; maybe thread list request?
+        stdcall StrCompNoCase, [esi+TArray.array], txt "error"
+        jc      .show_error
+
+        stdcall StrCompNoCase, [esi+TArray.array], txt "login"
+        jc      .user_login
+
+        stdcall StrCompNoCase, [esi+TArray.array], txt "logout"
+        jc      .user_logout
+
+        stdcall StrCompNoCase, [esi+TArray.array], txt "register"
+        jc      .user_register
+
+        stdcall StrCompNoCase, [esi+TArray.array], txt "post"
+        jc      .post_message
+
 
 
 .end_forum_request:
@@ -165,42 +203,157 @@ endl
         jmp     .error400
 
 
+.redirect_to_the_list:
 
-
-.show_thread_list:
-        lea     eax, [.start_time]
-        stdcall ListThreads, [.start], eax
-
-
-.output_forum_html:
-
-        stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Content-type: text/html", 13, 10, 13, 10>
-
-        lea     edx, [.start_time]
-        stdcall StrCatTemplate, edi, htmlHeader, 0, edx
-
-        stdcall StrCat, edi, eax
-
-        stdcall StrCatTemplate, edi, htmlFooter, 0, edx
-
-        stdcall StrDel, eax
-
-        stdcall ListFree, esi, StrDel
+        stdcall StrCat, edi, <"Status: 302 Found", 13, 10, "Location: /list/", 13, 10, 13, 10>
         jmp     .send_simple_result
 
 
+
+
+;..................................................................................
+
+
+.show_thread_list:
+
+        xor     ebx, ebx        ; the start page.
+
+        cmp     [esi+TArray.count], 1
+        je      .list_params_ready
+
+        stdcall StrToNum, [esi+TArray.array+4]
+        cmp     eax, -1
+        je      .page_ready
+
+        mov     ebx, eax
+
+.page_ready:
+
+
+; here put some hash analizing code for the hash tags. Not implemented yet.
+
+
+.list_params_ready:
+
+        lea     eax, [.start_time]      ; the special parameters data pointer.
+
+        stdcall ListThreads, ebx, eax
+
+        jmp     .output_forum_html
+
+
+
+;..................................................................................
+
+
 .show_one_thread:
+
+        xor     ebx, ebx
+
         cmp     [esi+TArray.count], 3
         jb      .show_thread
 
         stdcall StrToNum, [esi+TArray.array+8]
-        mov     [.start], eax
+        mov     ebx, eax
 
 .show_thread:
         lea     eax, [.start_time]
-        stdcall ShowThread, [esi+TArray.array+4], [.start], eax
+        stdcall ShowThread, [esi+TArray.array+4], ebx, eax
 
         jmp     .output_forum_html
+
+
+
+
+;..................................................................................
+
+cUnknownError text "unknown_error"
+
+
+.show_error:
+
+        mov     eax, cUnknownError
+
+        cmp     [esi+TArray.count], 2
+        jne     .error_ok
+
+        mov     eax, [esi+TArray.array+4]
+
+.error_ok:
+
+        stdcall ShowForumError, eax, [.pParams]
+
+        jmp     .output_forum_html
+
+
+;..................................................................................
+
+
+.user_login:
+
+        cmp     [.pPost], 0
+        je      .show_login_page
+
+
+        stdcall UserLogin, [.pPost], [.pParams]
+        stdcall StrDel, edi
+        mov     edi, eax
+        jmp     .send_simple_result
+
+
+
+.show_login_page:
+
+        stdcall ShowLoginPage
+        jmp     .output_forum_html
+
+
+
+;..................................................................................
+
+.user_logout:
+
+        lea     eax, [.special]
+        stdcall UserLogout, eax
+        stdcall StrDel, edi
+        mov     edi, eax
+
+        jmp     .send_simple_result
+
+;..................................................................................
+
+.user_register:
+
+        cmp     [.pPost], 0
+        je      .show_register_page
+
+        stdcall RegisterNewUser, [.pPost]
+        stdcall StrDel, edi
+        mov     edi, eax
+        jmp     .send_simple_result
+
+
+.show_register_page:
+
+        stdcall ShowRegisterPage
+        jmp     .output_forum_html
+
+;..................................................................................
+
+
+.post_message:
+
+
+
+        jmp     .output_forum_html
+
+
+
+
+;..................................................................................
+
+
+
 
 endp
 
@@ -208,11 +361,12 @@ endp
 
 
 htmlHeader  text '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>FastCGI in assembly language</title>',  \
-                 '<link rel="stylesheet" href="/all.css"></head><body>',                                                    \
+                 '<link rel="stylesheet" href="/all.css"><base target="_blank"></head><body>',                              \
                  '<h1>This is simply an experimental page. If you look for real content go ',                               \
-                 '<a href="http://asm32.info">here</a> or <a href="http://fresh.flatassembler.net">here</a></h1>'
+                 '<a href="http://asm32.info">here</a> or <a href="http://fresh.flatassembler.net">here</a></h1>',          \
+                 '<div class="login_interface">$special:loglink$</div>'
 
-htmlFooter  text '$special:timestamp$</body></html>'
+htmlFooter  text '<pre>$special:environment$</pre>$special:timestamp$</body></html>'
 
 
 
@@ -221,7 +375,7 @@ htmlFooter  text '$special:timestamp$</body></html>'
 sqlSelectThreads text "select id, Slug, Caption, StartPost, (select count() from posts where threadid = Threads.id) as PostCount from Threads limit ? offset ?"
 sqlThreadsCount  text "select count() from Threads"
 
-threadInfoTemplate text '<div class="thread_summary"><div class="thread_info">Posts:<br>$PostCount$</div><div class="thread_link"><a class="thread_link" href="/threads/$Slug$/">$Caption$</a></div></div>'
+threadInfoTemplate text '<div class="thread_summary"><div class="thread_info">Posts:<br>$PostCount$</div><div class="thread_link"><a target="_self" class="thread_link" href="/threads/$Slug$/">$Caption$</a></div></div>'
 
 
 proc ListThreads, .start, .p_special
@@ -245,7 +399,7 @@ begin
         mov     ebx, eax
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall CreatePagesLinks, txt "/", [.start], ebx
+        stdcall CreatePagesLinks, txt "/list/", [.start], ebx
         mov     [.list], eax
 
         stdcall StrCat, edi, eax
@@ -331,7 +485,7 @@ begin
         mov     [.threadID], eax
 
 
-        stdcall StrCat, edi, '<div class="thread"><a href="/">goto thread list</a><h1 class="thread_caption">'
+        stdcall StrCat, edi, '<div class="thread"><a target="_self" href="/">goto thread list</a><h1 class="thread_caption">'
 
         cinvoke sqliteColumnText, [.stmt], 1
 
@@ -507,7 +661,7 @@ begin
         jmp     .link_ok
 
 .current_ok:
-        stdcall StrCat, edi, '<a class="page_link" href="'
+        stdcall StrCat, edi, '<a class="page_link" target="_self" href="'
         stdcall StrCat, edi, [.prefix]
 
         stdcall StrCat, edi, eax
@@ -547,6 +701,522 @@ begin
         popad
         return
 endp
+
+
+
+
+sqlGetErrorText text "select msg from errors where err = ?"
+cGoRoot text "/"
+
+
+proc ShowForumError, .error_key, .pParams
+.stmt dd ?
+begin
+        pushad
+
+        stdcall StrDupMem, '<div class="error_block"><h1>ERROR!</h1><div class="error_msg">'
+        mov     edi, eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetErrorText, -1, eax, 0
+
+        stdcall StrLen, [.error_key]
+        mov     ecx, eax
+        stdcall StrPtr, [.error_key]
+        cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+
+        cmp     eax, SQLITE_ROW
+        jne     .unknown_msg
+
+        cinvoke sqliteColumnText, [.stmt], 0
+        stdcall StrCat, edi, eax
+
+.finalize:
+        cinvoke sqliteFinalize, [.stmt]
+
+
+; now insert link to the previous page.
+
+        stdcall StrCat, edi, '</div><br><a target="_self" href="'
+
+        stdcall ValueByName, [.pParams], "HTTP_REFERER"
+        jnc     .referer_ok
+
+        mov     eax, cGoRoot
+
+.referer_ok:
+        stdcall StrCat, edi, eax
+
+        stdcall StrCat, edi, '">Go back and try again</a></div>'
+
+        mov     [esp+4*regEAX], edi
+        popad
+        return
+
+
+
+.unknown_msg:
+        stdcall StrCat, edi, <"Three things are certain:", 13, 10, "Death, taxes and lost data.", 13, 10, "Guess which has occurred.">
+        jmp     .finalize
+endp
+
+
+
+
+
+
+
+templateLogin text '<form class="login-block" method="post" target="_self" action="/login/"><h1>Login</h1>',    \
+                   '<input type="text" value="" placeholder="Username" name="username" id="username" />',       \
+                   '<input type="password" value="" placeholder="Password" name="password" id="password" />',   \
+                   '<input type="submit" name="submit" id="submit" value="Submit" /></form>'
+
+
+proc ShowLoginPage
+begin
+        stdcall StrDupMem, templateLogin
+        return
+endp
+
+
+
+sqlGetUserInfo   text "select id, abs(random()) as session from users where nick = ? and passHash = ?"
+sqlInsertSession text "insert or replace into sessions (userID, sid, last_seen) values ( ?, ?, strftime('%s','now') )"
+
+
+proc UserLogin, .pPost, .pParams
+.stmt  dd ?
+
+.user     dd ?
+.password dd ?
+
+.userID   dd ?
+.session  dd ?
+
+begin
+        pushad
+
+        xor     eax, eax
+        mov     [.session], eax
+        mov     [.user], eax
+        mov     [.password], eax
+
+        stdcall StrDupMem, <"Status: 302 Found", 13, 10>
+        mov     edi, eax
+
+; check the information
+
+        stdcall StrNew
+        mov     ebx, eax
+
+        mov     edx, [.pPost]
+        lea     eax, [edx+TByteStream.data]
+        stdcall StrCatMem, ebx, eax, [edx+TByteStream.size]
+
+        stdcall GetQueryItem, ebx, "username=", 0
+        mov     [.user], eax
+
+        stdcall StrLen, eax
+        test    eax, eax
+        jz      .redirect_back_short
+
+
+        stdcall GetQueryItem, ebx, "password=", 0
+        mov     [.password], eax
+
+        stdcall StrLen, eax
+        test    eax, eax
+        jz      .redirect_back_short
+
+; hash the password
+
+        stdcall StrCat, [.password], [.user]
+        stdcall StrMD5, [.password]
+        stdcall StrDel, [.password]
+        mov     [.password], eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetUserInfo, -1, eax, 0
+
+        stdcall StrPtr, [.user]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+        stdcall StrPtr, [.password]
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        je      .user_ok
+
+
+.bad_user:
+        cinvoke sqliteFinalize, [.stmt]
+        jmp     .redirect_back_bad_password
+
+
+.user_ok:
+
+        DebugMsg "User login/password match!"
+
+; here the password matches this from the database.
+; Create session.
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        mov     [.userID], eax
+
+        OutputValue "User ID:", eax, 10, -1
+
+        cinvoke sqliteColumnText, [.stmt], 1    ; session ID
+        stdcall StrDupMem, eax
+        mov     [.session], eax
+
+        cinvoke sqliteFinalize, [.stmt]
+
+; Insert session record.
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertSession, -1, eax, 0
+
+        cinvoke sqliteBindInt, [.stmt], 1, [.userID]
+
+        stdcall StrPtr, [.session]
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+
+
+; check for error here!
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        DebugMsg "Record inserted."
+
+; now, set some cookies
+
+        stdcall StrCat, edi, "Set-Cookie: sid="
+        stdcall StrCat, edi, [.session]
+        stdcall StrCat, edi, <"; HttpOnly; Path=/", 13, 10>
+        stdcall StrCat, edi, <"Location: /list/", 13, 10, 13, 10>       ; go forward.
+
+        jmp     .finish
+
+.redirect_back_short:
+
+        stdcall StrCat, edi, <"Location: /error/login_missing_data/", 13, 10, 13, 10>       ; go backward.
+        jmp     .finish
+
+
+.redirect_back_bad_password:
+        stdcall StrCat, edi, <"Location: /error/login_bad_password/", 13, 10, 13, 10>       ; go backward.
+
+
+.finish:
+        stdcall StrDelNull, [.user]
+        stdcall StrDelNull, [.password]
+        stdcall StrDelNull, [.session]
+
+        OutputValue "Returned value: ", edi, 16, 8
+
+        mov     [esp+4*regEAX], edi
+        popad
+        return
+
+endp
+
+
+
+
+sqlLogout text "delete from Sessions where userID = ?"
+
+proc UserLogout, .pspecial
+.stmt dd ?
+begin
+        pushad
+
+        mov     esi, [.pspecial]
+
+        cmp     [esi+TSpecialParams.session], 0
+        je      .finish
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLogout, -1, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.userID]
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+.finish:
+        stdcall StrDupMem, <"Status: 302 Found", 13, 10, "Location: /list/", 13, 10, 13, 10>
+        mov     [esp+4*regEAX], eax
+
+        popad
+        return
+endp
+
+
+
+
+
+
+
+templateRegister text '<form class="register-block" method="post" target="_self" action="/register/"><h1>Register</h1>',    \
+                      '<input type="text" value="" placeholder="Username" name="username" id="username" />',             \
+                      '<input type="text" value="" placeholder="e-mail" name="email" id="email" />',                     \
+                      '<input type="password" value="" placeholder="Password" name="password" id="password" />',         \
+                      '<input type="password" value="" placeholder="Password again" name="password2" id="password2" />',            \
+                      '<input type="submit" name="submit" id="submit" value="Submit" /></form>'
+
+
+proc ShowRegisterPage
+begin
+        stdcall StrDupMem, templateRegister
+        return
+endp
+
+
+
+sqlRegisterUser  text "insert into Users (nick, passHash, status, email) values (?, ?, ?, ?)"
+
+
+proc RegisterNewUser, .pPost
+
+.stmt      dd ?
+
+.user      dd ?
+.password  dd ?
+.password2 dd ?
+.email     dd ?
+
+begin
+        pushad
+
+        xor     eax, eax
+        mov     [.user], eax
+        mov     [.password], eax
+        mov     [.password2], eax
+        mov     [.email], eax
+
+        stdcall StrDupMem, <"Status: 302 Found", 13, 10>
+        mov     edi, eax
+
+; check the information
+
+        stdcall StrNew
+        mov     ebx, eax
+
+        mov     edx, [.pPost]
+        lea     eax, [edx+TByteStream.data]
+        stdcall StrCatMem, ebx, eax, [edx+TByteStream.size]
+
+        stdcall GetQueryItem, ebx, "username=", 0
+        mov     [.user], eax
+
+        stdcall StrLen, eax
+        cmp     eax, 3
+        jbe     .redirect_back_short_name
+
+
+        stdcall GetQueryItem, ebx, "email=", 0
+        mov     [.email], eax
+
+        stdcall StrLen, eax
+        cmp     eax, 5
+        jbe     .redirect_back_short_email
+
+
+        stdcall GetQueryItem, ebx, "password=", 0
+        mov     [.password], eax
+
+        stdcall GetQueryItem, ebx, "password2=", 0
+        mov     [.password2], eax
+
+        stdcall StrCompCase, [.password], [.password2]
+        jnc     .redirect_back_different
+
+
+        stdcall StrLen, [.password]
+        cmp     eax, 5
+        jbe     .redirect_back_short_pass
+
+
+; hash the password
+
+        stdcall StrCat, [.password], [.user]
+        stdcall StrMD5, [.password]
+        stdcall StrDel, [.password]
+        mov     [.password], eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRegisterUser, -1, eax, 0
+
+        stdcall StrPtr, [.user]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+        stdcall StrPtr, [.password]
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteBindInt, [.stmt], 3, permLogin or permRead or permPost or permThreadStart or permEditOwn
+
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     eax, SQLITE_OK
+        jne     .redirect_back_exists
+
+        stdcall StrCat, edi, <"Location: /login/", 13, 10, 13, 10>       ; go forward.
+        jmp     .finish
+
+
+.redirect_back_short_name:
+        stdcall StrCat, edi, <"Location: /error/register_short_name/", 13, 10, 13, 10>       ; go backward.
+        jmp     .finish
+
+
+.redirect_back_short_email:
+        stdcall StrCat, edi, <"Location: /error/register_short_email/", 13, 10, 13, 10>       ; go backward.
+        jmp     .finish
+
+
+.redirect_back_short_pass:
+        stdcall StrCat, edi, <"Location: /error/register_short_pass/", 13, 10, 13, 10>       ; go backward.
+        jmp     .finish
+
+
+
+.redirect_back_different:
+        stdcall StrCat, edi, <"Location: /error/register_passwords_different/", 13, 10, 13, 10>       ; go backward.
+        jmp     .finish
+
+
+.redirect_back_exists:
+        stdcall StrCat, edi, <"Location: /error/register_user_exists/", 13, 10, 13, 10>       ; go backward.
+
+
+.finish:
+        stdcall StrDelNull, [.user]
+        stdcall StrDelNull, [.password]
+        stdcall StrDelNull, [.password2]
+        stdcall StrDelNull, [.email]
+
+        mov     [esp+4*regEAX], edi
+        popad
+        return
+endp
+
+
+
+
+
+
+sqlGetSession text "select userID, nick, last_seen from sessions left join users on id = userID where sid = ?"
+
+; returns:
+;   EAX: string with the logged user name
+;   ECX: string with the session ID
+;   EDX: logged user ID
+
+proc GetLoggedUser, .pParams, .special
+.stmt dd ?
+begin
+        pushad
+
+        mov     edi, [.special]
+
+        xor     eax, eax
+        mov     [edi+TSpecialParams.userID], eax
+        mov     [edi+TSpecialParams.userName], eax
+        mov     [edi+TSpecialParams.session], eax
+
+        stdcall GetCookieValue, [.pParams], txt 'sid'
+        jc      .finish
+
+        mov     ebx, eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetSession, -1, eax, 0
+
+        stdcall StrPtr, ebx
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .finish_sql
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        mov     [edi+TSpecialParams.userID], eax
+
+        cinvoke sqliteColumnText, [.stmt], 1
+        stdcall StrDupMem, eax
+
+        mov     [edi+TSpecialParams.userName], eax
+
+        stdcall StrDup, ebx
+        mov     [edi+TSpecialParams.session], eax
+
+
+.finish_sql:
+        cinvoke sqliteFinalize, [.stmt]
+        stdcall StrDel, ebx
+
+.finish:
+        popad
+        return
+endp
+
+
+
+
+
+
+proc GetCookieValue, .pParams, .name
+begin
+        pushad
+
+        stdcall ValueByName, [.pParams], "HTTP_COOKIE"
+        jc      .finish
+
+        mov     ebx, eax
+
+        stdcall StrSplitList, ebx, ";", FALSE
+        mov     esi, eax
+
+        xor     ecx, ecx
+
+.loop:
+        cmp     ecx, [esi+TArray.count]
+        jae     .end_loop
+
+        stdcall StrSplitList, [esi+TArray.array+4*ecx], "=", FALSE
+        mov     edi, eax
+
+        cmp     [edi+TArray.count], 2
+        jne     .next
+
+        stdcall StrCompNoCase, [edi+TArray.array], [.name]
+        jnc     .next
+
+        stdcall StrDup, [edi+TArray.array+4]
+        mov     [esp+4*regEAX], eax
+
+        mov     ecx, [esi+TArray.count] ; force loop end
+
+.next:
+        stdcall ListFree, edi, StrDel
+        inc     ecx
+        jmp     .loop
+
+
+.end_loop:
+        stdcall ListFree, esi, StrDel
+        clc
+
+.finish:
+        popad
+        return
+endp
+
+
 
 
 

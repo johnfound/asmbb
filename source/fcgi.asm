@@ -323,6 +323,8 @@ begin
         stdcall StrCompNoCase, eax, txt "POST"
         jnc     .serve_request                          ; it is not the POST request, so no need to wait for more data.
 
+; some post data is expected.
+
         or      [.requestFlags], ffcgiExpectStdIn
         jmp     .pack_loop
 
@@ -372,6 +374,7 @@ begin
 
 
 .stdin_received:
+
         and     [.requestFlags], not ffcgiExpectStdIn
 
         test    [.requestFlags], ffcgiExpectParams
@@ -670,6 +673,7 @@ begin
         mov     edx, eax
 
 .array_ok:
+
 
 .loop:
         call    .get_length              ; name length

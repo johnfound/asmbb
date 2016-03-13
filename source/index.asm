@@ -52,10 +52,14 @@ uglobal
 endg
 
 
-rb 173
+rb 273
 
 start:
         InitializeAll
+
+
+        stdcall SetForcedTerminateHandler, OnForcedTerminate
+
 
         cinvoke sqliteConfig, SQLITE_CONFIG_SERIALIZED
         cinvoke sqliteInitialize
@@ -79,3 +83,9 @@ start:
 
 
 
+proc OnForcedTerminate as procForcedTerminateHandler
+begin
+        cinvoke sqliteClose, [hMainDatabase]
+        stdcall TerminateAll, 0
+        return
+endp

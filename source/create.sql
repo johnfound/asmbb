@@ -4,7 +4,7 @@ BEGIN TRANSACTION;
 
 create table if not exists Users (
   id	    integer primary key autoincrement,
-  nick	    text,
+  nick	    text unique,
   passHash  text,
   status    integer,  -- active, banned, etc.
   user_desc text,     -- free text user description.
@@ -22,7 +22,7 @@ create table if not exists Threads (
   id	    integer primary key autoincrement,
   Slug	    text,			-- slugifyed version of the caption. Can be set independently.
   Caption   text,
-  StartPost integer references Posts(id)
+  StartPost integer
 );
 
 
@@ -86,5 +86,22 @@ create table if not exists Attachements (
   notes    text,
   file	   blob
 );
+
+
+create table if not exists Sessions (
+  userID    integer references Users(id),
+  fromIP    text,
+  sid	    text,
+  last_seen integer,
+  unique (userID, fromIP)
+);
+
+
+create table if not exists errors (
+  err  text primary key,
+  msg  text
+)
+
+
 
 COMMIT;
