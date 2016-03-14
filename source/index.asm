@@ -74,6 +74,8 @@ start:
 
 ; close the database
 
+.terminate:
+
         cinvoke sqliteClose, [hMainDatabase]
         cinvoke sqliteShutdown
 
@@ -85,7 +87,5 @@ start:
 
 proc OnForcedTerminate as procForcedTerminateHandler
 begin
-        cinvoke sqliteClose, [hMainDatabase]
-        stdcall TerminateAll, 0
-        return
+        jmp     start.terminate         ; the stack is not important here!
 endp

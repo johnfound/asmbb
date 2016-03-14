@@ -1,14 +1,18 @@
 body {
   font-size: 16px;
   font-family: Verdana,sans-serif;
-  background-color: #d0c0ff;
+  background-color: #d0d0d0;
 }
 
 body * {
   box-sizing: border-box;
   padding: 0px;
+/*  border: 1px solid red; */
 }
 
+a {
+  color: black;
+}
 
 /* Threads list styles */
 
@@ -39,7 +43,7 @@ div.thread_summary * {
 
 div.thread_info {
   position: absolute;
-	      width: 200px;
+  width: 100px;
   left: 0px;
   top: 0px;
   bottom: 0px;
@@ -59,7 +63,7 @@ div.thread_info {
 
 
 div.thread_link {
-  margin-left: 200px;
+  margin-left: 100px;
   padding: 8px;
   background-color: white;
   min-height: 64px;
@@ -226,7 +230,7 @@ span.current_page {
     box-sizing: border-box;
     border: 1px solid #ccc;
     margin-bottom: 20px;
-    font-size: 14px;
+    font-size: 16px;
     padding: 0 20px 0 50px;
     outline: none;
 }
@@ -246,15 +250,15 @@ span.current_page {
 
 .login-block input, .register-block input {
     background-color: white;
-    background-position: 20px top;
+    background-position: 12px -10px;
     background-repeat: no-repeat;
-    background-size: 16px 80px;
+    background-size: 24px 120px;
 }
 
 .login-block input:active, .login-block input:focus,
 .register-block input:active, .register-block input:focus  {
     background-color: white;
-    background-position: 20px bottom;
+    background-position: 12px -70px;
     border: 1px solid #ff656c;
 }
 
@@ -300,26 +304,22 @@ div.error_block {
   font-size: 20px;
   width: 640px;
   background: white;
-  color: white;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  padding-bottom: 28px;
+  padding: 20px;
+  border-top: 16px solid #f06060;
 }
 
 div.error_block h1 {
-  font-size: 21px;
-  background: #f06060;
-  text-align: center;
-  padding: 4px;
-  margin-bottom: 32px;
-  margin-left: auto;
-  margin-right: auto;
+    text-align: center;
+    color: #000;
+    font-size: 21px;
+    text-transform: uppercase;
 }
 
 div.error_block a {
   display: inline-block;
-  padding: 4px 16px 4px 16px;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
@@ -327,14 +327,13 @@ div.error_block a {
 }
 
 div.error_block a:hover {
-  background-color: #f06060;
-  color: white;
+  color: #f06060;
 }
 
 
 div.error_msg {
   white-space: pre-line;
-  padding: 32px;
+  padding: 64px;
   margin-left: auto;
   margin-right: auto;
   text-align: left;

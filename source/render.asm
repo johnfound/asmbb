@@ -97,14 +97,27 @@ endp
 
 
 
+sqlGetTemplate text "select template from templates where id = ?"
 
 
-
-proc StrCatTemplate, .hString, .strTemplate, .sql_statement, .p_special
+proc StrCatTemplate, .hString, .strTemplateID, .sql_statement, .p_special
+.stmt dd ?
 begin
         pushad
 
-        stdcall StrPtr, [.strTemplate]
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetTemplate, sqlGetTemplate.length+1, eax, 0
+
+        stdcall StrLen, [.strTemplateID]
+        mov     ecx, eax
+        stdcall StrPtr, [.strTemplateID]
+
+        cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .error
+
+        cinvoke sqliteColumnText, [.stmt], 0
         mov     esi, eax
 
 .outer:
@@ -128,7 +141,7 @@ begin
         stdcall StrCatMem, [.hString], ebx, eax
 
         test    cl, cl
-        jz      .end_of_file
+        jz      .end_of_template
 
         mov     ebx, esi
 
@@ -152,9 +165,17 @@ begin
         test    cl, cl
         jnz     .outer
 
-.end_of_file:
+.end_of_template:
+
+        cinvoke sqliteFinalize, [.stmt]
+
         popad
         return
+
+.error:
+        stdcall StrCat, [.hString], "Unknown template!"
+        jmp     .end_of_template
+
 endp
 
 

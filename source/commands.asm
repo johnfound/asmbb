@@ -134,11 +134,11 @@ begin
         stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Content-type: text/html", 13, 10, 13, 10>
 
         lea     edx, [.special]
-        stdcall StrCatTemplate, edi, htmlHeader, 0, edx
+        stdcall StrCatTemplate, edi, "main_html_start", 0, edx
 
         stdcall StrCat, edi, eax
 
-        stdcall StrCatTemplate, edi, htmlFooter, 0, edx
+        stdcall StrCatTemplate, edi, "main_html_end", 0, edx
 
         stdcall StrDel, eax
 
@@ -360,26 +360,9 @@ endp
 
 
 
-htmlHeader  text '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>FastCGI in assembly language</title>',  \
-                 '<link rel="stylesheet" href="/all.css"><base target="_blank"></head><body>',                              \
-                 '<h1>This is simply an experimental page. If you look for real content go ',                               \
-                 '<a href="http://asm32.info">here</a> or <a href="http://fresh.flatassembler.net">here</a></h1>',          \
-                 '<div class="creative_commons">The information on this page is copied from http://astronomy.stackexchange.com', \
-                 ' and is distributed under the terms of "Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)" license.',    \
-                 ' This information is used only as a database test content and will be deleted later. ',                   \
-                 'Do not link pages from this page, nor use the content for any purposes other than the test of the site engine demonstrated here.</div>',             \
-                 '<div class="login_interface">$special:loglink$</div>'
-
-htmlFooter  text '<pre>$special:environment$</pre>$special:timestamp$</body></html>'
-
-
-
-
 
 sqlSelectThreads text "select id, Slug, Caption, StartPost, (select count() from posts where threadid = Threads.id) as PostCount from Threads limit ? offset ?"
 sqlThreadsCount  text "select count() from Threads"
-
-threadInfoTemplate text '<div class="thread_summary"><div class="thread_info">Posts:<br>$PostCount$</div><div class="thread_link"><a target="_self" class="thread_link" href="/threads/$Slug$/">$Caption$</a></div></div>'
 
 
 proc ListThreads, .start, .p_special
@@ -424,7 +407,7 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .finish
 
-        stdcall StrCatTemplate, edi, threadInfoTemplate, [.stmt], [.p_special]
+        stdcall StrCatTemplate, edi, "thread_info", [.stmt], [.p_special]
 
         jmp     .loop
 
@@ -454,10 +437,6 @@ sqlSelectPosts   text "select Posts.id, Posts.threadID, datetime(Posts.postTime)
 sqlGetPostCount text "select count() from Posts where ThreadID = ?"
 
 sqlGetThreadInfo text "select id, Caption from Threads where Slug = ? limit 1"
-
-
-templatePost    text '<div class="post"><div class="user_info"><div class="user_name">$UserName$</div><div class="user_pcnt">Posts: $UserPostCount$</div></div>', \
-                     '<div class="post_info">Posted: $PostTime$</div><div class="post_text">$Content$</div></div>'
 
 
 
@@ -539,7 +518,7 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .finish
 
-        stdcall StrCatTemplate, edi, templatePost, [.stmt], [.p_special]
+        stdcall StrCatTemplate, edi, "post_view", [.stmt], [.p_special]
 
         jmp     .loop
 
@@ -770,18 +749,14 @@ endp
 
 
 
-
-templateLogin text '<form class="login-block" method="post" target="_self" action="/login/"><h1>Login</h1>',    \
-                   '<input type="text" value="" placeholder="Username" name="username" id="username" autofocus="on" maxlength="256">',       \
-                   '<input type="password" value="" placeholder="Password" name="password" id="password" maxlength="1024">',   \
-                   '<input type="submit" name="submit" id="submit" value="Submit"></form>'
-
-
 proc ShowLoginPage
 begin
-        stdcall StrDupMem, templateLogin
+        stdcall StrNew
+        stdcall StrCatTemplate, eax, "login_form", 0, 0
         return
 endp
+
+
 
 
 
@@ -962,18 +937,10 @@ endp
 
 
 
-
-templateRegister text '<form class="register-block" method="post" target="_self" action="/register/"><h1>Register</h1>',    \
-                      '<input type="text" value="" placeholder="Username" name="username" id="username" maxlength="256" autofocus="on">',             \
-                      '<input type="text" value="" placeholder="e-mail" name="email" id="email" maxlength="320">',                     \
-                      '<input type="password" value="" placeholder="Password" name="password" id="password" maxlength="1024">',         \
-                      '<input type="password" value="" placeholder="Password again" name="password2" id="password2" maxlength="1024">',            \
-                      '<input type="submit" name="submit" id="submit" value="Submit"></form>'
-
-
 proc ShowRegisterPage
 begin
-        stdcall StrDupMem, templateRegister
+        stdcall StrNew
+        stdcall StrCatTemplate, eax, "register_form", 0, 0
         return
 endp
 
