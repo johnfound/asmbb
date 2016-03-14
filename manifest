@@ -1,9 +1,9 @@
-C Login/Logout/Register\sservices\shas\sbeen\sadded.\sThe\ssession\shandling\sis\spretty\snaive\sfor\snow.\nAlso,\sgraceful\sshutdown\sof\sthe\sscript\shas\sbeen\simplemented\s(in\sFreshLib\sas\swell),\sso\snow\nthe\sengine\scloses\sthe\sdatabase\sbefore\sexiting.
-D 2016-03-13T21:25:23.442
-F source/commands.asm 0081e1d4f8de916c303ac65f39970c8269e802a6
+C get.asm\shas\sbeen\srenamed\sto\shttp.asm\sand\swill\scontain\sthe\scode\sfor\shandling\sdifferent\shttp\srelated\stasks.\nsome\stemplates\shas\sbeen\sedited.\sThey\swill\sbe\stransferred\sto\sthe\sdatabase\slater.
+D 2016-03-14T06:21:27.316
+F source/commands.asm 3673cdfd078953068b7c7d0fc5804699a4062816
 F source/create.sql cc7a469be545c3b4f38c76922acdfdd4bb2d6e0f
 F source/fcgi.asm bf508aed2c6671c6914702e7c5f61a1ec500c1c3
-F source/get.asm c751c43827d5e67c813aab812adba6534d8a9eb3
+F source/http.asm c751c43827d5e67c813aab812adba6534d8a9eb3 w source/get.asm
 F source/index.asm d5eeba37f2113bf68a2557ef4f17172337ce0721
 F source/index.fpr ef044477567c836d4af7dacb73b14f30fae847d7
 F source/render.asm a6c69bdb473e62989ceb560c79e8e2615536137c
@@ -17,7 +17,7 @@ F www/libsqlite3.so b219b02c71d515698b2086be2edc104e5c8997a7 x
 F www/lighttpd.conf e1b4c0e56430345d661af93ebf82862d21aa2fac
 F www/post.html 25b05d8e78a0614618aa105b8ab79ffce122c713
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
-P 61f00d1213066c998fae9548a26ab9135ef10abd
-R f5cb7ff99574f8ce876e7efd13a85d86
+P 6ee18c0eda6d3b23b52cdeb31b695fcd16fdc146
+R 5d30320f071e749e5096acb2d1599157
 U johnfound
-Z 29fca8ce1dda5befec27cf8c9fca71db
+Z c181234379ec1337dcca7e2d140bca21

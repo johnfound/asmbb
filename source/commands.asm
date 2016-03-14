@@ -364,6 +364,10 @@ htmlHeader  text '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><ti
                  '<link rel="stylesheet" href="/all.css"><base target="_blank"></head><body>',                              \
                  '<h1>This is simply an experimental page. If you look for real content go ',                               \
                  '<a href="http://asm32.info">here</a> or <a href="http://fresh.flatassembler.net">here</a></h1>',          \
+                 '<div class="creative_commons">The information on this page is copied from http://astronomy.stackexchange.com', \
+                 ' and is distributed under the terms of "Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)" license.',    \
+                 ' This information is used only as a database test content and will be deleted later. ',                   \
+                 'Do not link pages from this page, nor use the content for any purposes other than the test of the site engine demonstrated here.</div>',             \
                  '<div class="login_interface">$special:loglink$</div>'
 
 htmlFooter  text '<pre>$special:environment$</pre>$special:timestamp$</body></html>'
@@ -768,9 +772,9 @@ endp
 
 
 templateLogin text '<form class="login-block" method="post" target="_self" action="/login/"><h1>Login</h1>',    \
-                   '<input type="text" value="" placeholder="Username" name="username" id="username" />',       \
-                   '<input type="password" value="" placeholder="Password" name="password" id="password" />',   \
-                   '<input type="submit" name="submit" id="submit" value="Submit" /></form>'
+                   '<input type="text" value="" placeholder="Username" name="username" id="username" autofocus="on" maxlength="256">',       \
+                   '<input type="password" value="" placeholder="Password" name="password" id="password" maxlength="1024">',   \
+                   '<input type="submit" name="submit" id="submit" value="Submit"></form>'
 
 
 proc ShowLoginPage
@@ -960,11 +964,11 @@ endp
 
 
 templateRegister text '<form class="register-block" method="post" target="_self" action="/register/"><h1>Register</h1>',    \
-                      '<input type="text" value="" placeholder="Username" name="username" id="username" />',             \
-                      '<input type="text" value="" placeholder="e-mail" name="email" id="email" />',                     \
-                      '<input type="password" value="" placeholder="Password" name="password" id="password" />',         \
-                      '<input type="password" value="" placeholder="Password again" name="password2" id="password2" />',            \
-                      '<input type="submit" name="submit" id="submit" value="Submit" /></form>'
+                      '<input type="text" value="" placeholder="Username" name="username" id="username" maxlength="256" autofocus="on">',             \
+                      '<input type="text" value="" placeholder="e-mail" name="email" id="email" maxlength="320">',                     \
+                      '<input type="password" value="" placeholder="Password" name="password" id="password" maxlength="1024">',         \
+                      '<input type="password" value="" placeholder="Password again" name="password2" id="password2" maxlength="1024">',            \
+                      '<input type="submit" name="submit" id="submit" value="Submit"></form>'
 
 
 proc ShowRegisterPage
