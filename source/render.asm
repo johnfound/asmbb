@@ -313,9 +313,9 @@ end if
 
 .login:
         stdcall StrCat, [.string], '<a class="login" target="_self" href="/login/">Login</a>'
+        stdcall StrCat, [.string], '<span class="separator"></span><a class="register" target="_self" href="/register/">Register</a>'
 
 .common:
-        stdcall StrCat, [.string], '<span class="separator"></span><a class="register" target="_self" href="/register/">Register</a>'
         jmp     .finish
 
 

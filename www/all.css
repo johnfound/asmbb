@@ -5,7 +5,7 @@ body {
 }
 
 body * {
-  box-sizing: border-box;
+/*  box-sizing: border-box; */
   padding: 0px;
 /*  border: 1px solid red; */
 }
@@ -21,58 +21,37 @@ div.threads_list {
   width: 90%;
   max-width: 1280px;
   margin: auto;
-  position: relative;
-}
-
-div.threads_list * {
-  border 1px solid red;
-}
-
-div.thread_summary {
-  position: relative;
-  margin-top: 16px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 
-div.thread_summary * {
-  border: 0px;
+.thread_summary {
+  background-color: white;
+
+  overflow: hidden;
+  zoom: 1;
+  margin-bottom: 8px;
 }
 
 
 div.thread_info {
-  position: absolute;
-  width: 100px;
-  left: 0px;
-  top: 0px;
-  bottom: 0px;
-
   background-color: #404040;
   color: white;
-
-  padding: 8px;
   text-align: center;
   font-weight: bold;
-
-  display: flex;
-  justify-content:center;
-  align-content:center;
-  flex-direction:column; /* column | row */
+  
+  float: left;
+  width: 100px;
+  height: 100px;
+  padding-top: 32px;
+  line-height: 32px;
 }
 
 
 div.thread_link {
-  margin-left: 100px;
-  padding: 8px;
   background-color: white;
-  min-height: 64px;
-
-  display: flex;
-  justify-content:center;
-  align-items:flex-start;
-  flex-direction:column; /* column | row */
-
+  padding: 32px;
+  padding-left: 128px;
+  display: hide;
 }
 
 
@@ -97,10 +76,6 @@ h1.thread_caption {
   margin-top: 16px;
 }
 
-
-div.thread * {
-  background-color: transparent;
-}
 
 
 div.thread a {
@@ -173,7 +148,9 @@ div.post_text img {
 /* Pages links styles */
 
 div.page_row {
+  margin-bottom: 16px;
   margin-top: 16px;
+  clear: both;
 }
 
 a.page_link {
@@ -284,17 +261,23 @@ span.current_page {
 /* login/logout info on the pages */
 
 div.login_interface {
-  width: 90%;
-  max-width: 1280px;
   background-color: #f0f060;
   text-align: right;
-  padding: 8px;
-  margin: 32px auto;
+
+  width: 90%;
+  max-width: 1280px;
+  margin: 16px auto 0px auto;
+}
+
+div.login_interface a {
+  text-align: right;
+  display: inline;
+  padding-right: 16px;
+  line-height: 2em;
 }
 
 span.separator {
-  width: 32px;
-  display: inline-block;
+  display: hidden;
 }
 
 

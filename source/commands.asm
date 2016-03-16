@@ -946,7 +946,7 @@ endp
 
 
 
-sqlRegisterUser  text "insert into Users (nick, passHash, status, email) values (?, ?, ?, ?)"
+sqlRegisterUser  text "insert into WaitingActivation (nick, passHash, salt, email, time_reg, time_email, a_secret) values (?, ?, ?, ?, strftime('%s','now'), NULL, ?)"
 
 
 proc RegisterNewUser, .pPost
@@ -957,6 +957,9 @@ proc RegisterNewUser, .pPost
 .password  dd ?
 .password2 dd ?
 .email     dd ?
+.secret    dd ?
+
+.email_text dd ?
 
 begin
         pushad
@@ -966,6 +969,7 @@ begin
         mov     [.password], eax
         mov     [.password2], eax
         mov     [.email], eax
+        mov     [.secret], eax
 
         stdcall StrDupMem, <"Status: 302 Found", 13, 10>
         mov     edi, eax
@@ -984,7 +988,7 @@ begin
 
         stdcall StrLen, eax
         cmp     eax, 3
-        jbe     .redirect_back_short_name
+        jbe     .error_short_name
 
 
         stdcall GetQueryItem, ebx, "email=", 0
@@ -992,7 +996,7 @@ begin
 
         stdcall StrLen, eax
         cmp     eax, 5
-        jbe     .redirect_back_short_email
+        jbe     .error_short_email
 
 
         stdcall GetQueryItem, ebx, "password=", 0
@@ -1002,20 +1006,29 @@ begin
         mov     [.password2], eax
 
         stdcall StrCompCase, [.password], [.password2]
-        jnc     .redirect_back_different
+        jnc     .error_different
 
 
         stdcall StrLen, [.password]
         cmp     eax, 5
-        jbe     .redirect_back_short_pass
+        jbe     .error_short_pass
 
 
 ; hash the password
 
-        stdcall StrCat, [.password], [.user]
-        stdcall StrMD5, [.password]
+        stdcall HashPassword, [.password], [.user]
+        jc      .error_technical_problem
+
         stdcall StrDel, [.password]
+        stdcall StrDel, [.password2]
         mov     [.password], eax
+        mov     [.password2], edx       ; the salt!
+
+        stdcall GetRandomString, 32
+        jc      .error_technical_problem
+
+        mov     [.secret], eax
+
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRegisterUser, -1, eax, 0
@@ -1026,7 +1039,14 @@ begin
         stdcall StrPtr, [.password]
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 
-        cinvoke sqliteBindInt, [.stmt], 3, permLogin or permRead or permPost or permThreadStart or permEditOwn
+        stdcall StrPtr, [.password2]
+        cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
+
+        stdcall StrPtr, [.email]
+        cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
+
+        stdcall StrPtr, [.secret]
+        cinvoke sqliteBindText, [.stmt], 5, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
         mov     ebx, eax
@@ -1034,34 +1054,47 @@ begin
         cinvoke sqliteFinalize, [.stmt]
 
         cmp     eax, SQLITE_OK
-        jne     .redirect_back_exists
+        jne     .error_exists
 
-        stdcall StrCat, edi, <"Location: /login/", 13, 10, 13, 10>       ; go forward.
+
+; now send the activation email
+
+        stdcall SendActivationEmail, [.email], [.user], [.secret]
+        jc      .error_technical_problem
+
+; the user has been created and now is waiting for email activation.
+
+        stdcall StrCat, edi, <"Location: /message/user_created/", 13, 10, 13, 10>       ; go forward.
         jmp     .finish
 
 
-.redirect_back_short_name:
+.error_technical_problem:
+        stdcall StrCat, edi, <"Location: /error/register_technical/", 13, 10, 13, 10>       ; go backward.
+        jmp     .finish
+
+
+.error_short_name:
         stdcall StrCat, edi, <"Location: /error/register_short_name/", 13, 10, 13, 10>       ; go backward.
         jmp     .finish
 
 
-.redirect_back_short_email:
+.error_short_email:
         stdcall StrCat, edi, <"Location: /error/register_short_email/", 13, 10, 13, 10>       ; go backward.
         jmp     .finish
 
 
-.redirect_back_short_pass:
+.error_short_pass:
         stdcall StrCat, edi, <"Location: /error/register_short_pass/", 13, 10, 13, 10>       ; go backward.
         jmp     .finish
 
 
 
-.redirect_back_different:
+.error_different:
         stdcall StrCat, edi, <"Location: /error/register_passwords_different/", 13, 10, 13, 10>       ; go backward.
         jmp     .finish
 
 
-.redirect_back_exists:
+.error_exists:
         stdcall StrCat, edi, <"Location: /error/register_user_exists/", 13, 10, 13, 10>       ; go backward.
 
 
@@ -1070,6 +1103,7 @@ begin
         stdcall StrDelNull, [.password]
         stdcall StrDelNull, [.password2]
         stdcall StrDelNull, [.email]
+        stdcall StrDelNull, [.secret]
 
         mov     [esp+4*regEAX], edi
         popad
@@ -1291,6 +1325,26 @@ mimePNG   text "image/png"
 mimeJPEG  text "image/jpeg"
 mimeSVG   text "image/svg+xml"
 mimeGIF   text "image/gif"
+
+
+
+
+
+
+
+
+
+
+
+proc SendActivationEmail, .email, .user, .secret
+begin
+
+
+
+
+        return
+endp
+
 
 
 

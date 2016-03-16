@@ -78,3 +78,31 @@ begin
         pop     esi ecx
         return
 endp
+
+
+
+; returns 2 strings:
+;
+; eax - hashed password.
+; edx - the salt used.
+
+
+proc HashPassword, .hPassword
+begin
+; First the salt:
+
+        stdcall GetRandomString, 32
+        jc      .finish
+
+        mov     edx, eax
+        stdcall StrDup, eax
+        push    eax
+
+        stdcall StrCat, eax, [.hPassword]
+        stdcall StrMD5, eax
+        stdcall StrDel  ; from the stack
+        clc
+
+.finish:
+        return
+endp

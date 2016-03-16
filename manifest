@@ -1,23 +1,24 @@
-C The\stemplates\shas\sbeen\sremoved\sfrom\sthe\scode\sand\sput\sto\sthe\sdatabase.
-D 2016-03-14T11:40:20.500
-F source/commands.asm b83f2539758b6da1ff9be5445f7bd9027f746ab7
-F source/create.sql cc7a469be545c3b4f38c76922acdfdd4bb2d6e0f
+C Improved\spassword\shashing\sand\sprocedure\sof\saccount\sactivation\simplemented\s-\swork\sin\sprogress.\nIn\srelation\swith\sthis\sthe\sdabase\sscheme\sis\schanged.
+D 2016-03-16T06:48:22.135
+F source/Linux/sqlite3.inc f9221a234b424eac0cbf4ad99a1aa289591db75f w source/sqlite3.inc
+F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
+F source/commands.asm 144e3cb5ab3feaccf50b1a004b20d987e26c6c28
+F source/create.sql 0af5a2e0789fee88923810d1d4f29492770b522b
 F source/fcgi.asm bf508aed2c6671c6914702e7c5f61a1ec500c1c3
-F source/http.asm c751c43827d5e67c813aab812adba6534d8a9eb3
-F source/index.asm 7d044abef4943a241d836b325850582e0d6a0e51
+F source/http.asm 5a42e7a9490e3e525f323cc54bd151810e4e539e
+F source/index.asm 92501697b8386f3a5d7d920810f1ade53300902b
 F source/index.fpr 1393aa4328b9467164677edb5186a53bacf19f3f
-F source/render.asm ce5b34c063662c7ac88d0d84b946b696cb2fbfa6
+F source/render.asm b25ed3aa18fe9ca5d04d5bf5ede5ac02b2004b99
 F source/sqlite3.asm 9ea6342ffa2820dd35348c07965fa90c75c715ec
-F source/sqlite3.inc f9221a234b424eac0cbf4ad99a1aa289591db75f
 F www/.htaccess e3d61615a5f5b289f09966a72e7f02777d0b1c60
-F www/all.css f57ac1220c690f21a7b628b047f681c88bf06f68
+F www/all.css c7137d3b0d682c607af5b95e1905b647e5354001
 F www/error.css 51294ab459d163a2642ed8d56ce7caceb052ebc9
 F www/ld-musl-i386.so 4d44786b8676115c7df45c45ceb051c11ce14ffd x
 F www/libsqlite3.so b219b02c71d515698b2086be2edc104e5c8997a7 x
 F www/lighttpd.conf e1b4c0e56430345d661af93ebf82862d21aa2fac
 F www/post.html 25b05d8e78a0614618aa105b8ab79ffce122c713
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
-P a0e6eaf9338136eb393654d2b7d4d4a98f60c5ea
-R fb6858c0c17919acd83e847455cd7b9d
+P 737429457fb59665677fc87c93bd380303bc80bc
+R c0c91c44341c4982804a04566d29d08f
 U johnfound
-Z 69e8e7855b317ba780659e8b8c594501
+Z 4f069a0413bc1d3b9fd983fe4dd4e471

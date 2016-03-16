@@ -21,7 +21,7 @@ LINUX_INTERPRETER equ './ld-musl-i386.so'
 options.ShowSkipped = 0
 options.ShowSizes = 1
 
-options.DebugMode = 0
+options.DebugMode = 1
 options.AlignCode = 0
 options.ShowImported = 1
 
@@ -31,10 +31,10 @@ options.ShowImported = 1
 
 include "%lib%/freshlib.asm"
 
-uses sqlite3:"sqlite3.inc"
+uses sqlite3:"%TargetOS%/sqlite3.inc"
 
 include "sqlite3.asm"   ; sqlite utility functions.
-include "get.asm"
+include "http.asm"
 include "commands.asm"
 include "render.asm"
 include "fcgi.asm"
@@ -59,7 +59,6 @@ start:
 
 
         stdcall SetForcedTerminateHandler, OnForcedTerminate
-
 
         cinvoke sqliteConfig, SQLITE_CONFIG_SERIALIZED
         cinvoke sqliteInitialize
