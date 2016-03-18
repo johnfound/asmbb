@@ -17,25 +17,25 @@ INSERT INTO `Params` VALUES ('smtp_port','25');
 create table if not exists Users (
   id	    integer primary key autoincrement,
   nick	    text unique,
-  passHash  text,
-  salt	    text,
-  status    integer,  -- active, banned, etc.
-  user_desc text,     -- free text user description.
-  email     text      -- user email
+  passHash  text unique,
+  salt	    text unique,
+  status    integer,	     -- see permXXXXX constants.
+  user_desc text,	     -- free text user description.
+  email     text unique      -- user email
 );
 
 
 
 create table if not exists WaitingActivation(
   id integer primary key,
-  nick text,
-  passHash text,
-  salt	text,
-  email text,
+  nick text unique,
+  passHash text unique,
+  salt	text unique,
+  email text unique,
   ip_from text,
   time_reg   integer,
   time_email integer,
-  a_secret text
+  a_secret text unique
 );
 
 

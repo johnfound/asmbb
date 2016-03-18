@@ -81,6 +81,9 @@ begin
         stdcall StrDup, eax
         mov     [.uri], eax
 
+        stdcall StrSplitList, [.uri], '/', FALSE        ; split the URI in order to analize it better.
+        mov     esi, eax
+
 ; first check for supported file format.
 
         stdcall StrDup, [.root]
@@ -116,7 +119,7 @@ begin
 .error400:
         lea     eax, [.special]
         stdcall AppendError, edi, "400 Bad Request", eax
-        jmp     .send_simple_result
+        jmp     .send_simple_result2                            ; without freeing the list in ESI!
 
 
 .error403:
@@ -150,6 +153,8 @@ begin
 
         stdcall ListFree, esi, StrDel
 
+.send_simple_result2:
+
         stdcall StrPtr, edi
         stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], TRUE
 
@@ -169,9 +174,6 @@ begin
 
 
 .analize_uri:
-
-        stdcall StrSplitList, [.uri], '/', FALSE
-        mov     esi, eax
 
         OutputValue "Request count:", [esi+TArray.count], 10, -1
 
@@ -204,7 +206,7 @@ begin
 
 
 .end_forum_request:
-        jmp     .error400
+        jmp     .error404
 
 
 .redirect_to_the_list:
@@ -219,7 +221,7 @@ begin
 .activate_account:
 
         cmp     [esi+TArray.count], 2
-        jne     .error400
+        jne     .wrong_activation
 
         stdcall ActivateAccount, [esi+TArray.array+4]
         jc      .wrong_activation
@@ -1010,8 +1012,8 @@ endp
 
 
 ;sqlCheckMinInterval text "select (strftime('%s','now') - time_reg) as delta from WaitingActivation where (ip_from = ?) and ( delta>30 ) order by time_reg desc limit 1"
-sqlRegisterUser  text "insert into WaitingActivation (nick, passHash, salt, email, ip_from, time_reg, time_email, a_secret) values (?, ?, ?, ?, ?, strftime('%s','now'), NULL, ?)"
-
+sqlRegisterUser    text "insert into WaitingActivation (nick, passHash, salt, email, ip_from, time_reg, time_email, a_secret) values (?, ?, ?, ?, ?, strftime('%s','now'), NULL, ?)"
+sqlCheckUserExists text "select 1 from Users where lower(nick) = lower(?) or email = ? limit 1"
 
 proc RegisterNewUser, .pPost, .pParams
 
@@ -1098,6 +1100,24 @@ begin
 
         mov     [.secret], eax
 
+; check whether the user exists
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckUserExists, -1, eax, 0
+
+        stdcall StrPtr, [.user]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+        stdcall StrPtr, [.email]
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     ebx, SQLITE_ROW
+        je      .error_exists
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRegisterUser, -1, eax, 0
@@ -1602,6 +1622,7 @@ endp
 sqlBegin      text  "begin transaction"
 sqlActivate   text  "insert into Users ( nick, passHash, salt, status, email ) select nick, passHash, salt, ?, email from WaitingActivation where a_secret = ?"
 sqlDeleteWait text  "delete from WaitingActivation where a_secret = ?"
+sqlCheckCount text  "select count(*) from WaitingActivation where a_secret = ?"
 sqlCommit     text  "commit transaction"
 sqlRollback   text  "rollback"
 
@@ -1620,6 +1641,24 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
+; check again whether all is successful.
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckCount, -1, eax, 0
+
+        stdcall StrPtr, [.hSecret]
+        cinvoke sqliteBindText, [.stmt], 1, eax, -1, SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .rollback
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        cmp     eax, 1
+        jne     .rollback
+
+        cinvoke sqliteFinalize, [.stmt]
+
+
 ; insert new user
 
         lea     eax, [.stmt]
@@ -1633,6 +1672,8 @@ begin
 
         cmp     eax, SQLITE_DONE
         jne     .rollback
+
+        cinvoke sqliteChanges, [hMainDatabase]
 
         cinvoke sqliteFinalize, [.stmt]
 
