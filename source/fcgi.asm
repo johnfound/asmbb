@@ -390,6 +390,8 @@ begin
         stdcall ServeOneRequest, [.hSocket], [.requestID], [.requestParams], [.requestPost], [.start_time]
         jc      .finish
 
+        DebugMsg "Request served."
+
         stdcall FCGI_send_end_request, [.hSocket], [.requestID], FCGI_REQUEST_COMPLETE
         jc      .finish
 

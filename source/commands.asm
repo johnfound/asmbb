@@ -114,17 +114,20 @@ begin
 
 
 .error400:
-        stdcall AppendError, edi, "400 Bad Request"
+        lea     eax, [.special]
+        stdcall AppendError, edi, "400 Bad Request", eax
         jmp     .send_simple_result
 
 
 .error403:
-        stdcall AppendError, edi, "403 Forbidden"
+        lea     eax, [.special]
+        stdcall AppendError, edi, "403 Forbidden", eax
         jmp     .send_simple_result
 
 
 .error404:
-        stdcall AppendError, edi, "404 Not Found"
+        lea     eax, [.special]
+        stdcall AppendError, edi, "404 Not Found", eax
         jmp     .send_simple_result
 
 
@@ -142,14 +145,13 @@ begin
 
         stdcall StrDel, eax
 
-        stdcall ListFree, esi, StrDel
-
 
 .send_simple_result:    ; it is a result containing only a string data in EDI
 
+        stdcall ListFree, esi, StrDel
+
         stdcall StrPtr, edi
         stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], TRUE
-
 
 .final_clean:
 
@@ -171,6 +173,8 @@ begin
         stdcall StrSplitList, [.uri], '/', FALSE
         mov     esi, eax
 
+        OutputValue "Request count:", [esi+TArray.count], 10, -1
+
         cmp     [esi+TArray.count], 0
         je      .redirect_to_the_list
 
@@ -180,8 +184,8 @@ begin
         stdcall StrCompNoCase, [esi+TArray.array], txt "list"
         jc      .show_thread_list
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "error"
-        jc      .show_error
+        stdcall StrCompNoCase, [esi+TArray.array], txt "message"
+        jc      .show_message
 
         stdcall StrCompNoCase, [esi+TArray.array], txt "login"
         jc      .user_login
@@ -195,11 +199,11 @@ begin
         stdcall StrCompNoCase, [esi+TArray.array], txt "post"
         jc      .post_message
 
+        stdcall StrCompNoCase, [esi+TArray.array], txt "activate"
+        jc      .activate_account
 
 
 .end_forum_request:
-
-        stdcall ListFree, esi, StrDel
         jmp     .error400
 
 
@@ -209,6 +213,25 @@ begin
         jmp     .send_simple_result
 
 
+
+;..................................................................................
+
+.activate_account:
+
+        cmp     [esi+TArray.count], 2
+        jne     .error400
+
+        stdcall ActivateAccount, [esi+TArray.array+4]
+        jc      .wrong_activation
+
+        stdcall StrCat, edi, <"Status: 302 Found", 13, 10, "Location: /message/congratulations/", 13, 10, 13, 10>
+        jmp     .send_simple_result
+
+
+.wrong_activation:
+
+        stdcall StrCat, edi, <"Status: 302 Found", 13, 10, "Location: /message/bad_secret/", 13, 10, 13, 10>
+        jmp     .send_simple_result
 
 
 ;..................................................................................
@@ -270,7 +293,7 @@ begin
 cUnknownError text "unknown_error"
 
 
-.show_error:
+.show_message:
 
         mov     eax, cUnknownError
 
@@ -281,7 +304,7 @@ cUnknownError text "unknown_error"
 
 .error_ok:
 
-        stdcall ShowForumError, eax, [.pParams]
+        stdcall ShowForumMessage, eax, [.pParams]
 
         jmp     .output_forum_html
 
@@ -327,7 +350,8 @@ cUnknownError text "unknown_error"
         cmp     [.pPost], 0
         je      .show_register_page
 
-        stdcall RegisterNewUser, [.pPost]
+        stdcall RegisterNewUser, [.pPost], [.pParams]
+
         stdcall StrDel, edi
         mov     edi, eax
         jmp     .send_simple_result
@@ -688,40 +712,54 @@ endp
 
 
 
-sqlGetErrorText text "select msg from errors where err = ?"
+sqlGetErrorText text "select msg, header, link from messages where id = ?"
 cGoRoot text "/"
 
 
-proc ShowForumError, .error_key, .pParams
+proc ShowForumMessage, .key, .pParams
 .stmt dd ?
 begin
         pushad
 
-        stdcall StrDupMem, '<div class="error_block"><h1>ERROR!</h1><div class="error_msg">'
-        mov     edi, eax
-
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetErrorText, -1, eax, 0
 
-        stdcall StrLen, [.error_key]
+        stdcall StrLen, [.key]
         mov     ecx, eax
-        stdcall StrPtr, [.error_key]
+
+        stdcall StrPtr, [.key]
         cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
         cinvoke sqliteStep, [.stmt]
-
         cmp     eax, SQLITE_ROW
         jne     .unknown_msg
+
+        stdcall StrDupMem, '<div class="message_block"><h1>'
+        mov     edi, eax
+
+        cinvoke sqliteColumnText, [.stmt], 1
+        stdcall StrCat, edi, eax
+
+        stdcall StrCat, edi, '</h1><div class="message">'
 
         cinvoke sqliteColumnText, [.stmt], 0
         stdcall StrCat, edi, eax
 
-.finalize:
-        cinvoke sqliteFinalize, [.stmt]
+        stdcall StrCat, edi, '</div><br>'
+
+        cinvoke sqliteColumnType, [.stmt], 2
+        cmp     eax, SQLITE_NULL
+        je      .add_back_link
+
+        cinvoke sqliteColumnText, [.stmt], 2
+        stdcall StrCat, edi, eax
+        jmp     .finalize
 
 
 ; now insert link to the previous page.
 
-        stdcall StrCat, edi, '</div><br><a target="_self" href="'
+.add_back_link:
+
+        stdcall StrCat, edi, '<a target="_self" href="'
 
         stdcall ValueByName, [.pParams], "HTTP_REFERER"
         jnc     .referer_ok
@@ -730,18 +768,29 @@ begin
 
 .referer_ok:
         stdcall StrCat, edi, eax
+        stdcall StrCat, edi, '">Go back and try again</a>'
 
-        stdcall StrCat, edi, '">Go back and try again</a></div>'
+
+.finalize:
+        stdcall StrCat, edi, '</div>'
+
+        cinvoke sqliteFinalize, [.stmt]
+
 
         mov     [esp+4*regEAX], edi
         popad
         return
 
 
-
 .unknown_msg:
-        stdcall StrCat, edi, <"Three things are certain:", 13, 10, "Death, taxes and lost data.", 13, 10, "Guess which has occurred.">
-        jmp     .finalize
+        stdcall StrDupMem, <'<div class="message_block"><h1>ERROR!</h1><div class="message">',     \
+                            'Three things are certain:', 13, 10,                                   \
+                            'Death, taxes and lost data.', 13, 10,                                 \
+                            'Guess which has occurred.', 13, 10,                                   \
+                            '</div><br>', 13, 10 >
+
+        mov     edi, eax
+        jmp     .add_back_link
 endp
 
 
@@ -760,7 +809,7 @@ endp
 
 
 
-sqlGetUserInfo   text "select id, abs(random()) as session from users where nick = ? and passHash = ?"
+sqlGetUserInfo   text "select id, salt, passHash, status from Users where lower(nick) = lower(?)"
 sqlInsertSession text "insert or replace into sessions (userID, sid, last_seen) values ( ?, ?, strftime('%s','now') )"
 
 
@@ -772,6 +821,7 @@ proc UserLogin, .pPost, .pParams
 
 .userID   dd ?
 .session  dd ?
+.status   dd ?
 
 begin
         pushad
@@ -800,7 +850,6 @@ begin
         test    eax, eax
         jz      .redirect_back_short
 
-
         stdcall GetQueryItem, ebx, "password=", 0
         mov     [.password], eax
 
@@ -810,19 +859,11 @@ begin
 
 ; hash the password
 
-        stdcall StrCat, [.password], [.user]
-        stdcall StrMD5, [.password]
-        stdcall StrDel, [.password]
-        mov     [.password], eax
-
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetUserInfo, -1, eax, 0
 
         stdcall StrPtr, [.user]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-
-        stdcall StrPtr, [.password]
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
@@ -836,7 +877,22 @@ begin
 
 .user_ok:
 
-        DebugMsg "User login/password match!"
+        cinvoke sqliteColumnText, [.stmt], 1    ; the salt
+        stdcall StrDupMem, eax
+        push    eax
+
+        stdcall StrCat, eax, [.password]
+        stdcall StrMD5, eax
+        stdcall StrDel ; from the stack
+        stdcall StrDel, [.password]
+
+        mov     [.password], eax
+
+        cinvoke sqliteColumnText, [.stmt], 2    ; the password hash.
+
+        stdcall StrCompCase, [.password], eax
+        jnc     .bad_user
+
 
 ; here the password matches this from the database.
 ; Create session.
@@ -844,13 +900,20 @@ begin
         cinvoke sqliteColumnInt, [.stmt], 0
         mov     [.userID], eax
 
-        OutputValue "User ID:", eax, 10, -1
-
-        cinvoke sqliteColumnText, [.stmt], 1    ; session ID
-        stdcall StrDupMem, eax
-        mov     [.session], eax
+        cinvoke sqliteColumnInt, [.stmt], 3
+        mov     [.status], eax
 
         cinvoke sqliteFinalize, [.stmt]
+
+; check the status of the user
+
+        test    [.status], permLogin
+        jz      .redirect_back_bad_permissions
+
+
+        stdcall GetRandomString, 32
+        mov     [.session], eax
+
 
 ; Insert session record.
 
@@ -864,12 +927,9 @@ begin
 
         cinvoke sqliteStep, [.stmt]
 
-
 ; check for error here!
 
         cinvoke sqliteFinalize, [.stmt]
-
-        DebugMsg "Record inserted."
 
 ; now, set some cookies
 
@@ -882,20 +942,23 @@ begin
 
 .redirect_back_short:
 
-        stdcall StrCat, edi, <"Location: /error/login_missing_data/", 13, 10, 13, 10>       ; go backward.
+        stdcall StrCat, edi, <"Location: /message/login_missing_data/", 13, 10, 13, 10>       ; go backward.
+        jmp     .finish
+
+.redirect_back_bad_permissions:
+
+        stdcall StrCat, edi, <"Location: /message/login_bad_permissions/", 13, 10, 13, 10>       ; go backward.
         jmp     .finish
 
 
 .redirect_back_bad_password:
-        stdcall StrCat, edi, <"Location: /error/login_bad_password/", 13, 10, 13, 10>       ; go backward.
+        stdcall StrCat, edi, <"Location: /message/login_bad_password/", 13, 10, 13, 10>       ; go backward.
 
 
 .finish:
         stdcall StrDelNull, [.user]
         stdcall StrDelNull, [.password]
         stdcall StrDelNull, [.session]
-
-        OutputValue "Returned value: ", edi, 16, 8
 
         mov     [esp+4*regEAX], edi
         popad
@@ -946,10 +1009,11 @@ endp
 
 
 
-sqlRegisterUser  text "insert into WaitingActivation (nick, passHash, salt, email, time_reg, time_email, a_secret) values (?, ?, ?, ?, strftime('%s','now'), NULL, ?)"
+;sqlCheckMinInterval text "select (strftime('%s','now') - time_reg) as delta from WaitingActivation where (ip_from = ?) and ( delta>30 ) order by time_reg desc limit 1"
+sqlRegisterUser  text "insert into WaitingActivation (nick, passHash, salt, email, ip_from, time_reg, time_email, a_secret) values (?, ?, ?, ?, ?, strftime('%s','now'), NULL, ?)"
 
 
-proc RegisterNewUser, .pPost
+proc RegisterNewUser, .pPost, .pParams
 
 .stmt      dd ?
 
@@ -958,6 +1022,7 @@ proc RegisterNewUser, .pPost
 .password2 dd ?
 .email     dd ?
 .secret    dd ?
+.ip_from   dd ?
 
 .email_text dd ?
 
@@ -970,6 +1035,7 @@ begin
         mov     [.password2], eax
         mov     [.email], eax
         mov     [.secret], eax
+        mov     [.ip_from], eax
 
         stdcall StrDupMem, <"Status: 302 Found", 13, 10>
         mov     edi, eax
@@ -990,14 +1056,11 @@ begin
         cmp     eax, 3
         jbe     .error_short_name
 
-
         stdcall GetQueryItem, ebx, "email=", 0
         mov     [.email], eax
 
-        stdcall StrLen, eax
-        cmp     eax, 5
-        jbe     .error_short_email
-
+        stdcall CheckEmail, eax
+        jc      .error_bad_email
 
         stdcall GetQueryItem, ebx, "password=", 0
         mov     [.password], eax
@@ -1014,9 +1077,15 @@ begin
         jbe     .error_short_pass
 
 
+        stdcall ValueByName, [.pParams], "REMOTE_ADDR"
+        stdcall StrIP2Num, eax
+        jc      .error_technical_problem
+
+        mov     [.ip_from], eax
+
 ; hash the password
 
-        stdcall HashPassword, [.password], [.user]
+        stdcall HashPassword, [.password]
         jc      .error_technical_problem
 
         stdcall StrDel, [.password]
@@ -1045,21 +1114,22 @@ begin
         stdcall StrPtr, [.email]
         cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
 
+        cinvoke sqliteBindInt, [.stmt], 5, [.ip_from]
+
         stdcall StrPtr, [.secret]
-        cinvoke sqliteBindText, [.stmt], 5, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteBindText, [.stmt], 6, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
         mov     ebx, eax
 
         cinvoke sqliteFinalize, [.stmt]
 
-        cmp     eax, SQLITE_OK
+        cmp     ebx, SQLITE_DONE
         jne     .error_exists
 
+; now send the activation email for all registered user, where the email was not sent.
 
-; now send the activation email
-
-        stdcall SendActivationEmail, [.email], [.user], [.secret]
+        stdcall ProcessActivationEmails
         jc      .error_technical_problem
 
 ; the user has been created and now is waiting for email activation.
@@ -1069,33 +1139,32 @@ begin
 
 
 .error_technical_problem:
-        stdcall StrCat, edi, <"Location: /error/register_technical/", 13, 10, 13, 10>       ; go backward.
+        stdcall StrCat, edi, <"Location: /message/register_technical/", 13, 10, 13, 10>       ; go backward.
         jmp     .finish
 
 
 .error_short_name:
-        stdcall StrCat, edi, <"Location: /error/register_short_name/", 13, 10, 13, 10>       ; go backward.
+        stdcall StrCat, edi, <"Location: /message/register_short_name/", 13, 10, 13, 10>       ; go backward.
         jmp     .finish
 
 
-.error_short_email:
-        stdcall StrCat, edi, <"Location: /error/register_short_email/", 13, 10, 13, 10>       ; go backward.
+.error_bad_email:
+        stdcall StrCat, edi, <"Location: /message/register_bad_email/", 13, 10, 13, 10>       ; go backward.
         jmp     .finish
 
 
 .error_short_pass:
-        stdcall StrCat, edi, <"Location: /error/register_short_pass/", 13, 10, 13, 10>       ; go backward.
+        stdcall StrCat, edi, <"Location: /message/register_short_pass/", 13, 10, 13, 10>       ; go backward.
         jmp     .finish
 
 
-
 .error_different:
-        stdcall StrCat, edi, <"Location: /error/register_passwords_different/", 13, 10, 13, 10>       ; go backward.
+        stdcall StrCat, edi, <"Location: /message/register_passwords_different/", 13, 10, 13, 10>       ; go backward.
         jmp     .finish
 
 
 .error_exists:
-        stdcall StrCat, edi, <"Location: /error/register_user_exists/", 13, 10, 13, 10>       ; go backward.
+        stdcall StrCat, edi, <"Location: /message/register_user_exists/", 13, 10, 13, 10>       ; go backward.
 
 
 .finish:
@@ -1225,25 +1294,19 @@ endp
 
 
 
-
-
-errorHeader  text '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>HTTP response</title><link rel="stylesheet" href="/error.css"></head><body>'
-errorFooter  text '</body></html>'
-
-
-proc AppendError, .hString, .code
+proc AppendError, .hString, .code, .special
 begin
         stdcall StrCat, [.hString], "Status: "
         stdcall StrCat, [.hString], [.code]
         stdcall StrCharCat, [.hString], $0a0d
         stdcall StrCat, [.hString], <"Content-type: text/html", 13, 10, 13, 10>
 
-        stdcall StrCat, [.hString], errorHeader
+        stdcall StrCatTemplate, [.hString], "error_html_start", 0, [.special]
         stdcall StrCat, [.hString], txt "<h1>"
         stdcall StrCat, [.hString], [.code]
         stdcall StrCat, [.hString], txt "</h1>"
 
-        stdcall StrCat, [.hString], errorFooter
+        stdcall StrCatTemplate, [.hString], "error_html_end", 0, [.special]
         return
 endp
 
@@ -1334,16 +1397,289 @@ mimeGIF   text "image/gif"
 
 
 
+sqlSelectNotSent text "select id, nick, email, a_secret as secret, (select val from Params where id='host') as host from WaitingActivation where time_email is NULL order by time_reg"
+sqlCleanWaiting  text "delete from WaitingActivation where time_reg < (strftime('%s','now') - 86400) and time_email is not NULL"
 
-
-proc SendActivationEmail, .email, .user, .secret
+proc ProcessActivationEmails
+.stmt dd ?
 begin
+        pushad
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectNotSent, -1, eax, 0
+
+.account_loop:
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .process_end
+
+        stdcall SendActivationEmail, [.stmt]
+        jmp     .account_loop
 
 
+.process_end:
+        cinvoke sqliteFinalize, [.stmt]
+        cinvoke sqliteExec, [hMainDatabase], sqlCleanWaiting, 0, 0, 0
 
-
+        popad
         return
 endp
+
+
+sqlUpdateEmailTime text "update WaitingActivation set time_email = strftime('%s','now') where id = ?"
+
+proc SendActivationEmail, .stmt
+
+.stmt2     dd ?
+.subj      dd ?
+.body      dd ?
+
+.host      dd ?
+.from      dd ?
+.to        dd ?
+.smtp_ip   dd ?
+.smtp_port dd ?
+
+begin
+        pushad
+
+        xor     eax, eax
+        mov     [.host], eax
+        mov     [.from], eax
+        mov     [.to], eax
+        mov     [.smtp_ip], eax
+        mov     [.subj], eax
+        mov     [.body], eax
+
+
+        stdcall GetParam, txt "host", gpString
+        jc      .finish
+
+        mov     [.host], eax
+
+
+        stdcall GetParam, txt "email", gpString
+        jc      .finish
+
+        mov     [.from], eax
+
+        cinvoke sqliteColumnText, [.stmt], 2    ; the user email
+        stdcall StrDupMem, eax
+
+        mov     [.to], eax
+
+
+        stdcall GetParam, "smtp_ip", gpString
+        jc      .finish
+
+        mov     [.smtp_ip], eax
+
+
+        stdcall GetParam, "smtp_port", gpInteger
+        jc      .finish
+
+        mov     [.smtp_port], eax
+
+        stdcall StrNew
+        mov     [.subj], eax
+
+        stdcall StrCatTemplate, eax, "activation_email_subject", [.stmt], 0
+        jc      .finish
+
+
+        stdcall StrNew
+        mov     [.body], eax
+
+        stdcall StrCatTemplate, eax, "activation_email_text", [.stmt], 0
+        jc      .finish
+
+
+; now try to update the data of the record!
+
+        lea     eax, [.stmt2]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateEmailTime, -1, eax, 0
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        cinvoke sqliteBindInt, [.stmt2], 1, eax
+
+        cinvoke sqliteStep, [.stmt2]
+        push    eax
+        cinvoke sqliteFinalize, [.stmt2]
+
+        pop     eax
+        cmp     eax, SQLITE_DONE
+        jne     .error_update
+
+
+        stdcall SendEmail, [.smtp_ip], [.smtp_port], [.host], [.from], [.to], [.subj], [.body], 0
+
+.finish:
+        pushf
+
+        stdcall StrDelNull, [.smtp_ip]
+        stdcall StrDelNull, [.host]
+        stdcall StrDelNull, [.from]
+        stdcall StrDelNull, [.to]
+        stdcall StrDelNull, [.subj]
+        stdcall StrDelNull, [.body]
+
+        popf
+        popad
+        return
+
+
+.error_update:          ; the time_email field was not updated to the time of email, so the email was not sent
+                        ; in order to prevent spam to the user mailbox.
+
+        stc
+        jmp     .finish
+
+endp
+
+
+
+
+gpString  = 0
+gpInteger = 1
+
+
+sqlGetParam      text "select val from params where id = ?"
+
+proc GetParam, .key, .type
+.stmt dd ?
+begin
+        pushad
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetParam, -1, eax, 0
+
+        stdcall StrPtr, [.key]
+        cinvoke sqliteBindText, [.stmt], 1, eax, -1, SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .error
+
+        cmp     [.type], gpString
+        je      .get_string
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        jmp     .finish
+
+.get_string:
+        cinvoke sqliteColumnText, [.stmt], 0
+        stdcall StrDupMem, eax
+
+.result:
+        clc
+
+.finish:
+        pushf
+        push    eax
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        pop     eax
+        popf
+        mov     [esp+4*regEAX], eax
+        popad
+        return
+
+.error:
+        stc
+        mov     eax, [esp+4*regEAX]
+        jmp     .finish
+
+endp
+
+
+
+
+
+
+
+
+sqlBegin      text  "begin transaction"
+sqlActivate   text  "insert into Users ( nick, passHash, salt, status, email ) select nick, passHash, salt, ?, email from WaitingActivation where a_secret = ?"
+sqlDeleteWait text  "delete from WaitingActivation where a_secret = ?"
+sqlCommit     text  "commit transaction"
+sqlRollback   text  "rollback"
+
+proc ActivateAccount, .hSecret
+.stmt dd ?
+begin
+        pushad
+
+; begin transaction
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBegin, -1, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_DONE
+        jne     .rollback
+
+        cinvoke sqliteFinalize, [.stmt]
+
+; insert new user
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlActivate, -1, eax, 0
+
+        cinvoke sqliteBindInt, [.stmt], 1, permLogin or permRead or permPost or permThreadStart or permEditOwn
+
+        stdcall StrPtr, [.hSecret]
+        cinvoke sqliteBindText, [.stmt], 2, eax, -1, SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+
+        cmp     eax, SQLITE_DONE
+        jne     .rollback
+
+        cinvoke sqliteFinalize, [.stmt]
+
+; delete the waiting user
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlDeleteWait, -1, eax, 0
+
+        stdcall StrPtr, [.hSecret]
+        cinvoke sqliteBindText, [.stmt], 1, eax, -1, SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_DONE
+        jne     .rollback
+
+        cinvoke sqliteFinalize, [.stmt]
+
+; commit transaction
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCommit, -1, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_DONE
+        jne     .rollback
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        clc
+        popad
+        return
+
+.rollback:
+
+        cinvoke sqliteFinalize, [.stmt]         ; finalize the bad statement.
+
+; rollback transaction
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRollback, -1, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+        stc
+        popad
+        return
+endp
+
+
 
 
 

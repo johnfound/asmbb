@@ -2,20 +2,28 @@ BEGIN TRANSACTION;
 
 /* Data tables */
 
+create table if not exists Params (
+  id  text primary key,
+  val text
+);
+
+
+INSERT INTO `Params` VALUES ('host','board.asm32.info');
+INSERT INTO `Params` VALUES ('email','admin');
+INSERT INTO `Params` VALUES ('smtp_ip','164.138.218.50');
+INSERT INTO `Params` VALUES ('smtp_port','25');
+
+
 create table if not exists Users (
   id	    integer primary key autoincrement,
   nick	    text unique,
   passHash  text,
+  salt	    text,
   status    integer,  -- active, banned, etc.
   user_desc text,     -- free text user description.
   email     text      -- user email
 );
 
-
-INSERT INTO Users VALUES
- (1,'johnfound','',NULL,NULL,'johnfound@asm32.info'),
- (2,'asm_newbee','','','','newbee@asm32.info'),
- (3,'Troll','','','','troll@somewhere.invalid');
 
 
 create table if not exists WaitingActivation(
@@ -24,6 +32,7 @@ create table if not exists WaitingActivation(
   passHash text,
   salt	text,
   email text,
+  ip_from text,
   time_reg   integer,
   time_email integer,
   a_secret text
@@ -53,23 +62,12 @@ create table if not exists Posts (
 );
 
 
-INSERT INTO Posts VALUES
- (1,1,1,1457118799,'Welcome in AsmBB. This is forum engine implemented using assembly language.'),
- (2,2,2,1457118900,'I want to ask a question, about how to program in assembly language.'),
- (3,2,1,1457119000,'It is easy, just install Fresh IDE and start from the examples.'),
- (4,2,3,1457120000,'Asm is dead! Learn better some Java! Java rulez! But C# is also OK.');
-
 
 create table if not exists Tags (
   id	      integer primary key autoincrement,
   Tag	      text,
   Description text
 );
-
-INSERT INTO `Tags` VALUES
- (1,'asm,assembly language,асемблер','The most advanced programming language.'),
- (2,'chat,free talk,heap','Talks for everything'),
- (3,'C,C++,C#','Talks about C/C++/C# languages');
 
 
 /* Relation tables */
@@ -78,11 +76,6 @@ create table if not exists ThreadTags (
   ThreadID integer references Threads(id),
   TagID    integer references Tags(id)
 );
-
-
-INSERT INTO `ThreadTags` VALUES
- (1,2),
- (1,1);
 
 
 create table if not exists UnreadPosts (
@@ -110,19 +103,21 @@ create table if not exists Sessions (
 
 
 
-create table if not exists errors (
-  err  text primary key,
-  msg  text
-);
+CREATE TABLE "messages" (
+	`id`	text,
+	`msg`	text,
+	`header`	TEXT,
+	`link`	TEXT,
+	PRIMARY KEY(id)
+)
 
-
-INSERT INTO `errors` VALUES ('login_bad_password','Bad password or user name.');
-INSERT INTO `errors` VALUES ('login_missing_data','Missing data in login field.');
-INSERT INTO `errors` VALUES ('register_passwords_different','The confirmation password does not match.');
-INSERT INTO `errors` VALUES ('register_short_pass','The password is too short.');
-INSERT INTO `errors` VALUES ('register_user_exists','User name already exists.');
-INSERT INTO `errors` VALUES ('register_short_name','User name too short.');
-INSERT INTO `errors` VALUES ('register_short_email','User email address invalid.');
+INSERT INTO `messages` VALUES ('login_bad_password','Bad password or user name.', 'ERROR!', NULL);
+INSERT INTO `messages` VALUES ('login_missing_data','Missing data in login field.', 'ERROR!', NULL);
+INSERT INTO `messages` VALUES ('register_passwords_different','The confirmation password does not match.', 'ERROR!', NULL);
+INSERT INTO `messages` VALUES ('register_short_pass','The password is too short.', 'ERROR!', NULL);
+INSERT INTO `messages` VALUES ('register_user_exists','User name already exists.', 'ERROR!', NULL);
+INSERT INTO `messages` VALUES ('register_short_name','User name too short.', 'ERROR!', NULL);
+INSERT INTO `messages` VALUES ('register_short_email','User email address invalid.', 'ERROR!', NULL);
 
 
 create table if not exists templates (

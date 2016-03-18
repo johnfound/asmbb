@@ -25,6 +25,8 @@ options.DebugMode = 1
 options.AlignCode = 0
 options.ShowImported = 1
 
+options.DebugWeb = 1
+
 ;HeapManager  equ ASM
 ;LinuxThreads equ native
 

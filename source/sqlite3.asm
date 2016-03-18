@@ -46,7 +46,7 @@ begin
         jnz     .finish
 
         inc     ebx
-        cinvoke sqliteExec, [esi], [.ptrInitScript], -1, NULL, NULL, NULL
+        cinvoke sqliteExec, [esi], [.ptrInitScript], NULL, NULL, NULL
         test    eax, eax
         jz      .finish
 

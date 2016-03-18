@@ -259,7 +259,9 @@ begin
 .cat_environment:
 ; this is only for special purposes.
 
-if defined options.DebugMode & options.DebugMode
+if defined options.DebugWeb & options.DebugWeb
+
+        DebugMsg "Special:environment!"
 
 
         mov     esi, [.p_special]

@@ -1,24 +1,24 @@
-C Improved\spassword\shashing\sand\sprocedure\sof\saccount\sactivation\simplemented\s-\swork\sin\sprogress.\nIn\srelation\swith\sthis\sthe\sdabase\sscheme\sis\schanged.
-D 2016-03-16T06:48:22.135
-F source/Linux/sqlite3.inc f9221a234b424eac0cbf4ad99a1aa289591db75f w source/sqlite3.inc
+C Implemented\sprocedure\sof\saccount\sactivation\sthrought\semail\sexchange.\sNeed\ssome\nmore\scleanup,\sbut\sis\sworking\sas\sa\swhole.\sSome\schanges\sto\sthe\sdatabase\sschema\shas\nbeen\smade.
+D 2016-03-18T04:49:04.410
+F source/Linux/sqlite3.inc f9221a234b424eac0cbf4ad99a1aa289591db75f
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
-F source/commands.asm 144e3cb5ab3feaccf50b1a004b20d987e26c6c28
-F source/create.sql 0af5a2e0789fee88923810d1d4f29492770b522b
-F source/fcgi.asm bf508aed2c6671c6914702e7c5f61a1ec500c1c3
-F source/http.asm 5a42e7a9490e3e525f323cc54bd151810e4e539e
-F source/index.asm 92501697b8386f3a5d7d920810f1ade53300902b
+F source/commands.asm 19059bdfefc631ce368dc911c8766dc16aab86aa
+F source/create.sql b207041b773b89d146ae84b9d01f30b2433feb96
+F source/fcgi.asm 0e7e26fd53394d031d3e9732e294340efb683ee5
+F source/http.asm 84ba1d2d67dc85e1c222cd402d715e6ff6fc8c3b
+F source/index.asm 1822ca5c35b1de479a2d6cc5b756a8f5794ea740
 F source/index.fpr 1393aa4328b9467164677edb5186a53bacf19f3f
-F source/render.asm b25ed3aa18fe9ca5d04d5bf5ede5ac02b2004b99
-F source/sqlite3.asm 9ea6342ffa2820dd35348c07965fa90c75c715ec
+F source/render.asm 09919161c11ce855a8e65e8ad11e30984d7d43a6
+F source/sqlite3.asm 4285b7e6615de3ffd2630b7c4adbf3df3210dd43
 F www/.htaccess e3d61615a5f5b289f09966a72e7f02777d0b1c60
-F www/all.css c7137d3b0d682c607af5b95e1905b647e5354001
+F www/all.css 506c5074677f4565a626031c04527e7484f62426
 F www/error.css 51294ab459d163a2642ed8d56ce7caceb052ebc9
 F www/ld-musl-i386.so 4d44786b8676115c7df45c45ceb051c11ce14ffd x
 F www/libsqlite3.so b219b02c71d515698b2086be2edc104e5c8997a7 x
 F www/lighttpd.conf e1b4c0e56430345d661af93ebf82862d21aa2fac
 F www/post.html 25b05d8e78a0614618aa105b8ab79ffce122c713
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
-P 737429457fb59665677fc87c93bd380303bc80bc
-R c0c91c44341c4982804a04566d29d08f
+P 5f26dbe47c886ad9ff1ff98c7074d7325b02d3d0
+R f76c2493d3beac909626ba9e92ee8999
 U johnfound
-Z 4f069a0413bc1d3b9fd983fe4dd4e471
+Z bafe6021ce320d2ec01206d891f299a2

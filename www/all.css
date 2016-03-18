@@ -266,7 +266,7 @@ div.login_interface {
 
   width: 90%;
   max-width: 1280px;
-  margin: 16px auto 0px auto;
+  margin: 16px auto 16px auto;
 }
 
 div.login_interface a {
@@ -281,9 +281,9 @@ span.separator {
 }
 
 
-/* Error messages screen */
+/* messages screen */
 
-div.error_block {
+div.message_block {
   font-size: 20px;
   width: 640px;
   background: white;
@@ -294,14 +294,14 @@ div.error_block {
   border-top: 16px solid #f06060;
 }
 
-div.error_block h1 {
+div.message_block h1 {
     text-align: center;
     color: #000;
     font-size: 21px;
     text-transform: uppercase;
 }
 
-div.error_block a {
+div.message_block a {
   display: inline-block;
   text-align: center;
   margin-left: auto;
@@ -309,12 +309,12 @@ div.error_block a {
   outline: none;
 }
 
-div.error_block a:hover {
+div.message_block a:hover {
   color: #f06060;
 }
 
 
-div.error_msg {
+div.message {
   white-space: pre-line;
   padding: 64px;
   margin-left: auto;
