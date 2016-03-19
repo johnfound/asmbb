@@ -418,8 +418,7 @@ endp
 
 
 
-
-sqlSelectThreads text "select id, Slug, Caption, LastChanged, (select count() from posts where threadid = Threads.id) as PostCount from Threads order by LastChanged desc limit ? offset ?"
+sqlSelectThreads text "select id, Slug, Caption, strftime('%d.%m.%Y %H:%M:%S', LastChanged, 'unixepoch') as TimeChanged, (select count() from posts where threadid = Threads.id) as PostCount from Threads order by LastChanged desc limit ? offset ?"
 sqlThreadsCount  text "select count() from Threads"
 
 
@@ -435,6 +434,11 @@ begin
         mov     edi, eax
 
         stdcall StrCat, edi, '<div class="threads_list">'
+
+; navigation tool bar
+
+        stdcall StrCatTemplate, edi, "nav_list", 0, 0
+
 
 ; links to the pages.
         lea     eax, [.stmt]
@@ -525,9 +529,11 @@ begin
         cinvoke sqliteColumnInt, [.stmt], 0
         mov     [.threadID], eax
 
-        stdcall StrCatTemplate, edi, "thread_nav", [.stmt], [.p_special]
+        stdcall StrCat, edi, '<div class="thread">'
 
-        stdcall StrCat, edi, '<div class="thread"><h1 class="thread_caption">'
+        stdcall StrCatTemplate, edi, "nav_thread", [.stmt], [.p_special]
+
+        stdcall StrCat, edi, '<h1 class="thread_caption">'
 
         cinvoke sqliteColumnText, [.stmt], 1
 
@@ -703,7 +709,7 @@ begin
         jmp     .link_ok
 
 .current_ok:
-        stdcall StrCat, edi, '<a class="page_link" target="_self" href="'
+        stdcall StrCat, edi, '<a class="page_link" href="'
         stdcall StrCat, edi, [.prefix]
 
         stdcall StrCat, edi, eax
@@ -794,7 +800,7 @@ begin
 
 .add_back_link:
 
-        stdcall StrCat, edi, '<a target="_self" href="'
+        stdcall StrCat, edi, '<a href="'
 
         stdcall ValueByName, [.pParams], "HTTP_REFERER"
         jnc     .referer_ok
@@ -1818,7 +1824,7 @@ proc PostUserMessage, .hSlug, .pPost, .pSpecial
 begin
         pushad
 
-        DebugMsg "Post user message!"
+;        DebugMsg "Post user message!"
 
         xor     eax, eax
         mov     [.slug], eax
@@ -1835,7 +1841,7 @@ begin
 
 ; begin transaction!
 
-        DebugMsg "Begin transaction"
+;        DebugMsg "Begin transaction"
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBegin, -1, eax, 0
@@ -1858,7 +1864,7 @@ begin
 
 .new_thread:
 
-        DebugMsg "New thread started!"
+;        DebugMsg "New thread started!"
 
         stdcall GetQueryItem, [.post], "title=", 0
         mov     [.caption], eax
@@ -1869,7 +1875,7 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertThread, -1, eax, 0
 
-        OutputValue "Error prepade insert thread:", eax, 10, -1
+;        OutputValue "Error prepade insert thread:", eax, 10, -1
 
         stdcall StrPtr, [.slug]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
@@ -1879,14 +1885,14 @@ begin
 
         cinvoke sqliteStep, [.stmt]
 
-        OutputValue "Error insert thread:", eax, 10, -1
+;        OutputValue "Error insert thread:", eax, 10, -1
 
         cmp     eax, SQLITE_DONE
         jne     .rollback
 
         cinvoke sqliteFinalize, [.stmt]
 
-        DebugMsg "New thread created!"
+;        DebugMsg "New thread created!"
 
 .post_in_thread:
 
@@ -1909,7 +1915,7 @@ begin
 
 ; insert new post
 
-        DebugMsg "Now insert new post!"
+;        DebugMsg "Now insert new post!"
 
 
         lea     eax, [.stmt]
@@ -1935,7 +1941,7 @@ begin
         cinvoke sqliteLastInsertRowID, [hMainDatabase]
         mov     [esp+4*regEAX], eax
 
-        OutputValue "Post inserted with ID=", eax, 10, -1
+;        OutputValue "Post inserted with ID=", eax, 10, -1
 
 ; Update thread LastChanged
 
@@ -1959,7 +1965,7 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
-        DebugMsg "Transaction commited!"
+;        DebugMsg "Transaction commited!"
 
         call    .cleanup
         clc
@@ -1977,7 +1983,7 @@ begin
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 
-        DebugMsg "Transaction rollback!"
+;        DebugMsg "Transaction rollback!"
 
         call    .cleanup
         stc
@@ -2394,8 +2400,14 @@ begin
 .loop:
         mov     al, [esi]
         cmp     al, "a"
-        jb      .convert
+        jb      .not_letter
         cmp     al, "z"
+        jbe     .next
+
+.not_letter:
+        cmp     al, "0"
+        jb      .convert
+        cmp     al, "9"
         jbe     .next
 
 .convert:

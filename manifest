@@ -1,37 +1,51 @@
-C Deleting\sthe\scookie\son\sthe\slogout.\s(It\sis\snot\sneeded\sfor\ssession\scookies\sused\snow,\nbut\slater\ssome\spermanent\ssessions\scan\sbe\simplemented).
-D 2016-03-19T10:07:35.971
+C The\sfirst\sversion\sthat\sis\smore\sor\sless\sfunctional.\sOf\scourse\sprobably\sbuggy.\s:)
+D 2016-03-19T17:47:26.622
 F source/Linux/sqlite3.inc f9221a234b424eac0cbf4ad99a1aa289591db75f
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
-F source/commands.asm 5705de49a145ed7b9983cc4f9bc6d703102cd009
-F source/create.sql 754cfa02ff67adfc72d25be509bb47d917396124
+F source/commands.asm 13e9b3410898abadb5a2eec0d3c00893e3cea26c
+F source/create.sql 8534713f5551b6d27be00a9634a21e321d771665
 F source/fcgi.asm 0e7e26fd53394d031d3e9732e294340efb683ee5
 F source/http.asm 84ba1d2d67dc85e1c222cd402d715e6ff6fc8c3b
-F source/index.asm 1822ca5c35b1de479a2d6cc5b756a8f5794ea740
+F source/index.asm 46a074c6b2221ca68ace88080df475030b81f16f
 F source/index.fpr 20864136aeb55acc8006e7c5d902ec2ff37d1eec
-F source/render.asm aac4998d12d7e277f2322367a1e48357848cb639
-F source/sqlite3.asm ebfd4d537a7bb618514ec47cbd3dd67d544bd224
+F source/render.asm 1f48f0e8535ba1b99f946c6ba85d2709869e2496
+F source/sqlite3.asm 4285b7e6615de3ffd2630b7c4adbf3df3210dd43
 F www/.htaccess e3d61615a5f5b289f09966a72e7f02777d0b1c60
-F www/all.css fd83ed7000625d79b35f07228f082e2817f88c57
+F www/all.css f2bdc3c4415c08ae618a34657fbb20b04553a798
 F www/error.css 51294ab459d163a2642ed8d56ce7caceb052ebc9
+F www/images/edit.svg daa93760c447ef99b79caf00745cf447bf6ad3cc
+F www/images/email.png 1866c9acaa42ea4082f48a461dbdbda987c9376a
+F www/images/email.svg 947ba489f2a2ed0d64c3569e23ea74ef53d50b8f
+F www/images/emoticons/angry.svg b507d192d55f9c2f5d9b962f7beb5d927c49d799
+F www/images/emoticons/cry.svg 8d41ff6bf540df4099d92a880ae4dc3a52765d4a
+F www/images/emoticons/lol.svg 93c2da38509fcac2acf978eb4f1764576db30ef5
+F www/images/emoticons/sad.svg 1fd0177aa3bd2919f293f64b1c89e7642f195404
+F www/images/emoticons/smile.svg c01c9de9053e1e4b50ff3789c2dddd76b10f42d0
+F www/images/emoticons/tongue1.svg ce00e736565bcbae8ae5c5a2ae71c248f5586e51
+F www/images/emoticons/tongue2.svg 47f3ab912f343beafaf3ea3277c72b7a777b2497
+F www/images/emoticons/wink.svg 3db2c81d6dd73766ea590771ac071ef958272911
+F www/images/pass.png d1c58d21c07f74c45c270cc9f624a1adb15c12db
+F www/images/posts.svg 84ae4cbd8201a6ce4d56fde85f5d8f5cc4a53843
+F www/images/user.png ba86e508b26c39f611581aaa7780d0e4a9c3ac52
 F www/ld-musl-i386.so 4d44786b8676115c7df45c45ceb051c11ce14ffd x
 F www/libsqlite3.so b219b02c71d515698b2086be2edc104e5c8997a7 x
-F www/lighttpd.conf e1b4c0e56430345d661af93ebf82862d21aa2fac
-F www/post.html 25b05d8e78a0614618aa105b8ab79ffce122c713
+F www/lighttpd.conf f1548664d58bd00dc6ee5f34a803fc9382d9d0dd
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/activation_email_subject.tpl 17359b7b23bd9bcacbc576168a6764be7192810e
 F www/templates/activation_email_text.tpl 44858c154d24eb9170b9a7eaaf56587572b86633
-F www/templates/edit_form.tpl 8b3db221a7e91d1c14dd7cf7263c07b8d0bff542
+F www/templates/edit_form.tpl 364c667af4825dc4fbf08b64f769700597373fb3
 F www/templates/error_html_end.tpl 7b7c2b52a2ba0604cc07cedf736455180bdd1b8a
 F www/templates/error_html_start.tpl 0126a0a5df0802ae2159ec0364c5495237af9724
-F www/templates/login_form.tpl 9d9110ee372fc0ff7f58a1b74040c0186457a470
-F www/templates/main_html_end.tpl ab616bbd17cf39fd825146a11b5e312e14393b83
-F www/templates/main_html_start.tpl 4a56ac290ce4656902af142c1e133cd12291a02e
+F www/templates/login_form.tpl 4de29f4e1573a8fbc5e7811b216a011abd1d7cb7
+F www/templates/main_html_end.tpl f9c71c7cb0b9e5a02da0d02e88cdf50aafae2805
+F www/templates/main_html_start.tpl 3a785613c13ed5264386f84c785b510955881720
+F www/templates/nav_list.tpl d9214b96085f81d4651f5d19997ec935021ed9a1
+F www/templates/nav_thread.tpl d8832cdee1f89b34aa9366b4be3602b5f144072b w www/templates/thread_nav.tpl
 F www/templates/new_thread_form.tpl a8462892f559f7cc0d51bf7d72fcbaea0d2d6238
-F www/templates/post_view.tpl bf8b0f18bb56ffac8f6006969f4019ea40ddba83
-F www/templates/register_form.tpl 1a1834be0078415a0e210b30b148169151de07c5
-F www/templates/thread_info.tpl 5794b0787cd4b9aef10daaddfa1cefc0f492041b
-F www/templates/thread_nav.tpl d8832cdee1f89b34aa9366b4be3602b5f144072b
-P bda9228be30eee726e832d4da521c95780e3a2ec
-R 5d974a5627c44bbfdbc0a3c520247f33
+F www/templates/post_view.tpl be136ef8de2b9a01f875531ceb5e76c4141d14c2
+F www/templates/register_form.tpl 749a90f278e66de2add4a5b21dfdb6bc5b5131f3
+F www/templates/thread_info.tpl 26d71518f201a0a10b41a1f7ed94576d4cda416f
+P 206828fc551456d3fa033dd427431370f3706c85
+R d67de2e71799832075a1fa0d353e4472
 U johnfound
-Z 418baebeda80097bff4929ce8b1227b7
+Z 23c92754bc18c47e7466d8e0f59b173b

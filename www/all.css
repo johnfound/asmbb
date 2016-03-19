@@ -7,7 +7,6 @@ body {
 body * {
   box-sizing: border-box;  
   padding: 0px;
-/*  border: 1px solid red; */
 }
 
 a {
@@ -19,11 +18,24 @@ input {
   font-family: inherit;
 }
 
+/* header styles */
+
+div.header {
+  width: 95%;
+  max-width: 1280px;
+  margin: auto;
+}
+
+div.header h1 {
+  border-bottom: 4px solid gray;
+}
+
+
 /* Threads list styles */
 
 
 div.threads_list {
-  width: 90%;
+  width: 95%;
   max-width: 1280px;
   margin: auto;
 }
@@ -32,6 +44,7 @@ div.threads_list {
 .thread_summary {
   background-color: white;
 
+  position: relative;
   overflow: hidden;
   zoom: 1;
   margin-bottom: 8px;
@@ -41,22 +54,36 @@ div.threads_list {
 div.thread_info {
   background-color: #404040;
   color: white;
-  text-align: center;
-  font-weight: bold;
+  text-align: left;
   
   float: left;
-  width: 100px;
-  height: 100px;
-  padding-top: 32px;
-  line-height: 32px;
+  position: absolute;
+  width: 200px;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  padding: 8px;
 }
 
+div.thread_info img {
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+div.post_cnt {
+
+}
+
+div.changed {
+  font-size: 80%;
+  position: absolute;
+  bottom: 8px;
+}
 
 div.thread_link {
   background-color: white;
   padding: 32px;
-  padding-left: 128px;
-  display: hide;
+  padding-left: 216px;
 }
 
 
@@ -71,7 +98,7 @@ a.thread_link {
 
 
 div.thread {
-  width: 90%;
+  width: 95%;
   max-width: 1280px;
   margin: auto;
 }
@@ -142,17 +169,6 @@ div.post_text {
   background-color: white;
 }
 
-div.post_text p {
-}
-
-div.post_text img {
-  max-width: 90%;
-  max-height: 90%;
-  margin: auto;
-  display: block;
-}
-
-
 
 /* Pages links styles */
 
@@ -188,7 +204,7 @@ span.current_page {
     padding: 20px;
     background: #fff;
     border-top: 16px solid #f06060;
-    margin: 96px auto;
+    margin: 16px auto;
 }
 
 
@@ -197,17 +213,17 @@ span.current_page {
     padding: 20px;
     background: #fff;
     border-top: 16px solid #f06060;
-    margin: 32px auto;
+    margin: 16px auto;
 }
 
 
 .login-block h1, .register-block h1 {
     text-align: center;
     color: #000;
-    font-size: 18px;
-    text-transform: uppercase;
+    font-size: 20px;
+    font-variant: small-caps;
     margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .login-block input, .register-block input {
@@ -215,7 +231,7 @@ span.current_page {
     height: 42px;
     box-sizing: border-box;
     border: 1px solid #ccc;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     font-size: 16px;
     padding: 0 20px 0 50px;
     outline: none;
@@ -255,8 +271,8 @@ span.current_page {
     border: 1px solid #e15960;
     color: #fff;
     font-weight: bold;
-    text-transform: uppercase;
-    font-size: 14px;
+    font-size: 16px;
+    font-variant: small-caps;
     outline: none; 
     cursor: pointer;
     text-align: center;
@@ -270,31 +286,26 @@ span.current_page {
 /* login/logout info on the pages */
 
 div.login_interface {
-  background-color: #f0f060;
-  text-align: right;
-
-  width: 90%;
-  max-width: 1280px;
-  margin: 16px auto 16px auto;
+  float: right;
+  margin: 8px 5%;
 }
 
 div.login_interface a {
   text-align: right;
   display: inline;
-  padding-right: 16px;
-  line-height: 2em;
+  line-height: 1.5em;
 }
 
 span.separator {
-  display: hidden;
+  width: 16px;
+  display: inline-block;
 }
 
 /* Main user interface toolbar */
 
 div.ui {
-  width: 90%;
-  max-width: 1280px;
-  margin: 16px auto 16px auto;
+  width: 100%;
+  margin: 16px 0px;
 }
 
 a.ui {
@@ -316,18 +327,19 @@ div.message_block {
   font-size: 20px;
   width: 640px;
   background: white;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0px auto;
   text-align: center;
   padding: 20px;
   border-top: 16px solid #f06060;
+  clear: both;
 }
 
 div.message_block h1 {
     text-align: center;
     color: #000;
     font-size: 21px;
-    text-transform: uppercase;
+    font-variant: small-caps;
+    margin: 0px;
 }
 
 div.message_block a {
@@ -346,8 +358,7 @@ div.message_block a:hover {
 div.message {
   white-space: pre-line;
   padding: 64px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0px auto;
   text-align: left;
   color: black;
   display: inline-block;
@@ -357,17 +368,18 @@ div.message {
 /* Posting form styles */
 
 div.editor {
-  width: 90%;
+  width: 95%;
   max-width: 1280px;
-  margin: auto;
+  clear: both;
+  margin: 8px auto;
 }
 
-div.editor form {
+#editform {
   padding: 16px;
   background-color: gray;
 }
 
-div.editor h1 {
+h1.fakeedit {
   width: 100%;
   border-style: none;
   padding: 4px;
@@ -433,29 +445,183 @@ div.panel input:active, div.panel input:focus, div.panel input:hover {
 
 p.timestamp {
   background-color: #f0f060;
-  width: 90%;
+  width: 95%;
   max-width: 1280px;
   margin: auto;
   margin-top: 16px;
-  padding: 8px;
+  padding: 4px;
+}
+
+p.attribution {
+  width: 95%;
+  max-width: 1280px;
+  margin: auto;
+  margin-top: 16px;
+  padding: 4px 0px;
+  border-top: 4px solid gray;
+}
+
+/* minimag formatting styles */
+
+/* Headings */
+
+div.post_text h1 { font-size: 21px; margin-top: 32px; }
+div.post_text h2 { font-size: 20px; margin-top: 32px; }
+div.post_text h3 { font-size: 19px; margin-top: 32px; }
+div.post_text h4 { font-size: 18px; margin-top: 32px; }
+div.post_text h5 { font-size: 16px; margin-top: 32px; }
+div.post_text h6 { font-size: 16px; margin-top: 32px; }
+
+
+/* paragraph style */
+
+div.post_text p {
+   text-align: justify;
+   margin-top: 0.75em;
+   margin-bottom: 0.75em;
+}
+
+div.post_text p.uli {
+  display: list-item;
+  list-style: disc inside;
 }
 
 
-/* OTHER to be removed */
+/* source code inline and blocks */
 
-
-p {
-  border: 0px;
+div.code {
+  text-align: left;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 1em;
+  font-weight: 700;
+  border-left-style: solid;
+  border-left-width: 0.5em;
+  border-left-color: #ff6060;
+  padding-left: 0.5em;
+  margin-bottom: 0.5em;
 }
 
-h1 {
-  font-size: 14px;
+pre {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 1em;
   margin: 0px;
+  padding: 1em 0em 1em 0em;
 }
 
 
-h1 a {
-  border: 0px;
+code {
+  font-family: 'Source Code Pro', monospace;
+  font-weight: bold;
+}
+
+pre>code {
+  display: block;
+  white-space: pre;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 1em;
+  font-style: normal;
 }
 
 
+
+/* Style of the text included image. */
+
+img.ico {
+  display: inline-block; 
+  vertical-align: bottom;
+  width: 24px;
+  height: 24px;
+}
+
+
+img.txt {
+  border-style: none;
+  border-width: 0px;
+  margin: 16px auto;
+  display: block;
+  clear: both;
+  max-width: 95%; 
+}
+
+img.txt1 {
+  border-style: none;
+  border-width: 0px;
+  display: block;
+  float: left;
+  clear: left;
+  margin-right: 16px;
+  margin-bottom: 16px;
+}
+
+img.txt2 {
+  border-style: none;
+  border-width: 0px;
+  display: block;
+  float: right;
+  clear: right;
+  margin-left: 16px;
+  margin-bottom: 16px;
+}
+
+
+/* article tables */
+table.txt {
+   border-right-width: 2px;
+   border-bottom-width: 2px;
+   border-style: solid;
+   border-color: #606060;
+   margin: 0.2em;
+   background-color: white;
+   border-collapse: collapse;
+}
+
+
+/* style of the article table cell */
+table.txt td {
+   font-size: 1em;
+   border-left-width: 2px;
+   border-top-width: 2px;
+   border-right-width: 0px;
+   border-bottom-width: 0px;
+   border-style: solid;
+   border-color: #606060;
+   padding-left: 0.2em;
+   padding-right: 0.2em;
+   padding-top: 0.1em;
+   padding-bottom: 0.1em;
+   margin: 0px;
+}
+
+
+
+/* block quotes */
+
+div.bq {
+  border: 0px solid #808080;
+  padding: 1em;
+  padding-left: 2em;
+  margin: 0.5em;
+
+  border: 2px solid gray;
+  clear: both;
+}
+
+h1.bq
+{
+  margin-left: -1em;
+  margin-top: -1.7em;
+  padding: 0.2em 0.3em 0.2em 0.3em;
+  
+  border: 2px solid #808080;
+  background-color: #f8f8f8;
+  
+  font-size: 1em;
+  font-weight: normal;
+  
+  float: left;
+  clear: both;
+}
+
+div.right div.bq, div.right h1.bq {
+  background-color: #303030;
+}

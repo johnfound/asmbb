@@ -7,11 +7,10 @@ create table if not exists Params (
   val text
 );
 
-
-INSERT INTO `Params` VALUES ('host','board.asm32.info');
-INSERT INTO `Params` VALUES ('email','admin');
-INSERT INTO `Params` VALUES ('smtp_ip','164.138.218.50');
-INSERT INTO `Params` VALUES ('smtp_port','25');
+insert or ignore into Params values ('host','board.asm32.info');
+insert or ignore into Params values ('email','admin');
+insert or ignore into Params values ('smtp_ip','164.138.218.50');
+insert or ignore into Params values ('smtp_port','25');
 
 
 create table if not exists Users (
@@ -24,6 +23,9 @@ create table if not exists Users (
   email     text unique      -- user email
 );
 
+
+create index if not exists idxUsers_nick  on Users (nick);
+create index if not exists idxUsers_email on Users (email);
 
 
 create table if not exists WaitingActivation(
@@ -39,12 +41,17 @@ create table if not exists WaitingActivation(
 );
 
 
+
 create table if not exists Threads (
   id	      integer primary key autoincrement,
-  Slug	      text,			  -- slugifyed version of the caption. Can be set independently.
+  Slug	      text unique,
   Caption     text,
   LastChanged integer
 );
+
+
+create index if not exists idxThreads_LastChanged on Threads (LastChanged desc);
+create index if not exists idxThreads_Slug	  on Threads (Slug);
 
 
 
@@ -57,6 +64,10 @@ create table if not exists Posts (
   Content     text
 );
 
+
+create index if not exists idxPosts_UserID   on Posts (userID);
+create index if not exists idxPosts_ThreadID on Posts (threadID);
+create index if not exists idxPosts_Time     on Posts (postTime, id);
 
 
 create table if not exists Tags (
@@ -99,67 +110,37 @@ create table if not exists Sessions (
 
 
 
-CREATE TABLE "messages" (
-	`id`	text,
-	`msg`	text,
-	`header`	TEXT,
-	`link`	TEXT,
-	PRIMARY KEY(id)
-)
-
-INSERT INTO `messages` VALUES ('login_bad_password','Bad password or user name.', 'ERROR!', NULL);
-INSERT INTO `messages` VALUES ('login_missing_data','Missing data in login field.', 'ERROR!', NULL);
-INSERT INTO `messages` VALUES ('register_passwords_different','The confirmation password does not match.', 'ERROR!', NULL);
-INSERT INTO `messages` VALUES ('register_short_pass','The password is too short.', 'ERROR!', NULL);
-INSERT INTO `messages` VALUES ('register_user_exists','User name already exists.', 'ERROR!', NULL);
-INSERT INTO `messages` VALUES ('register_short_name','User name too short.', 'ERROR!', NULL);
-INSERT INTO `messages` VALUES ('register_short_email','User email address invalid.', 'ERROR!', NULL);
+create table if not exists Messages (
+  id	 text primary key,
+  msg	 text,
+  header text,
+  link	 text
+);
 
 
-create table if not exists templates (
+insert or ignore into Messages values ('bad_secret',	  'Bad activation secret!', 'ERROR!', '<a target="_self" href="/list/">Goto threads list</a>');
+insert or ignore into Messages values ('congratulations', 'Your account has been activated.', 'Congratulations!', '<a href="/login/">Welcome!</a>');
+insert or ignore into Messages values ('error_cant_create_threads', 'You do not have permissions to create new threads!', 'ERROR!', NULL);
+insert or ignore into Messages values ('error_cant_post', 'You do not have permissions to post in this forum!', 'ERROR!', NULL);
+insert or ignore into Messages values ('login_bad_password','Bad password or user name.', 'ERROR!', NULL);
+insert or ignore into Messages values ('login_bad_permissions', 'You do not have permissions to login.', 'ERROR!', NULL);
+insert or ignore into Messages values ('login_missing_data','Missing data in login field.', 'ERROR!', NULL);
+insert or ignore into Messages values ('register_bad_email','This address does not seems to be valid email.', 'ERROR!', NULL);
+insert or ignore into Messages values ('register_passwords_different','The confirmation password does not match.', 'ERROR!', NULL);
+insert or ignore into Messages values ('register_short_email','User email address invalid.', 'ERROR!', NULL);
+insert or ignore into Messages values ('register_short_name','User name too short.', 'ERROR!', NULL);
+insert or ignore into Messages values ('register_short_pass','The password is too short.', 'ERROR!', NULL);
+insert or ignore into Messages values ('register_technical','Because of some technical problems you can not register right now.', 'ERROR!', NULL);
+insert or ignore into Messages values ('register_user_exists','User name already exists.', 'ERROR!', NULL);
+insert or ignore into Messages values ('user_create','Your accout has been created, but is still inactive. Avtivation email has been sent to you.', 'Success!', '<a target="_self" href="/list/">Goto threads list</a>');
+
+
+create table if not exists Templates (
   id text primary key,
   template text
 );
 
 
-INSERT INTO templates VALUES ('main_html_start', '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Title</title></head><body><h1>Title</h1><div class="login_interface">$special:loglink$</div>');
 
-INSERT INTO templates VALUES ('main_html_end',	 '<pre>$special:environment$</pre>$special:timestamp$</body></html>');
-
-INSERT INTO templates VALUES ('thread_info', '<div class="thread_summary">
-<div class="thread_info">Posts:<br>$PostCount$</div>
-<div class="thread_link">
-<a class="thread_link" href="/threads/$Slug$/">$Caption$</a>
-</div>
-</div>'
-);
-
-INSERT INTO templates VALUES ('post_view', '<div class="post">
-<div class="user_info">
-<div class="user_name">$UserName$</div>
-<div class="user_pcnt">Posts: $UserPostCount$</div>
-</div>
-<div class="post_info">Posted: $PostTime$</div>
-<div class="post_text">$Content$</div>
-</div>'
-);
-
-INSERT INTO `templates` VALUES ('login_form','<form class="login-block" method="post" target="_self" action="/login/">
-<h1>Login</h1>
-<input type="text" value="" placeholder="Username" name="username" id="username" autofocus="on" maxlength="256">
-<input type="password" value="" placeholder="Password" name="password" id="password" maxlength="1024">
-<input type="submit" name="submit" id="submit" value="Submit">
-</form>'
-);
-
-INSERT INTO `templates` VALUES ('register_form', '<form class="register-block" method="post" target="_self" action="/register/">
-<h1>Register</h1>
-<input type="text" value="" placeholder="Username" name="username" id="username" maxlength="256" autofocus="on">
-<input type="text" value="" placeholder="e-mail" name="email" id="email" maxlength="320">
-<input type="password" value="" placeholder="Password" name="password" id="password" maxlength="1024">
-<input type="password" value="" placeholder="Password again" name="password2" id="password2" maxlength="1024">
-<input type="submit" name="submit" id="submit" value="Submit">
-</form>
-');
 
 COMMIT;

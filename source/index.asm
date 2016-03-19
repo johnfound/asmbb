@@ -21,17 +21,18 @@ LINUX_INTERPRETER equ './ld-musl-i386.so'
 options.ShowSkipped = 0
 options.ShowSizes = 1
 
-options.DebugMode = 1
+options.DebugMode = 0
 options.AlignCode = 0
 options.ShowImported = 1
 
-options.DebugWeb = 1
+options.DebugWeb = 0
 
 ;HeapManager  equ ASM
 ;LinuxThreads equ native
 
 
 include "%lib%/freshlib.asm"
+
 
 uses sqlite3:"%TargetOS%/sqlite3.inc"
 
@@ -54,7 +55,7 @@ uglobal
 endg
 
 
-rb 273
+rb 173
 
 start:
         InitializeAll
@@ -68,8 +69,10 @@ start:
         stdcall OpenOrCreate, cDatabaseFilename, hMainDatabase, sqlCreateDB
         jc      .finish
 
+        cinvoke sqliteBusyTimeout, [hMainDatabase], 2000
         cinvoke sqliteExec, [hMainDatabase], "PRAGMA journal_mode = WAL", 0, 0, 0
-
+        cinvoke sqliteExec, [hMainDatabase], "PRAGMA foreign_keys = TRUE", 0, 0, 0
+        cinvoke sqliteExec, [hMainDatabase], 'PRAGMA secure_delete = 0', 0, 0, 0
 
         stdcall Listen
 

@@ -129,7 +129,7 @@ begin
         stdcall StrDel ; from the stack
         jc      .error
 
-        OutputValue "Template from file. Length:", ecx, 10, -1
+;        OutputValue "Template from file. Length:", ecx, 10, -1
 
         mov     [.free], eax
         mov     esi, eax
@@ -209,6 +209,7 @@ endp
 
 proc StrCatColumnByName, .string, .pname, .len, .statement, .p_special
 .i dd ?
+.formatted dd ?
 begin
         pushad
 
@@ -233,13 +234,60 @@ begin
         cmp     [.statement], 0
         je      .finish
 
+        stdcall StrPos, edi, "plural:"
+        test    eax, eax
+        jnz     .cat_plural
+
+        mov     [.formatted], 0
+
+        stdcall StrPos, edi, "minimag:"
+        test    eax, eax
+        jz      .process_columns
+
+        or      [.formatted], 1
+
+        stdcall StrSplit, edi, 8
+        stdcall StrDel, edi
+        mov     edi, eax
+        jmp     .process_columns
+
+
+.process_columns:
+
+        call    .get_column_number
+        jnc     .finish
+
+        cinvoke sqliteColumnText, [.statement], [.i]
+        test    eax, eax
+        jz      .finish
+
+        stdcall StrDupMem, eax
+        stdcall StrDecodeHTML, eax
+        cmp     [.formatted], 0
+        je      .add_field
+
+        stdcall FormatPostText, eax
+
+.add_field:
+        stdcall StrCat, [.string], eax
+        stdcall StrDel, eax
+
+.finish:
+        stdcall StrDel, edi
+        popad
+        return
+
+
+
+.get_column_number:
+
         cinvoke sqliteColumnCount, [.statement]
         mov     ebx, eax
         and     [.i], 0
 
 .loop:
         cmp     [.i], ebx
-        jae     .finish
+        jae     .not_found
 
         cinvoke sqliteColumnName, [.statement], [.i]
         stdcall StrCompNoCase, eax, edi
@@ -248,20 +296,48 @@ begin
         inc     [.i]
         jmp     .loop
 
-.found:
-        cinvoke sqliteColumnText, [.statement], [.i]
-        test    eax, eax
-        jz      .finish
+.not_found:     ; here CF=0
+.found:         ; here CF=1
+        retn
 
-        stdcall StrDupMem, eax
-        stdcall StrDecodeHTML, eax
-        stdcall StrCat, [.string], eax
-        stdcall StrDel, eax
 
-.finish:
+
+;..................................................................
+
+
+.cat_plural:
+
+        stdcall StrSplit, edi, 7
         stdcall StrDel, edi
-        popad
-        return
+        mov     edi, eax
+
+        stdcall StrSplitList, edi, '|', FALSE
+        mov     esi, eax
+
+        cmp     [esi+TArray.count], 4
+        jne     .end_plural
+
+        stdcall StrCopy, edi, [esi+TArray.array]
+
+        call    .get_column_number
+        jnc     .end_plural
+
+        cinvoke sqliteColumnInt, [.statement], [.i]
+        inc     eax
+        cmp     eax, 3
+        jbe     @f
+        mov     eax, 3
+@@:
+        stdcall StrCat, [.string], [esi+TArray.array+4*eax]
+
+.end_plural:
+        stdcall ListFree, esi, StrDel
+
+        jmp     .finish
+
+
+;..................................................................
+
 
 
 .cat_timestamp:
@@ -280,6 +356,10 @@ begin
         stdcall StrCat, [.string], txt 'ms</p>'
 
         jmp     .finish
+
+
+;..................................................................
+
 
 .cat_environment:
 ; this is only for special purposes.
@@ -312,6 +392,11 @@ else
 end if
 
 
+
+;..................................................................
+
+
+
 .cat_username:
         mov     esi, [.p_special]
         mov     edx, [esi+TSpecialParams.userName]
@@ -322,6 +407,7 @@ end if
         jmp     .finish
 
 
+;..................................................................
 
 
 .cat_loglink:
@@ -332,18 +418,43 @@ end if
         jz      .login
 
 ; log out:
-        stdcall StrCat, [.string], '<a class="logout" target="_self" href="/logout/">Logout ['
+        stdcall StrCat, [.string], '<a class="logout" href="/logout/">Logout</a> ( <b>'
         stdcall StrCat, [.string], edx
-        stdcall StrCat, [.string], ']</a>'
+        stdcall StrCat, [.string], '</b> )'
         jmp     .common
 
 
 .login:
-        stdcall StrCat, [.string], '<a class="login" target="_self" href="/login/">Login</a>'
-        stdcall StrCat, [.string], '<span class="separator"></span><a class="register" target="_self" href="/register/">Register</a>'
+        stdcall StrCat, [.string], '<a class="login" href="/login/">Login</a>'
+        stdcall StrCat, [.string], '<span class="separator"></span><a class="register" href="/register/">Register</a>'
 
 .common:
         jmp     .finish
 
 
+endp
+
+
+
+
+
+
+
+proc FormatPostText, .hText
+
+.result TMarkdownResults
+
+begin
+        lea     eax, [.result]
+
+        stdcall StrCatTemplate, [.hText], "minimag_suffix", 0, 0
+        stdcall TranslateMarkdown, [.hText], 0, 0, eax
+
+        stdcall StrDel, [.hText]
+        stdcall StrDel, [.result.hIndex]
+        stdcall StrDel, [.result.hKeywords]
+        stdcall StrDel, [.result.hDescription]
+
+        mov     eax, [.result.hContent]
+        return
 endp
