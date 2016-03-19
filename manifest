@@ -1,14 +1,14 @@
-C Forgotten\sfile\sadded.
-D 2016-03-19T17:48:21.825
+C Fixing\sthe\sslugification\sof\sthe\stitles\sfor\scyrillic\stext.
+D 2016-03-19T20:34:51.124
 F source/Linux/sqlite3.inc f9221a234b424eac0cbf4ad99a1aa289591db75f
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
-F source/commands.asm 13e9b3410898abadb5a2eec0d3c00893e3cea26c
+F source/commands.asm 16f1bef3caca61144e619220753ff6575abe86fe
 F source/create.sql 8534713f5551b6d27be00a9634a21e321d771665
 F source/fcgi.asm 0e7e26fd53394d031d3e9732e294340efb683ee5
 F source/http.asm 84ba1d2d67dc85e1c222cd402d715e6ff6fc8c3b
 F source/index.asm 46a074c6b2221ca68ace88080df475030b81f16f
 F source/index.fpr 20864136aeb55acc8006e7c5d902ec2ff37d1eec
-F source/render.asm 1f48f0e8535ba1b99f946c6ba85d2709869e2496
+F source/render.asm 4cc8ad390464d5b32c18a4fd4a06d4ad1111270e
 F source/sqlite3.asm 4285b7e6615de3ffd2630b7c4adbf3df3210dd43
 F www/.htaccess e3d61615a5f5b289f09966a72e7f02777d0b1c60
 F www/all.css f2bdc3c4415c08ae618a34657fbb20b04553a798
@@ -46,7 +46,7 @@ F www/templates/new_thread_form.tpl a8462892f559f7cc0d51bf7d72fcbaea0d2d6238
 F www/templates/post_view.tpl be136ef8de2b9a01f875531ceb5e76c4141d14c2
 F www/templates/register_form.tpl 749a90f278e66de2add4a5b21dfdb6bc5b5131f3
 F www/templates/thread_info.tpl 26d71518f201a0a10b41a1f7ed94576d4cda416f
-P fab387decbf117b073c97bd2127ab89f0cdec5a0
-R 12f67c148bbd40a913643c8e5e3fdb92
+P 1a6d4850a18f3425df8851ded2aadf2f497f6200
+R 8abcf42e2c5c7dbcc360da1a42f72809
 U johnfound
-Z 8a61b3c2fe411a3cedad31395a526785
+Z c22102f16032b88804462274d0ae7727
