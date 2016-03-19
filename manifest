@@ -1,5 +1,5 @@
-C The\sfirst\sversion\sthat\sis\smore\sor\sless\sfunctional.\sOf\scourse\sprobably\sbuggy.\s:)
-D 2016-03-19T17:47:26.622
+C Forgotten\sfile\sadded.
+D 2016-03-19T17:48:21.825
 F source/Linux/sqlite3.inc f9221a234b424eac0cbf4ad99a1aa289591db75f
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
 F source/commands.asm 13e9b3410898abadb5a2eec0d3c00893e3cea26c
@@ -39,13 +39,14 @@ F www/templates/error_html_start.tpl 0126a0a5df0802ae2159ec0364c5495237af9724
 F www/templates/login_form.tpl 4de29f4e1573a8fbc5e7811b216a011abd1d7cb7
 F www/templates/main_html_end.tpl f9c71c7cb0b9e5a02da0d02e88cdf50aafae2805
 F www/templates/main_html_start.tpl 3a785613c13ed5264386f84c785b510955881720
+F www/templates/minimag_suffix.tpl df10dc0f27a70c7304794198e127289e78bc4fdb
 F www/templates/nav_list.tpl d9214b96085f81d4651f5d19997ec935021ed9a1
-F www/templates/nav_thread.tpl d8832cdee1f89b34aa9366b4be3602b5f144072b w www/templates/thread_nav.tpl
+F www/templates/nav_thread.tpl d8832cdee1f89b34aa9366b4be3602b5f144072b
 F www/templates/new_thread_form.tpl a8462892f559f7cc0d51bf7d72fcbaea0d2d6238
 F www/templates/post_view.tpl be136ef8de2b9a01f875531ceb5e76c4141d14c2
 F www/templates/register_form.tpl 749a90f278e66de2add4a5b21dfdb6bc5b5131f3
 F www/templates/thread_info.tpl 26d71518f201a0a10b41a1f7ed94576d4cda416f
-P 206828fc551456d3fa033dd427431370f3706c85
-R d67de2e71799832075a1fa0d353e4472
+P fab387decbf117b073c97bd2127ab89f0cdec5a0
+R 12f67c148bbd40a913643c8e5e3fdb92
 U johnfound
-Z 23c92754bc18c47e7466d8e0f59b173b
+Z 8a61b3c2fe411a3cedad31395a526785
