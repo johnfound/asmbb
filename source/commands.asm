@@ -1035,6 +1035,9 @@ proc UserLogout, .pspecial
 begin
         pushad
 
+        stdcall StrDupMem, <"Status: 302 Found", 13, 10>
+        mov     edi, eax
+
         mov     esi, [.pspecial]
 
         cmp     [esi+TSpecialParams.session], 0
@@ -1044,11 +1047,21 @@ begin
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLogout, -1, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.userID]
         cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
         cinvoke sqliteFinalize, [.stmt]
 
+        cmp     ebx, SQLITE_DONE
+        jne     .finish
+
+; delete the cookie.
+
+        DebugMsg "Now delete the cookie!"
+
+        stdcall StrCat, edi, <"Set-Cookie: sid=; HttpOnly; Path=/; Max-Age=0", 13, 10>
+
 .finish:
-        stdcall StrDupMem, <"Status: 302 Found", 13, 10, "Location: /list/", 13, 10, 13, 10>
-        mov     [esp+4*regEAX], eax
+        stdcall StrCat, edi, <"Location: /list/", 13, 10, 13, 10>       ; go forward.
+        mov     [esp+4*regEAX], edi
 
         popad
         return

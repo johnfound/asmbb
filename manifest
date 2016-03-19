@@ -1,8 +1,8 @@
-C If\sthe\sneeded\stemplate\sis\snot\sin\sthe\sdatabase,\ssearch\sit\sas\sa\sfile\sin\sthe\sdirectory\s"templates".\n\nPosting\snew\sthread\sand\sanswers\shas\sbeen\simplemented.\n\nSome\swork\son\sthe\snavigation\stoolbars.\sLittle\sfix\sto\sthe\ssessions\shandling.\sNot\sif\sthere\sis\s\nactive\ssession,\sit\swill\sbe\sreused.\sThis\sway,\slogin\sfrom\sanother\sbrowser\sdoes\snot\slogout\sthe\sother\sbrowser.\n\nSome\smore\swork\shave\sto\sbe\sdone\son\sthe\scookie\shandling\sand\snavigation.
-D 2016-03-19T09:34:22.904
+C Deleting\sthe\scookie\son\sthe\slogout.\s(It\sis\snot\sneeded\sfor\ssession\scookies\sused\snow,\nbut\slater\ssome\spermanent\ssessions\scan\sbe\simplemented).
+D 2016-03-19T10:07:35.971
 F source/Linux/sqlite3.inc f9221a234b424eac0cbf4ad99a1aa289591db75f
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
-F source/commands.asm 0e88f50525362b93871fda98336eb33eeb1aedbd
+F source/commands.asm 5705de49a145ed7b9983cc4f9bc6d703102cd009
 F source/create.sql 754cfa02ff67adfc72d25be509bb47d917396124
 F source/fcgi.asm 0e7e26fd53394d031d3e9732e294340efb683ee5
 F source/http.asm 84ba1d2d67dc85e1c222cd402d715e6ff6fc8c3b
@@ -31,7 +31,7 @@ F www/templates/post_view.tpl bf8b0f18bb56ffac8f6006969f4019ea40ddba83
 F www/templates/register_form.tpl 1a1834be0078415a0e210b30b148169151de07c5
 F www/templates/thread_info.tpl 5794b0787cd4b9aef10daaddfa1cefc0f492041b
 F www/templates/thread_nav.tpl d8832cdee1f89b34aa9366b4be3602b5f144072b
-P bf68e60b6563a4616ef985f804feeff5e4da8779
-R d5c879cc07acf19700ce84fdf149f6ff
+P bda9228be30eee726e832d4da521c95780e3a2ec
+R 5d974a5627c44bbfdbc0a3c520247f33
 U johnfound
-Z bf1970b0ee62f7eba9444a3eee85603a
+Z 418baebeda80097bff4929ce8b1227b7
