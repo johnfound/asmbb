@@ -5,13 +5,18 @@ body {
 }
 
 body * {
-/*  box-sizing: border-box; */
+  box-sizing: border-box;  
   padding: 0px;
 /*  border: 1px solid red; */
 }
 
 a {
   color: black;
+}
+
+input {
+  font-size: inherit;
+  font-family: inherit;
 }
 
 /* Threads list styles */
@@ -79,7 +84,7 @@ h1.thread_caption {
 
 
 div.thread a {
-  margin-top: 16px;
+  margin-top: 8px;
   display: inline-block;
 }
 
@@ -127,9 +132,13 @@ div.post_info {
   font-size: 12px;
 }
 
+div.post_info a {
+  margin: 0px;
+}
+
 div.post_text {
   margin-left: 200px;
-  padding: 8px;
+  padding: 16px 8px 32px 8px;
   background-color: white;
 }
 
@@ -280,6 +289,26 @@ span.separator {
   display: hidden;
 }
 
+/* Main user interface toolbar */
+
+div.ui {
+  width: 90%;
+  max-width: 1280px;
+  margin: 16px auto 16px auto;
+}
+
+a.ui {
+  display: inline-block;
+  padding: 4px 8px;
+
+  background-color: #e05050;
+  color: white;
+  text-decoration: none;
+}
+
+a.ui:hover, a.ui:active {
+  background-color: #ff656c;
+}
 
 /* messages screen */
 
@@ -324,6 +353,81 @@ div.message {
   display: inline-block;
 }
 
+
+/* Posting form styles */
+
+div.editor {
+  width: 90%;
+  max-width: 1280px;
+  margin: auto;
+}
+
+div.editor form {
+  padding: 16px;
+  background-color: gray;
+}
+
+div.editor h1 {
+  width: 100%;
+  border-style: none;
+  padding: 4px;
+  margin-bottom: 8px;
+
+  background-color: #e0e0e0;
+  color: #606060;
+  font-weight: bold;
+  font-size: inherit;
+}
+
+div.editor p {
+  color: white;
+  font-weight: bold;
+  margin: 0px 0px 4px 0px;
+}
+
+input.title {
+  display: inline-block;
+  width: 100%;
+  border-style: none;
+  padding: 4px;
+  margin-bottom: 8px;
+
+  background-color: white;
+}
+
+textarea.editor {
+  display: inline-block;
+  width: 100%;
+  height: 20em;
+  padding: 4px;
+  margin-bottom: 8px;
+  margin-top: -1px;
+  border-style: none;
+  outline-style: none;
+  overflow: auto;
+  resize: vertical;
+
+  font-family: "Liberation Mono", "Courier New", monospaced;
+  background-color: white;
+}
+
+div.panel {
+  display: inline-block;
+  width: 100%;
+  text-align: left;
+}
+
+div.panel input {
+  border-style: none;
+  padding: 4px;
+  
+  background-color: #f06060;
+  color: white;
+}
+
+div.panel input:active, div.panel input:focus, div.panel input:hover {
+  background-color: #ff656c;
+}
 
 /* common styles */
 

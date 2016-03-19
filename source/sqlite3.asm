@@ -33,6 +33,8 @@ begin
         return
 
 .openok:
+        cinvoke sqliteBusyTimeout, [esi], 2000
+
         xor     ebx, ebx
         lea     eax, [.hSQL]
         lea     ecx, [.ptrNext]

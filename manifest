@@ -1,24 +1,37 @@
-C Added\ssome\sunique\sclauses\sin\sthe\sdatabase.\sNow\sonly\sone\suser\sfrom\sone\semail\scan\sbe\sregistered.\nSome\sother\schecks\sfor\sthe\sdata\sconsistency\shas\sbeen\sadded\sto\sthe\suser\sregistration\sprocess.\nThe\swrong\s400\serror\shas\sbeen\sreplaced\swith\s404\sfor\ssome\serrors.
-D 2016-03-18T10:02:29.467
+C If\sthe\sneeded\stemplate\sis\snot\sin\sthe\sdatabase,\ssearch\sit\sas\sa\sfile\sin\sthe\sdirectory\s"templates".\n\nPosting\snew\sthread\sand\sanswers\shas\sbeen\simplemented.\n\nSome\swork\son\sthe\snavigation\stoolbars.\sLittle\sfix\sto\sthe\ssessions\shandling.\sNot\sif\sthere\sis\s\nactive\ssession,\sit\swill\sbe\sreused.\sThis\sway,\slogin\sfrom\sanother\sbrowser\sdoes\snot\slogout\sthe\sother\sbrowser.\n\nSome\smore\swork\shave\sto\sbe\sdone\son\sthe\scookie\shandling\sand\snavigation.
+D 2016-03-19T09:34:22.904
 F source/Linux/sqlite3.inc f9221a234b424eac0cbf4ad99a1aa289591db75f
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
-F source/commands.asm 425fa4d420e86387a2dc8e021f5f7d09681825a6
-F source/create.sql 0e398f948815f06f58c1887c876ce5c88ecc62da
+F source/commands.asm 0e88f50525362b93871fda98336eb33eeb1aedbd
+F source/create.sql 754cfa02ff67adfc72d25be509bb47d917396124
 F source/fcgi.asm 0e7e26fd53394d031d3e9732e294340efb683ee5
 F source/http.asm 84ba1d2d67dc85e1c222cd402d715e6ff6fc8c3b
 F source/index.asm 1822ca5c35b1de479a2d6cc5b756a8f5794ea740
-F source/index.fpr 1393aa4328b9467164677edb5186a53bacf19f3f
-F source/render.asm 09919161c11ce855a8e65e8ad11e30984d7d43a6
-F source/sqlite3.asm 4285b7e6615de3ffd2630b7c4adbf3df3210dd43
+F source/index.fpr 20864136aeb55acc8006e7c5d902ec2ff37d1eec
+F source/render.asm aac4998d12d7e277f2322367a1e48357848cb639
+F source/sqlite3.asm ebfd4d537a7bb618514ec47cbd3dd67d544bd224
 F www/.htaccess e3d61615a5f5b289f09966a72e7f02777d0b1c60
-F www/all.css 506c5074677f4565a626031c04527e7484f62426
+F www/all.css fd83ed7000625d79b35f07228f082e2817f88c57
 F www/error.css 51294ab459d163a2642ed8d56ce7caceb052ebc9
 F www/ld-musl-i386.so 4d44786b8676115c7df45c45ceb051c11ce14ffd x
 F www/libsqlite3.so b219b02c71d515698b2086be2edc104e5c8997a7 x
 F www/lighttpd.conf e1b4c0e56430345d661af93ebf82862d21aa2fac
 F www/post.html 25b05d8e78a0614618aa105b8ab79ffce122c713
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
-P 80c4582c58896c1172959fac07c659a7776b415c
-R 4f3482c1020ec27bee9ea8117ffd3a11
+F www/templates/activation_email_subject.tpl 17359b7b23bd9bcacbc576168a6764be7192810e
+F www/templates/activation_email_text.tpl 44858c154d24eb9170b9a7eaaf56587572b86633
+F www/templates/edit_form.tpl 8b3db221a7e91d1c14dd7cf7263c07b8d0bff542
+F www/templates/error_html_end.tpl 7b7c2b52a2ba0604cc07cedf736455180bdd1b8a
+F www/templates/error_html_start.tpl 0126a0a5df0802ae2159ec0364c5495237af9724
+F www/templates/login_form.tpl 9d9110ee372fc0ff7f58a1b74040c0186457a470
+F www/templates/main_html_end.tpl ab616bbd17cf39fd825146a11b5e312e14393b83
+F www/templates/main_html_start.tpl 4a56ac290ce4656902af142c1e133cd12291a02e
+F www/templates/new_thread_form.tpl a8462892f559f7cc0d51bf7d72fcbaea0d2d6238
+F www/templates/post_view.tpl bf8b0f18bb56ffac8f6006969f4019ea40ddba83
+F www/templates/register_form.tpl 1a1834be0078415a0e210b30b148169151de07c5
+F www/templates/thread_info.tpl 5794b0787cd4b9aef10daaddfa1cefc0f492041b
+F www/templates/thread_nav.tpl d8832cdee1f89b34aa9366b4be3602b5f144072b
+P bf68e60b6563a4616ef985f804feeff5e4da8779
+R d5c879cc07acf19700ce84fdf149f6ff
 U johnfound
-Z 96354a4178b74b828e296d130fe33e6c
+Z bf1970b0ee62f7eba9444a3eee85603a

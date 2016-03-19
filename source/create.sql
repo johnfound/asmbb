@@ -40,16 +40,12 @@ create table if not exists WaitingActivation(
 
 
 create table if not exists Threads (
-  id	    integer primary key autoincrement,
-  Slug	    text,			-- slugifyed version of the caption. Can be set independently.
-  Caption   text,
-  StartPost integer
+  id	      integer primary key autoincrement,
+  Slug	      text,			  -- slugifyed version of the caption. Can be set independently.
+  Caption     text,
+  LastChanged integer
 );
 
-
-INSERT INTO Threads VALUES
- (1,'welcome', 'Welcome',1),
- (2,'how_to_program_assembly', 'How to program assembly',2);
 
 
 create table if not exists Posts (

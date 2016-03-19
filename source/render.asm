@@ -102,8 +102,10 @@ sqlGetTemplate text "select template from templates where id = ?"
 
 proc StrCatTemplate, .hString, .strTemplateID, .sql_statement, .p_special
 .stmt dd ?
+.free dd ?
 begin
         pushad
+        and     [.free], 0
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetTemplate, sqlGetTemplate.length+1, eax, 0
@@ -115,7 +117,27 @@ begin
         cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
-        jne     .error
+        je      .get_template
+
+
+        stdcall StrDupMem, "templates/"
+        stdcall StrCat, eax, [.strTemplateID]
+        stdcall StrCharCat, eax, ".tpl"
+        push    eax
+
+        stdcall LoadBinaryFile, eax
+        stdcall StrDel ; from the stack
+        jc      .error
+
+        OutputValue "Template from file. Length:", ecx, 10, -1
+
+        mov     [.free], eax
+        mov     esi, eax
+        and     dword [eax+ecx], 0
+        jmp     .outer
+
+
+.get_template:
 
         cinvoke sqliteColumnText, [.stmt], 0
         mov     esi, eax
@@ -169,10 +191,13 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
+        stdcall FreeMem, [.free]
         popad
         return
 
 .error:
+        DebugMsg "Error read template!"
+
         stdcall StrCat, [.hString], "Unknown template!"
         jmp     .end_of_template
 
