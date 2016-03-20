@@ -1,8 +1,8 @@
-C Fixing\sthe\sslugification\sof\sthe\stitles\sfor\scyrillic\stext.
-D 2016-03-19T20:34:51.124
-F source/Linux/sqlite3.inc f9221a234b424eac0cbf4ad99a1aa289591db75f
+C Online\sSQLite\sconsole\shas\sbeen\simplemented.\sThe\saccess\sis\sonly\swith\sadmin\spermissions.\n\nAlso,\sthe\s/adminrulez\saddress\swith\shardcoded\sadmin\sprivileges\sset\sfor\sthe\s"admin"\suser\simplemented.\nIt\sis\sa\sway\sto\sfix\smissing\spermissions\ssometimes\sand\sseems\sto\sbe\ssafe\senough.
+D 2016-03-20T09:09:55.500
+F source/Linux/sqlite3.inc 3434422cbaa5b6d55ec5a3a8171d7784c08fe6bc
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
-F source/commands.asm 16f1bef3caca61144e619220753ff6575abe86fe
+F source/commands.asm 649982c081b1d080e1cedd31da9218eb686ea6c9
 F source/create.sql 8534713f5551b6d27be00a9634a21e321d771665
 F source/fcgi.asm 0e7e26fd53394d031d3e9732e294340efb683ee5
 F source/http.asm 84ba1d2d67dc85e1c222cd402d715e6ff6fc8c3b
@@ -11,7 +11,7 @@ F source/index.fpr 20864136aeb55acc8006e7c5d902ec2ff37d1eec
 F source/render.asm 4cc8ad390464d5b32c18a4fd4a06d4ad1111270e
 F source/sqlite3.asm 4285b7e6615de3ffd2630b7c4adbf3df3210dd43
 F www/.htaccess e3d61615a5f5b289f09966a72e7f02777d0b1c60
-F www/all.css f2bdc3c4415c08ae618a34657fbb20b04553a798
+F www/all.css e89599951bba9aebc90c2cb595c54d7caf299fcd
 F www/error.css 51294ab459d163a2642ed8d56ce7caceb052ebc9
 F www/images/edit.svg daa93760c447ef99b79caf00745cf447bf6ad3cc
 F www/images/email.png 1866c9acaa42ea4082f48a461dbdbda987c9376a
@@ -45,8 +45,9 @@ F www/templates/nav_thread.tpl d8832cdee1f89b34aa9366b4be3602b5f144072b
 F www/templates/new_thread_form.tpl a8462892f559f7cc0d51bf7d72fcbaea0d2d6238
 F www/templates/post_view.tpl be136ef8de2b9a01f875531ceb5e76c4141d14c2
 F www/templates/register_form.tpl 749a90f278e66de2add4a5b21dfdb6bc5b5131f3
+F www/templates/sqlite_console_form.tpl 4c6454b8848d1ffedc186e76c66dfd447b0a351d
 F www/templates/thread_info.tpl 26d71518f201a0a10b41a1f7ed94576d4cda416f
-P 1a6d4850a18f3425df8851ded2aadf2f497f6200
-R 8abcf42e2c5c7dbcc360da1a42f72809
+P a1ffd27d84ea31a901dbeee18de5f05ff8f381f1
+R 9b106b8821b0e0e12286ae095d1013c4
 U johnfound
-Z c22102f16032b88804462274d0ae7727
+Z 196d1b40416fd79e74f7cc225eb22ccd

@@ -427,6 +427,7 @@ div.panel {
   display: inline-block;
   width: 100%;
   text-align: left;
+  margin-bottom: 8px;
 }
 
 div.panel input {
@@ -440,6 +441,41 @@ div.panel input {
 div.panel input:active, div.panel input:focus, div.panel input:hover {
   background-color: #ff656c;
 }
+
+/* sqlite console styles */
+
+table.sql_rows {
+  border-collapse: collapse;
+  border: 2px solid gray;
+  width: 95%;
+  max-width: 1280px;
+  margin: auto;
+}
+
+table.sql_rows th {
+  border: 2px solid black;
+  padding: 8px;
+  max-width: 300px;
+  text-align: center;
+}
+
+table.sql_rows td {
+  border: 2px solid gray;
+  padding: 8px;
+  max-width: 300px;
+  text-align: left;
+  vertical-align: top;
+
+  white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+  white-space: -webkit-pre-wrap; /*Chrome & Safari */ 
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  white-space: pre-wrap;       /* css-3 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  word-break: break-all;
+  white-space: normal;
+}
+
 
 /* common styles */
 

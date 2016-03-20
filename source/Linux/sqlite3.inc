@@ -94,6 +94,7 @@ import_proto './libsqlite3.so',  \
     sqliteErrCode, <.ptrDB>,  'sqlite3_errcode',  \
     sqliteErrMsg, <.ptrDB>,  'sqlite3_errmsg',  \
     sqliteErrMsg16, <.ptrDB>,  'sqlite3_errmsg16',  \
+    sqliteErrStr, <.err_code>, 'sqlite3_errstr',    \
     sqliteExec, <.ptrDB, .ptrSQL, .procCallback, .lparam, .ptrVarErrMsg>,  'sqlite3_exec',  \
     sqliteExpired, <VOID>,  'sqlite3_expired',  \
     sqliteExtendedErrCode, <.ptrDB>,  'sqlite3_extended_errcode',  \

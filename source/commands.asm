@@ -210,6 +210,12 @@ begin
         stdcall StrCompNoCase, [esi+TArray.array], txt "activate"
         jc      .activate_account
 
+        stdcall StrCompNoCase, [esi+TArray.array], txt "sqlite"         ; sqlite console. only for admins.
+        jc      .sqlite
+
+        stdcall StrCompNoCase, [esi+TArray.array], txt "adminrulez"
+        jc      .set_admin_permissions
+
 
 .end_forum_request:
         jmp     .error404
@@ -220,6 +226,24 @@ begin
         stdcall StrCat, edi, <"Status: 302 Found", 13, 10, "Location: /list/", 13, 10, 13, 10>
         jmp     .send_simple_result
 
+;..................................................................................
+
+.set_admin_permissions:
+
+        cinvoke sqliteExec, [hMainDatabase], "update users set status = -1 where nick = 'admin';"
+
+        jmp     .error403
+
+;..................................................................................
+
+
+.sqlite:
+        test    [.special.userStatus], permAdmin
+        jz      .error403
+
+        lea     eax, [.special]
+        stdcall SQLiteConsole, [.pPost], eax
+        jmp     .output_forum_html
 
 
 ;..................................................................................
@@ -2198,6 +2222,211 @@ begin
         jmp     .finish
 
 endp
+
+
+
+
+
+
+
+
+
+;        stdcall SQLiteConsole, [.pPost], [.pParams], eax
+
+sqlSource  text 'select ? as source'
+
+proc SQLiteConsole, .pPost, .pSpecial
+.stmt dd ?
+.post dd ?
+.source dd ?
+.next   dd ?
+begin
+        pushad
+
+        xor     eax, eax
+        mov     [.stmt], eax
+        mov     [.post], eax
+
+        stdcall StrNew
+        mov     edi, eax
+
+        stdcall StrNew
+        mov     [.post], eax
+
+        mov     ecx, [.pPost]
+        jecxz   .post_ok
+
+        lea     eax, [ecx+TByteStream.data]
+        stdcall StrCatMem, [.post], eax, [ecx+TByteStream.size]
+
+.post_ok:
+
+        stdcall GetQueryItem, [.post], "source=", 0
+        mov     [.source], eax
+        test    eax, eax
+        jz      .make_the_form
+
+; first output the form
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSource, -1, eax, 0
+
+        stdcall StrPtr, [.source]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+
+
+.make_the_form:
+
+        stdcall StrCatTemplate, edi, "sqlite_console_form", [.stmt], [.pSpecial]
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     [.source], 0
+        je      .finish
+
+; here execute the source.
+
+        stdcall StrPtr, [.source]
+        mov     esi, eax
+
+.sql_loop:
+        cmp     byte [esi], 0
+        je      .finish
+
+        lea     ecx, [.stmt]
+        lea     eax, [.next]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], esi, -1, ecx, eax
+
+        test    eax, eax
+        jnz     .done
+
+        stdcall StrNew
+        mov     edx, eax
+
+        mov     eax, [.next]
+        sub     eax, esi
+        stdcall StrCatMem, edx, esi, eax
+
+        stdcall StrCat, edi, "<p>Statement executed:</p><pre>"
+        stdcall StrCat, edi, edx
+        stdcall StrDel, edx
+        stdcall StrCat, edi, "</pre>"
+
+; first step
+        cinvoke sqliteStep, [.stmt]
+
+        cmp     eax, SQLITE_ROW
+        je      .fetch_rows
+
+.done:
+        cmp     eax, SQLITE_DONE
+        je      .finalize
+
+        cinvoke sqliteErrStr, eax
+
+        stdcall StrCat, edi, '<p class="result_msg">'
+        stdcall StrCat, edi, eax
+        stdcall StrCat, edi, txt '</p>'
+
+.finalize:
+        cinvoke sqliteFinalize, [.stmt]
+
+        xchg    esi, [.next]
+        cmp     esi, [.next]
+        jne     .sql_loop
+
+
+.finish:
+        stdcall StrDelNull, [.source]
+        stdcall StrDelNull, [.post]
+
+        mov     [esp+4*regEAX], edi
+        popad
+        return
+
+
+
+.fetch_rows:
+
+locals
+  .count dd ?
+endl
+
+; first the table
+
+        stdcall StrCat, edi, '<table class="sql_rows"><tr>'
+
+        cinvoke sqliteColumnCount, [.stmt]
+        mov     [.count], eax
+
+        xor     ebx, ebx
+
+.col_loop:
+        cmp     ebx, [.count]
+        jae     .end_columns
+
+        cinvoke sqliteColumnName, [.stmt], ebx
+
+        stdcall StrCat, edi, txt "<th>"
+        stdcall StrCat, edi, eax
+        stdcall StrCat, edi, txt "</th>"
+
+        inc     ebx
+        jmp     .col_loop
+
+.end_columns:
+
+        stdcall StrCat, edi, txt "</tr>"
+
+.row_loop:
+
+        stdcall StrCat, edi, txt "<tr>"
+
+        xor     ebx, ebx
+
+.val_loop:
+        cmp     ebx, [.count]
+        jae     .end_vals
+
+        cinvoke sqliteColumnText, [.stmt], ebx
+        test    eax, eax
+        jnz     .txt_ok
+
+        mov     eax, .cNULL
+
+.txt_ok:
+        stdcall StrCat, edi, txt "<td>"
+        stdcall StrCat, edi, eax
+        stdcall StrCat, edi, txt "</td>"
+
+        inc     ebx
+        jmp     .val_loop
+
+.end_vals:
+        stdcall StrCat, edi, txt "</tr>"
+
+        cinvoke sqliteStep, [.stmt]
+
+        cmp     eax, SQLITE_ROW
+        je      .row_loop
+
+        stdcall StrCat, edi, "</table>"
+
+        jmp     .done
+
+.cNULL db "NULL", 0
+
+endp
+
+
+
+
+
+
+
+
+
+
 
 
 
