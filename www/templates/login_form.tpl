@@ -1,4 +1,4 @@
-<div class="editor">
+<div class="new_editor">
 <div class="ui">
   <a class="ui" href="/list">Threads</a>
 </div>

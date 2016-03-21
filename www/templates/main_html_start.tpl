@@ -7,7 +7,4 @@
 </head>
 
 <body>
-  <div class="header"><h1>AsmBB demo</h1></div>
-  <div class="login_interface">
-    $special:loglink$
-  </div>
+  <div class="header"><div class="login_interface">$special:loglink$</div><h1>AsmBB demo</h1></div>

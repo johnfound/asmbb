@@ -17,6 +17,7 @@ permAdmin       = $80000000
 struct TSpecialParams
   .start_time      dd ?
   .params          dd ?
+  .post            dd ?
   .userID          dd ?
   .userName        dd ?
   .userStatus      dd ?
@@ -26,7 +27,7 @@ ends
 
 
 
-proc ServeOneRequest, .hSocket, .requestID, .pParams, .pPost, .start_time
+proc ServeOneRequest, .hSocket, .requestID, .pParams2, .pPost2, .start_time
 
 .root dd ?
 .uri  dd ?
@@ -45,16 +46,29 @@ begin
         mov     eax, [.start_time]
         mov     [.special.start_time], eax
 
-        mov     eax, [.pParams]
+        mov     eax, [.pParams2]
         mov     [.special.params], eax
 
+        mov     eax, [.pPost2]
+        test    eax, eax
+        jz      .post_ok
+
+        lea     edx, [eax+TByteStream.data]
+        mov     ecx, [eax+TByteStream.size]
+
+        stdcall StrNew
+        stdcall StrCatMem, eax, edx, ecx
+
+.post_ok:
+        mov     [.special.post], eax
+
         lea     eax, [.special]
-        stdcall GetLoggedUser, [.pParams], eax
+        stdcall GetLoggedUser, eax
 
         stdcall StrNew
         mov     edi, eax
 
-        stdcall ValueByName, [.pParams], "DOCUMENT_ROOT"
+        stdcall ValueByName, [.pParams2], "DOCUMENT_ROOT"
         jc      .error400
 
         stdcall StrDup, eax
@@ -75,7 +89,7 @@ begin
         mov     [ebx+string.len], eax
 
 .root_ok:
-        stdcall ValueByName, [.pParams], "REQUEST_URI"
+        stdcall ValueByName, [.pParams2], "REQUEST_URI"
         jc      .error400
 
         stdcall StrDup, eax
@@ -143,10 +157,10 @@ begin
         stdcall StrCatTemplate, edi, "main_html_start", 0, edx
 
         stdcall StrCat, edi, eax
+        stdcall StrDel, eax
 
         stdcall StrCatTemplate, edi, "main_html_end", 0, edx
 
-        stdcall StrDel, eax
 
 
 .send_simple_result:    ; it is a result containing only a string data in EDI
@@ -166,6 +180,7 @@ begin
         stdcall StrDelNull, [.filename]
 
         stdcall StrDelNull, [.special.userName]
+        stdcall StrDelNull, [.special.post]
 
         clc
         popad
@@ -207,6 +222,9 @@ begin
         stdcall StrCompNoCase, [esi+TArray.array], txt "post"
         jc      .post_message
 
+        stdcall StrCompNoCase, [esi+TArray.array], txt "edit"
+        jc      .edit_message
+
         stdcall StrCompNoCase, [esi+TArray.array], txt "activate"
         jc      .activate_account
 
@@ -223,7 +241,7 @@ begin
 
 .redirect_to_the_list:
 
-        stdcall StrCat, edi, <"Status: 302 Found", 13, 10, "Location: /list/", 13, 10, 13, 10>
+        stdcall StrMakeRedirect, edi, "/list/"
         jmp     .send_simple_result
 
 ;..................................................................................
@@ -242,7 +260,7 @@ begin
         jz      .error403
 
         lea     eax, [.special]
-        stdcall SQLiteConsole, [.pPost], eax
+        stdcall SQLiteConsole, eax
         jmp     .output_forum_html
 
 
@@ -256,13 +274,13 @@ begin
         stdcall ActivateAccount, [esi+TArray.array+4]
         jc      .wrong_activation
 
-        stdcall StrCat, edi, <"Status: 302 Found", 13, 10, "Location: /message/congratulations/", 13, 10, 13, 10>
+        stdcall StrMakeRedirect, edi, "/message/congratulations/"
         jmp     .send_simple_result
 
 
 .wrong_activation:
 
-        stdcall StrCat, edi, <"Status: 302 Found", 13, 10, "Location: /message/bad_secret/", 13, 10, 13, 10>
+        stdcall StrMakeRedirect, edi, "/message/bad_secret/"
         jmp     .send_simple_result
 
 
@@ -276,10 +294,7 @@ begin
         cmp     [esi+TArray.count], 1
         je      .list_params_ready
 
-        stdcall StrToNum, [esi+TArray.array+4]
-        cmp     eax, -1
-        je      .page_ready
-
+        stdcall StrToNumEx, [esi+TArray.array+4]
         mov     ebx, eax
 
 .page_ready:
@@ -308,16 +323,17 @@ begin
         cmp     [esi+TArray.count], 3
         jb      .show_thread
 
-        stdcall StrToNum, [esi+TArray.array+8]
+        stdcall StrToNumEx, [esi+TArray.array+8]
         mov     ebx, eax
 
 .show_thread:
+        cmp     [esi+TArray.count], 2
+        jb      .error404
+
         lea     eax, [.start_time]
         stdcall ShowThread, [esi+TArray.array+4], ebx, eax
-
-        jmp     .output_forum_html
-
-
+        jnc     .output_forum_html
+        jmp     .error404
 
 
 ;..................................................................................
@@ -336,7 +352,8 @@ cUnknownError text "unknown_error"
 
 .error_ok:
 
-        stdcall ShowForumMessage, eax, [.pParams]
+        lea     ecx, [.special]
+        stdcall ShowForumMessage, eax, ecx
 
         jmp     .output_forum_html
 
@@ -346,11 +363,13 @@ cUnknownError text "unknown_error"
 
 .user_login:
 
-        cmp     [.pPost], 0
+        cmp     [.special.post], 0
         je      .show_login_page
 
 
-        stdcall UserLogin, [.pPost], [.pParams]
+        lea     eax, [.special]
+        stdcall UserLogin, eax
+
         jmp     .send_simple_replace
 
 
@@ -373,10 +392,11 @@ cUnknownError text "unknown_error"
 
 .user_register:
 
-        cmp     [.pPost], 0
+        cmp     [.special.post], 0
         je      .show_register_page
 
-        stdcall RegisterNewUser, [.pPost], [.pParams]
+        lea     eax, [.special]
+        stdcall RegisterNewUser, eax
         jmp     .send_simple_replace
 
 
@@ -403,14 +423,14 @@ cUnknownError text "unknown_error"
         jz      .error_cant_start_threads
 
 .can_post:
-        cmp     [.pPost], 0
+        cmp     [.special.post], 0
         je      .show_post_form
 
         lea     eax, [.special]
-        stdcall PostUserMessage, ebx, [.pPost], eax
+        stdcall PostUserMessage, ebx, eax
         jc      .error_cant_post
 
-        OutputValue "Now redirect to post ID=", eax, 10, -1
+;        OutputValue "Now redirect to post ID=", eax, 10, -1
 
         stdcall StrCatRedirectToPost, edi, eax
         jmp     .send_simple_result
@@ -424,16 +444,35 @@ cUnknownError text "unknown_error"
 
 
 .error_cant_post:
-        stdcall StrCat, edi, <"Status: 302 Found", 13, 10, "Location: /message/error_cant_post/", 13, 10, 13, 10>
+
+        stdcall StrMakeRedirect, edi, "/message/error_cant_post/"
         jmp     .send_simple_result
 
 
 .error_cant_start_threads:
-        stdcall StrCat, edi, <"Status: 302 Found", 13, 10, "Location: /message/error_cant_create_threads/", 13, 10, 13, 10>
+
+        stdcall StrMakeRedirect, edi, "/message/error_cant_create_threads/"
         jmp     .send_simple_result
 
 
 ;..................................................................................
+
+
+.edit_message:
+        cmp     [esi+TArray.count], 2
+        jne     .error400
+
+        stdcall StrToNumEx, [esi+TArray.array+4]
+
+        lea     ecx, [.special]
+        stdcall EditUserMessage, eax, ecx
+
+        jmp     .send_simple_replace
+
+
+
+;..................................................................................
+
 
 
 
@@ -781,7 +820,7 @@ sqlGetErrorText text "select msg, header, link from messages where id = ?"
 cGoRoot text "/"
 
 
-proc ShowForumMessage, .key, .pParams
+proc ShowForumMessage, .key, .pSpecial
 .stmt dd ?
 begin
         pushad
@@ -826,7 +865,8 @@ begin
 
         stdcall StrCat, edi, '<a href="'
 
-        stdcall ValueByName, [.pParams], "HTTP_REFERER"
+        mov     eax, [.pSpecial]
+        stdcall ValueByName, [eax+TSpecialParams.params], "HTTP_REFERER"
         jnc     .referer_ok
 
         mov     eax, cGoRoot
@@ -879,7 +919,7 @@ sqlInsertSession text "insert into sessions (userID, sid, last_seen) values ( ?,
 sqlCheckSession  text "select sid from sessions where userID = ?"
 
 
-proc UserLogin, .pPost, .pParams
+proc UserLogin, .pSpecial
 .stmt  dd ?
 
 .user     dd ?
@@ -897,17 +937,13 @@ begin
         mov     [.user], eax
         mov     [.password], eax
 
-        stdcall StrDupMem, <"Status: 302 Found", 13, 10>
+        stdcall StrNew
         mov     edi, eax
 
 ; check the information
 
-        stdcall StrNew
-        mov     ebx, eax
-
-        mov     edx, [.pPost]
-        lea     eax, [edx+TByteStream.data]
-        stdcall StrCatMem, ebx, eax, [edx+TByteStream.size]
+        mov     ebx, [.pSpecial]
+        mov     ebx, [ebx+TSpecialParams.post]
 
         stdcall GetQueryItem, ebx, "username=", 0
         mov     [.user], eax
@@ -1025,24 +1061,24 @@ begin
         stdcall StrCat, edi, "Set-Cookie: sid="
         stdcall StrCat, edi, [.session]
         stdcall StrCat, edi, <"; HttpOnly; Path=/", 13, 10>
-        stdcall StrCat, edi, <"Location: /list/", 13, 10, 13, 10>       ; go forward.
 
+        stdcall StrMakeRedirect, edi, "/list/"          ; go forward.
         jmp     .finish
 
 .redirect_back_short:
 
-        stdcall StrCat, edi, <"Location: /message/login_missing_data/", 13, 10, 13, 10>       ; go backward.
+        stdcall StrMakeRedirect, edi, "/message/login_missing_data/"  ; go backward.
         jmp     .finish
 
 .redirect_back_bad_permissions:
 
-        stdcall StrCat, edi, <"Location: /message/login_bad_permissions/", 13, 10, 13, 10>       ; go backward.
+        stdcall StrMakeRedirect, edi, "/message/login_bad_permissions/" ; go backward.
         jmp     .finish
 
 
 .redirect_back_bad_password:
-        stdcall StrCat, edi, <"Location: /message/login_bad_password/", 13, 10, 13, 10>       ; go backward.
 
+        stdcall StrMakeRedirect, edi, "/message/login_bad_password/"
 
 .finish:
         stdcall StrDelNull, [.user]
@@ -1065,7 +1101,7 @@ proc UserLogout, .pspecial
 begin
         pushad
 
-        stdcall StrDupMem, <"Status: 302 Found", 13, 10>
+        stdcall StrNew
         mov     edi, eax
 
         mov     esi, [.pspecial]
@@ -1077,22 +1113,17 @@ begin
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLogout, -1, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.userID]
         cinvoke sqliteStep, [.stmt]
-        mov     ebx, eax
         cinvoke sqliteFinalize, [.stmt]
-
-        cmp     ebx, SQLITE_DONE
-        jne     .finish
 
 ; delete the cookie.
 
-        DebugMsg "Now delete the cookie!"
+;        DebugMsg "Now delete the cookie!"
 
         stdcall StrCat, edi, <"Set-Cookie: sid=; HttpOnly; Path=/; Max-Age=0", 13, 10>
 
 .finish:
-        stdcall StrCat, edi, <"Location: /list/", 13, 10, 13, 10>       ; go forward.
+        stdcall StrMakeRedirect, edi, "/list/"
         mov     [esp+4*regEAX], edi
-
         popad
         return
 endp
@@ -1115,7 +1146,7 @@ endp
 sqlRegisterUser    text "insert into WaitingActivation (nick, passHash, salt, email, ip_from, time_reg, time_email, a_secret) values (?, ?, ?, ?, ?, strftime('%s','now'), NULL, ?)"
 sqlCheckUserExists text "select 1 from Users where lower(nick) = lower(?) or email = ? limit 1"
 
-proc RegisterNewUser, .pPost, .pParams
+proc RegisterNewUser, .pSpecial
 
 .stmt      dd ?
 
@@ -1139,17 +1170,10 @@ begin
         mov     [.secret], eax
         mov     [.ip_from], eax
 
-        stdcall StrDupMem, <"Status: 302 Found", 13, 10>
-        mov     edi, eax
-
 ; check the information
 
-        stdcall StrNew
-        mov     ebx, eax
-
-        mov     edx, [.pPost]
-        lea     eax, [edx+TByteStream.data]
-        stdcall StrCatMem, ebx, eax, [edx+TByteStream.size]
+        mov     ebx, [.pSpecial]
+        mov     ebx, [ebx+TSpecialParams.post]
 
         stdcall GetQueryItem, ebx, "username=", 0
         mov     [.user], eax
@@ -1173,13 +1197,12 @@ begin
         stdcall StrCompCase, [.password], [.password2]
         jnc     .error_different
 
-
         stdcall StrLen, [.password]
         cmp     eax, 5
         jbe     .error_short_pass
 
-
-        stdcall ValueByName, [.pParams], "REMOTE_ADDR"
+        mov     eax, [.pSpecial]
+        stdcall ValueByName, [eax+TSpecialParams.params], "REMOTE_ADDR"
         stdcall StrIP2Num, eax
         jc      .error_technical_problem
 
@@ -1254,38 +1277,41 @@ begin
 
 ; the user has been created and now is waiting for email activation.
 
-        stdcall StrCat, edi, <"Location: /message/user_created/", 13, 10, 13, 10>       ; go forward.
+        stdcall StrMakeRedirect, 0, "/message/user_created/"                    ; go forward.
         jmp     .finish
 
 
 .error_technical_problem:
-        stdcall StrCat, edi, <"Location: /message/register_technical/", 13, 10, 13, 10>       ; go backward.
+
+        stdcall StrMakeRedirect, 0, "/message/register_technical/"              ; go backward.
         jmp     .finish
 
 
 .error_short_name:
-        stdcall StrCat, edi, <"Location: /message/register_short_name/", 13, 10, 13, 10>       ; go backward.
+
+        stdcall StrMakeRedirect, 0, "/message/register_short_name/"             ; go backward.
         jmp     .finish
 
 
 .error_bad_email:
-        stdcall StrCat, edi, <"Location: /message/register_bad_email/", 13, 10, 13, 10>       ; go backward.
+        stdcall StrMakeRedirect, 0, "/message/register_bad_email/"              ; go backward.
         jmp     .finish
 
 
 .error_short_pass:
-        stdcall StrCat, edi, <"Location: /message/register_short_pass/", 13, 10, 13, 10>       ; go backward.
+        stdcall StrMakeRedirect, 0, "/message/register_short_pass/"             ; go backward.
         jmp     .finish
 
 
 .error_different:
-        stdcall StrCat, edi, <"Location: /message/register_passwords_different/", 13, 10, 13, 10>       ; go backward.
+
+        stdcall StrMakeRedirect, 0, "/message/register_passwords_different/"    ; go backward.
         jmp     .finish
 
 
 .error_exists:
-        stdcall StrCat, edi, <"Location: /message/register_user_exists/", 13, 10, 13, 10>       ; go backward.
 
+        stdcall StrMakeRedirect, 0, "/message/register_user_exists/"            ; go backward.
 
 .finish:
         stdcall StrDelNull, [.user]
@@ -1294,7 +1320,7 @@ begin
         stdcall StrDelNull, [.email]
         stdcall StrDelNull, [.secret]
 
-        mov     [esp+4*regEAX], edi
+        mov     [esp+4*regEAX], eax
         popad
         return
 endp
@@ -1311,19 +1337,20 @@ sqlGetSession text "select userID, nick, status, last_seen from sessions left jo
 ;   ECX: string with the session ID
 ;   EDX: logged user ID
 
-proc GetLoggedUser, .pParams, .special
+proc GetLoggedUser, .pSpecial
 .stmt dd ?
 begin
         pushad
 
-        mov     edi, [.special]
+        mov     edi, [.pSpecial]
 
         xor     eax, eax
         mov     [edi+TSpecialParams.userID], eax
         mov     [edi+TSpecialParams.userName], eax
+        mov     [edi+TSpecialParams.userStatus], eax
         mov     [edi+TSpecialParams.session], eax
 
-        stdcall GetCookieValue, [.pParams], txt 'sid'
+        stdcall GetCookieValue, [edi+TSpecialParams.params], txt 'sid'
         jc      .finish
 
         mov     ebx, eax
@@ -1837,10 +1864,9 @@ sqlInsertThread text "insert into Threads ( Slug, Caption ) values (?, ?)"
 ; returns  EAX = Posts.id of the inserted/updated post.
 ;          CF =1 on error.
 
-proc PostUserMessage, .hSlug, .pPost, .pSpecial
+proc PostUserMessage, .hSlug, .pSpecial
 .stmt dd ?
 
-.post    dd ?
 .caption dd ?
 .source  dd ?
 .slug    dd ?
@@ -1855,13 +1881,7 @@ begin
         mov     [.caption], eax
         mov     [.source], eax
 
-
-        stdcall StrNew
-        mov     [.post], eax
-
-        mov     edx, [.pPost]
-        lea     eax, [edx+TByteStream.data]
-        stdcall StrCatMem, [.post], eax, [edx+TByteStream.size]
+        mov     esi, [.pSpecial]
 
 ; begin transaction!
 
@@ -1890,7 +1910,7 @@ begin
 
 ;        DebugMsg "New thread started!"
 
-        stdcall GetQueryItem, [.post], "title=", 0
+        stdcall GetQueryItem, [esi+TSpecialParams.post], "title=", 0
         mov     [.caption], eax
 
         stdcall StrSlugify, [.caption]
@@ -1939,19 +1959,25 @@ begin
 
 ; insert new post
 
-;        DebugMsg "Now insert new post!"
+        DebugMsg "Now insert new post!"
+
+        mov     eax, [.pSpecial]
+        OutputValue "Special information on:", esi, 16, 8
+        OutputValue "POST information on:", [esi+TSpecialParams.post], 16, 8
+
 
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertPost, -1, eax, 0
 
         cinvoke sqliteBindInt, [.stmt], 1, ebx
+        cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.userID]
 
-        mov     eax, [.pSpecial]
-        cinvoke sqliteBindInt, [.stmt], 2, [eax+TSpecialParams.userID]
-
-        stdcall GetQueryItem, [.post], "source=", 0
+        stdcall GetQueryItem, [esi+TSpecialParams.post], "source=", 0
         mov     [.source], eax
+
+        OutputValue "Source string handle:", eax, 16, 8
+        test    eax, eax
 
         stdcall StrPtr, eax
         cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
@@ -1965,7 +1991,7 @@ begin
         cinvoke sqliteLastInsertRowID, [hMainDatabase]
         mov     [esp+4*regEAX], eax
 
-;        OutputValue "Post inserted with ID=", eax, 10, -1
+        OutputValue "Post inserted with ID=", eax, 10, -1
 
 ; Update thread LastChanged
 
@@ -2019,8 +2045,6 @@ begin
         stdcall StrDelNull, [.source]
         stdcall StrDelNull, [.caption]
         stdcall StrDelNull, [.slug]
-        stdcall StrDel, [.post]
-
         retn
 
 endp
@@ -2030,7 +2054,7 @@ endp
 
 ;        stdcall ShowPostForm, esi, eax
 
-cEditPostForm text "edit_form"
+cNewPostForm   text "new_post_form"
 cNewThreadForm text "new_thread_form"
 
 sqlSelectConst text "select ? as slug, ? as caption, ? as source"
@@ -2069,7 +2093,7 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
-        mov     esi, cEditPostForm
+        mov     esi, cNewPostForm
 
 
 .thread_ok:
@@ -2122,6 +2146,203 @@ endp
 
 
 
+sqlReadPost    text "select P.id, T.caption, P.content as source  from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
+sqlEditedPost  text "select P.id, T.caption, ?2 as source         from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
+sqlSavePost    text "update Posts set content = ? where id = ?"
+sqlGetPostUser text "select userID from Posts where id = ?"
+
+
+proc EditUserMessage, .postID, .pSpecial
+.stmt dd ?
+
+.fPreview dd ?
+.source   dd ?
+.res      dd ?
+
+begin
+        pushad
+
+        mov     [.fPreview], 1  ; preview by default when handling GET requests.
+        mov     [.source], 0
+
+        mov     esi, [.pSpecial]
+
+        stdcall StrNew
+        mov     edi, eax
+
+
+; check the permissions.
+
+;        OutputValue "User permissions:", [esi+TSpecialParams.userStatus], 16, 8
+
+        test    [esi+TSpecialParams.userStatus], permEditOwn or permEditAll or permAdmin
+        jz      .error_wrong_permissions
+
+        test    [esi+TSpecialParams.userStatus], permEditAll or permAdmin
+        jnz     .permissions_ok
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetPostUser, -1, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
+        cinvoke sqliteStep, [.stmt]
+        mov     [.res], eax
+        cmp     eax, SQLITE_ROW
+        jne     @f
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        mov     ebx, eax
+
+@@:
+        cinvoke sqliteFinalize, [.stmt]
+
+        OutputValue "Post ID check:", [.res], 10, -1
+
+        cmp     [.res], SQLITE_ROW
+        jne     .error_missing_post
+
+        cmp     ebx, [esi+TSpecialParams.userID]
+        jne     .error_wrong_permissions
+
+
+.permissions_ok:
+        cmp     [esi+TSpecialParams.post], 0
+        je      .show_edit_form
+
+; ok, get the action then:
+
+        stdcall GetQueryItem, [esi+TSpecialParams.post], "source=", 0
+        mov     [.source], eax
+
+        stdcall GetQueryItem, [esi+TSpecialParams.post], "submit=", 0
+        stdcall StrDel, eax
+        test    eax, eax
+        jnz     .save_post_and_exit
+
+        stdcall GetQueryItem, [esi+TSpecialParams.post], "preview=", 0
+        stdcall StrDel, eax
+        mov     [.fPreview], eax
+
+
+.show_edit_form:
+
+        stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Content-type: text/html", 13, 10, 13, 10>
+        stdcall StrCatTemplate, edi, "main_html_start", 0, esi
+
+        mov     ecx, sqlReadPost
+        cmp     [.source], 0
+        je      .sql_ok
+
+        mov     ecx, sqlEditedPost
+
+.sql_ok:
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], ecx, -1, eax, 0
+
+        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
+
+        cmp     [.source], 0
+        je      .source_ok
+
+        stdcall StrPtr, [.source]
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
+.source_ok:
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        je      .statement_ok
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        stdcall StrDel, edi
+        stdcall StrNew
+        mov     edi, eax
+        jmp     .error_missing_post
+
+.statement_ok:
+
+        stdcall StrCatTemplate, edi, "edit_form", [.stmt], esi
+
+        cmp     [.fPreview], 0
+        je      .preview_ok
+
+        stdcall StrCatTemplate, edi, "preview", [.stmt], esi
+
+.preview_ok:
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        stdcall StrCatTemplate, edi, "main_html_end", 0, esi
+        jmp     .finish
+
+
+;...............................................................................................
+
+.save_post_and_exit:
+
+        cmp     [.source], 0
+        je      .end_save
+
+        stdcall StrLen, [.source]
+        cmp     eax, 0
+        je      .end_save
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSavePost, -1, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 2, [.postID]
+
+        stdcall StrPtr, [.source]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     ebx, SQLITE_DONE
+        jne     .error_write
+
+.end_save:
+
+        stdcall StrCatRedirectToPost, edi, [.postID]
+
+.finish:
+        stdcall StrDelNull, [.source]
+        mov     [esp+4*regEAX], edi
+        popad
+        return
+
+
+.error_wrong_permissions:
+
+        stdcall StrMakeRedirect, edi, "/message/error_cant_post/"
+        jmp     .finish
+
+
+.error_missing_post:
+
+        stdcall StrMakeRedirect, edi, "/message/error_post_not_exists/"
+        jmp     .finish
+
+
+.error_write:
+
+        stdcall StrMakeRedirect, edi, "/message/error_cant_write/"
+        jmp     .finish
+
+
+
+endp
+
+
+
+
+
+
+
+
+
+
+
 
 sqlGetThePostIndex text "select count(*) from Posts p where threadID = ?1 and ( p.PostTime <= (select PostTime from Posts where id = ?2) and id < ?2 ) order by PostTime, id"
 
@@ -2166,7 +2387,7 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThePostIndex, -1, eax, 0
 
-        OutputValue "Prepare get post index:", eax, 10, -1
+;        OutputValue "Prepare get post index:", eax, 10, -1
 
         cinvoke sqliteBindInt, [.stmt], 1, ebx
         cinvoke sqliteBindInt, [.stmt], 2, [.postID]
@@ -2182,7 +2403,7 @@ begin
         div     ecx
         mov     [.page], eax
 
-        OutputValue "The post is on page ", eax, 10, -1
+;        OutputValue "The post is on page ", eax, 10, -1
 
         cinvoke sqliteFinalize, [.stmt]
 
@@ -2212,7 +2433,7 @@ begin
 
         stdcall StrDelNull, [.slug]
 
-        DebugMsg "StrCatRedirectToPost finished!"
+;        DebugMsg "StrCatRedirectToPost finished!"
 
         popad
         return
@@ -2235,9 +2456,8 @@ endp
 
 sqlSource  text 'select ? as source'
 
-proc SQLiteConsole, .pPost, .pSpecial
+proc SQLiteConsole, .pSpecial
 .stmt dd ?
-.post dd ?
 .source dd ?
 .next   dd ?
 begin
@@ -2245,23 +2465,12 @@ begin
 
         xor     eax, eax
         mov     [.stmt], eax
-        mov     [.post], eax
 
         stdcall StrNew
         mov     edi, eax
 
-        stdcall StrNew
-        mov     [.post], eax
-
-        mov     ecx, [.pPost]
-        jecxz   .post_ok
-
-        lea     eax, [ecx+TByteStream.data]
-        stdcall StrCatMem, [.post], eax, [ecx+TByteStream.size]
-
-.post_ok:
-
-        stdcall GetQueryItem, [.post], "source=", 0
+        mov     eax, [.pSpecial]
+        stdcall GetQueryItem, [eax+TSpecialParams.post], "source=", 0
         mov     [.source], eax
         test    eax, eax
         jz      .make_the_form
@@ -2286,12 +2495,14 @@ begin
 
 ; here execute the source.
 
+        stdcall StrCat, edi, '<div class="sql_exec">'
+
         stdcall StrPtr, [.source]
         mov     esi, eax
 
 .sql_loop:
         cmp     byte [esi], 0
-        je      .finish
+        je      .finish_exec
 
         lea     ecx, [.stmt]
         lea     eax, [.next]
@@ -2335,10 +2546,12 @@ begin
         cmp     esi, [.next]
         jne     .sql_loop
 
+.finish_exec:
+
+        stdcall StrCat, edi, '</div>'
 
 .finish:
         stdcall StrDelNull, [.source]
-        stdcall StrDelNull, [.post]
 
         mov     [esp+4*regEAX], edi
         popad
@@ -2417,6 +2630,12 @@ endl
 .cNULL db "NULL", 0
 
 endp
+
+
+
+
+
+
 
 
 

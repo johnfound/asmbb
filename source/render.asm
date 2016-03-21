@@ -1,26 +1,6 @@
 
 
 
-proc RenderPostContent, .html, .PostText
-begin
-        pushad
-
-
-        stdcall StrCat, [.html], '<p class="posttext">'
-
-
-        stdcall StrCat, [.html], [.PostText]
-
-
-        stdcall StrCat, [.html], txt '</p>'  ; div.posttext
-
-
-        popad
-        return
-endp
-
-
-
 
 proc RenderPostTime, .html, .time
 .dtime dq ?
@@ -376,7 +356,7 @@ if defined options.DebugWeb & options.DebugWeb
 
 .loop_env:
         cmp     ecx, [edx+TArray.count]
-        jae     .finish
+        jae     .show_post
 
         stdcall StrCat,     [.string], [edx+TArray.array+8*ecx]
         stdcall StrCharCat, [.string], " = "
@@ -385,6 +365,15 @@ if defined options.DebugWeb & options.DebugWeb
 
         inc     ecx
         jmp     .loop_env
+
+.show_post:
+        mov     eax, [esi+TSpecialParams.post]
+        test    eax, eax
+        jz      .finish
+
+        stdcall StrCat, [.string], <"Follows the POST data:", 13, 10>
+        stdcall StrCat, [.string], [esi+TSpecialParams.post]
+        jmp     .finish
 
 else
         jmp     .finish
@@ -641,4 +630,35 @@ begin
         dd      "a"
         dd      "yu"
 
+endp
+
+
+
+
+
+proc StrMakeRedirect, .hString, .hWhere
+begin
+        push    eax
+
+        cmp     [.hString], 0
+        jne     @f
+
+        stdcall StrNew
+        mov     [esp], eax
+        mov     [.hString], eax
+
+@@:
+        stdcall StrInsert,  [.hString], <"Status: 302 Found", 13, 10>, 0
+        stdcall StrPtr, [.hString]
+        add     eax, [eax+string.len]
+        cmp     word [eax-2], $0a0d
+        je      @f
+        stdcall StrCharCat, [.hString], $0a0d
+@@:
+        stdcall StrCat,     [.hString], "Location: "
+        stdcall StrCat,     [.hString], [.hWhere]
+        stdcall StrCharCat, [.hString], $0a0d0a0d
+
+        pop     eax
+        return
 endp

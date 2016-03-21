@@ -46,12 +46,16 @@ proc GetQueryItem, .hQuery, .itemname, .default
 begin
         push    ecx esi
 
+        cmp     [.hQuery], 0
+        je      .not_found
+
         stdcall StrLen, [.itemname]
         mov     ecx, eax
 
         stdcall StrPos, [.hQuery], [.itemname]
         jnz     .item_found
 
+.not_found:
         mov     eax, [.default]
         test    eax, eax
         jz      .finish

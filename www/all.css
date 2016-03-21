@@ -21,6 +21,7 @@ input {
 /* header styles */
 
 div.header {
+  position: relative;
   width: 95%;
   max-width: 1280px;
   margin: auto;
@@ -122,7 +123,6 @@ div.post {
   margin-right: auto;
 }
 
-
 div.user_info {
   float: left;
   position: absolute;
@@ -175,7 +175,6 @@ div.post_text {
 div.page_row {
   margin-bottom: 16px;
   margin-top: 16px;
-  clear: both;
 }
 
 a.page_link {
@@ -250,7 +249,7 @@ span.current_page {
     background-image: url('/images/pass.png');
 }
 
-.login-block input, .register-block input {
+.login-block input, .register-block input {     
     background-color: white;
     background-position: 12px -10px;
     background-repeat: no-repeat;
@@ -287,7 +286,9 @@ span.current_page {
 
 div.login_interface {
   float: right;
-  margin: 8px 5%;
+  position: absolute;
+  bottom: 8px;
+  right: 0px;
 }
 
 div.login_interface a {
@@ -368,11 +369,19 @@ div.message {
 /* Posting form styles */
 
 div.editor {
+  width: 640px;
+  max-width: 60%;
+  float: right;
+  margin: 0px 0px 16px 16px;
+}
+
+div.new_editor {
   width: 95%;
   max-width: 1280px;
   clear: both;
   margin: 8px auto;
 }
+
 
 #editform {
   padding: 16px;
@@ -391,7 +400,7 @@ h1.fakeedit {
   font-size: inherit;
 }
 
-div.editor p {
+div.editor p, div.new_editor p{
   color: white;
   font-weight: bold;
   margin: 0px 0px 4px 0px;
@@ -444,12 +453,46 @@ div.panel input:active, div.panel input:focus, div.panel input:hover {
 
 /* sqlite console styles */
 
-table.sql_rows {
-  border-collapse: collapse;
-  border: 2px solid gray;
+textarea.sql_editor {
+  display: inline-block;
+  width: 100%;
+  height: 5em;
+  padding: 4px;
+  margin-bottom: 8px;
+  margin-top: -1px;
+  border-style: none;
+  outline-style: none;
+  overflow: auto;
+  resize: vertical;
+
+  font-family: "Liberation Mono", "Courier New", monospaced;
+  background-color: white;
+}
+
+
+div.sql_exec {
   width: 95%;
   max-width: 1280px;
   margin: auto;
+
+  background-color: white;
+  padding: 8px;
+  font-size: 13px;
+}
+
+div.sql_exec p {
+  margin-bottom: 0px;
+}
+
+div.sql_exec pre {
+  padding: 4px;
+  margin-bottom: 4px;
+}
+
+table.sql_rows {
+  border-collapse: collapse;
+  border: 2px solid gray;
+  width: 100%;
 }
 
 table.sql_rows th {
@@ -466,14 +509,9 @@ table.sql_rows td {
   text-align: left;
   vertical-align: top;
 
-  white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
-  white-space: -webkit-pre-wrap; /*Chrome & Safari */ 
-  white-space: -pre-wrap;      /* Opera 4-6 */
-  white-space: -o-pre-wrap;    /* Opera 7 */
   white-space: pre-wrap;       /* css-3 */
   word-wrap: break-word;       /* Internet Explorer 5.5+ */
   word-break: break-all;
-  white-space: normal;
 }
 
 
@@ -542,6 +580,10 @@ pre {
   font-size: 1em;
   margin: 0px;
   padding: 1em 0em 1em 0em;
+
+  word-break: break-all;
+  white-space: pre-wrap;       /* css-3 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
 
@@ -575,7 +617,6 @@ img.txt {
   border-width: 0px;
   margin: 16px auto;
   display: block;
-  clear: both;
   max-width: 95%; 
 }
 
@@ -639,7 +680,6 @@ div.bq {
   margin: 0.5em;
 
   border: 2px solid gray;
-  clear: both;
 }
 
 h1.bq
@@ -655,7 +695,6 @@ h1.bq
   font-weight: normal;
   
   float: left;
-  clear: both;
 }
 
 div.right div.bq, div.right h1.bq {

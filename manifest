@@ -1,17 +1,18 @@
-C Online\sSQLite\sconsole\shas\sbeen\simplemented.\sThe\saccess\sis\sonly\swith\sadmin\spermissions.\n\nAlso,\sthe\s/adminrulez\saddress\swith\shardcoded\sadmin\sprivileges\sset\sfor\sthe\s"admin"\suser\simplemented.\nIt\sis\sa\sway\sto\sfix\smissing\spermissions\ssometimes\sand\sseems\sto\sbe\ssafe\senough.
-D 2016-03-20T09:09:55.500
+C Edit\spost\sfeature\salmost\sworks.\sOnly\sthe\slinks\shave\sto\sbe\sadd\sto\sthe\sposts.\n\nAnother\scode\srefactoring.\sFixed\sseveral\sbugs,\ssome\sof\sthem\sserious.
+D 2016-03-21T09:59:02.737
 F source/Linux/sqlite3.inc 3434422cbaa5b6d55ec5a3a8171d7784c08fe6bc
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
-F source/commands.asm 649982c081b1d080e1cedd31da9218eb686ea6c9
+F source/commands.asm 17260c8e747454f94898168f87eba15a8d4b8fee
 F source/create.sql 8534713f5551b6d27be00a9634a21e321d771665
 F source/fcgi.asm 0e7e26fd53394d031d3e9732e294340efb683ee5
-F source/http.asm 84ba1d2d67dc85e1c222cd402d715e6ff6fc8c3b
-F source/index.asm 46a074c6b2221ca68ace88080df475030b81f16f
+F source/http.asm 6fd36367f90732d910c6bd564ffbcb6815094c74
+F source/index.asm 5e79ac23ac216ad465ba24c2e4e0b140b43553a7
 F source/index.fpr 20864136aeb55acc8006e7c5d902ec2ff37d1eec
-F source/render.asm 4cc8ad390464d5b32c18a4fd4a06d4ad1111270e
+F source/messages_bg.sql 4893f07809bd618feaf0b61959c450dfed828b92
+F source/render.asm ba72a1936ac43591c495bebecb7bb1551a334af4
 F source/sqlite3.asm 4285b7e6615de3ffd2630b7c4adbf3df3210dd43
 F www/.htaccess e3d61615a5f5b289f09966a72e7f02777d0b1c60
-F www/all.css e89599951bba9aebc90c2cb595c54d7caf299fcd
+F www/all.css e3eed6d8fc1f53bb7aeab2c719a19c27d5ca5240
 F www/error.css 51294ab459d163a2642ed8d56ce7caceb052ebc9
 F www/images/edit.svg daa93760c447ef99b79caf00745cf447bf6ad3cc
 F www/images/email.png 1866c9acaa42ea4082f48a461dbdbda987c9376a
@@ -33,21 +34,23 @@ F www/lighttpd.conf f1548664d58bd00dc6ee5f34a803fc9382d9d0dd
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/activation_email_subject.tpl 17359b7b23bd9bcacbc576168a6764be7192810e
 F www/templates/activation_email_text.tpl 44858c154d24eb9170b9a7eaaf56587572b86633
-F www/templates/edit_form.tpl 364c667af4825dc4fbf08b64f769700597373fb3
+F www/templates/edit_form.tpl 6e28ae7286e5253e75c0932c90d9ac169e5bb2ea
 F www/templates/error_html_end.tpl 7b7c2b52a2ba0604cc07cedf736455180bdd1b8a
 F www/templates/error_html_start.tpl 0126a0a5df0802ae2159ec0364c5495237af9724
-F www/templates/login_form.tpl 4de29f4e1573a8fbc5e7811b216a011abd1d7cb7
-F www/templates/main_html_end.tpl f9c71c7cb0b9e5a02da0d02e88cdf50aafae2805
-F www/templates/main_html_start.tpl 3a785613c13ed5264386f84c785b510955881720
+F www/templates/login_form.tpl 9741ce3bb069a15efc0a7461f042dd52699d856b
+F www/templates/main_html_end.tpl 297384c1e64a4d9153f38b8175c6ee7a13562973
+F www/templates/main_html_start.tpl bab18e56d6f8779b934b6516c4e774dc396a0a14
 F www/templates/minimag_suffix.tpl df10dc0f27a70c7304794198e127289e78bc4fdb
 F www/templates/nav_list.tpl d9214b96085f81d4651f5d19997ec935021ed9a1
 F www/templates/nav_thread.tpl d8832cdee1f89b34aa9366b4be3602b5f144072b
-F www/templates/new_thread_form.tpl a8462892f559f7cc0d51bf7d72fcbaea0d2d6238
+F www/templates/new_post_form.tpl 359308270c4a44db2f5a3adad601f1c061776957
+F www/templates/new_thread_form.tpl 9f17928657143dd4762c525e293150c73d08a2ff
 F www/templates/post_view.tpl be136ef8de2b9a01f875531ceb5e76c4141d14c2
-F www/templates/register_form.tpl 749a90f278e66de2add4a5b21dfdb6bc5b5131f3
-F www/templates/sqlite_console_form.tpl 4c6454b8848d1ffedc186e76c66dfd447b0a351d
+F www/templates/preview.tpl 7e6ad7ce065f26bd687846ec18882e3a86cebfe4
+F www/templates/register_form.tpl 1538d4a5f188c90483e83a9d876d792fef0d2b64
+F www/templates/sqlite_console_form.tpl 890bb749edb0379596d86c30b08ec55ab2f76155
 F www/templates/thread_info.tpl 26d71518f201a0a10b41a1f7ed94576d4cda416f
-P a1ffd27d84ea31a901dbeee18de5f05ff8f381f1
-R 9b106b8821b0e0e12286ae095d1013c4
+P 8ee24193578fe2a6f4126202874fb939c3b023c7
+R 434c1a0cdca637640fa554d54b74a681
 U johnfound
-Z 196d1b40416fd79e74f7cc225eb22ccd
+Z 917eb7d96774158fadab34553d8edcfb
