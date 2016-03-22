@@ -68,6 +68,20 @@ INSERT INTO `Messages` VALUES ('error_post_not_exists','Какъв е резул
 INSERT INTO `Messages` VALUES ('error_cant_write','Не зная защо,
 но записът е невъзможен.
 Навярно съдба.','Проблем!',NULL);
+INSERT INTO `Messages` VALUES ('error_thread_not_exists','       Как да отговориш
+    на незададен 
+ въпрос,
+в тема, 
+  която
+    липсва?   
+','Проблем!',NULL);
+INSERT INTO `Messages` VALUES ('error_invalid_caption','Заглавието,
+важно е за темата!
+Напиши едно.','Проблем!',NULL);
+INSERT INTO `Messages` VALUES ('error_invalid_content','Мълчанието е 
+злато, но ти мълчиш 
+във писмен вид.
+','Проблем!',NULL);
 CREATE INDEX idxUsers_nick  on Users (nick);
 CREATE INDEX idxUsers_email on Users (email);
 CREATE INDEX idxThreads_Slug	  on Threads (Slug);

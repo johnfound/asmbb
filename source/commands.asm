@@ -2122,7 +2122,7 @@ begin
         je      .rollback
 
         stdcall StrPtr, [.caption]
-        cinvoke sqliteBindText, [.stmt], 2, eax, ecx, SQLITE_STATIC
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
 
@@ -2158,7 +2158,7 @@ begin
         cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.userID]
 
         cmp     [.source], 0
-        je      .rollback
+        je      .error_invalid_content
 
         stdcall StrPtr, [.source]
         cmp     [eax+string.len], 0
@@ -2211,31 +2211,38 @@ begin
         return
 
 
-.rollback:
+.rollback:      ; the transaction failed because of unknown reason
 
         cinvoke sqliteFinalize, [.stmt]         ; finalize the bad statement.
+        call    .do_rollback
 
-; rollback transaction
+        stdcall StrMakeRedirect, edi, "/message/error_cant_write/"
+        jmp     .finish
 
+
+.error_invalid_caption:
+
+        call    .do_rollback
+        stdcall StrMakeRedirect, edi, "/message/error_invalid_caption/"
+        jmp     .finish
+
+
+.error_invalid_content:
+
+        cinvoke sqliteFinalize, [.stmt]         ; finalize the bad statement.
+        call    .do_rollback
+
+        stdcall StrMakeRedirect, edi, "/message/error_invalid_content/"
+        jmp     .finish
+
+
+.do_rollback:
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRollback, -1, eax, 0
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 
-;.error_write:
-
-        stdcall StrMakeRedirect, edi, "/message/error_cant_write/"
-        jmp     .finish
-
-.error_invalid_caption:
-
-        stdcall StrMakeRedirect, edi, "/message/error_invalid_caption/"
-        jmp     .finish
-
-.error_invalid_content:
-
-        stdcall StrMakeRedirect, edi, "/message/error_invalid_content/"
-        jmp     .finish
+        retn
 
 
 .error_wrong_permissions:
@@ -2244,10 +2251,13 @@ begin
         jmp     .finish
 
 
+
 .error_thread_not_exists:
 
         stdcall StrMakeRedirect, edi, "/message/error_thread_not_exists/"
         jmp     .finish
+
+
 
 
 endp

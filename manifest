@@ -1,14 +1,14 @@
-C A\slot\sof\swork\son\sthe\sweb\ssecurity\sand\snew\sfeatures.\sNow\smost\sof\sthe\ssecurity\sholes\sshould\sbe\sclosed.\nIn\saddition,\spost\sediting\sand\spost\squoting\sfeatures\shas\sbeen\sintroduced.\sTogether\swith\snew\sicons\sand\ndesign\sfixing.\sAlmost\sready\sfor\sofficial\srelease.
-D 2016-03-22T09:32:30.493
+C Bug\sfixed\sand\supdated\sthe\slatest\smessages\sin\sBG\slanguage.
+D 2016-03-22T09:51:09.280
 F source/Linux/sqlite3.inc 3434422cbaa5b6d55ec5a3a8171d7784c08fe6bc
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
-F source/commands.asm f9b39766861ff4d1959966050fb8222854bbfcc0
+F source/commands.asm f6a85d1bb4bffe57fe418e11f32a8a99ad6b13a2
 F source/create.sql 8534713f5551b6d27be00a9634a21e321d771665
 F source/fcgi.asm 0e7e26fd53394d031d3e9732e294340efb683ee5
 F source/http.asm 6fd36367f90732d910c6bd564ffbcb6815094c74
-F source/index.asm 46a074c6b2221ca68ace88080df475030b81f16f
+F source/index.asm f48d2c58415bd49bd6affb486654a8faf0bc3860
 F source/index.fpr 96c432aac1262999c303526db0235455d6712e12
-F source/messages_bg.sql 4893f07809bd618feaf0b61959c450dfed828b92
+F source/messages_bg.sql 62c7904a2609951e48495db1c28bba3673c2756b
 F source/render.asm 9f8938864b28edc95451b768db6ea14391479994
 F source/sqlite3.asm 4285b7e6615de3ffd2630b7c4adbf3df3210dd43
 F www/.htaccess e3d61615a5f5b289f09966a72e7f02777d0b1c60
@@ -32,7 +32,7 @@ F www/images/quote.svg a57dfe55abff5e0685326195e49180c32bf2565c
 F www/images/sources/del_gray.svg bf94f2383987b249a4ad1f9ae5f093af95457dc1
 F www/images/sources/edit.svg 24184d8e14ca9ae7c402a54df5e77ddbbf7eb50b
 F www/images/sources/edit_gray.svg da532e60b6119e4c563d3f481120621a5bd299a2
-F www/images/sources/email.svg 947ba489f2a2ed0d64c3569e23ea74ef53d50b8f w www/images/email.svg
+F www/images/sources/email.svg 947ba489f2a2ed0d64c3569e23ea74ef53d50b8f
 F www/images/sources/posts.svg 9d12c6a91307096c735e1364f56b3b19e38b3ba6
 F www/images/sources/quote.svg 5e8c5fbcc26c08fb9ac99dd563acd50c50e1d28a
 F www/images/user.png ba86e508b26c39f611581aaa7780d0e4a9c3ac52
@@ -59,7 +59,7 @@ F www/templates/preview.tpl d44f634fd43ab70f8d5f636e44d0ddfc15433415
 F www/templates/register_form.tpl 1538d4a5f188c90483e83a9d876d792fef0d2b64
 F www/templates/sqlite_console_form.tpl bcd5f672811437343c4c74665e72b1b629c49028
 F www/templates/thread_info.tpl 26d71518f201a0a10b41a1f7ed94576d4cda416f
-P cd388465ce387e7404d22089ebe8096232b51cb9
-R 2fd24844534e6445679d6dd170d707e8
+P a2f6148048c40e7b4cf435b20fed50e61874ec8e
+R e5bb846d783b3116a0759401ca0cfa57
 U johnfound
-Z b2abe77d41fe9d57b027ab287a93da5c
+Z 1fa308d20ad048ee050504e51fd4cde2
