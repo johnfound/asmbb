@@ -1,10 +1,8 @@
-<script type='text/javascript'>
-  window.onscroll=function(){
-    document.getElementById('editor').style.marginTop = window.scrollY.toString()+"px";
-  };
-</script>
-
 <div class="editor" id="editor">
+  <div class="ui">
+    <a class="ui" href="/list">Root</a>
+    <a class="ui" href="/by_id/$id$">Back</a>
+  </div>
   <form id="editform" action="/edit/$id$" method="post">
     <p>Thread title:</p>
     <h1 class="fakeedit">$caption$</h1>

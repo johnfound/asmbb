@@ -5,7 +5,7 @@ body {
 }
 
 body * {
-  box-sizing: border-box;  
+  box-sizing: border-box;
   padding: 0px;
 }
 
@@ -56,14 +56,14 @@ div.thread_info {
   background-color: #404040;
   color: white;
   text-align: left;
-  
+
   float: left;
   position: absolute;
   width: 200px;
   left: 0px;
   top: 0px;
   bottom: 0px;
-  padding: 8px;
+  padding: 8px 8px 0px 8px;
 }
 
 div.thread_info img {
@@ -157,6 +157,7 @@ div.post_info {
   padding: 8px;
   background-color: #f0f060;
   font-size: 12px;
+  overflow: auto;
 }
 
 div.post_info a {
@@ -249,7 +250,7 @@ span.current_page {
     background-image: url('/images/pass.png');
 }
 
-.login-block input, .register-block input {     
+.login-block input, .register-block input {
     background-color: white;
     background-position: 12px -10px;
     background-repeat: no-repeat;
@@ -272,7 +273,7 @@ span.current_page {
     font-weight: bold;
     font-size: 16px;
     font-variant: small-caps;
-    outline: none; 
+    outline: none;
     cursor: pointer;
     text-align: center;
     padding: 0px;
@@ -322,6 +323,34 @@ a.ui:hover, a.ui:active {
   background-color: #ff656c;
 }
 
+/* Post editing buttons style */
+
+div.edit_tools {
+  float: right;
+}
+
+div.edit_tools a {
+  margin-right: 8px;
+  text-decoration: none;
+  outline: none;
+}
+
+img.edit_icon {
+  width: 18px;
+  height: 18px;
+}
+
+img.del_icon {
+  width: 18px;
+  height: 18px;
+}
+
+img.quote_icon {
+  width: 18px;
+  height: 18px;
+}
+
+
 /* messages screen */
 
 div.message_block {
@@ -357,7 +386,7 @@ div.message_block a:hover {
 
 
 div.message {
-  white-space: pre-line;
+  white-space: pre-wrap;
   padding: 64px;
   margin: 0px auto;
   text-align: left;
@@ -369,11 +398,22 @@ div.message {
 /* Posting form styles */
 
 div.editor {
+  position: fixed;
+  right: 2.5%;
+  top: 56px;
   width: 640px;
   max-width: 60%;
-  float: right;
-  margin: 0px 0px 16px 16px;
+  margin: 16px;
+  opacity: 0.6;
+
+  resize: vertical;
+  overflow: auto;
 }
+
+div.editor:hover {
+  opacity: 1;
+}
+
 
 div.new_editor {
   width: 95%;
@@ -442,7 +482,7 @@ div.panel {
 div.panel input {
   border-style: none;
   padding: 4px;
-  
+
   background-color: #f06060;
   color: white;
 }
@@ -539,12 +579,12 @@ p.attribution {
 
 /* Headings */
 
-div.post_text h1 { font-size: 21px; margin-top: 32px; }
-div.post_text h2 { font-size: 20px; margin-top: 32px; }
-div.post_text h3 { font-size: 19px; margin-top: 32px; }
-div.post_text h4 { font-size: 18px; margin-top: 32px; }
-div.post_text h5 { font-size: 16px; margin-top: 32px; }
-div.post_text h6 { font-size: 16px; margin-top: 32px; }
+h1 { font-size: 21px; margin-top: 32px; }
+h2 { font-size: 20px; margin-top: 32px; }
+h3 { font-size: 19px; margin-top: 32px; }
+h4 { font-size: 18px; margin-top: 32px; }
+h5 { font-size: 16px; margin-top: 32px; }
+h6 { font-size: 16px; margin-top: 32px; }
 
 
 /* paragraph style */
@@ -553,6 +593,9 @@ div.post_text p {
    text-align: justify;
    margin-top: 0.75em;
    margin-bottom: 0.75em;
+
+  word-break: break-all;
+//  word-wrap: break-word;	 /* Internet Explorer 5.5+ */
 }
 
 div.post_text p.uli {
@@ -605,10 +648,11 @@ pre>code {
 /* Style of the text included image. */
 
 img.ico {
-  display: inline-block; 
+  display: inline-block;
   vertical-align: bottom;
   width: 24px;
   height: 24px;
+  overflow: hidden;
 }
 
 
@@ -617,7 +661,7 @@ img.txt {
   border-width: 0px;
   margin: 16px auto;
   display: block;
-  max-width: 95%; 
+  max-width: 95%;
 }
 
 img.txt1 {
@@ -674,29 +718,39 @@ table.txt td {
 /* block quotes */
 
 div.bq {
-  border: 0px solid #808080;
-  padding: 1em;
-  padding-left: 2em;
-  margin: 0.5em;
+  border: 2px solid #808080;
 
-  border: 2px solid gray;
+  box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.2);
+  padding: 0em 0.7em 0.1em 1em;
+  margin:  1em;
+
+  background-color: #f8f8f8;
+  clear: both;
 }
 
 h1.bq
 {
-  margin-left: -1em;
-  margin-top: -1.7em;
+  margin-left: -0.5em;
+  margin-top: -1.2em;
   padding: 0.2em 0.3em 0.2em 0.3em;
-  
+
   border: 2px solid #808080;
-  background-color: #f8f8f8;
-  
+
+  box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.2);
+  background: white;
+  color: #808080;
+
   font-size: 1em;
   font-weight: normal;
-  
+
   float: left;
+  clear: both;
+
+  max-width: 150px;
+  overflow: hidden;
 }
 
 div.right div.bq, div.right h1.bq {
   background-color: #303030;
 }
+

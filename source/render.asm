@@ -2,77 +2,77 @@
 
 
 
-proc RenderPostTime, .html, .time
-.dtime dq ?
-.DateTime TDateTime
-begin
-
-        stdcall StrCat, [.html], '<div class="posttime">'
-
-        mov     eax, [.time]
-        cdq
-
-        mov     dword [.dtime], eax
-        mov     dword [.dtime+4], edx
-
-        lea     eax, [.dtime]
-        lea     edx, [.DateTime]
-        stdcall TimeToDateTime, eax, edx
-        stdcall DateTimeToStr, edx, 0
-
-        stdcall StrCat, [.html], eax
-        stdcall StrDel, eax
-
-
-        stdcall StrCat, [.html], '</div>'  ; div.posttime
-
-        return
-endp
-
-
-sqlUserInfo text 'select U.nick, (select count() from Posts P where P.userID=U.id) as postcount from Users as U where U.id=?'
+;proc RenderPostTime, .html, .time
+;.dtime dq ?
+;.DateTime TDateTime
+;begin
+;
+;        stdcall StrCat, [.html], '<div class="posttime">'
+;
+;        mov     eax, [.time]
+;        cdq
+;
+;        mov     dword [.dtime], eax
+;        mov     dword [.dtime+4], edx
+;
+;        lea     eax, [.dtime]
+;        lea     edx, [.DateTime]
+;        stdcall TimeToDateTime, eax, edx
+;        stdcall DateTimeToStr, edx, 0
+;
+;        stdcall StrCat, [.html], eax
+;        stdcall StrDel, eax
+;
+;
+;        stdcall StrCat, [.html], '</div>'  ; div.posttime
+;
+;        return
+;endp
 
 
-proc RenderUserInfo, .html, .Uid
-.stmt dd ?
-begin
-        pushad
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUserInfo, sqlUserInfo.length, eax, 0
-
-        cinvoke sqliteBindInt, [.stmt], 1, [.Uid]
-
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        je      .user_ok
-
-        stdcall StrCat, [.html], '<div class="usernull">NULL user</div>'
-        jmp     .finish
-
-.user_ok:
-        stdcall StrCat, [.html], '<div class="username">'
-
-        cinvoke sqliteColumnText, [.stmt], 0
-        stdcall StrCat, [.html], eax
-
-        stdcall StrCat, [.html], '</div>'  ; div.username
-
-        stdcall StrCat, [.html], '<div class="userpcnt">'
-
-        cinvoke sqliteColumnInt, [.stmt], 1
-        stdcall NumToStr, eax, ntsDec or ntsUnsigned
-
-        stdcall StrCat, [.html], eax
-        stdcall StrDel, eax
-
-        stdcall StrCat, [.html], '</div>'  ; div.userpcnt
-
-.finish:
-        cinvoke sqliteFinalize, [.stmt]
-        popad
-        return
-endp
+;sqlUserInfo text 'select U.nick, (select count() from Posts P where P.userID=U.id) as postcount from Users as U where U.id=?'
+;
+;
+;proc RenderUserInfo, .html, .Uid
+;.stmt dd ?
+;begin
+;        pushad
+;
+;        lea     eax, [.stmt]
+;        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUserInfo, sqlUserInfo.length, eax, 0
+;
+;        cinvoke sqliteBindInt, [.stmt], 1, [.Uid]
+;
+;        cinvoke sqliteStep, [.stmt]
+;        cmp     eax, SQLITE_ROW
+;        je      .user_ok
+;
+;        stdcall StrCat, [.html], '<div class="usernull">NULL user</div>'
+;        jmp     .finish
+;
+;.user_ok:
+;        stdcall StrCat, [.html], '<div class="username">'
+;
+;        cinvoke sqliteColumnText, [.stmt], 0
+;        stdcall StrCat, [.html], eax
+;
+;        stdcall StrCat, [.html], '</div>'  ; div.username
+;
+;        stdcall StrCat, [.html], '<div class="userpcnt">'
+;
+;        cinvoke sqliteColumnInt, [.stmt], 1
+;        stdcall NumToStr, eax, ntsDec or ntsUnsigned
+;
+;        stdcall StrCat, [.html], eax
+;        stdcall StrDel, eax
+;
+;        stdcall StrCat, [.html], '</div>'  ; div.userpcnt
+;
+;.finish:
+;        cinvoke sqliteFinalize, [.stmt]
+;        popad
+;        return
+;endp
 
 
 
@@ -176,7 +176,7 @@ begin
         return
 
 .error:
-        DebugMsg "Error read template!"
+;        DebugMsg "Error read template!"
 
         stdcall StrCat, [.hString], "Unknown template!"
         jmp     .end_of_template
@@ -211,6 +211,12 @@ begin
         stdcall StrCompNoCase, edi, "special:loglink"
         jc      .cat_loglink
 
+        stdcall StrCompNoCase, edi, "special:edit_tools"
+        jc      .cat_edit_tools
+
+        stdcall StrCompNoCase, edi, "special:referer"
+        jc      .cat_referer
+
         cmp     [.statement], 0
         je      .finish
 
@@ -241,12 +247,16 @@ begin
         test    eax, eax
         jz      .finish
 
-        stdcall StrDupMem, eax
-        stdcall StrDecodeHTML, eax
         cmp     [.formatted], 0
-        je      .add_field
+        je      .add_field_direct
 
+        stdcall StrDupMem, eax
         stdcall FormatPostText, eax
+        jmp     .add_field
+
+
+.add_field_direct:
+        stdcall StrEncodeHTML, eax
 
 .add_field:
         stdcall StrCat, [.string], eax
@@ -281,6 +291,100 @@ begin
         retn
 
 
+;..................................................................
+.cat_referer:
+        mov     esi, [.p_special]
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_REFERER"
+        jc      .root
+
+        mov     ebx, eax
+
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_HOST"
+        jc      .root
+
+        push    eax
+
+        stdcall StrLen, eax
+        mov     ecx, eax
+
+        stdcall StrPos, ebx     ; pattern from the stack
+        test    eax, eax
+        jz      .root
+
+        add     ecx, eax
+
+        stdcall StrPos, ecx, "/message"
+        cmp     eax, ecx
+        je      .root
+
+        stdcall StrPos, ecx, "/sqlite"
+        cmp     eax, ecx
+        je      .root
+
+        stdcall StrPos, ecx, "/post"
+        cmp     eax, ecx
+        je      .root
+
+        stdcall StrPos, ecx, "/edit"
+        cmp     eax, ecx
+        je      .root
+
+        stdcall StrEncodeHTML, ecx
+        stdcall StrCat, [.string], eax
+        stdcall StrDel, eax
+        jmp     .finish
+
+.root:
+        stdcall StrCharCat, [.string], "/"
+        jmp     .finish
+
+;..................................................................
+
+.cat_edit_tools:
+        pushad
+
+        mov     esi, [.p_special]
+        test    esi, esi
+        jz      .end_tools
+
+;        OutputValue "User permissions:", [esi+TSpecialParams.userStatus], 16, 8
+
+        test    [esi+TSpecialParams.userStatus], permEditAll or permAdmin
+        jnz     .do_insert_tools
+
+        test    [esi+TSpecialParams.userStatus], permEditOwn
+        jz      .end_tools
+
+        mov     edi, .colUserID
+        call    .get_column_number
+        jnc     .end_tools
+
+        cinvoke sqliteColumnInt, [.statement], [.i]
+        cmp     eax, [esi+TSpecialParams.userID]
+        jne     .end_tools
+
+.do_insert_tools:
+        mov     edi, .colPostID
+        call    .get_column_number
+        jnc     .end_tools
+
+        cinvoke sqliteColumnText, [.statement], [.i]
+        mov     edi, eax
+
+        stdcall StrCat, [.string], '<a class="edit_btn" href="/edit/'
+        stdcall StrCat, [.string], edi
+        stdcall StrCat, [.string], '"><img class="edit_icon" src="/images/edit_gray.svg"></a><a class="del_btn" href="/delete/'
+        stdcall StrCat, [.string], edi
+        stdcall StrCat, [.string], '"><img class="del_icon" src="/images/del_gray.svg"></a>'
+
+
+.end_tools:
+        popad
+        jmp     .finish
+
+
+.colUserID db "userID", 0
+.colPostID db "id", 0
 
 ;..................................................................
 
@@ -346,7 +450,7 @@ begin
 
 if defined options.DebugWeb & options.DebugWeb
 
-        DebugMsg "Special:environment!"
+;        DebugMsg "Special:environment!"
 
 
         mov     esi, [.p_special]
@@ -358,9 +462,15 @@ if defined options.DebugWeb & options.DebugWeb
         cmp     ecx, [edx+TArray.count]
         jae     .show_post
 
-        stdcall StrCat,     [.string], [edx+TArray.array+8*ecx]
+        stdcall StrEncodeHTML, [edx+TArray.array+8*ecx]
+        stdcall StrCat,     [.string], eax
+        stdcall StrDel, eax
+
         stdcall StrCharCat, [.string], " = "
-        stdcall StrCat,     [.string], [edx+TArray.array+8*ecx+4]
+
+        stdcall StrEncodeHTML, [edx+TArray.array+8*ecx+4]
+        stdcall StrCat,     [.string], eax
+        stdcall StrDel, eax
         stdcall StrCharCat, [.string], $0a0d
 
         inc     ecx
@@ -371,8 +481,10 @@ if defined options.DebugWeb & options.DebugWeb
         test    eax, eax
         jz      .finish
 
-        stdcall StrCat, [.string], <"Follows the POST data:", 13, 10>
+        stdcall StrCat, [.string], <13, 10, 13, 10, "<<<<< Follows the POST data: >>>>>", 13, 10>
         stdcall StrCat, [.string], [esi+TSpecialParams.post]
+        stdcall StrCat, [.string], <13, 10, "<<<<< Here ends the post data >>>>>", 13, 10>
+
         jmp     .finish
 
 else
@@ -407,8 +519,12 @@ end if
         jz      .login
 
 ; log out:
+
+        stdcall StrEncodeHTML, edx
+
         stdcall StrCat, [.string], '<a class="logout" href="/logout/">Logout</a> ( <b>'
-        stdcall StrCat, [.string], edx
+        stdcall StrCat, [.string], eax
+        stdcall StrDel, eax
         stdcall StrCat, [.string], '</b> )'
         jmp     .common
 
@@ -437,7 +553,7 @@ begin
         lea     eax, [.result]
 
         stdcall StrCatTemplate, [.hText], "minimag_suffix", 0, 0
-        stdcall TranslateMarkdown, [.hText], 0, 0, eax
+        stdcall TranslateMarkdown, [.hText], FixMiniMagLink, 0, eax
 
         stdcall StrDel, [.hText]
         stdcall StrDel, [.result.hIndex]
@@ -450,7 +566,76 @@ endp
 
 
 
+proc FixMiniMagLink, .ptrLink, .ptrBuffer
+begin
+        pushad
 
+        mov     edi, [.ptrBuffer]
+        mov     esi, [.ptrLink]
+        cmp     byte [esi], '#'
+        je      .finish         ; it is internal link
+
+.start_loop:
+        lodsb
+        cmp     al, $0d
+        je      .not_absolute
+        cmp     al, $0a
+        je      .not_absolute
+        cmp     al, ']'
+        je      .not_absolute
+        test    al,al
+        jz      .not_absolute
+
+        cmp     al, 'A'
+        jb      .found
+        cmp     al, 'Z'
+        jbe     .start_loop
+
+        cmp     al, 'a'
+        jb      .found
+        cmp     al, 'z'
+        jb      .start_loop
+
+.found:
+        cmp     al, ':'
+        jne     .not_absolute
+
+        mov     ecx, [.ptrLink]
+        sub     ecx, esi
+
+        cmp     ecx, -11
+        jne     .not_js
+
+        cmp     dword [esi+ecx], "java"
+        jne     .not_js
+
+        cmp     dword [esi+ecx+4], "scri"
+        jne     .not_js
+
+        cmp     word [esi+ecx+8], "pt"
+        jne     .not_js
+
+.add_https:
+        mov     dword [edi], "http"
+        mov     dword [edi+4], "s://"
+        lea     edi, [edi+8]
+        jmp     .protocol_ok
+
+.not_js:
+        cmp     dword [esi+ecx], "http"
+        jne     .add_https
+
+.not_absolute:
+.protocol_ok:
+        mov     esi, [.ptrLink]
+
+; it is absolute URL, exit
+.finish:
+        mov     [esp+4*regEAX], edi     ; return the end address.
+        mov     [esp+4*regEDX], esi     ; return the start of the link.
+        popad
+        return
+endp
 
 
 

@@ -1,22 +1,23 @@
-C Edit\spost\sfeature\salmost\sworks.\sOnly\sthe\slinks\shave\sto\sbe\sadd\sto\sthe\sposts.\n\nAnother\scode\srefactoring.\sFixed\sseveral\sbugs,\ssome\sof\sthem\sserious.
-D 2016-03-21T09:59:02.737
+C A\slot\sof\swork\son\sthe\sweb\ssecurity\sand\snew\sfeatures.\sNow\smost\sof\sthe\ssecurity\sholes\sshould\sbe\sclosed.\nIn\saddition,\spost\sediting\sand\spost\squoting\sfeatures\shas\sbeen\sintroduced.\sTogether\swith\snew\sicons\sand\ndesign\sfixing.\sAlmost\sready\sfor\sofficial\srelease.
+D 2016-03-22T09:32:30.493
 F source/Linux/sqlite3.inc 3434422cbaa5b6d55ec5a3a8171d7784c08fe6bc
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
-F source/commands.asm 17260c8e747454f94898168f87eba15a8d4b8fee
+F source/commands.asm f9b39766861ff4d1959966050fb8222854bbfcc0
 F source/create.sql 8534713f5551b6d27be00a9634a21e321d771665
 F source/fcgi.asm 0e7e26fd53394d031d3e9732e294340efb683ee5
 F source/http.asm 6fd36367f90732d910c6bd564ffbcb6815094c74
-F source/index.asm 5e79ac23ac216ad465ba24c2e4e0b140b43553a7
-F source/index.fpr 20864136aeb55acc8006e7c5d902ec2ff37d1eec
+F source/index.asm 46a074c6b2221ca68ace88080df475030b81f16f
+F source/index.fpr 96c432aac1262999c303526db0235455d6712e12
 F source/messages_bg.sql 4893f07809bd618feaf0b61959c450dfed828b92
-F source/render.asm ba72a1936ac43591c495bebecb7bb1551a334af4
+F source/render.asm 9f8938864b28edc95451b768db6ea14391479994
 F source/sqlite3.asm 4285b7e6615de3ffd2630b7c4adbf3df3210dd43
 F www/.htaccess e3d61615a5f5b289f09966a72e7f02777d0b1c60
-F www/all.css e3eed6d8fc1f53bb7aeab2c719a19c27d5ca5240
+F www/all.css 61f7cb6e07a0c2e3ef7dc96c7c5376145f2f9069
 F www/error.css 51294ab459d163a2642ed8d56ce7caceb052ebc9
-F www/images/edit.svg daa93760c447ef99b79caf00745cf447bf6ad3cc
+F www/images/del_gray.svg 5e3d0ba999e37de7dfdc43292d1c14e4513573ac
+F www/images/edit.svg c9a757dcaa4a28057c4a4df06c16134348ac51f7
+F www/images/edit_gray.svg a1b01c72f16833c8bad8eb058ff298cb3d5fb320
 F www/images/email.png 1866c9acaa42ea4082f48a461dbdbda987c9376a
-F www/images/email.svg 947ba489f2a2ed0d64c3569e23ea74ef53d50b8f
 F www/images/emoticons/angry.svg b507d192d55f9c2f5d9b962f7beb5d927c49d799
 F www/images/emoticons/cry.svg 8d41ff6bf540df4099d92a880ae4dc3a52765d4a
 F www/images/emoticons/lol.svg 93c2da38509fcac2acf978eb4f1764576db30ef5
@@ -26,7 +27,14 @@ F www/images/emoticons/tongue1.svg ce00e736565bcbae8ae5c5a2ae71c248f5586e51
 F www/images/emoticons/tongue2.svg 47f3ab912f343beafaf3ea3277c72b7a777b2497
 F www/images/emoticons/wink.svg 3db2c81d6dd73766ea590771ac071ef958272911
 F www/images/pass.png d1c58d21c07f74c45c270cc9f624a1adb15c12db
-F www/images/posts.svg 84ae4cbd8201a6ce4d56fde85f5d8f5cc4a53843
+F www/images/posts.svg 30833e3123a184230f80cc151581becfe20c9b71
+F www/images/quote.svg a57dfe55abff5e0685326195e49180c32bf2565c
+F www/images/sources/del_gray.svg bf94f2383987b249a4ad1f9ae5f093af95457dc1
+F www/images/sources/edit.svg 24184d8e14ca9ae7c402a54df5e77ddbbf7eb50b
+F www/images/sources/edit_gray.svg da532e60b6119e4c563d3f481120621a5bd299a2
+F www/images/sources/email.svg 947ba489f2a2ed0d64c3569e23ea74ef53d50b8f w www/images/email.svg
+F www/images/sources/posts.svg 9d12c6a91307096c735e1364f56b3b19e38b3ba6
+F www/images/sources/quote.svg 5e8c5fbcc26c08fb9ac99dd563acd50c50e1d28a
 F www/images/user.png ba86e508b26c39f611581aaa7780d0e4a9c3ac52
 F www/ld-musl-i386.so 4d44786b8676115c7df45c45ceb051c11ce14ffd x
 F www/libsqlite3.so b219b02c71d515698b2086be2edc104e5c8997a7 x
@@ -34,23 +42,24 @@ F www/lighttpd.conf f1548664d58bd00dc6ee5f34a803fc9382d9d0dd
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/activation_email_subject.tpl 17359b7b23bd9bcacbc576168a6764be7192810e
 F www/templates/activation_email_text.tpl 44858c154d24eb9170b9a7eaaf56587572b86633
-F www/templates/edit_form.tpl 6e28ae7286e5253e75c0932c90d9ac169e5bb2ea
-F www/templates/error_html_end.tpl 7b7c2b52a2ba0604cc07cedf736455180bdd1b8a
-F www/templates/error_html_start.tpl 0126a0a5df0802ae2159ec0364c5495237af9724
-F www/templates/login_form.tpl 9741ce3bb069a15efc0a7461f042dd52699d856b
-F www/templates/main_html_end.tpl 297384c1e64a4d9153f38b8175c6ee7a13562973
+F www/templates/edit_form.tpl b0732fd7786e44814aaebbb2f8cc3e526c7645d5
+F www/templates/error_html_end.tpl 409817a5ccf736d3b0501d9dc121988c9cbb619d
+F www/templates/error_html_start.tpl 381d732149dad4cbcd97798d9f83da768203d4f0
+F www/templates/login_form.tpl 3af294aa5da522ba4970663849f305b2e1b223a6
+F www/templates/logout.tpl bb39f3fead238b4622a10e2585a82678ea13f587
+F www/templates/main_html_end.tpl 7581fe2e0e2c8deffa9cb9211702cbc2ac00cc49
 F www/templates/main_html_start.tpl bab18e56d6f8779b934b6516c4e774dc396a0a14
 F www/templates/minimag_suffix.tpl df10dc0f27a70c7304794198e127289e78bc4fdb
 F www/templates/nav_list.tpl d9214b96085f81d4651f5d19997ec935021ed9a1
-F www/templates/nav_thread.tpl d8832cdee1f89b34aa9366b4be3602b5f144072b
-F www/templates/new_post_form.tpl 359308270c4a44db2f5a3adad601f1c061776957
-F www/templates/new_thread_form.tpl 9f17928657143dd4762c525e293150c73d08a2ff
-F www/templates/post_view.tpl be136ef8de2b9a01f875531ceb5e76c4141d14c2
-F www/templates/preview.tpl 7e6ad7ce065f26bd687846ec18882e3a86cebfe4
+F www/templates/nav_thread.tpl c32fe078023157a3978c36b819628391f6be497c
+F www/templates/new_post_form.tpl ee59f2f6fe96fa5a379a9b9c0840a9c0183c11a3
+F www/templates/new_thread_form.tpl 7fe9c9f0f857b16798c94457c193e8fb837829c5
+F www/templates/post_view.tpl 967934cb264dac68c9601cdb76cab19688b5a1d0
+F www/templates/preview.tpl d44f634fd43ab70f8d5f636e44d0ddfc15433415
 F www/templates/register_form.tpl 1538d4a5f188c90483e83a9d876d792fef0d2b64
-F www/templates/sqlite_console_form.tpl 890bb749edb0379596d86c30b08ec55ab2f76155
+F www/templates/sqlite_console_form.tpl bcd5f672811437343c4c74665e72b1b629c49028
 F www/templates/thread_info.tpl 26d71518f201a0a10b41a1f7ed94576d4cda416f
-P 8ee24193578fe2a6f4126202874fb939c3b023c7
-R 434c1a0cdca637640fa554d54b74a681
+P cd388465ce387e7404d22089ebe8096232b51cb9
+R 2fd24844534e6445679d6dd170d707e8
 U johnfound
-Z 917eb7d96774158fadab34553d8edcfb
+Z b2abe77d41fe9d57b027ab287a93da5c
