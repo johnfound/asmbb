@@ -72,7 +72,9 @@ start:
         cinvoke sqliteBusyTimeout, [hMainDatabase], 2000
         cinvoke sqliteExec, [hMainDatabase], "PRAGMA journal_mode = WAL", 0, 0, 0
         cinvoke sqliteExec, [hMainDatabase], "PRAGMA foreign_keys = TRUE", 0, 0, 0
-        cinvoke sqliteExec, [hMainDatabase], 'PRAGMA secure_delete = 0', 0, 0, 0
+        cinvoke sqliteExec, [hMainDatabase], 'PRAGMA synchronous = OFF', 0, 0, 0
+        cinvoke sqliteExec, [hMainDatabase], 'PRAGMA threads = 2', 0, 0, 0
+        cinvoke sqliteExec, [hMainDatabase], 'PRAGMA secure_delete = FALSE', 0, 0, 0
 
         stdcall Listen
 

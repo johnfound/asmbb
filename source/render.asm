@@ -220,9 +220,9 @@ begin
         cmp     [.statement], 0
         je      .finish
 
-        stdcall StrPos, edi, "plural:"
+        stdcall StrPos, edi, "case:"
         test    eax, eax
-        jnz     .cat_plural
+        jnz     .cat_case
 
         mov     [.formatted], 0
 
@@ -389,32 +389,34 @@ begin
 ;..................................................................
 
 
-.cat_plural:
+.cat_case:
 
-        stdcall StrSplit, edi, 7
+        stdcall StrSplit, edi, 5
         stdcall StrDel, edi
         mov     edi, eax
 
-        stdcall StrSplitList, edi, '|', FALSE
+        stdcall StrSplitList, edi, '|', TRUE
         mov     esi, eax
 
-        cmp     [esi+TArray.count], 4
-        jne     .end_plural
+        cmp     [esi+TArray.count], 3
+        jb      .end_case
 
         stdcall StrCopy, edi, [esi+TArray.array]
 
         call    .get_column_number
-        jnc     .end_plural
+        jnc     .end_case
 
         cinvoke sqliteColumnInt, [.statement], [.i]
-        inc     eax
-        cmp     eax, 3
-        jbe     @f
-        mov     eax, 3
-@@:
-        stdcall StrCat, [.string], [esi+TArray.array+4*eax]
+        mov     ecx, [esi+TArray.count]
+        sub     ecx, 2
 
-.end_plural:
+        cmp     eax, ecx
+        jbe     @f
+        mov     eax, ecx
+@@:
+        stdcall StrCat, [.string], [esi+TArray.array+4*eax+4]
+
+.end_case:
         stdcall ListFree, esi, StrDel
 
         jmp     .finish

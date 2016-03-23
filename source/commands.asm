@@ -66,12 +66,6 @@ begin
 .post_ok:
         mov     [.special.post], eax
 
-        lea     eax, [.special]
-        stdcall GetLoggedUser, eax
-
-;        OutputValue "User permissions 1:", [.special.userStatus], 16, 8
-
-
         stdcall StrNew
         mov     edi, eax
 
@@ -203,6 +197,9 @@ begin
 
 .analize_uri:
 
+        lea     eax, [.special]
+        stdcall GetLoggedUser, eax
+
 ;        OutputValue "Request count:", [esi+TArray.count], 10, -1
 
         cmp     [esi+TArray.count], 0
@@ -315,8 +312,7 @@ begin
 
 .list_params_ready:
 
-        lea     eax, [.start_time]      ; the special parameters data pointer.
-
+        lea     eax, [.special]      ; the special parameters data pointer.
         stdcall ListThreads, ebx, eax
 
         jmp     .output_forum_html
@@ -482,11 +478,30 @@ endp
 
 
 
-sqlSelectThreads text "select id, Slug, Caption, strftime('%d.%m.%Y %H:%M:%S', LastChanged, 'unixepoch') as TimeChanged, (select count() from posts where threadid = Threads.id) as PostCount from Threads order by LastChanged desc limit ? offset ?"
+sqlSelectThreads text "select ",                                                                                                                                \
+                                                                                                                                                                \
+                        "T.id, ",                                                                                                                               \
+                        "T.Slug, ",                                                                                                                             \
+                        "Caption, ",                                                                                                                            \
+                        "strftime('%d.%m.%Y %H:%M:%S', LastChanged, 'unixepoch') as TimeChanged, ",                                                             \
+                        "(select count() from posts where threadid = T.id) as PostCount, ",                                                                     \
+                        "(select count() from posts P, UnreadPosts U where P.id = U.PostID and P.threadID = T.id and U.userID = ?3 ) as Unread ",               \
+                                                                                                                                                                \
+                      "from ",                                                                                                                                  \
+                                                                                                                                                                \
+                        "Threads T ",                                                                                                                           \
+                                                                                                                                                                \
+                      "order by ",                                                                                                                              \
+                                                                                                                                                                \
+                        "LastChanged desc ",                                                                                                                    \
+                                                                                                                                                                \
+                      "limit ?1 ",                                                                                                                              \
+                      "offset ?2"
+
 sqlThreadsCount  text "select count() from Threads"
 
 
-proc ListThreads, .start, .p_special
+proc ListThreads, .start, .pSpecial
 
 .stmt  dd ?
 .list  dd ?
@@ -496,6 +511,8 @@ begin
 
         stdcall StrNew
         mov     edi, eax
+
+        mov     esi, [.pSpecial]
 
         stdcall StrCat, edi, '<div class="threads_list">'
 
@@ -528,12 +545,14 @@ begin
         imul    eax, PAGE_LENGTH
         cinvoke sqliteBindInt, [.stmt], 2, eax
 
+        cinvoke sqliteBindInt, [.stmt], 3, [esi+TSpecialParams.userID]
+
 .loop:
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
         jne     .finish
 
-        stdcall StrCatTemplate, edi, "thread_info", [.stmt], [.p_special]
+        stdcall StrCatTemplate, edi, "thread_info", [.stmt], esi
 
         jmp     .loop
 
@@ -557,8 +576,33 @@ endp
 
 
 
-sqlSelectPosts   text "select Posts.id, Posts.threadID, strftime('%d.%m.%Y %H:%M:%S', Posts.postTime, 'unixepoch') as PostTime, Posts.Content, Users.id as UserID, Users.nick as UserName,",            \
-                      "(select count() from Posts as X where X.userID = Posts.UserID) as UserPostCount, ?4 as Slug from Posts left join Users on Users.id = Posts.userID where threadID = ?1 order by Posts.postTime, Posts.id limit ?2 offset ?3"
+sqlSelectPosts   text "select ",                                                                                        \
+\
+                        "Posts.id, ",                                                                                   \
+                        "Posts.threadID, ",                                                                             \
+                        "strftime('%d.%m.%Y %H:%M:%S', Posts.postTime, 'unixepoch') as PostTime, ",                     \
+                        "Posts.Content, ",                                                                              \
+                        "Users.id as UserID, ",                                                                         \
+                        "Users.nick as UserName,",                                                                      \
+                        "(select count() from Posts X where X.userID = Posts.UserID) as UserPostCount, ",               \
+                        "?4 as Slug, ",                                                                                 \
+                        "(select count() from UnreadPosts U where UserID = ?5 and PostID = Posts.id) as Unread ",       \
+\
+                      "from ",                                                                                          \
+\
+                        "Posts left join Users on ",                                                                    \
+                          "Users.id = Posts.userID ",                                                                   \
+\
+                      "where ",                                                                                         \
+\
+                        "threadID = ?1 ",                                                                               \
+\
+                      "order by ",                                                                                      \
+\
+                        "Posts.id ",                                                                                    \
+\
+                      "limit ?2 ",                                                                                      \
+                      "offset ?3"
 
 sqlGetPostCount text "select count() from Posts where ThreadID = ?"
 
@@ -566,7 +610,7 @@ sqlGetThreadInfo text "select id, caption, slug from Threads where slug = ? limi
 
 
 
-proc ShowThread, .threadSlug, .start, .p_special
+proc ShowThread, .threadSlug, .start, .pSpecial
 
 .stmt  dd ?
 
@@ -579,6 +623,8 @@ begin
 
         stdcall StrNew
         mov     edi, eax
+
+        mov     esi, [.pSpecial]
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, -1, eax, 0
@@ -595,7 +641,7 @@ begin
 
         stdcall StrCat, edi, '<div class="thread">'
 
-        stdcall StrCatTemplate, edi, "nav_thread", [.stmt], [.p_special]
+        stdcall StrCatTemplate, edi, "nav_thread", [.stmt], esi
 
         stdcall StrCat, edi, '<h1 class="thread_caption">'
 
@@ -644,12 +690,21 @@ begin
         stdcall StrPtr, [.threadSlug]
         cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
 
+        cinvoke sqliteBindInt, [.stmt], 5, [esi+TSpecialParams.userID]
+
 .loop:
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
         jne     .finish
 
-        stdcall StrCatTemplate, edi, "post_view", [.stmt], [.p_special]
+        stdcall StrCatTemplate, edi, "post_view", [.stmt], esi
+
+        mov     ebx, [esi+TSpecialParams.userID]
+        test    ebx, ebx
+        jz      .loop
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        stdcall SetPostRead, ebx, eax
 
         jmp     .loop
 
@@ -1387,6 +1442,12 @@ begin
 .finish_sql:
         cinvoke sqliteFinalize, [.stmt]
         stdcall StrDel, ebx
+
+        mov     eax, [edi+TSpecialParams.userID]
+        test    eax, eax
+        jz      .finish
+
+        stdcall SetUserLastSeen, eax
 
 .finish:
         popad
@@ -2187,6 +2248,10 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
+; register as unread for all active users.
+
+        stdcall RegisterUnreadPost, esi
+
 ; commit transaction
 
         lea     eax, [.stmt]
@@ -2214,6 +2279,7 @@ begin
 .rollback:      ; the transaction failed because of unknown reason
 
         cinvoke sqliteFinalize, [.stmt]         ; finalize the bad statement.
+
         call    .do_rollback
 
         stdcall StrMakeRedirect, edi, "/message/error_cant_write/"
@@ -2284,8 +2350,8 @@ endp
 
 sqlReadPost    text "select P.id, T.caption, P.content as source  from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
 sqlEditedPost  text "select P.id, T.caption, ?2 as source         from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
-sqlSavePost    text "update Posts set content = ? where id = ?"
-sqlGetPostUser text "select userID from Posts where id = ?"
+sqlSavePost    text "update Posts set content = ?, postTime = strftime('%s','now') where id = ?"
+sqlGetPostUser text "select userID, threadID from Posts where id = ?"
 
 
 proc EditUserMessage, .postID, .pSpecial
@@ -2294,6 +2360,8 @@ proc EditUserMessage, .postID, .pSpecial
 .fPreview dd ?
 .source   dd ?
 .res      dd ?
+.threadID dd ?
+.userID   dd ?
 
 begin
         pushad
@@ -2306,10 +2374,24 @@ begin
         stdcall StrNew
         mov     edi, eax
 
+; read the userID and threadID for the post.
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetPostUser, -1, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .error_missing_post
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        mov     [.userID], eax
+
+        cinvoke sqliteColumnInt, [.stmt], 1
+        mov     [.threadID], eax
+
+        cinvoke sqliteFinalize, [.stmt]
 
 ; check the permissions.
-
-;        OutputValue "User permissions:", [esi+TSpecialParams.userStatus], 16, 8
 
         test    [esi+TSpecialParams.userStatus], permEditOwn or permEditAll or permAdmin
         jz      .error_wrong_permissions
@@ -2317,26 +2399,9 @@ begin
         test    [esi+TSpecialParams.userStatus], permEditAll or permAdmin
         jnz     .permissions_ok
 
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetPostUser, -1, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
-        cinvoke sqliteStep, [.stmt]
-        mov     [.res], eax
-        cmp     eax, SQLITE_ROW
-        jne     @f
+        mov     eax, [.userID]
+        cmp     eax, [esi+TSpecialParams.userID]
 
-        cinvoke sqliteColumnInt, [.stmt], 0
-        mov     ebx, eax
-
-@@:
-        cinvoke sqliteFinalize, [.stmt]
-
-;        OutputValue "Post ID check:", [.res], 10, -1
-
-        cmp     [.res], SQLITE_ROW
-        jne     .error_missing_post
-
-        cmp     ebx, [esi+TSpecialParams.userID]
         jne     .error_wrong_permissions
 
 
@@ -2423,6 +2488,17 @@ begin
         cmp     eax, 0
         je      .end_save
 
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBegin, -1, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     ebx, SQLITE_DONE
+        jne     .end_save               ; the transaction does not begin.
+
+
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSavePost, -1, eax, 0
         cinvoke sqliteBindInt, [.stmt], 2, [.postID]
@@ -2435,11 +2511,44 @@ begin
         cinvoke sqliteFinalize, [.stmt]
 
         cmp     ebx, SQLITE_DONE
+        jne     .error_write            ; strange write fault.
+
+; update the last changed time of the thread.
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateThreads, -1, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     ebx, SQLITE_DONE
         jne     .error_write
+
+
+        stdcall RegisterUnreadPost, [.postID]
+        cmp     eax, SQLITE_DONE
+        jne     .error_write
+
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCommit, -1, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     ebx, SQLITE_DONE
+        jne     .error_write
+
 
 .end_save:
 
         stdcall StrCatRedirectToPost, edi, [.postID]
+
+        stdcall GetTimestamp
+        sub     eax, [esi+TSpecialParams.start_time]
+
+        OutputValue "Edit write time [ms]:", eax, 10, -1
 
 .finish:
         stdcall StrDelNull, [.source]
@@ -2456,16 +2565,22 @@ begin
 
 .error_missing_post:
 
+        cinvoke sqliteFinalize, [.stmt]
         stdcall StrMakeRedirect, edi, "/message/error_post_not_exists/"
         jmp     .finish
 
 
 .error_write:
 
+; rollback:
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRollback, -1, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
         stdcall StrMakeRedirect, edi, "/message/error_cant_write/"
         jmp     .finish
-
-
 
 endp
 
@@ -2778,20 +2893,72 @@ endp
 
 
 
+sqlSetUserTime text "update users set LastSeen = strftime('%s','now') where id = ?"
+
+
+proc SetUserLastSeen, .userID
+.stmt dd ?
+begin
+        pushad
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetUserTime, sqlSetUserTime.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.userID]
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+        popad
+        return
+endp
 
 
 
 
 
+sqlSetUnread text "insert or replace into UnreadPosts (UserID, PostID, `Time`) select U.id, ?, strftime('%s','now') from users U where (strftime('%s','now') - U.LastSeen < 2592000)"
+
+proc RegisterUnreadPost, .postID
+.stmt dd ?
+begin
+        pushad
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetUnread, -1, eax, 0
+
+        OutputValue "Prepare exit:", eax, 10, -1
+
+        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
+        cinvoke sqliteStep, [.stmt]
+        mov     [esp+4*regEAX], eax
+
+        OutputValue "Step exit:", eax, 10, -1
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        popad
+        return
+endp
 
 
 
 
+sqlSetRead text "delete from UnreadPosts where UserID = ? and PostID = ?"
 
+proc SetPostRead, .userID, .postID
+.stmt dd ?
+begin
+        pushad
 
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetRead, -1, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.userID]
+        cinvoke sqliteBindInt, [.stmt], 2, [.postID]
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
 
-
-
+        popad
+        return
+endp
 
 
 

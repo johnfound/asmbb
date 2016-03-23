@@ -20,7 +20,8 @@ create table if not exists Users (
   salt	    text unique,
   status    integer,	     -- see permXXXXX constants.
   user_desc text,	     -- free text user description.
-  email     text unique      -- user email
+  email     text unique,     -- user email.
+  LastSeen  integer	     -- the time when the user has been last seen by taking some action.
 );
 
 
@@ -90,6 +91,9 @@ create table if not exists UnreadPosts (
   PostID integer references Posts(id),
   Time	 integer
 );
+
+
+create unique index idxUnreadPosts on UnreadPosts(UserID, PostID);
 
 
 create table if not exists Attachements (

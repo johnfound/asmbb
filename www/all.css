@@ -29,6 +29,7 @@ div.header {
 
 div.header h1 {
   border-bottom: 4px solid gray;
+  font-size: 36px;
 }
 
 
@@ -75,6 +76,11 @@ div.post_cnt {
 
 }
 
+div.unread_cnt {
+  font-size: 12px;
+}
+
+
 div.changed {
   font-size: 80%;
   position: absolute;
@@ -85,6 +91,7 @@ div.thread_link {
   background-color: white;
   padding: 32px;
   padding-left: 216px;
+  min-height: 100px;
 }
 
 
@@ -135,6 +142,11 @@ div.user_info {
   color: white;
 }
 
+img.unread_icon {
+  display: block;
+  float: left;
+  margin: 8px;
+}
 
 div.user_name {
   padding: 8px;
@@ -641,6 +653,7 @@ pre>code {
   font-family: 'Source Code Pro', monospace;
   font-size: 1em;
   font-style: normal;
+  overflow: auto;
 }
 
 

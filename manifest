@@ -1,21 +1,21 @@
-C Bug\sfixed\sand\supdated\sthe\slatest\smessages\sin\sBG\slanguage.
-D 2016-03-22T09:51:09.280
+C Implemented\stracking\sof\sthe\sread/unread\sposts.\sThe\s"plural:"\sspecial\skey\sin\sthe\s\ntemplate\sengine\shas\sbeen\srenamed\sto\s"case:".\sIn\sorder\sto\sincrease\sthe\sspeed\sof\nwriting\stransactions\sof\sSQLite,\swas\sapplied\s"pragma\ssynchronous=off"\swhich\sis\spretty\nsafe\sfor\sserver\sapplication.\sThe\scode\swas\sprettyfied\sa\slittle.
+D 2016-03-23T09:07:29.252
 F source/Linux/sqlite3.inc 3434422cbaa5b6d55ec5a3a8171d7784c08fe6bc
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
-F source/commands.asm f6a85d1bb4bffe57fe418e11f32a8a99ad6b13a2
-F source/create.sql 8534713f5551b6d27be00a9634a21e321d771665
+F source/commands.asm 481187afcfc51cfe405ef7a3f8725785615a9492
+F source/create.sql 1fdd8cb83c7250050b64a35a081c0763b013623e
 F source/fcgi.asm 0e7e26fd53394d031d3e9732e294340efb683ee5
 F source/http.asm 6fd36367f90732d910c6bd564ffbcb6815094c74
-F source/index.asm f48d2c58415bd49bd6affb486654a8faf0bc3860
+F source/index.asm 8c9ae028c7b7065b9c2db508e767759bd512b847
 F source/index.fpr 96c432aac1262999c303526db0235455d6712e12
 F source/messages_bg.sql 62c7904a2609951e48495db1c28bba3673c2756b
-F source/render.asm 9f8938864b28edc95451b768db6ea14391479994
+F source/render.asm 03e8d6ab44adc4ec0902e28bdd40b223d60b592d
 F source/sqlite3.asm 4285b7e6615de3ffd2630b7c4adbf3df3210dd43
 F www/.htaccess e3d61615a5f5b289f09966a72e7f02777d0b1c60
-F www/all.css 61f7cb6e07a0c2e3ef7dc96c7c5376145f2f9069
+F www/all.css d530a729c0e81c7fe052c9112c58a3db45dfdcda
 F www/error.css 51294ab459d163a2642ed8d56ce7caceb052ebc9
 F www/images/del_gray.svg 5e3d0ba999e37de7dfdc43292d1c14e4513573ac
-F www/images/edit.svg c9a757dcaa4a28057c4a4df06c16134348ac51f7
+F www/images/edit.svg 2f003198c4acd6bb294e25be53f1299713cffdb8
 F www/images/edit_gray.svg a1b01c72f16833c8bad8eb058ff298cb3d5fb320
 F www/images/email.png 1866c9acaa42ea4082f48a461dbdbda987c9376a
 F www/images/emoticons/angry.svg b507d192d55f9c2f5d9b962f7beb5d927c49d799
@@ -26,14 +26,18 @@ F www/images/emoticons/smile.svg c01c9de9053e1e4b50ff3789c2dddd76b10f42d0
 F www/images/emoticons/tongue1.svg ce00e736565bcbae8ae5c5a2ae71c248f5586e51
 F www/images/emoticons/tongue2.svg 47f3ab912f343beafaf3ea3277c72b7a777b2497
 F www/images/emoticons/wink.svg 3db2c81d6dd73766ea590771ac071ef958272911
+F www/images/onepost.svg 9fc23bd166c79286bafa72fb4e846ba81f808429
+F www/images/onepost_gray.svg e24f6a889dd6389c2a0a045b06e7761616cba763
 F www/images/pass.png d1c58d21c07f74c45c270cc9f624a1adb15c12db
 F www/images/posts.svg 30833e3123a184230f80cc151581becfe20c9b71
+F www/images/posts_gray.svg 809ee9b2688df16ae2f4fec535612e22f7bf6d9c
 F www/images/quote.svg a57dfe55abff5e0685326195e49180c32bf2565c
 F www/images/sources/del_gray.svg bf94f2383987b249a4ad1f9ae5f093af95457dc1
 F www/images/sources/edit.svg 24184d8e14ca9ae7c402a54df5e77ddbbf7eb50b
 F www/images/sources/edit_gray.svg da532e60b6119e4c563d3f481120621a5bd299a2
 F www/images/sources/email.svg 947ba489f2a2ed0d64c3569e23ea74ef53d50b8f
 F www/images/sources/posts.svg 9d12c6a91307096c735e1364f56b3b19e38b3ba6
+F www/images/sources/posts_gray.svg e567ee65433f84d3b87c1cdf0508e612ba400d94
 F www/images/sources/quote.svg 5e8c5fbcc26c08fb9ac99dd563acd50c50e1d28a
 F www/images/user.png ba86e508b26c39f611581aaa7780d0e4a9c3ac52
 F www/ld-musl-i386.so 4d44786b8676115c7df45c45ceb051c11ce14ffd x
@@ -54,12 +58,12 @@ F www/templates/nav_list.tpl d9214b96085f81d4651f5d19997ec935021ed9a1
 F www/templates/nav_thread.tpl c32fe078023157a3978c36b819628391f6be497c
 F www/templates/new_post_form.tpl ee59f2f6fe96fa5a379a9b9c0840a9c0183c11a3
 F www/templates/new_thread_form.tpl 7fe9c9f0f857b16798c94457c193e8fb837829c5
-F www/templates/post_view.tpl 967934cb264dac68c9601cdb76cab19688b5a1d0
+F www/templates/post_view.tpl 1af794bf5f5bcd31cd291f252805bcb46840b021
 F www/templates/preview.tpl d44f634fd43ab70f8d5f636e44d0ddfc15433415
 F www/templates/register_form.tpl 1538d4a5f188c90483e83a9d876d792fef0d2b64
 F www/templates/sqlite_console_form.tpl bcd5f672811437343c4c74665e72b1b629c49028
-F www/templates/thread_info.tpl 26d71518f201a0a10b41a1f7ed94576d4cda416f
-P a2f6148048c40e7b4cf435b20fed50e61874ec8e
-R e5bb846d783b3116a0759401ca0cfa57
+F www/templates/thread_info.tpl 25b9e7916d322aa1ce6c1da8b621b53799ff499b
+P e9234f10f488ed9df16ef6dc272c6c02f2ce3cf9
+R a5a43b277fb13b5c970f62558327c0c4
 U johnfound
-Z 1fa308d20ad048ee050504e51fd4cde2
+Z bc4348cfd3ff0d3f0220f0cbef651823
