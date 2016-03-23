@@ -518,7 +518,7 @@ begin
 
 ; navigation tool bar
 
-        stdcall StrCatTemplate, edi, "nav_list", 0, 0
+        stdcall StrCatTemplate, edi, "nav_list", 0, esi
 
 
 ; links to the pages.
@@ -577,7 +577,7 @@ endp
 
 
 sqlSelectPosts   text "select ",                                                                                        \
-\
+                                                                                                                        \
                         "Posts.id, ",                                                                                   \
                         "Posts.threadID, ",                                                                             \
                         "strftime('%d.%m.%Y %H:%M:%S', Posts.postTime, 'unixepoch') as PostTime, ",                     \
@@ -586,21 +586,22 @@ sqlSelectPosts   text "select ",                                                
                         "Users.nick as UserName,",                                                                      \
                         "(select count() from Posts X where X.userID = Posts.UserID) as UserPostCount, ",               \
                         "?4 as Slug, ",                                                                                 \
-                        "(select count() from UnreadPosts U where UserID = ?5 and PostID = Posts.id) as Unread ",       \
-\
+                        "(select count() from UnreadPosts U where UserID = ?5 and PostID = Posts.id) as Unread, ",      \
+                        "ReadCount ",                                                                                   \
+                                                                                                                        \
                       "from ",                                                                                          \
-\
+                                                                                                                        \
                         "Posts left join Users on ",                                                                    \
                           "Users.id = Posts.userID ",                                                                   \
-\
+                                                                                                                        \
                       "where ",                                                                                         \
-\
+                                                                                                                        \
                         "threadID = ?1 ",                                                                               \
-\
+                                                                                                                        \
                       "order by ",                                                                                      \
-\
+                                                                                                                        \
                         "Posts.id ",                                                                                    \
-\
+                                                                                                                        \
                       "limit ?2 ",                                                                                      \
                       "offset ?3"
 
@@ -699,11 +700,14 @@ begin
 
         stdcall StrCatTemplate, edi, "post_view", [.stmt], esi
 
+        cinvoke sqliteColumnInt, [.stmt], 0
+
+        stdcall PostIncrementReadCount, eax
+
         mov     ebx, [esi+TSpecialParams.userID]
         test    ebx, ebx
         jz      .loop
 
-        cinvoke sqliteColumnInt, [.stmt], 0
         stdcall SetPostRead, ebx, eax
 
         jmp     .loop
@@ -1928,7 +1932,7 @@ sqlSelectConst text "select ? as slug, ? as caption, ? as source"
 
 sqlGetQuote   text "select U.nick, P.content from Posts P left join Users U on U.id = P.userID where P.id = ?"
 
-sqlInsertPost text "insert into Posts ( ThreadID, UserID, PostTime, Content) values (?, ?, strftime('%s','now'), ?)"
+sqlInsertPost text "insert into Posts ( ThreadID, UserID, PostTime, Content, ReadCount) values (?, ?, strftime('%s','now'), ?, 0)"
 sqlUpdateThreads text "update Threads set LastChanged = strftime('%s','now') where id = ?"
 sqlInsertThread text "insert into Threads ( Slug, Caption ) values (?, ?)"
 
@@ -2912,6 +2916,24 @@ begin
 endp
 
 
+
+sqlIncReadCount text "update Posts set ReadCount = ReadCount + 1 where id = ?"
+
+
+proc PostIncrementReadCount, .postID
+.stmt dd ?
+begin
+        pushad
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlIncReadCount, sqlIncReadCount.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+        popad
+        return
+endp
 
 
 

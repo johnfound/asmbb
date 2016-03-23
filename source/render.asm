@@ -220,15 +220,13 @@ begin
         cmp     [.statement], 0
         je      .finish
 
-        stdcall StrPos, edi, "case:"
-        test    eax, eax
-        jnz     .cat_case
+        stdcall StrMatchPatternNoCase, "case:*", edi
+        jc      .cat_case
 
         mov     [.formatted], 0
 
-        stdcall StrPos, edi, "minimag:"
-        test    eax, eax
-        jz      .process_columns
+        stdcall StrMatchPatternNoCase, "minimag:*", edi
+        jnc     .process_columns
 
         or      [.formatted], 1
 
@@ -313,19 +311,16 @@ begin
 
         add     ecx, eax
 
-        stdcall StrPos, ecx, "/message"
-        cmp     eax, ecx
-        je      .root
+        stdcall StrMatchPatternNoCase, "/message/*", ecx
+        jc      .root
 
-        stdcall StrPos, ecx, "/sqlite"
-        cmp     eax, ecx
-        je      .root
+        stdcall StrMatchPatternNoCase, "/sqlite*", ecx
+        jc      .root
 
-        stdcall StrPos, ecx, "/post"
-        cmp     eax, ecx
-        je      .root
+        stdcall StrMatchPatternNoCase, "/post*", ecx
+        jc      .root
 
-        stdcall StrPos, ecx, "/edit"
+        stdcall StrMatchPatternNoCase, "/edit/*", ecx
         cmp     eax, ecx
         je      .root
 

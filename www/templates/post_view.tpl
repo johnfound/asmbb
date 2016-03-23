@@ -6,7 +6,7 @@
   </div>
   <div class="post_info">
     <a id="$id$" href="#$id$">#$id$</a>
-    Posted: $PostTime$
+    Публикуван: $PostTime$, видян: $ReadCount$ $case:ReadCount|пъти|път|пъти$
     <div class="edit_tools">
       <a class="quote_btn" href="/post/$slug$/$id$">
 	<img class="quote_icon" src="/images/quote.svg">

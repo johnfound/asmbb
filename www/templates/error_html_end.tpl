@@ -1,5 +1,5 @@
+<span class="notice">Redirect after 3000ms or click.</span>
 </a>
-<center>redirect after 3000ms</center>
 <pre>
 $special:environment$
 </pre>

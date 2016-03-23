@@ -1,19 +1,19 @@
-C Implemented\stracking\sof\sthe\sread/unread\sposts.\sThe\s"plural:"\sspecial\skey\sin\sthe\s\ntemplate\sengine\shas\sbeen\srenamed\sto\s"case:".\sIn\sorder\sto\sincrease\sthe\sspeed\sof\nwriting\stransactions\sof\sSQLite,\swas\sapplied\s"pragma\ssynchronous=off"\swhich\sis\spretty\nsafe\sfor\sserver\sapplication.\sThe\scode\swas\sprettyfied\sa\slittle.
-D 2016-03-23T09:07:29.252
+C Implemented\sread\scounter\sfor\sthe\sposts.
+D 2016-03-23T12:07:34.622
 F source/Linux/sqlite3.inc 3434422cbaa5b6d55ec5a3a8171d7784c08fe6bc
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
-F source/commands.asm 481187afcfc51cfe405ef7a3f8725785615a9492
+F source/commands.asm a567e6fe54349bd724fc261364ff80bb4bcc3d20
 F source/create.sql 1fdd8cb83c7250050b64a35a081c0763b013623e
 F source/fcgi.asm 0e7e26fd53394d031d3e9732e294340efb683ee5
 F source/http.asm 6fd36367f90732d910c6bd564ffbcb6815094c74
 F source/index.asm 8c9ae028c7b7065b9c2db508e767759bd512b847
 F source/index.fpr 96c432aac1262999c303526db0235455d6712e12
 F source/messages_bg.sql 62c7904a2609951e48495db1c28bba3673c2756b
-F source/render.asm 03e8d6ab44adc4ec0902e28bdd40b223d60b592d
+F source/render.asm a0ead6bde3a2cbf40e11a5fb8e62d48fa415a0ea
 F source/sqlite3.asm 4285b7e6615de3ffd2630b7c4adbf3df3210dd43
 F www/.htaccess e3d61615a5f5b289f09966a72e7f02777d0b1c60
 F www/all.css d530a729c0e81c7fe052c9112c58a3db45dfdcda
-F www/error.css 51294ab459d163a2642ed8d56ce7caceb052ebc9
+F www/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
 F www/images/del_gray.svg 5e3d0ba999e37de7dfdc43292d1c14e4513573ac
 F www/images/edit.svg 2f003198c4acd6bb294e25be53f1299713cffdb8
 F www/images/edit_gray.svg a1b01c72f16833c8bad8eb058ff298cb3d5fb320
@@ -47,23 +47,23 @@ F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/activation_email_subject.tpl 17359b7b23bd9bcacbc576168a6764be7192810e
 F www/templates/activation_email_text.tpl 44858c154d24eb9170b9a7eaaf56587572b86633
 F www/templates/edit_form.tpl b0732fd7786e44814aaebbb2f8cc3e526c7645d5
-F www/templates/error_html_end.tpl 409817a5ccf736d3b0501d9dc121988c9cbb619d
-F www/templates/error_html_start.tpl 381d732149dad4cbcd97798d9f83da768203d4f0
+F www/templates/error_html_end.tpl b76246c08f05a604310824bffe366737c149faf4
+F www/templates/error_html_start.tpl ed8ed3041c59a29f09ab21e434b5ad423091f6cf
 F www/templates/login_form.tpl 3af294aa5da522ba4970663849f305b2e1b223a6
 F www/templates/logout.tpl bb39f3fead238b4622a10e2585a82678ea13f587
-F www/templates/main_html_end.tpl 7581fe2e0e2c8deffa9cb9211702cbc2ac00cc49
+F www/templates/main_html_end.tpl 614cc9e9fa1b8aa540a887a58b0fe80785ecd77a
 F www/templates/main_html_start.tpl bab18e56d6f8779b934b6516c4e774dc396a0a14
 F www/templates/minimag_suffix.tpl df10dc0f27a70c7304794198e127289e78bc4fdb
 F www/templates/nav_list.tpl d9214b96085f81d4651f5d19997ec935021ed9a1
 F www/templates/nav_thread.tpl c32fe078023157a3978c36b819628391f6be497c
 F www/templates/new_post_form.tpl ee59f2f6fe96fa5a379a9b9c0840a9c0183c11a3
 F www/templates/new_thread_form.tpl 7fe9c9f0f857b16798c94457c193e8fb837829c5
-F www/templates/post_view.tpl 1af794bf5f5bcd31cd291f252805bcb46840b021
+F www/templates/post_view.tpl 688899fdaa28d62f4f61171ab1cccd4afe60e23d
 F www/templates/preview.tpl d44f634fd43ab70f8d5f636e44d0ddfc15433415
 F www/templates/register_form.tpl 1538d4a5f188c90483e83a9d876d792fef0d2b64
 F www/templates/sqlite_console_form.tpl bcd5f672811437343c4c74665e72b1b629c49028
 F www/templates/thread_info.tpl 25b9e7916d322aa1ce6c1da8b621b53799ff499b
-P e9234f10f488ed9df16ef6dc272c6c02f2ce3cf9
-R a5a43b277fb13b5c970f62558327c0c4
+P 95cbbebb694da8f552d8e8bdcc5ba204a68b7c71
+R dc2623f70553d6f8b200254f08ba43cd
 U johnfound
-Z bc4348cfd3ff0d3f0220f0cbef651823
+Z 95e6959729a251e8ddc457a1a221c14a
