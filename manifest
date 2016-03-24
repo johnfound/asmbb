@@ -1,10 +1,10 @@
-C Bug\shas\sbeen\sfixed\sin\sthe\sFCGI\slibrary.\sThe\semoticon\s.svg\simages\shas\sbeen\soptimized.
-D 2016-03-24T08:20:31.027
+C A\sbug\sin\shandling\splain\sfiles\shas\sbeen\sfixed.
+D 2016-03-24T11:31:23.622
 F source/Linux/sqlite3.inc 3434422cbaa5b6d55ec5a3a8171d7784c08fe6bc
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
-F source/commands.asm a567e6fe54349bd724fc261364ff80bb4bcc3d20
+F source/commands.asm e28ee8a766583a4e37c8d2180baf0409afd1b6e3
 F source/create.sql 1fdd8cb83c7250050b64a35a081c0763b013623e
-F source/fcgi.asm 6d6b7928e7bb8bac4d315b1796cbc0d6e9f9ef03
+F source/fcgi.asm 2d2fd311804d03b96327b738c43c9c6d698b8de5
 F source/http.asm 6fd36367f90732d910c6bd564ffbcb6815094c74
 F source/index.asm 8c9ae028c7b7065b9c2db508e767759bd512b847
 F source/index.fpr 7948de23f7e4951e64bc0b96ddd42084d08dab23
@@ -43,7 +43,7 @@ F www/images/sources/quote.svg 5e8c5fbcc26c08fb9ac99dd563acd50c50e1d28a
 F www/images/user.png ba86e508b26c39f611581aaa7780d0e4a9c3ac52
 F www/ld-musl-i386.so 4d44786b8676115c7df45c45ceb051c11ce14ffd x
 F www/libsqlite3.so b219b02c71d515698b2086be2edc104e5c8997a7 x
-F www/lighttpd.conf f1548664d58bd00dc6ee5f34a803fc9382d9d0dd
+F www/lighttpd.conf c2e99868510b00288e86a9bf0332fa279aabb608
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/activation_email_subject.tpl 17359b7b23bd9bcacbc576168a6764be7192810e
 F www/templates/activation_email_text.tpl 44858c154d24eb9170b9a7eaaf56587572b86633
@@ -64,7 +64,7 @@ F www/templates/preview.tpl d44f634fd43ab70f8d5f636e44d0ddfc15433415
 F www/templates/register_form.tpl 1538d4a5f188c90483e83a9d876d792fef0d2b64
 F www/templates/sqlite_console_form.tpl bcd5f672811437343c4c74665e72b1b629c49028
 F www/templates/thread_info.tpl 25b9e7916d322aa1ce6c1da8b621b53799ff499b
-P 2f1e1b18ead3f219cbd8bbb2d35d123e431fd9eb
-R 6147b482497c9895b15e9e9cd83dee56
+P 5c4655a880e1e3719623b1b298f0b47fc49efb19
+R eb3c618d8918c5bd933be55279f0ecb1
 U johnfound
-Z 6dc28b484642774da2fa008ba7e9b0a6
+Z 937c529e26566648af9e4b6b86c9a6cf

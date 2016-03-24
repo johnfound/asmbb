@@ -27,10 +27,10 @@ ends
 
 
 
-proc ServeOneRequest, .hSocket, .requestID, .pParams2, .pPost2, .start_time
+proc ServeOneRequest, .hSocket, .requestID, .pParams2, .pPost2, .start_time     ;, .threadID
 
-.root dd ?
-.uri  dd ?
+.root     dd ?
+.uri      dd ?
 .filename dd ?
 
 .special TSpecialParams
@@ -45,7 +45,7 @@ begin
 
         lea     edi, [.special]
         mov     ecx, sizeof.TSpecialParams / 4
-        stosd
+        rep stosd
 
         mov     eax, [.start_time]
         mov     [.special.start_time], eax
@@ -69,7 +69,7 @@ begin
         stdcall StrNew
         mov     edi, eax
 
-        stdcall ValueByName, [.pParams2], "DOCUMENT_ROOT"
+        stdcall ValueByName, [.special.params], "DOCUMENT_ROOT"
         jc      .error400
 
         stdcall StrDup, eax
@@ -86,22 +86,22 @@ begin
         cmp     byte [ebx+eax], "/"
         jne     .root_ok
 
-        mov     byte [ebx+eax], 0
         mov     [ebx+string.len], eax
+        mov     byte [ebx+eax], 0
 
 .root_ok:
+
         stdcall ValueByName, [.pParams2], "REQUEST_URI"
         jc      .error400
 
         stdcall StrDup, eax
         mov     [.uri], eax
 
-        stdcall StrSplitList, [.uri], '/', FALSE        ; split the URI in order to analize it better.
-        mov     esi, eax
-
 ; first check for supported file format.
 
-        stdcall StrDup, [.root]
+        stdcall StrPtr, [.root]
+
+        stdcall StrDupMem, eax
         stdcall StrCat, eax, [.uri]
         mov     [.filename], eax
 
@@ -112,21 +112,24 @@ begin
         stdcall StrDel ; from the stack
         jc      .analize_uri
 
-        stdcall FileExists, [.filename]
+        mov     edx, eax
+
+        stdcall LoadBinaryFile, [.filename]
         jc      .error404
+
+        mov     esi, eax
 
 ; serve the file.
 
         stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Content-type: ">
-        stdcall StrCat, edi, eax
+        stdcall StrCat, edi, edx
         stdcall StrCharCat, edi, $0a0d0a0d
 
         stdcall StrPtr, edi
         stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], FALSE
 
-        stdcall LoadBinaryFile, [.filename]
-        stdcall FCGI_output, [.hSocket], [.requestID], eax, ecx, TRUE
-        stdcall FreeMem, eax
+        stdcall FCGI_output, [.hSocket], [.requestID], esi, ecx, TRUE
+        stdcall FreeMem, esi
 
         jmp     .final_clean
 
@@ -163,7 +166,6 @@ begin
         stdcall StrCatTemplate, edi, "main_html_end", 0, edx
 
 
-
 .send_simple_result:    ; it is a result containing only a string data in EDI
 
         stdcall ListFree, esi, StrDel
@@ -197,10 +199,12 @@ begin
 
 .analize_uri:
 
+        stdcall StrSplitList, [.uri], '/', FALSE        ; split the URI in order to analize it better.
+        mov     esi, eax
+
         lea     eax, [.special]
         stdcall GetLoggedUser, eax
 
-;        OutputValue "Request count:", [esi+TArray.count], 10, -1
 
         cmp     [esi+TArray.count], 0
         je      .redirect_to_the_list
@@ -456,13 +460,8 @@ cUnknownError text "unknown_error"
 
         stdcall StrToNumEx, [esi+TArray.array+4]
 
-;        OutputValue "User permissions 2:", [.special.userStatus], 16, 8
-
         lea     ecx, [.special]
         stdcall EditUserMessage, eax, ecx
-
-;        OutputValue "User permissions 3:", [.special.userStatus], 16, 8
-
 
         jmp     .send_simple_replace
 
@@ -1601,12 +1600,12 @@ endp
 
 
 mimeIcon  text "image/x-icon"
-mimeHTML  text "text/html"
-mimeText  text "text/plain"
-mimeCSS   text "text/css"
+mimeHTML  text "text/html; charset=utf-8"
+mimeText  text "text/plain; charset=utf-8"
+mimeCSS   text "text/css; charset=utf-8"
 mimePNG   text "image/png"
 mimeJPEG  text "image/jpeg"
-mimeSVG   text "image/svg+xml"
+mimeSVG   text "image/svg+xml; charset=utf-8"
 mimeGIF   text "image/gif"
 
 
@@ -2552,7 +2551,7 @@ begin
         stdcall GetTimestamp
         sub     eax, [esi+TSpecialParams.start_time]
 
-        OutputValue "Edit write time [ms]:", eax, 10, -1
+;        OutputValue "Edit write time [ms]:", eax, 10, -1
 
 .finish:
         stdcall StrDelNull, [.source]
@@ -2642,8 +2641,6 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThePostIndex, -1, eax, 0
 
-;        OutputValue "Prepare get post index:", eax, 10, -1
-
         cinvoke sqliteBindInt, [.stmt], 1, ebx
         cinvoke sqliteBindInt, [.stmt], 2, [.postID]
 
@@ -2657,8 +2654,6 @@ begin
         mov     ecx, PAGE_LENGTH
         div     ecx
         mov     [.page], eax
-
-;        OutputValue "The post is on page ", eax, 10, -1
 
         cinvoke sqliteFinalize, [.stmt]
 
@@ -2947,13 +2942,9 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetUnread, -1, eax, 0
 
-        OutputValue "Prepare exit:", eax, 10, -1
-
         cinvoke sqliteBindInt, [.stmt], 1, [.postID]
         cinvoke sqliteStep, [.stmt]
         mov     [esp+4*regEAX], eax
-
-        OutputValue "Step exit:", eax, 10, -1
 
         cinvoke sqliteFinalize, [.stmt]
 

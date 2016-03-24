@@ -166,9 +166,6 @@ endp
 
 
 
-
-
-
 ; One connection serving thread procedure.
 
 
@@ -395,8 +392,6 @@ begin
         stdcall FCGI_send_end_request, [.hSocket], [.requestID], FCGI_REQUEST_COMPLETE
         jc      .finish
 
-        DebugMsg "Request served."
-
         test    [.requestFlags], FCGI_KEEP_CONN
         jnz     .main_loop
 
@@ -490,7 +485,7 @@ begin
 .data_loop:
         mov     ecx, $ffff
         cmp     edx, ecx
-        cmovb   ecx, edx        ; ecx = min($ffff, edx)
+        cmovb   ecx, edx                        ; ecx = min($ffff, edx)
 
         lea     ebx, [ecx+7]
         and     ebx, $fffffff8
@@ -504,7 +499,7 @@ begin
         or      eax, ecx
         jz      .end_ok         ; exit without finalizing the stream.
 
-        OutputValue "Send STDOUT length:", ecx, 10, -1
+;        OutputValue "Send STDOUT length:", ecx, 10, -1
 
         lea     eax, [.header]
         stdcall SocketSendAll, [.hSocket], eax, sizeof.FCGI_Header
