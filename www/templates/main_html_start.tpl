@@ -7,4 +7,6 @@
 </head>
 
 <body>
-  <div class="header"><div class="login_interface">$special:loglink$</div><h1>AsmBB demo</h1></div>
+  <div class="header"><div class="login_interface">
+    [case:[special:userid]|<a href="/login/">Login</a> <a href="/register/">Register</a>|
+			   <a href="/logout/">Logout ( [special:username] )</a>]</div><h1>AsmBB demo</h1></div>

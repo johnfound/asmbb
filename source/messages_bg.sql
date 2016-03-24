@@ -84,6 +84,7 @@ INSERT INTO `Messages` VALUES ('error_invalid_content','Мълчанието е
 ','Проблем!',NULL);
 CREATE INDEX idxUsers_nick  on Users (nick);
 CREATE INDEX idxUsers_email on Users (email);
+CREATE UNIQUE INDEX idxUnreadPosts on UnreadPosts(UserID, PostID);
 CREATE INDEX idxThreads_Slug	  on Threads (Slug);
 CREATE INDEX idxThreads_LastChanged on Threads (LastChanged desc);
 CREATE INDEX idxPosts_UserID   on Posts (userID);

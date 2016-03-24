@@ -412,19 +412,19 @@ div.message {
 div.editor {
   position: fixed;
   right: 2.5%;
-  top: 56px;
+  top: 16px;
   width: 640px;
   max-width: 60%;
   margin: 16px;
   opacity: 0.6;
 
-  resize: vertical;
   overflow: auto;
 }
 
 div.editor:hover {
   opacity: 1;
 }
+
 
 
 div.new_editor {
@@ -444,7 +444,7 @@ h1.fakeedit {
   width: 100%;
   border-style: none;
   padding: 4px;
-  margin-bottom: 8px;
+  margin: 8px 0px 8px 0px;
 
   background-color: #e0e0e0;
   color: #606060;

@@ -1,1 +1,1 @@
-Account activation link for http://$host$
+Account activation link for http://[host]

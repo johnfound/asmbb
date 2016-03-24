@@ -2,87 +2,121 @@
 
 
 
-;proc RenderPostTime, .html, .time
-;.dtime dq ?
-;.DateTime TDateTime
-;begin
-;
-;        stdcall StrCat, [.html], '<div class="posttime">'
-;
-;        mov     eax, [.time]
-;        cdq
-;
-;        mov     dword [.dtime], eax
-;        mov     dword [.dtime+4], edx
-;
-;        lea     eax, [.dtime]
-;        lea     edx, [.DateTime]
-;        stdcall TimeToDateTime, eax, edx
-;        stdcall DateTimeToStr, edx, 0
-;
-;        stdcall StrCat, [.html], eax
-;        stdcall StrDel, eax
-;
-;
-;        stdcall StrCat, [.html], '</div>'  ; div.posttime
-;
-;        return
-;endp
-
-
-;sqlUserInfo text 'select U.nick, (select count() from Posts P where P.userID=U.id) as postcount from Users as U where U.id=?'
-;
-;
-;proc RenderUserInfo, .html, .Uid
-;.stmt dd ?
-;begin
-;        pushad
-;
-;        lea     eax, [.stmt]
-;        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUserInfo, sqlUserInfo.length, eax, 0
-;
-;        cinvoke sqliteBindInt, [.stmt], 1, [.Uid]
-;
-;        cinvoke sqliteStep, [.stmt]
-;        cmp     eax, SQLITE_ROW
-;        je      .user_ok
-;
-;        stdcall StrCat, [.html], '<div class="usernull">NULL user</div>'
-;        jmp     .finish
-;
-;.user_ok:
-;        stdcall StrCat, [.html], '<div class="username">'
-;
-;        cinvoke sqliteColumnText, [.stmt], 0
-;        stdcall StrCat, [.html], eax
-;
-;        stdcall StrCat, [.html], '</div>'  ; div.username
-;
-;        stdcall StrCat, [.html], '<div class="userpcnt">'
-;
-;        cinvoke sqliteColumnInt, [.stmt], 1
-;        stdcall NumToStr, eax, ntsDec or ntsUnsigned
-;
-;        stdcall StrCat, [.html], eax
-;        stdcall StrDel, eax
-;
-;        stdcall StrCat, [.html], '</div>'  ; div.userpcnt
-;
-;.finish:
-;        cinvoke sqliteFinalize, [.stmt]
-;        popad
-;        return
-;endp
-
-
-
 
 sqlGetTemplate text "select template from templates where id = ?"
 
 
+;proc StrCatTemplate, .hString, .strTemplateID, .sql_statement, .p_special
+;.stmt  dd ?
+;.free  dd ?
+;.lvl   dd ?
+;begin
+;        pushad
+;        and     [.free], 0
+;        and     [.lvl], 0
+;
+;        lea     eax, [.stmt]
+;        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetTemplate, sqlGetTemplate.length+1, eax, 0
+;
+;        stdcall StrLen, [.strTemplateID]
+;        mov     ecx, eax
+;        stdcall StrPtr, [.strTemplateID]
+;
+;        cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
+;        cinvoke sqliteStep, [.stmt]
+;        cmp     eax, SQLITE_ROW
+;        je      .get_template
+;
+;
+;        stdcall StrDupMem, "templates/"
+;        stdcall StrCat, eax, [.strTemplateID]
+;        stdcall StrCharCat, eax, ".tpl"
+;        push    eax
+;
+;        stdcall LoadBinaryFile, eax
+;        stdcall StrDel ; from the stack
+;        jc      .error
+;
+;;        OutputValue "Template from file. Length:", ecx, 10, -1
+;
+;        mov     [.free], eax
+;        mov     esi, eax
+;        and     dword [eax+ecx], 0
+;        jmp     .outer
+;
+;
+;.get_template:
+;
+;        cinvoke sqliteColumnText, [.stmt], 0
+;        mov     esi, eax
+;
+;.outer:
+;        mov     ebx, esi
+;
+;.inner:
+;        mov     cl, [esi]
+;        inc     esi
+;
+;        test    cl, cl
+;        jz      .found
+;
+;        cmp     cl, '$'
+;        jne     .inner
+;
+;.found:
+;        mov     eax, esi
+;        sub     eax, ebx
+;        dec     eax
+;
+;        stdcall StrCatMem, [.hString], ebx, eax
+;
+;        test    cl, cl
+;        jz      .end_of_template
+;
+;        mov     ebx, esi
+;
+;.varname:
+;        mov     cl, [esi]
+;        inc     esi
+;
+;        test    cl, cl
+;        jz      .found_var
+;
+;        cmp     cl, '$'
+;        jne     .varname
+;
+;.found_var:
+;        mov     edx, esi
+;        sub     edx, ebx
+;        dec     edx
+;
+;        stdcall StrCatColumnByName, [.hString], ebx, edx, [.sql_statement], [.p_special]
+;
+;        test    cl, cl
+;        jnz     .outer
+;
+;.end_of_template:
+;
+;        cinvoke sqliteFinalize, [.stmt]
+;
+;        stdcall FreeMem, [.free]
+;        popad
+;        return
+;
+;.error:
+;;        DebugMsg "Error read template!"
+;
+;        stdcall StrCat, [.hString], "Unknown template!"
+;        jmp     .end_of_template
+;
+;endp
+
+
+
+
 proc StrCatTemplate, .hString, .strTemplateID, .sql_statement, .p_special
-.stmt dd ?
-.free dd ?
+.stmt  dd ?
+.free  dd ?
 begin
         pushad
         and     [.free], 0
@@ -114,13 +148,55 @@ begin
         mov     [.free], eax
         mov     esi, eax
         and     dword [eax+ecx], 0
-        jmp     .outer
+        jmp     .process_template
 
 
 .get_template:
 
         cinvoke sqliteColumnText, [.stmt], 0
         mov     esi, eax
+
+.process_template:
+
+        stdcall __DoProcessTemplate2, eax, [.sql_statement], [.p_special], TRUE
+
+        stdcall StrCat, [.hString], eax
+        stdcall StrDel, eax
+
+
+.finish:
+        cinvoke sqliteFinalize, [.stmt]
+
+        stdcall FreeMem, [.free]
+        popad
+        return
+
+
+.error:
+;        DebugMsg "Error read template!"
+
+        stdcall StrCat, [.hString], "Unknown template!"
+        jmp     .finish
+
+endp
+
+
+
+
+
+
+proc __DoProcessTemplate2, .hTemplate, .sql_stmt, .pSpecial, .fHTML
+
+begin
+        pushad
+
+        stdcall StrNew
+        mov     edi, eax
+
+        stdcall StrPtr, [.hTemplate]
+        mov     esi, eax
+
+        xor     edx, edx
 
 .outer:
         mov     ebx, esi
@@ -132,7 +208,7 @@ begin
         test    cl, cl
         jz      .found
 
-        cmp     cl, '$'
+        cmp     cl, '['
         jne     .inner
 
 .found:
@@ -140,7 +216,7 @@ begin
         sub     eax, ebx
         dec     eax
 
-        stdcall StrCatMem, [.hString], ebx, eax
+        stdcall StrCatMem, edi, ebx, eax
 
         test    cl, cl
         jz      .end_of_template
@@ -152,36 +228,405 @@ begin
         inc     esi
 
         test    cl, cl
-        jz      .found_var
+        jz      .end_of_template       ; ignore the not ended macros.
 
-        cmp     cl, '$'
+        cmp     cl, "["
+        jne     .nested_ok
+
+        inc     edx
+
+.nested_ok:
+        cmp     cl, ']'
         jne     .varname
 
-.found_var:
-        mov     edx, esi
-        sub     edx, ebx
+        test    edx, edx
+        jz      .found_var
+
         dec     edx
+        jmp     .varname
 
-        stdcall StrCatColumnByName, [.hString], ebx, edx, [.sql_statement], [.p_special]
-
-        test    cl, cl
-        jnz     .outer
 
 .end_of_template:
-
-        cinvoke sqliteFinalize, [.stmt]
-
-        stdcall FreeMem, [.free]
+        mov     [esp+4*regEAX], edi
         popad
         return
 
-.error:
-;        DebugMsg "Error read template!"
 
-        stdcall StrCat, [.hString], "Unknown template!"
-        jmp     .end_of_template
+
+.found_var:
+        pushad
+
+        mov     ecx, esi
+        sub     ecx, ebx
+        dec     ecx
+
+        stdcall StrNew
+        stdcall StrCatMem, eax, ebx, ecx
+        stdcall StrClipSpacesR, eax
+        stdcall StrClipSpacesL, eax
+        mov     edi, eax        ; the macro text
+
+        mov     esi, [.pSpecial]
+
+; get the value of the macro
+
+
+; first check for special names
+
+        stdcall StrMatchPatternNoCase, "special:*", edi
+        jc      .process_special
+
+        stdcall StrMatchPatternNoCase, "minimag:*", edi
+        jc      .process_minimag
+
+        stdcall StrMatchPatternNoCase, "case:*", edi
+        jc      .process_case
+
+        stdcall StrMatchPatternNoCase, "and:*", edi
+        jc      .process_and
+
+
+
+        cmp     [.sql_stmt], 0
+        je      .return_original                ; ignore all database fields, because there is no statement.
+
+
+        cinvoke sqliteColumnCount, [.sql_stmt]
+        mov     ebx, eax
+
+; search the column index
+
+.loop_columns:
+        dec     ebx
+        jns     .check_name
+
+
+.return_original:
+
+        stdcall StrNew                          ; return the original string.
+        stdcall StrCharCat, eax, "["
+        stdcall StrCat, eax, edi
+        stdcall StrCharCat, eax, "]"
+        jmp     .return_value
+
+
+.check_name:
+        cinvoke sqliteColumnName, [.sql_stmt], ebx
+        stdcall StrCompNoCase, eax, edi
+        jnc     .loop_columns
+
+; column has been found
+
+        cinvoke sqliteColumnText, [.sql_stmt], ebx
+
+
+.return_encoded:
+
+        test    eax, eax
+        jz      .return_value
+
+        cmp     [.fHTML], 0
+        jne     .encode
+
+        stdcall StrDupMem, eax
+        jmp     .return_value
+
+
+.encode:
+        stdcall StrEncodeHTML, eax
+
+
+.return_value:
+        stdcall StrDel, edi
+        mov     [esp+4*regEAX], eax
+        popad
+
+; the value has been computed.
+
+        test    eax, eax
+        jz      .outer
+
+        stdcall StrCat, edi, eax
+        stdcall StrDel, eax
+
+        jmp     .outer
+
+
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.process_special:
+
+        stdcall StrSplit, edi, 8
+        stdcall StrDel, edi
+        stdcall StrClipSpacesL, eax
+        mov     edi, eax
+
+        stdcall StrCompCase, edi, "timestamp"
+        je      .get_timestamp
+
+        stdcall StrCompNoCase, edi, "username"
+        jc      .get_username
+
+        stdcall StrCompNoCase, edi, "userid"
+        jc      .get_userid
+
+        stdcall StrCompNoCase, edi, "permissions"
+        jc      .get_permissions
+
+        stdcall StrCompNoCase, edi, "referer"
+        jc      .get_referer
+
+if defined options.DebugWeb & options.DebugWeb
+
+        stdcall StrCompNoCase, edi, "environment"
+        jc      .get_environment
+
+end if
+
+        xor     eax, eax
+        jmp     .return_value
+
+
+
+;..................................................................
+
+
+.get_timestamp:
+
+        stdcall GetTimestamp
+        sub     eax, [esi+TSpecialParams.start_time]
+
+        stdcall NumToStr, eax, ntsDec or ntsUnsigned
+
+        jmp     .return_value
+
+
+;..................................................................
+
+
+.get_username:
+
+        mov     eax, [esi+TSpecialParams.userName]
+        jmp     .return_encoded
+
+
+;..................................................................
+
+
+.get_userid:
+
+        mov     eax, [esi+TSpecialParams.userName]
+        test    eax, eax
+        jz      .return_value
+
+        stdcall NumToStr, [esi+TSpecialParams.userID], ntsDec or ntsUnsigned
+        jmp     .return_value
+
+
+;..................................................................
+
+
+.get_permissions:
+
+        mov     eax, [esi+TSpecialParams.userName]
+        test    eax, eax
+        jz      .return_value
+
+        stdcall NumToStr, [esi+TSpecialParams.userStatus], ntsHex or ntsUnsigned
+        stdcall StrCharInsert, eax, "$", 0
+        jmp     .return_value
+
+;..................................................................
+
+
+.get_referer:
+
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_REFERER"
+        jc      .root
+
+        mov     ebx, eax
+
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_HOST"
+        jc      .root
+
+        push    eax
+
+        stdcall StrLen, eax
+        mov     ecx, eax
+
+        stdcall StrPos, ebx     ; pattern from the stack
+        test    eax, eax
+        jz      .root
+
+        add     ecx, eax
+
+        stdcall StrMatchPatternNoCase, "/message/*", ecx
+        jc      .root
+
+        stdcall StrMatchPatternNoCase, "/sqlite*", ecx
+        jc      .root
+
+        stdcall StrMatchPatternNoCase, "/post*", ecx
+        jc      .root
+
+        stdcall StrMatchPatternNoCase, "/edit/*", ecx
+        cmp     eax, ecx
+        je      .root
+
+        stdcall StrEncodeHTML, ecx
+        jmp     .return_value
+
+.root:
+        stdcall StrNew
+        stdcall StrCharCat, eax, "/"
+        jmp     .return_value
+
+
+;..................................................................
+
+
+if defined options.DebugWeb & options.DebugWeb
+
+.get_environment:
+
+        stdcall StrDupMem, <"<pre>", 13, 10>
+        mov     ebx, eax
+
+        mov     edx, [esi+TSpecialParams.params]
+        xor     ecx, ecx
+
+.loop_env:
+        cmp     ecx, [edx+TArray.count]
+        jae     .show_post
+
+        stdcall StrEncodeHTML, [edx+TArray.array+8*ecx]
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+
+        stdcall StrCharCat, ebx, " = "
+
+        stdcall StrEncodeHTML, [edx+TArray.array+8*ecx+4]
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+        stdcall StrCharCat, ebx, $0a0d
+
+        inc     ecx
+        jmp     .loop_env
+
+
+.show_post:
+        mov     eax, [esi+TSpecialParams.post]
+        test    eax, eax
+        jz      .end_env
+
+        stdcall StrCat, ebx, <13, 10, 13, 10, "<<<<< Follows the POST data: >>>>>", 13, 10>
+        stdcall StrCat, ebx, [esi+TSpecialParams.post]
+        stdcall StrCat, ebx, <13, 10, "<<<<< Here ends the post data >>>>>", 13, 10>
+
+.end_env:
+        stdcall StrCat, ebx, "13, 10, </pre>"
+        mov     eax, ebx
+        jmp     .return_value
+
+end if
+
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.process_minimag:
+
+        stdcall StrSplit, edi, 8
+        stdcall StrDel, edi
+        stdcall StrClipSpacesL, eax
+        mov     edi, eax
+
+        stdcall __DoProcessTemplate2, edi, [.sql_stmt], [.pSpecial], FALSE
+
+        stdcall FormatPostText, eax
+        jmp     .return_value
+
+
+
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.process_case:
+
+        stdcall StrSplit, edi, 5
+        stdcall StrDel, edi
+        mov     edi, eax
+
+        stdcall __DoProcessTemplate2, edi, [.sql_stmt], [.pSpecial], TRUE
+        stdcall StrDel, edi
+        mov     edi, eax
+
+        stdcall StrSplitList, edi, '|', TRUE
+        mov     esi, eax
+
+        cmp     [esi+TArray.count], 2
+        jae     .get_case_value
+
+        xor     eax, eax
+        jmp     .end_case
+
+.get_case_value:
+
+        stdcall StrToNumEx, [esi+TArray.array]          ; the case number
+
+        mov     ecx, [esi+TArray.count]
+        sub     ecx, 2
+
+        cmp     eax, ecx
+        cmova   eax, ecx
+
+        stdcall StrDup, [esi+TArray.array+4*eax+4]
+
+.end_case:
+        stdcall ListFree, esi, StrDel
+        jmp     .return_value
+
+
+
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.process_and:
+
+        stdcall StrSplit, edi, 4
+        stdcall StrDel, edi
+        mov     edi, eax
+
+        stdcall __DoProcessTemplate2, edi, [.sql_stmt], [.pSpecial], TRUE
+        stdcall StrDel, edi
+        mov     edi, eax
+
+        stdcall StrSplitList, edi, '|', FALSE
+        mov     esi, eax
+
+        cmp     [esi+TArray.count], 2
+        jae     .get_and_value
+
+        xor     eax, eax
+        jmp     .end_if
+
+.get_and_value:
+
+        stdcall StrToNumEx, [esi+TArray.array]          ; the first operand
+        mov     ecx, eax
+
+        stdcall StrToNumEx, [esi+TArray.array+4]        ; the second operand
+        and     eax, ecx
+
+.end_if:
+        stdcall NumToStr, eax, ntsDec or ntsUnsigned
+        stdcall ListFree, esi, StrDel
+        jmp     .return_value
+
 
 endp
+
+
 
 
 
@@ -547,9 +992,12 @@ proc FormatPostText, .hText
 .result TMarkdownResults
 
 begin
-        lea     eax, [.result]
-
         stdcall StrCatTemplate, [.hText], "minimag_suffix", 0, 0
+
+;DEBUG ONLY!!!
+;        stdcall FileWriteString, [STDERR], [.hText]
+
+        lea     eax, [.result]
         stdcall TranslateMarkdown, [.hText], FixMiniMagLink, 0, eax
 
         stdcall StrDel, [.hText]

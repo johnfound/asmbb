@@ -1,1 +1,1 @@
-$special:referer$
+[special:referer]
