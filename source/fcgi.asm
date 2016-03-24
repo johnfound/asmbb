@@ -207,6 +207,8 @@ begin
         mov     esi, eax
         movzx   eax, [esi+FCGI_Header.type]
 
+;        OutputValue "Received header type: ", eax, 10, -1
+
         cmp     eax, FCGI_BEGIN_REQUEST
         je      .begin_request
 
@@ -390,10 +392,10 @@ begin
         stdcall ServeOneRequest, [.hSocket], [.requestID], [.requestParams], [.requestPost], [.start_time]
         jc      .finish
 
-        DebugMsg "Request served."
-
         stdcall FCGI_send_end_request, [.hSocket], [.requestID], FCGI_REQUEST_COMPLETE
         jc      .finish
+
+        DebugMsg "Request served."
 
         test    [.requestFlags], FCGI_KEEP_CONN
         jnz     .main_loop
@@ -502,9 +504,14 @@ begin
         or      eax, ecx
         jz      .end_ok         ; exit without finalizing the stream.
 
+        OutputValue "Send STDOUT length:", ecx, 10, -1
+
         lea     eax, [.header]
         stdcall SocketSendAll, [.hSocket], eax, sizeof.FCGI_Header
         jc      .finish
+
+        test    edx, edx
+        jz      .end_ok
 
         stdcall SocketSendAll, [.hSocket], esi, ecx
         jc      .finish
@@ -515,7 +522,7 @@ begin
 
         add     esi, ecx
         sub     edx, ecx
-        jnz     .data_loop
+        jmp     .data_loop
 
 .end_ok:
         clc

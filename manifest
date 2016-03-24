@@ -1,14 +1,15 @@
-C Implemented\sread\scounter\sfor\sthe\sposts.
-D 2016-03-23T12:07:34.622
+C Bug\shas\sbeen\sfixed\sin\sthe\sFCGI\slibrary.\sThe\semoticon\s.svg\simages\shas\sbeen\soptimized.
+D 2016-03-24T08:20:31.027
 F source/Linux/sqlite3.inc 3434422cbaa5b6d55ec5a3a8171d7784c08fe6bc
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
 F source/commands.asm a567e6fe54349bd724fc261364ff80bb4bcc3d20
 F source/create.sql 1fdd8cb83c7250050b64a35a081c0763b013623e
-F source/fcgi.asm 0e7e26fd53394d031d3e9732e294340efb683ee5
+F source/fcgi.asm 6d6b7928e7bb8bac4d315b1796cbc0d6e9f9ef03
 F source/http.asm 6fd36367f90732d910c6bd564ffbcb6815094c74
 F source/index.asm 8c9ae028c7b7065b9c2db508e767759bd512b847
-F source/index.fpr 96c432aac1262999c303526db0235455d6712e12
+F source/index.fpr 7948de23f7e4951e64bc0b96ddd42084d08dab23
 F source/messages_bg.sql 62c7904a2609951e48495db1c28bba3673c2756b
+F source/messages_en.sql 1ffe8953a1de08563fabb4162683e8c3819dda92
 F source/render.asm a0ead6bde3a2cbf40e11a5fb8e62d48fa415a0ea
 F source/sqlite3.asm 4285b7e6615de3ffd2630b7c4adbf3df3210dd43
 F www/.htaccess e3d61615a5f5b289f09966a72e7f02777d0b1c60
@@ -18,14 +19,14 @@ F www/images/del_gray.svg 5e3d0ba999e37de7dfdc43292d1c14e4513573ac
 F www/images/edit.svg 2f003198c4acd6bb294e25be53f1299713cffdb8
 F www/images/edit_gray.svg a1b01c72f16833c8bad8eb058ff298cb3d5fb320
 F www/images/email.png 1866c9acaa42ea4082f48a461dbdbda987c9376a
-F www/images/emoticons/angry.svg b507d192d55f9c2f5d9b962f7beb5d927c49d799
-F www/images/emoticons/cry.svg 8d41ff6bf540df4099d92a880ae4dc3a52765d4a
-F www/images/emoticons/lol.svg 93c2da38509fcac2acf978eb4f1764576db30ef5
-F www/images/emoticons/sad.svg 1fd0177aa3bd2919f293f64b1c89e7642f195404
-F www/images/emoticons/smile.svg c01c9de9053e1e4b50ff3789c2dddd76b10f42d0
-F www/images/emoticons/tongue1.svg ce00e736565bcbae8ae5c5a2ae71c248f5586e51
-F www/images/emoticons/tongue2.svg 47f3ab912f343beafaf3ea3277c72b7a777b2497
-F www/images/emoticons/wink.svg 3db2c81d6dd73766ea590771ac071ef958272911
+F www/images/emoticons/angry.svg 9a13052df8092e2190ead99bfd3c3ce652ba34af
+F www/images/emoticons/cry.svg fd8625938accd48f89db9afaabaacabffc42f954
+F www/images/emoticons/lol.svg de2fcee1cf93b7deb9e5556cc799fb85b784a73a
+F www/images/emoticons/sad.svg 6e22918df284a7e59715f7dbc4b1e8886ca1373f
+F www/images/emoticons/smile.svg 90f8172311a11daccea34a6670440f01877a3061
+F www/images/emoticons/tongue1.svg 3a949d377fb87c34f65d4bea3b68a2ebb43d0a17
+F www/images/emoticons/tongue2.svg dcef9a82fd762d5655eba39c45c32f3f7cc6e732
+F www/images/emoticons/wink.svg 0391c16877bb131837a1bd2de30ae5b12dc2dedf
 F www/images/onepost.svg 9fc23bd166c79286bafa72fb4e846ba81f808429
 F www/images/onepost_gray.svg e24f6a889dd6389c2a0a045b06e7761616cba763
 F www/images/pass.png d1c58d21c07f74c45c270cc9f624a1adb15c12db
@@ -63,7 +64,7 @@ F www/templates/preview.tpl d44f634fd43ab70f8d5f636e44d0ddfc15433415
 F www/templates/register_form.tpl 1538d4a5f188c90483e83a9d876d792fef0d2b64
 F www/templates/sqlite_console_form.tpl bcd5f672811437343c4c74665e72b1b629c49028
 F www/templates/thread_info.tpl 25b9e7916d322aa1ce6c1da8b621b53799ff499b
-P 95cbbebb694da8f552d8e8bdcc5ba204a68b7c71
-R dc2623f70553d6f8b200254f08ba43cd
+P 2f1e1b18ead3f219cbd8bbb2d35d123e431fd9eb
+R 6147b482497c9895b15e9e9cd83dee56
 U johnfound
-Z 95e6959729a251e8ddc457a1a221c14a
+Z 6dc28b484642774da2fa008ba7e9b0a6
