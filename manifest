@@ -1,5 +1,5 @@
-C It\sis\san\sexperiment\swith\sthe\stemplate\sengine\sin\sorder\sto\smake\sit\swork\srecursive\sand\nbehave\slike\sa\sprogramming\slanguage,\sallowing\ssome\slogic\sto\sbe\sput\sin\sthe\stemplates.
-D 2016-03-24T04:33:25.875
+C Fixed\sCR/LF\sissues.
+D 2016-03-25T12:46:14.759
 F source/Linux/sqlite3.inc 3434422cbaa5b6d55ec5a3a8171d7784c08fe6bc
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
 F source/commands.asm a567e6fe54349bd724fc261364ff80bb4bcc3d20
@@ -53,8 +53,8 @@ F www/templates/login_form.tpl 7b6753dbe4fce93548d45af70d85b42603238125
 F www/templates/logout.tpl 08bc7c756494e841962fb3b005686cb382495632
 F www/templates/main_html_end.tpl 048a3dece40863554c8366b98f0f7c9448ee0ae6
 F www/templates/main_html_start.tpl 2f0c0daf76ea13f6a174324fcaf3ec752c384ed6
-F www/templates/minimag_suffix.tpl 42558b85be77055462073b8213f42c7cd72d46fc
-F www/templates/nav_list.tpl acddec4ec26d5cdea9cc342774d3a7d6674c8eff
+F www/templates/minimag_suffix.tpl 0bc464c1264292332bfcbe3c78daadf31ec41d64
+F www/templates/nav_list.tpl d9214b96085f81d4651f5d19997ec935021ed9a1
 F www/templates/nav_thread.tpl c4df5b93a45d8026fbe689f7e7803ef29d5c5ced
 F www/templates/new_post_form.tpl 4bba35031d027c934f95200b38451703fe1cfdbe
 F www/templates/new_thread_form.tpl 2812ba3d5a6521d5c16d9f29d2e3c99672f9ac90
@@ -62,11 +62,8 @@ F www/templates/post_view.tpl 66d8c9b147ae243caf1cf83543e3c96d495bf849
 F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/register_form.tpl 891c8e443911145d7001c205462ff7408660b020
 F www/templates/sqlite_console_form.tpl e75963f0386c2730978eed2c35666e3443d64a38
-F www/templates/thread_info.tpl a72d47a1015b90e21a0cdecd329a8ac4070a902e
-P 2f1e1b18ead3f219cbd8bbb2d35d123e431fd9eb
-R 085144490b1b98ea5e227fee7067bbee
-T *branch * RecursiveTemplate
-T *sym-RecursiveTemplate *
-T -sym-trunk *
+F www/templates/thread_info.tpl be45dd3fcf1967ec749630163384a66e645f4a9a
+P d6678e62b97d0a135cc0f26fb94f56bb6a58056a
+R 872527499e11fee7981161382ef4b242
 U johnfound
-Z d6b194eb4d719d98f5309946886dfcc7
+Z 101709c6a8674fa83af86fd6a8fc2dc0
