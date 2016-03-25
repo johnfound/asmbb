@@ -52,6 +52,8 @@ endg
 
 uglobal
   hMainDatabase dd ?
+  ProcessID     dd ?
+  ProcessStart  dd ?
 endg
 
 
@@ -69,18 +71,36 @@ start:
         stdcall OpenOrCreate, cDatabaseFilename, hMainDatabase, sqlCreateDB
         jc      .finish
 
-        cinvoke sqliteBusyTimeout, [hMainDatabase], 2000
+        cinvoke sqliteBusyTimeout, [hMainDatabase], 5000
         cinvoke sqliteExec, [hMainDatabase], "PRAGMA journal_mode = WAL", 0, 0, 0
         cinvoke sqliteExec, [hMainDatabase], "PRAGMA foreign_keys = TRUE", 0, 0, 0
-        cinvoke sqliteExec, [hMainDatabase], 'PRAGMA synchronous = OFF', 0, 0, 0
-        cinvoke sqliteExec, [hMainDatabase], 'PRAGMA threads = 2', 0, 0, 0
-        cinvoke sqliteExec, [hMainDatabase], 'PRAGMA secure_delete = FALSE', 0, 0, 0
+        cinvoke sqliteExec, [hMainDatabase], "PRAGMA synchronous = OFF", 0, 0, 0
+        cinvoke sqliteExec, [hMainDatabase], "PRAGMA threads = 2", 0, 0, 0
+        cinvoke sqliteExec, [hMainDatabase], "PRAGMA secure_delete = FALSE", 0, 0, 0
+
+        cinvoke sqliteExec, [hMainDatabase], "insert into ProcessID(id) values (NULL)", 0, 0, 0
+
+        cinvoke sqliteLastInsertRowID, [hMainDatabase]
+        mov     [ProcessID], eax
+        cinvoke sqliteExec, [hMainDatabase], "delete from ProcessID", 0, 0, 0
+
+        stdcall GetTimestamp
+        mov     [ProcessStart], eax
+
+        stdcall LogEvent, "ScriptStart", logNULL, 0, 0
+
 
         stdcall Listen
+
 
 ; close the database
 
 .terminate:
+
+        stdcall GetTimestamp
+        sub     eax, [ProcessStart]
+
+        stdcall LogEvent, "ScriptEnd", logNULL, 0, eax
 
         cinvoke sqliteClose, [hMainDatabase]
         cinvoke sqliteShutdown

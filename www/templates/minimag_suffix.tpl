@@ -1,4 +1,6 @@
 
+;end
+
 [?:)]  /images/emoticons/smile.svg
 [?:-)] /images/emoticons/smile.svg
 [?smile] /images/emoticons/smile.svg

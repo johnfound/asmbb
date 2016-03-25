@@ -1,5 +1,4 @@
-
-
+LIMIT_POST_LENGTH equ 8*1024
 PAGE_LENGTH = 20
 
 ; User permissions status flags:
@@ -27,7 +26,7 @@ ends
 
 
 
-proc ServeOneRequest, .hSocket, .requestID, .pParams2, .pPost2, .start_time     ;, .threadID
+proc ServeOneRequest, .hSocket, .requestID, .pParams2, .pPost2, .start_time
 
 .root     dd ?
 .uri      dd ?
@@ -114,8 +113,9 @@ begin
 
         mov     edx, eax
 
-        stdcall LoadBinaryFile, [.filename]
-        jc      .error404
+        stdcall GetFileFromDB, [.filename]
+;        stdcall LoadBinaryFile, [.filename]
+        jc      .error404_no_list_free
 
         mov     esi, eax
 
@@ -140,10 +140,18 @@ begin
         jmp     .send_simple_result2                            ; without freeing the list in ESI!
 
 
+.error404_no_list_free:
+        lea     eax, [.special]
+        stdcall AppendError, edi, "404 Not Found", eax
+        jmp     .send_simple_result2
+
+
+
 .error403:
         lea     eax, [.special]
         stdcall AppendError, edi, "403 Forbidden", eax
         jmp     .send_simple_result
+
 
 
 .error404:
@@ -155,7 +163,7 @@ begin
 
 .output_forum_html:     ; Status: 200 OK
 
-        stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Content-type: text/html", 13, 10, 13, 10>
+        stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Content-type: text/html; charset=utf-8", 13, 10, 13, 10>
 
         lea     edx, [.special]
         stdcall StrCatTemplate, edi, "main_html_start", 0, edx
@@ -184,6 +192,8 @@ begin
 
         stdcall StrDelNull, [.special.post]
         stdcall StrDelNull, [.special.userName]
+        stdcall StrDelNull, [.special.session]
+
 
         clc
         popad
@@ -205,7 +215,6 @@ begin
         lea     eax, [.special]
         stdcall GetLoggedUser, eax
 
-
         cmp     [esi+TArray.count], 0
         je      .redirect_to_the_list
 
@@ -217,6 +226,9 @@ begin
 
         stdcall StrCompNoCase, [esi+TArray.array], txt "list"
         jc      .show_thread_list
+
+        stdcall StrCompNoCase, [esi+TArray.array], txt "markread"
+        jc      .mark_read_theme
 
         stdcall StrCompNoCase, [esi+TArray.array], txt "message"
         jc      .show_message
@@ -252,7 +264,10 @@ begin
 
 .redirect_to_the_list:
 
+;        stdcall StrCat, edi, <"Status: 302 Found", 13, 10, "Location: /list/", 13, 10, 13, 10>
+
         stdcall StrMakeRedirect, edi, "/list/"
+
         jmp     .send_simple_result
 
 ;..................................................................................
@@ -321,6 +336,23 @@ begin
 
         jmp     .output_forum_html
 
+
+;..................................................................................
+
+.mark_read_theme:
+
+        xor     ebx, ebx
+        cmp     [esi+TArray.count], 1
+        je      .mark_read
+
+        mov     ebx, [esi+TArray.array+4]
+
+.mark_read:
+
+        lea     eax, [.special]      ; the special parameters data pointer.
+        stdcall MarkThreadRead, ebx, eax
+
+        jmp     .send_simple_replace
 
 
 ;..................................................................................
@@ -575,6 +607,59 @@ endp
 
 
 
+;        stdcall MarkThemeRead, ebx, eax
+
+
+sqlMarkThreadRead text "delete from UnreadPosts where UserID = ?1 and ( ?2 is NULL or PostID in (select P.id from Posts P left join Threads T on P.ThreadID = T.id where T.Slug = ?2))"
+
+proc MarkThreadRead, .slug, .pSpecial
+.stmt dd ?
+begin
+        pushad
+
+        mov     esi, [.pSpecial]
+
+        cmp     [esi+TSpecialParams.userID], 0
+        je      .finish
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlMarkThreadRead, sqlMarkThreadRead.length, eax, 0
+
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.userID]
+
+        mov     edx, [.slug]
+        test    edx, edx
+        jz      .step_it
+
+        stdcall StrLen, edx
+        mov     ecx, eax
+        stdcall StrPtr, edx
+        cinvoke sqliteBindText, [.stmt], 2, eax, ecx, SQLITE_STATIC
+
+
+.step_it:
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+.finish:
+        stdcall StrNew
+        mov     edi, eax
+
+        stdcall StrNew
+        stdcall StrCatTemplate, eax, "logout", 0, [.pSpecial]           ; goto back to the page from where came.
+
+        stdcall StrMakeRedirect, edi, eax
+        stdcall StrDel, eax
+
+        mov     [esp+4*regEAX], edi
+        popad
+        return
+endp
+
+
+
+
+
 sqlSelectPosts   text "select ",                                                                                        \
                                                                                                                         \
                         "Posts.id, ",                                                                                   \
@@ -724,7 +809,6 @@ begin
         return
 
 .error:
-;        DebugMsg "Error show thread."
 
         cinvoke sqliteFinalize, [.stmt]
         stdcall StrDel, edi
@@ -1176,8 +1260,6 @@ begin
 
 ; delete the cookie.
 
-;        DebugMsg "Now delete the cookie!"
-
         stdcall StrCat, edi, <"Set-Cookie: sid=; HttpOnly; Path=/; Max-Age=0", 13, 10>
 
 .finish:
@@ -1417,6 +1499,8 @@ begin
         stdcall GetCookieValue, [edi+TSpecialParams.params], txt 'sid'
         jc      .finish
 
+        DebugMsg "User found!"
+
         mov     ebx, eax
 
         lea     eax, [.stmt]
@@ -1425,6 +1509,7 @@ begin
         stdcall StrPtr, ebx
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
         cinvoke sqliteStep, [.stmt]
+
         cmp     eax, SQLITE_ROW
         jne     .finish_sql
 
@@ -1931,9 +2016,10 @@ sqlSelectConst text "select ? as slug, ? as caption, ? as source"
 
 sqlGetQuote   text "select U.nick, P.content from Posts P left join Users U on U.id = P.userID where P.id = ?"
 
-sqlInsertPost text "insert into Posts ( ThreadID, UserID, PostTime, Content, ReadCount) values (?, ?, strftime('%s','now'), ?, 0)"
+sqlInsertPost text "insert into Posts ( ThreadID, UserID, PostTime, Content, ReadCount) values (?, ?, strftime('%s','now'), substr( ?, 1, ? ), 0)"
 sqlUpdateThreads text "update Threads set LastChanged = strftime('%s','now') where id = ?"
-sqlInsertThread text "insert into Threads ( Slug, Caption ) values (?, ?)"
+sqlInsertThread  text "insert into Threads ( Caption ) values ( substr( ?, 1, 256 ) )"
+sqlSetThreadSlug text "update Threads set slug = ? where id = ?"
 
 
 
@@ -2144,10 +2230,7 @@ begin
 
 .create_post_and_exit:
 
-
 ; begin transaction!
-
-;        DebugMsg "Begin transaction"
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBegin, -1, eax, 0
@@ -2179,14 +2262,11 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertThread, -1, eax, 0
 
-        stdcall StrPtr, [.slug]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-
         cmp     [.caption], 0
         je      .rollback
 
         stdcall StrPtr, [.caption]
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
 
@@ -2194,6 +2274,29 @@ begin
         jne     .rollback
 
         cinvoke sqliteFinalize, [.stmt]
+
+
+        cinvoke sqliteLastInsertRowID, [hMainDatabase]
+
+        mov     ebx, eax
+
+        stdcall NumToStr, ebx, ntsDec or ntsUnsigned
+
+        stdcall StrCharCat, [.slug], "_"
+        stdcall StrCat, [.slug], eax
+        stdcall StrDel, eax
+
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetThreadSlug, sqlSetThreadSlug.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 2, ebx
+
+        stdcall StrPtr, [.slug]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_DONE
+        jne     .rollback
 
 
 .post_in_thread:
@@ -2220,15 +2323,18 @@ begin
 
         cinvoke sqliteBindInt, [.stmt], 1, ebx
         cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.userID]
+        cinvoke sqliteBindInt, [.stmt], 4, LIMIT_POST_LENGTH
 
         cmp     [.source], 0
         je      .error_invalid_content
 
         stdcall StrPtr, [.source]
-        cmp     [eax+string.len], 0
-        je      .error_invalid_content
 
-        cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
+        mov     ecx, [eax+string.len]
+        test    ecx, ecx
+        jz      .error_invalid_content
+
+        cinvoke sqliteBindText, [.stmt], 3, eax, ecx, SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_DONE
@@ -2353,7 +2459,7 @@ endp
 
 sqlReadPost    text "select P.id, T.caption, P.content as source  from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
 sqlEditedPost  text "select P.id, T.caption, ?2 as source         from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
-sqlSavePost    text "update Posts set content = ?, postTime = strftime('%s','now') where id = ?"
+sqlSavePost    text "update Posts set content = substr( ?1, 1, ?3 ), postTime = strftime('%s','now') where id = ?2"
 sqlGetPostUser text "select userID, threadID from Posts where id = ?"
 
 
@@ -2504,10 +2610,17 @@ begin
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSavePost, -1, eax, 0
+
         cinvoke sqliteBindInt, [.stmt], 2, [.postID]
+        cinvoke sqliteBindInt, [.stmt], 3, LIMIT_POST_LENGTH
 
         stdcall StrPtr, [.source]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+        mov     ecx, [eax+string.len]
+        test    ecx, ecx
+        jz      .error_write
+
+        cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
         mov     ebx, eax
@@ -2548,10 +2661,8 @@ begin
 
         stdcall StrCatRedirectToPost, edi, [.postID]
 
-        stdcall GetTimestamp
-        sub     eax, [esi+TSpecialParams.start_time]
-
-;        OutputValue "Edit write time [ms]:", eax, 10, -1
+;        stdcall GetTimestamp
+;        sub     eax, [esi+TSpecialParams.start_time]
 
 .finish:
         stdcall StrDelNull, [.source]
@@ -2975,135 +3086,91 @@ endp
 
 
 
-; DEBUGGING CODE!
 
 
-;
-; This procedure is called when some request is fully received and need to be
-; processed.
-;
-; This is part of the web application, not the FastCGI framework. It need to
-; generate only the output stream.
-;
-; ServeOneRequestTest is debugging procedure that returns
-; some server specific information - the environment variables, the content of
-; FCGI_PARAMS stream, etc.
-;
 
-proc ServeOneRequestTest, .hSocket, .requestID, .pParams, .pPost, .p_special
+sqlGetFile text "select content from FileCache where filename = ?"
+sqlCacheFile text "insert into FileCache (filename, content) values (?, ?)"
+
+proc GetFileFromDB, .filename
+
+.stmt dd ?
+.ptr  dd ?
+.size dd ?
+
 begin
         pushad
 
-;        DebugMsg "Beginnign ServeOneRequest"
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetFile, sqlGetFile.length, eax, 0
 
-        stdcall StrDupMem, <"Status: 200 OK", 13, 10, "Content-type: text/plain", 13, 10, 13, 10, "Test FCGI!", 13, 10, 13, 10, "Environment variables:", 13, 10, 13, 10>
+        stdcall StrLen, [.filename]
+        mov     ecx, eax
+        stdcall StrPtr, [.filename]
+
+        cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .check_fs
+
+        cinvoke sqliteColumnBytes, [.stmt], 0
+        mov     ebx, eax
+        mov     [.size], eax
+
+        stdcall GetMem, ebx
         mov     edi, eax
+        mov     [.ptr], eax
 
-        stdcall EnvironmentToStr, edi
+        cinvoke sqliteColumnBlob, [.stmt], 0
+        mov     esi, eax
 
-        stdcall StrCat, edi, <"The FCGI_PARAMS stream parsed:", 13, 10, 13, 10>
+        mov     ecx, ebx
+        shr     ecx, 2
+        rep movsd
 
-        mov     esi, [.pParams]
-        xor     ecx, ecx
+        mov     ecx, ebx
+        and     ecx, 3
+        rep movsb
 
-.loop_params:
-        cmp     ecx, [esi+TArray.count]
-        jae     .end_params
+        mov     esi, [.ptr]
+        mov     ebx, [.size]
 
-        stdcall StrCat, edi, [esi+TArray.array+8*ecx]   ; name
-        stdcall StrCharCat, edi, " = "
-        stdcall StrCat, edi, [esi+TArray.array+8*ecx+4] ; value
-        stdcall StrCharCat, edi, $0a0d
+.finish_ok:
 
-        inc     ecx
-        jmp     .loop_params
+        cinvoke sqliteFinalize, [.stmt]
 
-.end_params:
-
-        mov     esi, [.pPost]
-        test    esi, esi
-        jz      .finish_processing
-
-        stdcall StrCat, edi, <13, 10, "POST data available:", 13, 10>
-
-;        OutputValue "Post data length:", [esi+TByteStream.size], 10, -1
-
-        lea     esi, [esi+TByteStream.data]
-
-        stdcall StrCat, edi, esi
-        stdcall StrCharCat, edi, $0a0d0a0d
-
-
-.finish_processing:
-
-;        DebugMsg "Output the result block."
-
-        stdcall StrPtr, edi
-
-        stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len]
-        stdcall StrDel, edi
-
+        mov     [esp+4*regEAX], esi
+        mov     [esp+4*regECX], ebx
         clc
         popad
         return
-endp
 
+.check_fs:
+        cinvoke sqliteFinalize, [.stmt]
 
+        stdcall LoadBinaryFile, [.filename]
+        jc      .read_error
 
-
-; some utility procedures for debug and testing.
-
-
-proc EnvironmentToStr, .hString
-begin
-        pushad
-
-        stdcall GetAllEnvironment
-        test    eax, eax
-        jz      .finish_env
-
-        push    eax
         mov     esi, eax
+        mov     ebx, ecx
 
-.env_out:
-        mov     ebx, esi
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCacheFile, sqlCacheFile.length, eax, 0
 
-.env_in:
-        mov     cl, [esi]
-        lea     esi, [esi+1]
-        test    cl, cl
-        jnz     .env_in
+        stdcall StrLen, [.filename]
+        mov     ecx, eax
+        stdcall StrPtr, [.filename]
+        cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
+        cinvoke sqliteBindBlob, [.stmt], 2, esi, ebx, SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+
+        jmp     .finish_ok
+
+
+.read_error:
 
         stc
-        mov     eax, esi
-        sbb     eax, ebx
-        jz      .end_env
-
-        stdcall StrCat, [.hString], ebx
-        stdcall StrCharCat, [.hString], $0a0d
-        jmp     .env_out
-
-.end_env:
-        stdcall FreeMem ; from the stack
-
-.finish_env:
-        stdcall StrCharCat, [.hString], $0a0d0a0d
-
-        stdcall StrCat, [.hString], 'Current directory: '
-
-        stdcall GetCurrentDir
-        jc      .finish
-
-        stdcall StrCat, [.hString], eax
-        stdcall StrDel, eax
-
-        stdcall StrCharCat, [.hString], $0a0d0a0d
-
-.finish:
-
         popad
         return
 endp
-
-
-
