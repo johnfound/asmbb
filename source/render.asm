@@ -869,17 +869,36 @@ begin
 .cat_timestamp:
 
         mov     esi, [.p_special]
-        mov     edx, [esi+TSpecialParams.start_time]
 
         stdcall StrCat, [.string], '<p class="timestamp">Script runtime: '
 
-        stdcall GetTimestamp
-        sub     eax, edx
-        stdcall NumToStr, eax, ntsDec or ntsUnsigned
-        stdcall StrCat, [.string], eax
-        stdcall StrDel, eax
+        stdcall GetTimestampHiRes
+        sub     eax, [esi+TSpecialParams.start_time]
 
-        stdcall StrCat, [.string], txt 'ms</p>'
+        stdcall NumToStr, eax, ntsDec or ntsUnsigned
+        mov     edx, eax
+
+        stdcall StrLen, eax
+        sub     eax, 3
+        jns     .point_ok
+
+        neg     eax
+        inc     eax
+
+.zero_loop:
+        stdcall StrCharInsert, edx, " ", 0
+        dec     eax
+        jnz     .zero_loop
+
+        inc     eax
+
+.point_ok:
+        stdcall StrCharInsert, edx, ".", eax
+
+        stdcall StrCat, [.string], edx
+        stdcall StrDel, edx
+
+        stdcall StrCat, [.string], txt ' ms</p>'
 
         jmp     .finish
 

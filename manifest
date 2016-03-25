@@ -1,15 +1,16 @@
-C Fixed\sCR/LF\sissues.
-D 2016-03-25T12:46:14.759
+C Updated\swith\sthe\slatest\schanges\sand\sfixes\sfrom\sthe\strunk.
+D 2016-03-25T13:21:30.147
 F source/Linux/sqlite3.inc 3434422cbaa5b6d55ec5a3a8171d7784c08fe6bc
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
-F source/commands.asm a567e6fe54349bd724fc261364ff80bb4bcc3d20
-F source/create.sql 1fdd8cb83c7250050b64a35a081c0763b013623e
-F source/fcgi.asm 0e7e26fd53394d031d3e9732e294340efb683ee5
+F source/commands.asm da8ba60e364ec5f8b8bb9a57089316e5d7bb9698
+F source/create.sql 78eaaad19bc41bd50686312dda1d79383b555b71
+F source/fcgi.asm 816b6007055f8cfa35a9e4ddc6ead833065f213c
 F source/http.asm 6fd36367f90732d910c6bd564ffbcb6815094c74
-F source/index.asm 8c9ae028c7b7065b9c2db508e767759bd512b847
+F source/index.asm d8bc2b329aca689f2bda3f18732636cf0ba08ac1
 F source/index.fpr 7948de23f7e4951e64bc0b96ddd42084d08dab23
 F source/messages_bg.sql 7d17e44f37b30c94cb53a890c55c05a2bcb792ba
-F source/render.asm b21e0a41e5535de92e4186588ecede665e654f34
+F source/messages_en.sql 1ffe8953a1de08563fabb4162683e8c3819dda92
+F source/render.asm fa0ec106ea17a2b8f6e7de2c9843dad66e35eb64
 F source/sqlite3.asm 4285b7e6615de3ffd2630b7c4adbf3df3210dd43
 F www/.htaccess e3d61615a5f5b289f09966a72e7f02777d0b1c60
 F www/all.css a976bb9e111a2853c31426cef8ac2198164d1671
@@ -18,14 +19,14 @@ F www/images/del_gray.svg 5e3d0ba999e37de7dfdc43292d1c14e4513573ac
 F www/images/edit.svg 2f003198c4acd6bb294e25be53f1299713cffdb8
 F www/images/edit_gray.svg a1b01c72f16833c8bad8eb058ff298cb3d5fb320
 F www/images/email.png 1866c9acaa42ea4082f48a461dbdbda987c9376a
-F www/images/emoticons/angry.svg b507d192d55f9c2f5d9b962f7beb5d927c49d799
-F www/images/emoticons/cry.svg 8d41ff6bf540df4099d92a880ae4dc3a52765d4a
-F www/images/emoticons/lol.svg 93c2da38509fcac2acf978eb4f1764576db30ef5
-F www/images/emoticons/sad.svg 1fd0177aa3bd2919f293f64b1c89e7642f195404
-F www/images/emoticons/smile.svg c01c9de9053e1e4b50ff3789c2dddd76b10f42d0
-F www/images/emoticons/tongue1.svg ce00e736565bcbae8ae5c5a2ae71c248f5586e51
-F www/images/emoticons/tongue2.svg 47f3ab912f343beafaf3ea3277c72b7a777b2497
-F www/images/emoticons/wink.svg 3db2c81d6dd73766ea590771ac071ef958272911
+F www/images/emoticons/angry.svg 9a13052df8092e2190ead99bfd3c3ce652ba34af
+F www/images/emoticons/cry.svg fd8625938accd48f89db9afaabaacabffc42f954
+F www/images/emoticons/lol.svg de2fcee1cf93b7deb9e5556cc799fb85b784a73a
+F www/images/emoticons/sad.svg 6e22918df284a7e59715f7dbc4b1e8886ca1373f
+F www/images/emoticons/smile.svg 90f8172311a11daccea34a6670440f01877a3061
+F www/images/emoticons/tongue1.svg 3a949d377fb87c34f65d4bea3b68a2ebb43d0a17
+F www/images/emoticons/tongue2.svg dcef9a82fd762d5655eba39c45c32f3f7cc6e732
+F www/images/emoticons/wink.svg 0391c16877bb131837a1bd2de30ae5b12dc2dedf
 F www/images/onepost.svg 9fc23bd166c79286bafa72fb4e846ba81f808429
 F www/images/onepost_gray.svg e24f6a889dd6389c2a0a045b06e7761616cba763
 F www/images/pass.png d1c58d21c07f74c45c270cc9f624a1adb15c12db
@@ -42,7 +43,7 @@ F www/images/sources/quote.svg 5e8c5fbcc26c08fb9ac99dd563acd50c50e1d28a
 F www/images/user.png ba86e508b26c39f611581aaa7780d0e4a9c3ac52
 F www/ld-musl-i386.so 4d44786b8676115c7df45c45ceb051c11ce14ffd x
 F www/libsqlite3.so b219b02c71d515698b2086be2edc104e5c8997a7 x
-F www/lighttpd.conf f1548664d58bd00dc6ee5f34a803fc9382d9d0dd
+F www/lighttpd.conf c2e99868510b00288e86a9bf0332fa279aabb608
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/activation_email_subject.tpl 38ff105af59057663f2e1f1fc79947c5e2de0cf2
 F www/templates/activation_email_text.tpl ceaa64cd0af3795fd60ba049bad19e4aa3d90b30
@@ -53,8 +54,8 @@ F www/templates/login_form.tpl 7b6753dbe4fce93548d45af70d85b42603238125
 F www/templates/logout.tpl 08bc7c756494e841962fb3b005686cb382495632
 F www/templates/main_html_end.tpl 048a3dece40863554c8366b98f0f7c9448ee0ae6
 F www/templates/main_html_start.tpl 2f0c0daf76ea13f6a174324fcaf3ec752c384ed6
-F www/templates/minimag_suffix.tpl 0bc464c1264292332bfcbe3c78daadf31ec41d64
-F www/templates/nav_list.tpl d9214b96085f81d4651f5d19997ec935021ed9a1
+F www/templates/minimag_suffix.tpl ffad3f079affabacaf8946a5eef9b9de6f17c76f
+F www/templates/nav_list.tpl 5ffa01473b2449c368693e238c9a3fd9f5a94f9d
 F www/templates/nav_thread.tpl c4df5b93a45d8026fbe689f7e7803ef29d5c5ced
 F www/templates/new_post_form.tpl 4bba35031d027c934f95200b38451703fe1cfdbe
 F www/templates/new_thread_form.tpl 2812ba3d5a6521d5c16d9f29d2e3c99672f9ac90
@@ -63,7 +64,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/register_form.tpl 891c8e443911145d7001c205462ff7408660b020
 F www/templates/sqlite_console_form.tpl e75963f0386c2730978eed2c35666e3443d64a38
 F www/templates/thread_info.tpl be45dd3fcf1967ec749630163384a66e645f4a9a
-P d6678e62b97d0a135cc0f26fb94f56bb6a58056a
-R 872527499e11fee7981161382ef4b242
+P 532ebc5b7b3bc63370ef70e4f2cf34495b63b4b3 1f1a14385810f9efe36f8c46efe198656a9bb6e2
+R 4b5db598f6cecf4f7f2da0ec88026970
 U johnfound
-Z 101709c6a8674fa83af86fd6a8fc2dc0
+Z 1d52950bce2dc8cab660a7d300abb5f3

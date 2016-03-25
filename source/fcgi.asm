@@ -165,6 +165,130 @@ begin
 endp
 
 
+;create table if not exists RequestsLog (
+;  process_id integer,      -- the unique process id
+;  timestamp  integer,
+;  event      integer,      -- what event is logged - start process, end process, start request, end request
+;  value      text          -- details in variable form.
+;)
+
+; GOOD report queries:
+;
+; select process_id, strftime('%d.%m.%Y %H:%M:%S', timestamp, 'unixepoch') as `Time`, E.name, value from log L left join Events E on event = E.id order by timestamp desc;
+;
+; select strftime('%d.%m.%Y %H:%M:%S', timestamp, 'unixepoch') as `Time`, E.name, value from log L left join Events E on L.event = E.id where L.event = 3 order by L.timestamp, L.rowID desc;
+;
+;
+; -- Gives the 10 slower requests, value in [ms]:
+;
+; select E.name || " : " || value, cast(L.runtime as float)/1000 from log L left join Events E on L.event = E.id where L.event = 3 order by runtime desc limit 10;
+;
+;
+; -- Shows the process start and end events:
+;
+; select strftime('%d.%m.%Y %H:%M:%S', L.timestamp, 'unixepoch') as Time, process_id, E.name, L.value, L.runtime from log L left join Events E on (L.event = E.id) where E.name in ("ScriptStart", "ScriptEnd") order by L.rowID;
+;
+;
+
+sqlLogEvent text "insert into Log (process_id, timestamp, event, value, runtime) values (?1, strftime('%s','now'), (select id from Events where lower(name) = lower(?2)), ?3, ?4 )"
+sqlCleanLog text "delete from Log where timestamp < strftime('%s','now') - 86400"
+
+
+logNULL   = 0
+logNumber = 1
+logText   = 2
+
+
+proc LogEvent, .event, .log_type, .value, .runtime
+.stmt dd ?
+begin
+        pushad
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLogEvent, sqlLogEvent.length, eax, 0
+
+        cinvoke sqliteBindInt, [.stmt], 1, [ProcessID]
+
+        cmp     [.event], 0
+        je      .event_ok
+
+        stdcall StrLen, [.event]
+        mov     ecx, eax
+        stdcall StrPtr, [.event]
+        cinvoke sqliteBindText, [.stmt], 2, eax, ecx, SQLITE_STATIC
+
+.event_ok:
+        cmp     [.log_type], logNULL
+        je      .value_ok
+
+        cmp     [.log_type], logNumber
+        je      .value_number
+
+        cmp     [.log_type], logText
+        je      .value_text
+
+        jmp     .value_ok
+
+.value_number:
+        cinvoke sqliteBindInt, [.stmt], 3, [.value]
+        jmp     .value_ok
+
+.value_text:
+        stdcall StrLen, [.value]
+        mov     ecx, eax
+        stdcall StrPtr, [.value]
+        cinvoke sqliteBindText, [.stmt], 3, eax, ecx, SQLITE_STATIC
+
+.value_ok:
+        cmp     [.runtime], 0
+        je      .runtime_ok
+
+        cinvoke sqliteBindInt, [.stmt], 4, [.runtime]
+
+.runtime_ok:
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+        cinvoke sqliteExec, [hMainDatabase], sqlCleanLog, 0, 0, 0
+
+        popad
+        return
+endp
+
+
+
+
+uglobal
+  UniqueID   dd ?
+  UniqueLock dd ?
+endg
+
+
+
+proc GetUniqueID
+begin
+        xor     eax, eax
+        dec     eax
+
+.loop:
+        xchg    eax, [UniqueLock]
+        test    eax, eax
+        jz      .locked
+
+        stdcall Sleep, 1
+        jmp     .loop
+
+
+.locked:
+        mov     eax, [UniqueID]
+        inc     [UniqueID]
+
+        mov     [UniqueLock], 0
+        return
+endp
+
+
+
 
 
 
@@ -185,6 +309,9 @@ proc procServeRequest, .hSocket
 
 .start_time     dd ?
 
+.threadID       dd ?
+.thread_start   dd ?
+
 begin
         pushad
 
@@ -192,6 +319,15 @@ begin
         mov     [.requestParams], eax
         mov     [.requestPost], eax
         xor     esi, esi
+
+        stdcall GetUniqueID
+        mov     [.threadID], eax
+
+        stdcall GetTimestampHiRes
+        mov     [.thread_start], eax
+
+        stdcall LogEvent, "ThreadStart", logNumber, eax, 0
+
 
 .main_loop:
 
@@ -206,6 +342,8 @@ begin
 
         mov     esi, eax
         movzx   eax, [esi+FCGI_Header.type]
+
+;        OutputValue "Received header type: ", eax, 10, -1
 
         cmp     eax, FCGI_BEGIN_REQUEST
         je      .begin_request
@@ -253,7 +391,9 @@ begin
         movzx   ecx, [esi+FCGI_BeginRequest.body.flags]
         or      [.requestFlags], ecx
 
-        stdcall GetTimestamp
+        stdcall LogEvent, "RequestStart", logNumber, [.threadID], 0
+
+        stdcall GetTimestampHiRes
         mov     [.start_time], eax
 
         jmp     .pack_loop
@@ -390,10 +530,15 @@ begin
         stdcall ServeOneRequest, [.hSocket], [.requestID], [.requestParams], [.requestPost], [.start_time]
         jc      .finish
 
-        DebugMsg "Request served."
-
         stdcall FCGI_send_end_request, [.hSocket], [.requestID], FCGI_REQUEST_COMPLETE
         jc      .finish
+
+
+        stdcall GetTimestampHiRes
+        sub     eax, [.start_time]
+
+        stdcall LogEvent, "RequestEnd", logNumber, [.threadID], eax
+
 
         test    [.requestFlags], FCGI_KEEP_CONN
         jnz     .main_loop
@@ -403,6 +548,10 @@ begin
         stdcall FreeMem, esi
         call    .FreeAllocations
         stdcall SocketClose, [.hSocket]
+
+        stdcall GetTimestampHiRes
+        sub     eax, [.thread_start]
+        stdcall LogEvent, "ThreadEnd", logNumber, [.threadID], eax
 
         xor     eax, eax
         popad
@@ -488,7 +637,7 @@ begin
 .data_loop:
         mov     ecx, $ffff
         cmp     edx, ecx
-        cmovb   ecx, edx        ; ecx = min($ffff, edx)
+        cmovb   ecx, edx                        ; ecx = min($ffff, edx)
 
         lea     ebx, [ecx+7]
         and     ebx, $fffffff8
@@ -502,9 +651,14 @@ begin
         or      eax, ecx
         jz      .end_ok         ; exit without finalizing the stream.
 
+;        OutputValue "Send STDOUT length:", ecx, 10, -1
+
         lea     eax, [.header]
         stdcall SocketSendAll, [.hSocket], eax, sizeof.FCGI_Header
         jc      .finish
+
+        test    edx, edx
+        jz      .end_ok
 
         stdcall SocketSendAll, [.hSocket], esi, ecx
         jc      .finish
@@ -515,7 +669,7 @@ begin
 
         add     esi, ecx
         sub     edx, ecx
-        jnz     .data_loop
+        jmp     .data_loop
 
 .end_ok:
         clc

@@ -122,6 +122,7 @@ create table if not exists Messages (
 );
 
 
+
 insert or ignore into Messages values ('bad_secret',	  'Bad activation secret!', 'ERROR!', '<a target="_self" href="/list/">Goto threads list</a>');
 insert or ignore into Messages values ('congratulations', 'Your account has been activated.', 'Congratulations!', '<a href="/login/">Welcome!</a>');
 insert or ignore into Messages values ('error_cant_create_threads', 'You do not have permissions to create new threads!', 'ERROR!', NULL);
@@ -139,10 +140,50 @@ insert or ignore into Messages values ('register_user_exists','User name already
 insert or ignore into Messages values ('user_create','Your accout has been created, but is still inactive. Avtivation email has been sent to you.', 'Success!', '<a target="_self" href="/list/">Goto threads list</a>');
 
 
+
+
+create table if not exists FileCache (
+  filename  text primary key,
+  content   blob
+);
+
+
+create table if not exists Events (
+  id   integer primary key autoincrement,
+  name text
+);
+
+
+insert or ignore into Events values (1,'ScriptStart');
+insert or ignore into Events values (2,'RequestStart');
+insert or ignore into Events values (3,'RequestEnd');
+insert or ignore into Events values (4,'Error');
+insert or ignore into Events values (5,'ScriptEnd');
+insert or ignore into Events values (6,'ThreadStart');
+insert or ignore into Events values (7,'ThreadEnd');
+
+
+
+create table if not exists Log (
+  process_id integer,				 -- the unique process id
+  timestamp  integer,
+  event      integer references events(id),	 -- what event is logged - start process, end process, start request, end request
+  value      text,				 -- details in variable form.
+  runtime    integer
+);
+
+
+
+create table if not exists ProcessID (
+  id integer primary key autoincrement
+);
+
+
 create table if not exists Templates (
   id text primary key,
   template text
 );
+
 
 
 
