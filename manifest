@@ -1,5 +1,5 @@
-C Pin/Unpin\sfeature\shas\sbeen\sadded\sto\sstick\sthe\smessages\sat\sthe\stop\sof\sthe\slist.\nNavigation\sbuttons\sat\sthe\sbottom.\sSome\sbot\sprotection\sfor\sposting\sand\sediting\s\nmessages.\s\nIn\sthe\sFCGI\slibrary,\sthe\ssize\sof\sthe\sreceived\sPOST\sblock\shas\sbeen\slimited\sto\s1MB\s(The\sconstant\sGENERAL_LIMIT_MAX_POST_LENGTH).\nSome\sdesign\sand\stemplate\schanges\sas\swell.
-D 2016-03-27T06:46:04.155
+C Fixed\smore\sbugs\sin\sthe\sformatting\sparser.\sBut\smost\schanges\sare\sin\sFreshLibDev\srepository.\nHere\sonly\sthe\sneeded\schanges.
+D 2016-03-27T09:10:44.270
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F source/Linux/sqlite3.inc 3434422cbaa5b6d55ec5a3a8171d7784c08fe6bc
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
@@ -7,7 +7,7 @@ F source/commands.asm 74e172bf995523ade8fa1ef88c051919a0b3e53b
 F source/create.sql 09a99fbd5b34ed770545c7615a8803af78ce8b3e
 F source/fcgi.asm f265bc3702440f1d36c843fb45ddec45418b68bb
 F source/http.asm 6fd36367f90732d910c6bd564ffbcb6815094c74
-F source/index.asm 2aaa5236d18b16d487690a86a5d9fa84f219c31f
+F source/index.asm 971565835d28167da6f7508a287b74978658cab6
 F source/index.fpr 7948de23f7e4951e64bc0b96ddd42084d08dab23
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql d4cbcf31c0d3a0555a883a8b943272e10557f197
@@ -59,7 +59,7 @@ F www/templates/login_form.tpl 7b6753dbe4fce93548d45af70d85b42603238125
 F www/templates/logout.tpl 08bc7c756494e841962fb3b005686cb382495632
 F www/templates/main_html_end.tpl dbc17594a4b720a493125fd95e4a62fc5659c800
 F www/templates/main_html_start.tpl 503374faee558f8dd0cafdcb16707ffceb7a8442
-F www/templates/minimag_suffix.tpl ffad3f079affabacaf8946a5eef9b9de6f17c76f
+F www/templates/minimag_suffix.tpl e0ee4765a03f31868c42f12693dc9b23b8ca076e
 F www/templates/nav_list.tpl bb594bd6df17af01c9c0d38afa9c2c27fdd1e342
 F www/templates/nav_thread.tpl 2288c65907e68041742fde9a25127667964c195f
 F www/templates/new_post_form.tpl 5931ea1a48d5e619afa869a73f11053682f52b29
@@ -69,7 +69,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/register_form.tpl 891c8e443911145d7001c205462ff7408660b020
 F www/templates/sqlite_console_form.tpl 05bd8e79b2f7d82d24c9d7f6a5c95a40234a1bd9
 F www/templates/thread_info.tpl 07d2a2e4a143aa71a7fb3e6c9353dd0aa9a244ad
-P 4487f221c6942fa7886a16a0f32cf1b8909dd996
-R 1fe7921dc84ab38fa9f51eecbd6a4fdd
+P cb24d7db12a56f1d02ac2817accbcda2aa541a3a
+R 7dc53bf9dd6ed7b96fc6f7452a3b24db
 U johnfound
-Z 908dd9ba89cb0cd984c7126d6e9be75d
+Z 83938653fc1608ef9c9a9bb2189fc84f

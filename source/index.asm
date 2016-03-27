@@ -21,7 +21,7 @@ LINUX_INTERPRETER equ './ld-musl-i386.so'
 options.ShowSkipped = 0
 options.ShowSizes = 1
 
-options.DebugMode = 1
+options.DebugMode = 0
 options.AlignCode = 0
 options.ShowImported = 1
 
@@ -57,7 +57,7 @@ uglobal
 endg
 
 
-rb 273
+rb 173
 
 start:
         InitializeAll

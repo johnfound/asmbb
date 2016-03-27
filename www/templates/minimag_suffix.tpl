@@ -1,5 +1,6 @@
 
 ;end
+;kill
 
 [?:)]  /images/emoticons/smile.svg
 [?:-)] /images/emoticons/smile.svg
