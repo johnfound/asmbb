@@ -24,12 +24,14 @@ div.header {
   position: relative;
   width: 95%;
   max-width: 1280px;
-  margin: auto;
+  margin: 0px auto 0px auto;
+  background-color: #ffda44;
+  overflow: auto;
 }
 
 div.header h1 {
-  border-bottom: 4px solid gray;
   font-size: 36px;
+  margin: 8px 0px 8px 16px;
 }
 
 
@@ -50,6 +52,8 @@ div.threads_list {
   overflow: hidden;
   zoom: 1;
   margin-bottom: 8px;
+  clear: both;
+  overflow: visible;
 }
 
 
@@ -65,11 +69,20 @@ div.thread_info {
   top: 0px;
   bottom: 0px;
   padding: 8px 8px 0px 8px;
+  overflow: visible;
 }
 
 div.thread_info img {
   margin-right: 8px;
   vertical-align: middle;
+}
+
+div.thread_info img.pinned {
+  float: right;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  margin: 0px;
 }
 
 div.post_cnt {
@@ -113,15 +126,16 @@ div.thread {
 
 h1.thread_caption {
   font-size: 20px;
-  margin-top: 16px;
+  margin: 16px 0px 0px 0px;
+  clear:both;
 }
 
 
 
-div.thread a {
+/* div.thread a {
   margin-top: 8px;
   display: inline-block;
-}
+} */
 
 div.post {
   position: relative;
@@ -150,7 +164,7 @@ img.unread_icon {
 
 div.user_name {
   padding: 8px;
-  color: #ffff60;
+  color: #ffda44;
   font-weight: bold;
   background-color: #404040;
 }
@@ -167,7 +181,7 @@ div.user_pcnt {
 div.post_info {
   margin-left: 200px;
   padding: 8px;
-  background-color: #f0f060;
+  background-color: #ffda44;
   font-size: 12px;
   overflow: auto;
 }
@@ -191,7 +205,7 @@ div.page_row {
 }
 
 a.page_link {
-  background-color: #f0f060;
+  background-color: #ffda44;
   padding: 4px;
   text-align: center;
   display:inline-block;
@@ -300,8 +314,10 @@ span.current_page {
 div.login_interface {
   float: right;
   position: absolute;
+  top: 8px;
   bottom: 8px;
-  right: 0px;
+  right: 16px;
+  text-align: right;
 }
 
 div.login_interface a {
@@ -320,11 +336,14 @@ span.separator {
 div.ui {
   width: 100%;
   margin: 16px 0px;
+  overflow: auto;
 }
 
-a.ui {
-  display: inline-block;
+a.ui, a.ui:visited {
+  display: block;
+  float: left;
   padding: 4px 8px;
+  margin: 0px 8px 0px 0px;
 
   background-color: #e05050;
   color: white;
@@ -334,6 +353,18 @@ a.ui {
 a.ui:hover, a.ui:active {
   background-color: #ff656c;
 }
+
+a.uir, a.uir:visited {
+  display: block;
+  float: right;
+  padding: 4px 8px;
+  margin: 0px 0px 0px 8px;
+
+  background-color: #e05050;
+  color: white;
+  text-decoration: none;
+}
+
 
 /* Post editing buttons style */
 
@@ -369,7 +400,7 @@ div.message_block {
   font-size: 20px;
   width: 640px;
   background: white;
-  margin: 0px auto;
+  margin: 16px auto;
   text-align: center;
   padding: 20px;
   border-top: 16px solid #f06060;
@@ -570,7 +601,7 @@ table.sql_rows td {
 /* common styles */
 
 p.timestamp {
-  background-color: #f0f060;
+  background-color: #ffda44;
   width: 95%;
   max-width: 1280px;
   margin: auto;

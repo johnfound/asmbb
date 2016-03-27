@@ -1,4 +1,4 @@
-<p class="timestamp">Script run time: [special:timestamp]ms</p>
+<p class="timestamp">Script run time: [special:timestamp] ms</p>
 <p class="attribution">
   <b>&copy;2016 John Found; Licensed under EUPL.<br>
   Powered by <a href="http://fresh.flatassembler.net">Fresh IDE</a>,

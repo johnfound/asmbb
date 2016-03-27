@@ -35,7 +35,7 @@ create table if not exists WaitingActivation(
   passHash text unique,
   salt	text unique,
   email text unique,
-  ip_from text,
+  ip_from text unique,
   time_reg   integer,
   time_email integer,
   a_secret text unique
@@ -47,7 +47,8 @@ create table if not exists Threads (
   id	      integer primary key autoincrement,
   Slug	      text unique,
   Caption     text,
-  LastChanged integer
+  LastChanged integer,
+  Pinned      integer
 );
 
 
@@ -62,6 +63,7 @@ create table if not exists Posts (
   userID      integer references Users(id),
 
   postTime    integer,	-- based on postTime the posts are sorted in the thread.
+  ReadCount   integer,
   Content     text
 );
 
@@ -109,6 +111,7 @@ create table if not exists Sessions (
   fromIP    text,
   sid	    text,
   last_seen integer,
+  ticket    text,
   unique (userID, fromIP)
 );
 
@@ -123,22 +126,114 @@ create table if not exists Messages (
 
 
 
-insert or ignore into Messages values ('bad_secret',	  'Bad activation secret!', 'ERROR!', '<a target="_self" href="/list/">Goto threads list</a>');
-insert or ignore into Messages values ('congratulations', 'Your account has been activated.', 'Congratulations!', '<a href="/login/">Welcome!</a>');
-insert or ignore into Messages values ('error_cant_create_threads', 'You do not have permissions to create new threads!', 'ERROR!', NULL);
-insert or ignore into Messages values ('error_cant_post', 'You do not have permissions to post in this forum!', 'ERROR!', NULL);
-insert or ignore into Messages values ('login_bad_password','Bad password or user name.', 'ERROR!', NULL);
-insert or ignore into Messages values ('login_bad_permissions', 'You do not have permissions to login.', 'ERROR!', NULL);
-insert or ignore into Messages values ('login_missing_data','Missing data in login field.', 'ERROR!', NULL);
-insert or ignore into Messages values ('register_bad_email','This address does not seems to be valid email.', 'ERROR!', NULL);
-insert or ignore into Messages values ('register_passwords_different','The confirmation password does not match.', 'ERROR!', NULL);
-insert or ignore into Messages values ('register_short_email','User email address invalid.', 'ERROR!', NULL);
-insert or ignore into Messages values ('register_short_name','User name too short.', 'ERROR!', NULL);
-insert or ignore into Messages values ('register_short_pass','The password is too short.', 'ERROR!', NULL);
-insert or ignore into Messages values ('register_technical','Because of some technical problems you can not register right now.', 'ERROR!', NULL);
-insert or ignore into Messages values ('register_user_exists','User name already exists.', 'ERROR!', NULL);
-insert or ignore into Messages values ('user_create','Your accout has been created, but is still inactive. Avtivation email has been sent to you.', 'Success!', '<a target="_self" href="/list/">Goto threads list</a>');
+insert or ignore into Messages VALUES ('login_bad_password','Login incorrect.
+Only perfect spellers may
+enter this system.','Incorrect user or password!',NULL);
 
+
+insert or ignore into Messages VALUES ('register_passwords_different','Passwords different.
+Only perfect spellers may
+register this forum.','Not matching passwords!',NULL);
+
+
+insert or ignore into Messages VALUES ('register_short_pass','Short password
+has been chosen. However,
+I disagree !','The password is too short!',NULL);
+
+
+insert or ignore into Messages VALUES ('login_missing_data','So many fields,
+you have to fill.
+Missed some.','Empty field!',NULL);
+
+
+insert or ignore into Messages VALUES ('register_user_exists','With this nickname
+you will never succeed!
+It is taken.','Not available nickname!',NULL);
+
+
+insert or ignore into Messages VALUES ('register_short_name','Short nick is not an
+advantage, but burden.
+Get longer.','The nickname too short!',NULL);
+
+
+insert or ignore into Messages VALUES ('register_short_email','Queer email,
+never saw alike before.
+Don''t like it!','Too short email address!',NULL);
+
+
+insert or ignore into Messages VALUES ('register_technical','Foreboding of evil,
+quick shadow in very cold day.
+A server is dying.','Server problem!',NULL);
+
+
+insert or ignore into Messages VALUES ('user_created','Just step remains,
+the secret, magic mail
+you shall receive.','Yes!','<a target="_self" href="/list/">Home</a>');
+
+
+insert or ignore into Messages VALUES ('congratulations','It happened,
+the journey ended at the door.
+You''re welcome.','Hooray!','<a target="_self" href="/login/">Come in</a>');
+
+
+insert or ignore into Messages VALUES ('bad_secret','Defeats and wins
+take turns each other.
+Now is the first.','Oh, no!','<a target="_self" href="/list/">Home</a>');
+
+
+insert or ignore into Messages VALUES ('login_bad_permissions','You are a sinner,
+because some man of power
+have banned you.','Forbidden!',NULL);
+
+
+insert or ignore into Messages VALUES ('error_cant_post','You can''t post here,
+still have no privileges.
+Or have no longer.','Missing privileges!',NULL);
+
+
+insert or ignore into Messages VALUES ('error_cant_create_threads','New thread,
+new hurricane of passions,
+but not for you.','Can''t start threads!',NULL);
+
+
+insert or ignore into Messages VALUES ('register_bad_email','This email
+does not looks like real.
+It shall not pass!','Invalid email address!',NULL);
+
+
+insert or ignore into Messages VALUES ('error_post_not_exists','With searching comes loss
+and the presence of absence:
+post not exists.','Missing post!',NULL);
+
+
+insert or ignore into Messages VALUES ('error_cant_write','Write has failed.
+I can''t tell you where or why.
+Lazy programmers.','Unknown error!',NULL);
+
+
+insert or ignore into Messages VALUES ('error_thread_not_exists','With searching comes loss
+and the presence of absence:
+thread not exists.','Missing thread!',NULL);
+
+
+insert or ignore into Messages VALUES ('error_invalid_caption','The title is
+missing, it''s pointless
+to post, after all.','Empty title!',NULL);
+
+
+insert or ignore into Messages VALUES ('error_invalid_content','Silence is golden.
+But try to be silent without
+posting void.','Empty post body!',NULL);
+
+
+insert or ignore into Messages VALUES ('register_bot','Attempt to cheat
+was miserable failure.
+So, shame on you!','Cheat attempt detected!',NULL);
+
+
+insert or ignore into Messages VALUES ('error_bad_ticket','Simple, deep, and still.
+The old masters were patient.
+Without desires.','Can''t post right now!',NULL);
 
 
 

@@ -2,116 +2,7 @@
 
 
 
-
 sqlGetTemplate text "select template from templates where id = ?"
-
-
-;proc StrCatTemplate, .hString, .strTemplateID, .sql_statement, .p_special
-;.stmt  dd ?
-;.free  dd ?
-;.lvl   dd ?
-;begin
-;        pushad
-;        and     [.free], 0
-;        and     [.lvl], 0
-;
-;        lea     eax, [.stmt]
-;        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetTemplate, sqlGetTemplate.length+1, eax, 0
-;
-;        stdcall StrLen, [.strTemplateID]
-;        mov     ecx, eax
-;        stdcall StrPtr, [.strTemplateID]
-;
-;        cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
-;        cinvoke sqliteStep, [.stmt]
-;        cmp     eax, SQLITE_ROW
-;        je      .get_template
-;
-;
-;        stdcall StrDupMem, "templates/"
-;        stdcall StrCat, eax, [.strTemplateID]
-;        stdcall StrCharCat, eax, ".tpl"
-;        push    eax
-;
-;        stdcall LoadBinaryFile, eax
-;        stdcall StrDel ; from the stack
-;        jc      .error
-;
-;;        OutputValue "Template from file. Length:", ecx, 10, -1
-;
-;        mov     [.free], eax
-;        mov     esi, eax
-;        and     dword [eax+ecx], 0
-;        jmp     .outer
-;
-;
-;.get_template:
-;
-;        cinvoke sqliteColumnText, [.stmt], 0
-;        mov     esi, eax
-;
-;.outer:
-;        mov     ebx, esi
-;
-;.inner:
-;        mov     cl, [esi]
-;        inc     esi
-;
-;        test    cl, cl
-;        jz      .found
-;
-;        cmp     cl, '$'
-;        jne     .inner
-;
-;.found:
-;        mov     eax, esi
-;        sub     eax, ebx
-;        dec     eax
-;
-;        stdcall StrCatMem, [.hString], ebx, eax
-;
-;        test    cl, cl
-;        jz      .end_of_template
-;
-;        mov     ebx, esi
-;
-;.varname:
-;        mov     cl, [esi]
-;        inc     esi
-;
-;        test    cl, cl
-;        jz      .found_var
-;
-;        cmp     cl, '$'
-;        jne     .varname
-;
-;.found_var:
-;        mov     edx, esi
-;        sub     edx, ebx
-;        dec     edx
-;
-;        stdcall StrCatColumnByName, [.hString], ebx, edx, [.sql_statement], [.p_special]
-;
-;        test    cl, cl
-;        jnz     .outer
-;
-;.end_of_template:
-;
-;        cinvoke sqliteFinalize, [.stmt]
-;
-;        stdcall FreeMem, [.free]
-;        popad
-;        return
-;
-;.error:
-;;        DebugMsg "Error read template!"
-;
-;        stdcall StrCat, [.hString], "Unknown template!"
-;        jmp     .end_of_template
-;
-;endp
-
-
 
 
 proc StrCatTemplate, .hString, .strTemplateID, .sql_statement, .p_special
@@ -143,8 +34,6 @@ begin
         stdcall StrDel ; from the stack
         jc      .error
 
-;        OutputValue "Template from file. Length:", ecx, 10, -1
-
         mov     [.free], eax
         mov     esi, eax
         and     dword [eax+ecx], 0
@@ -173,8 +62,6 @@ begin
 
 
 .error:
-;        DebugMsg "Error read template!"
-
         stdcall StrCat, [.hString], "Unknown template!"
         jmp     .finish
 
@@ -285,7 +172,8 @@ begin
         stdcall StrMatchPatternNoCase, "and:*", edi
         jc      .process_and
 
-
+        stdcall StrMatchPatternNoCase, "sql:*", edi
+        jc      .process_sql
 
         cmp     [.sql_stmt], 0
         je      .return_original                ; ignore all database fields, because there is no statement.
@@ -328,7 +216,7 @@ begin
         cmp     [.fHTML], 0
         jne     .encode
 
-        stdcall StrDupMem, eax
+        stdcall StrDup, eax
         jmp     .return_value
 
 
@@ -337,7 +225,7 @@ begin
 
 
 .return_value:
-        stdcall StrDel, edi
+        stdcall StrDelNull, edi
         mov     [esp+4*regEAX], eax
         popad
 
@@ -394,11 +282,30 @@ end if
 
 .get_timestamp:
 
-        stdcall GetTimestamp
+        stdcall GetTimestampHiRes
         sub     eax, [esi+TSpecialParams.start_time]
 
         stdcall NumToStr, eax, ntsDec or ntsUnsigned
+        mov     edx, eax
 
+        stdcall StrLen, eax
+        sub     eax, 3
+        jg      .point_ok
+
+        neg     eax
+        inc     eax
+
+.zero_loop:
+        stdcall StrCharInsert, edx, "0", 0
+        dec     eax
+        jnz     .zero_loop
+
+        inc     eax
+
+.point_ok:
+        stdcall StrCharInsert, edx, ".", eax
+
+        mov     eax, edx
         jmp     .return_value
 
 
@@ -416,9 +323,9 @@ end if
 
 .get_userid:
 
-        mov     eax, [esi+TSpecialParams.userName]
-        test    eax, eax
-        jz      .return_value
+;        mov     eax, [esi+TSpecialParams.userName]
+;        test    eax, eax
+;        jz      .return_value
 
         stdcall NumToStr, [esi+TSpecialParams.userID], ntsDec or ntsUnsigned
         jmp     .return_value
@@ -429,12 +336,11 @@ end if
 
 .get_permissions:
 
-        mov     eax, [esi+TSpecialParams.userName]
-        test    eax, eax
-        jz      .return_value
+;        mov     eax, [esi+TSpecialParams.userName]
+;        test    eax, eax
+;        jz      .return_value
 
-        stdcall NumToStr, [esi+TSpecialParams.userStatus], ntsHex or ntsUnsigned
-        stdcall StrCharInsert, eax, "$", 0
+        stdcall NumToStr, [esi+TSpecialParams.userStatus], ntsDec or ntsUnsigned
         jmp     .return_value
 
 ;..................................................................
@@ -468,6 +374,9 @@ end if
         jc      .root
 
         stdcall StrMatchPatternNoCase, "/post*", ecx
+        jc      .root
+
+        stdcall StrMatchPatternNoCase, "/register*", ecx
         jc      .root
 
         stdcall StrMatchPatternNoCase, "/edit/*", ecx
@@ -624,382 +533,83 @@ end if
         jmp     .return_value
 
 
-endp
 
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 
+.process_sql:
 
+locals
+  .stmt dd ?
+endl
 
-
-proc StrCatColumnByName, .string, .pname, .len, .statement, .p_special
-.i dd ?
-.formatted dd ?
-begin
-        pushad
-
-        stdcall StrNew
-        mov     edi, eax
-        stdcall StrCatMem, edi, [.pname], [.len]
-
-; first check for special names
-
-        stdcall StrCompNoCase, edi, "special:timestamp"
-        jc      .cat_timestamp
-
-        stdcall StrCompNoCase, edi, "special:environment"
-        jc      .cat_environment
-
-        stdcall StrCompNoCase, edi, "special:username"
-        jc      .cat_username
-
-        stdcall StrCompNoCase, edi, "special:loglink"
-        jc      .cat_loglink
-
-        stdcall StrCompNoCase, edi, "special:edit_tools"
-        jc      .cat_edit_tools
-
-        stdcall StrCompNoCase, edi, "special:referer"
-        jc      .cat_referer
-
-        cmp     [.statement], 0
-        je      .finish
-
-        stdcall StrMatchPatternNoCase, "case:*", edi
-        jc      .cat_case
-
-        mov     [.formatted], 0
-
-        stdcall StrMatchPatternNoCase, "minimag:*", edi
-        jnc     .process_columns
-
-        or      [.formatted], 1
-
-        stdcall StrSplit, edi, 8
-        stdcall StrDel, edi
-        mov     edi, eax
-        jmp     .process_columns
-
-
-.process_columns:
-
-        call    .get_column_number
-        jnc     .finish
-
-        cinvoke sqliteColumnText, [.statement], [.i]
-        test    eax, eax
-        jz      .finish
-
-        cmp     [.formatted], 0
-        je      .add_field_direct
-
-        stdcall StrDupMem, eax
-        stdcall FormatPostText, eax
-        jmp     .add_field
-
-
-.add_field_direct:
-        stdcall StrEncodeHTML, eax
-
-.add_field:
-        stdcall StrCat, [.string], eax
-        stdcall StrDel, eax
-
-.finish:
-        stdcall StrDel, edi
-        popad
-        return
-
-
-
-.get_column_number:
-
-        cinvoke sqliteColumnCount, [.statement]
-        mov     ebx, eax
-        and     [.i], 0
-
-.loop:
-        cmp     [.i], ebx
-        jae     .not_found
-
-        cinvoke sqliteColumnName, [.statement], [.i]
-        stdcall StrCompNoCase, eax, edi
-        jc      .found
-
-        inc     [.i]
-        jmp     .loop
-
-.not_found:     ; here CF=0
-.found:         ; here CF=1
-        retn
-
-
-;..................................................................
-.cat_referer:
-        mov     esi, [.p_special]
-        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_REFERER"
-        jc      .root
-
-        mov     ebx, eax
-
-        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_HOST"
-        jc      .root
-
-        push    eax
-
-        stdcall StrLen, eax
-        mov     ecx, eax
-
-        stdcall StrPos, ebx     ; pattern from the stack
-        test    eax, eax
-        jz      .root
-
-        add     ecx, eax
-
-        stdcall StrMatchPatternNoCase, "/message/*", ecx
-        jc      .root
-
-        stdcall StrMatchPatternNoCase, "/sqlite*", ecx
-        jc      .root
-
-        stdcall StrMatchPatternNoCase, "/post*", ecx
-        jc      .root
-
-        stdcall StrMatchPatternNoCase, "/edit/*", ecx
-        cmp     eax, ecx
-        je      .root
-
-        stdcall StrEncodeHTML, ecx
-        stdcall StrCat, [.string], eax
-        stdcall StrDel, eax
-        jmp     .finish
-
-.root:
-        stdcall StrCharCat, [.string], "/"
-        jmp     .finish
-
-;..................................................................
-
-.cat_edit_tools:
-        pushad
-
-        mov     esi, [.p_special]
-        test    esi, esi
-        jz      .end_tools
-
-;        OutputValue "User permissions:", [esi+TSpecialParams.userStatus], 16, 8
-
-        test    [esi+TSpecialParams.userStatus], permEditAll or permAdmin
-        jnz     .do_insert_tools
-
-        test    [esi+TSpecialParams.userStatus], permEditOwn
-        jz      .end_tools
-
-        mov     edi, .colUserID
-        call    .get_column_number
-        jnc     .end_tools
-
-        cinvoke sqliteColumnInt, [.statement], [.i]
-        cmp     eax, [esi+TSpecialParams.userID]
-        jne     .end_tools
-
-.do_insert_tools:
-        mov     edi, .colPostID
-        call    .get_column_number
-        jnc     .end_tools
-
-        cinvoke sqliteColumnText, [.statement], [.i]
-        mov     edi, eax
-
-        stdcall StrCat, [.string], '<a class="edit_btn" href="/edit/'
-        stdcall StrCat, [.string], edi
-        stdcall StrCat, [.string], '"><img class="edit_icon" src="/images/edit_gray.svg"></a><a class="del_btn" href="/delete/'
-        stdcall StrCat, [.string], edi
-        stdcall StrCat, [.string], '"><img class="del_icon" src="/images/del_gray.svg"></a>'
-
-
-.end_tools:
-        popad
-        jmp     .finish
-
-
-.colUserID db "userID", 0
-.colPostID db "id", 0
-
-;..................................................................
-
-
-.cat_case:
-
-        stdcall StrSplit, edi, 5
+        stdcall StrSplit, edi, 4
         stdcall StrDel, edi
         mov     edi, eax
 
-        stdcall StrSplitList, edi, '|', TRUE
+        stdcall __DoProcessTemplate2, edi, [.sql_stmt], [.pSpecial], TRUE
+        stdcall StrDel, edi
+        mov     edi, eax
+
+        stdcall StrSplitList, edi, "|", FALSE
         mov     esi, eax
 
-        cmp     [esi+TArray.count], 3
-        jb      .end_case
+        stdcall StrDel, edi
+        stdcall StrNew
+        mov     edi, eax
 
-        stdcall StrCopy, edi, [esi+TArray.array]
+        cmp     [esi+TArray.count], 0
+        je      .end_sql
 
-        call    .get_column_number
-        jnc     .end_case
 
-        cinvoke sqliteColumnInt, [.statement], [.i]
-        mov     ecx, [esi+TArray.count]
-        sub     ecx, 2
+        stdcall StrPtr, [esi+TArray.array]
 
-        cmp     eax, ecx
-        jbe     @f
-        mov     eax, ecx
-@@:
-        stdcall StrCat, [.string], [esi+TArray.array+4*eax+4]
+        lea     edx, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], eax, [eax+string.len], edx, 0
+        cmp     eax, SQLITE_OK
+        jne     .end_sql
 
-.end_case:
+        xor     ebx, ebx
+
+.bind_loop:
+        inc     ebx
+        cmp     ebx, [esi+TArray.count]
+        jae     .end_bind
+
+        stdcall StrPtr, [esi+TArray.array+4*ebx]
+
+        cinvoke sqliteBindText, [.stmt], ebx, eax, [eax+string.len], SQLITE_STATIC
+        cmp     eax, SQLITE_OK
+        je      .bind_loop
+
+        cmp     eax, SQLITE_RANGE
+        jne     .finalize_sql
+
+.end_bind:
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .finalize_sql
+
+.col_loop:
+
+        cinvoke sqliteColumnText, [.stmt], 0
+        stdcall StrCat, edi, eax
+
+.finalize_sql:
+
+        cinvoke sqliteFinalize, [.stmt]
+
+.end_sql:
         stdcall ListFree, esi, StrDel
 
-        jmp     .finish
-
-
-;..................................................................
-
-
-
-.cat_timestamp:
-
-        mov     esi, [.p_special]
-
-        stdcall StrCat, [.string], '<p class="timestamp">Script runtime: '
-
-        stdcall GetTimestampHiRes
-        sub     eax, [esi+TSpecialParams.start_time]
-
-        stdcall NumToStr, eax, ntsDec or ntsUnsigned
-        mov     edx, eax
-
-        stdcall StrLen, eax
-        sub     eax, 3
-        jns     .point_ok
-
-        neg     eax
-        inc     eax
-
-.zero_loop:
-        stdcall StrCharInsert, edx, " ", 0
-        dec     eax
-        jnz     .zero_loop
-
-        inc     eax
-
-.point_ok:
-        stdcall StrCharInsert, edx, ".", eax
-
-        stdcall StrCat, [.string], edx
-        stdcall StrDel, edx
-
-        stdcall StrCat, [.string], txt ' ms</p>'
-
-        jmp     .finish
-
-
-;..................................................................
-
-
-.cat_environment:
-; this is only for special purposes.
-
-if defined options.DebugWeb & options.DebugWeb
-
-;        DebugMsg "Special:environment!"
-
-
-        mov     esi, [.p_special]
-        mov     edx, [esi+TSpecialParams.params]
-
-        xor     ecx, ecx
-
-.loop_env:
-        cmp     ecx, [edx+TArray.count]
-        jae     .show_post
-
-        stdcall StrEncodeHTML, [edx+TArray.array+8*ecx]
-        stdcall StrCat,     [.string], eax
-        stdcall StrDel, eax
-
-        stdcall StrCharCat, [.string], " = "
-
-        stdcall StrEncodeHTML, [edx+TArray.array+8*ecx+4]
-        stdcall StrCat,     [.string], eax
-        stdcall StrDel, eax
-        stdcall StrCharCat, [.string], $0a0d
-
-        inc     ecx
-        jmp     .loop_env
-
-.show_post:
-        mov     eax, [esi+TSpecialParams.post]
-        test    eax, eax
-        jz      .finish
-
-        stdcall StrCat, [.string], <13, 10, 13, 10, "<<<<< Follows the POST data: >>>>>", 13, 10>
-        stdcall StrCat, [.string], [esi+TSpecialParams.post]
-        stdcall StrCat, [.string], <13, 10, "<<<<< Here ends the post data >>>>>", 13, 10>
-
-        jmp     .finish
-
-else
-        jmp     .finish
-
-end if
-
-
-
-;..................................................................
-
-
-
-.cat_username:
-        mov     esi, [.p_special]
-        mov     edx, [esi+TSpecialParams.userName]
-        test    edx, edx
-        jz      .finish
-
-        stdcall StrCat, [.string], edx
-        jmp     .finish
-
-
-;..................................................................
-
-
-.cat_loglink:
-
-        mov     esi, [.p_special]
-        mov     edx, [esi+TSpecialParams.userName]
-        test    edx, edx
-        jz      .login
-
-; log out:
-
-        stdcall StrEncodeHTML, edx
-
-        stdcall StrCat, [.string], '<a class="logout" href="/logout/">Logout</a> ( <b>'
-        stdcall StrCat, [.string], eax
-        stdcall StrDel, eax
-        stdcall StrCat, [.string], '</b> )'
-        jmp     .common
-
-
-.login:
-        stdcall StrCat, [.string], '<a class="login" href="/login/">Login</a>'
-        stdcall StrCat, [.string], '<span class="separator"></span><a class="register" href="/register/">Register</a>'
-
-.common:
-        jmp     .finish
+        mov     eax, edi
+        xor     edi, edi
+        jmp     .return_value
 
 
 endp
-
 
 
 

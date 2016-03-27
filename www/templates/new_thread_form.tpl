@@ -1,6 +1,6 @@
 <div class="new_editor">
   <div class="ui">
-    <a class="ui" href="/list">Root</a>
+    <a class="ui" href="/list">Thread list</a>
   </div>
   <form id="editform" action="/post/" method="post">
     <p>Thread title:</p>
@@ -10,6 +10,7 @@
     <div class="panel">
       <input type="submit" name="submit" value="Submit" >
       <input type="submit" name="preview" value="Preview" >
+      <input type="hidden" name="ticket" value="[Ticket]" >
       <input type="reset" value="Revert" >
     </div>
   </form>

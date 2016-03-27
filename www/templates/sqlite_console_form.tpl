@@ -1,6 +1,6 @@
 <div class="new_editor">
   <div class="ui">
-    <a class="ui" href="/list">Root</a>
+    <a class="ui" href="/list">Thread list</a>
   </div>
   <form id="editform" action="/sqlite/" method="post">
     <p>SQL statement:</p>

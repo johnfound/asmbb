@@ -1,3 +1,5 @@
+GENERAL_LIMIT_MAX_POST_LENGTH = 1024*1024   ; 1MB general limit on post data length. Everything above will be trunkated.
+
 ; The types for FCGI_Header.type
 
 FCGI_BEGIN_REQUEST      =  1
@@ -488,7 +490,7 @@ begin
         test    ecx, ecx
         jz      .stdin_received           ; no more packages to wait for FCGI_STDIN
 
-; add the package to the name/value pairs list.
+; add the package to the post data byte stream.
 
         push    esi
 
@@ -508,6 +510,9 @@ begin
         rep movsb
         xor     eax, eax
         stosd
+
+        cmp     [ebx+TByteStream.size], GENERAL_LIMIT_MAX_POST_LENGTH
+        ja      .stdin_received
 
         pop     esi
         jmp     .pack_loop
