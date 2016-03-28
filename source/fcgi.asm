@@ -153,9 +153,11 @@ ends
 ;
 
 proc Listen
+.addr TSocketAddressUn
 begin
 
 .loop:
+
         stdcall SocketAccept, [STDIN], 0
         jc      .finish
 
@@ -163,8 +165,28 @@ begin
         jmp     .loop
 
 .finish:
+        stdcall SocketCreate, PF_UNIX, SOCK_STREAM, 0
+        mov     [STDIN], eax
+
+        mov     [.addr.saFamily], AF_UNIX
+
+        mov     esi, pathMySocket
+        mov     ecx, pathMySocket.length + 1
+        lea     edi, [.addr.saPath]
+
+        rep movsb
+
+        lea     eax, [.addr]
+        stdcall SocketBind, [STDIN], eax
+
+        stdcall SocketListen, [STDIN], 10
+        jmp     .loop
+
         return
 endp
+
+
+pathMySocket text "./engine.sock"
 
 
 ;create table if not exists RequestsLog (

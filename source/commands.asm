@@ -723,6 +723,7 @@ sqlGetThreadInfo text "select id, caption, slug from Threads where slug = ? limi
 proc ShowThread, .threadSlug, .start, .pSpecial
 
 .stmt  dd ?
+.stmt2 dd ?
 
 .threadID dd ?
 
@@ -736,34 +737,32 @@ begin
 
         mov     esi, [.pSpecial]
 
-        lea     eax, [.stmt]
+        lea     eax, [.stmt2]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, -1, eax, 0
 
         stdcall StrPtr, [.threadSlug]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteBindText, [.stmt2], 1, eax, [eax+string.len], SQLITE_STATIC
 
-        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteStep, [.stmt2]
         cmp     eax, SQLITE_ROW
         jne     .error
 
-        cinvoke sqliteColumnInt, [.stmt], 0
+        cinvoke sqliteColumnInt, [.stmt2], 0
         mov     [.threadID], eax
 
         stdcall StrCat, edi, '<div class="thread">'
 
-        stdcall StrCatTemplate, edi, "nav_thread", [.stmt], esi
+        stdcall StrCatTemplate, edi, "nav_thread", [.stmt2], esi
 
         stdcall StrCat, edi, '<h1 class="thread_caption">'
 
-        cinvoke sqliteColumnText, [.stmt], 1
+        cinvoke sqliteColumnText, [.stmt2], 1
 
         stdcall StrEncodeHTML, eax
         stdcall StrCat, edi, eax
         stdcall StrDel, eax
 
         stdcall StrCat, edi, '</h1>'
-
-        cinvoke sqliteFinalize, [.stmt]
 
 
 ; pages links
@@ -825,10 +824,11 @@ begin
 .finish:
         stdcall StrCat, edi, [.list]
 
-        stdcall StrCatTemplate, edi, "nav_thread", [.stmt], esi
+        stdcall StrCatTemplate, edi, "nav_thread", [.stmt2], esi
         stdcall StrCat, edi, "</div>"   ; div.thread
 
         cinvoke sqliteFinalize, [.stmt]
+        cinvoke sqliteFinalize, [.stmt2]
 
         mov     [esp+4*regEAX], edi
         clc

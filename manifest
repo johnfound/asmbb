@@ -1,13 +1,13 @@
-C Fixed\smore\sbugs\sin\sthe\sformatting\sparser.\sBut\smost\schanges\sare\sin\sFreshLibDev\srepository.\nHere\sonly\sthe\sneeded\schanges.
-D 2016-03-27T09:10:44.270
+C Fixed\sa\sbug\swith\sthe\sbottom\sbuttons.
+D 2016-03-28T03:38:14.457
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F source/Linux/sqlite3.inc 3434422cbaa5b6d55ec5a3a8171d7784c08fe6bc
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
-F source/commands.asm 74e172bf995523ade8fa1ef88c051919a0b3e53b
+F source/commands.asm 07909c6a1e859cd7570f8cc125bbd0863fc91a04
 F source/create.sql 09a99fbd5b34ed770545c7615a8803af78ce8b3e
-F source/fcgi.asm f265bc3702440f1d36c843fb45ddec45418b68bb
+F source/fcgi.asm f969836ac4eb6279d4eb95a65351eeb3ca81500e
 F source/http.asm 6fd36367f90732d910c6bd564ffbcb6815094c74
-F source/index.asm 971565835d28167da6f7508a287b74978658cab6
+F source/index.asm 04650327b1529c1c93cccd1567331b4c54fbe4b0
 F source/index.fpr 7948de23f7e4951e64bc0b96ddd42084d08dab23
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql d4cbcf31c0d3a0555a883a8b943272e10557f197
@@ -47,7 +47,7 @@ F www/images/sources/screw.xcf 6a65dbe3140bc2ef2cfbe1ec6fdebefb6f18fec4
 F www/images/sources/screw0.xcf 50d79cf2cc504c7f0d1499c28147a621b7aaa234
 F www/images/user.png ba86e508b26c39f611581aaa7780d0e4a9c3ac52
 F www/ld-musl-i386.so 4d44786b8676115c7df45c45ceb051c11ce14ffd x
-F www/libsqlite3.so b219b02c71d515698b2086be2edc104e5c8997a7 x
+F www/libsqlite3.so 70045c696736178082b18594bd1bc5c53b5c0576 x
 F www/lighttpd.conf c2e99868510b00288e86a9bf0332fa279aabb608
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/activation_email_subject.tpl 38ff105af59057663f2e1f1fc79947c5e2de0cf2
@@ -69,7 +69,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/register_form.tpl 891c8e443911145d7001c205462ff7408660b020
 F www/templates/sqlite_console_form.tpl 05bd8e79b2f7d82d24c9d7f6a5c95a40234a1bd9
 F www/templates/thread_info.tpl 07d2a2e4a143aa71a7fb3e6c9353dd0aa9a244ad
-P cb24d7db12a56f1d02ac2817accbcda2aa541a3a
-R 7dc53bf9dd6ed7b96fc6f7452a3b24db
+P 8ed2578d38ae07cf48268ada011462ee83beca5c
+R 022fd3af9a7048ba4b15fdc2d758bec0
 U johnfound
-Z 83938653fc1608ef9c9a9bb2189fc84f
+Z 5f5d0921a03c19b87849f8b820cd6188
