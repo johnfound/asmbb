@@ -54,10 +54,11 @@ uglobal
   hMainDatabase dd ?
   ProcessID     dd ?
   ProcessStart  dd ?
+  fOwnSocket    dd ?
 endg
 
 
-;rb 273
+rb 273
 
 start:
         InitializeAll
@@ -113,5 +114,15 @@ start:
 
 proc OnForcedTerminate as procForcedTerminateHandler
 begin
+        cmp     [fOwnSocket], 0
+        je      start.terminate
+
+        stdcall SocketClose, [STDIN]
+        OutputValue "Socket close return:", eax, 10, -1
+
+        stdcall FileDelete, pathMySocket
+
+        OutputValue "File delete return:", eax, 10, -1
+
         jmp     start.terminate         ; the stack is not important here!
 endp

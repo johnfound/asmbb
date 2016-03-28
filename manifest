@@ -1,13 +1,13 @@
-C Fixed\sa\sbug\swith\sthe\sbottom\sbuttons.
-D 2016-03-28T03:38:14.457
+C The\sFastCGI\shas\sbeen\smade\sto\sopen\sits\sown\ssocket\sif\ssuch\sis\snot\sprovided\sby\sthe\s\nserver.\sIt\swas\simplemented\sin\sorder\sto\stest\sit\swith\srwasa\sserver\sthat\scan't\sspawn\s\nFastCGI\sscripts,\sbut\sexpects\sthey\sto\sbe\sexternally\sstarted.
+D 2016-03-28T15:34:52.459
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F source/Linux/sqlite3.inc 3434422cbaa5b6d55ec5a3a8171d7784c08fe6bc
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
-F source/commands.asm 07909c6a1e859cd7570f8cc125bbd0863fc91a04
+F source/commands.asm 9c4476f9b6a10986a481259b78590c55913a710e
 F source/create.sql 09a99fbd5b34ed770545c7615a8803af78ce8b3e
-F source/fcgi.asm f969836ac4eb6279d4eb95a65351eeb3ca81500e
+F source/fcgi.asm a0aa74fc006cc1fb49900b513697efeda3c5c3b6
 F source/http.asm 6fd36367f90732d910c6bd564ffbcb6815094c74
-F source/index.asm 04650327b1529c1c93cccd1567331b4c54fbe4b0
+F source/index.asm 2e0fd940abdabec91291ed8174d220378e74f392
 F source/index.fpr 7948de23f7e4951e64bc0b96ddd42084d08dab23
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql d4cbcf31c0d3a0555a883a8b943272e10557f197
@@ -69,7 +69,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/register_form.tpl 891c8e443911145d7001c205462ff7408660b020
 F www/templates/sqlite_console_form.tpl 05bd8e79b2f7d82d24c9d7f6a5c95a40234a1bd9
 F www/templates/thread_info.tpl 07d2a2e4a143aa71a7fb3e6c9353dd0aa9a244ad
-P 8ed2578d38ae07cf48268ada011462ee83beca5c
-R 022fd3af9a7048ba4b15fdc2d758bec0
+P a65ecc9ce8e043c7ed0afe69e77a330d942879e5
+R fe2b758c1c7bf5c0de19b04e944fb1f0
 U johnfound
-Z 5f5d0921a03c19b87849f8b820cd6188
+Z 96d2f54341605e1698619a8baf5ac3ef

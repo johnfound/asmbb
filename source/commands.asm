@@ -111,6 +111,7 @@ begin
         stdcall StrDel ; from the stack
         jc      .analize_uri
 
+
         mov     edx, eax
 
         stdcall GetFileFromDB, [.filename]
@@ -127,12 +128,20 @@ begin
 
         stdcall StrPtr, edi
         stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], FALSE
+        jc      .error500
 
         stdcall FCGI_output, [.hSocket], [.requestID], esi, ecx, TRUE
+        jc      .error500
+
         stdcall FreeMem, esi
 
         jmp     .final_clean
 
+
+.error500:
+        lea     eax, [.special]
+        stdcall AppendError, edi, "500 Unexpected server error", eax
+        jmp     .send_simple_result2
 
 .error400:
         lea     eax, [.special]
