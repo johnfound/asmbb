@@ -153,7 +153,7 @@ ends
 ;
 
 proc Listen
-.addr TSocketAddressUn
+;.addr TSocketAddressUn
 begin
 
 .loop:
@@ -165,30 +165,37 @@ begin
 
         jmp     .loop
 
+;.make_socket:
+;
+;        cmp     [fOwnSocket], 0
+;        jne     .finish
+;
+;        stdcall SocketCreate, PF_UNIX, SOCK_STREAM, 0
+;        jc      .finish
+;
+;        mov     [STDIN], eax
+;        mov     [fOwnSocket], 1
+;
+;        stdcall SocketSetOption, [STDIN], soReuseAddr, TRUE
+;        stdcall SocketSetOption, [STDIN], soLinger, 5
+;
+;        mov     [.addr.saFamily], AF_UNIX
+;
+;        mov     esi, pathMySocket
+;        mov     ecx, pathMySocket.length + 1
+;        lea     edi, [.addr.saPath]
+;
+;        rep movsb
+;
+;        lea     eax, [.addr]
+;        stdcall SocketBind, [STDIN], eax
+;        jc      .finish
+;
+;        stdcall SocketListen, [STDIN], 1
+;        jnc     .loop
+
 
 .finish:
-        stdcall SocketCreate, PF_UNIX, SOCK_STREAM, 0
-        mov     [STDIN], eax
-        mov     [fOwnSocket], 1
-
-        stdcall SocketSetOption, [STDIN], soReuseAddr, TRUE
-        stdcall SocketSetOption, [STDIN], soLinger, 5
-
-        mov     [.addr.saFamily], AF_UNIX
-
-        mov     esi, pathMySocket
-        mov     ecx, pathMySocket.length + 1
-        lea     edi, [.addr.saPath]
-
-        rep movsb
-
-        lea     eax, [.addr]
-        stdcall SocketBind, [STDIN], eax
-
-        stdcall SocketListen, [STDIN], 1
-
-        jmp     .loop
-
         return
 endp
 
@@ -344,8 +351,6 @@ proc procServeRequest, .hSocket
 .thread_start   dd ?
 
 begin
-        pushad
-
         xor     eax, eax
         mov     [.requestParams], eax
         mov     [.requestPost], eax
@@ -357,7 +362,7 @@ begin
         stdcall GetTimestampHiRes
         mov     [.thread_start], eax
 
-        stdcall LogEvent, "ThreadStart", logNumber, eax, 0
+        stdcall LogEvent, "ThreadStart", logNumber, [.threadID], 0
 
 
 .main_loop:
@@ -547,9 +552,12 @@ begin
 ; Processing of the request. Here all data is ready, so serve the request!
 
 .serve_request:
+        stdcall ValueByName, [.requestParams], "REQUEST_URI"
+        stdcall LogEvent, "RequestServeStart", logText, eax, 0
 
         stdcall ServeOneRequest, [.hSocket], [.requestID], [.requestParams], [.requestPost], [.start_time]
-;        jc      .finish
+
+        stdcall LogEvent, "RequestServeEnd", logNULL, 0, 0
 
 
 .request_complete:
@@ -574,12 +582,12 @@ begin
 
         stdcall GetTimestampHiRes
         sub     eax, [.thread_start]
+
         stdcall LogEvent, "ThreadEnd", logNumber, [.threadID], eax
 
-        xor     eax, eax
-        popad
-        return
+        stdcall Terminate, 0
 
+;...............................................................
 
 
 .FreeAllocations:

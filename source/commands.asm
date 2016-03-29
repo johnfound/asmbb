@@ -93,8 +93,17 @@ begin
         stdcall ValueByName, [.pParams2], "REQUEST_URI"
         jc      .error400
 
-        stdcall StrDup, eax
+        stdcall StrSplitList, eax, '?', FALSE
+        mov     ebx, eax
+
+        cmp     [ebx+TArray.count], 0
+        je      .error400
+
+        xor     eax, eax
+        xchg    eax, [ebx+TArray.array]
         mov     [.uri], eax
+
+        stdcall ListFree, ebx, StrDelNull
 
 ; first check for supported file format.
 
@@ -203,8 +212,6 @@ begin
         stdcall StrDelNull, [.special.userName]
         stdcall StrDelNull, [.special.session]
 
-
-        clc
         popad
         return
 
@@ -266,6 +273,9 @@ begin
         stdcall StrCompNoCase, [esi+TArray.array], txt "pinit"
         jc      .pinthread
 
+        stdcall StrCompNoCase, [esi+TArray.array], txt "search"
+        jc      .search
+
         stdcall StrCompNoCase, [esi+TArray.array], txt "adminrulez"
         jc      .set_admin_permissions
 
@@ -318,6 +328,27 @@ begin
         stdcall PinThread, eax, ecx
 
         jmp     .send_simple_replace
+
+
+;..................................................................................
+
+.search:
+        xor     ebx, ebx
+
+        cmp     [esi+TArray.count], 2
+        jb      .show_search
+
+        stdcall StrToNumEx, [esi+TArray.array+4]
+        mov     ebx, eax
+
+.show_search:
+
+        lea     eax, [.special]
+        stdcall ShowSearchResults, ebx, eax
+        jc      .send_simple_replace
+
+        jmp     .output_forum_html
+
 
 
 ;..................................................................................
@@ -406,6 +437,7 @@ begin
         lea     eax, [.special]
         stdcall ShowThread, [esi+TArray.array+4], ebx, eax
         jnc     .output_forum_html
+
         jmp     .error404
 
 
@@ -556,7 +588,7 @@ sqlSelectThreads text "select ",                                                
                                                                                                                                                                 \
                       "order by ",                                                                                                                              \
                                                                                                                                                                 \
-                        "Pinned desc, LastChanged desc ",                                                                                                            \
+                        "Pinned desc, T.LastChanged desc ",                                                                                                     \
                                                                                                                                                                 \
                       "limit ?1 ",                                                                                                                              \
                       "offset ?2"
@@ -592,7 +624,7 @@ begin
         mov     ebx, eax
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall CreatePagesLinks, txt "/list/", [.start], ebx
+        stdcall CreatePagesLinks, txt "/list/", 0, [.start], ebx
         mov     [.list], eax
 
         stdcall StrCat, edi, eax
@@ -759,6 +791,8 @@ begin
         cinvoke sqliteColumnInt, [.stmt2], 0
         mov     [.threadID], eax
 
+        OutputValue "Thread ID:", eax, 10, -1
+
         stdcall StrCat, edi, '<div class="thread">'
 
         stdcall StrCatTemplate, edi, "nav_thread", [.stmt2], esi
@@ -789,7 +823,7 @@ begin
         stdcall StrCat, eax, [.threadSlug]
         stdcall StrCharCat, eax, "/"
 
-        stdcall CreatePagesLinks, eax, [.start], ebx
+        stdcall CreatePagesLinks, eax, 0, [.start], ebx
         mov     [.list], eax
 
         stdcall StrCat, edi, [.list]
@@ -832,6 +866,7 @@ begin
 
 .finish:
         stdcall StrCat, edi, [.list]
+        stdcall StrDel, [.list]
 
         stdcall StrCatTemplate, edi, "nav_thread", [.stmt2], esi
         stdcall StrCat, edi, "</div>"   ; div.thread
@@ -839,14 +874,13 @@ begin
         cinvoke sqliteFinalize, [.stmt]
         cinvoke sqliteFinalize, [.stmt2]
 
-        mov     [esp+4*regEAX], edi
         clc
+        mov     [esp+4*regEAX], edi
         popad
         return
 
 .error:
-
-        cinvoke sqliteFinalize, [.stmt]
+        cinvoke sqliteFinalize, [.stmt2]
         stdcall StrDel, edi
         stc
         popad
@@ -861,7 +895,7 @@ endp
 
 
 
-proc CreatePagesLinks, .prefix, .current, .count
+proc CreatePagesLinks, .prefix, .suffix, .current, .count
 begin
         pushad
 
@@ -957,7 +991,15 @@ begin
         stdcall StrCat, edi, [.prefix]
 
         stdcall StrCat, edi, eax
-        stdcall StrCharCat, edi, '/">'
+
+        cmp     [.suffix], 0
+        je      .suf_ok
+
+        stdcall StrCharCat, edi, "?"
+        stdcall StrCat, edi, [.suffix]
+
+.suf_ok:
+        stdcall StrCharCat, edi, '">'
 
 .link_ok:
         stdcall StrCat, edi, eax
@@ -2294,10 +2336,16 @@ begin
 
 ; check the ticket
 
+        DebugMsg "Attempt to post!"
+
+
         stdcall CheckTicket, [.ticket], [esi+TSpecialParams.session]
         jc      .error_bad_ticket
 
 ; begin transaction!
+
+        DebugMsg "Ticket OK!"
+
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBegin, -1, eax, 0
@@ -2965,7 +3013,7 @@ begin
         cinvoke sqlitePrepare_v2, [hMainDatabase], esi, -1, ecx, eax
 
         test    eax, eax
-        jnz     .done
+        jnz     .error
 
         stdcall StrNew
 
@@ -2992,11 +3040,20 @@ begin
         cmp     eax, SQLITE_DONE
         je      .finalize
 
-        cinvoke sqliteErrStr, eax
+
+.error:
+        cinvoke sqliteDBMutex, [hMainDatabase]
+        cinvoke sqliteMutexEnter, eax
+
+        cinvoke sqliteErrMsg, [hMainDatabase]
 
         stdcall StrCat, edi, '<p class="result_msg">'
         stdcall StrCat, edi, eax
         stdcall StrCat, edi, txt '</p>'
+
+        cinvoke sqliteDBMutex, [hMainDatabase]
+        cinvoke sqliteMutexLeave, eax
+
 
 .finalize:
         cinvoke sqliteFinalize, [.stmt]
@@ -3260,6 +3317,9 @@ proc ClearTicket, .sid
 begin
         pushad
 
+        cmp     [.sid], 0
+        je      .finish
+
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetTicket, sqlSetTicket.length, eax, 0
 
@@ -3272,6 +3332,7 @@ begin
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 
+.finish:
         popad
         return
 endp
@@ -3287,6 +3348,9 @@ begin
         pushad
 
         cmp     [.ticket], 0
+        je      .error
+
+        cmp     [.sid], 0
         je      .error
 
         lea     eax, [.stmt]

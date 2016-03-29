@@ -48,7 +48,7 @@ create table if not exists Threads (
   Slug	      text unique,
   Caption     text,
   LastChanged integer,
-  Pinned      integer
+  Pinned      integer default 0
 );
 
 
@@ -256,6 +256,8 @@ insert or ignore into Events values (4,'Error');
 insert or ignore into Events values (5,'ScriptEnd');
 insert or ignore into Events values (6,'ThreadStart');
 insert or ignore into Events values (7,'ThreadEnd');
+insert or ignore into Events values (8,'RequestServeStart');
+insert or ignore into Events values (9,'RequestServeEnd');
 
 
 
@@ -279,6 +281,22 @@ create table if not exists Templates (
   template text
 );
 
+
+CREATE VIRTUAL TABLE PostFTS using fts5( `Content`, content=Posts, content_rowid=id, tokenize='porter unicode61 remove_diacritics 1');
+
+
+CREATE TRIGGER PostsAI AFTER INSERT ON Posts BEGIN
+  INSERT INTO PostFTS(rowid, Content) VALUES (new.id, new.Content);
+END;
+
+CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
+  INSERT INTO PostFTS(PostFTS, rowid, Content) VALUES('delete', old.id, old.Content);
+END;
+
+CREATE TRIGGER PostsAU AFTER UPDATE ON Posts BEGIN
+  INSERT INTO PostFTS(PostFTS, rowid, Content) VALUES('delete', old.id, old.Content);
+  INSERT INTO PostFTS(rowid, Content) VALUES (new.id, new.Content);
+END;
 
 
 

@@ -30,9 +30,59 @@ div.header {
 }
 
 div.header h1 {
+  float: left;
   font-size: 36px;
   margin: 8px 0px 8px 16px;
 }
+
+
+/* Search form styles */
+
+form#search_form {
+  position: absolute;
+  display: inline-block;
+
+  bottom: 50%;
+  right: 50%;
+
+  transform: translate(50%, 50%);
+  -webkit-transform: translate(50%, 50%);
+  -moz-transform: translate(50%, 50%);
+
+}
+
+input#search_line {
+  height: 32px;
+  padding: 4px;
+  border: none;
+  background-color: #606060;
+  color: white;
+}
+
+
+input#search_line:focus {
+  background-color: white;
+  color: black;
+}
+
+
+input#search_btn  {
+  float: right;
+  width: 32px;
+  height: 32px;
+
+  border-style: none;
+  padding: 4px;
+
+  background-color: #f06060;
+  background-image: url('/images/search.svg');
+  color: white;
+}
+
+input#search_btn:hover  {
+  background-color: #ff7b81;
+}
+
 
 
 /* Threads list styles */
@@ -156,6 +206,50 @@ div.user_info {
   color: white;
 }
 
+div.search_info {
+  float: left;
+  position: absolute;
+  width: 200px;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+
+  background-color: #404040;
+  color: white;
+}
+
+div.post_time {
+  padding: 8px;
+  text-align: left;
+  font-size: 12px;
+  background-color: #404040;
+}
+
+div.post_link {
+  padding: 4px;
+  text-align: right;
+  font-size: 18px;
+}
+
+div.post_sum {
+  margin-left: 200px;
+  padding: 4px 4px 4px 4px;
+  background-color: white;
+}
+
+div.post_thread {
+  margin-left: 200px;
+  padding: 8px;
+  background-color: #ffda44;
+  font-size: 12px;
+  overflow: auto;
+}
+
+div.post_thread a {
+  font-size: 16px;
+  font-weight: bold;
+}
+
 img.unread_icon {
   display: block;
   float: left;
@@ -185,6 +279,7 @@ div.post_info {
   font-size: 12px;
   overflow: auto;
 }
+
 
 div.post_info a {
   margin: 0px;
@@ -225,77 +320,67 @@ span.current_page {
 
 /* login page styles */
 
-.login-block {
+form.login-block, form.register-block {
     width: 320px;
-    padding: 20px;
-    background: #fff;
-    border-top: 16px solid #f06060;
-    margin: 16px auto;
+    padding: 16px;
+    background: #ffda44;
+    margin: 16px auto 48px auto;
 }
 
 
-.register-block {
-    width: 320px;
-    padding: 20px;
-    background: #fff;
-    border-top: 16px solid #f06060;
-    margin: 16px auto;
-}
 
-
-.login-block h1, .register-block h1 {
+form.login-block h1, form.register-block h1 {
+    height: 38px;
     text-align: center;
-    color: #000;
+    color: white;
+    background-color: #606060;
     font-size: 20px;
     font-variant: small-caps;
     margin-top: 0;
     margin-bottom: 16px;
+    padding: 8px;
 }
 
-.login-block input, .register-block input {
+input#username, input#email,
+input#password, input#password2 {
     width: 100%;
-    height: 42px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
+    height: 38px;
     margin-bottom: 16px;
     font-size: 16px;
     padding: 0 20px 0 50px;
     outline: none;
-}
+    border: none;
 
-.login-block input#username, .register-block input#username {
-    background-image: url('/images/user.png');
-}
-
-.login-block input#email, .register-block input#email {
-    background-image: url('/images/email.png');
-}
-
-.login-block input#password, .login-block input#password2,
-.register-block input#password, .register-block input#password2 {
-    background-image: url('/images/pass.png');
-}
-
-.login-block input, .register-block input {
     background-color: white;
+    color: black;
     background-position: 12px -10px;
     background-repeat: no-repeat;
     background-size: 24px 120px;
 }
 
-.login-block input:active, .login-block input:focus,
-.register-block input:active, .register-block input:focus  {
-    background-color: white;
-    background-position: 12px -70px;
-    border: 1px solid #ff656c;
+input#username {
+    background-image: url('/images/user.png');
 }
 
-.login-block input#submit, .register-block input#submit {
-    height: 40px;
+input#email {
+    background-image: url('/images/email.png');
+}
+
+input#password, input#password2 {
+    background-image: url('/images/pass.png');
+}
+
+input#username:focus, input#email:focus,
+input#password:focus, input#password2:focus  {
+    background-position: 12px -70px;
+}
+
+input#submit {
+    height: 38px;
+    width: 100%;
     background: #ff656c;
-    box-sizing: border-box;
-    border: 1px solid #e15960;
-    color: #fff;
+    border: none;
+    color: white;
     font-weight: bold;
     font-size: 16px;
     font-variant: small-caps;
@@ -303,9 +388,10 @@ span.current_page {
     cursor: pointer;
     text-align: center;
     padding: 0px;
+    display: block;
 }
 
-.login-block input#submit:hover, .register-block input#submit:hover {
+input#submit:hover {
     background: #ff7b81;
 }
 
@@ -313,10 +399,11 @@ span.current_page {
 
 div.login_interface {
   float: right;
-  position: absolute;
-  top: 8px;
-  bottom: 8px;
-  right: 16px;
+//  position: absolute;
+//  top: 8px;
+//  bottom: 8px;
+//  right: 16px;
+  margin-right: 16px;
   text-align: right;
 }
 
@@ -598,6 +685,9 @@ table.sql_rows td {
 }
 
 
+
+
+
 /* common styles */
 
 p.timestamp {
@@ -617,6 +707,13 @@ p.attribution {
   padding: 4px 0px;
   border-top: 4px solid gray;
 }
+
+
+
+
+
+
+
 
 /* minimag formatting styles */
 

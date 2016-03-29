@@ -41,6 +41,7 @@ include "http.asm"
 include "commands.asm"
 include "render.asm"
 include "fcgi.asm"
+include "free_text_search.asm"
 
 
 iglobal
@@ -54,7 +55,7 @@ uglobal
   hMainDatabase dd ?
   ProcessID     dd ?
   ProcessStart  dd ?
-  fOwnSocket    dd ?
+;  fOwnSocket    dd ?
 endg
 
 
@@ -62,7 +63,6 @@ rb 273
 
 start:
         InitializeAll
-
 
         stdcall SetForcedTerminateHandler, OnForcedTerminate
 
@@ -114,15 +114,15 @@ start:
 
 proc OnForcedTerminate as procForcedTerminateHandler
 begin
-        cmp     [fOwnSocket], 0
-        je      start.terminate
+;        cmp     [fOwnSocket], 0
+;        je      start.terminate
+;
+;        stdcall SocketClose, [STDIN]
+;;        OutputValue "Socket close return:", eax, 10, -1
+;
+;        stdcall FileDelete, pathMySocket
 
-        stdcall SocketClose, [STDIN]
-        OutputValue "Socket close return:", eax, 10, -1
-
-        stdcall FileDelete, pathMySocket
-
-        OutputValue "File delete return:", eax, 10, -1
+;        OutputValue "File delete return:", eax, 10, -1
 
         jmp     start.terminate         ; the stack is not important here!
 endp

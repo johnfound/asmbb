@@ -265,6 +265,9 @@ begin
         stdcall StrCompNoCase, edi, "referer"
         jc      .get_referer
 
+        stdcall StrCompNoCase, edi, "query"
+        jc      .get_query
+
 if defined options.DebugWeb & options.DebugWeb
 
         stdcall StrCompNoCase, edi, "environment"
@@ -389,6 +392,35 @@ end if
 .root:
         stdcall StrNew
         stdcall StrCharCat, eax, "/"
+        jmp     .return_value
+
+
+;..................................................................
+
+.get_query:
+
+        stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
+        jc      .empty_query
+
+        mov     ebx, eax
+
+        stdcall StrLen, ebx
+        test    eax, eax
+        jz      .empty_query
+
+        stdcall StrDup, ebx
+        push    eax
+
+        stdcall StrSplit, eax, 2
+        stdcall StrDel ; from the stack
+
+        stdcall StrURLDecode, eax
+
+        jmp     .return_value
+
+.empty_query:
+
+        stdcall StrNew
         jmp     .return_value
 
 
