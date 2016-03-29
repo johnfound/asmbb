@@ -1,14 +1,14 @@
-C Search\sengine\susing\ssqlite\sFTS5\shas\sbeen\simplemented.\sSeveral\sbugs,\scausing\scrashes\shas\sbeen\sfixed.\nBetter\serror\smessages\sfor\sthe\ssqlite\sconsole.\sMore\sconsistent\sdesign\sof\sthe\slogin\sand\sregister\sforms.
-D 2016-03-29T19:15:06.185
+C Renamed\sthe\sproject\sfile\sand\sthe\smain\sfile\sof\sthe\sproject\sin\sorder\sto\scorrespond\swith\sthe\snature\sof\sthe\sproject.
+D 2016-03-29T20:58:05.270
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F source/Linux/sqlite3.inc 3434422cbaa5b6d55ec5a3a8171d7784c08fe6bc
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
 F source/commands.asm 92c0e44fd1aa882af2c2e3343b29ee3b41545610
 F source/create.sql 1c667a2e2cb7c3c7f03ca833fdf43dc7367b306f
+F source/engine.asm 1c9ff2652d137787b4f17eec0926dbdd4df58333 w source/index.asm
+F source/engine.fpr 1ecebbde33e9fd2f8ddd04f5d48be5627343c4da w source/index.fpr
 F source/fcgi.asm 4d9e7406bd77fe6e8d7ff810f998aa71db7bfc0b
 F source/http.asm 6fd36367f90732d910c6bd564ffbcb6815094c74
-F source/index.asm 1c9ff2652d137787b4f17eec0926dbdd4df58333
-F source/index.fpr 34f19292d82ff48bbb4cb4b9a7fa850fa365eb8e
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 54a024c98970cf06de9631de16326a746244e257
 F source/render.asm 28bdbcf1e0ae21e66396e18eb9979a5c4a47137c
@@ -72,7 +72,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/register_form.tpl 891c8e443911145d7001c205462ff7408660b020
 F www/templates/sqlite_console_form.tpl 95127bede821d6028ed3cfc3a37db0b26126a809
 F www/templates/thread_info.tpl 07d2a2e4a143aa71a7fb3e6c9353dd0aa9a244ad
-P dbb6ebee474382d357c571f14ce986901040b940
-R 2073207ecc5c52c008ee8c0579198046
+P 43e979a5be4d2a080c55f49f16e43d95d68d0ca0
+R 26b4915f3e2bc7a1f6c4cb4d92c787d5
 U johnfound
-Z 281b2c835b6d34e3ef71c3fe58d53c39
+Z 6e81270f25757b1b4d0350e63aac1a7f
