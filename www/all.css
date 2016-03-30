@@ -90,8 +90,10 @@ input#search_btn:hover  {
 
 div.threads_list {
   width: 95%;
+  position: relative;
   max-width: 1280px;
   margin: auto;
+  clear: both;
 }
 
 
@@ -102,7 +104,6 @@ div.threads_list {
   overflow: hidden;
   zoom: 1;
   margin-bottom: 8px;
-  clear: both;
   overflow: visible;
 }
 
@@ -163,6 +164,31 @@ a.thread_link {
   font-weight: bold;
 }
 
+
+/* tag list styles */
+
+div.tags {
+  width: 95%;
+  max-width: 1280px;
+  margin: 16px auto;
+  padding: 4px;
+
+  background-color: #606060;
+  font-size: 28px;
+  font-weight: normal;
+}
+
+a.taglink {
+  margin: 0px 4px;
+  color: white;
+}
+
+
+
+a.taglink img {
+  vertical-align: middle;
+  margin-right: 8px;
+}
 
 
 /* Thread view styles */
@@ -576,6 +602,23 @@ div.editor p, div.new_editor p{
   margin: 0px 0px 4px 0px;
 }
 
+span.small {
+  font-size: 80%;
+  font-weight: normal;
+}
+
+div.edit_groupL {
+  display: inline-block;
+  width: 50%;
+  padding-right: 8px;
+}
+
+div.edit_groupR {
+  display: inline-block;
+  width: 50%;
+  padding-left: 8px;
+}
+
 input.title {
   display: inline-block;
   width: 100%;
@@ -585,6 +628,18 @@ input.title {
 
   background-color: white;
 }
+
+input.tags {
+  display: inline-block;
+  width: 100%;
+
+  border-style: none;
+  padding: 4px;
+  margin-bottom: 8px;
+
+  background-color: white;
+}
+
 
 textarea.editor {
   display: inline-block;

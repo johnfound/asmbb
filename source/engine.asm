@@ -41,7 +41,9 @@ include "http.asm"
 include "commands.asm"
 include "render.asm"
 include "fcgi.asm"
-include "free_text_search.asm"
+include "search.asm"
+include "post.asm"
+include "edit.asm"
 
 
 iglobal
@@ -59,7 +61,7 @@ uglobal
 endg
 
 
-rb 273
+rb 73
 
 start:
         InitializeAll

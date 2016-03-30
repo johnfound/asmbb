@@ -1,21 +1,25 @@
-C Renamed\sthe\sproject\sfile\sand\sthe\smain\sfile\sof\sthe\sproject\sin\sorder\sto\scorrespond\swith\sthe\snature\sof\sthe\sproject.
-D 2016-03-29T20:58:05.270
+C The\simplementation\sof\sthe\stag\sbased\sforum\ssections\sis\salmost\sdone.\sSome\smore\s\ntesting\sneeded\sand\ssome\sminor\sfeatures\sas\sa\sdisplaying\sof\sthe\sassigned\stags\sin\sthe\nthread\ssummary.\sThe\ssource\shas\sbeen\sseparated\sin\sseveral\snew\sfiles\sin\sorder\sto\skeep\sthem\ssmaller.
+D 2016-03-30T21:11:03.706
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F source/Linux/sqlite3.inc 3434422cbaa5b6d55ec5a3a8171d7784c08fe6bc
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
-F source/commands.asm 92c0e44fd1aa882af2c2e3343b29ee3b41545610
-F source/create.sql 1c667a2e2cb7c3c7f03ca833fdf43dc7367b306f
-F source/engine.asm 1c9ff2652d137787b4f17eec0926dbdd4df58333 w source/index.asm
-F source/engine.fpr 1ecebbde33e9fd2f8ddd04f5d48be5627343c4da w source/index.fpr
+F source/commands.asm 0560c11ea27ffbfd8245d94f09c489c21a9a9c6f
+F source/create.sql 2f1015f3670e11e28c3a8a897929ae6fee4a1073
+F source/edit.asm a9322036c35a29a5223e98ec4af5128c7abdd412
+F source/engine.asm 4563ec650c3ba37bf4ca69e72940af1a97e259c8
+F source/engine.fpr 66be85431d9eff74a68ab7c25cad865776ab88ef
+F source/exponential_scaling.ods b66ca0aa6f1f4dc69986c751341877b423db11e5
+F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 4d9e7406bd77fe6e8d7ff810f998aa71db7bfc0b
 F source/http.asm 6fd36367f90732d910c6bd564ffbcb6815094c74
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 54a024c98970cf06de9631de16326a746244e257
-F source/render.asm 28bdbcf1e0ae21e66396e18eb9979a5c4a47137c
-F source/search.asm 2b7d1ff6fc54608e211e574b93b70f3b666aabac
+F source/post.asm 60f3c887b82206f352281627fe36e2a3e5378705
+F source/render.asm 068142d0e0e711470e95fa259eaa3baf635ee06e
+F source/search.asm 473858459d6a6e3fbe377b461985efb0d0bc788f
 F source/sqlite3.asm 4285b7e6615de3ffd2630b7c4adbf3df3210dd43
 F www/.htaccess e3d61615a5f5b289f09966a72e7f02777d0b1c60
-F www/all.css afb46e34c1d58da6c6265450163261b56223b1af
+F www/all.css 32b270147b13cea57c70a1384d461ac5b22bd1d5
 F www/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
 F www/images/del_gray.svg 5e3d0ba999e37de7dfdc43292d1c14e4513573ac
 F www/images/edit.svg 2f003198c4acd6bb294e25be53f1299713cffdb8
@@ -37,7 +41,7 @@ F www/images/posts_gray.svg 809ee9b2688df16ae2f4fec535612e22f7bf6d9c
 F www/images/quote.svg a57dfe55abff5e0685326195e49180c32bf2565c
 F www/images/screw.png 85d1316adcbbfc75a913bfbc876988f1a6482b20
 F www/images/screw0.png 066a3c6e31fb2da342f34602eff8b35cb18f3fc3
-F www/images/search.svg 1587856878afe0e2eeaa944cdc92859c14b1c4c6
+F www/images/search.svg 4304f2fc3ba7f9b50e06b061b0f59eb0e829e126
 F www/images/sources/del_gray.svg bf94f2383987b249a4ad1f9ae5f093af95457dc1
 F www/images/sources/edit.svg 24184d8e14ca9ae7c402a54df5e77ddbbf7eb50b
 F www/images/sources/edit_gray.svg da532e60b6119e4c563d3f481120621a5bd299a2
@@ -47,7 +51,7 @@ F www/images/sources/posts_gray.svg e567ee65433f84d3b87c1cdf0508e612ba400d94
 F www/images/sources/quote.svg 5e8c5fbcc26c08fb9ac99dd563acd50c50e1d28a
 F www/images/sources/screw.xcf 6a65dbe3140bc2ef2cfbe1ec6fdebefb6f18fec4
 F www/images/sources/screw0.xcf 50d79cf2cc504c7f0d1499c28147a621b7aaa234
-F www/images/sources/search.svg 5fa56549ecff1a18db3f54b68346cf02326da70f
+F www/images/sources/search.svg 50eb2717ab41f19d5a617f6189290fca02470b6b
 F www/images/user.png bf7f849ee8f09b959965aa984f2a5ce7f972ce07
 F www/ld-musl-i386.so 4d44786b8676115c7df45c45ceb051c11ce14ffd x
 F www/libsqlite3.so 70045c696736178082b18594bd1bc5c53b5c0576 x
@@ -61,18 +65,18 @@ F www/templates/error_html_start.tpl 3210e7211a82de3b7050239c30fa87d5c2a37186
 F www/templates/login_form.tpl 7b6753dbe4fce93548d45af70d85b42603238125
 F www/templates/logout.tpl 08bc7c756494e841962fb3b005686cb382495632
 F www/templates/main_html_end.tpl dbc17594a4b720a493125fd95e4a62fc5659c800
-F www/templates/main_html_start.tpl 1c58a26c4512598a0ccd2eec9a87bb1bb4570315
+F www/templates/main_html_start.tpl 25e0c4cc8ee52de6f32b7d98beb6b5c32f854236
 F www/templates/minimag_suffix.tpl e0ee4765a03f31868c42f12693dc9b23b8ca076e
-F www/templates/nav_list.tpl bb594bd6df17af01c9c0d38afa9c2c27fdd1e342
-F www/templates/nav_thread.tpl 2288c65907e68041742fde9a25127667964c195f
+F www/templates/nav_list.tpl b614380d576145465c0101b84c3619c567be57e1
+F www/templates/nav_thread.tpl 5d87fa91190c8c37c622044ea3379ec1badbe496
 F www/templates/new_post_form.tpl 5931ea1a48d5e619afa869a73f11053682f52b29
-F www/templates/new_thread_form.tpl 5868183b6ed0f966e318fed84d80004c18c7e86c
+F www/templates/new_thread_form.tpl a1d47a3ca030f96452fd216cf820cf993c6c1a1f
 F www/templates/post_view.tpl 70529555a272f51db2d675c3244891dfd3b8693f
 F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/register_form.tpl 891c8e443911145d7001c205462ff7408660b020
 F www/templates/sqlite_console_form.tpl 95127bede821d6028ed3cfc3a37db0b26126a809
-F www/templates/thread_info.tpl 07d2a2e4a143aa71a7fb3e6c9353dd0aa9a244ad
-P 43e979a5be4d2a080c55f49f16e43d95d68d0ca0
-R 26b4915f3e2bc7a1f6c4cb4d92c787d5
+F www/templates/thread_info.tpl 7015771f2942d4fd91ffaa3f4468041afe0c0456
+P 2ba75eb191cf770362104245b0fed3ee2f7d71f2
+R 44ef34964e5261047b83b479a361dc94
 U johnfound
-Z 6e81270f25757b1b4d0350e63aac1a7f
+Z 22d7c86e716de28da18a240ae0ca0bb3

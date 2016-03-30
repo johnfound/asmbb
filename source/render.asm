@@ -73,7 +73,7 @@ endp
 
 
 proc __DoProcessTemplate2, .hTemplate, .sql_stmt, .pSpecial, .fHTML
-
+  .stmt dd ?
 begin
         pushad
 
@@ -265,8 +265,18 @@ begin
         stdcall StrCompNoCase, edi, "referer"
         jc      .get_referer
 
+        stdcall StrCompNoCase, edi, "search"
+        jc      .get_search
+
+        stdcall StrCompNoCase, edi, txt "tag"
+        jc      .get_tag
+
         stdcall StrCompNoCase, edi, "query"
         jc      .get_query
+
+        stdcall StrCompNoCase, edi, "alltags"
+        jc      .get_all_tags
+
 
 if defined options.DebugWeb & options.DebugWeb
 
@@ -397,32 +407,147 @@ end if
 
 ;..................................................................
 
+.get_search:
+        cmp     [esi+TSpecialParams.search], 0
+        je      .empty_query
+
+        stdcall StrDup, [esi+TSpecialParams.search]
+        jmp     .return_value
+
+;..................................................................
+
+
+.get_tag:
+        cmp     [esi+TSpecialParams.tag], 0
+        je      .empty_query
+
+        stdcall StrDup, [esi+TSpecialParams.tag]
+        jmp     .return_value
+
+;..................................................................
+
 .get_query:
+        cmp     [esi+TSpecialParams.query], 0
+        je      .empty_query
 
-        stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
-        jc      .empty_query
-
-        mov     ebx, eax
-
-        stdcall StrLen, ebx
-        test    eax, eax
-        jz      .empty_query
-
-        stdcall StrDup, ebx
-        push    eax
-
-        stdcall StrSplit, eax, 2
-        stdcall StrDel ; from the stack
-
-        stdcall StrURLDecode, eax
-
+        stdcall StrDup, [esi+TSpecialParams.query]
         jmp     .return_value
 
 .empty_query:
-
         stdcall StrNew
         jmp     .return_value
 
+;..................................................................
+
+.scale   db 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 32, 33, 35, 37, 38
+         db 40, 41, 43, 44, 46, 47, 48, 50, 51, 52, 53, 55, 56, 57, 58, 59, 60, 62, 63, 64
+         db 65, 66, 67, 68, 69, 70, 70, 71, 72, 73, 74, 75, 76, 76, 77, 78, 79, 79, 80, 81
+         db 82, 82, 83, 83, 84, 85, 85, 86, 87, 87, 88, 88, 89, 89, 90, 90, 91, 91, 92, 92
+         db 93, 93, 94, 94, 95, 95, 95, 96, 96, 97, 97, 97, 98, 98, 98, 99, 99, 99, 100,100
+
+
+.get_all_tags:
+
+sqlGetMaxTagUsed text "select count(Tag) as cnt from ThreadTags group by tag order by cnt desc limit 1"
+sqlGetAllTags    text "select TT.tag, count(TT.tag) as cnt, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag group by TT.tag order by TT.tag"
+
+locals
+  .max   dd ?
+  .cnt   dd ?
+endl
+
+        stdcall StrNew
+        mov     ebx, eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetMaxTagUsed, sqlGetMaxTagUsed.length, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .end_tags
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        test    eax, eax
+        jz      .end_tags
+
+        mov     [.max], eax
+
+        cinvoke sqliteFinalize, [.stmt]
+
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetAllTags, sqlGetAllTags.length, eax, 0
+
+.tag_loop:
+        cinvoke sqliteStep, [.stmt]
+
+        cmp     eax, SQLITE_ROW
+        jne     .end_tags
+
+        cinvoke sqliteColumnInt, [.stmt], 1     ; the count used
+        mov     [.cnt], eax
+        mov     ecx, 100
+        mul     ecx
+        div     [.max]
+        test    eax, eax
+        jz      .tag_loop
+
+        cmp     eax, ecx
+        cmova   eax, ecx
+
+        movzx   eax, [.scale+eax-1]
+        test    eax, eax
+        jz      .tag_loop
+
+        stdcall StrCat, ebx, '<a class="taglink" style="font-size:'
+        stdcall NumToStr, eax, ntsDec or ntsUnsigned
+
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+
+        stdcall StrCat, ebx, txt '%;" title="'
+
+        cinvoke sqliteColumnText, [.stmt], 2
+        test    eax, eax
+        jz      .title_ok
+
+        stdcall StrEncodeHTML, eax
+        stdcall StrCat, ebx, eax
+        stdcall StrCharCat, ebx, "; "
+        stdcall StrDel, eax
+
+.title_ok:
+
+        stdcall NumToStr, [.cnt], ntsDec or ntsUnsigned
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+
+        stdcall StrCat, ebx, ' thread'
+        cmp     [.cnt], 1
+        je      .plural_ok
+
+        stdcall StrCharCat, ebx, 's'
+
+.plural_ok:
+
+        stdcall StrCat, ebx, '." href="/list/?tag='
+
+        cinvoke sqliteColumnText, [.stmt], 0
+        stdcall StrEncodeHTML, eax
+
+        stdcall StrCat, ebx, eax
+        stdcall StrCat, ebx, txt '">'
+        stdcall StrCat, ebx, eax
+        stdcall StrCat, ebx, txt '</a>'
+        stdcall StrDel, eax
+
+        jmp     .tag_loop
+
+
+.end_tags:
+        cinvoke sqliteFinalize, [.stmt]
+
+        mov     eax, ebx
+        jmp     .return_value
 
 ;..................................................................
 
@@ -571,10 +696,6 @@ end if
 
 
 .process_sql:
-
-locals
-  .stmt dd ?
-endl
 
         stdcall StrSplit, edi, 4
         stdcall StrDel, edi
@@ -771,6 +892,39 @@ endp
 
 
 
+proc StrTagify, .hString
+begin
+        pushad
+
+        mov     ebx, [.hString]
+
+        stdcall StrConvertWhiteSpace, ebx, " "
+        stdcall StrConvertPunctuation, ebx
+
+        stdcall StrCleanDupSpaces, ebx
+        stdcall StrClipSpacesR, ebx
+        stdcall StrClipSpacesL, ebx
+
+        stdcall StrOffsUtf8, ebx, 16
+        stdcall StrSplit, ebx, eax
+        stdcall StrDel, eax
+
+        stdcall StrClipSpacesR, ebx
+        stdcall StrClipSpacesL, ebx
+
+        stdcall StrConvertWhiteSpace, ebx, "_"
+
+        popad
+        return
+endp
+
+
+
+
+
+
+
+
 proc StrConvertWhiteSpace, .hString, .toChar
 begin
         pushad
@@ -814,6 +968,14 @@ begin
 
 .loop:
         mov     al, [esi]
+        cmp     al, $80         ; unicode
+        ja      .next
+        cmp     al, '_'
+        je      .next
+        cmp     al, '-'
+        je      .next
+
+        or      al, $20
         cmp     al, "a"
         jb      .not_letter
         cmp     al, "z"

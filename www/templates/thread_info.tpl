@@ -8,5 +8,5 @@
     <div class="unread_cnt">[Unread] [case:[Unread]|непрочетени|непрочетено|непрочетени]</div>
     <div class="changed"><img src="/images/edit.svg" width="16" height="16" alt="#">[TimeChanged]</div>
   </div>
-  <div class="thread_link"><a class="thread_link" href="/threads/[Slug]/">[Caption]</a></div>
+  <div class="thread_link"><a class="thread_link" href="/threads/[Slug]/?tag=[special:tag]">[Caption]</a></div>
 </div>

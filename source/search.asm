@@ -22,11 +22,7 @@ sqlSearch text "select ",                                                       
 
 
 proc ShowSearchResults, .start, .pSpecial
-.query      dd ?
 .pages      dd ?
-
-.query_orig dd ?        ; don't free it!
-
 
 .stmt       dd ?
 
@@ -35,29 +31,13 @@ begin
 
         mov     esi, [.pSpecial]
 
-        stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
-        jc      .missing_query
-
-        mov     [.query_orig], eax
-
-        stdcall StrLen, eax
-        test    eax, eax
-        jz      .missing_query
-
-        stdcall StrDup, [.query_orig]
-        push    eax
-
-        stdcall StrSplit, eax, 2
-        stdcall StrDel ; from the stack
-
-        stdcall StrURLDecode, eax
-        mov     [.query], eax   ; only the query string!
-
+        cmp     [esi+TSpecialParams.search], 0
+        je      .missing_query
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSearchCnt, sqlSearchCnt.length, eax, 0
 
-        stdcall StrPtr, [.query]
+        stdcall StrPtr, [esi+TSpecialParams.search]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
@@ -71,7 +51,7 @@ begin
         test    edi, edi
         jz      .pages_ok
 
-        stdcall CreatePagesLinks, "/search/", [.query_orig], [.start], edi
+        stdcall CreatePagesLinks, "/search/", [esi+TSpecialParams.query], [.start], edi
         mov     [.pages], eax
 
 .pages_ok:
@@ -90,7 +70,7 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSearch, sqlSearch.length, eax, 0
 
-        stdcall StrPtr, [.query]
+        stdcall StrPtr, [esi+TSpecialParams.search]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteBindInt, [.stmt], 2, PAGE_LENGTH
@@ -112,8 +92,6 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall StrDel, [.query]
-
         stdcall StrCat, edi, [.pages]
         stdcall StrDel, [.pages]
 
@@ -130,9 +108,7 @@ begin
         return
 
 
-
 .missing_query:
-
 
         stdcall StrMakeRedirect, 0, "/message/missing_query/"
         mov     edi, eax

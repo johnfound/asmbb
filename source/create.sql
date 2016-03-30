@@ -11,6 +11,7 @@ insert or ignore into Params values ('host','board.asm32.info');
 insert or ignore into Params values ('email','admin');
 insert or ignore into Params values ('smtp_ip','164.138.218.50');
 insert or ignore into Params values ('smtp_port','25');
+insert or ignore into Params values ('file_cache', '0');
 
 
 create table if not exists Users (
@@ -59,8 +60,8 @@ create index if not exists idxThreads_Slug	  on Threads (Slug);
 
 create table if not exists Posts (
   id	      integer primary key autoincrement,
-  threadID    integer references Threads(id),
-  userID      integer references Users(id),
+  threadID    integer references Threads(id) on delete cascade,
+  userID      integer references Users(id) on delete cascade,
 
   postTime    integer,	-- based on postTime the posts are sorted in the thread.
   ReadCount   integer,
@@ -74,8 +75,8 @@ create index if not exists idxPosts_Time     on Posts (postTime, id);
 
 
 create table if not exists Tags (
-  id	      integer primary key autoincrement,
-  Tag	      text,
+  Tag	      text primary key,
+  Importance  integer not null default 0,
   Description text
 );
 
@@ -83,14 +84,17 @@ create table if not exists Tags (
 /* Relation tables */
 
 create table if not exists ThreadTags (
-  ThreadID integer references Threads(id),
-  TagID    integer references Tags(id)
+  ThreadID integer references Threads(id) on delete cascade,
+  Tag	   text references Tags(Tag) on delete cascade on update cascade
 );
 
 
+create unique index idxThreadTagsUnique on ThreadTags ( ThreadID, Tag );
+
+
 create table if not exists UnreadPosts (
-  UserID integer references Users(id),
-  PostID integer references Posts(id),
+  UserID integer references Users(id) on delete cascade,
+  PostID integer references Posts(id) on delete cascade,
   Time	 integer
 );
 
@@ -99,15 +103,17 @@ create unique index idxUnreadPosts on UnreadPosts(UserID, PostID);
 
 
 create table if not exists Attachements (
-  postID   integer references Posts(id),
+  id	   integer primary key autoincrement,
+  postID   integer references Posts(id) on delete cascade,
   filename text,
   notes    text,
   file	   blob
 );
 
 
+
 create table if not exists Sessions (
-  userID    integer references Users(id),
+  userID    integer references Users(id) on delete cascade,
   fromIP    text,
   sid	    text,
   last_seen integer,
