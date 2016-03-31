@@ -38,6 +38,7 @@ uses sqlite3:"%TargetOS%/sqlite3.inc"
 
 include "sqlite3.asm"   ; sqlite utility functions.
 include "http.asm"
+include "timeproc.asm"  ; date/time utility procedures.
 include "commands.asm"
 include "render.asm"
 include "fcgi.asm"
@@ -60,6 +61,9 @@ uglobal
   ProcessID     dd ?
   ProcessStart  dd ?
 ;  fOwnSocket    dd ?
+
+  dtm TDateTime
+  tm  rd 2
 endg
 
 

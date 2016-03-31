@@ -1,17 +1,17 @@
-C Continues\sthe\swork\son\ssplitting\sthe\ssource\samong\sseparate\sfiles.\sNow\stwo\smore\sfiles\shas\sbeen\screated.\n\nImplemented\sthread\stag\sdisplay\sin\sthe\sdifferent\sthread\slists.\n\nThe\spage\sbottom\snavigation\shas\sbeen\sremoved\sfrom\sthe\spages\sthat\shave\s5\sor\sless\sitems\slisted,\sbecause\sthe\stop\spage\snavigation\sis\salways\saccessible.
-D 2016-03-31T11:14:45.265
+C Mainly\swork\son\sthe\scache\scontrol.\sNow\swith\senabled\scache\scontrol\sit\sloads\svery\sfast,\sbecause\sdoesn't\sneed\sto\sload\sall\simages.\n\nAdditionally\sthe\snext\simprovements\sin\sFreshLibDev\s(new\sfunctions\shas\sbeed\simplemented),\sso\sthis\sversion\swill\sneed\supdating\sFreshLibDev\sas\swell.
+D 2016-03-31T19:22:51.421
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F source/Linux/sqlite3.inc 3434422cbaa5b6d55ec5a3a8171d7784c08fe6bc
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
-F source/commands.asm 70ae6ded0c47213d1485a22cbda1594f3fca53ec
-F source/create.sql 2f1015f3670e11e28c3a8a897929ae6fee4a1073
+F source/commands.asm fc11788783c4c9fee71b45244c479d05e671e860
+F source/create.sql d99d566822a28c0e503722a1edb3f208c1b8a882
 F source/edit.asm a9322036c35a29a5223e98ec4af5128c7abdd412
-F source/engine.asm f10eb0f998fca80ebe2f40eafb2915108f141bb6
-F source/engine.fpr f3af0486dce5d60fb88f20669bbf0263eb2f3d73
+F source/engine.asm 47f2585e00716bb74e5f4f2a86d7383f326d335d
+F source/engine.fpr 5d16f59fba5e02708ddae3bcecfaa61a34c7fc74
 F source/exponential_scaling.ods b66ca0aa6f1f4dc69986c751341877b423db11e5
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 4d9e7406bd77fe6e8d7ff810f998aa71db7bfc0b
-F source/http.asm 6fd36367f90732d910c6bd564ffbcb6815094c74
+F source/http.asm 1de11f176bffa49928dc6d01d73be4174be065a3
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 54a024c98970cf06de9631de16326a746244e257
 F source/post.asm ef64bedcc7c51ce740915dbb6c42b78aa7d34c5c
@@ -20,6 +20,7 @@ F source/search.asm 473858459d6a6e3fbe377b461985efb0d0bc788f
 F source/showthread.asm c064db981cd0dcadc9e1f6d93aeb43fe4f806102
 F source/sqlite3.asm 4285b7e6615de3ffd2630b7c4adbf3df3210dd43
 F source/threadlist.asm 85bf2732165ce26b4108280a7fa2c8cf0756932e
+F source/timeproc.asm 48fe8e08a08375742d78811a34ed5df4273efdb0
 F www/.htaccess e3d61615a5f5b289f09966a72e7f02777d0b1c60
 F www/all.css 9d9628cbb2c2eed01ef021ab4fb43edbbddea0bc
 F www/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
@@ -80,7 +81,7 @@ F www/templates/register_form.tpl 891c8e443911145d7001c205462ff7408660b020
 F www/templates/search_result.tpl d2fab89332c2e6418618bcc4bef468bab57e85c7
 F www/templates/sqlite_console_form.tpl 95127bede821d6028ed3cfc3a37db0b26126a809
 F www/templates/thread_info.tpl 38aa7f20ea108c10a57d61653e4decd222aa03e1
-P 01f9ed9222e98f50214d25390734b5fd3c801c30
-R 011f3649e0a149de862e076ea4a87875
+P fdd2a8cd12418c08593ca10a249dad31c0c7584f
+R 36afd981383fc672149b189079e2b2f2
 U johnfound
-Z e2012bbc11b94606a1965badefc50abe
+Z bd27c2e4305f7f76d9d07ccc91ece2d9

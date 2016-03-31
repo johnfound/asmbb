@@ -34,6 +34,14 @@ proc ServeOneRequest, .hSocket, .requestID, .pParams2, .pPost2, .start_time
 .root     dd ?
 .uri      dd ?
 .filename dd ?
+.mime     dd ?
+
+.date     TDateTime
+.timelo   dd ?
+.timehi   dd ?
+
+.timeRet  rd 2
+
 
 .special TSpecialParams
 
@@ -66,7 +74,24 @@ begin
         stdcall StrCatMem, eax, edx, ecx
 
 .post_ok:
+
         mov     [.special.post], eax
+
+
+; debug only
+
+;        lea     eax, [.special]
+;        stdcall __DoProcessTemplate2, "[special:environment]", 0, eax, FALSE
+;        push    eax
+;
+;        stdcall FileWriteString, [STDERR], eax
+;        stdcall FileWriteString, [STDERR], <13, 10, 13, 10, "----------------------------------------------------------", 13, 10, 13, 10>
+;
+;        stdcall StrDel ; from the stack
+
+; end of debug
+
+
 
         stdcall StrNew
         mov     edi, eax
@@ -162,19 +187,44 @@ begin
         stdcall StrDel ; from the stack
         jc      .analize_uri
 
+        mov     [.mime], eax
 
-        mov     edx, eax
 
-        stdcall GetFileFromDB, [.filename]
-;        stdcall LoadBinaryFile, [.filename]
+        mov     [.timelo], 0
+        mov     [.timehi], 0
+
+        stdcall ValueByName, [.special.params], "HTTP_IF_MODIFIED_SINCE"
+        jc      .get_file
+
+        lea     edx, [.date]
+        stdcall DecodeHTTPDate, eax, edx
+        jc      .get_file
+
+        stdcall DateTimeToTime, edx
+        mov     [.timelo], eax
+        mov     [.timehi], edx
+
+.get_file:
+        lea     eax, [.timeRet]
+        stdcall GetFileFromDB, [.filename], [.timelo], [.timehi], eax
         jc      .error404_no_list_free
+
+        test    eax, eax
+        jz      .send_304_not_modified
 
         mov     esi, eax
 
 ; serve the file.
 
-        stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Content-type: ">
-        stdcall StrCat, edi, edx
+        stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Cache-control: public", 13, 10>
+
+        stdcall FormatHTTPTime, [.timeRet], [.timeRet+4]
+        stdcall StrCat, edi, "Last-modified: "
+        stdcall StrCat, edi, eax
+        stdcall StrDel, eax
+
+        stdcall StrCat, edi, <13, 10, "Content-type: ">
+        stdcall StrCat, edi, [.mime]
         stdcall StrCharCat, edi, $0a0d0a0d
 
         stdcall StrPtr, edi
@@ -188,6 +238,11 @@ begin
 
         jmp     .final_clean
 
+
+.send_304_not_modified:
+
+        stdcall StrCat, edi, <"Status: 304 Not Modified", 13, 10, 13, 10>
+        jmp     .send_simple_result2
 
 .error500:
         lea     eax, [.special]
@@ -2424,14 +2479,16 @@ endp
 
 
 
-sqlGetFile text "select content from FileCache where filename = ?"
-sqlCacheFile text "insert into FileCache (filename, content) values (?, ?)"
+sqlGetFile text "select content, changed from FileCache where filename = ?"
+sqlCacheFile text "insert into FileCache (filename, content, changed) values (?, ?, ?)"
 
-proc GetFileFromDB, .filename
+proc GetFileFromDB, .filename, .time_lo, .time_hi, .pModified
 
 .stmt dd ?
 .ptr  dd ?
 .size dd ?
+
+.file_info TFileInfo
 
 begin
         pushad
@@ -2459,6 +2516,26 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .check_fs
 
+; check the date
+
+        xor     esi, esi
+        xor     ebx, ebx
+
+        cinvoke sqliteColumnInt64, [.stmt], 1
+
+        mov     ecx, [.pModified]
+        mov     [ecx], eax
+        mov     [ecx+4], edx
+
+        cmp     edx, [.time_hi]
+        ja      .newer
+        jb      .finish_ret     ; returns EAX = 0 and CF=0 if the date is older.
+
+        cmp     eax, [.time_lo]
+        jbe     .finish_ret
+
+
+.newer:
         cinvoke sqliteColumnBytes, [.stmt], 0
         mov     ebx, eax
         mov     [.size], eax
@@ -2485,6 +2562,8 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
+.finish_ret:
+
         mov     [esp+4*regEAX], esi
         mov     [esp+4*regECX], ebx
         clc
@@ -2498,14 +2577,40 @@ begin
 
 
 .get_file:
-        stdcall LoadBinaryFile, [.filename]
+
+        stdcall FileOpenAccess, [.filename], faReadOnly
         jc      .finish
 
+        mov     ebx, eax
+
+        lea     eax, [.file_info]
+        stdcall GetFileInfo, ebx, eax
+
+        stdcall FileSize, ebx
+        mov     ecx, eax
+
+        stdcall GetMem, ecx
         mov     esi, eax
+
+        stdcall FileRead, ebx, esi, ecx
+        push    eax ecx
+
+        stdcall FileClose, ebx
+        pop     ecx eax
+
+        cmp     eax, ecx
+        je      .read_ok
+
+        stdcall FreeMem, esi
+        stc
+        jmp     .finish
+
+
+.read_ok:
         mov     ebx, ecx
 
         test    edi, edi
-        jz      .finish_ok
+        jz      .finish_ret_file
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCacheFile, sqlCacheFile.length, eax, 0
@@ -2515,7 +2620,32 @@ begin
         stdcall StrPtr, [.filename]
         cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
         cinvoke sqliteBindBlob, [.stmt], 2, esi, ebx, SQLITE_STATIC
-        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteBindInt64, [.stmt], 3, dword [.file_info.timeModified], dword [.file_info.timeModified+4]
 
-        jmp     .finish_ok
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+.finish_ret_file:
+
+        mov     eax, dword [.file_info.timeModified]
+        mov     edx, dword [.file_info.timeModified+4]
+        mov     ecx, [.pModified]
+
+        mov     [ecx], eax
+        mov     [ecx+4], edx
+
+        cmp     edx, [.time_hi]
+        ja      .finish_ret
+        jb      .finish_ret_clear     ; returns EAX = 0 and CF=0 if the date is older.
+
+        cmp     eax, [.time_lo]
+        ja      .finish_ret
+
+.finish_ret_clear:
+
+        stdcall FreeMem, esi
+        xor     esi, esi
+        xor     ebx, ebx
+
+        jmp     .finish_ret
 endp

@@ -410,60 +410,6 @@ endp
 
 
 
-proc GetEmailTimestamp
-.time rd 2
-.date_time TDateTime
-begin
-
-
-        stdcall GetTime
-        mov     [.time], eax
-        mov     [.time+4], edx
-
-        lea     eax, [.time]
-        lea     ecx, [.date_time]
-        stdcall TimeToDateTime, eax, ecx
-
-; date
-        stdcall NumToStr, [.date_time.date], ntsUnsigned or ntsFixedWidth or ntsDec + 2
-        mov     ebx, eax
-        stdcall StrCharCat, ebx, ' '
-
-        mov     eax, [.date_time.month]
-        mov     eax, [.months+4*eax-4]
-        stdcall StrCharCat, ebx, eax
-
-        stdcall NumToStr, [.date_time.year], ntsSigned or ntsFixedWidth or ntsDec + 4
-        stdcall StrCat, ebx, eax
-        stdcall StrDel, eax
-        stdcall StrCharCat, ebx, ' '
-
-; time
-        stdcall NumToStr, [.date_time.hour], ntsUnsigned or ntsFixedWidth or ntsDec + 2
-        stdcall StrCat, ebx, eax
-        stdcall StrDel, eax
-        stdcall StrCharCat, ebx, ':'
-        stdcall NumToStr, [.date_time.minute], ntsUnsigned or ntsFixedWidth or ntsDec + 2
-        stdcall StrCat, ebx, eax
-        stdcall StrDel, eax
-        stdcall StrCharCat, ebx, ':'
-        stdcall NumToStr, [.date_time.second], ntsUnsigned or ntsFixedWidth or ntsDec + 2
-        stdcall StrCat, ebx, eax
-        stdcall StrDel, eax
-
-        stdcall StrCat, ebx, txt "-0000"
-
-        mov     eax, ebx
-        pop     esi ebx
-        return
-
-
-.months dd 'Jan ', 'Feb ', 'Mar ', 'Apr ', 'May ', 'Jun ', 'Jul ', 'Aug ', 'Sep ', 'Oct ', 'Nov ', 'Dec '
-
-endp
-
-
-
 
 
 

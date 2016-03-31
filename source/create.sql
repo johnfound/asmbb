@@ -245,7 +245,8 @@ Without desires.','Can''t post right now!',NULL);
 
 create table if not exists FileCache (
   filename  text primary key,
-  content   blob
+  content   blob,
+  changed   text
 );
 
 
