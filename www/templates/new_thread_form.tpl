@@ -7,7 +7,7 @@
       <p>Title:</p>
       <input class="title" type="edit" value="[caption]" placeholder="Thread title" name="title" autofocus="on">
     </div><div class="edit_groupR">
-      <p>Tags: <span class="small">(max 3, comma delimited, no spaces)</span></p>
+      <p>Tags: <span class="small">(max 3, comma delimited, no spaces)</span> [case:[sql:select "[special:tag]"<>""]| |+ "[special:tag]"]</p>
       <input class="tags"  type="edit" value="[tags]" name="tags" placeholder="some tags here"><br>
     </div>
     <p>Post content:</p>

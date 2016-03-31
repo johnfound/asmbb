@@ -277,6 +277,10 @@ begin
         stdcall StrCompNoCase, edi, "alltags"
         jc      .get_all_tags
 
+        stdcall GetQueryItem, edi, "threadtags=", 0
+        test    eax, eax
+        jnz     .get_thread_tags
+
 
 if defined options.DebugWeb & options.DebugWeb
 
@@ -498,7 +502,24 @@ endl
         test    eax, eax
         jz      .tag_loop
 
-        stdcall StrCat, ebx, '<a class="taglink" style="font-size:'
+        push    eax
+
+        stdcall StrCat, ebx, '<a class="taglink'
+
+        cmp     [esi+TSpecialParams.tag], 0
+        je      .current_ok
+
+        cinvoke sqliteColumnText, [.stmt], 0
+        stdcall StrCompNoCase, eax, [esi+TSpecialParams.tag]
+        jnc     .current_ok
+
+        stdcall StrCat, ebx, ' current_tag'
+
+.current_ok:
+
+        pop     eax
+
+        stdcall StrCat, ebx, '" style="font-size:'
         stdcall NumToStr, eax, ntsDec or ntsUnsigned
 
         stdcall StrCat, ebx, eax
@@ -550,6 +571,86 @@ endl
         jmp     .return_value
 
 ;..................................................................
+
+.get_thread_tags:
+
+sqlGetThreadTags    text "select TT.tag, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag where TT.threadID=? order by TT.tag"
+
+locals
+  .threadID dd ?
+endl
+
+        mov     ecx, eax
+
+        stdcall StrNew
+        mov     ebx, eax
+
+        stdcall __DoProcessTemplate2, ecx, [.sql_stmt], [.pSpecial], FALSE
+        stdcall StrDel, ecx
+
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack
+        jc      .end_thread_tags2
+
+        mov     [.threadID], eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadTags, sqlGetAllTags.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
+
+.thread_tag_loop:
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .end_thread_tags
+
+        cmp     [.threadID], 0
+        jne     .comma_ok
+
+        stdcall StrCharCat, ebx, ', '
+
+.comma_ok:
+        mov     [.threadID], 0
+        stdcall StrCat, ebx, '<a class="ttlink" '
+
+        cinvoke sqliteColumnText, [.stmt], 1
+        test    eax, eax
+        jz      .link_title_ok
+
+        stdcall StrEncodeHTML, eax
+
+        stdcall StrCat, ebx, 'title="'
+        stdcall StrCat, ebx, eax
+        stdcall StrCharCat, ebx, '" '
+        stdcall StrDel, eax
+
+.link_title_ok:
+
+        stdcall StrCat, ebx, 'href="/list/?tag='
+
+        cinvoke sqliteColumnText, [.stmt], 0
+        stdcall StrEncodeHTML, eax
+
+        stdcall StrCat, ebx, eax
+        stdcall StrCat, ebx, txt '">'
+        stdcall StrCat, ebx, eax
+        stdcall StrCat, ebx, txt '</a>'
+        stdcall StrDel, eax
+
+        jmp     .thread_tag_loop
+
+.end_thread_tags:
+
+        cinvoke sqliteFinalize, [.stmt]
+
+.end_thread_tags2:
+        mov     eax, ebx
+        jmp     .return_value
+
+;..................................................................
+
+
 
 
 if defined options.DebugWeb & options.DebugWeb

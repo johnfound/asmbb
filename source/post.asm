@@ -404,6 +404,9 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
         stdcall StrTagify, [edi+TArray.array]
 
         stdcall StrPtr, [edi+TArray.array]
+        cmp     [eax+string.len], 0
+        je      .next_tag
+
         cinvoke sqliteBindText, [.stmt],  1, eax, [eax+string.len], SQLITE_STATIC
 
         stdcall StrPtr, [edi+TArray.array]

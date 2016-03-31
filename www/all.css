@@ -55,7 +55,7 @@ input#search_line {
   height: 32px;
   padding: 4px;
   border: none;
-  background-color: #606060;
+  background-color: #404040;
   color: white;
 }
 
@@ -123,10 +123,12 @@ div.thread_info {
   overflow: visible;
 }
 
+
 div.thread_info img {
   margin-right: 8px;
   vertical-align: middle;
 }
+
 
 div.thread_info img.pinned {
   float: right;
@@ -136,9 +138,12 @@ div.thread_info img.pinned {
   margin: 0px;
 }
 
+
+
 div.post_cnt {
 
 }
+
 
 div.unread_cnt {
   font-size: 12px;
@@ -153,16 +158,26 @@ div.changed {
 
 div.thread_link {
   background-color: white;
-  padding: 32px;
+  padding: 16px;
   padding-left: 216px;
-  min-height: 100px;
+  min-height: 64px;
 }
-
 
 a.thread_link {
   font-size: 16px;
   font-weight: bold;
 }
+
+
+div.thread_tags {
+  background-color: #ffda44;
+  padding: 8px;
+  padding-left: 216px;
+  min-height: 32px;
+
+  font-size: 12px;
+}
+
 
 
 /* tag list styles */
@@ -173,16 +188,21 @@ div.tags {
   margin: 16px auto;
   padding: 4px;
 
-  background-color: #606060;
+  background-color: #404040;
   font-size: 28px;
   font-weight: normal;
 }
 
 a.taglink {
-  margin: 0px 4px;
+  padding: 0px 4px;
   color: white;
+  display: table-cell;
 }
 
+a.current_tag {
+  background-color: #ffda44;
+  color: black;
+}
 
 
 a.taglink img {
@@ -359,7 +379,7 @@ form.login-block h1, form.register-block h1 {
     height: 38px;
     text-align: center;
     color: white;
-    background-color: #606060;
+    background-color: #404040;
     font-size: 20px;
     font-variant: small-caps;
     margin-top: 0;
@@ -591,7 +611,7 @@ h1.fakeedit {
   margin: 8px 0px 8px 0px;
 
   background-color: #e0e0e0;
-  color: #606060;
+  color: #404040;
   font-weight: bold;
   font-size: inherit;
 }
@@ -788,9 +808,7 @@ div.post_text p {
    text-align: justify;
    margin-top: 0.75em;
    margin-bottom: 0.75em;
-
-  word-break: break-all;
-//  word-wrap: break-word;	 /* Internet Explorer 5.5+ */
+   word-wrap: break-word;	
 }
 
 div.post_text p.uli {
@@ -886,7 +904,7 @@ table.txt {
    border-right-width: 2px;
    border-bottom-width: 2px;
    border-style: solid;
-   border-color: #606060;
+   border-color: #404040;
    margin: 0.2em;
    background-color: white;
    border-collapse: collapse;
@@ -901,7 +919,7 @@ table.txt td {
    border-right-width: 0px;
    border-bottom-width: 0px;
    border-style: solid;
-   border-color: #606060;
+   border-color: #404040;
    padding-left: 0.2em;
    padding-right: 0.2em;
    padding-top: 0.1em;
