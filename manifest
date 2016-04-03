@@ -1,5 +1,5 @@
-C User\sinfo\spages,\schange\spassword\sand\schange\semail\sfeatures\shas\sbeen\sadded\sto\sthe\sengine.\nSome\sspeed\soptimizations\shas\sbeen\smade\sto\sthe\stemplate\sengine.\s\sAnother\snew\ssource\sfiles\nhas\sbeen\ssplit\sfrom\sthe\scommands.asm\sin\sorder\sto\smake\sit\ssmaller.
-D 2016-04-03T11:18:22.426
+C Minimized\sthe\s.htaccess\sfile\sfor\sapache.
+D 2016-04-03T11:56:16.600
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F source/Linux/sqlite3.inc 3434422cbaa5b6d55ec5a3a8171d7784c08fe6bc
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
@@ -23,7 +23,7 @@ F source/sqlite3.asm 4285b7e6615de3ffd2630b7c4adbf3df3210dd43
 F source/threadlist.asm 85bf2732165ce26b4108280a7fa2c8cf0756932e
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
 F source/userinfo.asm f9a994d3abe72acc08ca4de760c66c399f9aeb3a
-F www/.htaccess e3d61615a5f5b289f09966a72e7f02777d0b1c60
+F www/.htaccess fc8c641fc61f2a38821bdb99fb9556ddf98929a7
 F www/all.css 838ed5e301ba9b4d12f61689eae470481bb74cd6
 F www/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
 F www/images/del_gray.svg 5e3d0ba999e37de7dfdc43292d1c14e4513573ac
@@ -85,7 +85,7 @@ F www/templates/search_result.tpl 0452301cac82f1ab404ecb1e8fabc1e533897ecd
 F www/templates/sqlite_console_form.tpl 95127bede821d6028ed3cfc3a37db0b26126a809
 F www/templates/thread_info.tpl 7809ce7ca1d7ffdb8e48604f465e92b820768da2
 F www/templates/userinfo.tpl e16eb90c261deb2f46d97ab84bc24507344780f7
-P 882a91d89c83e8081c91319b775dc6dd54b652ba
-R 4926098bbc19f3f6159f0a1110809b5d
+P 0ad4cf66997a2072f9b453fca11f45e862ea94c1
+R ebd81c5b75e84301e3914d43a35d2e36
 U johnfound
-Z dc1e377a64b52294af4c6ff9f3d2e3dc
+Z 65f7eecd09d706a76e1a1a733e2ba401
