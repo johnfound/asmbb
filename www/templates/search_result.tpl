@@ -1,7 +1,7 @@
 <div class="post">
   <div class="search_info">
     <img class="unread_icon" src="/images/[case:[Unread]|onepost_gray.svg|onepost.svg]">
-    <div class="user_name">[UserName]</div>
+    <a class="user_name" href="/userinfo/[UserID]">[UserName]</a>
     <div class="post_time">[PostTime]</div>
   </div>
   <div class="post_thread">

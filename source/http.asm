@@ -146,11 +146,6 @@ begin
         stdcall GetEmailTimestamp
         mov     [.time], eax
 
-        stdcall StrPtr, [.time]
-        Output eax
-        DebugMsg
-
-
         or      [.exit], -1
 
         stdcall StrNew

@@ -47,6 +47,8 @@ include "showthread.asm"
 include "search.asm"
 include "post.asm"
 include "edit.asm"
+include "userinfo.asm"
+include "accounts.asm"
 
 
 iglobal

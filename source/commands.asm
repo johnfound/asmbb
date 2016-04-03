@@ -1,14 +1,14 @@
-LIMIT_POST_LENGTH equ 8*1024
 PAGE_LENGTH = 20
 
 ; User permissions status flags:
 
 permLogin       = 1
-permRead        = 2
 permPost        = 4
 permThreadStart = 8
 permEditOwn     = 16
 permEditAll     = 32
+permDelOwn      = 64
+permDelAll      = 128
 permAdmin       = $80000000
 
 
@@ -216,7 +216,7 @@ begin
 
 ; serve the file.
 
-        stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Cache-control: public", 13, 10>
+        stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Cache-control: max-age=1000000", 13, 10>
 
         stdcall FormatHTTPTime, [.timeRet], [.timeRet+4]
         stdcall StrCat, edi, "Last-modified: "
@@ -334,14 +334,14 @@ begin
         cmp     [esi+TArray.count], 0
         je      .redirect_to_the_list
 
+        stdcall StrCompNoCase, [esi+TArray.array], txt "list"
+        jc      .show_thread_list
+
         stdcall StrCompNoCase, [esi+TArray.array], txt "threads"
         jc      .show_one_thread
 
         stdcall StrCompNoCase, [esi+TArray.array], txt "by_id"
         jc      .show_post_in_thread
-
-        stdcall StrCompNoCase, [esi+TArray.array], txt "list"
-        jc      .show_thread_list
 
         stdcall StrCompNoCase, [esi+TArray.array], txt "markread"
         jc      .mark_read_theme
@@ -358,14 +358,20 @@ begin
         stdcall StrCompNoCase, [esi+TArray.array], txt "register"
         jc      .user_register
 
+        stdcall StrCompNoCase, [esi+TArray.array], txt "activate"
+        jc      .activate_account
+
+        stdcall StrCompNoCase, [esi+TArray.array], txt "changepassword"
+        jc      .change_password
+
+        stdcall StrCompNoCase, [esi+TArray.array], txt "changemail"
+        jc      .change_email
+
         stdcall StrCompNoCase, [esi+TArray.array], txt "post"
         jc      .post_message
 
         stdcall StrCompNoCase, [esi+TArray.array], txt "edit"
         jc      .edit_message
-
-        stdcall StrCompNoCase, [esi+TArray.array], txt "activate"
-        jc      .activate_account
 
         stdcall StrCompNoCase, [esi+TArray.array], txt "sqlite"         ; sqlite console. only for admins.
         jc      .sqlite
@@ -375,6 +381,9 @@ begin
 
         stdcall StrCompNoCase, [esi+TArray.array], txt "search"
         jc      .search
+
+        stdcall StrCompNoCase, [esi+TArray.array], txt "userinfo"
+        jc      .user_info
 
         stdcall StrCompNoCase, [esi+TArray.array], txt "adminrulez"
         jc      .set_admin_permissions
@@ -449,26 +458,6 @@ begin
 
         jmp     .output_forum_html
 
-
-
-;..................................................................................
-
-.activate_account:
-
-        cmp     [esi+TArray.count], 2
-        jne     .wrong_activation
-
-        stdcall ActivateAccount, [esi+TArray.array+4]
-        jc      .wrong_activation
-
-        stdcall StrMakeRedirect, edi, "/message/congratulations/"
-        jmp     .send_simple_result
-
-
-.wrong_activation:
-
-        stdcall StrMakeRedirect, edi, "/message/bad_secret/"
-        jmp     .send_simple_result
 
 
 ;..................................................................................
@@ -618,7 +607,48 @@ cUnknownError text "unknown_error"
         stdcall ShowRegisterPage
         jmp     .output_forum_html
 
+
 ;..................................................................................
+
+.activate_account:
+
+        cmp     [esi+TArray.count], 2
+        jne     .error404
+
+        stdcall ActivateAccount, [esi+TArray.array+4]
+
+        jmp     .send_simple_replace
+
+;..................................................................................
+
+
+.change_password:
+
+        cmp     [esi+TArray.count], 1
+        jne     .error404
+
+        lea     eax, [.special]
+        stdcall ChangePassword, eax
+
+        jmp     .send_simple_replace
+
+
+;..................................................................................
+
+
+.change_email:
+
+        cmp     [esi+TArray.count], 1
+        jne     .error404
+
+        lea     eax, [.special]
+        stdcall ChangeEmail, eax
+
+        jmp     .send_simple_replace
+
+
+;..................................................................................
+
 
 
 .post_message:
@@ -654,11 +684,22 @@ cUnknownError text "unknown_error"
         jmp     .send_simple_replace
 
 
-
 ;..................................................................................
 
 
+.user_info:
 
+        cmp     [esi+TArray.count], 2
+        jne     .error400
+
+        stdcall StrToNumEx, [esi+TArray.array+4]
+        jc      .error404
+
+        lea     ecx, [.special]
+        stdcall ShowUserInfo, eax, ecx
+        jnc     .output_forum_html
+
+        jmp     .send_simple_replace
 
 endp
 
@@ -950,449 +991,6 @@ endp
 
 
 
-proc ShowLoginPage, .pSpecial
-begin
-        stdcall StrNew
-        stdcall StrCatTemplate, eax, "login_form", 0, [.pSpecial]
-        return
-endp
-
-
-
-
-
-sqlGetUserInfo   text "select id, salt, passHash, status from Users where lower(nick) = lower(?)"
-sqlInsertSession text "insert into sessions (userID, sid, last_seen) values ( ?, ?, strftime('%s','now') )"
-sqlCheckSession  text "select sid from sessions where userID = ?"
-
-
-proc UserLogin, .pSpecial
-.stmt  dd ?
-
-.user     dd ?
-.password dd ?
-
-.userID   dd ?
-.session  dd ?
-.status   dd ?
-
-begin
-        pushad
-
-        xor     eax, eax
-        mov     [.session], eax
-        mov     [.user], eax
-        mov     [.password], eax
-
-        stdcall StrNew
-        mov     edi, eax
-
-; check the information
-
-        mov     ebx, [.pSpecial]
-        mov     ebx, [ebx+TSpecialParams.post]
-
-        stdcall GetQueryItem, ebx, "username=", 0
-        mov     [.user], eax
-
-        stdcall StrLen, eax
-        test    eax, eax
-        jz      .redirect_back_short
-
-        stdcall GetQueryItem, ebx, "password=", 0
-        mov     [.password], eax
-
-        stdcall StrLen, eax
-        test    eax, eax
-        jz      .redirect_back_short
-
-; hash the password
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetUserInfo, -1, eax, 0
-
-        stdcall StrPtr, [.user]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        je      .user_ok
-
-
-.bad_user:
-        cinvoke sqliteFinalize, [.stmt]
-        jmp     .redirect_back_bad_password
-
-
-.user_ok:
-
-        cinvoke sqliteColumnText, [.stmt], 1    ; the salt
-        stdcall StrDupMem, eax
-        push    eax
-
-        stdcall StrCat, eax, [.password]
-        stdcall StrMD5, eax
-        stdcall StrDel ; from the stack
-        stdcall StrDel, [.password]
-
-        mov     [.password], eax
-
-        cinvoke sqliteColumnText, [.stmt], 2    ; the password hash.
-
-        stdcall StrCompCase, [.password], eax
-        jnc     .bad_user
-
-
-; here the password matches this from the database.
-
-        cinvoke sqliteColumnInt, [.stmt], 0
-        mov     [.userID], eax
-
-        cinvoke sqliteColumnInt, [.stmt], 3
-        mov     [.status], eax
-
-        cinvoke sqliteFinalize, [.stmt]
-
-; check the status of the user
-
-        test    [.status], permLogin
-        jz      .redirect_back_bad_permissions
-
-; Check for existing session
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare, [hMainDatabase], sqlCheckSession, -1, eax, 0
-
-        cinvoke sqliteBindInt, [.stmt], 1, [.userID]
-
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        jne     .new_session
-
-        cinvoke sqliteColumnText, [.stmt], 0
-        stdcall StrDupMem, eax
-        mov     [.session], eax
-
-        cinvoke sqliteFinalize, [.stmt]
-
-        jmp     .set_the_cookie
-
-
-.new_session:
-
-        stdcall GetRandomString, 32
-        mov     [.session], eax
-
-
-; Insert new session record.
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertSession, -1, eax, 0
-
-        cinvoke sqliteBindInt, [.stmt], 1, [.userID]
-
-        stdcall StrPtr, [.session]
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteStep, [.stmt]
-
-; check for error here!
-
-        cinvoke sqliteFinalize, [.stmt]
-
-
-; now, set some cookies
-
-.set_the_cookie:
-
-        stdcall StrCat, edi, "Set-Cookie: sid="
-        stdcall StrCat, edi, [.session]
-        stdcall StrCat, edi, <"; HttpOnly; Path=/", 13, 10>
-
-        stdcall GetQueryItem, ebx, "backlink=", "/list/"
-
-        stdcall StrMakeRedirect, edi, eax       ; go back from where came.
-        stdcall StrDel, eax
-        jmp     .finish
-
-.redirect_back_short:
-
-        stdcall StrMakeRedirect, edi, "/message/login_missing_data/"  ; go backward.
-        jmp     .finish
-
-.redirect_back_bad_permissions:
-
-        stdcall StrMakeRedirect, edi, "/message/login_bad_permissions/" ; go backward.
-        jmp     .finish
-
-
-.redirect_back_bad_password:
-
-        stdcall StrMakeRedirect, edi, "/message/login_bad_password/"
-
-.finish:
-        stdcall StrDelNull, [.user]
-        stdcall StrDelNull, [.password]
-        stdcall StrDelNull, [.session]
-
-        mov     [esp+4*regEAX], edi
-        popad
-        return
-
-endp
-
-
-
-
-sqlLogout text "delete from Sessions where userID = ?"
-
-proc UserLogout, .pspecial
-.stmt dd ?
-begin
-        pushad
-
-        stdcall StrNew
-        mov     edi, eax
-
-        mov     esi, [.pspecial]
-
-        cmp     [esi+TSpecialParams.session], 0
-        je      .finish
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLogout, -1, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.userID]
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteFinalize, [.stmt]
-
-; delete the cookie.
-
-        stdcall StrCat, edi, <"Set-Cookie: sid=; HttpOnly; Path=/; Max-Age=0", 13, 10>
-
-.finish:
-        stdcall StrNew
-        stdcall StrCatTemplate, eax, "logout", 0, [.pspecial]
-
-        stdcall StrMakeRedirect, edi, eax
-        stdcall StrDel, eax
-
-        mov     [esp+4*regEAX], edi
-        popad
-        return
-endp
-
-
-
-
-
-
-proc ShowRegisterPage
-begin
-        stdcall StrNew
-        stdcall StrCatTemplate, eax, "register_form", 0, 0
-        return
-endp
-
-
-
-;sqlCheckMinInterval text "select (strftime('%s','now') - time_reg) as delta from WaitingActivation where (ip_from = ?) and ( delta>30 ) order by time_reg desc limit 1"
-sqlRegisterUser    text "insert into WaitingActivation (nick, passHash, salt, email, ip_from, time_reg, time_email, a_secret) values (?, ?, ?, ?, ?, strftime('%s','now'), NULL, ?)"
-sqlCheckUserExists text "select 1 from Users where lower(nick) = lower(?) or email = ? limit 1"
-
-proc RegisterNewUser, .pSpecial
-
-.stmt      dd ?
-
-.user      dd ?
-.password  dd ?
-.password2 dd ?
-.email     dd ?
-.secret    dd ?
-.ip_from   dd ?
-
-.email_text dd ?
-
-begin
-        pushad
-
-        xor     eax, eax
-        mov     [.user], eax
-        mov     [.password], eax
-        mov     [.password2], eax
-        mov     [.email], eax
-        mov     [.secret], eax
-        mov     [.ip_from], eax
-
-; check the information
-
-        mov     ebx, [.pSpecial]
-        mov     ebx, [ebx+TSpecialParams.post]
-
-        stdcall GetQueryItem, ebx, "username=", 0
-        mov     [.user], eax
-
-        stdcall StrLen, eax
-        cmp     eax, 3
-        jbe     .error_short_name
-
-        cmp     eax, 256
-        ja      .error_trick
-
-        stdcall GetQueryItem, ebx, "email=", 0
-        mov     [.email], eax
-
-        stdcall CheckEmail, eax
-        jc      .error_bad_email
-
-        stdcall GetQueryItem, ebx, "password=", 0
-        mov     [.password], eax
-
-        stdcall GetQueryItem, ebx, "password2=", 0
-        mov     [.password2], eax
-
-        stdcall StrCompCase, [.password], [.password2]
-        jnc     .error_different
-
-        stdcall StrLen, [.password]
-
-        cmp     eax, 5
-        jbe     .error_short_pass
-
-        cmp     eax, 1024
-        ja      .error_trick
-
-        mov     eax, [.pSpecial]
-        stdcall ValueByName, [eax+TSpecialParams.params], "REMOTE_ADDR"
-        stdcall StrIP2Num, eax
-        jc      .error_technical_problem
-
-        mov     [.ip_from], eax
-
-; hash the password
-
-        stdcall HashPassword, [.password]
-        jc      .error_technical_problem
-
-        stdcall StrDel, [.password]
-        stdcall StrDel, [.password2]
-        mov     [.password], eax
-        mov     [.password2], edx       ; the salt!
-
-        stdcall GetRandomString, 32
-        jc      .error_technical_problem
-
-        mov     [.secret], eax
-
-; check whether the user exists
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckUserExists, -1, eax, 0
-
-        stdcall StrPtr, [.user]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-
-        stdcall StrPtr, [.email]
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteStep, [.stmt]
-        mov     ebx, eax
-
-        cinvoke sqliteFinalize, [.stmt]
-
-        cmp     ebx, SQLITE_ROW
-        je      .error_exists
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRegisterUser, -1, eax, 0
-
-        stdcall StrPtr, [.user]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-
-        stdcall StrPtr, [.password]
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
-
-        stdcall StrPtr, [.password2]
-        cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
-
-        stdcall StrPtr, [.email]
-        cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteBindInt, [.stmt], 5, [.ip_from]
-
-        stdcall StrPtr, [.secret]
-        cinvoke sqliteBindText, [.stmt], 6, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteStep, [.stmt]
-        mov     ebx, eax
-
-        cinvoke sqliteFinalize, [.stmt]
-
-        cmp     ebx, SQLITE_DONE
-        jne     .error_exists
-
-; now send the activation email for all registered user, where the email was not sent.
-
-        stdcall ProcessActivationEmails
-        jc      .error_technical_problem
-
-; the user has been created and now is waiting for email activation.
-
-        stdcall StrMakeRedirect, 0, "/message/user_created/"                    ; go forward.
-        jmp     .finish
-
-
-.error_technical_problem:
-
-        stdcall StrMakeRedirect, 0, "/message/register_technical/"              ; go backward.
-        jmp     .finish
-
-
-.error_short_name:
-
-        stdcall StrMakeRedirect, 0, "/message/register_short_name/"             ; go backward.
-        jmp     .finish
-
-.error_trick:
-
-        stdcall StrMakeRedirect, 0, "/message/register_bot/"
-
-        jmp     .finish
-
-
-.error_bad_email:
-        stdcall StrMakeRedirect, 0, "/message/register_bad_email/"              ; go backward.
-        jmp     .finish
-
-
-.error_short_pass:
-        stdcall StrMakeRedirect, 0, "/message/register_short_pass/"             ; go backward.
-        jmp     .finish
-
-
-.error_different:
-
-        stdcall StrMakeRedirect, 0, "/message/register_passwords_different/"    ; go backward.
-        jmp     .finish
-
-
-.error_exists:
-
-        stdcall StrMakeRedirect, 0, "/message/register_user_exists/"            ; go backward.
-
-.finish:
-        stdcall StrDelNull, [.user]
-        stdcall StrDelNull, [.password]
-        stdcall StrDelNull, [.password2]
-        stdcall StrDelNull, [.email]
-        stdcall StrDelNull, [.secret]
-
-        mov     [esp+4*regEAX], eax
-        popad
-        return
-endp
-
-
-
 
 
 
@@ -1613,13 +1211,7 @@ mimeGIF   text "image/gif"
 
 
 
-
-
-
-
-
-
-sqlSelectNotSent text "select id, nick, email, a_secret as secret, (select val from Params where id='host') as host from WaitingActivation where time_email is NULL order by time_reg"
+sqlSelectNotSent text "select id, nick, email, a_secret as secret, (select val from Params where id='host') as host, salt from WaitingActivation where time_email is NULL order by time_reg"
 sqlCleanWaiting  text "delete from WaitingActivation where time_reg < (strftime('%s','now') - 86400) and time_email is not NULL"
 
 proc ProcessActivationEmails
@@ -1701,6 +1293,7 @@ begin
         jc      .finish
 
         mov     [.smtp_port], eax
+
 
         stdcall StrNew
         mov     [.subj], eax
@@ -1813,117 +1406,6 @@ begin
         jmp     .finish
 
 endp
-
-
-
-
-
-
-
-
-sqlBegin      text  "begin transaction"
-sqlActivate   text  "insert into Users ( nick, passHash, salt, status, email ) select nick, passHash, salt, ?, email from WaitingActivation where a_secret = ?"
-sqlDeleteWait text  "delete from WaitingActivation where a_secret = ?"
-sqlCheckCount text  "select count(*) from WaitingActivation where a_secret = ?"
-sqlCommit     text  "commit transaction"
-sqlRollback   text  "rollback"
-
-proc ActivateAccount, .hSecret
-.stmt dd ?
-begin
-        pushad
-
-; begin transaction
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBegin, -1, eax, 0
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_DONE
-        jne     .rollback
-
-        cinvoke sqliteFinalize, [.stmt]
-
-; check again whether all is successful.
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckCount, -1, eax, 0
-
-        stdcall StrPtr, [.hSecret]
-        cinvoke sqliteBindText, [.stmt], 1, eax, -1, SQLITE_STATIC
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        jne     .rollback
-
-        cinvoke sqliteColumnInt, [.stmt], 0
-        cmp     eax, 1
-        jne     .rollback
-
-        cinvoke sqliteFinalize, [.stmt]
-
-
-; insert new user
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlActivate, -1, eax, 0
-
-        cinvoke sqliteBindInt, [.stmt], 1, permLogin or permRead or permPost or permThreadStart or permEditOwn
-
-        stdcall StrPtr, [.hSecret]
-        cinvoke sqliteBindText, [.stmt], 2, eax, -1, SQLITE_STATIC
-        cinvoke sqliteStep, [.stmt]
-
-        cmp     eax, SQLITE_DONE
-        jne     .rollback
-
-        cinvoke sqliteChanges, [hMainDatabase]
-
-        cinvoke sqliteFinalize, [.stmt]
-
-; delete the waiting user
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlDeleteWait, -1, eax, 0
-
-        stdcall StrPtr, [.hSecret]
-        cinvoke sqliteBindText, [.stmt], 1, eax, -1, SQLITE_STATIC
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_DONE
-        jne     .rollback
-
-        cinvoke sqliteFinalize, [.stmt]
-
-; commit transaction
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCommit, -1, eax, 0
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_DONE
-        jne     .rollback
-
-        cinvoke sqliteFinalize, [.stmt]
-
-        clc
-        popad
-        return
-
-.rollback:
-
-        cinvoke sqliteFinalize, [.stmt]         ; finalize the bad statement.
-
-; rollback transaction
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRollback, -1, eax, 0
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteFinalize, [.stmt]
-
-        stc
-        popad
-        return
-endp
-
-
-
 
 
 

@@ -1,4 +1,6 @@
-
+LIMIT_POST_LENGTH = 16*1024
+LIMIT_POST_CAPTION = 512
+LIMIT_TAG_DESCRIPTION = 1024
 
 
 cNewPostForm   text "new_post_form"
@@ -8,9 +10,9 @@ sqlSelectConst text "select ? as slug, ? as caption, ? as source, ? as ticket, ?
 
 sqlGetQuote   text "select U.nick, P.content from Posts P left join Users U on U.id = P.userID where P.id = ?"
 
-sqlInsertPost text "insert into Posts ( ThreadID, UserID, PostTime, Content, ReadCount) values (?, ?, strftime('%s','now'), substr( ?, 1, ? ), 0)"
+sqlInsertPost text "insert into Posts ( ThreadID, UserID, PostTime, Content, ReadCount) values (?, ?, strftime('%s','now'), ?, 0)"
 sqlUpdateThreads text "update Threads set LastChanged = strftime('%s','now') where id = ?"
-sqlInsertThread  text "insert into Threads ( Caption ) values ( substr( ?, 1, 256 ) )"
+sqlInsertThread  text "insert into Threads ( Caption ) values ( ? )"
 sqlSetThreadSlug text "update Threads set slug = ? where id = ?"
 
 
@@ -80,19 +82,8 @@ begin
         test    eax, eax
         jz      .title_ok
 
-        stdcall StrPtr, eax
-        mov     ebx, eax
-
-        stdcall StrOffsUtf8, ebx, 512
-        sub     eax, ebx
-        push    eax
-
-        stdcall StrNew
-        stdcall StrCatMem, eax, ebx     ; length from the stack
-
-        stdcall StrDel, [.caption]
-        mov     [.caption], eax
-
+        stdcall StrByteUtf8, [.caption], 512
+        stdcall StrTrim, [.caption], eax
 
 .title_ok:
         stdcall GetQueryItem, [esi+TSpecialParams.post], "tags=", 0
@@ -142,6 +133,13 @@ begin
 
         stdcall GetQueryItem, [esi+TSpecialParams.post], "source=", 0
         mov     [.source], eax
+        test    eax, eax
+        jz      .source_ok2
+
+        stdcall StrByteUtf8, [.source], LIMIT_POST_LENGTH
+        stdcall StrTrim, [.source], eax
+
+.source_ok2:
 
 ; ok, get the action then:
 
@@ -351,10 +349,6 @@ begin
 
         pushad
 
-        stdcall StrPtr, [.tags]
-        Output eax
-        DebugMsg
-
         stdcall StrSplitList, [.tags], ",", FALSE
         mov     esi, eax
 
@@ -395,6 +389,9 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
 
         cmp     [edi+TArray.count], 2
         jb      .description_ok
+
+        stdcall StrByteUtf8, [edi+TArray.array+4], LIMIT_TAG_DESCRIPTION
+        stdcall StrTrim, [edi+TArray.array+4]
 
         stdcall StrPtr, [edi+TArray.array+4]
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
@@ -457,7 +454,6 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
 
         cinvoke sqliteBindInt, [.stmt], 1, ebx
         cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.userID]
-        cinvoke sqliteBindInt, [.stmt], 4, LIMIT_POST_LENGTH
 
         cmp     [.source], 0
         je      .error_invalid_content
@@ -546,7 +542,7 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
         cinvoke sqliteFinalize, [.stmt]         ; finalize the bad statement.
         call    .do_rollback
 
-        stdcall StrMakeRedirect, edi, "/message/error_invalid_content/"
+        stdcall StrMakeRedirect, edi, "/message/error_invalid_content"
         jmp     .finish_clear
 
 
@@ -561,20 +557,21 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
 
 .error_wrong_permissions:
 
-        stdcall StrMakeRedirect, edi, "/message/error_cant_post/"
+        stdcall StrMakeRedirect, edi, "/message/error_cant_post"
         jmp     .finish_clear
 
 
 
 .error_thread_not_exists:
 
-        stdcall StrMakeRedirect, edi, "/message/error_thread_not_exists/"
+        stdcall StrMakeRedirect, edi, "/message/error_thread_not_exists"
         jmp     .finish_clear
 
 
 .error_bad_ticket:
-
-        stdcall StrMakeRedirect, edi, "/message/error_bad_ticket/"
+        stdcall StrDel, edi
+        stdcall StrMakeRedirect, 0, "/message/error_bad_ticket"
+        mov     edi, eax
         jmp     .finish_clear
 
 

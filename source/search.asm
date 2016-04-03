@@ -8,6 +8,7 @@ sqlSearchCnt text "select count() from PostFTS where PostFTS match ?"
 
 sqlSearch text "select ",                                                                                                       \
                  "U.nick as UserName, ",                                                                                        \
+                 "U.id as UserID, ",                                                                                            \
                  "T.slug, ",                                                                                                    \
                  "strftime('%d.%m.%Y %H:%M:%S', P.postTime, 'unixepoch') as PostTime, ",                                        \
                  "P.ReadCount, ",                                                                                               \

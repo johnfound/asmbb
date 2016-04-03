@@ -262,6 +262,24 @@ begin
         stdcall StrCompNoCase, edi, "permissions"
         jc      .get_permissions
 
+        stdcall StrCompNoCase, edi, "isadmin"
+        jc      .is_admin
+
+        stdcall StrCompNoCase, edi, "canlogin"
+        jc      .can_login
+
+        stdcall StrCompNoCase, edi, "canpost"
+        jc      .can_post
+
+        stdcall StrCompNoCase, edi, "canstart"
+        jc      .can_start
+
+        stdcall StrCompNoCase, edi, "canedit"
+        jc      .can_edit
+
+        stdcall StrCompNoCase, edi, "candel"
+        jc      .can_del
+
         stdcall StrCompNoCase, edi, "referer"
         jc      .get_referer
 
@@ -340,10 +358,6 @@ end if
 
 .get_userid:
 
-;        mov     eax, [esi+TSpecialParams.userName]
-;        test    eax, eax
-;        jz      .return_value
-
         stdcall NumToStr, [esi+TSpecialParams.userID], ntsDec or ntsUnsigned
         jmp     .return_value
 
@@ -353,15 +367,108 @@ end if
 
 .get_permissions:
 
-;        mov     eax, [esi+TSpecialParams.userName]
-;        test    eax, eax
-;        jz      .return_value
-
         stdcall NumToStr, [esi+TSpecialParams.userStatus], ntsDec or ntsUnsigned
         jmp     .return_value
 
 ;..................................................................
 
+.is_admin:
+
+        mov     ecx, permAdmin
+        jmp     .check_one_permission
+
+.can_login:
+
+        mov     ecx, permLogin
+        jmp     .check_one_permission
+
+.can_post:
+
+        mov     ecx, permPost
+        jmp     .check_one_permission
+
+.can_start:
+
+        mov     ecx, permThreadStart
+        jmp     .check_one_permission
+
+
+.check_one_permission:
+
+        stdcall StrDupMem, txt "1"
+
+        test    [esi+TSpecialParams.userStatus], ecx
+        jnz     .return_value
+
+        mov     ebx, eax
+        stdcall StrPtr, eax
+        mov     byte [eax], "0"
+        mov     eax, ebx
+
+.perm_ok:
+        jmp     .return_value
+
+
+locals
+  .permOwn dd ?
+  .permAll dd ?
+endl
+
+
+.can_edit:
+        mov     [.permOwn], permEditOwn
+        mov     [.permAll], permEditAll
+        jmp     .complex_perm
+
+
+.can_del:
+        mov     [.permOwn], permDelOwn
+        mov     [.permAll], permDelAll
+
+
+.complex_perm:
+
+        stdcall StrDupMem, txt "1"
+
+        mov     ecx, [esi+TSpecialParams.userStatus]
+        test    ecx, [.permAll]
+        jnz     .return_value
+
+        push    eax
+
+        cinvoke sqliteColumnCount, [.sql_stmt]
+        mov     ebx, eax
+
+; search the column index for "userid"
+
+.loop_columns2:
+        dec     ebx
+        js      .edit_no        ; the userid for the author of the post has not be found.
+
+        cinvoke sqliteColumnName, [.sql_stmt], ebx
+        stdcall StrCompNoCase, eax, txt "userid"
+        jnc     .loop_columns2
+
+        cinvoke sqliteColumnInt, [.sql_stmt], ebx
+
+        cmp     eax, [esi+TSpecialParams.userID]
+        jne     .edit_no
+
+        mov     eax, [esi+TSpecialParams.userStatus]
+        test    eax, [.permOwn]
+        jnz     .edit_ok
+
+.edit_no:
+        stdcall StrPtr, [esp]
+        mov     byte [eax], "0"
+
+.edit_ok:
+        pop     eax
+        jmp     .return_value
+
+
+
+;..................................................................
 
 .get_referer:
 
@@ -740,7 +847,11 @@ end if
 .get_case_value:
 
         stdcall StrToNumEx, [esi+TArray.array]          ; the case number
+        jnc     .check_it
 
+        stdcall StrLenUtf8, [esi+TArray.array], -1      ; the length of the string if not a number.
+
+.check_it:
         mov     ecx, [esi+TArray.count]
         sub     ecx, 2
 
@@ -1006,9 +1117,8 @@ begin
         stdcall StrClipSpacesR, ebx
         stdcall StrClipSpacesL, ebx
 
-        stdcall StrOffsUtf8, ebx, 16
-        stdcall StrSplit, ebx, eax
-        stdcall StrDel, eax
+        stdcall StrByteUtf8, ebx, 16
+        stdcall StrTrim, ebx, eax
 
         stdcall StrClipSpacesR, ebx
         stdcall StrClipSpacesL, ebx

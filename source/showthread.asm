@@ -9,6 +9,7 @@ sqlSelectPosts   text "select ",                                                
                         "Posts.Content, ",                                                                              \
                         "Users.id as UserID, ",                                                                         \
                         "Users.nick as UserName,",                                                                      \
+                        "Users.avatar as avatar,",                                                                      \
                         "(select count() from Posts X where X.userID = Posts.UserID) as UserPostCount, ",               \
                         "?4 as Slug, ",                                                                                 \
                         "(select count() from UnreadPosts U where UserID = ?5 and PostID = Posts.id) as Unread, ",      \

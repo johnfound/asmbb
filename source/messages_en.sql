@@ -68,3 +68,18 @@ INSERT INTO `Messages` VALUES ('missing_query','Searching nothing -
 you now step on the right
 way to dao.
 ','Search what?',NULL);
+INSERT INTO `Messages` VALUES ('password_changed','Your worthy password,
+successfully has been changed.
+You''r on the safe side.','Pasword changed!','<a target="_self" href="/login/">Login</a>');
+INSERT INTO `Messages` VALUES ('change_different','Passwords different.
+Only perfect spellers may
+change their password.','Not matching passwords!',NULL);
+INSERT INTO `Messages` VALUES ('change_password','Your present password,
+you must provide as evidence
+of your intentions.','Password does not match!',NULL);
+INSERT INTO `Messages` VALUES ('email_activation_sent','The secret token
+was sent to your new email.
+To check the channel.','Check your mailbox!',NULL);
+INSERT INTO `Messages` VALUES ('email_changed','The new address to send
+a messages will never change
+the old relationship.','E-mail has been changed','<a target="_self" href="/list/">Home</a>');

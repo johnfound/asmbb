@@ -10,7 +10,7 @@
   <div class="header">
     <div class="login_interface">
       [case:[special:userid]|<a href="/login/">Login</a><br><a href="/register/">Register</a>|
-			   <a href="/logout/">Logout ( [special:username] )</a>]
+      <a href="/logout/">Logout ( [special:username] )</a><br><a href="/userinfo/[special:userid]">User profile</a>]
     </div>
     <form class="tags" id="search_form" action="/search" method="get" >
       <input id="search_line" type="edit" size="40" name="s" placeholder="search" value="[special:search]"><input id="search_btn"  type="submit" value="" >
