@@ -383,9 +383,90 @@ form.login-block, form.register-block {
     margin: 16px auto 48px auto;
 }
 
+form.settings {
+    width: 640px;
+    padding: 16px;
+    background: #ffda44;
+    margin: 16px auto 16px auto;
+}
+
+form.settings label {
+  display: inline-block;
+  text-align: right;
+  width: 220px;
+  line-height: 38px;
+  padding: 0px 8px;
+  color: black;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+input.settings {
+    display: inline-block;
+    height: 38px;
+    margin: 0px 8px 16px 0px;
+    font-size: 16px;
+    padding: 0px 8px;
+    outline: none;
+    border: none;
+
+    background-color: white;
+    color: black;
+    background-position: 12px -10px;
+    background-repeat: no-repeat;
+    background-size: 24px 120px;
+}
+
+label.checkbox {
+  display: inline-block;
+  width: auto !important;
+  height: auto !important;
+  padding: 0px !important;
+  line-height: 0px !important;
+}
+
+label.checkbox input {
+    display: none;
+}
+
+label.checkbox span {
+    width: 20px;
+    line-height: 12px;
+    display: inline-block;
+    background-color: white;
+    color: white;
+    font-size: 16px;
+    border: 4px solid white;
+}
+
+label.checkbox input:checked + span {
+    color: lime;
+    background-color: lime;
+}
 
 
-form.login-block h1, form.register-block h1 {
+input.button {
+    height: 38px;
+    width: 128px;
+    background: #ff656c;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    font-variant: small-caps;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    padding: 0px;
+    display: block;
+}
+
+input.button:hover {
+    background: #ff7b81;
+}
+
+
+form.login-block h1, form.register-block h1, form.settings h1 {
     height: 38px;
     text-align: center;
     color: white;
@@ -412,6 +493,8 @@ input.username, input.email, input.password {
     background-repeat: no-repeat;
     background-size: 24px 120px;
 }
+
+
 
 input.username {
     background-image: url('/images/user.png');

@@ -1,8 +1,8 @@
 <div class="new_editor">
   <div class="ui">
-    <a class="ui" href="/list/?tag=[special:tag]">Thread list</a>
+    <a class="ui" href="/list/[special:urltag]">Thread list</a>
   </div>
-  <form id="editform" action="/post/?tag=[special:tag]" method="post">
+  <form id="editform" action="/post/[special:urltag]" method="post">
     <div class="edit_groupL">
       <p>Title:</p>
       <input class="title" type="edit" value="[caption]" placeholder="Thread title" name="title" autofocus="on">

@@ -1,7 +1,7 @@
 <div class="new_editor">
   <div class="ui">
     <a class="ui" href="/list">Thread list</a>
-    <a class="uir" target="_blank" href="/sqlite">SQL console</a>
+    <a class="uir" target="_blank" href="/sqlite">SQL console</a><a class="uir" href="/settings">Settings</a>
   </div>
   <form id="editform" action="/sqlite/" method="post">
     <p>SQL statement:</p>

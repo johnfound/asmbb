@@ -153,46 +153,46 @@ ends
 ;
 
 proc Listen
-;.addr TSocketAddressUn
+.addr TSocketAddressUn
 begin
 
 .loop:
 
         stdcall SocketAccept, [STDIN], 0
-        jc      .finish
+        jc      .make_socket
 
         stdcall ThreadCreate, procServeRequest, eax
 
         jmp     .loop
 
-;.make_socket:
-;
-;        cmp     [fOwnSocket], 0
-;        jne     .finish
-;
-;        stdcall SocketCreate, PF_UNIX, SOCK_STREAM, 0
-;        jc      .finish
-;
-;        mov     [STDIN], eax
-;        mov     [fOwnSocket], 1
-;
-;        stdcall SocketSetOption, [STDIN], soReuseAddr, TRUE
-;        stdcall SocketSetOption, [STDIN], soLinger, 5
-;
-;        mov     [.addr.saFamily], AF_UNIX
-;
-;        mov     esi, pathMySocket
-;        mov     ecx, pathMySocket.length + 1
-;        lea     edi, [.addr.saPath]
-;
-;        rep movsb
-;
-;        lea     eax, [.addr]
-;        stdcall SocketBind, [STDIN], eax
-;        jc      .finish
-;
-;        stdcall SocketListen, [STDIN], 1
-;        jnc     .loop
+.make_socket:
+
+        cmp     [fOwnSocket], 0
+        jne     .finish
+
+        stdcall SocketCreate, PF_UNIX, SOCK_STREAM, 0
+        jc      .finish
+
+        mov     [STDIN], eax
+        mov     [fOwnSocket], 1
+
+        stdcall SocketSetOption, [STDIN], soReuseAddr, TRUE
+        stdcall SocketSetOption, [STDIN], soLinger, 5
+
+        mov     [.addr.saFamily], AF_UNIX
+
+        mov     esi, pathMySocket
+        mov     ecx, pathMySocket.length + 1
+        lea     edi, [.addr.saPath]
+
+        rep movsb
+
+        lea     eax, [.addr]
+        stdcall SocketBind, [STDIN], eax
+        jc      .finish
+
+        stdcall SocketListen, [STDIN], 1
+        jnc     .loop
 
 
 .finish:
@@ -242,6 +242,10 @@ proc LogEvent, .event, .log_type, .value, .runtime
 begin
         pushad
 
+        stdcall GetParam, "log_events", gpInteger
+        test    eax, eax
+        jz      .finish
+
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLogEvent, sqlLogEvent.length, eax, 0
 
@@ -289,6 +293,7 @@ begin
 
         cinvoke sqliteExec, [hMainDatabase], sqlCleanLog, 0, 0, 0
 
+.finish:
         popad
         return
 endp

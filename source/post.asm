@@ -76,7 +76,6 @@ begin
         cmp     [esi+TSpecialParams.post], 0
         je      .show_edit_form
 
-
         stdcall GetQueryItem, [esi+TSpecialParams.post], "title=", 0
         mov     [.caption], eax
         test    eax, eax
@@ -86,6 +85,7 @@ begin
         stdcall StrTrim, [.caption], eax
 
 .title_ok:
+
         stdcall GetQueryItem, [esi+TSpecialParams.post], "tags=", 0
         mov     [.tags], eax
         test    eax, eax
@@ -97,9 +97,7 @@ begin
         stdcall StrCharCat, [.tags], ', '
         stdcall StrCat, [.tags], [esi+TSpecialParams.tag]
 
-
 .tags_ok:
-
         jmp     .thread_ok
 
 
@@ -324,7 +322,7 @@ begin
 
         stdcall NumToStr, eax, ntsDec or ntsUnsigned
 
-        stdcall StrCharCat, [.slug], "_"
+        stdcall StrCharCat, [.slug], "."
         stdcall StrCat, [.slug], eax
         stdcall StrDel, eax
 
@@ -353,6 +351,7 @@ begin
         mov     esi, eax
 
         mov     ebx, [esi+TArray.count]
+
         test    ebx, ebx
         jz      .finish_tags
 
@@ -401,6 +400,7 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
         stdcall StrTagify, [edi+TArray.array]
 
         stdcall StrPtr, [edi+TArray.array]
+
         cmp     [eax+string.len], 0
         je      .next_tag
 
@@ -501,7 +501,8 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
 
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall StrCatRedirectToPost, edi, esi
+        mov     eax, [.pSpecial]
+        stdcall StrCatRedirectToPost, edi, esi, [eax+TSpecialParams.tag]
 
 .finish_clear:
         mov     eax, [.pSpecial]

@@ -24,6 +24,7 @@ struct TSpecialParams
   .userName        dd ?
   .userStatus      dd ?
   .session         dd ?
+  .setupmode       dd ?
 ends
 
 
@@ -76,22 +77,6 @@ begin
 .post_ok:
 
         mov     [.special.post], eax
-
-
-; debug only
-
-;        lea     eax, [.special]
-;        stdcall __DoProcessTemplate2, "[special:environment]", 0, eax, FALSE
-;        push    eax
-;
-;        stdcall FileWriteString, [STDERR], eax
-;        stdcall FileWriteString, [STDERR], <13, 10, 13, 10, "----------------------------------------------------------", 13, 10, 13, 10>
-;
-;        stdcall StrDel ; from the stack
-
-; end of debug
-
-
 
         stdcall StrNew
         mov     edi, eax
@@ -334,6 +319,12 @@ begin
         cmp     [esi+TArray.count], 0
         je      .redirect_to_the_list
 
+        stdcall StrCompNoCase, [esi+TArray.array], txt "adminrulez"
+        jc      .set_admin_account
+
+        cmp     [.special.setupmode], 0
+        jne     .settings
+
         stdcall StrCompNoCase, [esi+TArray.array], txt "list"
         jc      .show_thread_list
 
@@ -385,8 +376,8 @@ begin
         stdcall StrCompNoCase, [esi+TArray.array], txt "userinfo"
         jc      .user_info
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "adminrulez"
-        jc      .set_admin_permissions
+        stdcall StrCompNoCase, [esi+TArray.array], txt "settings"
+        jc      .settings
 
 
 .end_forum_request:
@@ -395,19 +386,21 @@ begin
 
 .redirect_to_the_list:
 
-;        stdcall StrCat, edi, <"Status: 302 Found", 13, 10, "Location: /list/", 13, 10, 13, 10>
-
         stdcall StrMakeRedirect, edi, "/list/"
 
         jmp     .send_simple_result
 
 ;..................................................................................
 
-.set_admin_permissions:
+.set_admin_account:
 
-        cinvoke sqliteExec, [hMainDatabase], "update users set status = -1 where nick = 'admin';"
+        cmp     [.special.setupmode], 0
+        je      .error403
 
-        jmp     .error403
+        lea     eax, [.special]
+        stdcall CreateAdminAccount, eax
+
+        jmp     .send_simple_replace
 
 ;..................................................................................
 
@@ -533,7 +526,7 @@ begin
         stdcall StrToNumEx, [esi+TArray.array+4]
         mov     ebx, eax
 
-        stdcall StrCatRedirectToPost, edi, ebx
+        stdcall StrCatRedirectToPost, edi, ebx, [.special.tag]
 
         jmp     .send_simple_result
 
@@ -690,13 +683,31 @@ cUnknownError text "unknown_error"
 .user_info:
 
         cmp     [esi+TArray.count], 2
-        jne     .error400
+        jne     .error404
 
         stdcall StrToNumEx, [esi+TArray.array+4]
         jc      .error404
 
         lea     ecx, [.special]
         stdcall ShowUserInfo, eax, ecx
+        jnc     .output_forum_html
+
+        jmp     .send_simple_replace
+
+
+;..................................................................................
+
+.settings:
+        cmp     [.special.setupmode], 0
+        jne     .force_settings
+
+        test    [.special.userStatus], permAdmin
+        jz      .error403
+
+.force_settings:
+        lea     ecx, [.special]
+        stdcall BoardSettings, ecx
+
         jnc     .output_forum_html
 
         jmp     .send_simple_replace
@@ -994,7 +1005,8 @@ endp
 
 
 
-sqlGetSession text "select userID, nick, status, last_seen from sessions left join users on id = userID where sid = ?"
+sqlGetSession    text "select userID, nick, status, last_seen from sessions left join users on id = userID where sid = ?"
+sqlGetUserExists text "select 1 from users limit 1"
 
 ; returns:
 ;   EAX: string with the logged user name
@@ -1013,6 +1025,23 @@ begin
         mov     [edi+TSpecialParams.userName], eax
         mov     [edi+TSpecialParams.userStatus], eax
         mov     [edi+TSpecialParams.session], eax
+
+        xor     ebx, ebx
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetUserExists, sqlGetUserExists.length, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        je      .setupmode_ok
+
+        inc     ebx
+
+.setupmode_ok:
+        cinvoke sqliteFinalize, [.stmt]
+        mov     [edi+TSpecialParams.setupmode], ebx
+
+        test    ebx, ebx
+        jnz     .finish
 
         stdcall GetCookieValue, [edi+TSpecialParams.params], txt 'sid'
         jc      .finish
@@ -1251,7 +1280,7 @@ proc SendActivationEmail, .stmt
 .host      dd ?
 .from      dd ?
 .to        dd ?
-.smtp_ip   dd ?
+.smtp_addr dd ?
 .smtp_port dd ?
 
 begin
@@ -1261,7 +1290,7 @@ begin
         mov     [.host], eax
         mov     [.from], eax
         mov     [.to], eax
-        mov     [.smtp_ip], eax
+        mov     [.smtp_addr], eax
         mov     [.subj], eax
         mov     [.body], eax
 
@@ -1283,10 +1312,10 @@ begin
         mov     [.to], eax
 
 
-        stdcall GetParam, "smtp_ip", gpString
+        stdcall GetParam, "smtp_addr", gpString
         jc      .finish
 
-        mov     [.smtp_ip], eax
+        mov     [.smtp_addr], eax
 
 
         stdcall GetParam, "smtp_port", gpInteger
@@ -1326,12 +1355,12 @@ begin
         jne     .error_update
 
 
-        stdcall SendEmail, [.smtp_ip], [.smtp_port], [.host], [.from], [.to], [.subj], [.body], 0
+        stdcall SendEmail, [.smtp_addr], [.smtp_port], [.host], [.from], [.to], [.subj], [.body], 0
 
 .finish:
         pushf
 
-        stdcall StrDelNull, [.smtp_ip]
+        stdcall StrDelNull, [.smtp_addr]
         stdcall StrDelNull, [.host]
         stdcall StrDelNull, [.from]
         stdcall StrDelNull, [.to]
@@ -1421,7 +1450,7 @@ sqlGetThePostIndex text "select count(*) from Posts p where threadID = ?1 and ( 
 
 sqlGetThreadID text "select P.ThreadID, T.Slug from Posts P left join Threads T on P.threadID = T.id where P.id = ?"
 
-proc StrCatRedirectToPost, .hString, .postID
+proc StrCatRedirectToPost, .hString, .postID, .tag
 .stmt dd ?
 
 .page dd ?
@@ -1480,17 +1509,23 @@ begin
 
         stdcall StrCat, [.hString], "threads/"
         stdcall StrCat, [.hString], [.slug]
-        stdcall StrCharCat, [.hString], "/"
 
         cmp     [.page], 0
         je      .page_ok
 
+        stdcall StrCharCat, [.hString], "/"
         stdcall NumToStr, [.page], ntsDec or ntsUnsigned
         stdcall StrCat, [.hString], eax
         stdcall StrDel, eax
-        stdcall StrCharCat, [.hString], "/"
 
 .page_ok:
+        cmp     [.tag], 0
+        je      .tag_ok
+
+        stdcall StrCat, [.hString], txt "?tag="
+        stdcall StrCat, [.hString], [.tag]
+
+.tag_ok:
         stdcall StrCharCat, [.hString], "#"
 
         stdcall NumToStr, [.postID], ntsDec or ntsUnsigned
@@ -1498,11 +1533,9 @@ begin
         stdcall StrDel, eax
 
 .finish:
+
         stdcall StrCharCat, [.hString], $0a0d0a0d
-
         stdcall StrDelNull, [.slug]
-
-;        DebugMsg "StrCatRedirectToPost finished!"
 
         popad
         return

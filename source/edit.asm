@@ -214,8 +214,7 @@ begin
         jne     .error_write
 
 .end_save:
-
-        stdcall StrCatRedirectToPost, edi, [.postID]
+        stdcall StrCatRedirectToPost, edi, [.postID], [esi+TSpecialParams.tag]
 
 .finish_clear:
 

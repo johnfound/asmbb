@@ -68,8 +68,6 @@ begin
         cinvoke sqliteColumnInt, [.stmt2], 0
         mov     [.threadID], eax
 
-        OutputValue "Thread ID:", eax, 10, -1
-
         stdcall StrCat, edi, '<div class="thread">'
 
         stdcall StrCatTemplate, edi, "nav_thread", [.stmt2], esi

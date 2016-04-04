@@ -289,11 +289,18 @@ begin
         stdcall StrCompNoCase, edi, txt "tag"
         jc      .get_tag
 
+        stdcall StrCompNoCase, edi, txt "urltag"
+        jc      .get_url_tag
+
         stdcall StrCompNoCase, edi, "query"
         jc      .get_query
 
         stdcall StrCompNoCase, edi, "alltags"
         jc      .get_all_tags
+
+        stdcall StrCompNoCase, edi, "setupmode"
+        jc      .get_setupmode
+
 
         stdcall GetQueryItem, edi, "threadtags=", 0
         test    eax, eax
@@ -534,6 +541,24 @@ endl
 
         stdcall StrDup, [esi+TSpecialParams.tag]
         jmp     .return_value
+
+
+.get_url_tag:
+        cmp     [esi+TSpecialParams.tag], 0
+        je      .empty_query
+
+        stdcall StrDupMem, txt "?tag="
+        stdcall StrCat, eax, [esi+TSpecialParams.tag]
+        jmp     .return_value
+
+
+;..................................................................
+
+.get_setupmode:
+        stdcall NumToStr, [esi+TSpecialParams.setupmode], ntsDec or ntsUnsigned
+
+        jmp     .return_value
+
 
 ;..................................................................
 
@@ -988,9 +1013,6 @@ proc FormatPostText, .hText
 begin
         stdcall StrCatTemplate, [.hText], "minimag_suffix", 0, 0
 
-;DEBUG ONLY!!!
-;        stdcall FileWriteString, [STDERR], [.hText]
-
         lea     eax, [.result]
         stdcall TranslateMarkdown, [.hText], FixMiniMagLink, 0, eax
 
@@ -1097,7 +1119,7 @@ begin
         stdcall StrClipSpacesR, eax
         stdcall StrClipSpacesL, eax
 
-        stdcall StrConvertWhiteSpace, eax, "_"
+        stdcall StrConvertWhiteSpace, eax, "-"          ; according to google rules.
 
         return
 endp
@@ -1118,12 +1140,13 @@ begin
         stdcall StrClipSpacesL, ebx
 
         stdcall StrByteUtf8, ebx, 16
+
         stdcall StrTrim, ebx, eax
 
         stdcall StrClipSpacesR, ebx
         stdcall StrClipSpacesL, ebx
 
-        stdcall StrConvertWhiteSpace, ebx, "_"
+        stdcall StrConvertWhiteSpace, ebx, "."        ; google don't like underscores.
 
         popad
         return
@@ -1180,7 +1203,7 @@ begin
 .loop:
         mov     al, [esi]
         cmp     al, $80         ; unicode
-        ja      .next
+        jae     .next
         cmp     al, '_'
         je      .next
         cmp     al, '-'

@@ -3,7 +3,7 @@
     <a class="ui" href="/list">Thread list</a>
     <a class="ui" href="/by_id/[id]">Back</a>
   </div>
-  <form id="editform" action="/edit/[id]" method="post">
+  <form id="editform" action="/edit/[id][special:urltag]" method="post">
     <p>Thread title:</p>
     <h1 class="fakeedit">[caption]</h1>
     <p>Post content:</p>

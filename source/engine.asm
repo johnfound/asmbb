@@ -19,11 +19,11 @@ LINUX_INTERPRETER equ './ld-musl-i386.so'
 @BinaryType console, compact
 
 options.ShowSkipped = 0
-options.ShowSizes = 1
+options.ShowSizes = 0
 
 options.DebugMode = 0
 options.AlignCode = 0
-options.ShowImported = 1
+options.ShowImported = 0
 
 options.DebugWeb = 0
 
@@ -49,6 +49,7 @@ include "post.asm"
 include "edit.asm"
 include "userinfo.asm"
 include "accounts.asm"
+include "settings.asm"
 
 
 iglobal
@@ -62,10 +63,7 @@ uglobal
   hMainDatabase dd ?
   ProcessID     dd ?
   ProcessStart  dd ?
-;  fOwnSocket    dd ?
-
-  dtm TDateTime
-  tm  rd 2
+  fOwnSocket    dd ?
 endg
 
 
@@ -124,15 +122,11 @@ start:
 
 proc OnForcedTerminate as procForcedTerminateHandler
 begin
-;        cmp     [fOwnSocket], 0
-;        je      start.terminate
-;
-;        stdcall SocketClose, [STDIN]
-;;        OutputValue "Socket close return:", eax, 10, -1
-;
-;        stdcall FileDelete, pathMySocket
+        cmp     [fOwnSocket], 0
+        je      start.terminate
 
-;        OutputValue "File delete return:", eax, 10, -1
+        stdcall SocketClose, [STDIN]
+        stdcall FileDelete, pathMySocket
 
         jmp     start.terminate         ; the stack is not important here!
 endp
