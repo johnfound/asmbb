@@ -53,6 +53,7 @@ begin
         mov     ecx, eax
 
         stdcall StrPos, [.hQuery], [.itemname]
+        test    eax, eax
         jnz     .item_found
 
 .not_found:
@@ -64,6 +65,7 @@ begin
         jmp     .item_ok
 
 .item_found:
+
         lea     esi, [eax+ecx]
         stdcall StrCharPos, esi, '&'
         jnz     .copy_item
@@ -136,7 +138,7 @@ endp
 ;  CF = 1 - the email is not send, because of the different reasons.
 ;           Additional information on the fail reasons can be found in the log string.
 
-proc SendEmail, .ip_smtp, .port, .host, .from, .to, .subject, .body, .attachment
+proc SendEmail, .smtp_addr, .port, .host, .from, .to, .subject, .body, .attachment
 .address TSocketAddressIn
 .exit    dd ?
 .time    dd ?
@@ -145,11 +147,6 @@ begin
 
         stdcall GetEmailTimestamp
         mov     [.time], eax
-
-        stdcall StrPtr, [.time]
-        Output eax
-        DebugMsg
-
 
         or      [.exit], -1
 
@@ -162,7 +159,7 @@ begin
         mov     ebx, eax
         mov     [.address.saFamily], AF_INET
 
-        stdcall StrIP2Num, [.ip_smtp]
+        stdcall ResolveDomainIP, [.smtp_addr]
         bswap   eax
 
         mov     edx, [.port]
@@ -331,8 +328,6 @@ proc ReadSMTPresponse, .hSocket, .buffer
 begin
         pushad
 
-        DebugMsg "Read SMTP enter."
-
         stdcall StrNew
         mov     [.str], eax
         mov     [.res], 0
@@ -409,56 +404,84 @@ endp
 
 
 
+struct TAddrInfo
+  .flags       dd ?
+  .family      dd ?
+  .sock_type   dd ?
+  .protocol    dd ?
+  .addrlen     dd ?
+  .p_sock_addr dd ?
+  .p_canonname dd ?
+  .p_next      dd ?     ; next addrinfo structure.
+ends
 
-proc GetEmailTimestamp
-.time rd 2
-.date_time TDateTime
+
+
+; returns the IP address of some domain in EAX
+
+proc ResolveDomainIP, .hDomain
+.result dd ?
 begin
+        pushad
+
+        lea     ecx, [.result]
+
+        stdcall StrPtr, [.hDomain]
+
+        cinvoke getaddrinfo, eax, 0, 0, ecx
+        test    eax, eax
+        jnz     .error
+
+        mov     esi, [.result]
+
+.loop:
+        test    esi, esi
+        jz      .not_found
+
+        cmp     [esi+TAddrInfo.family], AF_INET
+        jne     .next
+
+        cmp     [esi+TAddrInfo.sock_type], SOCK_STREAM
+        jne     .next
+
+        cmp     [esi+TAddrInfo.protocol], IPPROTO_TCP
+        jne     .next
+
+        cmp     [esi+TAddrInfo.addrlen], sizeof.TSocketAddressIn
+        je      .found
+
+.next:
+        mov     esi, [esi+TAddrInfo.p_next]
+        jmp     .loop
+
+.end_loop:
 
 
-        stdcall GetTime
-        mov     [.time], eax
-        mov     [.time+4], edx
+.found:
+        mov     edx, [esi+TAddrInfo.p_sock_addr]
+        mov     eax, [edx+TSocketAddressIn.saAddress]
+        bswap   eax
+        mov     [esp+4*regEAX], eax
 
-        lea     eax, [.time]
-        lea     ecx, [.date_time]
-        stdcall TimeToDateTime, eax, ecx
+        clc
 
-; date
-        stdcall NumToStr, [.date_time.date], ntsUnsigned or ntsFixedWidth or ntsDec + 2
-        mov     ebx, eax
-        stdcall StrCharCat, ebx, ' '
+.finish:
 
-        mov     eax, [.date_time.month]
-        mov     eax, [.months+4*eax-4]
-        stdcall StrCharCat, ebx, eax
+        pushf
+        cinvoke freeaddrinfo, [.result]
+        popf
 
-        stdcall NumToStr, [.date_time.year], ntsSigned or ntsFixedWidth or ntsDec + 4
-        stdcall StrCat, ebx, eax
-        stdcall StrDel, eax
-        stdcall StrCharCat, ebx, ' '
-
-; time
-        stdcall NumToStr, [.date_time.hour], ntsUnsigned or ntsFixedWidth or ntsDec + 2
-        stdcall StrCat, ebx, eax
-        stdcall StrDel, eax
-        stdcall StrCharCat, ebx, ':'
-        stdcall NumToStr, [.date_time.minute], ntsUnsigned or ntsFixedWidth or ntsDec + 2
-        stdcall StrCat, ebx, eax
-        stdcall StrDel, eax
-        stdcall StrCharCat, ebx, ':'
-        stdcall NumToStr, [.date_time.second], ntsUnsigned or ntsFixedWidth or ntsDec + 2
-        stdcall StrCat, ebx, eax
-        stdcall StrDel, eax
-
-        stdcall StrCat, ebx, txt "-0000"
-
-        mov     eax, ebx
-        pop     esi ebx
+.exit:
+        popad
         return
 
+.not_found:
+        stc
+        jmp     .finish
 
-.months dd 'Jan ', 'Feb ', 'Mar ', 'Apr ', 'May ', 'Jun ', 'Jul ', 'Aug ', 'Sep ', 'Oct ', 'Nov ', 'Dec '
+.error:
+        stc
+        jmp     .exit
 
 endp
 
@@ -467,9 +490,48 @@ endp
 
 
 
-
-
-
+;        stdcall FileWriteString, [STDOUT], "Family: "
+;        stdcall NumToStr, [esi+linuxAddrInfo.family], ntsDec
+;        push    eax
+;        stdcall FileWriteString, [STDOUT], eax
+;        stdcall StrDel ; from the stack
+;        stdcall FileWriteString, [STDOUT], <txt 13, 10>
+;
+;
+;        stdcall FileWriteString, [STDOUT], "Socket type: "
+;        stdcall NumToStr, [esi+linuxAddrInfo.sock_type], ntsDec
+;        push    eax
+;        stdcall FileWriteString, [STDOUT], eax
+;        stdcall StrDel ; from the stack
+;        stdcall FileWriteString, [STDOUT], <txt 13, 10>
+;
+;
+;        stdcall FileWriteString, [STDOUT], "Protocol: "
+;        stdcall NumToStr, [esi+linuxAddrInfo.protocol], ntsDec
+;        push    eax
+;        stdcall FileWriteString, [STDOUT], eax
+;        stdcall StrDel ; from the stack
+;        stdcall FileWriteString, [STDOUT], <txt 13, 10>
+;
+;
+;        stdcall FileWriteString, [STDOUT], "Address length: "
+;        stdcall NumToStr, [esi+linuxAddrInfo.addrlen], ntsDec
+;        push    eax
+;        stdcall FileWriteString, [STDOUT], eax
+;        stdcall StrDel ; from the stack
+;        stdcall FileWriteString, [STDOUT], <txt 13, 10>
+;
+;
+;        mov     edi, [esi+linuxAddrInfo.p_sock_addr]
+;
+;        stdcall FileWriteString, [STDOUT], "IP Address: "
+;        mov     eax, [edi+TSocketAddressIn.saAddress]
+;        bswap   eax
+;        stdcall IP2Str, eax
+;        push    eax
+;        stdcall FileWriteString, [STDOUT], eax
+;        stdcall StrDel ; from the stack
+;        stdcall FileWriteString, [STDOUT], <txt 13, 10>
 
 
 

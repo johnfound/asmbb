@@ -1,20 +1,20 @@
 <div class="post">
   <div class="user_info">
-    <img class="unread_icon" src="/images/$case:Unread|onepost_gray.svg|onepost.svg$">
-    <div class="user_name">$UserName$</div>
-    <div class="user_pcnt">Posts: $UserPostCount$</div>
+    <img class="unread_icon" src="/images/[case:[Unread]|onepost_gray.svg|onepost.svg]">
+    <a class="user_name" href="/userinfo/[UserID][special:urltag]">[UserName]</a>
+    <img class="avatar" src="[avatar]">
+    <div class="user_pcnt">Posts: [UserPostCount]</div>
   </div>
   <div class="post_info">
-    <a id="$id$" href="#$id$">#$id$</a>
-    Публикуван: $PostTime$, видян: $ReadCount$ $case:ReadCount|пъти|път|пъти$
+    <a id="[id]" href="#[id]">#[id]</a>
+    Last edited: [PostTime], read: [ReadCount] [case:[ReadCount]|times|time|times]
     <div class="edit_tools">
-      <a class="quote_btn" href="/post/$slug$/$id$">
-	<img class="quote_icon" src="/images/quote.svg">
-      </a>
-      $special:edit_tools$
+      [case:[special:canpost]| |<a class="quote_btn" href="/post/[slug]/[id][special:urltag]"><img class="quote_icon" src="/images/quote.svg"></a>]
+      [case:[special:canedit]| |<a class="edit_btn" href="/edit/[id][special:urltag]"><img class="edit_icon" src="/images/edit_gray.svg"></a>]
+      [case:[special:candel] | |<a class="del_btn" href="/delete/[id][special:urltag]"><img class="del_icon" src="/images/del_gray.svg"></a>]
     </div>
   </div>
   <div class="post_text">
-    $minimag:content$
+    [minimag:[content]]
   </div>
 </div>

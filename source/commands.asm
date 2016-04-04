@@ -1,14 +1,14 @@
-LIMIT_POST_LENGTH equ 8*1024
 PAGE_LENGTH = 20
 
 ; User permissions status flags:
 
 permLogin       = 1
-permRead        = 2
 permPost        = 4
 permThreadStart = 8
 permEditOwn     = 16
 permEditAll     = 32
+permDelOwn      = 64
+permDelAll      = 128
 permAdmin       = $80000000
 
 
@@ -17,10 +17,14 @@ struct TSpecialParams
   .start_time      dd ?
   .params          dd ?
   .post            dd ?
+  .query           dd ?
+  .search          dd ?
+  .tag             dd ?
   .userID          dd ?
   .userName        dd ?
   .userStatus      dd ?
   .session         dd ?
+  .setupmode       dd ?
 ends
 
 
@@ -31,6 +35,14 @@ proc ServeOneRequest, .hSocket, .requestID, .pParams2, .pPost2, .start_time
 .root     dd ?
 .uri      dd ?
 .filename dd ?
+.mime     dd ?
+
+.date     TDateTime
+.timelo   dd ?
+.timehi   dd ?
+
+.timeRet  rd 2
+
 
 .special TSpecialParams
 
@@ -63,6 +75,7 @@ begin
         stdcall StrCatMem, eax, edx, ecx
 
 .post_ok:
+
         mov     [.special.post], eax
 
         stdcall StrNew
@@ -93,8 +106,56 @@ begin
         stdcall ValueByName, [.pParams2], "REQUEST_URI"
         jc      .error400
 
-        stdcall StrDup, eax
+        stdcall StrSplitList, eax, '?', FALSE
+        mov     ebx, eax
+
+        cmp     [ebx+TArray.count], 0
+        je      .error400
+
+        xor     eax, eax
+        xchg    eax, [ebx+TArray.array]
         mov     [.uri], eax
+
+        stdcall ListFree, ebx, StrDelNull
+
+
+; QUERY_STRING analizing
+
+        stdcall ValueByName, [.special.params], "QUERY_STRING"
+        jc      .query_ok
+
+        stdcall StrDup, eax
+        mov     [.special.query], eax
+
+        stdcall GetQueryItem, [.special.query], txt "s=", 0
+        mov     [.special.search], eax
+        test    eax, eax
+        jz      .search_ok
+
+        stdcall StrLen, eax
+        test    eax, eax
+        jnz     .search_ok
+
+        xchg    eax, [.special.search]
+        stdcall StrDel, eax
+
+.search_ok:
+
+        stdcall GetQueryItem, [.special.query], txt "tag=", 0
+        mov     [.special.tag], eax
+        test    eax, eax
+        jz      .tag_ok
+
+        stdcall StrLen, eax
+        test    eax, eax
+        jnz     .tag_ok
+
+        xchg    eax, [.special.tag]
+        stdcall StrDel, eax
+
+.tag_ok:
+
+.query_ok:
 
 ; first check for supported file format.
 
@@ -111,28 +172,67 @@ begin
         stdcall StrDel ; from the stack
         jc      .analize_uri
 
-        mov     edx, eax
+        mov     [.mime], eax
 
-        stdcall GetFileFromDB, [.filename]
-;        stdcall LoadBinaryFile, [.filename]
+
+        mov     [.timelo], 0
+        mov     [.timehi], 0
+
+        stdcall ValueByName, [.special.params], "HTTP_IF_MODIFIED_SINCE"
+        jc      .get_file
+
+        lea     edx, [.date]
+        stdcall DecodeHTTPDate, eax, edx
+        jc      .get_file
+
+        stdcall DateTimeToTime, edx
+        mov     [.timelo], eax
+        mov     [.timehi], edx
+
+.get_file:
+        lea     eax, [.timeRet]
+        stdcall GetFileFromDB, [.filename], [.timelo], [.timehi], eax
         jc      .error404_no_list_free
+
+        test    eax, eax
+        jz      .send_304_not_modified
 
         mov     esi, eax
 
 ; serve the file.
 
-        stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Content-type: ">
-        stdcall StrCat, edi, edx
+        stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Cache-control: max-age=1000000", 13, 10>
+
+        stdcall FormatHTTPTime, [.timeRet], [.timeRet+4]
+        stdcall StrCat, edi, "Last-modified: "
+        stdcall StrCat, edi, eax
+        stdcall StrDel, eax
+
+        stdcall StrCat, edi, <13, 10, "Content-type: ">
+        stdcall StrCat, edi, [.mime]
         stdcall StrCharCat, edi, $0a0d0a0d
 
         stdcall StrPtr, edi
         stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], FALSE
+        jc      .error500
 
         stdcall FCGI_output, [.hSocket], [.requestID], esi, ecx, TRUE
+        jc      .error500
+
         stdcall FreeMem, esi
 
         jmp     .final_clean
 
+
+.send_304_not_modified:
+
+        stdcall StrCat, edi, <"Status: 304 Not Modified", 13, 10, 13, 10>
+        jmp     .send_simple_result2
+
+.error500:
+        lea     eax, [.special]
+        stdcall AppendError, edi, "500 Unexpected server error", eax
+        jmp     .send_simple_result2
 
 .error400:
         lea     eax, [.special]
@@ -193,9 +293,10 @@ begin
         stdcall StrDelNull, [.special.post]
         stdcall StrDelNull, [.special.userName]
         stdcall StrDelNull, [.special.session]
+        stdcall StrDelNull, [.special.search]
+        stdcall StrDelNull, [.special.tag]
+        stdcall StrDelNull, [.special.query]
 
-
-        clc
         popad
         return
 
@@ -218,14 +319,20 @@ begin
         cmp     [esi+TArray.count], 0
         je      .redirect_to_the_list
 
+        stdcall StrCompNoCase, [esi+TArray.array], txt "adminrulez"
+        jc      .set_admin_account
+
+        cmp     [.special.setupmode], 0
+        jne     .settings
+
+        stdcall StrCompNoCase, [esi+TArray.array], txt "list"
+        jc      .show_thread_list
+
         stdcall StrCompNoCase, [esi+TArray.array], txt "threads"
         jc      .show_one_thread
 
         stdcall StrCompNoCase, [esi+TArray.array], txt "by_id"
         jc      .show_post_in_thread
-
-        stdcall StrCompNoCase, [esi+TArray.array], txt "list"
-        jc      .show_thread_list
 
         stdcall StrCompNoCase, [esi+TArray.array], txt "markread"
         jc      .mark_read_theme
@@ -242,20 +349,35 @@ begin
         stdcall StrCompNoCase, [esi+TArray.array], txt "register"
         jc      .user_register
 
+        stdcall StrCompNoCase, [esi+TArray.array], txt "activate"
+        jc      .activate_account
+
+        stdcall StrCompNoCase, [esi+TArray.array], txt "changepassword"
+        jc      .change_password
+
+        stdcall StrCompNoCase, [esi+TArray.array], txt "changemail"
+        jc      .change_email
+
         stdcall StrCompNoCase, [esi+TArray.array], txt "post"
         jc      .post_message
 
         stdcall StrCompNoCase, [esi+TArray.array], txt "edit"
         jc      .edit_message
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "activate"
-        jc      .activate_account
-
         stdcall StrCompNoCase, [esi+TArray.array], txt "sqlite"         ; sqlite console. only for admins.
         jc      .sqlite
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "adminrulez"
-        jc      .set_admin_permissions
+        stdcall StrCompNoCase, [esi+TArray.array], txt "pinit"
+        jc      .pinthread
+
+        stdcall StrCompNoCase, [esi+TArray.array], txt "search"
+        jc      .search
+
+        stdcall StrCompNoCase, [esi+TArray.array], txt "userinfo"
+        jc      .user_info
+
+        stdcall StrCompNoCase, [esi+TArray.array], txt "settings"
+        jc      .settings
 
 
 .end_forum_request:
@@ -264,19 +386,21 @@ begin
 
 .redirect_to_the_list:
 
-;        stdcall StrCat, edi, <"Status: 302 Found", 13, 10, "Location: /list/", 13, 10, 13, 10>
-
         stdcall StrMakeRedirect, edi, "/list/"
 
         jmp     .send_simple_result
 
 ;..................................................................................
 
-.set_admin_permissions:
+.set_admin_account:
 
-        cinvoke sqliteExec, [hMainDatabase], "update users set status = -1 where nick = 'admin';"
+        cmp     [.special.setupmode], 0
+        je      .error403
 
-        jmp     .error403
+        lea     eax, [.special]
+        stdcall CreateAdminAccount, eax
+
+        jmp     .send_simple_replace
 
 ;..................................................................................
 
@@ -292,22 +416,41 @@ begin
 
 ;..................................................................................
 
-.activate_account:
+.pinthread:
+        test    [.special.userStatus], permAdmin
+        jz      .error403
 
         cmp     [esi+TArray.count], 2
-        jne     .wrong_activation
+        jb      .error404
 
-        stdcall ActivateAccount, [esi+TArray.array+4]
-        jc      .wrong_activation
+        stdcall StrToNumEx, [esi+TArray.array+4]
+        jc      .error404
 
-        stdcall StrMakeRedirect, edi, "/message/congratulations/"
-        jmp     .send_simple_result
+        lea     ecx, [.special]
+        stdcall PinThread, eax, ecx
+
+        jmp     .send_simple_replace
 
 
-.wrong_activation:
+;..................................................................................
 
-        stdcall StrMakeRedirect, edi, "/message/bad_secret/"
-        jmp     .send_simple_result
+.search:
+        xor     ebx, ebx
+
+        cmp     [esi+TArray.count], 2
+        jb      .show_search
+
+        stdcall StrToNumEx, [esi+TArray.array+4]
+        mov     ebx, eax
+
+.show_search:
+
+        lea     eax, [.special]
+        stdcall ShowSearchResults, ebx, eax
+        jc      .send_simple_replace
+
+        jmp     .output_forum_html
+
 
 
 ;..................................................................................
@@ -323,14 +466,7 @@ begin
         stdcall StrToNumEx, [esi+TArray.array+4]
         mov     ebx, eax
 
-.page_ready:
-
-
-; here put some hash analizing code for the hash tags. Not implemented yet.
-
-
 .list_params_ready:
-
         lea     eax, [.special]      ; the special parameters data pointer.
         stdcall ListThreads, ebx, eax
 
@@ -376,6 +512,7 @@ begin
         lea     eax, [.special]
         stdcall ShowThread, [esi+TArray.array+4], ebx, eax
         jnc     .output_forum_html
+
         jmp     .error404
 
 
@@ -389,7 +526,7 @@ begin
         stdcall StrToNumEx, [esi+TArray.array+4]
         mov     ebx, eax
 
-        stdcall StrCatRedirectToPost, edi, ebx
+        stdcall StrCatRedirectToPost, edi, ebx, [.special.tag]
 
         jmp     .send_simple_result
 
@@ -463,7 +600,48 @@ cUnknownError text "unknown_error"
         stdcall ShowRegisterPage
         jmp     .output_forum_html
 
+
 ;..................................................................................
+
+.activate_account:
+
+        cmp     [esi+TArray.count], 2
+        jne     .error404
+
+        stdcall ActivateAccount, [esi+TArray.array+4]
+
+        jmp     .send_simple_replace
+
+;..................................................................................
+
+
+.change_password:
+
+        cmp     [esi+TArray.count], 1
+        jne     .error404
+
+        lea     eax, [.special]
+        stdcall ChangePassword, eax
+
+        jmp     .send_simple_replace
+
+
+;..................................................................................
+
+
+.change_email:
+
+        cmp     [esi+TArray.count], 1
+        jne     .error404
+
+        lea     eax, [.special]
+        stdcall ChangeEmail, eax
+
+        jmp     .send_simple_replace
+
+
+;..................................................................................
+
 
 
 .post_message:
@@ -491,6 +669,7 @@ cUnknownError text "unknown_error"
         jne     .error400
 
         stdcall StrToNumEx, [esi+TArray.array+4]
+        jc      .error404
 
         lea     ecx, [.special]
         stdcall EditUserMessage, eax, ecx
@@ -498,107 +677,43 @@ cUnknownError text "unknown_error"
         jmp     .send_simple_replace
 
 
-
 ;..................................................................................
 
 
+.user_info:
 
+        cmp     [esi+TArray.count], 2
+        jne     .error404
+
+        stdcall StrToNumEx, [esi+TArray.array+4]
+        jc      .error404
+
+        lea     ecx, [.special]
+        stdcall ShowUserInfo, eax, ecx
+        jnc     .output_forum_html
+
+        jmp     .send_simple_replace
+
+
+;..................................................................................
+
+.settings:
+        cmp     [.special.setupmode], 0
+        jne     .force_settings
+
+        test    [.special.userStatus], permAdmin
+        jz      .error403
+
+.force_settings:
+        lea     ecx, [.special]
+        stdcall BoardSettings, ecx
+
+        jnc     .output_forum_html
+
+        jmp     .send_simple_replace
 
 endp
 
-
-
-
-sqlSelectThreads text "select ",                                                                                                                                \
-                                                                                                                                                                \
-                        "T.id, ",                                                                                                                               \
-                        "T.Slug, ",                                                                                                                             \
-                        "Caption, ",                                                                                                                            \
-                        "strftime('%d.%m.%Y %H:%M:%S', LastChanged, 'unixepoch') as TimeChanged, ",                                                             \
-                        "(select count() from posts where threadid = T.id) as PostCount, ",                                                                     \
-                        "(select count() from posts P, UnreadPosts U where P.id = U.PostID and P.threadID = T.id and U.userID = ?3 ) as Unread ",               \
-                                                                                                                                                                \
-                      "from ",                                                                                                                                  \
-                                                                                                                                                                \
-                        "Threads T ",                                                                                                                           \
-                                                                                                                                                                \
-                      "order by ",                                                                                                                              \
-                                                                                                                                                                \
-                        "LastChanged desc ",                                                                                                                    \
-                                                                                                                                                                \
-                      "limit ?1 ",                                                                                                                              \
-                      "offset ?2"
-
-sqlThreadsCount  text "select count() from Threads"
-
-
-proc ListThreads, .start, .pSpecial
-
-.stmt  dd ?
-.list  dd ?
-
-begin
-        pushad
-
-        stdcall StrNew
-        mov     edi, eax
-
-        mov     esi, [.pSpecial]
-
-        stdcall StrCat, edi, '<div class="threads_list">'
-
-; navigation tool bar
-
-        stdcall StrCatTemplate, edi, "nav_list", 0, esi
-
-
-; links to the pages.
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlThreadsCount, -1, eax, 0
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteColumnInt, [.stmt], 0
-        mov     ebx, eax
-        cinvoke sqliteFinalize, [.stmt]
-
-        stdcall CreatePagesLinks, txt "/list/", [.start], ebx
-        mov     [.list], eax
-
-        stdcall StrCat, edi, eax
-
-; now append the list itself.
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectThreads, -1, eax, 0
-
-        cinvoke sqliteBindInt, [.stmt], 1, PAGE_LENGTH
-
-        mov     eax, [.start]
-        imul    eax, PAGE_LENGTH
-        cinvoke sqliteBindInt, [.stmt], 2, eax
-
-        cinvoke sqliteBindInt, [.stmt], 3, [esi+TSpecialParams.userID]
-
-.loop:
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        jne     .finish
-
-        stdcall StrCatTemplate, edi, "thread_info", [.stmt], esi
-
-        jmp     .loop
-
-
-.finish:
-        stdcall StrCat, edi, [.list]
-        stdcall StrDel, [.list]
-        stdcall StrCat, edi, "</div>"   ; div.threads_list
-
-        cinvoke sqliteFinalize, [.stmt]
-
-        mov     [esp+4*regEAX], edi
-        popad
-        return
-endp
 
 
 
@@ -660,172 +775,8 @@ endp
 
 
 
-sqlSelectPosts   text "select ",                                                                                        \
-                                                                                                                        \
-                        "Posts.id, ",                                                                                   \
-                        "Posts.threadID, ",                                                                             \
-                        "strftime('%d.%m.%Y %H:%M:%S', Posts.postTime, 'unixepoch') as PostTime, ",                     \
-                        "Posts.Content, ",                                                                              \
-                        "Users.id as UserID, ",                                                                         \
-                        "Users.nick as UserName,",                                                                      \
-                        "(select count() from Posts X where X.userID = Posts.UserID) as UserPostCount, ",               \
-                        "?4 as Slug, ",                                                                                 \
-                        "(select count() from UnreadPosts U where UserID = ?5 and PostID = Posts.id) as Unread, ",      \
-                        "ReadCount ",                                                                                   \
-                                                                                                                        \
-                      "from ",                                                                                          \
-                                                                                                                        \
-                        "Posts left join Users on ",                                                                    \
-                          "Users.id = Posts.userID ",                                                                   \
-                                                                                                                        \
-                      "where ",                                                                                         \
-                                                                                                                        \
-                        "threadID = ?1 ",                                                                               \
-                                                                                                                        \
-                      "order by ",                                                                                      \
-                                                                                                                        \
-                        "Posts.id ",                                                                                    \
-                                                                                                                        \
-                      "limit ?2 ",                                                                                      \
-                      "offset ?3"
 
-sqlGetPostCount text "select count() from Posts where ThreadID = ?"
-
-sqlGetThreadInfo text "select id, caption, slug from Threads where slug = ? limit 1"
-
-
-
-proc ShowThread, .threadSlug, .start, .pSpecial
-
-.stmt  dd ?
-
-.threadID dd ?
-
-.list dd ?
-
-begin
-        pushad
-
-        stdcall StrNew
-        mov     edi, eax
-
-        mov     esi, [.pSpecial]
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, -1, eax, 0
-
-        stdcall StrPtr, [.threadSlug]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        jne     .error
-
-        cinvoke sqliteColumnInt, [.stmt], 0
-        mov     [.threadID], eax
-
-        stdcall StrCat, edi, '<div class="thread">'
-
-        stdcall StrCatTemplate, edi, "nav_thread", [.stmt], esi
-
-        stdcall StrCat, edi, '<h1 class="thread_caption">'
-
-        cinvoke sqliteColumnText, [.stmt], 1
-
-        stdcall StrEncodeHTML, eax
-        stdcall StrCat, edi, eax
-        stdcall StrDel, eax
-
-        stdcall StrCat, edi, '</h1>'
-
-        cinvoke sqliteFinalize, [.stmt]
-
-
-; pages links
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetPostCount, -1, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
-
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteColumnInt, [.stmt], 0
-        mov     ebx, eax
-        cinvoke sqliteFinalize, [.stmt]
-
-        stdcall StrDup, txt "/threads/"
-        stdcall StrCat, eax, [.threadSlug]
-        stdcall StrCharCat, eax, "/"
-
-        stdcall CreatePagesLinks, eax, [.start], ebx
-        mov     [.list], eax
-
-        stdcall StrCat, edi, [.list]
-
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectPosts, -1, eax, 0
-
-        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
-        cinvoke sqliteBindInt, [.stmt], 2, PAGE_LENGTH
-
-        mov     eax, [.start]
-        imul    eax, PAGE_LENGTH
-        cinvoke sqliteBindInt, [.stmt], 3, eax
-
-        stdcall StrPtr, [.threadSlug]
-        cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteBindInt, [.stmt], 5, [esi+TSpecialParams.userID]
-
-.loop:
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        jne     .finish
-
-        stdcall StrCatTemplate, edi, "post_view", [.stmt], esi
-
-        cinvoke sqliteColumnInt, [.stmt], 0
-
-        stdcall PostIncrementReadCount, eax
-
-        mov     ebx, [esi+TSpecialParams.userID]
-        test    ebx, ebx
-        jz      .loop
-
-        stdcall SetPostRead, ebx, eax
-
-        jmp     .loop
-
-
-.finish:
-        stdcall StrCat, edi, [.list]
-        stdcall StrCat, edi, "</div>"   ; div.thread
-
-        cinvoke sqliteFinalize, [.stmt]
-
-        mov     [esp+4*regEAX], edi
-        clc
-        popad
-        return
-
-.error:
-
-        cinvoke sqliteFinalize, [.stmt]
-        stdcall StrDel, edi
-        stc
-        popad
-        return
-
-endp
-
-
-
-
-
-
-
-
-proc CreatePagesLinks, .prefix, .current, .count
+proc CreatePagesLinks, .prefix, .suffix, .current, .count
 begin
         pushad
 
@@ -921,7 +872,15 @@ begin
         stdcall StrCat, edi, [.prefix]
 
         stdcall StrCat, edi, eax
-        stdcall StrCharCat, edi, '/">'
+
+        cmp     [.suffix], 0
+        je      .suf_ok
+
+        stdcall StrCharCat, edi, "?"
+        stdcall StrCat, edi, [.suffix]
+
+.suf_ok:
+        stdcall StrCharCat, edi, '">'
 
 .link_ok:
         stdcall StrCat, edi, eax
@@ -1043,440 +1002,11 @@ endp
 
 
 
-proc ShowLoginPage, .pSpecial
-begin
-        stdcall StrNew
-        stdcall StrCatTemplate, eax, "login_form", 0, [.pSpecial]
-        return
-endp
 
 
 
-
-
-sqlGetUserInfo   text "select id, salt, passHash, status from Users where lower(nick) = lower(?)"
-sqlInsertSession text "insert into sessions (userID, sid, last_seen) values ( ?, ?, strftime('%s','now') )"
-sqlCheckSession  text "select sid from sessions where userID = ?"
-
-
-proc UserLogin, .pSpecial
-.stmt  dd ?
-
-.user     dd ?
-.password dd ?
-
-.userID   dd ?
-.session  dd ?
-.status   dd ?
-
-begin
-        pushad
-
-        xor     eax, eax
-        mov     [.session], eax
-        mov     [.user], eax
-        mov     [.password], eax
-
-        stdcall StrNew
-        mov     edi, eax
-
-; check the information
-
-        mov     ebx, [.pSpecial]
-        mov     ebx, [ebx+TSpecialParams.post]
-
-        stdcall GetQueryItem, ebx, "username=", 0
-        mov     [.user], eax
-
-        stdcall StrLen, eax
-        test    eax, eax
-        jz      .redirect_back_short
-
-        stdcall GetQueryItem, ebx, "password=", 0
-        mov     [.password], eax
-
-        stdcall StrLen, eax
-        test    eax, eax
-        jz      .redirect_back_short
-
-; hash the password
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetUserInfo, -1, eax, 0
-
-        stdcall StrPtr, [.user]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        je      .user_ok
-
-
-.bad_user:
-        cinvoke sqliteFinalize, [.stmt]
-        jmp     .redirect_back_bad_password
-
-
-.user_ok:
-
-        cinvoke sqliteColumnText, [.stmt], 1    ; the salt
-        stdcall StrDupMem, eax
-        push    eax
-
-        stdcall StrCat, eax, [.password]
-        stdcall StrMD5, eax
-        stdcall StrDel ; from the stack
-        stdcall StrDel, [.password]
-
-        mov     [.password], eax
-
-        cinvoke sqliteColumnText, [.stmt], 2    ; the password hash.
-
-        stdcall StrCompCase, [.password], eax
-        jnc     .bad_user
-
-
-; here the password matches this from the database.
-
-        cinvoke sqliteColumnInt, [.stmt], 0
-        mov     [.userID], eax
-
-        cinvoke sqliteColumnInt, [.stmt], 3
-        mov     [.status], eax
-
-        cinvoke sqliteFinalize, [.stmt]
-
-; check the status of the user
-
-        test    [.status], permLogin
-        jz      .redirect_back_bad_permissions
-
-; Check for existing session
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare, [hMainDatabase], sqlCheckSession, -1, eax, 0
-
-        cinvoke sqliteBindInt, [.stmt], 1, [.userID]
-
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        jne     .new_session
-
-        cinvoke sqliteColumnText, [.stmt], 0
-        stdcall StrDupMem, eax
-        mov     [.session], eax
-
-        cinvoke sqliteFinalize, [.stmt]
-
-        jmp     .set_the_cookie
-
-
-.new_session:
-
-        stdcall GetRandomString, 32
-        mov     [.session], eax
-
-
-; Insert new session record.
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertSession, -1, eax, 0
-
-        cinvoke sqliteBindInt, [.stmt], 1, [.userID]
-
-        stdcall StrPtr, [.session]
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteStep, [.stmt]
-
-; check for error here!
-
-        cinvoke sqliteFinalize, [.stmt]
-
-
-; now, set some cookies
-
-.set_the_cookie:
-
-        stdcall StrCat, edi, "Set-Cookie: sid="
-        stdcall StrCat, edi, [.session]
-        stdcall StrCat, edi, <"; HttpOnly; Path=/", 13, 10>
-
-        stdcall GetQueryItem, ebx, "backlink=", "/list/"
-
-        stdcall StrMakeRedirect, edi, eax       ; go back from where came.
-        stdcall StrDel, eax
-        jmp     .finish
-
-.redirect_back_short:
-
-        stdcall StrMakeRedirect, edi, "/message/login_missing_data/"  ; go backward.
-        jmp     .finish
-
-.redirect_back_bad_permissions:
-
-        stdcall StrMakeRedirect, edi, "/message/login_bad_permissions/" ; go backward.
-        jmp     .finish
-
-
-.redirect_back_bad_password:
-
-        stdcall StrMakeRedirect, edi, "/message/login_bad_password/"
-
-.finish:
-        stdcall StrDelNull, [.user]
-        stdcall StrDelNull, [.password]
-        stdcall StrDelNull, [.session]
-
-        mov     [esp+4*regEAX], edi
-        popad
-        return
-
-endp
-
-
-
-
-sqlLogout text "delete from Sessions where userID = ?"
-
-proc UserLogout, .pspecial
-.stmt dd ?
-begin
-        pushad
-
-        stdcall StrNew
-        mov     edi, eax
-
-        mov     esi, [.pspecial]
-
-        cmp     [esi+TSpecialParams.session], 0
-        je      .finish
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLogout, -1, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.userID]
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteFinalize, [.stmt]
-
-; delete the cookie.
-
-        stdcall StrCat, edi, <"Set-Cookie: sid=; HttpOnly; Path=/; Max-Age=0", 13, 10>
-
-.finish:
-        stdcall StrNew
-        stdcall StrCatTemplate, eax, "logout", 0, [.pspecial]
-
-        stdcall StrMakeRedirect, edi, eax
-        stdcall StrDel, eax
-
-        mov     [esp+4*regEAX], edi
-        popad
-        return
-endp
-
-
-
-
-
-
-proc ShowRegisterPage
-begin
-        stdcall StrNew
-        stdcall StrCatTemplate, eax, "register_form", 0, 0
-        return
-endp
-
-
-
-;sqlCheckMinInterval text "select (strftime('%s','now') - time_reg) as delta from WaitingActivation where (ip_from = ?) and ( delta>30 ) order by time_reg desc limit 1"
-sqlRegisterUser    text "insert into WaitingActivation (nick, passHash, salt, email, ip_from, time_reg, time_email, a_secret) values (?, ?, ?, ?, ?, strftime('%s','now'), NULL, ?)"
-sqlCheckUserExists text "select 1 from Users where lower(nick) = lower(?) or email = ? limit 1"
-
-proc RegisterNewUser, .pSpecial
-
-.stmt      dd ?
-
-.user      dd ?
-.password  dd ?
-.password2 dd ?
-.email     dd ?
-.secret    dd ?
-.ip_from   dd ?
-
-.email_text dd ?
-
-begin
-        pushad
-
-        xor     eax, eax
-        mov     [.user], eax
-        mov     [.password], eax
-        mov     [.password2], eax
-        mov     [.email], eax
-        mov     [.secret], eax
-        mov     [.ip_from], eax
-
-; check the information
-
-        mov     ebx, [.pSpecial]
-        mov     ebx, [ebx+TSpecialParams.post]
-
-        stdcall GetQueryItem, ebx, "username=", 0
-        mov     [.user], eax
-
-        stdcall StrLen, eax
-        cmp     eax, 3
-        jbe     .error_short_name
-
-        stdcall GetQueryItem, ebx, "email=", 0
-        mov     [.email], eax
-
-        stdcall CheckEmail, eax
-        jc      .error_bad_email
-
-        stdcall GetQueryItem, ebx, "password=", 0
-        mov     [.password], eax
-
-        stdcall GetQueryItem, ebx, "password2=", 0
-        mov     [.password2], eax
-
-        stdcall StrCompCase, [.password], [.password2]
-        jnc     .error_different
-
-        stdcall StrLen, [.password]
-        cmp     eax, 5
-        jbe     .error_short_pass
-
-        mov     eax, [.pSpecial]
-        stdcall ValueByName, [eax+TSpecialParams.params], "REMOTE_ADDR"
-        stdcall StrIP2Num, eax
-        jc      .error_technical_problem
-
-        mov     [.ip_from], eax
-
-; hash the password
-
-        stdcall HashPassword, [.password]
-        jc      .error_technical_problem
-
-        stdcall StrDel, [.password]
-        stdcall StrDel, [.password2]
-        mov     [.password], eax
-        mov     [.password2], edx       ; the salt!
-
-        stdcall GetRandomString, 32
-        jc      .error_technical_problem
-
-        mov     [.secret], eax
-
-; check whether the user exists
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckUserExists, -1, eax, 0
-
-        stdcall StrPtr, [.user]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-
-        stdcall StrPtr, [.email]
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteStep, [.stmt]
-        mov     ebx, eax
-
-        cinvoke sqliteFinalize, [.stmt]
-
-        cmp     ebx, SQLITE_ROW
-        je      .error_exists
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRegisterUser, -1, eax, 0
-
-        stdcall StrPtr, [.user]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-
-        stdcall StrPtr, [.password]
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
-
-        stdcall StrPtr, [.password2]
-        cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
-
-        stdcall StrPtr, [.email]
-        cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteBindInt, [.stmt], 5, [.ip_from]
-
-        stdcall StrPtr, [.secret]
-        cinvoke sqliteBindText, [.stmt], 6, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteStep, [.stmt]
-        mov     ebx, eax
-
-        cinvoke sqliteFinalize, [.stmt]
-
-        cmp     ebx, SQLITE_DONE
-        jne     .error_exists
-
-; now send the activation email for all registered user, where the email was not sent.
-
-        stdcall ProcessActivationEmails
-        jc      .error_technical_problem
-
-; the user has been created and now is waiting for email activation.
-
-        stdcall StrMakeRedirect, 0, "/message/user_created/"                    ; go forward.
-        jmp     .finish
-
-
-.error_technical_problem:
-
-        stdcall StrMakeRedirect, 0, "/message/register_technical/"              ; go backward.
-        jmp     .finish
-
-
-.error_short_name:
-
-        stdcall StrMakeRedirect, 0, "/message/register_short_name/"             ; go backward.
-        jmp     .finish
-
-
-.error_bad_email:
-        stdcall StrMakeRedirect, 0, "/message/register_bad_email/"              ; go backward.
-        jmp     .finish
-
-
-.error_short_pass:
-        stdcall StrMakeRedirect, 0, "/message/register_short_pass/"             ; go backward.
-        jmp     .finish
-
-
-.error_different:
-
-        stdcall StrMakeRedirect, 0, "/message/register_passwords_different/"    ; go backward.
-        jmp     .finish
-
-
-.error_exists:
-
-        stdcall StrMakeRedirect, 0, "/message/register_user_exists/"            ; go backward.
-
-.finish:
-        stdcall StrDelNull, [.user]
-        stdcall StrDelNull, [.password]
-        stdcall StrDelNull, [.password2]
-        stdcall StrDelNull, [.email]
-        stdcall StrDelNull, [.secret]
-
-        mov     [esp+4*regEAX], eax
-        popad
-        return
-endp
-
-
-
-
-
-
-sqlGetSession text "select userID, nick, status, last_seen from sessions left join users on id = userID where sid = ?"
+sqlGetSession    text "select userID, nick, status, last_seen from sessions left join users on id = userID where sid = ?"
+sqlGetUserExists text "select 1 from users limit 1"
 
 ; returns:
 ;   EAX: string with the logged user name
@@ -1496,10 +1026,25 @@ begin
         mov     [edi+TSpecialParams.userStatus], eax
         mov     [edi+TSpecialParams.session], eax
 
+        xor     ebx, ebx
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetUserExists, sqlGetUserExists.length, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        je      .setupmode_ok
+
+        inc     ebx
+
+.setupmode_ok:
+        cinvoke sqliteFinalize, [.stmt]
+        mov     [edi+TSpecialParams.setupmode], ebx
+
+        test    ebx, ebx
+        jnz     .finish
+
         stdcall GetCookieValue, [edi+TSpecialParams.params], txt 'sid'
         jc      .finish
-
-        DebugMsg "User found!"
 
         mov     ebx, eax
 
@@ -1695,13 +1240,7 @@ mimeGIF   text "image/gif"
 
 
 
-
-
-
-
-
-
-sqlSelectNotSent text "select id, nick, email, a_secret as secret, (select val from Params where id='host') as host from WaitingActivation where time_email is NULL order by time_reg"
+sqlSelectNotSent text "select id, nick, email, a_secret as secret, (select val from Params where id='host') as host, salt from WaitingActivation where time_email is NULL order by time_reg"
 sqlCleanWaiting  text "delete from WaitingActivation where time_reg < (strftime('%s','now') - 86400) and time_email is not NULL"
 
 proc ProcessActivationEmails
@@ -1741,7 +1280,7 @@ proc SendActivationEmail, .stmt
 .host      dd ?
 .from      dd ?
 .to        dd ?
-.smtp_ip   dd ?
+.smtp_addr dd ?
 .smtp_port dd ?
 
 begin
@@ -1751,7 +1290,7 @@ begin
         mov     [.host], eax
         mov     [.from], eax
         mov     [.to], eax
-        mov     [.smtp_ip], eax
+        mov     [.smtp_addr], eax
         mov     [.subj], eax
         mov     [.body], eax
 
@@ -1773,16 +1312,17 @@ begin
         mov     [.to], eax
 
 
-        stdcall GetParam, "smtp_ip", gpString
+        stdcall GetParam, "smtp_addr", gpString
         jc      .finish
 
-        mov     [.smtp_ip], eax
+        mov     [.smtp_addr], eax
 
 
         stdcall GetParam, "smtp_port", gpInteger
         jc      .finish
 
         mov     [.smtp_port], eax
+
 
         stdcall StrNew
         mov     [.subj], eax
@@ -1815,12 +1355,12 @@ begin
         jne     .error_update
 
 
-        stdcall SendEmail, [.smtp_ip], [.smtp_port], [.host], [.from], [.to], [.subj], [.body], 0
+        stdcall SendEmail, [.smtp_addr], [.smtp_port], [.host], [.from], [.to], [.subj], [.body], 0
 
 .finish:
         pushf
 
-        stdcall StrDelNull, [.smtp_ip]
+        stdcall StrDelNull, [.smtp_addr]
         stdcall StrDelNull, [.host]
         stdcall StrDelNull, [.from]
         stdcall StrDelNull, [.to]
@@ -1903,809 +1443,6 @@ endp
 
 
 
-sqlBegin      text  "begin transaction"
-sqlActivate   text  "insert into Users ( nick, passHash, salt, status, email ) select nick, passHash, salt, ?, email from WaitingActivation where a_secret = ?"
-sqlDeleteWait text  "delete from WaitingActivation where a_secret = ?"
-sqlCheckCount text  "select count(*) from WaitingActivation where a_secret = ?"
-sqlCommit     text  "commit transaction"
-sqlRollback   text  "rollback"
-
-proc ActivateAccount, .hSecret
-.stmt dd ?
-begin
-        pushad
-
-; begin transaction
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBegin, -1, eax, 0
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_DONE
-        jne     .rollback
-
-        cinvoke sqliteFinalize, [.stmt]
-
-; check again whether all is successful.
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckCount, -1, eax, 0
-
-        stdcall StrPtr, [.hSecret]
-        cinvoke sqliteBindText, [.stmt], 1, eax, -1, SQLITE_STATIC
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        jne     .rollback
-
-        cinvoke sqliteColumnInt, [.stmt], 0
-        cmp     eax, 1
-        jne     .rollback
-
-        cinvoke sqliteFinalize, [.stmt]
-
-
-; insert new user
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlActivate, -1, eax, 0
-
-        cinvoke sqliteBindInt, [.stmt], 1, permLogin or permRead or permPost or permThreadStart or permEditOwn
-
-        stdcall StrPtr, [.hSecret]
-        cinvoke sqliteBindText, [.stmt], 2, eax, -1, SQLITE_STATIC
-        cinvoke sqliteStep, [.stmt]
-
-        cmp     eax, SQLITE_DONE
-        jne     .rollback
-
-        cinvoke sqliteChanges, [hMainDatabase]
-
-        cinvoke sqliteFinalize, [.stmt]
-
-; delete the waiting user
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlDeleteWait, -1, eax, 0
-
-        stdcall StrPtr, [.hSecret]
-        cinvoke sqliteBindText, [.stmt], 1, eax, -1, SQLITE_STATIC
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_DONE
-        jne     .rollback
-
-        cinvoke sqliteFinalize, [.stmt]
-
-; commit transaction
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCommit, -1, eax, 0
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_DONE
-        jne     .rollback
-
-        cinvoke sqliteFinalize, [.stmt]
-
-        clc
-        popad
-        return
-
-.rollback:
-
-        cinvoke sqliteFinalize, [.stmt]         ; finalize the bad statement.
-
-; rollback transaction
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRollback, -1, eax, 0
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteFinalize, [.stmt]
-
-        stc
-        popad
-        return
-endp
-
-
-
-
-
-
-cNewPostForm   text "new_post_form"
-cNewThreadForm text "new_thread_form"
-
-sqlSelectConst text "select ? as slug, ? as caption, ? as source"
-
-sqlGetQuote   text "select U.nick, P.content from Posts P left join Users U on U.id = P.userID where P.id = ?"
-
-sqlInsertPost text "insert into Posts ( ThreadID, UserID, PostTime, Content, ReadCount) values (?, ?, strftime('%s','now'), substr( ?, 1, ? ), 0)"
-sqlUpdateThreads text "update Threads set LastChanged = strftime('%s','now') where id = ?"
-sqlInsertThread  text "insert into Threads ( Caption ) values ( substr( ?, 1, 256 ) )"
-sqlSetThreadSlug text "update Threads set slug = ? where id = ?"
-
-
-
-proc PostUserMessage2, .hSlug, .idQuote, .pSpecial
-.stmt dd ?
-
-.fPreview dd ?
-
-.slug     dd ?
-.caption  dd ?
-.source   dd ?
-
-.postID   dd ?
-
-begin
-        pushad
-
-        xor     eax, eax
-        mov     [.fPreview], eax  ; preview by default when handling GET requests.
-        mov     [.slug], eax
-        mov     [.source], eax
-        mov     [.caption], eax
-
-        mov     esi, [.pSpecial]
-
-        stdcall StrNew
-        mov     edi, eax
-
-; check the permissions.
-
-        mov     eax, permThreadStart
-        cmp     [.hSlug], 0
-        je      .perm_ok
-
-        mov     eax, permPost
-
-.perm_ok:
-        or      eax, permAdmin
-
-        test    [esi+TSpecialParams.userStatus], eax
-        jz      .error_wrong_permissions
-
-
-; get the additional post/thread parameters
-
-        cmp     [.hSlug], 0
-        jne     .get_caption_from_thread
-
-
-        cmp     [esi+TSpecialParams.post], 0
-        je      .show_edit_form
-
-
-        stdcall GetQueryItem, [esi+TSpecialParams.post], "title=", 0
-        mov     [.caption], eax
-        test    eax, eax
-        jz      .thread_ok
-
-        stdcall StrPtr, eax
-        mov     ebx, eax
-
-        stdcall StrOffsUtf8, ebx, 512
-        sub     eax, ebx
-        push    eax
-
-        stdcall StrNew
-        stdcall StrCatMem, eax, ebx     ; length from the stack
-
-        stdcall StrDel, [.caption]
-        mov     [.caption], eax
-
-        jmp     .thread_ok
-
-
-.get_caption_from_thread:
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, -1, eax, 0
-
-        stdcall StrPtr, [.hSlug]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteStep, [.stmt]
-
-        cmp     eax, SQLITE_ROW
-        jne     .error_thread_not_exists
-
-        cinvoke sqliteColumnText, [.stmt], 1
-        stdcall StrDupMem, eax
-        mov     [.caption], eax
-
-        cinvoke sqliteFinalize, [.stmt]
-
-.thread_ok:
-
-; get the source
-
-        stdcall GetQueryItem, [esi+TSpecialParams.post], "source=", 0
-        mov     [.source], eax
-
-; ok, get the action then:
-
-        stdcall GetQueryItem, [esi+TSpecialParams.post], "submit=", 0
-        stdcall StrDel, eax
-        test    eax, eax
-        jnz     .create_post_and_exit
-
-
-        stdcall GetQueryItem, [esi+TSpecialParams.post], "preview=", 0
-        stdcall StrDel, eax
-        mov     [.fPreview], eax
-
-
-        cmp     [.idQuote], 0
-        je      .show_edit_form
-
-        cmp     [.source], 0
-        jne     .show_edit_form
-
-; get the quoted text
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetQuote, -1, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, [.idQuote]
-        cinvoke sqliteStep, [.stmt]
-
-        cmp     eax, SQLITE_ROW
-        jne     .finalize_quote
-
-        stdcall StrDupMem, ";quote "
-        mov     [.source], eax          ; [.source] should be 0 at this point!!!
-
-        cinvoke sqliteColumnText, [.stmt], 0    ; the user nick name.
-
-        stdcall StrCat, [.source], eax
-        stdcall StrCharCat, [.source], $0a0d
-
-        cinvoke sqliteColumnText, [.stmt], 1
-        stdcall StrCat, [.source], eax
-
-        stdcall StrCat, [.source], <13, 10, ";end quote", 13, 10>
-
-.finalize_quote:
-
-        cinvoke sqliteFinalize, [.stmt]
-
-
-.show_edit_form:
-
-        stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Content-type: text/html", 13, 10, 13, 10>
-        stdcall StrCatTemplate, edi, "main_html_start", 0, esi
-
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectConst, -1, eax, 0
-
-        cmp     [.hSlug], 0
-        je      .slug_ok
-
-        stdcall StrPtr, [.hSlug]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-
-.slug_ok:
-
-        cmp     [.caption], 0
-        je      .caption_ok
-
-        stdcall StrPtr, [.caption]
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
-
-.caption_ok:
-
-        cmp     [.source], 0
-        je      .source_ok
-
-        stdcall StrPtr, [.source]
-        cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
-
-.source_ok:
-
-        cinvoke sqliteStep, [.stmt]
-
-        mov     ecx, cNewThreadForm
-        cmp     [.hSlug], 0
-        je      .make_form
-
-        mov     ecx, cNewPostForm
-
-.make_form:
-
-        stdcall StrCatTemplate, edi, ecx, [.stmt], esi
-
-
-        cmp     [.fPreview], 0
-        je      .preview_ok
-
-        stdcall StrCatTemplate, edi, "preview", [.stmt], esi
-
-.preview_ok:
-
-        cinvoke sqliteFinalize, [.stmt]
-
-        stdcall StrCatTemplate, edi, "main_html_end", 0, esi
-        jmp     .finish
-
-
-;...............................................................................................
-
-.create_post_and_exit:
-
-; begin transaction!
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBegin, -1, eax, 0
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_DONE
-        jne     .rollback
-
-        cinvoke sqliteFinalize, [.stmt]
-
-        cmp     [.hSlug], 0
-        je      .new_thread
-
-        stdcall StrDup, [.hSlug]
-        mov     [.slug], eax
-
-        jmp     .post_in_thread
-
-
-; create new thread, from the post data
-
-.new_thread:
-
-        stdcall StrSlugify, [.caption]
-        mov     [.slug], eax
-        stdcall StrLen, eax
-        test    eax, eax
-        jz      .error_invalid_caption
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertThread, -1, eax, 0
-
-        cmp     [.caption], 0
-        je      .rollback
-
-        stdcall StrPtr, [.caption]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteStep, [.stmt]
-
-        cmp     eax, SQLITE_DONE
-        jne     .rollback
-
-        cinvoke sqliteFinalize, [.stmt]
-
-
-        cinvoke sqliteLastInsertRowID, [hMainDatabase]
-
-        mov     ebx, eax
-
-        stdcall NumToStr, ebx, ntsDec or ntsUnsigned
-
-        stdcall StrCharCat, [.slug], "_"
-        stdcall StrCat, [.slug], eax
-        stdcall StrDel, eax
-
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetThreadSlug, sqlSetThreadSlug.length, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 2, ebx
-
-        stdcall StrPtr, [.slug]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_DONE
-        jne     .rollback
-
-
-.post_in_thread:
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, -1, eax, 0
-
-        stdcall StrPtr, [.slug]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        jne     .rollback
-
-        cinvoke sqliteColumnInt, [.stmt], 0
-        mov     ebx, eax
-
-        cinvoke sqliteFinalize, [.stmt]
-
-; insert new post
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertPost, -1, eax, 0
-
-        cinvoke sqliteBindInt, [.stmt], 1, ebx
-        cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.userID]
-        cinvoke sqliteBindInt, [.stmt], 4, LIMIT_POST_LENGTH
-
-        cmp     [.source], 0
-        je      .error_invalid_content
-
-        stdcall StrPtr, [.source]
-
-        mov     ecx, [eax+string.len]
-        test    ecx, ecx
-        jz      .error_invalid_content
-
-        cinvoke sqliteBindText, [.stmt], 3, eax, ecx, SQLITE_STATIC
-
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_DONE
-        jne     .rollback
-
-        cinvoke sqliteFinalize, [.stmt]
-
-        cinvoke sqliteLastInsertRowID, [hMainDatabase]
-        mov     esi, eax                                                ; ESI is now the inserted postID!!!!
-
-; Update thread LastChanged
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateThreads, -1, eax, 0
-
-        cinvoke sqliteBindInt, [.stmt], 1, ebx
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_DONE
-        jne     .rollback
-
-        cinvoke sqliteFinalize, [.stmt]
-
-; register as unread for all active users.
-
-        stdcall RegisterUnreadPost, esi
-
-; commit transaction
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCommit, -1, eax, 0
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_DONE
-        jne     .rollback
-
-        cinvoke sqliteFinalize, [.stmt]
-
-
-        stdcall StrCatRedirectToPost, edi, esi
-
-
-.finish:
-        stdcall StrDelNull, [.slug]
-        stdcall StrDelNull, [.source]
-        stdcall StrDelNull, [.caption]
-
-        mov     [esp+4*regEAX], edi
-        popad
-        return
-
-
-.rollback:      ; the transaction failed because of unknown reason
-
-        cinvoke sqliteFinalize, [.stmt]         ; finalize the bad statement.
-
-        call    .do_rollback
-
-        stdcall StrMakeRedirect, edi, "/message/error_cant_write/"
-        jmp     .finish
-
-
-.error_invalid_caption:
-
-        call    .do_rollback
-        stdcall StrMakeRedirect, edi, "/message/error_invalid_caption/"
-        jmp     .finish
-
-
-.error_invalid_content:
-
-        cinvoke sqliteFinalize, [.stmt]         ; finalize the bad statement.
-        call    .do_rollback
-
-        stdcall StrMakeRedirect, edi, "/message/error_invalid_content/"
-        jmp     .finish
-
-
-.do_rollback:
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRollback, -1, eax, 0
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteFinalize, [.stmt]
-
-        retn
-
-
-.error_wrong_permissions:
-
-        stdcall StrMakeRedirect, edi, "/message/error_cant_post/"
-        jmp     .finish
-
-
-
-.error_thread_not_exists:
-
-        stdcall StrMakeRedirect, edi, "/message/error_thread_not_exists/"
-        jmp     .finish
-
-
-
-
-endp
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-sqlReadPost    text "select P.id, T.caption, P.content as source  from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
-sqlEditedPost  text "select P.id, T.caption, ?2 as source         from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
-sqlSavePost    text "update Posts set content = substr( ?1, 1, ?3 ), postTime = strftime('%s','now') where id = ?2"
-sqlGetPostUser text "select userID, threadID from Posts where id = ?"
-
-
-proc EditUserMessage, .postID, .pSpecial
-.stmt dd ?
-
-.fPreview dd ?
-.source   dd ?
-.res      dd ?
-.threadID dd ?
-.userID   dd ?
-
-begin
-        pushad
-
-        mov     [.fPreview], 1  ; preview by default when handling GET requests.
-        mov     [.source], 0
-
-        mov     esi, [.pSpecial]
-
-        stdcall StrNew
-        mov     edi, eax
-
-; read the userID and threadID for the post.
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetPostUser, -1, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        jne     .error_missing_post
-
-        cinvoke sqliteColumnInt, [.stmt], 0
-        mov     [.userID], eax
-
-        cinvoke sqliteColumnInt, [.stmt], 1
-        mov     [.threadID], eax
-
-        cinvoke sqliteFinalize, [.stmt]
-
-; check the permissions.
-
-        test    [esi+TSpecialParams.userStatus], permEditOwn or permEditAll or permAdmin
-        jz      .error_wrong_permissions
-
-        test    [esi+TSpecialParams.userStatus], permEditAll or permAdmin
-        jnz     .permissions_ok
-
-        mov     eax, [.userID]
-        cmp     eax, [esi+TSpecialParams.userID]
-
-        jne     .error_wrong_permissions
-
-
-.permissions_ok:
-        cmp     [esi+TSpecialParams.post], 0
-        je      .show_edit_form
-
-; ok, get the action then:
-
-        stdcall GetQueryItem, [esi+TSpecialParams.post], "source=", 0
-        mov     [.source], eax
-
-        stdcall GetQueryItem, [esi+TSpecialParams.post], "submit=", 0
-        stdcall StrDel, eax
-        test    eax, eax
-        jnz     .save_post_and_exit
-
-        stdcall GetQueryItem, [esi+TSpecialParams.post], "preview=", 0
-        stdcall StrDel, eax
-        mov     [.fPreview], eax
-
-
-.show_edit_form:
-
-        stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Content-type: text/html", 13, 10, 13, 10>
-        stdcall StrCatTemplate, edi, "main_html_start", 0, esi
-
-        mov     ecx, sqlReadPost
-        cmp     [.source], 0
-        je      .sql_ok
-
-        mov     ecx, sqlEditedPost
-
-.sql_ok:
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], ecx, -1, eax, 0
-
-        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
-
-        cmp     [.source], 0
-        je      .source_ok
-
-        stdcall StrPtr, [.source]
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
-
-.source_ok:
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        je      .statement_ok
-
-        cinvoke sqliteFinalize, [.stmt]
-
-        stdcall StrDel, edi
-        stdcall StrNew
-        mov     edi, eax
-        jmp     .error_missing_post
-
-.statement_ok:
-
-        stdcall StrCatTemplate, edi, "edit_form", [.stmt], esi
-
-        cmp     [.fPreview], 0
-        je      .preview_ok
-
-        stdcall StrCatTemplate, edi, "preview", [.stmt], esi
-
-.preview_ok:
-
-        cinvoke sqliteFinalize, [.stmt]
-
-        stdcall StrCatTemplate, edi, "main_html_end", 0, esi
-        jmp     .finish
-
-
-;...............................................................................................
-
-.save_post_and_exit:
-
-        cmp     [.source], 0
-        je      .end_save
-
-        stdcall StrLen, [.source]
-        cmp     eax, 0
-        je      .end_save
-
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBegin, -1, eax, 0
-        cinvoke sqliteStep, [.stmt]
-        mov     ebx, eax
-        cinvoke sqliteFinalize, [.stmt]
-
-        cmp     ebx, SQLITE_DONE
-        jne     .end_save               ; the transaction does not begin.
-
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSavePost, -1, eax, 0
-
-        cinvoke sqliteBindInt, [.stmt], 2, [.postID]
-        cinvoke sqliteBindInt, [.stmt], 3, LIMIT_POST_LENGTH
-
-        stdcall StrPtr, [.source]
-
-        mov     ecx, [eax+string.len]
-        test    ecx, ecx
-        jz      .error_write
-
-        cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
-
-        cinvoke sqliteStep, [.stmt]
-        mov     ebx, eax
-        cinvoke sqliteFinalize, [.stmt]
-
-        cmp     ebx, SQLITE_DONE
-        jne     .error_write            ; strange write fault.
-
-; update the last changed time of the thread.
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateThreads, -1, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
-        cinvoke sqliteStep, [.stmt]
-        mov     ebx, eax
-        cinvoke sqliteFinalize, [.stmt]
-
-        cmp     ebx, SQLITE_DONE
-        jne     .error_write
-
-
-        stdcall RegisterUnreadPost, [.postID]
-        cmp     eax, SQLITE_DONE
-        jne     .error_write
-
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCommit, -1, eax, 0
-        cinvoke sqliteStep, [.stmt]
-        mov     ebx, eax
-        cinvoke sqliteFinalize, [.stmt]
-
-        cmp     ebx, SQLITE_DONE
-        jne     .error_write
-
-
-.end_save:
-
-        stdcall StrCatRedirectToPost, edi, [.postID]
-
-;        stdcall GetTimestamp
-;        sub     eax, [esi+TSpecialParams.start_time]
-
-.finish:
-        stdcall StrDelNull, [.source]
-        mov     [esp+4*regEAX], edi
-        popad
-        return
-
-
-.error_wrong_permissions:
-
-        stdcall StrMakeRedirect, edi, "/message/error_cant_post/"
-        jmp     .finish
-
-
-.error_missing_post:
-
-        cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect, edi, "/message/error_post_not_exists/"
-        jmp     .finish
-
-
-.error_write:
-
-; rollback:
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRollback, -1, eax, 0
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteFinalize, [.stmt]
-
-        stdcall StrMakeRedirect, edi, "/message/error_cant_write/"
-        jmp     .finish
-
-endp
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2713,7 +1450,7 @@ sqlGetThePostIndex text "select count(*) from Posts p where threadID = ?1 and ( 
 
 sqlGetThreadID text "select P.ThreadID, T.Slug from Posts P left join Threads T on P.threadID = T.id where P.id = ?"
 
-proc StrCatRedirectToPost, .hString, .postID
+proc StrCatRedirectToPost, .hString, .postID, .tag
 .stmt dd ?
 
 .page dd ?
@@ -2772,17 +1509,23 @@ begin
 
         stdcall StrCat, [.hString], "threads/"
         stdcall StrCat, [.hString], [.slug]
-        stdcall StrCharCat, [.hString], "/"
 
         cmp     [.page], 0
         je      .page_ok
 
+        stdcall StrCharCat, [.hString], "/"
         stdcall NumToStr, [.page], ntsDec or ntsUnsigned
         stdcall StrCat, [.hString], eax
         stdcall StrDel, eax
-        stdcall StrCharCat, [.hString], "/"
 
 .page_ok:
+        cmp     [.tag], 0
+        je      .tag_ok
+
+        stdcall StrCat, [.hString], txt "?tag="
+        stdcall StrCat, [.hString], [.tag]
+
+.tag_ok:
         stdcall StrCharCat, [.hString], "#"
 
         stdcall NumToStr, [.postID], ntsDec or ntsUnsigned
@@ -2790,11 +1533,9 @@ begin
         stdcall StrDel, eax
 
 .finish:
+
         stdcall StrCharCat, [.hString], $0a0d0a0d
-
         stdcall StrDelNull, [.slug]
-
-;        DebugMsg "StrCatRedirectToPost finished!"
 
         popad
         return
@@ -2824,31 +1565,32 @@ proc SQLiteConsole, .pSpecial
 begin
         pushad
 
-        xor     eax, eax
-        mov     [.stmt], eax
-
         stdcall StrNew
         mov     edi, eax
 
         mov     eax, [.pSpecial]
         stdcall GetQueryItem, [eax+TSpecialParams.post], "source=", 0
         mov     [.source], eax
-        test    eax, eax
-        jz      .make_the_form
 
 ; first output the form
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSource, -1, eax, 0
 
+        cmp     [.source], 0
+        je      .bind_ok
+
         stdcall StrPtr, [.source]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+.bind_ok:
         cinvoke sqliteStep, [.stmt]
 
 
 .make_the_form:
 
         stdcall StrCatTemplate, edi, "sqlite_console_form", [.stmt], [.pSpecial]
+
         cinvoke sqliteFinalize, [.stmt]
 
         cmp     [.source], 0
@@ -2857,6 +1599,9 @@ begin
 ; here execute the source.
 
         stdcall StrCat, edi, '<div class="sql_exec">'
+
+        stdcall StrClipSpacesR, [.source]
+        stdcall StrClipSpacesL, [.source]
 
         stdcall StrPtr, [.source]
         mov     esi, eax
@@ -2870,7 +1615,7 @@ begin
         cinvoke sqlitePrepare_v2, [hMainDatabase], esi, -1, ecx, eax
 
         test    eax, eax
-        jnz     .done
+        jnz     .error
 
         stdcall StrNew
 
@@ -2882,7 +1627,7 @@ begin
         stdcall StrEncodeHTML, eax
         stdcall StrDel ; from the stack
 
-        stdcall StrCat, edi, "<p>Statement executed:</p><pre>"
+        stdcall StrCat, edi, "<h5>Statement executed:</h5><pre>"
         stdcall StrCat, edi, eax
         stdcall StrDel, eax
         stdcall StrCat, edi, "</pre>"
@@ -2897,11 +1642,20 @@ begin
         cmp     eax, SQLITE_DONE
         je      .finalize
 
-        cinvoke sqliteErrStr, eax
+
+.error:
+        cinvoke sqliteDBMutex, [hMainDatabase]
+        cinvoke sqliteMutexEnter, eax
+
+        cinvoke sqliteErrMsg, [hMainDatabase]
 
         stdcall StrCat, edi, '<p class="result_msg">'
         stdcall StrCat, edi, eax
         stdcall StrCat, edi, txt '</p>'
+
+        cinvoke sqliteDBMutex, [hMainDatabase]
+        cinvoke sqliteMutexLeave, eax
+
 
 .finalize:
         cinvoke sqliteFinalize, [.stmt]
@@ -3002,6 +1756,37 @@ endp
 
 
 
+sqlPinToggle text "update threads set pinned = (pinned is NULL) or ( (pinned +1)%2) where id = ?"
+
+proc PinThread, .threadID, .pSpecial
+.stmt dd ?
+begin
+        pushad
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlPinToggle, sqlPinToggle.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+        stdcall StrNew
+        push    eax
+        stdcall StrCatTemplate, eax, "logout", 0, [.pSpecial]
+
+        stdcall StrMakeRedirect, 0, eax
+        stdcall StrDel ; from the stack.
+
+        mov     [esp+4*regEAX], eax
+
+        popad
+        return
+endp
+
+
+
+
+
+
 
 sqlSetUserTime text "update users set LastSeen = strftime('%s','now') where id = ?"
 
@@ -3086,20 +1871,152 @@ endp
 
 
 
+sqlSetTicket text "update Sessions set Ticket = ? where sid = ?"
+
+proc SetUniqueTicket, .sid
+.stmt dd ?
+begin
+        pushad
+        stdcall GetRandomString, 32
+        mov     ebx, eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetTicket, sqlSetTicket.length, eax, 0
+
+        stdcall StrLen, ebx
+        mov     ecx, eax
+        stdcall StrPtr, ebx
+
+        cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
+
+        stdcall StrLen, [.sid]
+        mov     ecx, eax
+        stdcall StrPtr, [.sid]
+
+        cinvoke sqliteBindText, [.stmt], 2, eax, ecx, SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+        mov     edi, eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     edi, SQLITE_DONE
+        clc
+        je      .finish
+
+        stdcall StrDel, ebx
+        mov     ebx, [esp+4*regEAX]
+        stc
+
+.finish:
+        mov     [esp+4*regEAX], ebx
+        popad
+        return
+endp
+
+
+proc ClearTicket, .sid
+.stmt dd ?
+begin
+        pushad
+
+        cmp     [.sid], 0
+        je      .finish
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetTicket, sqlSetTicket.length, eax, 0
+
+        stdcall StrLen, [.sid]
+        mov     ecx, eax
+        stdcall StrPtr, [.sid]
+
+        cinvoke sqliteBindText, [.stmt], 2, eax, ecx, SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+.finish:
+        popad
+        return
+endp
 
 
 
-sqlGetFile text "select content from FileCache where filename = ?"
-sqlCacheFile text "insert into FileCache (filename, content) values (?, ?)"
 
-proc GetFileFromDB, .filename
+sqlCheckTicket text "select 1 from sessions where ticket = ? and sid = ?"
+
+proc CheckTicket, .ticket, .sid
+.stmt dd ?
+begin
+        pushad
+
+        cmp     [.ticket], 0
+        je      .error
+
+        cmp     [.sid], 0
+        je      .error
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckTicket, sqlCheckTicket.length, eax, 0
+
+        stdcall StrLen, [.ticket]
+        mov     ecx, eax
+        stdcall StrPtr, [.ticket]
+
+        cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
+
+        stdcall StrLen, [.sid]
+        mov     ecx, eax
+        stdcall StrPtr, [.sid]
+
+        cinvoke sqliteBindText, [.stmt], 2, eax, ecx, SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     ebx, SQLITE_ROW
+        jne     .error
+
+        clc
+        popad
+        return
+
+.error:
+        stc
+        popad
+        return
+
+endp
+
+
+
+
+
+
+sqlGetFile text "select content, changed from FileCache where filename = ?"
+sqlCacheFile text "insert into FileCache (filename, content, changed) values (?, ?, ?)"
+
+proc GetFileFromDB, .filename, .time_lo, .time_hi, .pModified
 
 .stmt dd ?
 .ptr  dd ?
 .size dd ?
 
+.file_info TFileInfo
+
 begin
         pushad
+
+        stdcall GetParam, "file_cache", gpInteger
+        jc      .cache_it
+
+        mov     edi, eax
+        test    eax, eax
+        jz      .get_file
+
+
+.cache_it:
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetFile, sqlGetFile.length, eax, 0
@@ -3114,6 +2031,26 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .check_fs
 
+; check the date
+
+        xor     esi, esi
+        xor     ebx, ebx
+
+        cinvoke sqliteColumnInt64, [.stmt], 1
+
+        mov     ecx, [.pModified]
+        mov     [ecx], eax
+        mov     [ecx+4], edx
+
+        cmp     edx, [.time_hi]
+        ja      .newer
+        jb      .finish_ret     ; returns EAX = 0 and CF=0 if the date is older.
+
+        cmp     eax, [.time_lo]
+        jbe     .finish_ret
+
+
+.newer:
         cinvoke sqliteColumnBytes, [.stmt], 0
         mov     ebx, eax
         mov     [.size], eax
@@ -3140,20 +2077,55 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
+.finish_ret:
+
         mov     [esp+4*regEAX], esi
         mov     [esp+4*regECX], ebx
         clc
+
+.finish:
         popad
         return
 
 .check_fs:
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall LoadBinaryFile, [.filename]
-        jc      .read_error
 
+.get_file:
+
+        stdcall FileOpenAccess, [.filename], faReadOnly
+        jc      .finish
+
+        mov     ebx, eax
+
+        lea     eax, [.file_info]
+        stdcall GetFileInfo, ebx, eax
+
+        stdcall FileSize, ebx
+        mov     ecx, eax
+
+        stdcall GetMem, ecx
         mov     esi, eax
+
+        stdcall FileRead, ebx, esi, ecx
+        push    eax ecx
+
+        stdcall FileClose, ebx
+        pop     ecx eax
+
+        cmp     eax, ecx
+        je      .read_ok
+
+        stdcall FreeMem, esi
+        stc
+        jmp     .finish
+
+
+.read_ok:
         mov     ebx, ecx
+
+        test    edi, edi
+        jz      .finish_ret_file
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCacheFile, sqlCacheFile.length, eax, 0
@@ -3163,14 +2135,32 @@ begin
         stdcall StrPtr, [.filename]
         cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
         cinvoke sqliteBindBlob, [.stmt], 2, esi, ebx, SQLITE_STATIC
+        cinvoke sqliteBindInt64, [.stmt], 3, dword [.file_info.timeModified], dword [.file_info.timeModified+4]
+
         cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
 
-        jmp     .finish_ok
+.finish_ret_file:
 
+        mov     eax, dword [.file_info.timeModified]
+        mov     edx, dword [.file_info.timeModified+4]
+        mov     ecx, [.pModified]
 
-.read_error:
+        mov     [ecx], eax
+        mov     [ecx+4], edx
 
-        stc
-        popad
-        return
+        cmp     edx, [.time_hi]
+        ja      .finish_ret
+        jb      .finish_ret_clear     ; returns EAX = 0 and CF=0 if the date is older.
+
+        cmp     eax, [.time_lo]
+        ja      .finish_ret
+
+.finish_ret_clear:
+
+        stdcall FreeMem, esi
+        xor     esi, esi
+        xor     ebx, ebx
+
+        jmp     .finish_ret
 endp

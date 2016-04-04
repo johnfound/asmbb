@@ -1,3 +1,5 @@
+GENERAL_LIMIT_MAX_POST_LENGTH = 1024*1024   ; 1MB general limit on post data length. Everything above will be trunkated.
+
 ; The types for FCGI_Header.type
 
 FCGI_BEGIN_REQUEST      =  1
@@ -151,18 +153,54 @@ ends
 ;
 
 proc Listen
+.addr TSocketAddressUn
 begin
 
 .loop:
+
         stdcall SocketAccept, [STDIN], 0
-        jc      .finish
+        jc      .make_socket
 
         stdcall ThreadCreate, procServeRequest, eax
+
         jmp     .loop
+
+.make_socket:
+
+        cmp     [fOwnSocket], 0
+        jne     .finish
+
+        stdcall SocketCreate, PF_UNIX, SOCK_STREAM, 0
+        jc      .finish
+
+        mov     [STDIN], eax
+        mov     [fOwnSocket], 1
+
+        stdcall SocketSetOption, [STDIN], soReuseAddr, TRUE
+        stdcall SocketSetOption, [STDIN], soLinger, 5
+
+        mov     [.addr.saFamily], AF_UNIX
+
+        mov     esi, pathMySocket
+        mov     ecx, pathMySocket.length + 1
+        lea     edi, [.addr.saPath]
+
+        rep movsb
+
+        lea     eax, [.addr]
+        stdcall SocketBind, [STDIN], eax
+        jc      .finish
+
+        stdcall SocketListen, [STDIN], 1
+        jnc     .loop
+
 
 .finish:
         return
 endp
+
+
+pathMySocket text "./engine.sock"
 
 
 ;create table if not exists RequestsLog (
@@ -203,6 +241,10 @@ proc LogEvent, .event, .log_type, .value, .runtime
 .stmt dd ?
 begin
         pushad
+
+        stdcall GetParam, "log_events", gpInteger
+        test    eax, eax
+        jz      .finish
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLogEvent, sqlLogEvent.length, eax, 0
@@ -251,6 +293,7 @@ begin
 
         cinvoke sqliteExec, [hMainDatabase], sqlCleanLog, 0, 0, 0
 
+.finish:
         popad
         return
 endp
@@ -313,8 +356,6 @@ proc procServeRequest, .hSocket
 .thread_start   dd ?
 
 begin
-        pushad
-
         xor     eax, eax
         mov     [.requestParams], eax
         mov     [.requestPost], eax
@@ -326,7 +367,7 @@ begin
         stdcall GetTimestampHiRes
         mov     [.thread_start], eax
 
-        stdcall LogEvent, "ThreadStart", logNumber, eax, 0
+        stdcall LogEvent, "ThreadStart", logNumber, [.threadID], 0
 
 
 .main_loop:
@@ -343,8 +384,6 @@ begin
         mov     esi, eax
         movzx   eax, [esi+FCGI_Header.type]
 
-;        OutputValue "Received header type: ", eax, 10, -1
-
         cmp     eax, FCGI_BEGIN_REQUEST
         je      .begin_request
 
@@ -355,12 +394,12 @@ begin
         je      .get_stdin
 
         cmp     eax, FCGI_ABORT_REQUEST
-        je      .abort_request
+        je      .request_complete
 
 ; send back unknown type record.
 
         xor     edx, edx
-        mov     dx, word [esi+FCGI_Header.requestIdB1]
+        mov     dx, [esi+FCGI_Header.requestId]
         xchg    dl, dh
 
         stdcall FCGI_send_unknown_type, [.hSocket], edx, eax
@@ -409,17 +448,6 @@ begin
 
         stdcall FCGI_send_end_request, [.hSocket], eax, FCGI_CANT_MPX_CONN
         jmp     .pack_loop
-
-
-.abort_request:
-
-        xor     eax, eax
-        mov     ax, [esi+FCGI_Header.requestId]
-        xchg    al, ah
-
-        stdcall FCGI_send_end_request, [.hSocket], eax, FCGI_REQUEST_COMPLETE
-
-        jmp     .main_loop
 
 
 ; Processing of FCGI_PARAMS
@@ -488,7 +516,7 @@ begin
         test    ecx, ecx
         jz      .stdin_received           ; no more packages to wait for FCGI_STDIN
 
-; add the package to the name/value pairs list.
+; add the package to the post data byte stream.
 
         push    esi
 
@@ -509,6 +537,9 @@ begin
         xor     eax, eax
         stosd
 
+        cmp     [ebx+TByteStream.size], GENERAL_LIMIT_MAX_POST_LENGTH
+        ja      .stdin_received
+
         pop     esi
         jmp     .pack_loop
 
@@ -526,19 +557,23 @@ begin
 ; Processing of the request. Here all data is ready, so serve the request!
 
 .serve_request:
+        stdcall ValueByName, [.requestParams], "REQUEST_URI"
+        stdcall LogEvent, "RequestServeStart", logText, eax, 0
 
         stdcall ServeOneRequest, [.hSocket], [.requestID], [.requestParams], [.requestPost], [.start_time]
-        jc      .finish
+
+        stdcall LogEvent, "RequestServeEnd", logNULL, 0, 0
+
+
+.request_complete:
 
         stdcall FCGI_send_end_request, [.hSocket], [.requestID], FCGI_REQUEST_COMPLETE
         jc      .finish
-
 
         stdcall GetTimestampHiRes
         sub     eax, [.start_time]
 
         stdcall LogEvent, "RequestEnd", logNumber, [.threadID], eax
-
 
         test    [.requestFlags], FCGI_KEEP_CONN
         jnz     .main_loop
@@ -547,16 +582,17 @@ begin
 .finish:
         stdcall FreeMem, esi
         call    .FreeAllocations
+
         stdcall SocketClose, [.hSocket]
 
         stdcall GetTimestampHiRes
         sub     eax, [.thread_start]
+
         stdcall LogEvent, "ThreadEnd", logNumber, [.threadID], eax
 
-        xor     eax, eax
-        popad
-        return
+        stdcall Terminate, 0
 
+;...............................................................
 
 
 .FreeAllocations:
@@ -573,7 +609,7 @@ begin
         je      .post_ok
 
         stdcall FreeMem, [.requestPost]
-        mov     [.requestPost], 0
+        mov     [.requestPost], eax
 
 .post_ok:
         mov     [.requestFlags], eax
@@ -619,12 +655,14 @@ proc FCGI_output, .hSocket, .RequestID, .pData, .Size, .final
 begin
         pushad
 
+        xor     eax, eax
+        lea     edi, [.header]
+        mov     ecx, ( sizeof.FCGI_Header + 16 ) / 4
+        rep stosd
+
+
         mov     [.header.version], 1
         mov     [.header.type], FCGI_STDOUT
-
-        xor     eax, eax
-        mov     dword [.buffer], eax
-        mov     dword [.buffer+4], eax
 
         mov     eax, [.RequestID]
         mov     [.header.requestIdB1], ah
@@ -651,8 +689,6 @@ begin
         or      eax, ecx
         jz      .end_ok         ; exit without finalizing the stream.
 
-;        OutputValue "Send STDOUT length:", ecx, 10, -1
-
         lea     eax, [.header]
         stdcall SocketSendAll, [.hSocket], eax, sizeof.FCGI_Header
         jc      .finish
@@ -663,10 +699,14 @@ begin
         stdcall SocketSendAll, [.hSocket], esi, ecx
         jc      .finish
 
+        test    ebx, ebx
+        jz      .padding_ok
+
         lea     eax, [.buffer]
         stdcall SocketSendAll, [.hSocket], eax, ebx   ; send 0 as a padding bytes.
         jc      .finish
 
+.padding_ok:
         add     esi, ecx
         sub     edx, ecx
         jmp     .data_loop
@@ -689,6 +729,11 @@ proc FCGI_send_end_request, .hSocket, .RequestID, .status
 begin
         pushad
 
+        xor     eax, eax
+        lea     edi, [.rec]
+        mov     ecx, sizeof.FCGI_EndRequest / 4
+        rep stosd
+
         mov     [.rec.header.version], 1
         mov     [.rec.header.type], FCGI_END_REQUEST
 
@@ -696,11 +741,8 @@ begin
         mov     [.rec.header.requestIdB1], ah
         mov     [.rec.header.requestIdB0], al
 
-        mov     [.rec.header.contentLengthB1], 0
         mov     [.rec.header.contentLengthB0], sizeof.FCGI_EndRequestBody
-        mov     [.rec.header.paddingLength], 0
 
-        mov     dword [.rec.body.appStatusB3], 0
         mov     al, byte [.status]
         mov     [.rec.body.protocolStatus], al
 
@@ -721,6 +763,11 @@ proc FCGI_send_unknown_type, .hSocket, .RequestID, .unknown_type
 begin
         pushad
 
+        xor     eax, eax
+        lea     edi, [.rec]
+        mov     ecx, sizeof.FCGI_UnknownType / 4
+        rep stosd
+
         mov     [.rec.header.version], 1
         mov     [.rec.header.type], FCGI_UNKNOWN_TYPE
 
@@ -728,9 +775,7 @@ begin
         mov     [.rec.header.requestIdB1], ah
         mov     [.rec.header.requestIdB0], al
 
-        mov     [.rec.header.contentLengthB1], 0
         mov     [.rec.header.contentLengthB0], sizeof.FCGI_UnknownType
-        mov     [.rec.header.paddingLength], 0
 
         mov     al, byte [.unknown_type]
         mov     [.rec.body.type], al
@@ -795,12 +840,10 @@ begin
         return
 
 .error2:
-;        DebugMsg "Read pack: error2"
 
         stdcall FreeMem, [.ptr]
 
 .error:
-;        DebugMsg "Read pack: error1"
 
         stc
         popad

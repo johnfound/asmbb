@@ -1,10 +1,3 @@
-BEGIN TRANSACTION;
-CREATE TABLE Messages (
-  id	 text primary key,
-  msg	 text,
-  header text,
-  link	 text
-);
 INSERT INTO `Messages` VALUES ('login_bad_password','Грешна парола,
 или юзър. Tака е то.
 Опитай пак.','Проблем!',NULL);
@@ -82,11 +75,6 @@ INSERT INTO `Messages` VALUES ('error_invalid_content','Мълчанието е
 злато, но ти мълчиш 
 във писмен вид.
 ','Проблем!',NULL);
-CREATE INDEX idxUsers_nick  on Users (nick);
-CREATE INDEX idxUsers_email on Users (email);
-CREATE INDEX idxThreads_Slug	  on Threads (Slug);
-CREATE INDEX idxThreads_LastChanged on Threads (LastChanged desc);
-CREATE INDEX idxPosts_UserID   on Posts (userID);
-CREATE INDEX idxPosts_Time     on Posts (postTime, id);
-CREATE INDEX idxPosts_ThreadID on Posts (threadID);
-COMMIT;
+INSERT INTO `Messages` VALUES ('error_invalid_content','Опит за измама - 
+мизерен провал...
+Засрами се!','Пак ли?!',NULL);

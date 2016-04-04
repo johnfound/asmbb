@@ -1,19 +1,2 @@
 FcgidWrapper "/home/asm32inf/board/engine" virtual
 SetHandler fcgid-script
-
-DirectoryIndex /
-
-<Files ~ "\.log$">
-Order allow,deny
-Deny from all
-</Files>
-
-<Files ~ "\.inc$">
-Order allow,deny
-Deny from all
-</Files>
-
-<Files ~ "\.so$">
-Order allow,deny
-Deny from all
-</Files>

@@ -19,11 +19,11 @@ LINUX_INTERPRETER equ './ld-musl-i386.so'
 @BinaryType console, compact
 
 options.ShowSkipped = 0
-options.ShowSizes = 1
+options.ShowSizes = 0
 
 options.DebugMode = 0
 options.AlignCode = 0
-options.ShowImported = 1
+options.ShowImported = 0
 
 options.DebugWeb = 0
 
@@ -38,9 +38,18 @@ uses sqlite3:"%TargetOS%/sqlite3.inc"
 
 include "sqlite3.asm"   ; sqlite utility functions.
 include "http.asm"
+include "timeproc.asm"  ; date/time utility procedures.
 include "commands.asm"
 include "render.asm"
 include "fcgi.asm"
+include "threadlist.asm"
+include "showthread.asm"
+include "search.asm"
+include "post.asm"
+include "edit.asm"
+include "userinfo.asm"
+include "accounts.asm"
+include "settings.asm"
 
 
 iglobal
@@ -54,14 +63,14 @@ uglobal
   hMainDatabase dd ?
   ProcessID     dd ?
   ProcessStart  dd ?
+  fOwnSocket    dd ?
 endg
 
 
-rb 273
+rb 73
 
 start:
         InitializeAll
-
 
         stdcall SetForcedTerminateHandler, OnForcedTerminate
 
@@ -113,5 +122,11 @@ start:
 
 proc OnForcedTerminate as procForcedTerminateHandler
 begin
+        cmp     [fOwnSocket], 0
+        je      start.terminate
+
+        stdcall SocketClose, [STDIN]
+        stdcall FileDelete, pathMySocket
+
         jmp     start.terminate         ; the stack is not important here!
 endp

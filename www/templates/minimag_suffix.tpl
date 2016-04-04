@@ -1,5 +1,6 @@
 
 ;end
+;kill
 
 [?:)]  /images/emoticons/smile.svg
 [?:-)] /images/emoticons/smile.svg
@@ -11,15 +12,15 @@
 
 [?:D]  /images/emoticons/lol.svg
 [?:-D] /images/emoticons/lol.svg
-[?lol]  /images/emoticons/lol.svg
+[?lol]	/images/emoticons/lol.svg
 
 [?:(]  /images/emoticons/sad.svg
 [?:-(] /images/emoticons/sad.svg
-[?sad]  /images/emoticons/sad.svg
+[?sad]	/images/emoticons/sad.svg
 
-[?:'(]  /images/emoticons/cry.svg
+[?:'(]	/images/emoticons/cry.svg
 [?:'-(] /images/emoticons/cry.svg
-[?cry]  /images/emoticons/cry.svg
+[?cry]	/images/emoticons/cry.svg
 
 [?:P] /images/emoticons/tongue2.svg
 [?:-P] /images/emoticons/tongue1.svg
