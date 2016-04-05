@@ -722,9 +722,6 @@ endp
 
 
 
-;        stdcall MarkThemeRead, ebx, eax
-
-
 sqlMarkThreadRead text "delete from UnreadPosts where UserID = ?1 and ( ?2 is NULL or PostID in (select P.id from Posts P left join Threads T on P.ThreadID = T.id where T.Slug = ?2))"
 
 proc MarkThreadRead, .slug, .pSpecial

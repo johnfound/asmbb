@@ -20,11 +20,20 @@ begin
         mov     esi, [.pSpecial]
 
         cmp     [esi+TSpecialParams.post], 0
-        je      .show_settings_form
+        jne     .save_settings
 
-        call    .save_settings
+        stdcall GetQueryItem, [esi+TSpecialParams.query], txt "err=", 0
+        test    eax, eax
+        jz      .error_ok
+
+        inc     [.error]
+
+.error_ok:
+        stdcall GetQueryItem, [esi+TSpecialParams.query], txt "msg=", 0
+        test    eax, eax
+        jz      .show_settings_form
+
         mov     [.message], eax
-
 
 .show_settings_form:
 
@@ -106,6 +115,7 @@ begin
 
         stdcall StrDelNull, [.message]
 
+        clc
         popad
         return
 
@@ -239,8 +249,29 @@ begin
 
         stdcall StrDupMem, "The settings has been saved"
 
-        retn
 
+.end_save:
+        mov     ebx, eax
+
+        stdcall StrDupMem, "/settings?msg="
+        stdcall StrCat, eax, ebx
+        stdcall StrDel, ebx
+
+        cmp     [.error], 0
+        je      .errok
+
+        stdcall StrCat, eax, "&err=1"
+
+.errok:
+        push    eax
+
+        stdcall StrMakeRedirect, 0, eax
+        stdcall StrDel ; from the stack
+
+        mov     [esp+4*regEAX], eax
+        stc
+        popad
+        return
 
 
 .error_post_request:
@@ -269,8 +300,7 @@ begin
         inc     [.error]
 
         pop     eax
-        retn
-
+        jmp     .end_save
 
 
 

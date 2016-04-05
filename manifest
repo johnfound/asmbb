@@ -1,10 +1,10 @@
-C Debugging\sthe\smissing\ssqliteFinalize\scall.\sPlay\swith\sthe\sdissapearing\smessages\sin\sthe\ssettings\spage.
-D 2016-04-05T12:52:03.829
+C Fixed\sthe\ssave\ssettings\sto\suse\s302\sredirect\sin\sorder\sto\sallow\srefresh\swithout\sannoying\spost\swarning\sfrom\sthe\sbrowser.
+D 2016-04-05T14:58:06.473
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F source/Linux/sqlite3.inc 3434422cbaa5b6d55ec5a3a8171d7784c08fe6bc
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
 F source/accounts.asm 6c7879c1e90904c6f89f4a9c459a11a6f37f8255
-F source/commands.asm ddf4e45a2807b09f00958eac1b9b519d1aa0b9b2
+F source/commands.asm 2dae89a017c39c7e42fe493799ca23ac9b362956
 F source/create.sql a6343c86092d5b74eae0a39472c5fe25a6d562b6
 F source/edit.asm 511ab5b0edb71f2c654817f2bfc49ecd1ee8f294
 F source/engine.asm 393740449379099a55022637918739f9acd89ee1
@@ -18,7 +18,7 @@ F source/messages_en.sql c9a34d4a6ecaddb7efb11a18204ad588f8fb396a
 F source/post.asm fe89bc12a0a01902b46fd6d840c371086cf7c5af
 F source/render.asm 2de118920509120d735d1578004c995c51138f0c
 F source/search.asm 345384bfec3b774d20f6f96e056cd813da981b8c
-F source/settings.asm fe5289a3a5b5c876c486be65456b6db214bf9c72
+F source/settings.asm 1453b20a7708c85c68f30da423c254fbc4b01256
 F source/showthread.asm 78d1ab31d7e2f26debbcfa348991c1ce7d9e3a1e
 F source/sqlite3.asm 4285b7e6615de3ffd2630b7c4adbf3df3210dd43
 F source/threadlist.asm 85bf2732165ce26b4108280a7fa2c8cf0756932e
@@ -87,7 +87,7 @@ F www/templates/search_result.tpl 0452301cac82f1ab404ecb1e8fabc1e533897ecd
 F www/templates/sqlite_console_form.tpl e1033e7afad75f72dc18eb257473bfbfd72d13aa
 F www/templates/thread_info.tpl d15dfa02de0da9a13110c9253a7e98ecc5752d2c
 F www/templates/userinfo.tpl e16eb90c261deb2f46d97ab84bc24507344780f7
-P 887277d696d5024f0fb8813bf234c47a743b49ee
-R a219f8aff0b2c09a932e1b1df304c00a
+P 07f714307503d444a5fc63be1da24dba136c1ecd
+R 89a98acded771716f8fb1e221ab0a197
 U johnfound
-Z 6837c6eeb0d0168393081b4777cf5453
+Z a44996472df4b3cc55dae29cae62a3b3
