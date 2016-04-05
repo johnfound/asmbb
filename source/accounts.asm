@@ -446,7 +446,7 @@ endp
 
 
 
-sqlBegin      text  "begin transaction"
+sqlBegin      text  "begin transaction;"
 sqlActivate   text  "insert into Users ( nick, passHash, salt, status, email ) select nick, passHash, salt, ?, email from WaitingActivation where a_secret = ?"
 sqlDeleteWait text  "delete from WaitingActivation where a_secret = ?"
 sqlCheckCount text  "select count(1), salt from WaitingActivation where a_secret = ?"

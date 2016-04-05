@@ -374,19 +374,22 @@ span.current_page {
 }
 
 
-/* login page styles */
+/* settings form styles */
 
-form.login-block, form.register-block {
-    width: 320px;
-    padding: 16px;
-    background: #ffda44;
-    margin: 16px auto 48px auto;
+div.set_page {
+  position: relative;
+  width: 95%;
+  max-width: 1280px;
+  margin: 0px auto 0px auto;
+  background-color: #404040;
+  overflow: auto;
+  padding: 16px;
 }
 
 form.settings {
     width: 640px;
     padding: 16px;
-    background: #ffda44;
+    background: #d0d0d0; 
     margin: 16px auto 16px auto;
 }
 
@@ -465,6 +468,42 @@ input.button:hover {
     background: #ff7b81;
 }
 
+
+h1.msg {
+  margin: 0px;
+  padding: 8px;
+  text-align: center;
+  color: white;
+  display: block;
+}
+
+.info {
+  opacity: 1.0;
+  background-color: green;
+  transition: all 1s;
+  transition-delay: 5s;
+}
+
+.error {
+  opacity: 1.0;
+  background-color: red;
+  transition: all 3s;
+  transition-delay: 5s;
+}
+
+.hidden {
+  opacity: 0.0;
+}
+
+
+/* login page styles */
+
+form.login-block, form.register-block {
+    width: 320px;
+    padding: 16px;
+    background: #ffda44;
+    margin: 16px auto 48px auto;
+}
 
 form.login-block h1, form.register-block h1, form.settings h1 {
     height: 38px;

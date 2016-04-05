@@ -1,22 +1,32 @@
 
 
-sqlParameters   text "select ? as host, ? as smtp_addr, ? as smtp_port, ? as smtp_user, ? as file_cache, ? as log_events"
+sqlParameters   text "select ? as host, ? as smtp_addr, ? as smtp_port, ? as smtp_user, ? as file_cache, ? as log_events, ? as message, ? as error"
+sqlUpdateParams text "insert or replace into Params values (?, ?)"
+
 
 
 proc BoardSettings, .pSpecial
 
-.stmt dd ?
+.stmt    dd ?
+.message dd ?
+.error   dd ?
 
 begin
         pushad
 
+        and     [.message], 0
+        and     [.error], 0
+
         mov     esi, [.pSpecial]
 
-        stdcall StrNew
-        mov     edi, eax
-
         cmp     [esi+TSpecialParams.post], 0
-        jne     .save_settings
+        je      .show_settings_form
+
+        call    .save_settings
+        mov     [.message], eax
+
+
+.show_settings_form:
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlParameters, sqlParameters.length, eax, 0
@@ -47,7 +57,7 @@ begin
 .smtp_port_ok:
         cinvoke sqliteBindInt, [.stmt], 3, eax
 
-        stdcall GetParam, txt "email", gpString
+        stdcall GetParam, txt "smtp_user", gpString
         jc      .email_ok
 
         push    eax
@@ -74,24 +84,215 @@ begin
 
 .log_events_ok:
 
+        cmp     [.message], 0
+        je      .message_ok
+
+        stdcall StrPtr, [.message]
+        cinvoke sqliteBindText, [.stmt], 7, eax, [eax+string.len], SQLITE_STATIC
+
+.message_ok:
+
+        cinvoke sqliteBindInt, [.stmt], 8, [.error]
+
+
         cinvoke sqliteStep, [.stmt]
 
-        stdcall StrCatTemplate, edi, "form_settings", [.stmt], esi
+        stdcall StrNew
+        mov     [esp+4*regEAX], eax
 
+        stdcall StrCatTemplate, eax, "form_settings", [.stmt], esi
         cinvoke sqliteFinalize, [.stmt]
-        clc
 
-.finish:
-        mov     [esp+4*regEAX], edi
+        stdcall StrDelNull, [.message]
+
         popad
         return
 
 
+;.............................................................................................................
 
 .save_settings:
 
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBegin, sqlBegin.length, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_DONE
+        jne     .error_transaction
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateParams, sqlUpdateParams.length, eax, 0
+
+; save host
+
+        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "host=", 0
+        test    eax, eax
+        jz      .error_post_request
+
+        push    eax
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_TRANSIENT
+        cinvoke sqliteBindText, [.stmt], 1, txt "host", -1, SQLITE_STATIC
+        stdcall StrDel ; from the stack.
+
+        call    .exec_write
+        jc      .error_write
+
+; save smtp_addr
+
+        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "smtp_addr=", 0
+        test    eax, eax
+        jz      .error_post_request
+
+        push    eax
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_TRANSIENT
+        cinvoke sqliteBindText, [.stmt], 1, txt "smtp_addr", -1, SQLITE_STATIC
+        stdcall StrDel ; from the stack.
+
+        call    .exec_write
+        jc      .error_write
+
+; save smtp_port
+
+        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "smtp_port=", 0
+        test    eax, eax
+        jz      .error_post_request
+
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack.
+        jc      .error_invalid_number
+
+        cinvoke sqliteBindInt,  [.stmt], 2, eax
+        cinvoke sqliteBindText, [.stmt], 1, txt "smtp_port", -1, SQLITE_STATIC
+
+        call    .exec_write
+        jc      .error_write
+
+; save smtp_user
+
+        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "smtp_user=", 0
+        test    eax, eax
+        jz      .error_post_request
+
+        push    eax
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_TRANSIENT
+        cinvoke sqliteBindText, [.stmt], 1, txt "smtp_user", -1, SQLITE_STATIC
+        stdcall StrDel ; from the stack.
+
+        call    .exec_write
+        jc      .error_write
+
+
+; save bool file_cache
+
+        xor     ebx, ebx
+
+        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "file_cache=", 0
+        test    eax, eax
+        jz      .bind_cache
+
+        inc     ebx
+        stdcall StrDel, eax
+
+.bind_cache:
+        cinvoke sqliteBindInt,  [.stmt], 2, ebx
+        cinvoke sqliteBindText, [.stmt], 1, txt "file_cache", -1, SQLITE_STATIC
+
+        call    .exec_write
+        jc      .error_write
+
+; save bool log_events
+
+        xor     ebx, ebx
+
+        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "log_events=", 0
+        test    eax, eax
+        jz      .bind_log
+
+        inc     ebx
+        stdcall StrDel, eax
+
+.bind_log:
+        cinvoke sqliteBindInt,  [.stmt], 2, ebx
+        cinvoke sqliteBindText, [.stmt], 1, txt "log_events", -1, SQLITE_STATIC
+
+        call    .exec_write
+        jc      .error_write
+
+; everything is OK
+
+        cinvoke sqliteFinalize, [.stmt]
+
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCommit, sqlCommit.length, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_DONE
+        jne     .error_commit
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        stdcall StrDupMem, "The settings has been saved"
+
+        retn
+
+
+
+.error_post_request:
+
+        stdcall StrDupMem, "Error: Strange, there is missing value in the POST request. Hack attempt? "
+        jmp     .error_write
+
+.error_invalid_number:
+
+        stdcall StrDupMem, "Error: Invalid number as an SMTP port."
+        jmp     .error_write
+
+
+.error_transaction:
+.error_commit:
+
+        call    .error_get_msg
+
+.error_write:
+        push    eax
+
+        cinvoke sqliteFinalize, [.stmt]
+        cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
+
+        inc     [.error]
+
+        pop     eax
+        retn
+
+
+
+
+.exec_write:
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_DONE
+        jne     .error_get_msg
+
+        cinvoke sqliteReset, [.stmt]
+        cinvoke sqliteClearBindings, [.stmt]
+
+        clc
+        retn
+
+.error_get_msg:
+
+        cinvoke sqliteErrMsg, [hMainDatabase]
+        push    eax
+
+        stdcall StrDupMem, 'The save failed with the following message: "'
+        stdcall StrCat, eax ; second from the stack
+        stdcall StrCharCat, eax, '"'
+
         stc
-        jmp     .finish
+        retn
 endp
 
 

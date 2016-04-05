@@ -1301,7 +1301,7 @@ begin
         mov     [.host], eax
 
 
-        stdcall GetParam, txt "email", gpString
+        stdcall GetParam, txt "smtp_user", gpString
         jc      .finish
 
         mov     [.from], eax
