@@ -156,7 +156,7 @@ begin
         jc      .error_bad_ticket
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBegin, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBegin, sqlBegin.length, eax, 0
         cinvoke sqliteStep, [.stmt]
         mov     ebx, eax
         cinvoke sqliteFinalize, [.stmt]
@@ -259,10 +259,7 @@ begin
 
 ; rollback:
 
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRollback, -1, eax, 0
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteFinalize, [.stmt]
+        cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
 
         stdcall StrMakeRedirect, edi, "/message/error_cant_write/"
         jmp     .finish_clear

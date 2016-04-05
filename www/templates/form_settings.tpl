@@ -11,7 +11,7 @@
 </form>
 ]
 
-[case:[message]|<h1 class="msg hidden">Message</h1>|<h1 id="message" class="msg [case:[error]|info|error]">[message]</h1>]
+[case:[message]|<h1 class="hidden msg">Message</h1>|<h1 id="message" class="msg [case:[error]|info|error]">[message]</h1>]
 <form class="settings" method="post" action="/settings">
   <h1>Forum engine settings</h1>
   <label>Host:</label><input type="text" value="[host]" name="host" class="settings" size="30" maxlength="320"><br>
@@ -26,6 +26,6 @@
 
 <script type="text/javascript">
 <!-- 
-  document.getElementById('message').style.opacity = "0.0"; 
+setTimeout(function(){ document.getElementById('message').style.opacity = "0.0"; }, 5000)
 // -->
 </script>

@@ -573,10 +573,7 @@ begin
 
 ; rollback transaction
 
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRollback, sqlRollback.length, eax, 0
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteFinalize, [.stmt]
+        cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
 
         stdcall StrMakeRedirect, 0, "/message/bad_secret"
         jmp     .finish

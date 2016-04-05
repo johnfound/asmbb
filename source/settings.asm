@@ -101,6 +101,7 @@ begin
         mov     [esp+4*regEAX], eax
 
         stdcall StrCatTemplate, eax, "form_settings", [.stmt], esi
+
         cinvoke sqliteFinalize, [.stmt]
 
         stdcall StrDelNull, [.message]
@@ -118,6 +119,8 @@ begin
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_DONE
         jne     .error_transaction
+
+        cinvoke sqliteFinalize, [.stmt]
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateParams, sqlUpdateParams.length, eax, 0
@@ -260,6 +263,7 @@ begin
         push    eax
 
         cinvoke sqliteFinalize, [.stmt]
+
         cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
 
         inc     [.error]

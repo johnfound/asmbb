@@ -475,24 +475,23 @@ h1.msg {
   text-align: center;
   color: white;
   display: block;
+  opacity: 1.0;
 }
 
 .info {
-  opacity: 1.0;
   background-color: green;
   transition: all 1s;
-  transition-delay: 5s;
+  -webkit-transition: all 1s;
 }
 
 .error {
-  opacity: 1.0;
   background-color: red;
   transition: all 3s;
-  transition-delay: 5s;
+  -webkit-transition: all 3s;
 }
 
 .hidden {
-  opacity: 0.0;
+  opacity: 0.0 !important;
 }
 
 
@@ -876,7 +875,8 @@ table.sql_rows th {
 table.sql_rows td {
   border: 2px solid gray;
   padding: 8px;
-  max-width: 300px;
+  max-width: 400px;
+  max-height: 400px;
   text-align: left;
   vertical-align: top;
 

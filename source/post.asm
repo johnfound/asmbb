@@ -275,7 +275,7 @@ begin
 ; begin transaction!
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBegin, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBegin, sqlBegin.length, eax, 0
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_DONE
         jne     .rollback
@@ -548,10 +548,8 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
 
 
 .do_rollback:
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRollback, -1, eax, 0
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteFinalize, [.stmt]
+
+        cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
 
         retn
 

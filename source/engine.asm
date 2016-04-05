@@ -111,7 +111,21 @@ start:
 
         stdcall LogEvent, "ScriptEnd", logNULL, 0, eax
 
+        mov     ebx, 300        ; 300x10ms = 3000ms
+
+.wait_close:
         cinvoke sqliteClose, [hMainDatabase]
+        cmp     eax, SQLITE_BUSY
+        jne     .database_closed
+
+        stdcall Sleep, 10
+        dec     ebx
+        jmp     .wait_close
+
+
+.database_closed:
+        OutputValue "Result of sqliteClose:", eax, 10, -1
+
         cinvoke sqliteShutdown
 
 .finish:
