@@ -225,7 +225,7 @@ begin
 
 
 .return_value:
-        stdcall StrDelNull, edi
+        stdcall StrDel, edi
         mov     [esp+4*regEAX], eax
         popad
 

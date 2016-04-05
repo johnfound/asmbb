@@ -181,9 +181,9 @@ begin
         stdcall StrMakeRedirect, edi, "/message/login_bad_password/"
 
 .finish:
-        stdcall StrDelNull, [.user]
-        stdcall StrDelNull, [.password]
-        stdcall StrDelNull, [.session]
+        stdcall StrDel, [.user]
+        stdcall StrDel, [.password]
+        stdcall StrDel, [.session]
 
         mov     [esp+4*regEAX], edi
         popad
@@ -430,11 +430,11 @@ begin
         stdcall StrMakeRedirect, 0, "/message/register_user_exists/"            ; go backward.
 
 .finish:
-        stdcall StrDelNull, [.user]
-        stdcall StrDelNull, [.password]
-        stdcall StrDelNull, [.password2]
-        stdcall StrDelNull, [.email]
-        stdcall StrDelNull, [.secret]
+        stdcall StrDel, [.user]
+        stdcall StrDel, [.password]
+        stdcall StrDel, [.password2]
+        stdcall StrDel, [.email]
+        stdcall StrDel, [.secret]
 
         mov     [esp+4*regEAX], eax
         popad
@@ -515,7 +515,10 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlActivate, sqlActivate.length, eax, 0
 
-        cinvoke sqliteBindInt, [.stmt], 1, permLogin or permPost or permThreadStart or permEditOwn
+        stdcall GetParam, "user_perm", gpInteger
+        jc      .rollback
+
+        cinvoke sqliteBindInt, [.stmt], 1, eax
 
         stdcall StrPtr, [.hSecret]
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
@@ -697,9 +700,9 @@ begin
 
 .finish:
 
-        stdcall StrDelNull, [.oldpass]
-        stdcall StrDelNull, [.newpass]
-        stdcall StrDelNull, [.newpass2]
+        stdcall StrDel, [.oldpass]
+        stdcall StrDel, [.newpass]
+        stdcall StrDel, [.newpass2]
 
         mov     [esp+4*regEAX], eax
         popad
@@ -848,10 +851,10 @@ begin
 
 .finish:
 
-        stdcall StrDelNull, [.nick]
-        stdcall StrDelNull, [.password]
-        stdcall StrDelNull, [.email]
-        stdcall StrDelNull, [.secret]
+        stdcall StrDel, [.nick]
+        stdcall StrDel, [.password]
+        stdcall StrDel, [.email]
+        stdcall StrDel, [.secret]
 
         mov     [esp+4*regEAX], eax
         popad

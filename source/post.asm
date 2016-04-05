@@ -509,11 +509,11 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
         stdcall ClearTicket, [eax+TSpecialParams.session]
 
 .finish:
-        stdcall StrDelNull, [.slug]
-        stdcall StrDelNull, [.source]
-        stdcall StrDelNull, [.caption]
-        stdcall StrDelNull, [.tags]
-        stdcall StrDelNull, [.ticket]
+        stdcall StrDel, [.slug]
+        stdcall StrDel, [.source]
+        stdcall StrDel, [.caption]
+        stdcall StrDel, [.tags]
+        stdcall StrDel, [.ticket]
 
         mov     [esp+4*regEAX], edi
         popad

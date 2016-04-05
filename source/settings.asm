@@ -1,6 +1,11 @@
 
 
-sqlParameters   text "select ? as host, ? as smtp_addr, ? as smtp_port, ? as smtp_user, ? as file_cache, ? as log_events, ? as message, ? as error"
+sqlParameters   text "select ? as host, ? as smtp_addr, ? as smtp_port, ",                              \
+                            "? as smtp_user, ? as file_cache, ? as log_events, ",                       \
+                            "? as message, ? as error, ",                                               \
+                            "? as user_perm0, ? as user_perm2, ? as user_perm3, ? as user_perm4, ",     \
+                            "? as user_perm5, ? as user_perm6, ? as user_perm7, ? as user_perm31"
+
 sqlUpdateParams text "insert or replace into Params values (?, ?)"
 
 
@@ -104,6 +109,58 @@ begin
         cinvoke sqliteBindInt, [.stmt], 8, [.error]
 
 
+        stdcall GetParam, "user_perm", gpInteger
+        mov     ebx, eax
+
+        test    ebx, permLogin
+        jz      @f
+
+        cinvoke sqliteBindText, [.stmt], 9, "checked", -1, SQLITE_STATIC
+
+@@:
+        test    ebx, permPost
+        jz      @f
+
+        cinvoke sqliteBindText, [.stmt], 10, "checked", -1, SQLITE_STATIC
+
+@@:
+        test    ebx, permThreadStart
+        jz      @f
+
+        cinvoke sqliteBindText, [.stmt], 11, "checked", -1, SQLITE_STATIC
+
+@@:
+        test    ebx, permEditOwn
+        jz      @f
+
+        cinvoke sqliteBindText, [.stmt], 12, "checked", -1, SQLITE_STATIC
+
+@@:
+        test    ebx, permEditAll
+        jz      @f
+
+        cinvoke sqliteBindText, [.stmt], 13, "checked", -1, SQLITE_STATIC
+
+@@:
+        test    ebx, permDelOwn
+        jz      @f
+
+        cinvoke sqliteBindText, [.stmt], 14, "checked", -1, SQLITE_STATIC
+
+@@:
+        test    ebx, permDelAll
+        jz      @f
+
+        cinvoke sqliteBindText, [.stmt], 15, "checked", -1, SQLITE_STATIC
+
+@@:
+        test    ebx, permAdmin
+        jz      @f
+
+        cinvoke sqliteBindText, [.stmt], 16, "checked", -1, SQLITE_STATIC
+
+@@:
+
         cinvoke sqliteStep, [.stmt]
 
         stdcall StrNew
@@ -113,7 +170,7 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall StrDelNull, [.message]
+        stdcall StrDel, [.message]
 
         clc
         popad
@@ -233,6 +290,72 @@ begin
 
         call    .exec_write
         jc      .error_write
+
+
+        xor     ebx, ebx
+
+        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "user_perm0=", 0
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack.
+
+        or      ebx, eax
+
+        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "user_perm2=", 0
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack.
+
+        or      ebx, eax
+
+        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "user_perm3=", 0
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack.
+
+        or      ebx, eax
+
+        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "user_perm4=", 0
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack.
+
+        or      ebx, eax
+
+        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "user_perm5=", 0
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack.
+
+        or      ebx, eax
+
+        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "user_perm6=", 0
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack.
+
+        or      ebx, eax
+
+        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "user_perm7=", 0
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack.
+
+        or      ebx, eax
+
+        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "user_perm31=", 0
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack.
+
+        or      ebx, eax
+
+        cinvoke sqliteBindInt,  [.stmt], 2, ebx
+        cinvoke sqliteBindText, [.stmt], 1, txt "user_perm", -1, SQLITE_STATIC
+
+        call    .exec_write
+        jc      .error_write
+
 
 ; everything is OK
 

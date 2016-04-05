@@ -397,17 +397,24 @@ form.settings label {
   display: inline-block;
   text-align: right;
   width: 220px;
-  line-height: 38px;
+//  line-height: 30px;
+  margin-bottom: 8px;
   padding: 0px 8px;
   color: black;
   font-size: 16px;
   font-weight: bold;
 }
 
+form.settings label.line {
+  width: auto;
+  display: block;
+  text-align: left;
+}
+
 input.settings {
     display: inline-block;
     height: 38px;
-    margin: 0px 8px 16px 0px;
+    margin: 0px 8px 8px 0px;
     font-size: 16px;
     padding: 0px 8px;
     outline: none;

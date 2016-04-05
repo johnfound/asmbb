@@ -70,6 +70,8 @@ endg
 rb 73
 
 start:
+        stdcall StrDel, 0
+
         InitializeAll
 
         stdcall SetForcedTerminateHandler, OnForcedTerminate

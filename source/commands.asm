@@ -116,7 +116,7 @@ begin
         xchg    eax, [ebx+TArray.array]
         mov     [.uri], eax
 
-        stdcall ListFree, ebx, StrDelNull
+        stdcall ListFree, ebx, StrDel
 
 
 ; QUERY_STRING analizing
@@ -286,16 +286,16 @@ begin
 .final_clean:
 
         stdcall StrDel, edi
-        stdcall StrDelNull, [.root]
-        stdcall StrDelNull, [.uri]
-        stdcall StrDelNull, [.filename]
+        stdcall StrDel, [.root]
+        stdcall StrDel, [.uri]
+        stdcall StrDel, [.filename]
 
-        stdcall StrDelNull, [.special.post]
-        stdcall StrDelNull, [.special.userName]
-        stdcall StrDelNull, [.special.session]
-        stdcall StrDelNull, [.special.search]
-        stdcall StrDelNull, [.special.tag]
-        stdcall StrDelNull, [.special.query]
+        stdcall StrDel, [.special.post]
+        stdcall StrDel, [.special.userName]
+        stdcall StrDel, [.special.session]
+        stdcall StrDel, [.special.search]
+        stdcall StrDel, [.special.tag]
+        stdcall StrDel, [.special.query]
 
         popad
         return
@@ -1160,21 +1160,6 @@ endp
 
 
 
-proc StrDelNull, .hString
-begin
-        cmp     [.hString], 0
-        jz      @f
-
-        stdcall StrDel, [.hString]
-
-@@:
-        return
-endp
-
-
-
-
-
 proc GetMimeType, .extension
 begin
         mov     eax, mimeIcon
@@ -1357,12 +1342,12 @@ begin
 .finish:
         pushf
 
-        stdcall StrDelNull, [.smtp_addr]
-        stdcall StrDelNull, [.host]
-        stdcall StrDelNull, [.from]
-        stdcall StrDelNull, [.to]
-        stdcall StrDelNull, [.subj]
-        stdcall StrDelNull, [.body]
+        stdcall StrDel, [.smtp_addr]
+        stdcall StrDel, [.host]
+        stdcall StrDel, [.from]
+        stdcall StrDel, [.to]
+        stdcall StrDel, [.subj]
+        stdcall StrDel, [.body]
 
         popf
         popad
@@ -1532,7 +1517,7 @@ begin
 .finish:
 
         stdcall StrCharCat, [.hString], $0a0d0a0d
-        stdcall StrDelNull, [.slug]
+        stdcall StrDel, [.slug]
 
         popad
         return
@@ -1666,7 +1651,7 @@ begin
         stdcall StrCat, edi, '</div>'
 
 .finish:
-        stdcall StrDelNull, [.source]
+        stdcall StrDel, [.source]
 
         mov     [esp+4*regEAX], edi
         popad

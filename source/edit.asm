@@ -221,8 +221,8 @@ begin
         stdcall ClearTicket, [esi+TSpecialParams.session]
 
 .finish:
-        stdcall StrDelNull, [.source]
-        stdcall StrDelNull, [.ticket]
+        stdcall StrDel, [.source]
+        stdcall StrDel, [.ticket]
         mov     [esp+4*regEAX], edi
         popad
         return

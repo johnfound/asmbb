@@ -8,6 +8,7 @@ create table Params (
 );
 
 
+insert into Params values ('user_perm', '29');	-- permLogin + permPost + permThreadStart + permEditOwn
 insert into Params values ('file_cache', '0');
 insert into Params values ('log_events', '0');
 

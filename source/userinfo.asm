@@ -139,8 +139,8 @@ endl
         stdcall StrMakeRedirect, edi, ebx
         stdcall StrDel, ebx
 
-        stdcall StrDelNull, [.avatar]
-        stdcall StrDelNull, [.user_desc]
+        stdcall StrDel, [.avatar]
+        stdcall StrDel, [.user_desc]
 
         stc
         jmp     .finish
