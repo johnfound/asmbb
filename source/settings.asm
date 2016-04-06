@@ -47,13 +47,14 @@ begin
 
         stdcall GetParam, txt "host", gpString
         jc      .host_ok
+
         push    eax
         stdcall StrPtr, eax
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_TRANSIENT
         stdcall StrDel ; from the stack
 
-
 .host_ok:
+
         stdcall GetParam, txt "smtp_addr", gpString
         jc      .smtp_addr_ok
 
@@ -63,12 +64,14 @@ begin
         stdcall StrDel ; from the stack
 
 .smtp_addr_ok:
+
         stdcall GetParam, txt "smtp_port", gpInteger
         jnc     .smtp_port_ok
 
         mov     eax, 25
 
 .smtp_port_ok:
+
         cinvoke sqliteBindInt, [.stmt], 3, eax
 
         stdcall GetParam, txt "smtp_user", gpString
@@ -80,6 +83,7 @@ begin
         stdcall StrDel ; from the stack
 
 .email_ok:
+
         stdcall GetParam, txt "file_cache", gpInteger
         jc      .file_cache_ok
         test    eax, eax
@@ -376,20 +380,17 @@ begin
 .end_save:
         mov     ebx, eax
 
-        stdcall StrDupMem, "/settings?msg="
-        stdcall StrCat, eax, ebx
+        stdcall StrCat, [esi+TSpecialParams.query], "&msg="
+        stdcall StrCat, [esi+TSpecialParams.query], ebx
         stdcall StrDel, ebx
 
         cmp     [.error], 0
         je      .errok
 
-        stdcall StrCat, eax, "&err=1"
+        stdcall StrCat, [esi+TSpecialParams.query], "&err=1"
 
 .errok:
-        push    eax
-
-        stdcall StrMakeRedirect, 0, eax
-        stdcall StrDel ; from the stack
+        stdcall StrMakeRedirect2, 0, "/settings", [esi+TSpecialParams.query]
 
         mov     [esp+4*regEAX], eax
         stc
@@ -539,7 +540,7 @@ begin
         jne     .error_no_data
 
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect, 0, "/login"
+        stdcall StrMakeRedirect2, 0, "/login", [esi+TSpecialParams.query]
 
 .finish:
         mov     [esp+4*regEAX], eax
@@ -561,7 +562,7 @@ begin
         cinvoke sqliteFinalize, [.stmt]
 
 .error_no_post:
-        stdcall StrMakeRedirect, 0, "/settings"
+        stdcall StrMakeRedirect2, 0, "/settings", 0
         jmp     .finish
 
 endp

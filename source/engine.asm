@@ -47,6 +47,7 @@ include "showthread.asm"
 include "search.asm"
 include "post.asm"
 include "edit.asm"
+include "delete.asm"
 include "userinfo.asm"
 include "accounts.asm"
 include "settings.asm"
@@ -122,8 +123,10 @@ start:
 
         stdcall Sleep, 10
         dec     ebx
-        jmp     .wait_close
+        jnz     .wait_close
 
+
+        stdcall FileWriteString, [STDERR], <"The database remained open! Check for not finished SQLite statements!", 13, 10>
 
 .database_closed:
         OutputValue "Result of sqliteClose:", eax, 10, -1

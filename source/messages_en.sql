@@ -39,7 +39,7 @@ still have no privileges.
 Or have no longer.','Missing privileges!',NULL);
 INSERT INTO `Messages` VALUES ('error_cant_create_threads','New thread,
 new hurricane of passions,
-but not for you.','Can''t start threads!',NULL);
+but not for you.','Can''t start threads!','<a target="_self" href="/list/">Home</a>');
 INSERT INTO `Messages` VALUES ('register_bad_email','This email
 does not looks like real.
 It shall not pass!','Invalid email address!',NULL);
@@ -83,3 +83,6 @@ To check the channel.','Check your mailbox!',NULL);
 INSERT INTO `Messages` VALUES ('email_changed','The new address to send
 a messages will never change
 the old relationship.','E-mail has been changed','<a target="_self" href="/list/">Home</a>');
+INSERT INTO `Messages` VALUES ('error_cant_delete','You can''t delete it,
+still have no privileges.
+Or have no longer.','Missing privileges!',NULL);

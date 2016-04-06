@@ -16,6 +16,8 @@ sqlGetFullUserInfo text "select ",                                              
                           "(select status & 8 <> 0) as canstart, ",                                     \
                           "(select status & 16 <> 0) as caneditown, ",                                  \
                           "(select status & 32 <> 0) as caneditall, ",                                  \
+                          "(select status & 64 <> 0) as candelown, ",                                   \
+                          "(select status & 128 <> 0) as candelall, ",                                  \
                           "(select status & 0x80000000 <> 0) as isadmin ",                              \
                         "from users u ",                                                                \
                         "where userid = ?"
@@ -65,13 +67,17 @@ begin
         clc
 
 .finish:
+
+        pushf
+        cinvoke sqliteFinalize, [.stmt]
+        popf
+
         mov     [esp+4*regEAX], edi
         popad
         return
 
 
 .missing_user:
-        cinvoke sqliteFinalize, [.stmt]
         stdcall AppendError, edi, "404 Not Found", [.pSpecial]
         stc
         jmp     .finish
@@ -103,7 +109,7 @@ endl
 
         stdcall StrLen, [.avatar]
         cmp     eax, MAX_AVATAR_SIZE
-        ja      .update_end
+        ja      .avatar_ok
 
         stdcall StrPtr, [.avatar]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
@@ -128,7 +134,6 @@ endl
         cinvoke sqliteStep, [.stmt]
 
 .update_end:
-        cinvoke sqliteFinalize, [.stmt]
 
         stdcall StrDupMem, "/userinfo/"
         mov     ebx, eax
@@ -136,7 +141,7 @@ endl
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax
 
-        stdcall StrMakeRedirect, edi, ebx
+        stdcall StrMakeRedirect2, edi, ebx, [esi+TSpecialParams.query]
         stdcall StrDel, ebx
 
         stdcall StrDel, [.avatar]

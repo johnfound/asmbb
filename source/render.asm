@@ -479,49 +479,12 @@ endl
 
 .get_referer:
 
-        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_REFERER"
-        jc      .root
-
-        mov     ebx, eax
-
-        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_HOST"
-        jc      .root
-
+        stdcall GetBackLink, esi
         push    eax
 
-        stdcall StrLen, eax
-        mov     ecx, eax
-
-        stdcall StrPos, ebx     ; pattern from the stack
-        test    eax, eax
-        jz      .root
-
-        add     ecx, eax
-
-        stdcall StrMatchPatternNoCase, "/message/*", ecx
-        jc      .root
-
-        stdcall StrMatchPatternNoCase, "/sqlite*", ecx
-        jc      .root
-
-        stdcall StrMatchPatternNoCase, "/post*", ecx
-        jc      .root
-
-        stdcall StrMatchPatternNoCase, "/register*", ecx
-        jc      .root
-
-        stdcall StrMatchPatternNoCase, "/edit/*", ecx
-        cmp     eax, ecx
-        je      .root
-
-        stdcall StrEncodeHTML, ecx
+        stdcall StrEncodeHTML, eax
+        stdcall StrDel ; from the stack
         jmp     .return_value
-
-.root:
-        stdcall StrNew
-        stdcall StrCharCat, eax, "/"
-        jmp     .return_value
-
 
 ;..................................................................
 
@@ -1323,7 +1286,7 @@ endp
 
 
 
-proc StrMakeRedirect, .hString, .hWhere
+proc StrMakeRedirect2, .hString, .hWhere, .hQuery
 begin
         push    eax
 
@@ -1336,16 +1299,120 @@ begin
 
 @@:
         stdcall StrInsert,  [.hString], <"Status: 302 Found", 13, 10>, 0
+
         stdcall StrPtr, [.hString]
         add     eax, [eax+string.len]
         cmp     word [eax-2], $0a0d
         je      @f
         stdcall StrCharCat, [.hString], $0a0d
 @@:
-        stdcall StrCat,     [.hString], "Location: "
-        stdcall StrCat,     [.hString], [.hWhere]
+        stdcall StrCat, [.hString], "Location: "
+        stdcall StrCat, [.hString], [.hWhere]
+        cmp     [.hQuery], 0
+        je      .query_ok
+
+        stdcall StrLen, [.hQuery]
+        test    eax, eax
+        jz      .query_ok
+
+        stdcall StrCharCat, [.hString], "?"
+        stdcall StrCat, [.hString], [.hQuery]
+
+.query_ok:
         stdcall StrCharCat, [.hString], $0a0d0a0d
 
         pop     eax
         return
 endp
+
+
+
+
+
+
+proc GetBackLink, .pSpecial
+begin
+        pushad
+
+        mov     esi, [.pSpecial]
+
+
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_REFERER"
+        jc      .root
+
+        mov     ebx, eax
+
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_HOST"
+        jc      .root
+
+        push    eax
+
+        stdcall StrLen, eax
+        mov     ecx, eax
+
+        stdcall StrPos, ebx     ; pattern from the stack
+        test    eax, eax
+        jz      .root
+
+        add     ecx, eax
+
+        stdcall StrMatchPatternNoCase, "/message/*", ecx
+        jc      .root
+
+        stdcall StrMatchPatternNoCase, "/sqlite*", ecx
+        jc      .root
+
+        stdcall StrMatchPatternNoCase, "/post*", ecx
+        jc      .root
+
+        stdcall StrMatchPatternNoCase, "/register*", ecx
+        jc      .root
+
+        stdcall StrMatchPatternNoCase, "/edit/*", ecx
+        cmp     eax, ecx
+        je      .root
+
+        stdcall StrDupMem, ecx
+        clc
+        jmp     .finish
+
+.root:
+        stdcall StrNew
+        stdcall StrCharCat, eax, "/"
+        stc
+
+.finish:
+        mov     [esp+4*regEAX], eax
+        popad
+        return
+endp
+
+
+
+
+
+
+
+
+
+
+
+
+;proc StrCatQuery, .hString, .hQuery
+;begin
+;        push    eax
+;
+;        cmp     [.hQuery], 0
+;        je      .finish
+;
+;        stdcall StrLen, [.hQuery]
+;        test    eax, eax
+;        jz      .finish
+;
+;        stdcall StrCharCat, [.hString], "?"
+;        stdcall StrCat, [.hString], [.hQuery]
+;
+;.finish:
+;        pop     eax
+;        return
+;endp

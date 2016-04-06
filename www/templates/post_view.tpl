@@ -11,7 +11,7 @@
     <div class="edit_tools">
       [case:[special:canpost]| |<a class="quote_btn" href="/post/[slug]/[id][special:urltag]"><img class="quote_icon" src="/images/quote.svg"></a>]
       [case:[special:canedit]| |<a class="edit_btn" href="/edit/[id][special:urltag]"><img class="edit_icon" src="/images/edit_gray.svg"></a>]
-      [case:[special:candel] | |<a class="del_btn" href="/delete/[id][special:urltag]"><img class="del_icon" src="/images/del_gray.svg"></a>]
+      [case:[special:candel] | |<a class="del_btn" href="/confirm/[id][special:urltag]"><img class="del_icon" src="/images/del_gray.svg"></a>]
     </div>
   </div>
   <div class="post_text">

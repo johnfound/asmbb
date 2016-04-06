@@ -1,7 +1,7 @@
 <div class="editor" id="editor">
   <div class="ui">
     <a class="ui" href="/list">Thread list</a>
-    <a class="ui" href="/by_id/[id]">Back</a>
+    <a class="ui" href="/by_id/[id][special:urltag]">Back</a>
   </div>
   <form id="editform" action="/edit/[id][special:urltag]" method="post">
     <p>Thread title:</p>

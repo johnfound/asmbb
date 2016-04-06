@@ -282,6 +282,7 @@ div.post_sum {
   background-color: white;
 }
 
+
 div.post_thread {
   margin-left: 200px;
   padding: 8px;
@@ -497,6 +498,12 @@ h1.msg {
   -webkit-transition: all 3s;
 }
 
+.warning {
+  background-color: #404040;
+  color: yellow !important;
+}
+
+
 .hidden {
   opacity: 0.0 !important;
 }
@@ -605,29 +612,34 @@ div.ui {
 }
 
 a.ui, a.ui:visited {
-  display: block;
-  float: left;
-  padding: 4px 8px;
-  margin: 0px 8px 0px 0px;
+  display: block !important;
+  float: left !important;
+  padding: 4px 8px !important;
+  margin: 0px 8px 0px 0px !important;
 
-  background-color: #e05050;
-  color: white;
-  text-decoration: none;
+  background-color: #e05050 !important;
+  color: white !important;
+  text-decoration: none !important;
 }
 
 a.ui:hover, a.ui:active {
-  background-color: #ff656c;
+  background-color: #ff656c !important;
+  color: white !important;
 }
 
 a.uir, a.uir:visited {
-  display: block;
-  float: right;
-  padding: 4px 8px;
-  margin: 0px 0px 0px 8px;
+  display: block !important;
+  float: right !important;
+  padding: 4px 8px !important;
+  margin: 0px 0px 0px 8px !important;
 
-  background-color: #e05050;
-  color: white;
-  text-decoration: none;
+  background-color: #e05050 !important;
+  color: white !important;
+  text-decoration: none !important;
+}
+
+a.uir:hover, a.uir:active {
+  background-color: #ff656c !important;
 }
 
 
@@ -668,13 +680,13 @@ div.message_block {
   margin: 16px auto;
   text-align: center;
   padding: 20px;
-  border-top: 16px solid #f06060;
+//  border-top: 16px solid #f06060;
   clear: both;
+  color: #000;
 }
 
 div.message_block h1 {
     text-align: center;
-    color: #000;
     font-size: 21px;
     font-variant: small-caps;
     margin: 0px;
@@ -700,6 +712,30 @@ div.message {
   text-align: left;
   color: black;
   display: inline-block;
+}
+
+
+/* Delete confirm dialog styles */
+
+div.confirm {
+  font-size: 18px;
+  width: 640px;
+  background: white;
+  margin: 16px auto;
+  text-align: left;
+  padding: 16px;
+  clear: both;
+  color: black;
+}
+
+
+div.post_preview {
+  margin: 16px 0px;
+  padding: 8px;
+  background-color: #d0d0d0;
+  text-align: left;
+  max-height: 200px;
+  overflow: auto;
 }
 
 

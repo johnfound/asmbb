@@ -268,6 +268,11 @@ a messages will never change
 the old relationship.','E-mail has been changed!','<a target="_self" href="/list/">Home</a>');
 
 
+insert into Messages VALUES ('error_cant_delete','You can''t delete it,
+still have no privileges.
+Or have no longer.','Missing privileges!',NULL);
+
+
 
 create table FileCache (
   filename  text primary key,

@@ -12,7 +12,7 @@
 ]
 
 [case:[message]|<h1 class="hidden msg">Message</h1>|<h1 id="message" class="msg [case:[error]|info|error]">[message]</h1>]
-<form class="settings" method="post" action="/settings">
+<form class="settings" method="post" action="/settings[special:urltag]">
   <h1>Forum engine settings</h1>
   <label>Host:</label><input type="text" value="[host]" name="host" class="settings" size="30" maxlength="320"><br>
   <label>SMTP server/port:</label><input type="text" value="[smtp_addr]" name="smtp_addr" class="settings" size="20" maxlength="256"><input type="text" value="[smtp_port]" name="smtp_port" class="settings" size="5" maxlength="5"><br>

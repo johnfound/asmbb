@@ -527,23 +527,28 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
 
         call    .do_rollback
 
-        stdcall StrMakeRedirect, edi, "/message/error_cant_write/"
+        mov     eax, [.pSpecial]
+        stdcall StrMakeRedirect2, edi, "/message/error_cant_write/", [eax+TSpecialParams.query]
         jmp     .finish_clear
 
 
 .error_invalid_caption:
 
         call    .do_rollback
-        stdcall StrMakeRedirect, edi, "/message/error_invalid_caption/"
+
+        mov     eax, [.pSpecial]
+        stdcall StrMakeRedirect2, edi, "/message/error_invalid_caption/", [eax+TSpecialParams.query]
         jmp     .finish_clear
 
 
 .error_invalid_content:
 
         cinvoke sqliteFinalize, [.stmt]         ; finalize the bad statement.
+
         call    .do_rollback
 
-        stdcall StrMakeRedirect, edi, "/message/error_invalid_content"
+        mov     eax, [.pSpecial]
+        stdcall StrMakeRedirect2, edi, "/message/error_invalid_content", [eax+TSpecialParams.query]
         jmp     .finish_clear
 
 
@@ -556,20 +561,24 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
 
 .error_wrong_permissions:
 
-        stdcall StrMakeRedirect, edi, "/message/error_cant_post"
+        mov     eax, [.pSpecial]
+        stdcall StrMakeRedirect2, edi, "/message/error_cant_post", [eax+TSpecialParams.query]
         jmp     .finish_clear
 
 
 
 .error_thread_not_exists:
 
-        stdcall StrMakeRedirect, edi, "/message/error_thread_not_exists"
+        mov     eax, [.pSpecial]
+        stdcall StrMakeRedirect2, edi, "/message/error_thread_not_exists", [eax+TSpecialParams.query]
         jmp     .finish_clear
 
 
 .error_bad_ticket:
         stdcall StrDel, edi
-        stdcall StrMakeRedirect, 0, "/message/error_bad_ticket"
+
+        mov     eax, [.pSpecial]
+        stdcall StrMakeRedirect2, 0, "/message/error_bad_ticket", [eax+TSpecialParams.query]
         mov     edi, eax
         jmp     .finish_clear
 

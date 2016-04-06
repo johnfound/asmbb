@@ -1,31 +1,32 @@
-C The\sinitial\suser\spermissions\sare\sget\sfrom\sthe\sparams\stable\sand\sare\seditable\sfrom\sthe\sforum\ssettings\spage.
-D 2016-04-05T19:24:03.097
+C Added\sfeature\sfor\sdeleting\sposts\s(and\sthreads\sif\sit\sis\sthe\slast\spost).\sAdded\srelated\suser\spermissions.\sSome\sbugs\sfixed\srelated\sto\nnot\sfinished\ssql\sstatements\s(in\sLogin\scode).\sStrMakeRedirect\schanged\sin\sorder\sto\sautomatically\sadd\sthe\sGET\sparameters\s(in\sorder\sto\nfollow\sthe\stags\sthrough\sthe\snavigation)\ssome\swrong\sbehaviour\sis\spossible.
+D 2016-04-06T19:10:02.725
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F source/Linux/sqlite3.inc 3434422cbaa5b6d55ec5a3a8171d7784c08fe6bc
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
-F source/accounts.asm 814be47cb9b5af66dcb36a06f6cc20b9e72505a3
-F source/commands.asm 1385ae17da7ba63201ec9756a27ab6d8dfa56ad2
-F source/create.sql 899a552c4753aa10529b2cde8557e8a176a12d46
-F source/edit.asm 23b6b3d1e993ffb4994f79b090b8892e1f2a307f
-F source/engine.asm c54e7788691a402499b465dfa6ba1791d5a58bf4
-F source/engine.fpr 09a69a05ecd7e7c91de107effd42d7d99045aea1
+F source/accounts.asm d3485af4c5e5c26f99e0ef1091d309e83efc12d3
+F source/commands.asm 80b6ff2d9c40264407219aa20c38b81da128f413
+F source/create.sql 3ea6706a253f73a059a1618bdbe1c68c1a1c5dda
+F source/delete.asm 23c3c39a19ec22e47845e042242818a1ab37e0eb
+F source/edit.asm d36eb7c34f39b34a36a8552198a061a0584a80ca
+F source/engine.asm 56ee81f2ac078f9f2afae21433da4af601a9bc65
+F source/engine.fpr 231a591d82aaec5e83636ade64f44052577a517c
 F source/exponential_scaling.ods b66ca0aa6f1f4dc69986c751341877b423db11e5
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 231a479cd6221654cbbbaf408763f1fb65d5823b
 F source/http.asm 31145fc891514c6675393a1db68ac4c7b917744d
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
-F source/messages_en.sql c9a34d4a6ecaddb7efb11a18204ad588f8fb396a
-F source/post.asm cb0f578db3091ded3d178379b48cdcbe75308d15
-F source/render.asm c3d136e4d5d93dec6dc652680ce2c709711b4cbe
-F source/search.asm 345384bfec3b774d20f6f96e056cd813da981b8c
-F source/settings.asm 9fbea2dba3c40c5daa3905a0b480b45f361c97df
+F source/messages_en.sql 9813e1beaeeefc73eaee5c6eb20baa1aa6187abc
+F source/post.asm 2e5236e653497fe47a246a4b9615da87314061b2
+F source/render.asm feab89c280a99f5797cb8271367ce57896f3d625
+F source/search.asm 95ae631ab20dd0a4c5f40dbca7d844fb181813a7
+F source/settings.asm 0a1cd311ec5a36acd12330dd57738573b7d7cd33
 F source/showthread.asm 78d1ab31d7e2f26debbcfa348991c1ce7d9e3a1e
 F source/sqlite3.asm 4285b7e6615de3ffd2630b7c4adbf3df3210dd43
 F source/threadlist.asm 85bf2732165ce26b4108280a7fa2c8cf0756932e
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
-F source/userinfo.asm fd5dcbba8ea0b5168afd25072ad5448fa1e3a6fd
+F source/userinfo.asm 28a35f7157b0cbd9b95b7d26ccf1d7346046e3f9
 F www/.htaccess fc8c641fc61f2a38821bdb99fb9556ddf98929a7
-F www/all.css 8f968bc136b23111352670c503a406e4fc592077
+F www/all.css a17f0a80b14e95f8a5e9744a690328e211205eb5
 F www/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
 F www/images/del_gray.svg 5e3d0ba999e37de7dfdc43292d1c14e4513573ac
 F www/images/edit.svg 2f003198c4acd6bb294e25be53f1299713cffdb8
@@ -65,29 +66,30 @@ F www/lighttpd.conf c2e99868510b00288e86a9bf0332fa279aabb608
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/activation_email_subject.tpl 950d3451cce1b1b55eec7c9ac9c0bb415abaa34e
 F www/templates/activation_email_text.tpl a4cf857f84166584b5b146af7e00d7223ab235c7
-F www/templates/edit_form.tpl 8b0dc53c5943b0b27c98233fe7193011f4dfd499
+F www/templates/del_confirm.tpl ee759d8b663be7a71ac2f92089375c3d4a3ed944
+F www/templates/edit_form.tpl 31166b1277c359c98b117e50829b25ad294f4018
 F www/templates/error_html_end.tpl 937e074b29bb4ee9a7fce7b806559ab89468c700
 F www/templates/error_html_start.tpl fce7c74e9363e1ee7425beccd6afb0aa13eac833
-F www/templates/form_editinfo.tpl de8f5c7066d75520abcb7f3f04a3b42ec9db2b42
-F www/templates/form_settings.tpl 2c69d59703429290baf603e75dc3dc1ef81ea0f7
+F www/templates/form_editinfo.tpl b9011ce2b5a0c37976c7842a07e5a6a07706efb3
+F www/templates/form_settings.tpl 798d2b4f45c8f0ae5c65a56ec465d7817160d808
 F www/templates/login_form.tpl 15f1639aab52acdbefe6a276cb0e10d36aa52dad
 F www/templates/logout.tpl 08bc7c756494e841962fb3b005686cb382495632
 F www/templates/main_html_end.tpl dbc17594a4b720a493125fd95e4a62fc5659c800
-F www/templates/main_html_start.tpl 9b9fd8bd596875042701ed959b3ae2503ccb64d6
+F www/templates/main_html_start.tpl 5ed6d3fe4b31dccec8293e5634d368f895c9921d
 F www/templates/minimag_suffix.tpl e0ee4765a03f31868c42f12693dc9b23b8ca076e
-F www/templates/nav_list.tpl 47ffa75b0b59c4ab19ebbdf075b2d92d97fa0798
+F www/templates/nav_list.tpl 187846227caf59349a2d9365c0221dad0524efa8
 F www/templates/nav_search.tpl 8184180ece4f8e83bdf9e35672bc055ef1ff3129
-F www/templates/nav_thread.tpl 6a73fc98f9a1e1eddbcd8f95ed3594334abae483
+F www/templates/nav_thread.tpl 75c7ffb2d3fb6bf4fa4df0476b18eefa8a83345b
 F www/templates/new_post_form.tpl 7c79cea6732400151f19dc4fb459175959e3eb0b
 F www/templates/new_thread_form.tpl e468d490bb51369ab1ae85b66eabda8e74cafd30
-F www/templates/post_view.tpl c5b52022ba7a3c5b1314d8b01e7d7e520b4ccb5d
+F www/templates/post_view.tpl ff7f890670a0372a0d77556931af8730e32176d2
 F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/register_form.tpl 472535cb1964f0acd6fe5189fcbd2b72b057a3c8
 F www/templates/search_result.tpl 0452301cac82f1ab404ecb1e8fabc1e533897ecd
 F www/templates/sqlite_console_form.tpl e1033e7afad75f72dc18eb257473bfbfd72d13aa
 F www/templates/thread_info.tpl d15dfa02de0da9a13110c9253a7e98ecc5752d2c
-F www/templates/userinfo.tpl e16eb90c261deb2f46d97ab84bc24507344780f7
-P 66a4924060228f715999e8165767ddb50df7002b
-R d25cad6a34c24b0aff5b86500a379121
+F www/templates/userinfo.tpl 4e71cc52b631c69e0286f01af05e2390d3b79b83
+P 67e1a9168cabb68892faa5a1adfba6a245680568
+R 3c29112e1aea06f8af54c96bdd13b272
 U johnfound
-Z f1cc08b6f42057aa7a7c20d64092c373
+Z 392f8b595530933bc87d826421ad1613

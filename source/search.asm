@@ -111,7 +111,7 @@ begin
 
 .missing_query:
 
-        stdcall StrMakeRedirect, 0, "/message/missing_query/"
+        stdcall StrMakeRedirect2, 0, "/message/missing_query/", [esi+TSpecialParams.query]
         mov     edi, eax
         stc
         jmp     .finish

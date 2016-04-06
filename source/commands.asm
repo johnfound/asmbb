@@ -364,6 +364,12 @@ begin
         stdcall StrCompNoCase, [esi+TArray.array], txt "edit"
         jc      .edit_message
 
+        stdcall StrCompNoCase, [esi+TArray.array], txt "confirm"
+        jc      .delete_confirm
+
+        stdcall StrCompNoCase, [esi+TArray.array], txt "del"
+        jc      .delete_post
+
         stdcall StrCompNoCase, [esi+TArray.array], txt "sqlite"         ; sqlite console. only for admins.
         jc      .sqlite
 
@@ -386,7 +392,7 @@ begin
 
 .redirect_to_the_list:
 
-        stdcall StrMakeRedirect, edi, "/list/"
+        stdcall StrMakeRedirect2, edi, "/list", 0
 
         jmp     .send_simple_result
 
@@ -666,13 +672,51 @@ cUnknownError text "unknown_error"
 
 .edit_message:
         cmp     [esi+TArray.count], 2
-        jne     .error400
+        jne     .error404
 
         stdcall StrToNumEx, [esi+TArray.array+4]
         jc      .error404
 
         lea     ecx, [.special]
         stdcall EditUserMessage, eax, ecx
+
+        jmp     .send_simple_replace
+
+
+;..................................................................................
+
+.delete_confirm:
+
+        cmp     [esi+TArray.count], 2
+        jne     .error404
+
+        stdcall StrToNumEx, [esi+TArray.array+4]
+        jc      .error404
+
+        lea     ecx, [.special]
+
+        stdcall DeleteConfirmation, eax, ecx
+        jc      .send_simple_replace
+
+        test    eax, eax
+        jz      .error404
+
+        jmp     .output_forum_html
+
+
+
+.delete_post:
+
+        cmp     [esi+TArray.count], 2
+        jne     .error404
+
+        stdcall StrToNumEx, [esi+TArray.array+4]
+        jc      .error404
+
+        lea     ecx, [.special]
+        stdcall DeletePost, eax, ecx
+        test    eax, eax
+        jz      .error404
 
         jmp     .send_simple_replace
 
@@ -755,15 +799,13 @@ begin
 
 .finish:
         stdcall StrNew
-        mov     edi, eax
-
-        stdcall StrNew
         stdcall StrCatTemplate, eax, "logout", 0, [.pSpecial]           ; goto back to the page from where came.
+        push    eax
 
-        stdcall StrMakeRedirect, edi, eax
-        stdcall StrDel, eax
+        stdcall StrMakeRedirect2, 0, eax, 0
+        stdcall StrDel ; from the stack
 
-        mov     [esp+4*regEAX], edi
+        mov     [esp+4*regEAX], eax
         popad
         return
 endp
@@ -966,11 +1008,18 @@ begin
 
         stdcall StrCat, edi, '<a href="'
 
-        stdcall StrNew
-        stdcall StrCatTemplate, eax, "logout", 0, [.pSpecial]
+        stdcall GetBackLink, [.pSpecial]
+        pushf
         stdcall StrCat, edi, eax
         stdcall StrDel, eax
-        stdcall StrCat, edi, '">Go back and try again</a>'
+        popf
+        jnc     .back
+
+        stdcall StrCat, edi, '">Home</a>'
+        jmp     .finalize
+
+.back:
+        stdcall StrCat, edi, '">Go back</a>'
 
 .finalize:
         stdcall StrCat, edi, '</div>'
@@ -1745,6 +1794,8 @@ proc PinThread, .threadID, .pSpecial
 begin
         pushad
 
+        mov     esi, [.pSpecial]
+
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlPinToggle, sqlPinToggle.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
@@ -1753,9 +1804,9 @@ begin
 
         stdcall StrNew
         push    eax
-        stdcall StrCatTemplate, eax, "logout", 0, [.pSpecial]
+        stdcall StrCatTemplate, eax, "logout", 0, esi
 
-        stdcall StrMakeRedirect, 0, eax
+        stdcall StrMakeRedirect2, 0, eax, [esi+TSpecialParams.query]
         stdcall StrDel ; from the stack.
 
         mov     [esp+4*regEAX], eax

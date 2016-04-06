@@ -233,13 +233,14 @@ begin
         stdcall StrDel, edi
         stdcall StrNew
         mov     edi, eax
-        stdcall StrMakeRedirect, edi, "/message/error_bad_ticket/"
+
+        stdcall StrMakeRedirect2, edi, "/message/error_bad_ticket/", [esi+TSpecialParams.query]
         jmp     .finish_clear
 
 
 .error_wrong_permissions:
 
-        stdcall StrMakeRedirect, edi, "/message/error_cant_post/"
+        stdcall StrMakeRedirect2, edi, "/message/error_cant_post/", [esi+TSpecialParams.query]
         jmp     .finish_clear
 
 
@@ -251,7 +252,7 @@ begin
         stdcall StrNew
         mov     edi, eax
 
-        stdcall StrMakeRedirect, edi, "/message/error_post_not_exists/"
+        stdcall StrMakeRedirect2, edi, "/message/error_post_not_exists/", [esi+TSpecialParams.query]
         jmp     .finish
 
 
@@ -261,7 +262,7 @@ begin
 
         cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
 
-        stdcall StrMakeRedirect, edi, "/message/error_cant_write/"
+        stdcall StrMakeRedirect2, edi, "/message/error_cant_write/", [esi+TSpecialParams.query]
         jmp     .finish_clear
 
 endp
