@@ -22,7 +22,7 @@
   <label>Default user permissions:</label><br>
   <label></label><label class="checkbox"><input type="checkbox" [user_perm0] name="user_perm0" value="1" class="checkbox"><span>.</span> Login</label><br>
   <label></label><label class="checkbox"><input type="checkbox" [user_perm2] name="user_perm2" value="4" class="checkbox"><span>.</span> Post</label><br>
-  <label></label><label class="checkbox"><input type="checkbox" [user_perm3] name="user_perm3" value="8" class="checkbox"><span>.</span> Strart threads</label><br>
+  <label></label><label class="checkbox"><input type="checkbox" [user_perm3] name="user_perm3" value="8" class="checkbox"><span>.</span> Start threads</label><br>
   <label></label><label class="checkbox"><input type="checkbox" [user_perm4] name="user_perm4" value="16" class="checkbox"><span>.</span> Edit own posts</label><br>
   <label></label><label class="checkbox" style="color: maroon"><input type="checkbox" [user_perm5] name="user_perm5" value="32" class="checkbox"><span>.</span> Edit all posts</label><br>
   <label></label><label class="checkbox" style="color: maroon"><input type="checkbox" [user_perm6] name="user_perm6" value="64" class="checkbox"><span>.</span> Delete own posts</label><br>

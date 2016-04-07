@@ -1,6 +1,11 @@
-C SQLite\sconsole\smodule\smoved\sto\sseparate\sfile.\sImplemented\smechanism\sfor\sdebugging\snot\sfinalized\sSQLite\squeries.\s(option.DebugSQLite\s=\s1)\nFixed\sseveral\sbugs\srelated\sto\snon-finished\squeries.\sThe\squery\sfor\sfetching\sthread\sposts\shas\sbeen\sspeed\soptimized\sand\nnot\sis\sat\sleast\stwice\sfaster\son\svery\slong\sthreads.
-D 2016-04-07T12:41:34.065
+C It\sis\sthe\sofficial\sAsmBB\sv1.0\srelease\swith\sbinary\spackage\sadded\sfor\seasier\sinstallation.
+D 2016-04-07T18:45:35.042
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
+F install/.htaccess f6b1e20e6db9a39a03722ead7f34d71bac90e0cd
+F install/asmbb.tar.gz 03116c998227d0bc58caad36f51d4274dbfda20e
+F install/create_release.sh c2ebc6824822d2c0accb707784d14304891676b4 x
+F install/install.txt 7d3f4f32b07d36ba1256bccb17b3b96c6fa1d004
+F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
 F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
 F source/accounts.asm d3485af4c5e5c26f99e0ef1091d309e83efc12d3
@@ -62,8 +67,8 @@ F www/images/sources/screw0.xcf 50d79cf2cc504c7f0d1499c28147a621b7aaa234
 F www/images/sources/search.svg 50eb2717ab41f19d5a617f6189290fca02470b6b
 F www/images/user.png bf7f849ee8f09b959965aa984f2a5ce7f972ce07
 F www/ld-musl-i386.so 4d44786b8676115c7df45c45ceb051c11ce14ffd x
-F www/libsqlite3.so 70045c696736178082b18594bd1bc5c53b5c0576 x
-F www/lighttpd.conf c2e99868510b00288e86a9bf0332fa279aabb608
+F www/libsqlite3.so 582c12ea2e71bd9bfe2d895e666222a40b645ac4 x
+F www/lighttpd.conf 3ac00a623c9c2a41cfdb39332a2456dab8b16f14
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/activation_email_subject.tpl 950d3451cce1b1b55eec7c9ac9c0bb415abaa34e
 F www/templates/activation_email_text.tpl a4cf857f84166584b5b146af7e00d7223ab235c7
@@ -72,7 +77,7 @@ F www/templates/edit_form.tpl 31166b1277c359c98b117e50829b25ad294f4018
 F www/templates/error_html_end.tpl 937e074b29bb4ee9a7fce7b806559ab89468c700
 F www/templates/error_html_start.tpl fce7c74e9363e1ee7425beccd6afb0aa13eac833
 F www/templates/form_editinfo.tpl b9011ce2b5a0c37976c7842a07e5a6a07706efb3
-F www/templates/form_settings.tpl 798d2b4f45c8f0ae5c65a56ec465d7817160d808
+F www/templates/form_settings.tpl d4b1208c713287233af5b6f205e5b97d0b5ebec0
 F www/templates/login_form.tpl 15f1639aab52acdbefe6a276cb0e10d36aa52dad
 F www/templates/logout.tpl 08bc7c756494e841962fb3b005686cb382495632
 F www/templates/main_html_end.tpl dbc17594a4b720a493125fd95e4a62fc5659c800
@@ -90,7 +95,9 @@ F www/templates/search_result.tpl 0452301cac82f1ab404ecb1e8fabc1e533897ecd
 F www/templates/sqlite_console_form.tpl e1033e7afad75f72dc18eb257473bfbfd72d13aa
 F www/templates/thread_info.tpl d15dfa02de0da9a13110c9253a7e98ecc5752d2c
 F www/templates/userinfo.tpl 4e71cc52b631c69e0286f01af05e2390d3b79b83
-P 96adf40c93bc46194afd76f3cafbaa6a7a736516
-R 99589af0c7ae55651e875a6ca6ccecd5
+P 107e377f985eb4c44539aeedf95bb3cf442cc199
+R 346e7e39a24407d13a5760c579317fe1
+T +sym-release *
+T +sym-v1.0 *
 U johnfound
-Z ba73b5279e5d9e655d13879eface4517
+Z ccc562aded31bde5b66b668994d6e6ab

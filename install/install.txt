@@ -1,0 +1,66 @@
+# AsmBB installation guide
+
+## Preface
+
+This package contains the forum engine AsmBB, which is high performance
+web forum engine, written entirely in assembly language.
+
+This package is the binary release of the engine, but it is free open source
+distributed under EUPL license (the file License.txt) and you can download
+the source code from the source repository (fossil), located on:
+
+               http://asm32.info/fossil/repo/asmbb/
+
+## Prerequisites
+
+In order to use AsmBB you will need running web server, supporting FastCGI 
+protocol. Most web servers will do the job. Particularly Apache.
+
+You can install AsmBB on local server (for testing) on shared hosting or any
+other hosting option.
+
+The only mandatory condition is that the server must run on x86 or x86-64 
+Linux platform and the fastcgi module should be enabled (most servers running
+php has it enabled anyway).
+
+AsmBB is self sufficient and does not requires any libraries or databases 
+installed on the server.
+
+In order to send mails to the forum users, AsmBB will need the address and 
+port number of SMTP server that is accessible from your web server without
+authentication. Most SMTP servers provided by the web hosting will not need 
+authentication if connected from the local network (i.e. the web site engine).
+
+
+## Installation
+
+First unpack the files in temporary directory. Depending on your server
+edit the file .htaccess (Apache) or lighttpd.conf (lighttpd) - 
+Change the "_FULL_PATH_TO_DOCUMENT_ROOT_HERE_" placeholder to the real
+path to your document root (it depends on the web server settings).
+
+Upload all files (and direcrories) of the package to the document_root directory 
+of your web server.
+
+Test the forum by loading the web site in your favourite browser.
+
+As simple as that. 
+
+
+## Introduction to the forum configuration.
+
+When run for the first time, AsmBB will create an empty database for the 
+forum - a file, named board.sqlite in the root directory.
+
+Until there is no users registered, AsmBB will run in setup mode, displaying 
+the administrator user creation dialog. 
+
+The registration of the admin user will not need email activation and is pretty
+liberal about the quality of the password. But you as an administrator of the 
+forum, better choose strong password and whatever nickname you prefer. 
+
+After creation the administrator user, the access to the forum settings is 
+rescticted only for the users with administrator privilegies.
+
+Set the SMTP server and other forum parameters in the settings page.    
+
