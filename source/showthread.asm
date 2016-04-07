@@ -1,38 +1,28 @@
 
 
 
-sqlSelectPosts   text "select ",                                                                                        \
-                                                                                                                        \
-                        "Posts.id, ",                                                                                   \
-                        "Posts.threadID, ",                                                                             \
-                        "strftime('%d.%m.%Y %H:%M:%S', Posts.postTime, 'unixepoch') as PostTime, ",                     \
-                        "Posts.Content, ",                                                                              \
-                        "Users.id as UserID, ",                                                                         \
-                        "Users.nick as UserName,",                                                                      \
-                        "Users.avatar as avatar,",                                                                      \
-                        "(select count() from Posts X where X.userID = Posts.UserID) as UserPostCount, ",               \
-                        "?4 as Slug, ",                                                                                 \
-                        "(select count() from UnreadPosts U where UserID = ?5 and PostID = Posts.id) as Unread, ",      \
-                        "ReadCount ",                                                                                   \
-                                                                                                                        \
-                      "from ",                                                                                          \
-                                                                                                                        \
-                        "Posts left join Users on ",                                                                    \
-                          "Users.id = Posts.userID ",                                                                   \
-                                                                                                                        \
-                      "where ",                                                                                         \
-                                                                                                                        \
-                        "threadID = ?1 ",                                                                               \
-                                                                                                                        \
-                      "order by ",                                                                                      \
-                                                                                                                        \
-                        "Posts.id ",                                                                                    \
-                                                                                                                        \
-                      "limit ?2 ",                                                                                      \
-                      "offset ?3"
+sqlSelectPosts   text "select ",                                                                                                                \
+                        "P.id, ",                                                                                                               \
+                        "P.threadID, ",                                                                                                         \
+                        "strftime('%d.%m.%Y %H:%M:%S', P.postTime, 'unixepoch') as PostTime, ",                                                 \
+                        "P.Content, ",                                                                                                          \
+                        "U.id as UserID, ",                                                                                                     \
+                        "U.nick as UserName, ",                                                                                                 \
+                        "U.avatar as avatar, ",                                                                                                 \
+                        "U.PostCount as UserPostCount, ",                                                                                       \
+                        "?4 as Slug, ",                                                                                                         \
+                        "(select count() from UnreadPosts UP where UP.UserID = ?5 and UP.PostID = P.id) as Unread, ",                           \
+                        "P.ReadCount ",                                                                                                         \
+                      "from ",                                                                                                                  \
+                        "Posts P left join UsersX U on ",                                                                                       \
+                          "U.id = P.userID ",                                                                                                   \
+                      "where ",                                                                                                                 \
+                        "P.threadID = ?1 and P.id >= (select px.id from posts px where px.threadID = ?1 order by px.id limit 1 offset ?3 ) ",   \
+                      "order by ",                                                                                                              \
+                        "P.id ",                                                                                                                \
+                      "limit ?2"
 
-sqlGetPostCount text "select count(1) from Posts where ThreadID = ?"
-
+sqlGetPostCount  text "select count(1) from Posts where ThreadID = ?"
 sqlGetThreadInfo text "select id, caption, slug from Threads where slug = ? limit 1"
 
 
@@ -90,8 +80,10 @@ begin
         cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
 
         cinvoke sqliteStep, [.stmt]
+
         cinvoke sqliteColumnInt, [.stmt], 0
         mov     [.cnt], eax
+
         cinvoke sqliteFinalize, [.stmt]
 
         stdcall StrDup, txt "/threads/"
@@ -102,6 +94,7 @@ begin
         mov     [.list], eax
 
         stdcall StrCat, edi, [.list]
+
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectPosts, -1, eax, 0

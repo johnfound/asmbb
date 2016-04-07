@@ -27,6 +27,8 @@ create table Users (
 );
 
 
+create view UsersX as select *, (select count(1) from Posts as P where P.UserID = U.id) as PostCount from Users as U;
+
 create index idxUsers_nick on Users (nick);
 create index idxUsers_email on Users (email);
 
@@ -72,7 +74,7 @@ create table Posts (
 
 create index idxPosts_UserID   on Posts (userID);
 create index idxPosts_ThreadID on Posts (threadID);
-create index idxPosts_Time     on Posts (postTime, id);
+-- create index idxPosts_Time	  on Posts (postTime, id);
 
 
 create table Tags (
@@ -301,10 +303,10 @@ insert into Events values (9,'RequestServeEnd');
 
 
 create table Log (
-  process_id integer,				 -- the unique process id
+  process_id integer,								     -- the unique process id
   timestamp  integer,
-  event      integer references events(id),	 -- what event is logged - start process, end process, start request, end request
-  value      text,				 -- details in variable form.
+  event      integer references events(id) on delete cascade on update cascade,      -- what event is logged - start process, end process, start request, end request
+  value      text,								     -- details in variable form.
   runtime    integer
 );
 

@@ -36,7 +36,7 @@ begin
         xor     ebx, ebx
         lea     eax, [.hSQL]
         lea     ecx, [.ptrNext]
-        cinvoke sqlitePrepare, [esi], sqlCheckEmpty, -1, eax, ecx
+        cinvoke sqlitePrepare_v2, [esi], sqlCheckEmpty, -1, eax, ecx
         cinvoke sqliteStep, [.hSQL]
         cinvoke sqliteColumnInt, [.hSQL], 0
         push    eax

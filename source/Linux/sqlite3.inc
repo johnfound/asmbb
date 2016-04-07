@@ -100,7 +100,7 @@ import_proto './libsqlite3.so',  \
     sqliteExtendedErrCode, <.ptrDB>,  'sqlite3_extended_errcode',  \
     sqliteExtendedResultCodes, <.ptrDB, .flagEnable>,  'sqlite3_extended_result_codes',  \
     sqliteFileControl, <.ptrDB, .ptrDBName, .wparam, .lparam>,  'sqlite3_file_control',  \
-    sqliteFinalize, <.stmt>,  'sqlite3_finalize',  \
+    _sqliteFinalize, <.stmt>,  'sqlite3_finalize',  \
     sqliteFree, <.ptrmem>,  'sqlite3_free',  \
     sqliteFreeTable, <.ptrVarResult>,  'sqlite3_free_table',  \
     sqliteGetAutocommit, <.ptrDB>,  'sqlite3_get_autocommit',  \
@@ -135,7 +135,7 @@ import_proto './libsqlite3.so',  \
     sqlitePrepare, <.ptrDB, .ptrSQL, .lenSQL, .ptrVarStmt, .ptrVarNext>,  'sqlite3_prepare',  \
     sqlitePrepare16, <.ptrDB, .ptrSQL, .lenSQL, .ptrVarStmt, .ptrVarNext>,  'sqlite3_prepare16',  \
     sqlitePrepare16_v2, <.ptrDB, .ptrSQL, .lenSQL, .ptrVarStmt, .ptrVarNext>,  'sqlite3_prepare16_v2',  \
-    sqlitePrepare_v2, <.ptrDB, .ptrSQL, .lenSQL, .ptrVarStmt, .ptrVarNext>,  'sqlite3_prepare_v2',  \
+    _sqlitePrepare_v2, <.ptrDB, .ptrSQL, .lenSQL, .ptrVarStmt, .ptrVarNext>,  'sqlite3_prepare_v2',  \
     sqliteProfile, <.ptrDB, .procProfiler, .lparam>,  'sqlite3_profile',  \
     sqliteProgressHandler, <.ptrDB, .N, .procProgress, .lparam>,  'sqlite3_progress_handler',  \
     sqliteRandomness, <.bytes, .buffer>,  'sqlite3_randomness',  \

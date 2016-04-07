@@ -26,6 +26,7 @@ options.AlignCode = 0
 options.ShowImported = 0
 
 options.DebugWeb = 0
+options.DebugSQLite = 0
 
 ;HeapManager  equ ASM
 ;LinuxThreads equ native
@@ -51,6 +52,7 @@ include "delete.asm"
 include "userinfo.asm"
 include "accounts.asm"
 include "settings.asm"
+include "sqlite_console.asm"
 
 
 iglobal
@@ -68,12 +70,20 @@ uglobal
 endg
 
 
-rb 73
+rb 273
 
 start:
         stdcall StrDel, 0
 
         InitializeAll
+
+        if ~( defined options.DebugSQLite & options.DebugSQLite )
+          mov   eax, [_sqlitePrepare_v2]
+          mov   ecx, [_sqliteFinalize]
+          mov   [sqlitePrepare_v2], eax
+          mov   [sqliteFinalize], ecx
+        end if
+
 
         stdcall SetForcedTerminateHandler, OnForcedTerminate
 
@@ -125,8 +135,9 @@ start:
         dec     ebx
         jnz     .wait_close
 
-
+        push    eax
         stdcall FileWriteString, [STDERR], <"The database remained open! Check for not finished SQLite statements!", 13, 10>
+        pop     eax
 
 .database_closed:
         OutputValue "Result of sqliteClose:", eax, 10, -1
@@ -148,4 +159,75 @@ begin
         stdcall FileDelete, pathMySocket
 
         jmp     start.terminate         ; the stack is not important here!
+endp
+
+
+
+
+
+
+
+
+; debug replacement for sqlitePrepare_v2 and sqliteFinalize !!!
+
+if defined options.DebugSQLite & options.DebugSQLite
+  sqlitePrepare_v2 dd my_sqlitePrepare_v2
+  sqliteFinalize   dd my_sqliteFinalize
+else
+  sqlitePrepare_v2 dd 0
+  sqliteFinalize   dd 0
+end if
+
+
+proc my_sqlitePrepare_v2, .ptrDB, .ptrSQL, .lenSQL, .ptrVarStmt, .ptrVarNext
+begin
+        cinvoke  _sqlitePrepare_v2, [.ptrDB], [.ptrSQL], [.lenSQL], [.ptrVarStmt], [.ptrVarNext]
+
+        pushad
+
+        stdcall FileWriteString, [STDERR], "SQL statement prepared:   $"
+
+        mov     eax, [.ptrVarStmt]
+        stdcall NumToStr, [eax], ntsHex or ntsUnsigned or ntsFixedWidth + 8
+        push    eax
+        stdcall FileWriteString, [STDERR], eax
+        stdcall StrDel ; from the stack;
+
+        stdcall FileWriteString, [STDERR], txt " call from $"
+        stdcall NumToStr, [ebp+4], ntsHex or ntsUnsigned or ntsFixedWidth + 8
+        push    eax
+        stdcall FileWriteString, [STDERR], eax
+        stdcall StrDel ; from the stack;
+        stdcall FileWriteString, [STDERR], <txt 13, 10>
+
+        popad
+
+        cret
+endp
+
+
+proc my_sqliteFinalize, .stmt
+begin
+        pushad
+
+        stdcall FileWriteString, [STDERR], "SQL statement finalizing: $"
+
+        stdcall NumToStr, [.stmt], ntsHex or ntsUnsigned or ntsFixedWidth + 8
+        push    eax
+        stdcall FileWriteString, [STDERR], eax
+        stdcall StrDel ; from the stack;
+
+        stdcall FileWriteString, [STDERR], txt " call from $"
+        stdcall NumToStr, [ebp+4], ntsHex or ntsUnsigned or ntsFixedWidth + 8
+        push    eax
+        stdcall FileWriteString, [STDERR], eax
+        stdcall StrDel ; from the stack;
+
+        stdcall FileWriteString, [STDERR], <txt 13, 10, 13, 10>
+
+        popad
+
+        cinvoke _sqliteFinalize, [.stmt]
+
+        cret
 endp

@@ -1,15 +1,15 @@
-C Added\sfeature\sfor\sdeleting\sposts\s(and\sthreads\sif\sit\sis\sthe\slast\spost).\sAdded\srelated\suser\spermissions.\sSome\sbugs\sfixed\srelated\sto\nnot\sfinished\ssql\sstatements\s(in\sLogin\scode).\sStrMakeRedirect\schanged\sin\sorder\sto\sautomatically\sadd\sthe\sGET\sparameters\s(in\sorder\sto\nfollow\sthe\stags\sthrough\sthe\snavigation)\ssome\swrong\sbehaviour\sis\spossible.
-D 2016-04-06T19:10:02.725
+C SQLite\sconsole\smodule\smoved\sto\sseparate\sfile.\sImplemented\smechanism\sfor\sdebugging\snot\sfinalized\sSQLite\squeries.\s(option.DebugSQLite\s=\s1)\nFixed\sseveral\sbugs\srelated\sto\snon-finished\squeries.\sThe\squery\sfor\sfetching\sthread\sposts\shas\sbeen\sspeed\soptimized\sand\nnot\sis\sat\sleast\stwice\sfaster\son\svery\slong\sthreads.
+D 2016-04-07T12:41:34.065
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
-F source/Linux/sqlite3.inc 3434422cbaa5b6d55ec5a3a8171d7784c08fe6bc
+F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
 F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
 F source/accounts.asm d3485af4c5e5c26f99e0ef1091d309e83efc12d3
-F source/commands.asm 80b6ff2d9c40264407219aa20c38b81da128f413
-F source/create.sql 3ea6706a253f73a059a1618bdbe1c68c1a1c5dda
+F source/commands.asm 236d9aef04280c914e6049549d97aa5e5853eacd
+F source/create.sql 054ff4ee807f0dc7eb2240339e971fd2c89cf62f
 F source/delete.asm 23c3c39a19ec22e47845e042242818a1ab37e0eb
 F source/edit.asm d36eb7c34f39b34a36a8552198a061a0584a80ca
-F source/engine.asm 56ee81f2ac078f9f2afae21433da4af601a9bc65
-F source/engine.fpr 231a591d82aaec5e83636ade64f44052577a517c
+F source/engine.asm 9db0f175f4088b8c04d4baf065a912e992f0977c
+F source/engine.fpr d8f2a0a5176b632238e86da4a0bb58d2c6555676
 F source/exponential_scaling.ods b66ca0aa6f1f4dc69986c751341877b423db11e5
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 231a479cd6221654cbbbaf408763f1fb65d5823b
@@ -20,8 +20,9 @@ F source/post.asm 2e5236e653497fe47a246a4b9615da87314061b2
 F source/render.asm feab89c280a99f5797cb8271367ce57896f3d625
 F source/search.asm 95ae631ab20dd0a4c5f40dbca7d844fb181813a7
 F source/settings.asm 0a1cd311ec5a36acd12330dd57738573b7d7cd33
-F source/showthread.asm 78d1ab31d7e2f26debbcfa348991c1ce7d9e3a1e
-F source/sqlite3.asm 4285b7e6615de3ffd2630b7c4adbf3df3210dd43
+F source/showthread.asm ac0cf299a2c69fbcbe6895575bb4357fed35c494
+F source/sqlite3.asm f605d645a6cd5a75fbfc52a86ce38c0b5ab0430a
+F source/sqlite_console.asm 0ca7d56f08473e2963626eef75c78bd267383445
 F source/threadlist.asm 85bf2732165ce26b4108280a7fa2c8cf0756932e
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
 F source/userinfo.asm 28a35f7157b0cbd9b95b7d26ccf1d7346046e3f9
@@ -89,7 +90,7 @@ F www/templates/search_result.tpl 0452301cac82f1ab404ecb1e8fabc1e533897ecd
 F www/templates/sqlite_console_form.tpl e1033e7afad75f72dc18eb257473bfbfd72d13aa
 F www/templates/thread_info.tpl d15dfa02de0da9a13110c9253a7e98ecc5752d2c
 F www/templates/userinfo.tpl 4e71cc52b631c69e0286f01af05e2390d3b79b83
-P 67e1a9168cabb68892faa5a1adfba6a245680568
-R 3c29112e1aea06f8af54c96bdd13b272
+P 96adf40c93bc46194afd76f3cafbaa6a7a736516
+R 99589af0c7ae55651e875a6ca6ccecd5
 U johnfound
-Z 392f8b595530933bc87d826421ad1613
+Z ba73b5279e5d9e655d13879eface4517
