@@ -2,6 +2,7 @@
 mkdir asmbb
 mkdir asmbb/templates/
 mkdir asmbb/images/
+mkdir asmbb/images/favicons/
 
 # engine files
 cp ../www/engine asmbb/
@@ -11,6 +12,7 @@ cp ../www/*.so asmbb/
 cp ../www/*.css asmbb/
 cp ../www/templates/*.tpl asmbb/templates/
 cp ../www/images/*.* asmbb/images/
+cp ../www/images/favicons/*.* asmbb/images/favicons/
 
 # example config files for apache and lighttpd
 cp .htaccess asmbb/
@@ -24,6 +26,9 @@ tar -czf asmbb.tar.gz asmbb/
 
 rm asmbb/templates/*
 rmdir asmbb/templates/
+
+rm asmbb/images/favicons/*
+rmdir asmbb/images/favicons/
 
 rm asmbb/images/*
 rmdir asmbb/images/

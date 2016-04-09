@@ -1,9 +1,9 @@
-C Added\sfeature\sto\sdisplay\sthe\sthread\sstarter\sand\sthe\sthread\sposters\sin\sthe\sthread\slist.\nAdded\ssome\sdebugging\scode\sthat\sto\swrite\sa\slog\sfile\s("fault.txt")\swith\sthe\sstack\sbacktrace\nin\scase\sof\ssegmentation\sfaults.\sThis\sway\sone\sbug\shas\sbeen\sfixed\sin\sthe\scookie\sprocessing\s\ncode.\sThe\scode\sis\snow\scompilable\sfor\sWindows\sas\swell\s(with\sthe\slatest\sFreshLibDev\slibrary).\nAdded\sall\sneeded\sfavicons\sfiles,\ssupporting\siOS\sand\sother\smodern\splatforms.\sRelated\sto\sthis\ntwo\smore\smime\stypes\shas\sbeen\sadded:\smimeXML\sand\smimeJson.
-D 2016-04-09T07:52:40.443
+C images/favicons/\sfile\shas\sbeen\sadded\sto\sthe\sbinary\spackage.
+D 2016-04-09T09:14:04.414
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess f6b1e20e6db9a39a03722ead7f34d71bac90e0cd
-F install/asmbb.tar.gz a44bece0d57f25d218dd3bb96bb40bfd730d1c94
-F install/create_release.sh c2ebc6824822d2c0accb707784d14304891676b4 x
+F install/asmbb.tar.gz e45d7c3b4a3f7ea54b3709caa62513e9a173e290
+F install/create_release.sh ad954053d8ad529bb6bd1a5d400d3ed37904e5c1 x
 F install/install.txt 7d3f4f32b07d36ba1256bccb17b3b96c6fa1d004
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
 F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
@@ -128,7 +128,7 @@ F www/templates/search_result.tpl 0452301cac82f1ab404ecb1e8fabc1e533897ecd
 F www/templates/sqlite_console_form.tpl e1033e7afad75f72dc18eb257473bfbfd72d13aa
 F www/templates/thread_info.tpl 23984edb2eb7a67202ef7c20ea0b51ba0c3acbbe
 F www/templates/userinfo.tpl 4e71cc52b631c69e0286f01af05e2390d3b79b83
-P 9393359c56ec1d18b627bea5110c48960b481f43
-R 9f7c9671cc5d1ade02f0fba4fda3fd5e
+P 416c78d5b9a02857760e41cc095a596d35487ccd
+R 3b3953dacb941f5adf9fbaebee2408d8
 U johnfound
-Z d3ed541573ed23b1a2d9a06423b7fb43
+Z 54223c7ab2616a475a08209f28a66ceb
