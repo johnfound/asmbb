@@ -301,6 +301,9 @@ begin
         stdcall StrCompNoCase, edi, "setupmode"
         jc      .get_setupmode
 
+        stdcall GetQueryItem, edi, "posters=", 0
+        test    eax, eax
+        jnz     .get_thread_posters
 
         stdcall GetQueryItem, edi, "threadtags=", 0
         test    eax, eax
@@ -324,7 +327,7 @@ end if
 
 .get_timestamp:
 
-        stdcall GetTimestampHiRes
+        stdcall GetFineTimestamp
         sub     eax, [esi+TSpecialParams.start_time]
 
         stdcall NumToStr, eax, ntsDec or ntsUnsigned
@@ -673,6 +676,7 @@ sqlGetThreadTags    text "select TT.tag, T.Description from ThreadTags TT left j
 
 locals
   .threadID dd ?
+  .counter  dd ?
 endl
 
         mov     ecx, eax
@@ -740,6 +744,102 @@ endl
         cinvoke sqliteFinalize, [.stmt]
 
 .end_thread_tags2:
+        mov     eax, ebx
+        jmp     .return_value
+
+
+;..................................................................
+
+;<span class="small">starter: <a href="/userinfo/[StarterID][special:urltag]">[StarterName]</a></span>
+
+.get_thread_posters:
+
+sqlGetThreadPosters  text "select distinct U.id, U.nick from Posts P left join Users U on U.id = P.userID where p.threadid = ? order by P.id limit 11"
+
+        mov     ecx, eax
+
+        stdcall StrNew
+        mov     ebx, eax
+
+        stdcall __DoProcessTemplate2, ecx, [.sql_stmt], [.pSpecial], FALSE
+        stdcall StrDel, ecx
+
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack
+        jc      .end_thread_posters2
+
+        mov     [.threadID], eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadPosters, sqlGetThreadPosters.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
+
+        and     [.counter], 0
+
+.thread_posters_loop:
+        inc     [.counter]
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .end_thread_posters
+
+        cmp     [.counter], 11
+        je      .add_more_sign
+
+        cmp     [.counter], 2
+        je      .first_contributor
+        ja      .contributor
+
+; starter:
+        stdcall StrCat, ebx, 'started by: <b><a href="/userinfo/'
+        cinvoke sqliteColumnText, [.stmt], 0
+        stdcall StrCat, ebx, eax
+        stdcall StrCatQuery, ebx, [esi+TSpecialParams.query]
+
+        stdcall StrCharCat, ebx, '">'
+
+        cinvoke sqliteColumnText, [.stmt], 1
+        stdcall StrCat, ebx, eax
+        stdcall StrCat, ebx, '</a></b>'
+
+        jmp     .thread_posters_loop
+
+
+.first_contributor:
+
+        stdcall StrCat, ebx, '<br>joined: '
+        jmp     .add_contributor
+
+.contributor:
+
+        stdcall StrCharCat, ebx, ', '
+
+.add_contributor:
+
+        stdcall StrCat, ebx, '<a href="/userinfo/'
+        cinvoke sqliteColumnText, [.stmt], 0
+        stdcall StrCat, ebx, eax
+        stdcall StrCatQuery, ebx, [esi+TSpecialParams.query]
+
+        stdcall StrCharCat, ebx, '">'
+
+        cinvoke sqliteColumnText, [.stmt], 1
+        stdcall StrCat, ebx, eax
+        stdcall StrCharCat, ebx, '</a>'
+
+        jmp     .thread_posters_loop
+
+.add_more_sign:
+
+        stdcall StrCat, ebx, txt " ..."
+
+
+.end_thread_posters:
+
+        cinvoke sqliteFinalize, [.stmt]
+
+.end_thread_posters2:
         mov     eax, ebx
         jmp     .return_value
 
@@ -1392,27 +1492,21 @@ endp
 
 
 
+proc StrCatQuery, .hString, .hQuery
+begin
+        push    eax
 
+        cmp     [.hQuery], 0
+        je      .finish
 
+        stdcall StrLen, [.hQuery]
+        test    eax, eax
+        jz      .finish
 
+        stdcall StrCharCat, [.hString], "?"
+        stdcall StrCat, [.hString], [.hQuery]
 
-
-
-;proc StrCatQuery, .hString, .hQuery
-;begin
-;        push    eax
-;
-;        cmp     [.hQuery], 0
-;        je      .finish
-;
-;        stdcall StrLen, [.hQuery]
-;        test    eax, eax
-;        jz      .finish
-;
-;        stdcall StrCharCat, [.hString], "?"
-;        stdcall StrCat, [.hString], [.hQuery]
-;
-;.finish:
-;        pop     eax
-;        return
-;endp
+.finish:
+        pop     eax
+        return
+endp

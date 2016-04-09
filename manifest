@@ -1,39 +1,40 @@
-C It\sis\sthe\sofficial\sAsmBB\sv1.0\srelease\swith\sbinary\spackage\sadded\sfor\seasier\sinstallation.
-D 2016-04-07T18:45:35.042
+C Added\sfeature\sto\sdisplay\sthe\sthread\sstarter\sand\sthe\sthread\sposters\sin\sthe\sthread\slist.\nAdded\ssome\sdebugging\scode\sthat\sto\swrite\sa\slog\sfile\s("fault.txt")\swith\sthe\sstack\sbacktrace\nin\scase\sof\ssegmentation\sfaults.\sThis\sway\sone\sbug\shas\sbeen\sfixed\sin\sthe\scookie\sprocessing\s\ncode.\sThe\scode\sis\snow\scompilable\sfor\sWindows\sas\swell\s(with\sthe\slatest\sFreshLibDev\slibrary).\nAdded\sall\sneeded\sfavicons\sfiles,\ssupporting\siOS\sand\sother\smodern\splatforms.\sRelated\sto\sthis\ntwo\smore\smime\stypes\shas\sbeen\sadded:\smimeXML\sand\smimeJson.
+D 2016-04-09T07:52:40.443
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess f6b1e20e6db9a39a03722ead7f34d71bac90e0cd
-F install/asmbb.tar.gz 03116c998227d0bc58caad36f51d4274dbfda20e
+F install/asmbb.tar.gz a44bece0d57f25d218dd3bb96bb40bfd730d1c94
 F install/create_release.sh c2ebc6824822d2c0accb707784d14304891676b4 x
 F install/install.txt 7d3f4f32b07d36ba1256bccb17b3b96c6fa1d004
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
 F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
-F source/Win32/sqlite3.inc 00957971129ca93ccce3feb1d93a200178bc3d47
+F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm d3485af4c5e5c26f99e0ef1091d309e83efc12d3
-F source/commands.asm 236d9aef04280c914e6049549d97aa5e5853eacd
+F source/commands.asm 996310e0278b87b9f3fe070788272a0b3c176c30
 F source/create.sql 054ff4ee807f0dc7eb2240339e971fd2c89cf62f
 F source/delete.asm 23c3c39a19ec22e47845e042242818a1ab37e0eb
 F source/edit.asm d36eb7c34f39b34a36a8552198a061a0584a80ca
-F source/engine.asm 9db0f175f4088b8c04d4baf065a912e992f0977c
+F source/engine.asm 64e46fc419584a78464eaf4f52945510fa692d3f
 F source/engine.fpr d8f2a0a5176b632238e86da4a0bb58d2c6555676
 F source/exponential_scaling.ods b66ca0aa6f1f4dc69986c751341877b423db11e5
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
-F source/fcgi.asm 231a479cd6221654cbbbaf408763f1fb65d5823b
+F source/fcgi.asm c6d971629d563377995258d74b665b147fc86809
 F source/http.asm 31145fc891514c6675393a1db68ac4c7b917744d
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 9813e1beaeeefc73eaee5c6eb20baa1aa6187abc
 F source/post.asm 2e5236e653497fe47a246a4b9615da87314061b2
-F source/render.asm feab89c280a99f5797cb8271367ce57896f3d625
+F source/render.asm 001eabb9c338557ba3d7fc7b59dad8fd2b1591b7
 F source/search.asm 95ae631ab20dd0a4c5f40dbca7d844fb181813a7
 F source/settings.asm 0a1cd311ec5a36acd12330dd57738573b7d7cd33
 F source/showthread.asm ac0cf299a2c69fbcbe6895575bb4357fed35c494
 F source/sqlite3.asm f605d645a6cd5a75fbfc52a86ce38c0b5ab0430a
-F source/sqlite_console.asm 0ca7d56f08473e2963626eef75c78bd267383445
-F source/threadlist.asm 85bf2732165ce26b4108280a7fa2c8cf0756932e
+F source/sqlite_console.asm e5c53474ff445010ba8a4e71115763ad992db182
+F source/threadlist.asm 1be8256d7527dc02d704be2bf6824cdbe93402b2
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
 F source/userinfo.asm 28a35f7157b0cbd9b95b7d26ccf1d7346046e3f9
 F www/.htaccess fc8c641fc61f2a38821bdb99fb9556ddf98929a7
 F www/all.css a17f0a80b14e95f8a5e9744a690328e211205eb5
 F www/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
+F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
 F www/images/del_gray.svg 5e3d0ba999e37de7dfdc43292d1c14e4513573ac
 F www/images/edit.svg 2f003198c4acd6bb294e25be53f1299713cffdb8
 F www/images/edit_gray.svg a1b01c72f16833c8bad8eb058ff298cb3d5fb320
@@ -46,6 +47,36 @@ F www/images/emoticons/smile.svg 90f8172311a11daccea34a6670440f01877a3061
 F www/images/emoticons/tongue1.svg 3a949d377fb87c34f65d4bea3b68a2ebb43d0a17
 F www/images/emoticons/tongue2.svg dcef9a82fd762d5655eba39c45c32f3f7cc6e732
 F www/images/emoticons/wink.svg 0391c16877bb131837a1bd2de30ae5b12dc2dedf
+F www/images/favicons/android-chrome-144x144.png c52089920b0e4f7c740199f58fa9162fc71cf4cc
+F www/images/favicons/android-chrome-192x192.png 8947adffc183a46500f6e97baec557e7c4dd9ac7
+F www/images/favicons/android-chrome-36x36.png 9c9bf63298773ffa090f910fe870acce54431c81
+F www/images/favicons/android-chrome-48x48.png a80a59a8e39c6fb8d4706b083c9aebe214853c49
+F www/images/favicons/android-chrome-72x72.png 0d4e73d1b3ddf83e4a62f14f0fb65074bad42f75
+F www/images/favicons/android-chrome-96x96.png 246dd973da09592e06a1833952457e4e3179f12a
+F www/images/favicons/apple-touch-icon-114x114.png be6c0abacb42310ac99e4046eeec4a1dc76a3b55
+F www/images/favicons/apple-touch-icon-120x120.png a99ba2a1201a25d2b2297d5905deaac4e3ed468e
+F www/images/favicons/apple-touch-icon-144x144.png eb6169ec9862b0d0b70d291ef56ae41c1ae469b5
+F www/images/favicons/apple-touch-icon-152x152.png aea040525b1bdd1db02e8248dc93897348b2dff2
+F www/images/favicons/apple-touch-icon-180x180.png 0422ede99dca629c40fdd269815dca9826bec2f4
+F www/images/favicons/apple-touch-icon-57x57.png 3ffeac625779f67df0093a43d2069b1aa9e8031a
+F www/images/favicons/apple-touch-icon-60x60.png 58fdb62fa858ea89e7d174fc1fbf05fad7113999
+F www/images/favicons/apple-touch-icon-72x72.png 2b630f090d9629b6e04f99a0cbf5d1288c0b8005
+F www/images/favicons/apple-touch-icon-76x76.png 8dbb2b4346f3c0fa653d5154084f4a869c34a89a
+F www/images/favicons/apple-touch-icon-precomposed.png b1b9e43238e73d45db06339e98d2c19452d79846
+F www/images/favicons/apple-touch-icon.png 0422ede99dca629c40fdd269815dca9826bec2f4
+F www/images/favicons/browserconfig.xml 5fa164dd05c18c7af70c26cb527a1a9e3450fb8b
+F www/images/favicons/favicon-16x16.png dde4aae4d7f8effbac992702ac39cce247cad770
+F www/images/favicons/favicon-194x194.png 759197b4f552b6b659ce381b3073f40e9b205b5b
+F www/images/favicons/favicon-32x32.png 9f0f46321ef1fe7bf891e218d6ffc101c5dadc64
+F www/images/favicons/favicon-96x96.png 4b6beb9d12e6f6e10a370bf7b3c939d7acc04d20
+F www/images/favicons/favicon.ico f24f15cca73ff8e87072cb07791eed8a7b978cb9
+F www/images/favicons/manifest.json 55216482084662a2dd0a73b069173f534a181ffd
+F www/images/favicons/mstile-144x144.png ed3b024566a85b54ce2aa012f7c783ebbfc42160
+F www/images/favicons/mstile-150x150.png a3322a6dd73c66454b57d135d9c537b8c8eaff17
+F www/images/favicons/mstile-310x150.png d572c5e3ffffff1b9d0664b2f5a5db1c70934ae4
+F www/images/favicons/mstile-310x310.png 10b456c8fe92b8333d5fa07d3a8d37811e4f28e1
+F www/images/favicons/mstile-70x70.png df18a312b6e738c1f4629f9854e868da75410830
+F www/images/favicons/safari-pinned-tab.svg 55034cf24fc5499da7503b859161fe24db03d3d3
 F www/images/onepost.svg 9fc23bd166c79286bafa72fb4e846ba81f808429
 F www/images/onepost_gray.svg e24f6a889dd6389c2a0a045b06e7761616cba763
 F www/images/pass.png 53421227820c5bd598095a41606845d13e23155f
@@ -59,6 +90,8 @@ F www/images/sources/del_gray.svg bf94f2383987b249a4ad1f9ae5f093af95457dc1
 F www/images/sources/edit.svg 24184d8e14ca9ae7c402a54df5e77ddbbf7eb50b
 F www/images/sources/edit_gray.svg da532e60b6119e4c563d3f481120621a5bd299a2
 F www/images/sources/email.svg 947ba489f2a2ed0d64c3569e23ea74ef53d50b8f
+F www/images/sources/favicon.xcf abf79cfec76d4ec3b5f0898ff1a508e9d53e0c92
+F www/images/sources/favicons.zip 224b66646e61719bf4498d561acc7a12c16d247b
 F www/images/sources/posts.svg 9d12c6a91307096c735e1364f56b3b19e38b3ba6
 F www/images/sources/posts_gray.svg e567ee65433f84d3b87c1cdf0508e612ba400d94
 F www/images/sources/quote.svg 5e8c5fbcc26c08fb9ac99dd563acd50c50e1d28a
@@ -81,7 +114,7 @@ F www/templates/form_settings.tpl d4b1208c713287233af5b6f205e5b97d0b5ebec0
 F www/templates/login_form.tpl 15f1639aab52acdbefe6a276cb0e10d36aa52dad
 F www/templates/logout.tpl 08bc7c756494e841962fb3b005686cb382495632
 F www/templates/main_html_end.tpl dbc17594a4b720a493125fd95e4a62fc5659c800
-F www/templates/main_html_start.tpl 5ed6d3fe4b31dccec8293e5634d368f895c9921d
+F www/templates/main_html_start.tpl 3eee39f75c7450faab253831ec3287dd01ab1ad7
 F www/templates/minimag_suffix.tpl e0ee4765a03f31868c42f12693dc9b23b8ca076e
 F www/templates/nav_list.tpl 187846227caf59349a2d9365c0221dad0524efa8
 F www/templates/nav_search.tpl 8184180ece4f8e83bdf9e35672bc055ef1ff3129
@@ -93,11 +126,9 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/register_form.tpl 472535cb1964f0acd6fe5189fcbd2b72b057a3c8
 F www/templates/search_result.tpl 0452301cac82f1ab404ecb1e8fabc1e533897ecd
 F www/templates/sqlite_console_form.tpl e1033e7afad75f72dc18eb257473bfbfd72d13aa
-F www/templates/thread_info.tpl d15dfa02de0da9a13110c9253a7e98ecc5752d2c
+F www/templates/thread_info.tpl 23984edb2eb7a67202ef7c20ea0b51ba0c3acbbe
 F www/templates/userinfo.tpl 4e71cc52b631c69e0286f01af05e2390d3b79b83
-P 107e377f985eb4c44539aeedf95bb3cf442cc199
-R 346e7e39a24407d13a5760c579317fe1
-T +sym-release *
-T +sym-v1.0 *
+P 9393359c56ec1d18b627bea5110c48960b481f43
+R 9f7c9671cc5d1ade02f0fba4fda3fd5e
 U johnfound
-Z ccc562aded31bde5b66b668994d6e6ab
+Z d3ed541573ed23b1a2d9a06423b7fb43

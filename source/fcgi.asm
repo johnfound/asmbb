@@ -364,7 +364,7 @@ begin
         stdcall GetUniqueID
         mov     [.threadID], eax
 
-        stdcall GetTimestampHiRes
+        stdcall GetFineTimestamp
         mov     [.thread_start], eax
 
         stdcall LogEvent, "ThreadStart", logNumber, [.threadID], 0
@@ -432,7 +432,7 @@ begin
 
         stdcall LogEvent, "RequestStart", logNumber, [.threadID], 0
 
-        stdcall GetTimestampHiRes
+        stdcall GetFineTimestamp
         mov     [.start_time], eax
 
         jmp     .pack_loop
@@ -570,7 +570,7 @@ begin
         stdcall FCGI_send_end_request, [.hSocket], [.requestID], FCGI_REQUEST_COMPLETE
         jc      .finish
 
-        stdcall GetTimestampHiRes
+        stdcall GetFineTimestamp
         sub     eax, [.start_time]
 
         stdcall LogEvent, "RequestEnd", logNumber, [.threadID], eax
@@ -585,7 +585,7 @@ begin
 
         stdcall SocketClose, [.hSocket]
 
-        stdcall GetTimestampHiRes
+        stdcall GetFineTimestamp
         sub     eax, [.thread_start]
 
         stdcall LogEvent, "ThreadEnd", logNumber, [.threadID], eax

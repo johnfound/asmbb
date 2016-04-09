@@ -70,11 +70,9 @@ uglobal
 endg
 
 
-rb 273
+rb 73
 
 start:
-        stdcall StrDel, 0
-
         InitializeAll
 
         if ~( defined options.DebugSQLite & options.DebugSQLite )
@@ -84,6 +82,7 @@ start:
           mov   [sqliteFinalize], ecx
         end if
 
+        stdcall SetSegmentationFaultHandler, OnForcedTerminate
 
         stdcall SetForcedTerminateHandler, OnForcedTerminate
 
@@ -152,6 +151,9 @@ start:
 
 proc OnForcedTerminate as procForcedTerminateHandler
 begin
+
+        DebugMsg "OnForcedTerminate"
+
         cmp     [fOwnSocket], 0
         je      start.terminate
 

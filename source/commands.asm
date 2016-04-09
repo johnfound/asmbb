@@ -1142,19 +1142,18 @@ proc GetCookieValue, .pParams, .name
 begin
         pushad
 
+        or      ebx, -1
+
         stdcall ValueByName, [.pParams], "HTTP_COOKIE"
         jc      .finish
 
-        mov     ebx, eax
-
-        stdcall StrSplitList, ebx, ";", FALSE
+        stdcall StrSplitList, eax, ";", FALSE
         mov     esi, eax
-
-        xor     ecx, ecx
+        mov     ecx, [esi+TArray.count]
 
 .loop:
-        cmp     ecx, [esi+TArray.count]
-        jae     .end_loop
+        dec     ecx
+        js      .end_loop
 
         stdcall StrSplitList, [esi+TArray.array+4*ecx], "=", FALSE
         mov     edi, eax
@@ -1165,22 +1164,23 @@ begin
         stdcall StrCompNoCase, [edi+TArray.array], [.name]
         jnc     .next
 
-        stdcall StrDup, [edi+TArray.array+4]
+; found
+        xor     eax, eax
+        xchg    eax, [edi+TArray.array+4]
         mov     [esp+4*regEAX], eax
-
-        mov     ecx, [esi+TArray.count] ; force loop end
+        xor     ecx, ecx                        ; force the loop end, after freeing the list in edi
+        xor     ebx, ebx
 
 .next:
         stdcall ListFree, edi, StrDel
-        inc     ecx
         jmp     .loop
 
 
 .end_loop:
         stdcall ListFree, esi, StrDel
-        clc
 
 .finish:
+        shr     ebx, 1          ; set the CF!
         popad
         return
 endp
@@ -1249,6 +1249,14 @@ begin
         stdcall StrCompNoCase, [.extension], txt ".txt"
         jc      .mime_ok
 
+        mov     eax, mimeXML
+        stdcall StrCompNoCase, [.extension], txt ".xml"
+        jc      .mime_ok
+
+        mov     eax, mimeJson
+        stdcall StrCompNoCase, [.extension], txt ".json"
+        jc      .mime_ok
+
         xor     eax, eax
         stc
         return
@@ -1262,6 +1270,8 @@ endp
 
 mimeIcon  text "image/x-icon"
 mimeHTML  text "text/html; charset=utf-8"
+mimeXML   text "text/xml"
+mimeJson  text "application/json"
 mimeText  text "text/plain; charset=utf-8"
 mimeCSS   text "text/css; charset=utf-8"
 mimePNG   text "image/png"

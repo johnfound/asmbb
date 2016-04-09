@@ -57,7 +57,7 @@ begin
         cmp     byte [esi], 0
         je      .finish_exec
 
-        stdcall GetTimestampHiRes
+        stdcall GetFineTimestamp
         mov     [.start],eax
 
         lea     ecx, [.stmt]
@@ -110,8 +110,7 @@ begin
 .finalize:
         cinvoke sqliteFinalize, [.stmt]
 
-
-        stdcall GetTimestampHiRes
+        stdcall GetFineTimestamp
         sub     eax, [.start]
 
         stdcall NumToStr, eax, ntsDec or ntsUnsigned
