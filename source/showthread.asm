@@ -87,15 +87,10 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall StrDup, txt "/threads/"
-        stdcall StrCat, eax, [.threadSlug]
-        stdcall StrCharCat, eax, "/"
-
-        stdcall CreatePagesLinks, eax, 0, [.start], [.cnt]
+        stdcall CreatePagesLinks2, [.start], [.cnt]
         mov     [.list], eax
 
         stdcall StrCat, edi, [.list]
-
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectPosts, -1, eax, 0

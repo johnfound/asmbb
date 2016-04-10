@@ -286,18 +286,6 @@ begin
         stdcall StrCompNoCase, edi, "referer"
         jc      .get_referer
 
-        stdcall StrCompNoCase, edi, "search"
-        jc      .get_search
-
-        stdcall StrCompNoCase, edi, txt "tag"
-        jc      .get_tag
-
-        stdcall StrCompNoCase, edi, txt "urltag"
-        jc      .get_url_tag
-
-        stdcall StrCompNoCase, edi, "query"
-        jc      .get_query
-
         stdcall StrCompNoCase, edi, "alltags"
         jc      .get_all_tags
 
@@ -500,34 +488,6 @@ endl
 
 ;..................................................................
 
-.get_search:
-        cmp     [esi+TSpecialParams.search], 0
-        je      .empty_query
-
-        stdcall StrDup, [esi+TSpecialParams.search]
-        jmp     .return_value
-
-;..................................................................
-
-
-.get_tag:
-        cmp     [esi+TSpecialParams.tag], 0
-        je      .empty_query
-
-        stdcall StrDup, [esi+TSpecialParams.tag]
-        jmp     .return_value
-
-
-.get_url_tag:
-        cmp     [esi+TSpecialParams.tag], 0
-        je      .empty_query
-
-        stdcall StrDupMem, txt "?tag="
-        stdcall StrCat, eax, [esi+TSpecialParams.tag]
-        jmp     .return_value
-
-
-;..................................................................
 
 .get_setupmode:
         stdcall NumToStr, [esi+TSpecialParams.setupmode], ntsDec or ntsUnsigned
@@ -537,18 +497,6 @@ endl
 
 ;..................................................................
 
-.get_query:
-        cmp     [esi+TSpecialParams.query], 0
-        je      .empty_query
-
-        stdcall StrDup, [esi+TSpecialParams.query]
-        jmp     .return_value
-
-.empty_query:
-        stdcall StrNew
-        jmp     .return_value
-
-;..................................................................
 
 .scale   db 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 32, 33, 35, 37, 38
          db 40, 41, 43, 44, 46, 47, 48, 50, 51, 52, 53, 55, 56, 57, 58, 59, 60, 62, 63, 64
@@ -613,11 +561,11 @@ endl
 
         stdcall StrCat, ebx, '<a class="taglink'
 
-        cmp     [esi+TSpecialParams.tag], 0
+        cmp     [esi+TSpecialParams.dir], 0
         je      .current_ok
 
         cinvoke sqliteColumnText, [.stmt], 0
-        stdcall StrCompNoCase, eax, [esi+TSpecialParams.tag]
+        stdcall StrCompNoCase, eax, [esi+TSpecialParams.dir]
         jnc     .current_ok
 
         stdcall StrCat, ebx, ' current_tag'
@@ -802,13 +750,9 @@ sqlGetThreadPosters  text "select distinct U.id, U.nick from Posts P left join U
 
 ; starter:
         stdcall StrCat, ebx, 'started by: <b><a href="/userinfo/'
-        cinvoke sqliteColumnText, [.stmt], 0
-        stdcall StrCat, ebx, eax
-        stdcall StrCatQuery, ebx, [esi+TSpecialParams.query]
-
-        stdcall StrCharCat, ebx, '">'
-
         cinvoke sqliteColumnText, [.stmt], 1
+        stdcall StrCat, ebx, eax
+        stdcall StrCharCat, ebx, '">'
         stdcall StrCat, ebx, eax
         stdcall StrCat, ebx, '</a></b>'
 
@@ -827,13 +771,9 @@ sqlGetThreadPosters  text "select distinct U.id, U.nick from Posts P left join U
 .add_contributor:
 
         stdcall StrCat, ebx, '<a href="/userinfo/'
-        cinvoke sqliteColumnText, [.stmt], 0
-        stdcall StrCat, ebx, eax
-        stdcall StrCatQuery, ebx, [esi+TSpecialParams.query]
-
-        stdcall StrCharCat, ebx, '">'
-
         cinvoke sqliteColumnText, [.stmt], 1
+        stdcall StrCat, ebx, eax
+        stdcall StrCharCat, ebx, '">'
         stdcall StrCat, ebx, eax
         stdcall StrCharCat, ebx, '</a>'
 
@@ -1395,7 +1335,7 @@ endp
 
 
 
-proc StrMakeRedirect2, .hString, .hWhere, .hQuery
+proc StrMakeRedirect, .hString, .hWhere
 begin
         push    eax
 
@@ -1417,17 +1357,6 @@ begin
 @@:
         stdcall StrCat, [.hString], "Location: "
         stdcall StrCat, [.hString], [.hWhere]
-        cmp     [.hQuery], 0
-        je      .query_ok
-
-        stdcall StrLen, [.hQuery]
-        test    eax, eax
-        jz      .query_ok
-
-        stdcall StrCharCat, [.hString], "?"
-        stdcall StrCat, [.hString], [.hQuery]
-
-.query_ok:
         stdcall StrCharCat, [.hString], $0a0d0a0d
 
         pop     eax
@@ -1496,26 +1425,3 @@ begin
         return
 endp
 
-
-
-
-
-
-proc StrCatQuery, .hString, .hQuery
-begin
-        push    eax
-
-        cmp     [.hQuery], 0
-        je      .finish
-
-        stdcall StrLen, [.hQuery]
-        test    eax, eax
-        jz      .finish
-
-        stdcall StrCharCat, [.hString], "?"
-        stdcall StrCat, [.hString], [.hQuery]
-
-.finish:
-        pop     eax
-        return
-endp

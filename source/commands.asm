@@ -17,9 +17,10 @@ struct TSpecialParams
   .start_time      dd ?
   .params          dd ?
   .post            dd ?
-  .query           dd ?
-  .search          dd ?
-  .tag             dd ?
+;  .query           dd ?
+;  .search          dd ?
+;  .tag             dd ?
+  .dir             dd ?
   .userID          dd ?
   .userName        dd ?
   .userStatus      dd ?
@@ -126,44 +127,6 @@ begin
 
         stdcall ListFree, ebx, StrDel
 
-
-; QUERY_STRING analizing
-
-        stdcall ValueByName, [.special.params], "QUERY_STRING"
-        jc      .query_ok
-
-        stdcall StrDup, eax
-        mov     [.special.query], eax
-
-        stdcall GetQueryItem, [.special.query], txt "s=", 0
-        mov     [.special.search], eax
-        test    eax, eax
-        jz      .search_ok
-
-        stdcall StrLen, eax
-        test    eax, eax
-        jnz     .search_ok
-
-        xchg    eax, [.special.search]
-        stdcall StrDel, eax
-
-.search_ok:
-
-        stdcall GetQueryItem, [.special.query], txt "tag=", 0
-        mov     [.special.tag], eax
-        test    eax, eax
-        jz      .tag_ok
-
-        stdcall StrLen, eax
-        test    eax, eax
-        jnz     .tag_ok
-
-        xchg    eax, [.special.tag]
-        stdcall StrDel, eax
-
-.tag_ok:
-
-.query_ok:
 
 ; first check for supported file format.
 
@@ -307,9 +270,7 @@ begin
         stdcall StrDel, [.special.post]
         stdcall StrDel, [.special.userName]
         stdcall StrDel, [.special.session]
-        stdcall StrDel, [.special.search]
-        stdcall StrDel, [.special.tag]
-        stdcall StrDel, [.special.query]
+        stdcall StrDel, [.special.dir]
         stdcall StrDel, [.special.page_title]
 
         popad
@@ -339,6 +300,12 @@ begin
 
         cmp     [.special.setupmode], 0
         jne     .settings
+
+
+;        stdcall InTags. [esi+
+
+
+
 
         stdcall StrCompNoCase, [esi+TArray.array], txt "list"
         jc      .show_thread_list
@@ -407,7 +374,7 @@ begin
 
 .redirect_to_the_list:
 
-        stdcall StrMakeRedirect2, edi, "/list", 0
+        stdcall StrMakeRedirect, edi, "/list"
 
         jmp     .send_simple_result
 
@@ -469,7 +436,7 @@ begin
 .show_search:
 
         lea     eax, [.special]
-        stdcall ShowSearchResults, ebx, eax
+        stdcall ShowSearchResults2, 0, ebx, eax
         jc      .send_simple_replace
 
         jmp     .output_forum_html
@@ -549,7 +516,7 @@ begin
         stdcall StrToNumEx, [esi+TArray.array+4]
         mov     ebx, eax
 
-        stdcall StrCatRedirectToPost, edi, ebx, [.special.tag]
+        stdcall StrCatRedirectToPost, edi, ebx, [.special.dir]
 
         jmp     .send_simple_result
 
@@ -820,7 +787,7 @@ begin
         stdcall StrCatTemplate, eax, "logout", 0, [.pSpecial]           ; goto back to the page from where came.
         push    eax
 
-        stdcall StrMakeRedirect2, 0, eax, 0
+        stdcall StrMakeRedirect, 0, eax
         stdcall StrDel ; from the stack
 
         mov     [esp+4*regEAX], eax
@@ -833,7 +800,7 @@ endp
 
 
 
-proc CreatePagesLinks, .prefix, .suffix, .current, .count
+proc CreatePagesLinks2, .current, .count
 begin
         pushad
 
@@ -926,19 +893,8 @@ begin
 
 .current_ok:
         stdcall StrCat, edi, '<a class="page_link" href="'
-        stdcall StrCat, edi, [.prefix]
-
         stdcall StrCat, edi, eax
-
-        cmp     [.suffix], 0
-        je      .suf_ok
-
-        stdcall StrCharCat, edi, "?"
-        stdcall StrCat, edi, [.suffix]
-
-.suf_ok:
-        stdcall StrCharCat, edi, '">'
-
+        stdcall StrCat, edi, txt '">'
 .link_ok:
         stdcall StrCat, edi, eax
         stdcall StrDel, eax
@@ -950,7 +906,7 @@ begin
         jmp     .next
 
 .current_ok2:
-        stdcall StrCat, edi, "</a> "
+        stdcall StrCat, edi, txt "</a> "
 
 .next:
         inc     ecx
@@ -1510,7 +1466,7 @@ sqlGetThePostIndex text "select count(*) from Posts p where threadID = ?1 and ( 
 
 sqlGetThreadID text "select P.ThreadID, T.Slug from Posts P left join Threads T on P.threadID = T.id where P.id = ?"
 
-proc StrCatRedirectToPost, .hString, .postID, .tag
+proc StrCatRedirectToPost, .hString, .postID, .dir
 .stmt dd ?
 
 .page dd ?
@@ -1567,7 +1523,14 @@ begin
 
 ; now compose the redirection string
 
-        stdcall StrCat, [.hString], "threads/"
+        cmp     [.dir], 0
+        je      .dir_ok
+
+        stdcall StrCat, edi, [.dir]
+        stdcall StrCharCat, edi, "/"
+
+.dir_ok:
+
         stdcall StrCat, [.hString], [.slug]
 
         cmp     [.page], 0
@@ -1579,13 +1542,6 @@ begin
         stdcall StrDel, eax
 
 .page_ok:
-        cmp     [.tag], 0
-        je      .tag_ok
-
-        stdcall StrCat, [.hString], txt "?tag="
-        stdcall StrCat, [.hString], [.tag]
-
-.tag_ok:
         stdcall StrCharCat, [.hString], "#"
 
         stdcall NumToStr, [.postID], ntsDec or ntsUnsigned
@@ -1634,7 +1590,7 @@ begin
         push    eax
         stdcall StrCatTemplate, eax, "logout", 0, esi
 
-        stdcall StrMakeRedirect2, 0, eax, [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, 0, eax
         stdcall StrDel ; from the stack.
 
         mov     [esp+4*regEAX], eax

@@ -22,7 +22,7 @@ sqlSearch text "select ",                                                       
                "where PostFTS match ? order by rank limit ? offset ?"
 
 
-proc ShowSearchResults, .start, .pSpecial
+proc ShowSearchResults2, .query, .start, .pSpecial
 .pages      dd ?
 
 .stmt       dd ?
@@ -32,16 +32,16 @@ begin
 
         mov     esi, [.pSpecial]
 
-        cmp     [esi+TSpecialParams.search], 0
+        cmp     [.query], 0
         je      .missing_query
 
         stdcall StrCat, [esi+TSpecialParams.page_title], "Search results for: "
-        stdcall StrCat, [esi+TSpecialParams.page_title], [esi+TSpecialParams.search]
+        stdcall StrCat, [esi+TSpecialParams.page_title], [.query]
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSearchCnt, sqlSearchCnt.length, eax, 0
 
-        stdcall StrPtr, [esi+TSpecialParams.search]
+        stdcall StrPtr, [.query]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
@@ -55,7 +55,7 @@ begin
         test    edi, edi
         jz      .pages_ok
 
-        stdcall CreatePagesLinks, "/search/", [esi+TSpecialParams.query], [.start], edi
+        stdcall CreatePagesLinks2, [.start], edi
         mov     [.pages], eax
 
 .pages_ok:
@@ -74,7 +74,7 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSearch, sqlSearch.length, eax, 0
 
-        stdcall StrPtr, [esi+TSpecialParams.search]
+        stdcall StrPtr, [.query]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteBindInt, [.stmt], 2, PAGE_LENGTH
@@ -114,7 +114,7 @@ begin
 
 .missing_query:
 
-        stdcall StrMakeRedirect2, 0, "/message/missing_query/", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, 0, "/message/missing_query/"
         mov     edi, eax
         stc
         jmp     .finish

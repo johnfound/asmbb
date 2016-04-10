@@ -40,24 +40,25 @@ begin
 ; make the title
 
         mov     ebx, [esi+TSpecialParams.page_title]
-        stdcall StrCat, ebx, "Threads list"
+        stdcall StrCat, ebx, "Threads list "
+
+        cmp     [esi+TSpecialParams.dir], 0
+        je      .no_tag
+
+        stdcall StrCat, ebx, [esi+TSpecialParams.dir]
+
+.no_tag:
+        stdcall StrCharCat, ebx, "/"
 
         cmp     [.start], 0
         je      .page_ok
 
-        stdcall StrCat, ebx, ", page: "
+        stdcall StrCat, ebx, " page: "
         stdcall NumToStr, [.start], ntsDec or ntsUnsigned
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax
 
 .page_ok:
-        cmp     [esi+TSpecialParams.tag], 0
-        je      .no_tag
-
-        stdcall StrCat, ebx, ", tag: "
-        stdcall StrCat, ebx, [esi+TSpecialParams.tag]
-
-.no_tag:
         mov     [esi+TSpecialParams.page_title], ebx
 
 
@@ -72,10 +73,10 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlThreadsCount, -1, eax, 0
 
-        cmp     [esi+TSpecialParams.tag], 0
+        cmp     [esi+TSpecialParams.dir], 0
         je      .tag_ok
 
-        stdcall StrPtr, [esi+TSpecialParams.tag]
+        stdcall StrPtr, [esi+TSpecialParams.dir]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
 .tag_ok:
@@ -84,7 +85,7 @@ begin
         mov     ebx, eax
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall CreatePagesLinks, txt "/list/", 0, [.start], ebx
+        stdcall CreatePagesLinks2, [.start], ebx
         mov     [.list], eax
 
         stdcall StrCat, edi, eax
@@ -104,12 +105,11 @@ begin
 
         xor     ebx, ebx
 
-        cmp     [esi+TSpecialParams.tag], 0
+        cmp     [esi+TSpecialParams.dir], 0
         je      .loop
 
-        stdcall StrPtr, [esi+TSpecialParams.tag]
+        stdcall StrPtr, [esi+TSpecialParams.dir]
         cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
-
 
 .loop:
         cinvoke sqliteStep, [.stmt]

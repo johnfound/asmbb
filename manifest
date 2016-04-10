@@ -1,5 +1,5 @@
-C Titles\sfor\sthe\sdifferent\spages\sof\sthe\sforum.
-D 2016-04-10T05:40:39.221
+C A\snew\sbranch\saimed\sto\simplement\smore\ssimple\sURLs\swithout\susing\sGET\squery\sparameters.
+D 2016-04-10T08:44:41.411
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess f6b1e20e6db9a39a03722ead7f34d71bac90e0cd
 F install/asmbb.tar.gz e45d7c3b4a3f7ea54b3709caa62513e9a173e290
@@ -8,11 +8,11 @@ F install/install.txt 7d3f4f32b07d36ba1256bccb17b3b96c6fa1d004
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
 F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
-F source/accounts.asm e70a9359974494f4190917ed969c6e43b7c2cbd6
-F source/commands.asm 69123b82ef98e87d26bf94286ef9bd6f9b1296bb
+F source/accounts.asm c398bd16eec7622a14c454f3ec86977234aa6164
+F source/commands.asm 12b68cf7da7b1d0c2a7e26f03349a20e011e7142
 F source/create.sql 054ff4ee807f0dc7eb2240339e971fd2c89cf62f
-F source/delete.asm 0f4a0eed6b19b0bf28eed04f6c8d2c40eec11105
-F source/edit.asm 4ff35c15e712e6fa734641d5a0b5517def464c32
+F source/delete.asm aa52dc5f38ac841e4336e44728aef49a2662ff9c
+F source/edit.asm f9ce26eefe05c3ab3cf0712f952aaf09877a1914
 F source/engine.asm 64e46fc419584a78464eaf4f52945510fa692d3f
 F source/engine.fpr d8f2a0a5176b632238e86da4a0bb58d2c6555676
 F source/exponential_scaling.ods b66ca0aa6f1f4dc69986c751341877b423db11e5
@@ -21,16 +21,16 @@ F source/fcgi.asm c6d971629d563377995258d74b665b147fc86809
 F source/http.asm 31145fc891514c6675393a1db68ac4c7b917744d
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 9813e1beaeeefc73eaee5c6eb20baa1aa6187abc
-F source/post.asm 9134fa90c6ee59e5092cf5a91dfeaa6a65efae69
-F source/render.asm a8943eef116de184c6091592977672212312034e
-F source/search.asm 57fcb94c0b26e438630e49eb0d4779242b84f91c
-F source/settings.asm d22902e1587a107182f9286238331a982e7fb5db
-F source/showthread.asm 118fccd1170d4c7a85afa110f98e007fc54c2cb6
+F source/post.asm e698f5dd6bdd326e4f0030d744624e2b59383b05
+F source/render.asm 53cadc1233f4c2b18a36900e8b1828e6aa0eaced
+F source/search.asm 63dffd7e081ac6acd27be2d895ee17762b835b51
+F source/settings.asm 38d2489752bf93572b55bbe6b24d1b088ce2193a
+F source/showthread.asm 86ac09af37eeb22e5c8d2fa4f66431560b1de681
 F source/sqlite3.asm f605d645a6cd5a75fbfc52a86ce38c0b5ab0430a
 F source/sqlite_console.asm e5c53474ff445010ba8a4e71115763ad992db182
-F source/threadlist.asm e533cd0e7e1f5bc1247f8e828c3d8e7716d15f28
+F source/threadlist.asm c703732f838a8ab41aae7103616de9dc1a88e0d9
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
-F source/userinfo.asm 735ee96423d70af7cd4454caaab424a5178d74ce
+F source/userinfo.asm a6e4b13b942a886879fb98e8d9c6f6ad3e1eb8f0
 F www/.htaccess fc8c641fc61f2a38821bdb99fb9556ddf98929a7
 F www/all.css a17f0a80b14e95f8a5e9744a690328e211205eb5
 F www/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
@@ -128,7 +128,10 @@ F www/templates/search_result.tpl 0452301cac82f1ab404ecb1e8fabc1e533897ecd
 F www/templates/sqlite_console_form.tpl e1033e7afad75f72dc18eb257473bfbfd72d13aa
 F www/templates/thread_info.tpl 23984edb2eb7a67202ef7c20ea0b51ba0c3acbbe
 F www/templates/userinfo.tpl 4e71cc52b631c69e0286f01af05e2390d3b79b83
-P 6e8090ed5977049e1a076878cdc944ba09c7ce6f
-R d032e73aa3649042507f966b9d01096e
+P 45095a6cc17ba5ce1877a9fe4224a00b6668a64a
+R 96c9a58d6d170f038a669f40ddabc431
+T *branch * SimpleURL
+T *sym-SimpleURL *
+T -sym-trunk *
 U johnfound
-Z de7622561155b1e658a2315c5c99ad9a
+Z 1108e942d7f87ce4254e4e538ddbcffa

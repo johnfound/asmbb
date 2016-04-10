@@ -220,7 +220,7 @@ begin
         jne     .error_write
 
 .end_save:
-        stdcall StrCatRedirectToPost, edi, [.postID], [esi+TSpecialParams.tag]
+        stdcall StrCatRedirectToPost2, edi, [.postID], [esi+TSpecialParams.dir]
 
 .finish_clear:
 
@@ -240,13 +240,13 @@ begin
         stdcall StrNew
         mov     edi, eax
 
-        stdcall StrMakeRedirect2, edi, "/message/error_bad_ticket/", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, edi, "/message/error_bad_ticket/"
         jmp     .finish_clear
 
 
 .error_wrong_permissions:
 
-        stdcall StrMakeRedirect2, edi, "/message/error_cant_post/", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, edi, "/message/error_cant_post/"
         jmp     .finish_clear
 
 
@@ -258,7 +258,7 @@ begin
         stdcall StrNew
         mov     edi, eax
 
-        stdcall StrMakeRedirect2, edi, "/message/error_post_not_exists/", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, edi, "/message/error_post_not_exists/"
         jmp     .finish
 
 
@@ -268,7 +268,7 @@ begin
 
         cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
 
-        stdcall StrMakeRedirect2, edi, "/message/error_cant_write/", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, edi, "/message/error_cant_write/"
         jmp     .finish_clear
 
 endp

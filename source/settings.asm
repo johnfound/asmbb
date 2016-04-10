@@ -29,14 +29,17 @@ begin
 
         stdcall StrCat, [esi+TSpecialParams.page_title], "Forum settings page"
 
-        stdcall GetQueryItem, [esi+TSpecialParams.query], txt "err=", 0
+        stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
+        mov     ebx, eax
+
+        stdcall GetQueryItem, ebx, txt "err=", 0
         test    eax, eax
         jz      .error_ok
 
         inc     [.error]
 
 .error_ok:
-        stdcall GetQueryItem, [esi+TSpecialParams.query], txt "msg=", 0
+        stdcall GetQueryItem, ebx, txt "msg=", 0
         test    eax, eax
         jz      .show_settings_form
 
@@ -382,17 +385,18 @@ begin
 .end_save:
         mov     ebx, eax
 
-        stdcall StrCat, [esi+TSpecialParams.query], "&msg="
-        stdcall StrCat, [esi+TSpecialParams.query], ebx
+        stdcall StrDupMem, "/settings?msg="
+        push    eax
+
+        stdcall StrCat, eax, ebx
         stdcall StrDel, ebx
 
         cmp     [.error], 0
         je      .errok
-
-        stdcall StrCat, [esi+TSpecialParams.query], "&err=1"
-
+        stdcall StrCat, eax, "&err=1"
 .errok:
-        stdcall StrMakeRedirect2, 0, "/settings", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, 0, eax
+        stdcall StrDel ; from the stack
 
         mov     [esp+4*regEAX], eax
         stc
@@ -542,7 +546,7 @@ begin
         jne     .error_no_data
 
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect2, 0, "/login", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, 0, "/login"
 
 .finish:
         mov     [esp+4*regEAX], eax
@@ -564,7 +568,7 @@ begin
         cinvoke sqliteFinalize, [.stmt]
 
 .error_no_post:
-        stdcall StrMakeRedirect2, 0, "/settings", 0
+        stdcall StrMakeRedirect, 0, "/settings"
         jmp     .finish
 
 endp

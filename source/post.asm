@@ -91,11 +91,11 @@ begin
         test    eax, eax
         jz      .tags_ok
 
-        cmp     [esi+TSpecialParams.tag], 0
+        cmp     [esi+TSpecialParams.dir], 0
         je      .tags_ok
 
         stdcall StrCharCat, [.tags], ', '
-        stdcall StrCat, [.tags], [esi+TSpecialParams.tag]
+        stdcall StrCat, [.tags], [esi+TSpecialParams.dir]
 
 .tags_ok:
         jmp     .thread_ok
@@ -514,7 +514,7 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
         cinvoke sqliteFinalize, [.stmt]
 
         mov     eax, [.pSpecial]
-        stdcall StrCatRedirectToPost, edi, esi, [eax+TSpecialParams.tag]
+        stdcall StrCatRedirectToPost2, edi, esi, [esi+TSpecialParams.dir]
 
 .finish_clear:
         mov     eax, [.pSpecial]
@@ -540,7 +540,7 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
         call    .do_rollback
 
         mov     eax, [.pSpecial]
-        stdcall StrMakeRedirect2, edi, "/message/error_cant_write/", [eax+TSpecialParams.query]
+        stdcall StrMakeRedirect, edi, "/message/error_cant_write/"
         jmp     .finish_clear
 
 
@@ -549,7 +549,7 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
         call    .do_rollback
 
         mov     eax, [.pSpecial]
-        stdcall StrMakeRedirect2, edi, "/message/error_invalid_caption/", [eax+TSpecialParams.query]
+        stdcall StrMakeRedirect, edi, "/message/error_invalid_caption/"
         jmp     .finish_clear
 
 
@@ -560,7 +560,7 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
         call    .do_rollback
 
         mov     eax, [.pSpecial]
-        stdcall StrMakeRedirect2, edi, "/message/error_invalid_content", [eax+TSpecialParams.query]
+        stdcall StrMakeRedirect, edi, "/message/error_invalid_content"
         jmp     .finish_clear
 
 
@@ -574,7 +574,7 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
 .error_wrong_permissions:
 
         mov     eax, [.pSpecial]
-        stdcall StrMakeRedirect2, edi, "/message/error_cant_post", [eax+TSpecialParams.query]
+        stdcall StrMakeRedirect, edi, "/message/error_cant_post"
         jmp     .finish_clear
 
 
@@ -582,7 +582,7 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
 .error_thread_not_exists:
 
         mov     eax, [.pSpecial]
-        stdcall StrMakeRedirect2, edi, "/message/error_thread_not_exists", [eax+TSpecialParams.query]
+        stdcall StrMakeRedirect, edi, "/message/error_thread_not_exists"
         jmp     .finish_clear
 
 
@@ -590,7 +590,7 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
         stdcall StrDel, edi
 
         mov     eax, [.pSpecial]
-        stdcall StrMakeRedirect2, 0, "/message/error_bad_ticket", [eax+TSpecialParams.query]
+        stdcall StrMakeRedirect, 0, "/message/error_bad_ticket"
         mov     edi, eax
         jmp     .finish_clear
 

@@ -147,7 +147,7 @@ endl
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax
 
-        stdcall StrMakeRedirect2, edi, ebx, [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, edi, ebx
         stdcall StrDel, ebx
 
         stdcall StrDel, [.avatar]
