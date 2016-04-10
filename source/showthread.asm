@@ -27,7 +27,7 @@ sqlGetThreadInfo text "select id, caption, slug from Threads where slug = ? limi
 
 
 
-proc ShowThread, .threadSlug, .start, .pSpecial
+proc ShowThread, .pSpecial
 
 .stmt  dd ?
 .stmt2 dd ?
@@ -48,7 +48,7 @@ begin
         lea     eax, [.stmt2]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, -1, eax, 0
 
-        stdcall StrPtr, [.threadSlug]
+        stdcall StrPtr, [esi+TSpecialParams.thread]
         cinvoke sqliteBindText, [.stmt2], 1, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt2]
@@ -87,7 +87,7 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall CreatePagesLinks2, [.start], [.cnt]
+        stdcall CreatePagesLinks2, [esi+TSpecialParams.page_num], [.cnt]
         mov     [.list], eax
 
         stdcall StrCat, edi, [.list]
@@ -98,11 +98,11 @@ begin
         cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
         cinvoke sqliteBindInt, [.stmt], 2, PAGE_LENGTH
 
-        mov     eax, [.start]
+        mov     eax, [esi+TSpecialParams.page_num]
         imul    eax, PAGE_LENGTH
         cinvoke sqliteBindInt, [.stmt], 3, eax
 
-        stdcall StrPtr, [.threadSlug]
+        stdcall StrPtr, [esi+TSpecialParams.thread]
         cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteBindInt, [.stmt], 5, [esi+TSpecialParams.userID]

@@ -605,13 +605,13 @@ endl
 
 .plural_ok:
 
-        stdcall StrCat, ebx, '." href="/list/?tag='
+        stdcall StrCat, ebx, '." href="/'
 
         cinvoke sqliteColumnText, [.stmt], 0
         stdcall StrEncodeHTML, eax
 
         stdcall StrCat, ebx, eax
-        stdcall StrCat, ebx, txt '">'
+        stdcall StrCat, ebx, txt '/">'
         stdcall StrCat, ebx, eax
         stdcall StrCat, ebx, txt '</a>'
         stdcall StrDel, eax
@@ -683,13 +683,13 @@ endl
 
 .link_title_ok:
 
-        stdcall StrCat, ebx, 'href="/list/?tag='
+        stdcall StrCat, ebx, 'href="/'
 
         cinvoke sqliteColumnText, [.stmt], 0
         stdcall StrEncodeHTML, eax
 
         stdcall StrCat, ebx, eax
-        stdcall StrCat, ebx, txt '">'
+        stdcall StrCat, ebx, txt '/">'
         stdcall StrCat, ebx, eax
         stdcall StrCat, ebx, txt '</a>'
         stdcall StrDel, eax

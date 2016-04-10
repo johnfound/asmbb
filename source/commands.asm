@@ -21,9 +21,13 @@ struct TSpecialParams
 ;  .search          dd ?
 ;  .tag             dd ?
   .dir             dd ?
+  .thread          dd ?
+  .page_num        dd ?
+
   .userID          dd ?
   .userName        dd ?
   .userStatus      dd ?
+  .userLang        dd ?
   .session         dd ?
   .setupmode       dd ?
   .page_title      dd ?
@@ -271,6 +275,7 @@ begin
         stdcall StrDel, [.special.userName]
         stdcall StrDel, [.special.session]
         stdcall StrDel, [.special.dir]
+        stdcall StrDel, [.special.thread]
         stdcall StrDel, [.special.page_title]
 
         popad
@@ -286,14 +291,13 @@ begin
 
 .analize_uri:
 
+;        DebugMsg "Analyze URL"
+
         stdcall StrSplitList, [.uri], '/', FALSE        ; split the URI in order to analize it better.
         mov     esi, eax
 
         lea     eax, [.special]
         stdcall GetLoggedUser, eax
-
-        cmp     [esi+TArray.count], 0
-        je      .redirect_to_the_list
 
         stdcall StrCompNoCase, [esi+TArray.array], txt "adminrulez"
         jc      .set_admin_account
@@ -302,73 +306,120 @@ begin
         jne     .settings
 
 
-;        stdcall InTags. [esi+
 
 
+        call    .pop_array_item
+        jz      .show_thread_list
+
+; .is_it_tag:
+
+;        DebugMsg "Is it a tag?"
+
+        stdcall InTags, eax
+        jnc     .is_it_thread
+
+;        DebugMsg "Tag detected"
+
+        mov     [.special.dir], eax
+        call    .pop_array_item
+        jz      .show_thread_list
 
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "list"
-        jc      .show_thread_list
+.is_it_thread:
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "threads"
-        jc      .show_one_thread
+;        DebugMsg "Is it a thread?"
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "by_id"
+        stdcall InThreads, eax
+        jnc     .is_it_number
+
+;        DebugMsg "Thread detected"
+
+        mov     [.special.thread], eax
+        call    .pop_array_item
+        jz      .show_one_thread
+
+.is_it_number:
+
+;        DebugMsg "Is it a number?"
+
+        stdcall InNumbers, eax
+        jnc     .is_it_command
+
+;        DebugMsg "Number detected"
+
+        mov     [.special.page_num], edx
+        stdcall StrDel, eax
+
+        call    .pop_array_item
+        jnz     .is_it_command
+
+        cmp     [.special.thread], eax  ; eax==0 here
+        je      .show_thread_list
+        jmp     .show_one_thread
+
+
+.is_it_command:
+
+;        DebugMsg "Is it a command?"
+
+        stdcall StrCompNoCase, eax, txt "by_id"
         jc      .show_post_in_thread
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "markread"
+        stdcall StrCompNoCase, eax, txt "markread"
         jc      .mark_read_theme
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "message"
+        stdcall StrCompNoCase, eax, txt "message"
         jc      .show_message
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "login"
+        stdcall StrCompNoCase, eax, txt "login"
         jc      .user_login
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "logout"
+        stdcall StrCompNoCase, eax, txt "logout"
         jc      .user_logout
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "register"
+        stdcall StrCompNoCase, eax, txt "register"
         jc      .user_register
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "activate"
+        stdcall StrCompNoCase, eax, txt "activate"
         jc      .activate_account
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "changepassword"
+        stdcall StrCompNoCase, eax, txt "changepassword"
         jc      .change_password
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "changemail"
+        stdcall StrCompNoCase, eax, txt "changemail"
         jc      .change_email
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "post"
+        stdcall StrCompNoCase, eax, txt "post"
         jc      .post_message
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "edit"
+        stdcall StrCompNoCase, eax, txt "edit"
         jc      .edit_message
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "confirm"
+        stdcall StrCompNoCase, eax, txt "confirm"
         jc      .delete_confirm
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "del"
+        stdcall StrCompNoCase, eax, txt "del"
         jc      .delete_post
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "sqlite"         ; sqlite console. only for admins.
+        stdcall StrCompNoCase, eax, txt "sqlite"         ; sqlite console. only for admins.
         jc      .sqlite
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "pinit"
+        stdcall StrCompNoCase, eax, txt "pinit"
         jc      .pinthread
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "search"
+        stdcall StrCompNoCase, eax, txt "search"
         jc      .search
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "userinfo"
+        stdcall StrCompNoCase, eax, txt "userinfo"
         jc      .user_info
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "settings"
+        stdcall StrCompNoCase, eax, txt "settings"
         jc      .settings
 
 
-.end_forum_request:
+;        DebugMsg "Command not detected."
+
+
         jmp     .error404
 
 
@@ -448,17 +499,8 @@ begin
 
 .show_thread_list:
 
-        xor     ebx, ebx        ; the start page.
-
-        cmp     [esi+TArray.count], 1
-        je      .list_params_ready
-
-        stdcall StrToNumEx, [esi+TArray.array+4]
-        mov     ebx, eax
-
-.list_params_ready:
         lea     eax, [.special]      ; the special parameters data pointer.
-        stdcall ListThreads, ebx, eax
+        stdcall ListThreads, eax
 
         jmp     .output_forum_html
 
@@ -486,21 +528,8 @@ begin
 
 .show_one_thread:
 
-        xor     ebx, ebx
-
-        cmp     [esi+TArray.count], 3
-        jb      .show_thread
-
-        stdcall StrToNumEx, [esi+TArray.array+8]
-        jc      .error404
-        mov     ebx, eax
-
-.show_thread:
-        cmp     [esi+TArray.count], 2
-        jb      .error404
-
         lea     eax, [.special]
-        stdcall ShowThread, [esi+TArray.array+4], ebx, eax
+        stdcall ShowThread, eax
         jnc     .output_forum_html
 
         jmp     .error404
@@ -740,6 +769,27 @@ cUnknownError text "unknown_error"
         jnc     .output_forum_html
 
         jmp     .send_simple_replace
+
+
+
+
+;..................................................................................
+
+
+.pop_array_item:
+
+        xor     eax, eax
+        cmp     [esi+TArray.count], eax
+        je      .end_pop
+
+        mov     eax, [esi+TArray.array]
+        stdcall DeleteArrayItems, esi, 0, 1
+        mov     esi, edx
+        cmp     eax, edx        ; always not equal!
+
+.end_pop:
+        retn
+
 
 endp
 
@@ -1980,4 +2030,91 @@ begin
         xor     ebx, ebx
 
         jmp     .finish_ret
+endp
+
+
+
+
+sqlInTags text "select 1 from Tags where Tag = ?"
+
+proc InTags, .hTag
+.stmt dd ?
+begin
+        pushad
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInTags, sqlInTags.length, eax, 0
+
+        stdcall StrLen, [.hTag]
+        mov     ecx, eax
+
+        stdcall StrPtr, [.hTag]
+        cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     ebx, SQLITE_ROW
+        jne     .not_tag
+
+        stc
+        popad
+        return
+
+
+.not_tag:
+        clc
+        popad
+        return
+endp
+
+
+
+sqlInThreads text "select 1 from Threads where Slug = ?"
+
+proc InThreads, .hSlug
+.stmt dd ?
+begin
+        pushad
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInThreads, sqlInThreads.length, eax, 0
+
+        stdcall StrLen, [.hSlug]
+        mov     ecx, eax
+
+        stdcall StrPtr, [.hSlug]
+        cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     ebx, SQLITE_ROW
+        jne     .not_thread
+
+        stc
+        popad
+        return
+
+
+.not_thread:
+        clc
+        popad
+        return
+endp
+
+
+proc InNumbers, .hString
+begin
+        pushad
+
+        stdcall StrToNumEx, [.hString]
+        jc      .finish
+
+        mov     [esp+4*regEDX], eax
+
+.finish:
+        cmc
+        popad
+        return
 endp

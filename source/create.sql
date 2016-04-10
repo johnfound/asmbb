@@ -2,6 +2,14 @@ BEGIN TRANSACTION;
 
 /* Data tables */
 
+
+create table Languages (
+  lang int primary key
+);
+
+
+
+
 create table Params (
   id  text primary key,
   val text

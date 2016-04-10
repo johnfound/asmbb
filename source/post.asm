@@ -3,8 +3,8 @@ LIMIT_POST_CAPTION = 512
 LIMIT_TAG_DESCRIPTION = 1024
 
 
-cNewPostForm   text "new_post_form"
-cNewThreadForm text "new_thread_form"
+cNewPostForm   text "form_new_post"
+cNewThreadForm text "form_new_thread"
 
 sqlSelectConst text "select ? as slug, ? as caption, ? as source, ? as ticket, ? as tags"
 
@@ -514,7 +514,7 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
         cinvoke sqliteFinalize, [.stmt]
 
         mov     eax, [.pSpecial]
-        stdcall StrCatRedirectToPost2, edi, esi, [esi+TSpecialParams.dir]
+        stdcall StrCatRedirectToPost, edi, esi, [esi+TSpecialParams.dir]
 
 .finish_clear:
         mov     eax, [.pSpecial]

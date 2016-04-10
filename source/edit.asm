@@ -131,7 +131,7 @@ begin
 
         stdcall StrCatTemplate, edi, "main_html_start", 0, esi
 
-        stdcall StrCatTemplate, edi, "edit_form", [.stmt], esi
+        stdcall StrCatTemplate, edi, "form_edit", [.stmt], esi
 
         cmp     [.fPreview], 0
         je      .preview_ok
@@ -220,7 +220,7 @@ begin
         jne     .error_write
 
 .end_save:
-        stdcall StrCatRedirectToPost2, edi, [.postID], [esi+TSpecialParams.dir]
+        stdcall StrCatRedirectToPost, edi, [.postID], [esi+TSpecialParams.dir]
 
 .finish_clear:
 

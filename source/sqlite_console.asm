@@ -36,7 +36,7 @@ begin
 
 .make_the_form:
 
-        stdcall StrCatTemplate, edi, "sqlite_console_form", [.stmt], [.pSpecial]
+        stdcall StrCatTemplate, edi, "form_sqlite_console", [.stmt], [.pSpecial]
 
         cinvoke sqliteFinalize, [.stmt]
 

@@ -24,7 +24,7 @@ sqlSelectThreads text "select ",                                                
 sqlThreadsCount  text "select count(1) from Threads t where ?1 is null or ?1 in (select tag from threadtags tt where tt.threadid = t.id)"
 
 
-proc ListThreads, .start, .pSpecial
+proc ListThreads, .pSpecial
 
 .stmt  dd ?
 .list  dd ?
@@ -50,11 +50,11 @@ begin
 .no_tag:
         stdcall StrCharCat, ebx, "/"
 
-        cmp     [.start], 0
+        cmp     [esi+TSpecialParams.page_num], 0
         je      .page_ok
 
         stdcall StrCat, ebx, " page: "
-        stdcall NumToStr, [.start], ntsDec or ntsUnsigned
+        stdcall NumToStr, [esi+TSpecialParams.page_num], ntsDec or ntsUnsigned
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax
 
@@ -85,7 +85,7 @@ begin
         mov     ebx, eax
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall CreatePagesLinks2, [.start], ebx
+        stdcall CreatePagesLinks2, [esi+TSpecialParams.page_num], ebx
         mov     [.list], eax
 
         stdcall StrCat, edi, eax
@@ -97,7 +97,7 @@ begin
 
         cinvoke sqliteBindInt, [.stmt], 1, PAGE_LENGTH
 
-        mov     eax, [.start]
+        mov     eax, [esi+TSpecialParams.page_num]
         imul    eax, PAGE_LENGTH
         cinvoke sqliteBindInt, [.stmt], 2, eax
 

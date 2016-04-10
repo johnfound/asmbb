@@ -6,7 +6,7 @@ begin
         stdcall StrCat, [eax+TSpecialParams.page_title], "Login dialog"
 
         stdcall StrNew
-        stdcall StrCatTemplate, eax, "login_form", 0, [.pSpecial]
+        stdcall StrCatTemplate, eax, "form_login", 0, [.pSpecial]
         return
 endp
 
@@ -249,7 +249,7 @@ endp
 proc ShowRegisterPage
 begin
         stdcall StrNew
-        stdcall StrCatTemplate, eax, "register_form", 0, 0
+        stdcall StrCatTemplate, eax, "form_register", 0, 0
         return
 endp
 
