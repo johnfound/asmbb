@@ -1,5 +1,5 @@
-C Titles\sfor\sthe\sdifferent\spages\sof\sthe\sforum.
-D 2016-04-10T05:40:39.221
+C Fixed\sregression\sin\sthe\sforrum\serror\smessages\shandling.
+D 2016-04-10T22:54:59.090
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess f6b1e20e6db9a39a03722ead7f34d71bac90e0cd
 F install/asmbb.tar.gz e45d7c3b4a3f7ea54b3709caa62513e9a173e290
@@ -9,7 +9,7 @@ F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
 F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm e70a9359974494f4190917ed969c6e43b7c2cbd6
-F source/commands.asm 69123b82ef98e87d26bf94286ef9bd6f9b1296bb
+F source/commands.asm ed4a381b5b9672c9b930bdf181c96a6ef0394192
 F source/create.sql 054ff4ee807f0dc7eb2240339e971fd2c89cf62f
 F source/delete.asm 0f4a0eed6b19b0bf28eed04f6c8d2c40eec11105
 F source/edit.asm 4ff35c15e712e6fa734641d5a0b5517def464c32
@@ -128,7 +128,7 @@ F www/templates/search_result.tpl 0452301cac82f1ab404ecb1e8fabc1e533897ecd
 F www/templates/sqlite_console_form.tpl e1033e7afad75f72dc18eb257473bfbfd72d13aa
 F www/templates/thread_info.tpl 23984edb2eb7a67202ef7c20ea0b51ba0c3acbbe
 F www/templates/userinfo.tpl 4e71cc52b631c69e0286f01af05e2390d3b79b83
-P 6e8090ed5977049e1a076878cdc944ba09c7ce6f
-R d032e73aa3649042507f966b9d01096e
+P 45095a6cc17ba5ce1877a9fe4224a00b6668a64a
+R 8a879ad0f07ac969ffa872da75acc0b8
 U johnfound
-Z de7622561155b1e658a2315c5c99ad9a
+Z 5c80231b56628d88767fec7cfd23dafb
