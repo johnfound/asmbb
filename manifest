@@ -1,5 +1,5 @@
-C images/favicons/\sfile\shas\sbeen\sadded\sto\sthe\sbinary\spackage.
-D 2016-04-09T09:14:04.414
+C Titles\sfor\sthe\sdifferent\spages\sof\sthe\sforum.
+D 2016-04-10T05:40:39.221
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess f6b1e20e6db9a39a03722ead7f34d71bac90e0cd
 F install/asmbb.tar.gz e45d7c3b4a3f7ea54b3709caa62513e9a173e290
@@ -8,11 +8,11 @@ F install/install.txt 7d3f4f32b07d36ba1256bccb17b3b96c6fa1d004
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
 F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
-F source/accounts.asm d3485af4c5e5c26f99e0ef1091d309e83efc12d3
-F source/commands.asm 996310e0278b87b9f3fe070788272a0b3c176c30
+F source/accounts.asm e70a9359974494f4190917ed969c6e43b7c2cbd6
+F source/commands.asm 69123b82ef98e87d26bf94286ef9bd6f9b1296bb
 F source/create.sql 054ff4ee807f0dc7eb2240339e971fd2c89cf62f
-F source/delete.asm 23c3c39a19ec22e47845e042242818a1ab37e0eb
-F source/edit.asm d36eb7c34f39b34a36a8552198a061a0584a80ca
+F source/delete.asm 0f4a0eed6b19b0bf28eed04f6c8d2c40eec11105
+F source/edit.asm 4ff35c15e712e6fa734641d5a0b5517def464c32
 F source/engine.asm 64e46fc419584a78464eaf4f52945510fa692d3f
 F source/engine.fpr d8f2a0a5176b632238e86da4a0bb58d2c6555676
 F source/exponential_scaling.ods b66ca0aa6f1f4dc69986c751341877b423db11e5
@@ -21,16 +21,16 @@ F source/fcgi.asm c6d971629d563377995258d74b665b147fc86809
 F source/http.asm 31145fc891514c6675393a1db68ac4c7b917744d
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 9813e1beaeeefc73eaee5c6eb20baa1aa6187abc
-F source/post.asm 2e5236e653497fe47a246a4b9615da87314061b2
-F source/render.asm 001eabb9c338557ba3d7fc7b59dad8fd2b1591b7
-F source/search.asm 95ae631ab20dd0a4c5f40dbca7d844fb181813a7
-F source/settings.asm 0a1cd311ec5a36acd12330dd57738573b7d7cd33
-F source/showthread.asm ac0cf299a2c69fbcbe6895575bb4357fed35c494
+F source/post.asm 9134fa90c6ee59e5092cf5a91dfeaa6a65efae69
+F source/render.asm a8943eef116de184c6091592977672212312034e
+F source/search.asm 57fcb94c0b26e438630e49eb0d4779242b84f91c
+F source/settings.asm d22902e1587a107182f9286238331a982e7fb5db
+F source/showthread.asm 118fccd1170d4c7a85afa110f98e007fc54c2cb6
 F source/sqlite3.asm f605d645a6cd5a75fbfc52a86ce38c0b5ab0430a
 F source/sqlite_console.asm e5c53474ff445010ba8a4e71115763ad992db182
-F source/threadlist.asm 1be8256d7527dc02d704be2bf6824cdbe93402b2
+F source/threadlist.asm e533cd0e7e1f5bc1247f8e828c3d8e7716d15f28
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
-F source/userinfo.asm 28a35f7157b0cbd9b95b7d26ccf1d7346046e3f9
+F source/userinfo.asm 735ee96423d70af7cd4454caaab424a5178d74ce
 F www/.htaccess fc8c641fc61f2a38821bdb99fb9556ddf98929a7
 F www/all.css a17f0a80b14e95f8a5e9744a690328e211205eb5
 F www/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
@@ -114,7 +114,7 @@ F www/templates/form_settings.tpl d4b1208c713287233af5b6f205e5b97d0b5ebec0
 F www/templates/login_form.tpl 15f1639aab52acdbefe6a276cb0e10d36aa52dad
 F www/templates/logout.tpl 08bc7c756494e841962fb3b005686cb382495632
 F www/templates/main_html_end.tpl dbc17594a4b720a493125fd95e4a62fc5659c800
-F www/templates/main_html_start.tpl 3eee39f75c7450faab253831ec3287dd01ab1ad7
+F www/templates/main_html_start.tpl e554b28d4ba2bce15f3923bce99ae97ea9a0eb05
 F www/templates/minimag_suffix.tpl e0ee4765a03f31868c42f12693dc9b23b8ca076e
 F www/templates/nav_list.tpl 187846227caf59349a2d9365c0221dad0524efa8
 F www/templates/nav_search.tpl 8184180ece4f8e83bdf9e35672bc055ef1ff3129
@@ -128,7 +128,7 @@ F www/templates/search_result.tpl 0452301cac82f1ab404ecb1e8fabc1e533897ecd
 F www/templates/sqlite_console_form.tpl e1033e7afad75f72dc18eb257473bfbfd72d13aa
 F www/templates/thread_info.tpl 23984edb2eb7a67202ef7c20ea0b51ba0c3acbbe
 F www/templates/userinfo.tpl 4e71cc52b631c69e0286f01af05e2390d3b79b83
-P 416c78d5b9a02857760e41cc095a596d35487ccd
-R 3b3953dacb941f5adf9fbaebee2408d8
+P 6e8090ed5977049e1a076878cdc944ba09c7ce6f
+R d032e73aa3649042507f966b9d01096e
 U johnfound
-Z 54223c7ab2616a475a08209f28a66ceb
+Z de7622561155b1e658a2315c5c99ad9a

@@ -2,6 +2,9 @@
 
 proc ShowLoginPage, .pSpecial
 begin
+        mov     eax, [.pSpecial]
+        stdcall StrCat, [eax+TSpecialParams.page_title], "Login dialog"
+
         stdcall StrNew
         stdcall StrCatTemplate, eax, "login_form", 0, [.pSpecial]
         return

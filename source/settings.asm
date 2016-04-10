@@ -27,6 +27,8 @@ begin
         cmp     [esi+TSpecialParams.post], 0
         jne     .save_settings
 
+        stdcall StrCat, [esi+TSpecialParams.page_title], "Forum settings page"
+
         stdcall GetQueryItem, [esi+TSpecialParams.query], txt "err=", 0
         test    eax, eax
         jz      .error_ok

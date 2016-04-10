@@ -37,6 +37,30 @@ begin
         stdcall StrNew
         mov     edi, eax
 
+; make the title
+
+        mov     ebx, [esi+TSpecialParams.page_title]
+        stdcall StrCat, ebx, "Threads list"
+
+        cmp     [.start], 0
+        je      .page_ok
+
+        stdcall StrCat, ebx, ", page: "
+        stdcall NumToStr, [.start], ntsDec or ntsUnsigned
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+
+.page_ok:
+        cmp     [esi+TSpecialParams.tag], 0
+        je      .no_tag
+
+        stdcall StrCat, ebx, ", tag: "
+        stdcall StrCat, ebx, [esi+TSpecialParams.tag]
+
+.no_tag:
+        mov     [esi+TSpecialParams.page_title], ebx
+
+
         stdcall StrCat, edi, '<div class="threads_list">'
 
 ; navigation tool bar

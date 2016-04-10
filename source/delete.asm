@@ -40,6 +40,8 @@ begin
 
 
 .perm_ok:
+        stdcall StrCat, [esi+TSpecialParams.page_title], "Delete confirmation"
+
         stdcall StrCatTemplate, ebx, "del_confirm", [.stmt], [.pSpecial]
 
 .finish_ok:

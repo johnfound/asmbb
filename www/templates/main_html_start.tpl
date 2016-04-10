@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>FastCGI in assembly language</title>
+  <title>[special:title]</title>
   <link rel="stylesheet" href="/all.css">
 
   <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">

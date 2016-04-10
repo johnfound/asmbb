@@ -35,6 +35,9 @@ begin
         cmp     [esi+TSpecialParams.search], 0
         je      .missing_query
 
+        stdcall StrCat, [esi+TSpecialParams.page_title], "Search results for: "
+        stdcall StrCat, [esi+TSpecialParams.page_title], [esi+TSpecialParams.search]
+
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSearchCnt, sqlSearchCnt.length, eax, 0
 

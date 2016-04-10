@@ -87,7 +87,6 @@ begin
 .show_edit_form:
 
         stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Content-type: text/html", 13, 10, 13, 10>
-        stdcall StrCatTemplate, edi, "main_html_start", 0, esi
 
         cmp     [.ticket], 0
         jne     .ticket_ok
@@ -124,6 +123,13 @@ begin
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
         jne     .error_missing_post
+
+        stdcall StrCat, [esi+TSpecialParams.page_title], "Editing page: "
+
+        cinvoke sqliteColumnText, [.stmt], 1
+        stdcall StrCat, [esi+TSpecialParams.page_title], eax
+
+        stdcall StrCatTemplate, edi, "main_html_start", 0, esi
 
         stdcall StrCatTemplate, edi, "edit_form", [.stmt], esi
 

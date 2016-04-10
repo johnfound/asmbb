@@ -25,6 +25,7 @@ struct TSpecialParams
   .userStatus      dd ?
   .session         dd ?
   .setupmode       dd ?
+  .page_title      dd ?
 ends
 
 
@@ -75,8 +76,15 @@ begin
         stdcall StrCatMem, eax, edx, ecx
 
 .post_ok:
-
         mov     [.special.post], eax
+
+        stdcall GetParam, "forum_title", gpString
+        jnc     .title_ok
+
+        stdcall StrDupMem, "AsmBB: "
+
+.title_ok:
+        mov     [.special.page_title], eax
 
         stdcall StrNew
         mov     edi, eax
@@ -210,6 +218,12 @@ begin
 
         stdcall StrCat, edi, <13, 10, "Content-type: ">
         stdcall StrCat, edi, [.mime]
+
+        stdcall StrCat, edi, <13, 10, "Content-length: ">
+        stdcall NumToStr, ecx, ntsDec or ntsUnsigned
+        stdcall StrCat, edi, eax
+        stdcall StrDel, eax
+
         stdcall StrCharCat, edi, $0a0d0a0d
 
         stdcall StrPtr, edi
@@ -296,6 +310,7 @@ begin
         stdcall StrDel, [.special.search]
         stdcall StrDel, [.special.tag]
         stdcall StrDel, [.special.query]
+        stdcall StrDel, [.special.page_title]
 
         popad
         return
@@ -414,6 +429,8 @@ begin
 .sqlite:
         test    [.special.userStatus], permAdmin
         jz      .error403
+
+        stdcall StrCat, [.special.page_title], "SQLite console"
 
         lea     eax, [.special]
         stdcall SQLiteConsole, eax
@@ -603,6 +620,7 @@ cUnknownError text "unknown_error"
 
 .show_register_page:
 
+        stdcall StrCat, [.special.page_title], "Register new user"
         stdcall ShowRegisterPage
         jmp     .output_forum_html
 
@@ -985,6 +1003,7 @@ begin
 
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, edi, eax
+        stdcall StrCat, [esi+TSpecialParams.page_title], eax
 
         stdcall StrCat, edi, '</h1><div class="message">'
 

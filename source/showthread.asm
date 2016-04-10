@@ -68,6 +68,7 @@ begin
 
         stdcall StrEncodeHTML, eax
         stdcall StrCat, edi, eax
+        stdcall StrCat, [esi+TSpecialParams.page_title], eax
         stdcall StrDel, eax
 
         stdcall StrCat, edi, '</h1>'

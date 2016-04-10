@@ -250,8 +250,11 @@ begin
         stdcall StrClipSpacesL, eax
         mov     edi, eax
 
-        stdcall StrCompCase, edi, "timestamp"
-        je      .get_timestamp
+        stdcall StrCompNoCase, edi, "timestamp"
+        jc      .get_timestamp
+
+        stdcall StrCompNoCase, edi, "title"
+        jc      .get_title
 
         stdcall StrCompNoCase, edi, "username"
         jc      .get_username
@@ -353,6 +356,12 @@ end if
         mov     eax, edx
         jmp     .return_value
 
+
+;..................................................................
+
+.get_title:
+        mov     eax, [esi+TSpecialParams.page_title]
+        jmp     .return_encoded
 
 ;..................................................................
 

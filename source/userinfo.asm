@@ -46,6 +46,12 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .missing_user
 
+
+        stdcall StrCat, [esi+TSpecialParams.page_title], "Profile for: "
+        cinvoke sqliteColumnText, [.stmt], 1
+        stdcall StrCat, [esi+TSpecialParams.page_title], eax
+
+
         stdcall StrCat, edi, '<div class="user_profile">'
 
         stdcall StrCatTemplate, edi, "userinfo", [.stmt], esi

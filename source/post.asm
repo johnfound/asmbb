@@ -188,6 +188,18 @@ begin
 
 .show_edit_form:
 
+        cmp     [.caption], 0
+        je      .title_new_thread
+
+        stdcall StrCat, [esi+TSpecialParams.page_title], "Posting in: "
+        stdcall StrCat, [esi+TSpecialParams.page_title], [.caption]
+        jmp     .title_set
+
+.title_new_thread:
+        stdcall StrCat, [esi+TSpecialParams.page_title], "New thread posting"
+
+.title_set:
+
         stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Content-type: text/html", 13, 10, 13, 10>
         stdcall StrCatTemplate, edi, "main_html_start", 0, esi
 
