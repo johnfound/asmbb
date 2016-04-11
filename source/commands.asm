@@ -15,22 +15,31 @@ permAdmin       = $80000000
 
 struct TSpecialParams
   .start_time      dd ?
+
+; request parameters
+
   .params          dd ?
   .post            dd ?
-;  .query           dd ?
-;  .search          dd ?
-;  .tag             dd ?
-  .dir             dd ?
-  .thread          dd ?
-  .page_num        dd ?
+
+  .dir             dd ?                 ; /tag_name/
+  .thread          dd ?                 ; /thread_slug/
+  .page_num        dd ?                 ; /1234
+
+; forum global variables.
+
+  .page_title      dd ?
+  .setupmode       dd ?
+
+; logged user info.
 
   .userID          dd ?
   .userName        dd ?
   .userStatus      dd ?
-  .userLang        dd ?
+
+  .userLang        dd ?         ; not used right now.
+  .userSkin        dd ?         ; not used right now.
   .session         dd ?
-  .setupmode       dd ?
-  .page_title      dd ?
+
 ends
 
 
@@ -166,7 +175,7 @@ begin
 
 .get_file:
         lea     eax, [.timeRet]
-        stdcall GetFileFromDB, [.filename], [.timelo], [.timehi], eax
+        stdcall GetFileIfNewer, [.filename], [.timelo], [.timehi], eax
         jc      .error404_no_list_free
 
         test    eax, eax
@@ -299,19 +308,52 @@ begin
         lea     eax, [.special]
         stdcall GetLoggedUser, eax
 
-        stdcall StrCompNoCase, [esi+TArray.array], txt "adminrulez"
-        jc      .set_admin_account
-
         cmp     [.special.setupmode], 0
-        jne     .settings
-
-
-
+        jne     .set_admin_account
 
         call    .pop_array_item
         jz      .show_thread_list
 
-; .is_it_tag:
+;.is_it_root_command:
+
+        push    eax
+        stdcall StrPtr, eax
+        cmp     byte [eax], '!'
+        pop     eax
+        jne     .is_it_tag
+
+        stdcall StrCompNoCase, eax, txt "!message"
+        jc      .show_message
+
+        stdcall StrCompNoCase, eax, txt "!login"
+        jc      .user_login
+
+        stdcall StrCompNoCase, eax, txt "!logout"
+        jc      .user_logout
+
+        stdcall StrCompNoCase, eax, txt "!register"
+        jc      .user_register
+
+        stdcall StrCompNoCase, eax, txt "!activate"
+        jc      .activate_account
+
+        stdcall StrCompNoCase, eax, txt "!changepassword"
+        jc      .change_password
+
+        stdcall StrCompNoCase, eax, txt "!changemail"
+        jc      .change_email
+
+        stdcall StrCompNoCase, eax, txt "!sqlite"         ; sqlite console. only for admins.
+        jc      .sqlite
+
+        stdcall StrCompNoCase, eax, txt "!settings"
+        jc      .settings
+
+        stdcall StrCompNoCase, eax, txt "!userinfo"
+        jc      .user_info
+
+
+.is_it_tag:
 
 ;        DebugMsg "Is it a tag?"
 
@@ -362,93 +404,63 @@ begin
 
 ;        DebugMsg "Is it a command?"
 
-        stdcall StrCompNoCase, eax, txt "by_id"
-        jc      .show_post_in_thread
+        push    eax
+        stdcall StrPtr, eax
+        cmp     byte [eax], '!'
+        pop     eax
+        jne     .bad_command
 
-        stdcall StrCompNoCase, eax, txt "markread"
+        stdcall StrCompNoCase, eax, txt "!markread"
         jc      .mark_read_theme
 
-        stdcall StrCompNoCase, eax, txt "message"
-        jc      .show_message
-
-        stdcall StrCompNoCase, eax, txt "login"
-        jc      .user_login
-
-        stdcall StrCompNoCase, eax, txt "logout"
-        jc      .user_logout
-
-        stdcall StrCompNoCase, eax, txt "register"
-        jc      .user_register
-
-        stdcall StrCompNoCase, eax, txt "activate"
-        jc      .activate_account
-
-        stdcall StrCompNoCase, eax, txt "changepassword"
-        jc      .change_password
-
-        stdcall StrCompNoCase, eax, txt "changemail"
-        jc      .change_email
-
-        stdcall StrCompNoCase, eax, txt "post"
+        stdcall StrCompNoCase, eax, txt "!post"
         jc      .post_message
 
-        stdcall StrCompNoCase, eax, txt "edit"
+        stdcall StrCompNoCase, eax, txt "!edit"
         jc      .edit_message
 
-        stdcall StrCompNoCase, eax, txt "confirm"
+        stdcall StrCompNoCase, eax, txt "!confirm"
         jc      .delete_confirm
 
-        stdcall StrCompNoCase, eax, txt "del"
+        stdcall StrCompNoCase, eax, txt "!del"
         jc      .delete_post
 
-        stdcall StrCompNoCase, eax, txt "sqlite"         ; sqlite console. only for admins.
-        jc      .sqlite
-
-        stdcall StrCompNoCase, eax, txt "pinit"
+        stdcall StrCompNoCase, eax, txt "!pinit"
         jc      .pinthread
 
-        stdcall StrCompNoCase, eax, txt "search"
+        stdcall StrCompNoCase, eax, txt "!search"
         jc      .search
 
-        stdcall StrCompNoCase, eax, txt "userinfo"
-        jc      .user_info
-
-        stdcall StrCompNoCase, eax, txt "settings"
-        jc      .settings
+        stdcall StrCompNoCase, eax, txt "!by_id"
+        jc      .show_post_in_thread
 
 
+.bad_command:
 ;        DebugMsg "Command not detected."
 
-
+        stdcall StrDel, eax
         jmp     .error404
 
-
-.redirect_to_the_list:
-
-        stdcall StrMakeRedirect, edi, "/list"
-
-        jmp     .send_simple_result
 
 ;..................................................................................
 
 .set_admin_account:
 
-        cmp     [.special.setupmode], 0
-        je      .error403
-
         lea     eax, [.special]
         stdcall CreateAdminAccount, eax
+        jc      .send_simple_replace
 
-        jmp     .send_simple_replace
+        jmp     .output_forum_html
 
 ;..................................................................................
 
 
 .sqlite:
+
         test    [.special.userStatus], permAdmin
         jz      .error403
 
-        stdcall StrCat, [.special.page_title], "SQLite console"
+        stdcall StrCat, [.special.page_title], "WARNING! SQLite console. You can destroy your database here!"
 
         lea     eax, [.special]
         stdcall SQLiteConsole, eax
@@ -461,14 +473,11 @@ begin
         test    [.special.userStatus], permAdmin
         jz      .error403
 
-        cmp     [esi+TArray.count], 2
-        jb      .error404
-
-        stdcall StrToNumEx, [esi+TArray.array+4]
-        jc      .error404
+        cmp     [.special.thread], 0
+        je      .error404
 
         lea     ecx, [.special]
-        stdcall PinThread, eax, ecx
+        stdcall PinThread, ecx
 
         jmp     .send_simple_replace
 
@@ -509,16 +518,8 @@ begin
 
 .mark_read_theme:
 
-        xor     ebx, ebx
-        cmp     [esi+TArray.count], 1
-        je      .mark_read
-
-        mov     ebx, [esi+TArray.array+4]
-
-.mark_read:
-
         lea     eax, [.special]      ; the special parameters data pointer.
-        stdcall MarkThreadRead, ebx, eax
+        stdcall MarkThreadRead, eax
 
         jmp     .send_simple_replace
 
@@ -539,13 +540,13 @@ begin
 
 .show_post_in_thread:
 
-        cmp     [esi+TArray.count], 2
-        jne     .error404
+        stdcall GetID, [.special.params]
+        jc      .error404
 
-        stdcall StrToNumEx, [esi+TArray.array+4]
         mov     ebx, eax
 
-        stdcall StrCatRedirectToPost, edi, ebx, [.special.dir]
+        lea     eax, [.special]
+        stdcall StrCatRedirectToPost, edi, ebx, eax
 
         jmp     .send_simple_result
 
@@ -558,10 +559,10 @@ cUnknownError text "unknown_error"
 
         mov     eax, cUnknownError
 
-        cmp     [esi+TArray.count], 2
+        cmp     [esi+TArray.count], 1
         jne     .error_ok
 
-        mov     eax, [esi+TArray.array+4]
+        mov     eax, [esi+TArray.array]
 
 .error_ok:
 
@@ -662,22 +663,11 @@ cUnknownError text "unknown_error"
 
 ;..................................................................................
 
-
-
 .post_message:
-        xor     ebx, ebx
-        cmp     [esi+TArray.count], 2
-        cmovae  ebx, [esi+TArray.array+4]       ; the thread slug.
 
-        xor     eax, eax
-        cmp     [esi+TArray.count], 3
-        jb      .quote_ok
-
-        stdcall StrToNumEx, [esi+TArray.array+8]
-
-.quote_ok:
         lea     ecx, [.special]
-        stdcall PostUserMessage2, ebx, eax, ecx
+        stdcall PostUserMessage2, ecx
+        jnc     .output_forum_html
 
         jmp     .send_simple_replace
 
@@ -685,14 +675,10 @@ cUnknownError text "unknown_error"
 
 
 .edit_message:
-        cmp     [esi+TArray.count], 2
-        jne     .error404
-
-        stdcall StrToNumEx, [esi+TArray.array+4]
-        jc      .error404
 
         lea     ecx, [.special]
-        stdcall EditUserMessage, eax, ecx
+        stdcall EditUserMessage, ecx
+        jnc     .output_forum_html
 
         jmp     .send_simple_replace
 
@@ -701,14 +687,10 @@ cUnknownError text "unknown_error"
 
 .delete_confirm:
 
-        cmp     [esi+TArray.count], 2
-        jne     .error404
-
-        stdcall StrToNumEx, [esi+TArray.array+4]
+        stdcall GetID, [.special.params]
         jc      .error404
 
         lea     ecx, [.special]
-
         stdcall DeleteConfirmation, eax, ecx
         jc      .send_simple_replace
 
@@ -721,14 +703,12 @@ cUnknownError text "unknown_error"
 
 .delete_post:
 
-        cmp     [esi+TArray.count], 2
-        jne     .error404
-
-        stdcall StrToNumEx, [esi+TArray.array+4]
+        stdcall GetID, [.special.params]
         jc      .error404
 
         lea     ecx, [.special]
         stdcall DeletePost, eax, ecx
+
         test    eax, eax
         jz      .error404
 
@@ -740,14 +720,11 @@ cUnknownError text "unknown_error"
 
 .user_info:
 
-        cmp     [esi+TArray.count], 2
+        cmp     [esi+TArray.count], 1
         jne     .error404
 
-        stdcall StrToNumEx, [esi+TArray.array+4]
-        jc      .error404
-
         lea     ecx, [.special]
-        stdcall ShowUserInfo, eax, ecx
+        stdcall ShowUserInfo, [esi+TArray.array], ecx
         jnc     .output_forum_html
 
         jmp     .send_simple_replace
@@ -803,7 +780,7 @@ endp
 
 sqlMarkThreadRead text "delete from UnreadPosts where UserID = ?1 and ( ?2 is NULL or PostID in (select P.id from Posts P left join Threads T on P.ThreadID = T.id where T.Slug = ?2))"
 
-proc MarkThreadRead, .slug, .pSpecial
+proc MarkThreadRead, .pSpecial
 .stmt dd ?
 begin
         pushad
@@ -818,7 +795,7 @@ begin
 
         cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.userID]
 
-        mov     edx, [.slug]
+        mov     edx, [esi+TSpecialParams.thread]
         test    edx, edx
         jz      .step_it
 
@@ -833,8 +810,7 @@ begin
         cinvoke sqliteFinalize, [.stmt]
 
 .finish:
-        stdcall StrNew
-        stdcall StrCatTemplate, eax, "logout", 0, [.pSpecial]           ; goto back to the page from where came.
+        stdcall GetBackLink, esi
         push    eax
 
         stdcall StrMakeRedirect, 0, eax
@@ -1510,6 +1486,30 @@ endp
 
 
 
+proc GetID, .pParams
+begin
+        stdcall ValueByName, [.pParams], "QUERY_STRING"
+        jc      .not_found
+
+        stdcall GetQueryItem, eax, txt "id=", 0
+        test    eax, eax
+        jz      .not_found
+
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack
+        jc      .not_found
+
+        return
+
+.not_found:
+        stc
+        xor     eax, eax
+        return
+
+endp
+
+
 
 
 
@@ -1518,7 +1518,7 @@ sqlGetThePostIndex text "select count(*) from Posts p where threadID = ?1 and ( 
 
 sqlGetThreadID text "select P.ThreadID, T.Slug from Posts P left join Threads T on P.threadID = T.id where P.id = ?"
 
-proc StrCatRedirectToPost, .hString, .postID, .dir
+proc StrCatRedirectToPost, .hString, .postID, .pSpecial
 .stmt dd ?
 
 .page dd ?
@@ -1528,6 +1528,8 @@ begin
         pushad
 
         mov     [.slug], 0
+
+        mov     esi, [.pSpecial]
 
         stdcall StrCat, [.hString], <"Status: 302 Found", 13, 10, "Location: /">
 
@@ -1575,20 +1577,19 @@ begin
 
 ; now compose the redirection string
 
-        cmp     [.dir], 0
+        cmp     [esi+TSpecialParams.dir], 0
         je      .dir_ok
 
-        stdcall StrCat, edi, [.dir]
+        stdcall StrCat, edi, [esi+TSpecialParams.dir]
         stdcall StrCharCat, edi, "/"
 
 .dir_ok:
-
         stdcall StrCat, [.hString], [.slug]
+        stdcall StrCharCat, edi, "/"
 
         cmp     [.page], 0
         je      .page_ok
 
-        stdcall StrCharCat, [.hString], "/"
         stdcall NumToStr, [.page], ntsDec or ntsUnsigned
         stdcall StrCat, [.hString], eax
         stdcall StrDel, eax
@@ -1623,9 +1624,9 @@ endp
 
 
 
-sqlPinToggle text "update threads set pinned = (pinned is NULL) or ( (pinned +1)%2) where id = ?"
+sqlPinToggle text "update threads set pinned = (pinned is NULL) or ( (pinned +1)%2) where slug = ?"
 
-proc PinThread, .threadID, .pSpecial
+proc PinThread, .pSpecial
 .stmt dd ?
 begin
         pushad
@@ -1634,13 +1635,14 @@ begin
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlPinToggle, sqlPinToggle.length, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
+
+        stdcall StrPtr, [esi+TSpecialParams.thread]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall StrNew
+        stdcall GetBackLink, esi
         push    eax
-        stdcall StrCatTemplate, eax, "logout", 0, esi
 
         stdcall StrMakeRedirect, 0, eax
         stdcall StrDel ; from the stack.
@@ -1863,104 +1865,12 @@ endp
 
 
 
-sqlGetFile text "select content, changed from FileCache where filename = ?"
-sqlCacheFile text "insert into FileCache (filename, content, changed) values (?, ?, ?)"
-
-proc GetFileFromDB, .filename, .time_lo, .time_hi, .pModified
-
-.stmt dd ?
-.ptr  dd ?
-.size dd ?
+proc GetFileIfNewer, .filename, .time_lo, .time_hi, .ptrRetModified
 
 .file_info TFileInfo
 
 begin
         pushad
-
-        stdcall GetParam, "file_cache", gpInteger
-        jc      .cache_it
-
-        mov     edi, eax
-        test    eax, eax
-        jz      .get_file
-
-
-.cache_it:
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetFile, sqlGetFile.length, eax, 0
-
-        stdcall StrLen, [.filename]
-        mov     ecx, eax
-        stdcall StrPtr, [.filename]
-
-        cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
-
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        jne     .check_fs
-
-; check the date
-
-        xor     esi, esi
-        xor     ebx, ebx
-
-        cinvoke sqliteColumnInt64, [.stmt], 1
-
-        mov     ecx, [.pModified]
-        mov     [ecx], eax
-        mov     [ecx+4], edx
-
-        cmp     edx, [.time_hi]
-        ja      .newer
-        jb      .finish_ok     ; returns EAX = 0 and CF=0 if the date is older.
-
-        cmp     eax, [.time_lo]
-        jbe     .finish_ok
-
-
-.newer:
-        cinvoke sqliteColumnBytes, [.stmt], 0
-        mov     ebx, eax
-        mov     [.size], eax
-
-        stdcall GetMem, ebx
-        mov     edi, eax
-        mov     [.ptr], eax
-
-        cinvoke sqliteColumnBlob, [.stmt], 0
-        mov     esi, eax
-
-        mov     ecx, ebx
-        shr     ecx, 2
-        rep movsd
-
-        mov     ecx, ebx
-        and     ecx, 3
-        rep movsb
-
-        mov     esi, [.ptr]
-        mov     ebx, [.size]
-
-.finish_ok:
-
-        cinvoke sqliteFinalize, [.stmt]
-
-.finish_ret:
-
-        mov     [esp+4*regEAX], esi
-        mov     [esp+4*regECX], ebx
-        clc
-
-.finish:
-        popad
-        return
-
-.check_fs:
-        cinvoke sqliteFinalize, [.stmt]
-
-
-.get_file:
 
         stdcall FileOpenAccess, [.filename], faReadOnly
         jc      .finish
@@ -1970,6 +1880,21 @@ begin
         lea     eax, [.file_info]
         stdcall GetFileInfo, ebx, eax
 
+        mov     eax, dword [.file_info.timeModified]
+        mov     edx, dword [.file_info.timeModified+4]
+        mov     ecx, [.ptrRetModified]
+
+        mov     [ecx], eax
+        mov     [ecx+4], edx
+
+        cmp     edx, [.time_hi]
+        ja      .read_it              ; the file is newer
+        jb      .finish_older         ; returns EAX = 0 and CF=0 if the date is older.
+
+        cmp     eax, [.time_lo]
+        jbe     .finish_older
+
+.read_it:
         stdcall FileSize, ebx
         mov     ecx, eax
 
@@ -1977,61 +1902,34 @@ begin
         mov     esi, eax
 
         stdcall FileRead, ebx, esi, ecx
-        push    eax ecx
-
-        stdcall FileClose, ebx
-        pop     ecx eax
 
         cmp     eax, ecx
         je      .read_ok
 
+; read is not ok - return CF = 1
         stdcall FreeMem, esi
         stc
-        jmp     .finish
+        jmp     .finish_close
 
+
+.finish_older:
+
+        xor     esi, esi
+        xor     ecx, ecx
 
 .read_ok:
-        mov     ebx, ecx
+        mov     [esp+4*regEAX], esi
+        mov     [esp+4*regECX], ecx
+        clc
 
-        test    edi, edi
-        jz      .finish_ret_file
+.finish_close:
+        pushf
+        stdcall FileClose, ebx
+        popf
 
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCacheFile, sqlCacheFile.length, eax, 0
-
-        stdcall StrLen, [.filename]
-        mov     ecx, eax
-        stdcall StrPtr, [.filename]
-        cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
-        cinvoke sqliteBindBlob, [.stmt], 2, esi, ebx, SQLITE_STATIC
-        cinvoke sqliteBindInt64, [.stmt], 3, dword [.file_info.timeModified], dword [.file_info.timeModified+4]
-
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteFinalize, [.stmt]
-
-.finish_ret_file:
-
-        mov     eax, dword [.file_info.timeModified]
-        mov     edx, dword [.file_info.timeModified+4]
-        mov     ecx, [.pModified]
-
-        mov     [ecx], eax
-        mov     [ecx+4], edx
-
-        cmp     edx, [.time_hi]
-        ja      .finish_ret
-        jb      .finish_ret_clear     ; returns EAX = 0 and CF=0 if the date is older.
-
-        cmp     eax, [.time_lo]
-        ja      .finish_ret
-
-.finish_ret_clear:
-
-        stdcall FreeMem, esi
-        xor     esi, esi
-        xor     ebx, ebx
-
-        jmp     .finish_ret
+.finish:
+        popad
+        return
 endp
 
 

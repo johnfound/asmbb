@@ -56,7 +56,7 @@ include "sqlite_console.asm"
 
 
 iglobal
-  sqlCreateDB file 'create.sql'
+  sqlCreateDB StripText 'create.sql', SQL
               dd   0
 
   cDatabaseFilename text "./board.sqlite"
@@ -70,7 +70,7 @@ uglobal
 endg
 
 
-rb 73
+rb 173
 
 start:
         InitializeAll

@@ -1,9 +1,9 @@
 <div class="new_editor">
   <div class="ui">
-    <a class="ui" href="/list">Thread list</a>
-    <a class="ui" href="/threads/[slug]">Thread</a>
+    <a class="ui" href="../">Thread list</a>
+    <a class="ui" href="./">Thread</a>
   </div>
-  <form id="editform" action="/post/[slug][special:urltag]" method="post">
+  <form id="editform" action="!post" method="post">
     <p>Thread title:</p>
     <h1 class="fakeedit">[caption]</h1>
     <p>Post content:</p>

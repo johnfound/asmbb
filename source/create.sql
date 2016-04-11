@@ -2,14 +2,6 @@ BEGIN TRANSACTION;
 
 /* Data tables */
 
-
-create table Languages (
-  lang int primary key
-);
-
-
-
-
 create table Params (
   id  text primary key,
   val text
@@ -17,7 +9,6 @@ create table Params (
 
 
 insert into Params values ('user_perm', '29');	-- permLogin + permPost + permThreadStart + permEditOwn
-insert into Params values ('file_cache', '0');
 insert into Params values ('log_events', '0');
 
 
@@ -32,6 +23,8 @@ create table Users (
   email     text unique,     -- user email.
   Register  integer,	     -- the time when the user has activated the account.
   LastSeen  integer	     -- the time when the user has been last seen by taking some action.
+  Lang	    text	     -- the language of the user interface.
+  Skin	    text	     -- the name of the UI skin.
 );
 
 
@@ -82,7 +75,7 @@ create table Posts (
 
 create index idxPosts_UserID   on Posts (userID);
 create index idxPosts_ThreadID on Posts (threadID);
--- create index idxPosts_Time	  on Posts (postTime, id);
+create index idxPosts_Time     on Posts (postTime, id);
 
 
 create table Tags (
@@ -284,37 +277,11 @@ Or have no longer.','Missing privileges!',NULL);
 
 
 
-create table FileCache (
-  filename  text primary key,
-  content   blob,
-  changed   integer
-);
-
-
-create table Events (
-  id   integer primary key autoincrement,
-  name text
-);
-
-
-
-insert into Events values (1,'ScriptStart');
-insert into Events values (2,'RequestStart');
-insert into Events values (3,'RequestEnd');
-insert into Events values (4,'Error');
-insert into Events values (5,'ScriptEnd');
-insert into Events values (6,'ThreadStart');
-insert into Events values (7,'ThreadEnd');
-insert into Events values (8,'RequestServeStart');
-insert into Events values (9,'RequestServeEnd');
-
-
-
 create table Log (
-  process_id integer,								     -- the unique process id
+  process_id integer,	-- the unique process id
   timestamp  integer,
-  event      integer references events(id) on delete cascade on update cascade,      -- what event is logged - start process, end process, start request, end request
-  value      text,								     -- details in variable form.
+  event      text	-- what event is logged - start process, end process, start request, end request
+  value      text,	-- details in variable form.
   runtime    integer
 );
 
@@ -324,11 +291,6 @@ create table ProcessID (
   id integer primary key autoincrement
 );
 
-
-create table Templates (
-  id text primary key,
-  template text
-);
 
 
 CREATE VIRTUAL TABLE PostFTS using fts5( `Content`, content=Posts, content_rowid=id, tokenize='porter unicode61 remove_diacritics 1');

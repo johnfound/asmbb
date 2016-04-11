@@ -2,28 +2,9 @@
 
 
 
-sqlGetTemplate text "select template from templates where id = ?"
-
-
 proc StrCatTemplate, .hString, .strTemplateID, .sql_statement, .p_special
-.stmt  dd ?
-.free  dd ?
 begin
         pushad
-        and     [.free], 0
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetTemplate, sqlGetTemplate.length+1, eax, 0
-
-        stdcall StrLen, [.strTemplateID]
-        mov     ecx, eax
-        stdcall StrPtr, [.strTemplateID]
-
-        cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        je      .get_template
-
 
         stdcall StrDupMem, "templates/"
         stdcall StrCat, eax, [.strTemplateID]
@@ -32,39 +13,20 @@ begin
 
         stdcall LoadBinaryFile, eax
         stdcall StrDel ; from the stack
-        jc      .error
+        jc      .finish
 
-        mov     [.free], eax
         mov     esi, eax
         and     dword [eax+ecx], 0
-        jmp     .process_template
 
-
-.get_template:
-
-        cinvoke sqliteColumnText, [.stmt], 0
-        mov     esi, eax
-
-.process_template:
-
-        stdcall __DoProcessTemplate2, eax, [.sql_statement], [.p_special], TRUE
+        stdcall __DoProcessTemplate2, esi, [.sql_statement], [.p_special], TRUE
 
         stdcall StrCat, [.hString], eax
         stdcall StrDel, eax
-
+        stdcall FreeMem, esi
 
 .finish:
-        cinvoke sqliteFinalize, [.stmt]
-
-        stdcall FreeMem, [.free]
         popad
         return
-
-
-.error:
-        stdcall StrCat, [.hString], "Unknown template!"
-        jmp     .finish
-
 endp
 
 
@@ -480,10 +442,6 @@ endl
 .get_referer:
 
         stdcall GetBackLink, esi
-        push    eax
-
-        stdcall StrEncodeHTML, eax
-        stdcall StrDel ; from the stack
         jmp     .return_value
 
 ;..................................................................
@@ -606,7 +564,6 @@ endl
 .plural_ok:
 
         stdcall StrCat, ebx, '." href="/'
-
         cinvoke sqliteColumnText, [.stmt], 0
         stdcall StrEncodeHTML, eax
 
@@ -1394,19 +1351,19 @@ begin
 
         add     ecx, eax
 
-        stdcall StrMatchPatternNoCase, "/message/*", ecx
+        stdcall StrMatchPatternNoCase, "/!message/*", ecx
         jc      .root
 
-        stdcall StrMatchPatternNoCase, "/sqlite*", ecx
+        stdcall StrMatchPatternNoCase, "/!sqlite*", ecx
         jc      .root
 
-        stdcall StrMatchPatternNoCase, "/post*", ecx
+        stdcall StrMatchPatternNoCase, "*/!post*", ecx
         jc      .root
 
-        stdcall StrMatchPatternNoCase, "/register*", ecx
+        stdcall StrMatchPatternNoCase, "/!register*", ecx
         jc      .root
 
-        stdcall StrMatchPatternNoCase, "/edit/*", ecx
+        stdcall StrMatchPatternNoCase, "*/!edit/*", ecx
         cmp     eax, ecx
         je      .root
 
@@ -1420,6 +1377,10 @@ begin
         stc
 
 .finish:
+        push    eax
+        stdcall StrEncodeHTML, eax
+        stdcall StrDel ; from the stack
+
         mov     [esp+4*regEAX], eax
         popad
         return

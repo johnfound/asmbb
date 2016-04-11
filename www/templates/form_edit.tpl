@@ -1,9 +1,9 @@
 <div class="editor" id="editor">
   <div class="ui">
-    <a class="ui" href="/list">Thread list</a>
-    <a class="ui" href="/by_id/[id][special:urltag]">Back</a>
+    <a class="ui" href="../">Thread list</a>
+    <a class="ui" href="!by_id?id=[id]">Back</a>
   </div>
-  <form id="editform" action="/edit/[id][special:urltag]" method="post">
+  <form id="editform" action="!edit?id=[id]" method="post">
     <p>Thread title:</p>
     <h1 class="fakeedit">[caption]</h1>
     <p>Post content:</p>

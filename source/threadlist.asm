@@ -15,7 +15,7 @@ sqlSelectThreads text "select ",                                                
                                                                                                                                                                 \
                       "from Threads T left join Users UU on UU.id = StarterID ",                                                                                \
                                                                                                                                                                 \
-                      "where ?4 is null or ?4 in (select tag from threadtags tt where tt.threadid = t.id) ",                                                    \
+                      "where ?4 is null or ?4 in (select tag from threadtags tt where tt.threadid = t.id) ",                                                  \
                       "order by Pinned desc, T.LastChanged desc ",                                                                                              \
                                                                                                                                                                 \
                       "limit  ?1 ",                                                                                                                             \
@@ -71,7 +71,7 @@ begin
 
 ; links to the pages.
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlThreadsCount, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlThreadsCount, sqlThreadsCount.length, eax, 0
 
         cmp     [esi+TSpecialParams.dir], 0
         je      .tag_ok
@@ -106,10 +106,12 @@ begin
         xor     ebx, ebx
 
         cmp     [esi+TSpecialParams.dir], 0
-        je      .loop
+        je      .dir_ok
 
         stdcall StrPtr, [esi+TSpecialParams.dir]
         cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
+
+.dir_ok:
 
 .loop:
         cinvoke sqliteStep, [.stmt]

@@ -1,7 +1,7 @@
 
 
 sqlParameters   text "select ? as host, ? as smtp_addr, ? as smtp_port, ",                              \
-                            "? as smtp_user, ? as file_cache, ? as log_events, ",                       \
+                            "? as smtp_user, ? as forum_title, ? as log_events, ",                      \
                             "? as message, ? as error, ",                                               \
                             "? as user_perm0, ? as user_perm2, ? as user_perm3, ? as user_perm4, ",     \
                             "? as user_perm5, ? as user_perm6, ? as user_perm7, ? as user_perm31"
@@ -89,14 +89,15 @@ begin
 
 .email_ok:
 
-        stdcall GetParam, txt "file_cache", gpInteger
-        jc      .file_cache_ok
-        test    eax, eax
-        jz      .file_cache_ok
+        stdcall GetParam, txt "forum_title", gpString
+        jc      .title_ok
 
-        cinvoke sqliteBindText, [.stmt], 5, "checked", -1, SQLITE_STATIC
+        push    eax
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 5, eax, [eax+string.len], SQLITE_TRANSIENT
+        stdcall StrDel ; from the stack
 
-.file_cache_ok:
+.title_ok:
 
         stdcall GetParam, txt "log_events", gpInteger
         jc      .log_events_ok
@@ -264,20 +265,17 @@ begin
         jc      .error_write
 
 
-; save bool file_cache
+; save forum_title
 
-        xor     ebx, ebx
-
-        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "file_cache=", 0
+        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "forum_title=", 0
         test    eax, eax
-        jz      .bind_cache
+        jz      .error_post_request
 
-        inc     ebx
-        stdcall StrDel, eax
-
-.bind_cache:
-        cinvoke sqliteBindInt,  [.stmt], 2, ebx
-        cinvoke sqliteBindText, [.stmt], 1, txt "file_cache", -1, SQLITE_STATIC
+        push    eax
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_TRANSIENT
+        cinvoke sqliteBindText, [.stmt], 1, txt "forum_title", -1, SQLITE_STATIC
+        stdcall StrDel ; from the stack.
 
         call    .exec_write
         jc      .error_write
@@ -467,17 +465,72 @@ endp
 
 
 sqlCreateAdmin   text  "insert into Users ( nick, passHash, salt, status, email ) values ( ?, ?, ?, -1, ?)"
-
+sqlMessage       text  "select ? as message, ? as error"
 
 proc CreateAdminAccount, .pSpecial
-.stmt dd ?
+.stmt    dd ?
+
+.message dd ?
+.error   dd ?
 begin
         pushad
 
         mov     esi, [.pSpecial]
+
         mov     ebx, [esi+TSpecialParams.post]
         test    ebx, ebx
-        jz      .error_no_post
+        jnz     .create_account
+
+
+; show the admin creation dialog.
+
+        stdcall StrCat, [esi+TSpecialParams.page_title], "Create the first admin account!"
+
+
+        stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
+        mov     ebx, eax
+
+        and     [.error], 0
+        stdcall GetQueryItem, ebx, txt "err=", 0
+        test    eax, eax
+        jz      .error_ok
+
+        inc     [.error]
+
+.error_ok:
+        stdcall GetQueryItem, ebx, txt "msg=", 0
+        mov     [.message], eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlMessage, sqlMessage.length, eax, 0
+
+        cmp     [.message], 0
+        je      .message_bnd
+
+        stdcall StrPtr, [.message]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+.message_bnd:
+
+        cinvoke sqliteBindInt, [.stmt], 2, [.error]
+        cinvoke sqliteStep, [.stmt]
+
+        stdcall StrNew
+        mov     [esp+4*regEAX], eax
+
+        stdcall StrCatTemplate, eax, "form_setup", [.stmt], esi
+        cinvoke sqliteFinalize, [.stmt]
+        stdcall StrDel, [.message]
+
+        clc
+        popad
+        return
+
+
+
+.create_account:
+        stdcall StrDupMem, "/?err=1&msg="
+        mov     [.message], eax
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare, [hMainDatabase], sqlCreateAdmin, sqlCreateAdmin.length, eax, 0
@@ -509,7 +562,7 @@ begin
 
         stdcall GetQueryItem, ebx, "password2=", 0
         test    eax, eax
-        jz      .error_del_edi
+        jz      .error_wrong_password
 
         stdcall StrCompCase, edi, eax
         jnc     .error_diff_pass
@@ -546,10 +599,14 @@ begin
         jne     .error_no_data
 
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect, 0, "/login"
+        stdcall StrMakeRedirect, 0, "/!login"
+
 
 .finish:
         mov     [esp+4*regEAX], eax
+        stdcall StrDel, [.message]
+
+        stc
         popad
         return
 
@@ -557,18 +614,38 @@ begin
 
 .error_diff_pass:
 
+        stdcall StrURLEncode, "Error: Passwords different!"
+        stdcall StrCat, [.message], eax
+        stdcall StrDel, eax
+        jmp     .error_del_eax
+
+.error_no_data:
+        stdcall StrURLEncode, "Error: POST data invalid!"
+        stdcall StrCat, [.message], eax
+        stdcall StrDel, eax
+        jmp     .error_finalize
+
+
+.error_wrong_password:
+        stdcall StrURLEncode, "Error: Passwords different!"
+        stdcall StrCat, [.message], eax
+        stdcall StrDel, eax
+        jmp     .error_del_edi
+
+
+.error_del_eax:
+
         stdcall StrDel, eax
 
 .error_del_edi:
 
         stdcall StrDel, edi
 
-.error_no_data:
+.error_finalize:
 
         cinvoke sqliteFinalize, [.stmt]
 
-.error_no_post:
-        stdcall StrMakeRedirect, 0, "/settings"
+        stdcall StrMakeRedirect, 0, [.message]
         jmp     .finish
 
 endp

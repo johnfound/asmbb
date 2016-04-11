@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Error!</title>
-    <link rel="stylesheet" href="/error.css">
+    <link rel="stylesheet" href="/templates/error.css">
     <meta http-equiv="refresh" content="3; url=[special:referer]">
   </head>
   <body>

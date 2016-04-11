@@ -177,18 +177,18 @@ begin
 
 .redirect_back_short:
 
-        stdcall StrMakeRedirect, edi, "/message/login_missing_data/"
+        stdcall StrMakeRedirect, edi, "/!message/login_missing_data/"
         jmp     .finish
 
 .redirect_back_bad_permissions:
 
-        stdcall StrMakeRedirect, edi, "/message/login_bad_permissions/"
+        stdcall StrMakeRedirect, edi, "/!message/login_bad_permissions/"
         jmp     .finish
 
 
 .redirect_back_bad_password:
 
-        stdcall StrMakeRedirect, edi, "/message/login_bad_password/"
+        stdcall StrMakeRedirect, edi, "/!message/login_bad_password/"
 
 .finish:
         stdcall StrDel, [.user]
@@ -230,11 +230,11 @@ begin
         stdcall StrCat, edi, <"Set-Cookie: sid=; HttpOnly; Path=/; Max-Age=0", 13, 10>
 
 .finish:
-        stdcall StrNew
-        stdcall StrCatTemplate, eax, "logout", 0, [.pspecial]
+        stdcall GetBackLink, esi
+        push    eax
 
         stdcall StrMakeRedirect, edi, eax
-        stdcall StrDel, eax
+        stdcall StrDel ; from the stack
 
         mov     [esp+4*regEAX], edi
         popad
@@ -397,47 +397,47 @@ begin
 
 ; the user has been created and now is waiting for email activation.
 
-        stdcall StrMakeRedirect, 0, "/message/user_created/"
+        stdcall StrMakeRedirect, 0, "/!message/user_created/"
         jmp     .finish
 
 
 .error_technical_problem:
 
-        stdcall StrMakeRedirect, 0, "/message/register_technical/"
+        stdcall StrMakeRedirect, 0, "/!message/register_technical/"
         jmp     .finish
 
 
 .error_short_name:
 
-        stdcall StrMakeRedirect, 0, "/message/register_short_name/"
+        stdcall StrMakeRedirect, 0, "/!message/register_short_name/"
         jmp     .finish
 
 .error_trick:
 
-        stdcall StrMakeRedirect, 0, "/message/register_bot/"
+        stdcall StrMakeRedirect, 0, "/!message/register_bot/"
 
         jmp     .finish
 
 
 .error_bad_email:
-        stdcall StrMakeRedirect, 0, "/message/register_bad_email/"
+        stdcall StrMakeRedirect, 0, "/!message/register_bad_email/"
         jmp     .finish
 
 
 .error_short_pass:
-        stdcall StrMakeRedirect, 0, "/message/register_short_pass/"
+        stdcall StrMakeRedirect, 0, "/!message/register_short_pass/"
         jmp     .finish
 
 
 .error_different:
 
-        stdcall StrMakeRedirect, 0, "/message/register_passwords_different/"
+        stdcall StrMakeRedirect, 0, "/!message/register_passwords_different/"
         jmp     .finish
 
 
 .error_exists:
 
-        stdcall StrMakeRedirect, 0, "/message/register_user_exists/"
+        stdcall StrMakeRedirect, 0, "/!message/register_user_exists/"
 
 .finish:
         stdcall StrDel, [.user]
@@ -566,12 +566,12 @@ begin
         cmp     [.type], SQLITE_NULL
         jne     .msg_new_account
 
-        stdcall StrMakeRedirect, 0, "/message/email_changed"
+        stdcall StrMakeRedirect, 0, "/!message/email_changed"
         jmp     .finish
 
 
 .msg_new_account:
-        stdcall StrMakeRedirect, 0, "/message/congratulations"
+        stdcall StrMakeRedirect, 0, "/!message/congratulations"
 
 
 .finish:
@@ -588,7 +588,7 @@ begin
 
         cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
 
-        stdcall StrMakeRedirect, 0, "/message/bad_secret"
+        stdcall StrMakeRedirect, 0, "/!message/bad_secret"
         jmp     .finish
 
 endp
@@ -706,7 +706,7 @@ begin
         stdcall UserLogout, [.pSpecial]
         stdcall StrDel, eax
 
-        stdcall StrMakeRedirect, 0, "/message/password_changed"
+        stdcall StrMakeRedirect, 0, "/!message/password_changed"
 
 .finish:
 
@@ -722,37 +722,37 @@ begin
 .bad_user:
 
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect, 0, "/message/register_bot"
+        stdcall StrMakeRedirect, 0, "/!message/register_bot"
         jmp     .finish
 
 
 .bad_password:
 
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect, 0, "/message/change_password"
+        stdcall StrMakeRedirect, 0, "/!message/change_password"
         jmp     .finish
 
 
 .bad_parameter:
 
-        stdcall StrMakeRedirect, 0, "/message/login_missing_data"
+        stdcall StrMakeRedirect, 0, "/!message/login_missing_data"
         jmp     .finish
 
 
 .error_different:
 
-        stdcall StrMakeRedirect, 0, "/message/change_different"
+        stdcall StrMakeRedirect, 0, "/!message/change_different"
         jmp     .finish
 
 
 .error_update:
 
-        stdcall StrMakeRedirect, 0, "/message/error_cant_write"
+        stdcall StrMakeRedirect, 0, "/!message/error_cant_write"
         jmp     .finish
 
 
 .error_short_pass:
-        stdcall StrMakeRedirect, 0, "/message/register_short_pass/"
+        stdcall StrMakeRedirect, 0, "/!message/register_short_pass/"
         jmp     .finish
 
 endp
@@ -857,7 +857,7 @@ begin
         stdcall ProcessActivationEmails
         jc      .error_technical_problem
 
-        stdcall StrMakeRedirect, 0, "/message/email_activation_sent"
+        stdcall StrMakeRedirect, 0, "/!message/email_activation_sent"
 
 .finish:
 
@@ -874,37 +874,37 @@ begin
 .bad_user:
 
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect, 0, "/message/register_bot"
+        stdcall StrMakeRedirect, 0, "/!message/register_bot"
         jmp     .finish
 
 
 .bad_password:
 
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect, 0, "/message/change_password"
+        stdcall StrMakeRedirect, 0, "/!message/change_password"
         jmp     .finish
 
 
 .bad_parameter:
 
-        stdcall StrMakeRedirect, 0, "/message/login_missing_data"
+        stdcall StrMakeRedirect, 0, "/!message/login_missing_data"
         jmp     .finish
 
 
 .error_update:
 
-        stdcall StrMakeRedirect, 0, "/message/error_cant_write"
+        stdcall StrMakeRedirect, 0, "/!message/error_cant_write"
         jmp     .finish
 
 
 .bad_email:
-        stdcall StrMakeRedirect, 0, "/message/register_bad_email"
+        stdcall StrMakeRedirect, 0, "/!message/register_bad_email"
         jmp     .finish
 
 
 .error_technical_problem:
 
-        stdcall StrMakeRedirect, 0, "/message/register_technical"
+        stdcall StrMakeRedirect, 0, "/!message/register_technical"
         jmp     .finish
 
 endp

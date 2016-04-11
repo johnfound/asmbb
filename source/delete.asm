@@ -59,7 +59,7 @@ begin
 .perm_not_ok:
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall StrMakeRedirect, ebx, "/message/error_cant_delete"
+        stdcall StrMakeRedirect, ebx, "/!message/error_cant_delete"
         stc
         jmp     .finish
 
@@ -171,26 +171,24 @@ begin
 
 .finish_redirect_list:
 
-        stdcall StrMakeRedirect, ebx, "/list"
+        stdcall StrMakeRedirect, ebx, txt "../"
         jmp     .finish
 
 
 .finish_redirect_thread:
 
-        stdcall StrDupMem, "/threads/"
-        stdcall StrCat, eax, [.slug]
-        stdcall StrMakeRedirect, ebx, eax
+        stdcall StrMakeRedirect, ebx, txt "./"
         stdcall StrDel, eax
         jmp     .finish
 
 
 .perm_not_ok:
-        stdcall StrMakeRedirect, ebx, "/message/error_cant_delete"
+        stdcall StrMakeRedirect, ebx, "/!message/error_cant_delete"
         jmp     .do_rollback
 
 
 .write_failure:
-        stdcall StrMakeRedirect, ebx, "/message/error_cant_write"
+        stdcall StrMakeRedirect, ebx, "/!message/error_cant_write"
 
 
 .do_rollback:

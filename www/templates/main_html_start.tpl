@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>[special:title]</title>
-  <link rel="stylesheet" href="/all.css">
+  <link rel="stylesheet" href="/templates/all.css">
 
   <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
@@ -32,10 +32,10 @@
 <body>
   <div class="header">
     <div class="login_interface">
-      [case:[special:userid]|<a href="/login/">Login</a><br><a href="/register/">Register</a>|
-      <a href="/logout">Logout ( [special:username] )</a><br><a href="/userinfo/[special:userid][special:urltag]">User profile</a>]
+      [case:[special:userid]|<a href="/!login/">Login</a><br><a href="/!register/">Register</a>|
+      <a href="/!logout">Logout ( [special:username] )</a><br><a href="/!userinfo/[special:username]">User profile</a>]
     </div>
-    <form class="tags" id="search_form" action="/search" method="get" >
+    <form class="tags" id="search_form" action="/!search" method="get" >
       <input id="search_line" type="edit" size="40" name="s" placeholder="search" value="[special:search]"><input id="search_btn"  type="submit" value="" >
     </form>
     <h1>AsmBB demo</h1>
