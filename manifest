@@ -1,5 +1,5 @@
-C Renamed\ssome\stemplates\sin\sorder\sto\shave\sbetter\snames.\s:)\sWork\son\sthe\snew\sURL\sprocessing.
-D 2016-04-10T20:03:12.468
+C Get\sthe\sregression\sfix\sfrom\sthe\strunk.
+D 2016-04-11T06:07:45.986
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess f6b1e20e6db9a39a03722ead7f34d71bac90e0cd
 F install/asmbb.tar.gz e45d7c3b4a3f7ea54b3709caa62513e9a173e290
@@ -9,7 +9,7 @@ F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
 F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm 9ffb0eaeec9b4b702db4e798e4b61937d64f3788
-F source/commands.asm bb0e73e779582587a37781c472d36f8971f1e11b
+F source/commands.asm 77ade35ff48dbc1687d329f05935bbe96d0a1189
 F source/create.sql 9397e2737821907c3b8b7ec1722eac3a6124252e
 F source/delete.asm aa52dc5f38ac841e4336e44728aef49a2662ff9c
 F source/edit.asm e0f725458d5175a86a9ba3bb7d5c297ffa016d55
@@ -109,14 +109,14 @@ F www/templates/activation_email_text.tpl a4cf857f84166584b5b146af7e00d7223ab235
 F www/templates/del_confirm.tpl ee759d8b663be7a71ac2f92089375c3d4a3ed944
 F www/templates/error_html_end.tpl 937e074b29bb4ee9a7fce7b806559ab89468c700
 F www/templates/error_html_start.tpl fce7c74e9363e1ee7425beccd6afb0aa13eac833
-F www/templates/form_edit.tpl 31166b1277c359c98b117e50829b25ad294f4018 w www/templates/edit_form.tpl
+F www/templates/form_edit.tpl 31166b1277c359c98b117e50829b25ad294f4018
 F www/templates/form_editinfo.tpl b9011ce2b5a0c37976c7842a07e5a6a07706efb3
-F www/templates/form_login.tpl 15f1639aab52acdbefe6a276cb0e10d36aa52dad w www/templates/login_form.tpl
-F www/templates/form_new_post.tpl 7c79cea6732400151f19dc4fb459175959e3eb0b w www/templates/new_post_form.tpl
-F www/templates/form_new_thread.tpl e468d490bb51369ab1ae85b66eabda8e74cafd30 w www/templates/new_thread_form.tpl
-F www/templates/form_register.tpl 472535cb1964f0acd6fe5189fcbd2b72b057a3c8 w www/templates/register_form.tpl
+F www/templates/form_login.tpl 15f1639aab52acdbefe6a276cb0e10d36aa52dad
+F www/templates/form_new_post.tpl 7c79cea6732400151f19dc4fb459175959e3eb0b
+F www/templates/form_new_thread.tpl e468d490bb51369ab1ae85b66eabda8e74cafd30
+F www/templates/form_register.tpl 472535cb1964f0acd6fe5189fcbd2b72b057a3c8
 F www/templates/form_settings.tpl d4b1208c713287233af5b6f205e5b97d0b5ebec0
-F www/templates/form_sqlite_console.tpl e1033e7afad75f72dc18eb257473bfbfd72d13aa w www/templates/sqlite_console_form.tpl
+F www/templates/form_sqlite_console.tpl e1033e7afad75f72dc18eb257473bfbfd72d13aa
 F www/templates/logout.tpl 08bc7c756494e841962fb3b005686cb382495632
 F www/templates/main_html_end.tpl dbc17594a4b720a493125fd95e4a62fc5659c800
 F www/templates/main_html_start.tpl 1d535e4c253921086464c9d0a507bfdfd3376893
@@ -129,7 +129,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 0452301cac82f1ab404ecb1e8fabc1e533897ecd
 F www/templates/thread_info.tpl 461bb45318b8c91460e08f763329d4e97c30e443
 F www/templates/userinfo.tpl 4e71cc52b631c69e0286f01af05e2390d3b79b83
-P e1ff62ad20e93babb90bf8f55dea9980f0d66dfa
-R 5bb1b0f23e462db63e0edea92ce6eca8
+P eaac93d09d53a10a208bb74aaa126ff178dbb07e 67a0abe2dc98ff9296cb34c456cc6931ccfc4075
+R ecbdc4a3e5040083b168a1e619021d07
 U johnfound
-Z 8bc965de1fa2c7f9c1ddbb444fca28b1
+Z d9487a9bff61ab11c1a213b6e4c4be9e

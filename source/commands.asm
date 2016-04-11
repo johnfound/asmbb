@@ -992,6 +992,8 @@ proc ShowForumMessage, .key, .pSpecial
 begin
         pushad
 
+        mov     esi, [.pSpecial]
+
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetErrorText, -1, eax, 0
 
@@ -1033,7 +1035,7 @@ begin
 
         stdcall StrCat, edi, '<a href="'
 
-        stdcall GetBackLink, [.pSpecial]
+        stdcall GetBackLink, esi
         pushf
         stdcall StrCat, edi, eax
         stdcall StrDel, eax
