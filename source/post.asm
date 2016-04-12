@@ -154,10 +154,9 @@ begin
         cmp     [.source], 0
         jne     .show_edit_form
 
-        stdcall GetID, [esi+TSpecialParams.params]
-        jc      .show_edit_form
-
-        mov     ebx, eax
+        mov     ebx, [esi+TSpecialParams.page_num]
+        test    ebx, ebx
+        jz      .show_edit_form
 
 ; get the quoted text
 

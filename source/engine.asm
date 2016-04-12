@@ -53,6 +53,7 @@ include "userinfo.asm"
 include "accounts.asm"
 include "settings.asm"
 include "sqlite_console.asm"
+include "messages.asm"
 
 
 iglobal

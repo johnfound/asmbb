@@ -1,14 +1,12 @@
 
 
-
-
 ;                               |       0      |      1    |        2          |      3        |     4    |                                      5                                       |    6
 
 sqlDelConfirmInfo  text  "select P.id as PostID, P.threadID, U.nick as UserName, U.id as UserID, P.Content, (select count(1) from Posts P2 where P2.threadID = P.threadID ) as cnt_thread, T.Slug ",    \
                          "from Posts P left join Users U on U.id = P.userID left join Threads T on T.id = P.threadID where P.id = ?"
 
 
-proc DeleteConfirmation, .postID, .pSpecial
+proc DeleteConfirmation, .pSpecial
 .stmt dd ?
 begin
         pushad
@@ -16,14 +14,17 @@ begin
         xor     ebx, ebx
         mov     esi, [.pSpecial]
 
+        cmp     [esi+TSpecialParams.page_num], ebx
+        je      .finish_ok
+
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlDelConfirmInfo, sqlDelConfirmInfo.length, eax, 0
 
-        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.page_num]
 
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
-        jne     .finish_ok
+        jne     .finish_ok_fin
 
         stdcall StrNew
         mov     ebx, eax
@@ -41,12 +42,13 @@ begin
 
 .perm_ok:
         stdcall StrCat, [esi+TSpecialParams.page_title], "Delete confirmation"
-
         stdcall StrCatTemplate, ebx, "del_confirm", [.stmt], [.pSpecial]
 
-.finish_ok:
+.finish_ok_fin:
 
         cinvoke sqliteFinalize, [.stmt]
+
+.finish_ok:
 
         clc
 
@@ -58,7 +60,6 @@ begin
 
 .perm_not_ok:
         cinvoke sqliteFinalize, [.stmt]
-
         stdcall StrMakeRedirect, ebx, "/!message/error_cant_delete"
         stc
         jmp     .finish
@@ -71,7 +72,7 @@ endp
 sqlDelPost text "delete from Posts where id = ?"
 sqlDelThread text "delete from Threads where id = ?"
 
-proc DeletePost, .postID, .pSpecial
+proc DeletePost, .pSpecial
 .stmt dd ?
 
 .threadID dd ?
@@ -88,6 +89,8 @@ begin
 
         mov     esi, [.pSpecial]
 
+        cmp     [esi+TSpecialParams.page_num], ebx
+        je      .err404
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBegin, sqlBegin.length, eax, 0
@@ -100,7 +103,7 @@ begin
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlDelConfirmInfo, sqlDelConfirmInfo.length, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.page_num]
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
         jne     .write_failure
@@ -136,7 +139,7 @@ begin
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlDelPost, sqlDelPost.length, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.page_num]
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_DONE
         jne     .write_failure
@@ -171,13 +174,13 @@ begin
 
 .finish_redirect_list:
 
-        stdcall StrMakeRedirect, ebx, txt "../"
+        stdcall StrMakeRedirect, ebx, txt "../../"
         jmp     .finish
 
 
 .finish_redirect_thread:
 
-        stdcall StrMakeRedirect, ebx, txt "./"
+        stdcall StrMakeRedirect, ebx, txt "../"
         stdcall StrDel, eax
         jmp     .finish
 
@@ -196,10 +199,16 @@ begin
         cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
 
 .finish:
+        stc
+
+.exit:
         stdcall StrDel, [.slug]
         mov     [esp+4*regEAX], ebx
         popad
         return
 
+.err404:
+        clc
+        jmp     .exit
 
 endp

@@ -1,18 +1,5 @@
 
 
-proc ShowLoginPage, .pSpecial
-begin
-        mov     eax, [.pSpecial]
-        stdcall StrCat, [eax+TSpecialParams.page_title], "Login dialog"
-
-        stdcall StrNew
-        stdcall StrCatTemplate, eax, "form_login", 0, [.pSpecial]
-        return
-endp
-
-
-
-
 
 sqlGetUserInfo   text "select id, salt, passHash, status from Users where lower(nick) = lower(?)"
 sqlInsertSession text "insert into sessions (userID, sid, last_seen) values ( ?, ?, strftime('%s','now') )"
@@ -44,6 +31,20 @@ begin
 
         mov     esi, [.pSpecial]
         mov     ebx, [esi+TSpecialParams.post]
+        test    ebx, ebx
+        jnz     .do_login_user
+
+
+        stdcall StrCat, [esi+TSpecialParams.page_title], "Login dialog"
+        stdcall StrCatTemplate, edi, "form_login", 0, esi
+
+        mov     [esp+4*regEAX], edi
+        clc
+        popad
+        return
+
+
+.do_login_user:
 
         stdcall GetQueryItem, ebx, "username=", 0
         mov     [.user], eax
@@ -196,6 +197,7 @@ begin
         stdcall StrDel, [.session]
 
         mov     [esp+4*regEAX], edi
+        stc
         popad
         return
 
@@ -237,6 +239,7 @@ begin
         stdcall StrDel ; from the stack
 
         mov     [esp+4*regEAX], edi
+        stc
         popad
         return
 endp
@@ -244,14 +247,6 @@ endp
 
 
 
-
-
-proc ShowRegisterPage
-begin
-        stdcall StrNew
-        stdcall StrCatTemplate, eax, "form_register", 0, 0
-        return
-endp
 
 
 
@@ -287,6 +282,21 @@ begin
 
         mov     esi, [.pSpecial]
         mov     ebx, [esi+TSpecialParams.post]
+        test    ebx, ebx
+        jnz     .do_register_user
+
+
+        stdcall StrNew
+        stdcall StrCatTemplate, eax, "form_register", 0, 0
+
+        mov     [esp+4*regEAX], eax
+        clc
+        popad
+        return
+
+
+
+.do_register_user:
 
         stdcall GetQueryItem, ebx, "username=", 0
         mov     [.user], eax
@@ -447,6 +457,7 @@ begin
         stdcall StrDel, [.secret]
 
         mov     [esp+4*regEAX], eax
+        stc
         popad
         return
 endp
@@ -465,11 +476,16 @@ sqlRollback   text  "rollback"
 
 sqlUpdateUserEmail text "update users set email = (select email from WaitingActivation where a_secret = ?1) where nick = (select nick from WaitingActivation where a_secret = ?1)"
 
-proc ActivateAccount, .hSecret
+
+proc ActivateAccount, .hSecret, .pSpecial
 .stmt dd ?
 .type dd ?
 begin
         pushad
+
+        xor     eax, eax
+        cmp     [.hSecret], eax
+        je      .exit                   ; CF=0 if jump is taken
 
 ; begin transaction
 
@@ -575,6 +591,9 @@ begin
 
 
 .finish:
+        stc
+
+.exit:
         mov     [esp+4*regEAX], eax
         popad
         return
@@ -715,6 +734,7 @@ begin
         stdcall StrDel, [.newpass2]
 
         mov     [esp+4*regEAX], eax
+        stc
         popad
         return
 
@@ -867,6 +887,7 @@ begin
         stdcall StrDel, [.secret]
 
         mov     [esp+4*regEAX], eax
+        stc
         popad
         return
 

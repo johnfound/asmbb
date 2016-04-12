@@ -8,3 +8,4 @@
 
   <input type="submit" name="submit" class="button" value="Setup admin">
 </form>
+</div>

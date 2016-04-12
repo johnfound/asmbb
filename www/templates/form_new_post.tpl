@@ -1,7 +1,7 @@
 <div class="new_editor">
   <div class="ui">
-    <a class="ui" href="../">Thread list</a>
-    <a class="ui" href="./">Thread</a>
+    <a class="ui" href="[case:[special:page]||../]../">Thread list</a>
+    <a class="ui" href="[case:[special:page]|./|!by_id]">Thread</a>
   </div>
   <form id="editform" action="!post" method="post">
     <p>Thread title:</p>

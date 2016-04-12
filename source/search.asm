@@ -14,26 +14,44 @@ sqlSearch text "select ",                                                       
                  "P.ReadCount, ",                                                                                               \
                  "PostFTS.rowid, ",                                                                                             \
                  "snippet(PostFTS, 0, '', '', '...', 16) as Content, ",                                                         \
-                 "T.Caption ",                                                                                                  \
+                 "T.Caption, ",                                                                                                 \
+                 "(select count() from UnreadPosts UP where UP.UserID = ?4 and UP.PostID = PostFTS.rowid) as Unread ",          \
                "from PostFTS ",                                                                                                 \
                "left join Posts P on P.id = PostFTS.rowid ",                                                                    \
                "left join Threads T on T.id = P.threadID ",                                                                     \
                "left join Users U on P.userID = U.id ",                                                                         \
-               "where PostFTS match ? order by rank limit ? offset ?"
+               "where PostFTS match ?1 order by rank limit ?2 offset ?3"
 
 
-proc ShowSearchResults2, .query, .start, .pSpecial
+proc ShowSearchResults2, .hStart, .pSpecial
 .pages      dd ?
-
 .stmt       dd ?
-
+.query      dd ?
+.start      dd ?
 begin
         pushad
 
+        mov     [.query], 0
         mov     esi, [.pSpecial]
 
-        cmp     [.query], 0
-        je      .missing_query
+        mov     eax, [.hStart]
+        test    eax, eax
+        jz      .start_ok
+
+        stdcall StrToNumEx, eax
+
+.start_ok:
+        mov     [.start],eax
+
+
+        stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
+        jc      .missing_query
+
+        stdcall GetQueryItem, eax, txt "s=", 0
+        test    eax, eax
+        jz      .missing_query
+
+        mov     [.query], eax
 
         stdcall StrCat, [esi+TSpecialParams.page_title], "Search results for: "
         stdcall StrCat, [esi+TSpecialParams.page_title], [.query]
@@ -55,7 +73,12 @@ begin
         test    edi, edi
         jz      .pages_ok
 
-        stdcall CreatePagesLinks2, [.start], edi
+        stdcall StrDupMem, txt "?s="
+        stdcall StrCat, eax, [.query]
+        push    eax
+
+        stdcall CreatePagesLinks, [.start], edi, eax
+        stdcall StrDel ; from the stack
         mov     [.pages], eax
 
 .pages_ok:
@@ -82,6 +105,8 @@ begin
         mov     eax, [.start]
         imul    eax, PAGE_LENGTH
         cinvoke sqliteBindInt, [.stmt], 3, eax
+
+        cinvoke sqliteBindInt, [.stmt], 4, [esi+TSpecialParams.userID]
 
 .search_loop:
         cinvoke sqliteStep, [.stmt]

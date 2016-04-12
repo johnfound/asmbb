@@ -31,6 +31,10 @@ proc ShowUserInfo, .UserName, .pSpecial
 begin
         pushad
 
+        xor     edi, edi
+        cmp     [.UserName], edi
+        je      .exit
+
         stdcall StrNew
         mov     edi, eax
         mov     esi, [.pSpecial]
@@ -80,6 +84,7 @@ begin
         cinvoke sqliteFinalize, [.stmt]
         popf
 
+.exit:
         mov     [esp+4*regEAX], edi
         popad
         return

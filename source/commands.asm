@@ -298,6 +298,8 @@ begin
         jmp     .send_simple_result
 
 
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 .analize_uri:
 
 ;        DebugMsg "Analyze URL"
@@ -308,8 +310,9 @@ begin
         lea     eax, [.special]
         stdcall GetLoggedUser, eax
 
+        mov     ecx, CreateAdminAccount
         cmp     [.special.setupmode], 0
-        jne     .set_admin_account
+        jne     .exec_command
 
         call    .pop_array_item
         jz      .show_thread_list
@@ -322,35 +325,45 @@ begin
         pop     eax
         jne     .is_it_tag
 
-        stdcall StrCompNoCase, eax, txt "!message"
-        jc      .show_message
-
+        mov     ecx, UserLogin
         stdcall StrCompNoCase, eax, txt "!login"
-        jc      .user_login
+        jc      .exec_command
 
+        mov     ecx, UserLogout
         stdcall StrCompNoCase, eax, txt "!logout"
-        jc      .user_logout
+        jc      .exec_command
 
+        mov     ecx, RegisterNewUser
         stdcall StrCompNoCase, eax, txt "!register"
-        jc      .user_register
+        jc      .exec_command
 
-        stdcall StrCompNoCase, eax, txt "!activate"
-        jc      .activate_account
-
+        mov     ecx, ChangePassword
         stdcall StrCompNoCase, eax, txt "!changepassword"
-        jc      .change_password
+        jc      .exec_command
 
+        mov     ecx, ChangeEmail
         stdcall StrCompNoCase, eax, txt "!changemail"
-        jc      .change_email
+        jc      .exec_command
 
+        mov     ecx, SQLiteConsole
         stdcall StrCompNoCase, eax, txt "!sqlite"         ; sqlite console. only for admins.
-        jc      .sqlite
+        jc      .exec_command
 
+        mov     ecx, BoardSettings
         stdcall StrCompNoCase, eax, txt "!settings"
-        jc      .settings
+        jc      .exec_command
 
+        mov     ecx, ShowForumMessage
+        stdcall StrCompNoCase, eax, txt "!message"
+        jc      .exec_command2
+
+        mov     ecx, ActivateAccount
+        stdcall StrCompNoCase, eax, txt "!activate"
+        jc      .exec_command2
+
+        mov     ecx, ShowUserInfo
         stdcall StrCompNoCase, eax, txt "!userinfo"
-        jc      .user_info
+        jc      .exec_command2
 
 
 .is_it_tag:
@@ -410,29 +423,38 @@ begin
         pop     eax
         jne     .bad_command
 
+
+        mov     ecx, MarkThreadRead
         stdcall StrCompNoCase, eax, txt "!markread"
-        jc      .mark_read_theme
+        jc      .exec_command
 
+        mov     ecx, PostUserMessage2
         stdcall StrCompNoCase, eax, txt "!post"
-        jc      .post_message
+        jc      .exec_command
 
+        mov     ecx, EditUserMessage
         stdcall StrCompNoCase, eax, txt "!edit"
-        jc      .edit_message
+        jc      .exec_command
 
+        mov     ecx, DeleteConfirmation
         stdcall StrCompNoCase, eax, txt "!confirm"
-        jc      .delete_confirm
+        jc      .exec_command
 
+        mov     ecx, DeletePost
         stdcall StrCompNoCase, eax, txt "!del"
-        jc      .delete_post
+        jc      .exec_command
 
+        mov     ecx, PinThread
         stdcall StrCompNoCase, eax, txt "!pinit"
-        jc      .pinthread
+        jc      .exec_command
 
-        stdcall StrCompNoCase, eax, txt "!search"
-        jc      .search
-
+        mov     ecx, PostByID
         stdcall StrCompNoCase, eax, txt "!by_id"
-        jc      .show_post_in_thread
+        jc      .exec_command
+
+        mov     ecx, ShowSearchResults2
+        stdcall StrCompNoCase, eax, txt "!search"
+        jc      .exec_command2
 
 
 .bad_command:
@@ -443,255 +465,22 @@ begin
 
 
 ;..................................................................................
-
-.set_admin_account:
-
-        lea     eax, [.special]
-        stdcall CreateAdminAccount, eax
-        jc      .send_simple_replace
-
-        jmp     .output_forum_html
-
-;..................................................................................
-
-
-.sqlite:
-
-        test    [.special.userStatus], permAdmin
-        jz      .error403
-
-        stdcall StrCat, [.special.page_title], "WARNING! SQLite console. You can destroy your database here!"
-
-        lea     eax, [.special]
-        stdcall SQLiteConsole, eax
-        jmp     .output_forum_html
-
-
-;..................................................................................
-
-.pinthread:
-        test    [.special.userStatus], permAdmin
-        jz      .error403
-
-        cmp     [.special.thread], 0
-        je      .error404
-
-        lea     ecx, [.special]
-        stdcall PinThread, ecx
-
-        jmp     .send_simple_replace
-
-
-;..................................................................................
-
-.search:
-        xor     ebx, ebx
-
-        cmp     [esi+TArray.count], 2
-        jb      .show_search
-
-        stdcall StrToNumEx, [esi+TArray.array+4]
-        mov     ebx, eax
-
-.show_search:
-
-        lea     eax, [.special]
-        stdcall ShowSearchResults2, 0, ebx, eax
-        jc      .send_simple_replace
-
-        jmp     .output_forum_html
-
-
-
-;..................................................................................
-
+;
+; Execute command procedure with 1 argument = ptr to TSpecialParams
 
 .show_thread_list:
-
-        lea     eax, [.special]      ; the special parameters data pointer.
-        stdcall ListThreads, eax
-
-        jmp     .output_forum_html
-
-
-;..................................................................................
-
-.mark_read_theme:
-
-        lea     eax, [.special]      ; the special parameters data pointer.
-        stdcall MarkThreadRead, eax
-
-        jmp     .send_simple_replace
-
-
-;..................................................................................
+        mov     ecx, ListThreads
+        jmp     .exec_command
 
 
 .show_one_thread:
+        mov     ecx, ShowThread
+
+
+.exec_command:
 
         lea     eax, [.special]
-        stdcall ShowThread, eax
-        jnc     .output_forum_html
-
-        jmp     .error404
-
-
-;..................................................................................
-
-.show_post_in_thread:
-
-        stdcall GetID, [.special.params]
-        jc      .error404
-
-        mov     ebx, eax
-
-        lea     eax, [.special]
-        stdcall StrCatRedirectToPost, edi, ebx, eax
-
-        jmp     .send_simple_result
-
-;..................................................................................
-
-cUnknownError text "unknown_error"
-
-
-.show_message:
-
-        mov     eax, cUnknownError
-
-        cmp     [esi+TArray.count], 1
-        jne     .error_ok
-
-        mov     eax, [esi+TArray.array]
-
-.error_ok:
-
-        lea     ecx, [.special]
-        stdcall ShowForumMessage, eax, ecx
-
-        jmp     .output_forum_html
-
-
-;..................................................................................
-
-
-.user_login:
-
-        cmp     [.special.post], 0
-        je      .show_login_page
-
-
-        lea     eax, [.special]
-        stdcall UserLogin, eax
-
-        jmp     .send_simple_replace
-
-
-.show_login_page:
-
-        lea     eax, [.special]
-        stdcall ShowLoginPage, eax
-        jmp     .output_forum_html
-
-
-
-;..................................................................................
-
-.user_logout:
-
-        lea     eax, [.special]
-        stdcall UserLogout, eax
-        jmp     .send_simple_replace
-
-;..................................................................................
-
-.user_register:
-
-        cmp     [.special.post], 0
-        je      .show_register_page
-
-        lea     eax, [.special]
-        stdcall RegisterNewUser, eax
-        jmp     .send_simple_replace
-
-
-.show_register_page:
-
-        stdcall StrCat, [.special.page_title], "Register new user"
-        stdcall ShowRegisterPage
-        jmp     .output_forum_html
-
-
-;..................................................................................
-
-.activate_account:
-
-        cmp     [esi+TArray.count], 2
-        jne     .error404
-
-        stdcall ActivateAccount, [esi+TArray.array+4]
-
-        jmp     .send_simple_replace
-
-;..................................................................................
-
-
-.change_password:
-
-        cmp     [esi+TArray.count], 1
-        jne     .error404
-
-        lea     eax, [.special]
-        stdcall ChangePassword, eax
-
-        jmp     .send_simple_replace
-
-
-;..................................................................................
-
-
-.change_email:
-
-        cmp     [esi+TArray.count], 1
-        jne     .error404
-
-        lea     eax, [.special]
-        stdcall ChangeEmail, eax
-
-        jmp     .send_simple_replace
-
-
-;..................................................................................
-
-.post_message:
-
-        lea     ecx, [.special]
-        stdcall PostUserMessage2, ecx
-        jnc     .output_forum_html
-
-        jmp     .send_simple_replace
-
-;..................................................................................
-
-
-.edit_message:
-
-        lea     ecx, [.special]
-        stdcall EditUserMessage, ecx
-        jnc     .output_forum_html
-
-        jmp     .send_simple_replace
-
-
-;..................................................................................
-
-.delete_confirm:
-
-        stdcall GetID, [.special.params]
-        jc      .error404
-
-        lea     ecx, [.special]
-        stdcall DeleteConfirmation, eax, ecx
+        stdcall ecx, eax
         jc      .send_simple_replace
 
         test    eax, eax
@@ -701,56 +490,31 @@ cUnknownError text "unknown_error"
 
 
 
-.delete_post:
+;..................................................................................
+;
+; Executes command procedure with 2 arguments: 1:hString and 2:ptr to TSpecialParams
 
-        stdcall GetID, [.special.params]
-        jc      .error404
+.exec_command2:
 
-        lea     ecx, [.special]
-        stdcall DeletePost, eax, ecx
+        xor     edx, edx
+        cmp     [esi+TArray.count], edx
+        je      .arg_ok
+
+        mov     edx, [esi+TArray.array]
+
+.arg_ok:
+        lea     eax, [.special]
+        stdcall ecx, edx, eax
+        jc      .send_simple_replace
 
         test    eax, eax
         jz      .error404
 
-        jmp     .send_simple_replace
+        jmp     .output_forum_html
 
 
 ;..................................................................................
 
-
-.user_info:
-
-        cmp     [esi+TArray.count], 1
-        jne     .error404
-
-        lea     ecx, [.special]
-        stdcall ShowUserInfo, [esi+TArray.array], ecx
-        jnc     .output_forum_html
-
-        jmp     .send_simple_replace
-
-
-;..................................................................................
-
-.settings:
-        cmp     [.special.setupmode], 0
-        jne     .force_settings
-
-        test    [.special.userStatus], permAdmin
-        jz      .error403
-
-.force_settings:
-        lea     ecx, [.special]
-        stdcall BoardSettings, ecx
-
-        jnc     .output_forum_html
-
-        jmp     .send_simple_replace
-
-
-
-
-;..................................................................................
 
 
 .pop_array_item:
@@ -817,6 +581,7 @@ begin
         stdcall StrDel ; from the stack
 
         mov     [esp+4*regEAX], eax
+        stc
         popad
         return
 endp
@@ -826,7 +591,7 @@ endp
 
 
 
-proc CreatePagesLinks2, .current, .count
+proc CreatePagesLinks, .current, .count, .suffix
 begin
         pushad
 
@@ -919,7 +684,22 @@ begin
 
 .current_ok:
         stdcall StrCat, edi, '<a class="page_link" href="'
+        test    ecx, ecx
+        jnz     .non_zero
+
+        stdcall StrCharCat, edi, "."
+        jmp     .href_ok
+
+.non_zero:
         stdcall StrCat, edi, eax
+
+.href_ok:
+        cmp     [.suffix], 0
+        je      .close_href
+
+        stdcall StrCat, edi, [.suffix]
+
+.close_href:
         stdcall StrCat, edi, txt '">'
 .link_ok:
         stdcall StrCat, edi, eax
@@ -955,98 +735,6 @@ begin
         popad
         return
 endp
-
-
-
-
-sqlGetErrorText text "select msg, header, link from messages where id = ?"
-cGoRoot text "/"
-
-
-proc ShowForumMessage, .key, .pSpecial
-.stmt dd ?
-begin
-        pushad
-
-        mov     esi, [.pSpecial]
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetErrorText, -1, eax, 0
-
-        stdcall StrLen, [.key]
-        mov     ecx, eax
-
-        stdcall StrPtr, [.key]
-        cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        jne     .unknown_msg
-
-        stdcall StrDupMem, '<div class="message_block"><h1>'
-        mov     edi, eax
-
-        cinvoke sqliteColumnText, [.stmt], 1
-        stdcall StrCat, edi, eax
-        stdcall StrCat, [esi+TSpecialParams.page_title], eax
-
-        stdcall StrCat, edi, '</h1><div class="message">'
-
-        cinvoke sqliteColumnText, [.stmt], 0
-        stdcall StrCat, edi, eax
-
-        stdcall StrCat, edi, '</div><br>'
-
-        cinvoke sqliteColumnType, [.stmt], 2
-        cmp     eax, SQLITE_NULL
-        je      .add_back_link
-
-        cinvoke sqliteColumnText, [.stmt], 2
-        stdcall StrCat, edi, eax
-        jmp     .finalize
-
-
-; now insert link to the previous page.
-
-.add_back_link:
-
-        stdcall StrCat, edi, '<a href="'
-
-        stdcall GetBackLink, esi
-        pushf
-        stdcall StrCat, edi, eax
-        stdcall StrDel, eax
-        popf
-        jnc     .back
-
-        stdcall StrCat, edi, '">Home</a>'
-        jmp     .finalize
-
-.back:
-        stdcall StrCat, edi, '">Go back</a>'
-
-.finalize:
-        stdcall StrCat, edi, '</div>'
-
-        cinvoke sqliteFinalize, [.stmt]
-
-
-        mov     [esp+4*regEAX], edi
-        popad
-        return
-
-
-.unknown_msg:
-        stdcall StrDupMem, <'<div class="message_block"><h1>ERROR!</h1><div class="message">',     \
-                            'Three things are certain:', 13, 10,                                   \
-                            'Death, taxes and lost data.', 13, 10,                                 \
-                            'Guess which has occurred.', 13, 10,                                   \
-                            '</div><br>', 13, 10 >
-
-        mov     edi, eax
-        jmp     .add_back_link
-endp
-
-
 
 
 
@@ -1284,6 +972,9 @@ mimeGIF   text "image/gif"
 
 
 
+
+
+
 sqlSelectNotSent text "select id, nick, email, a_secret as secret, (select val from Params where id='host') as host, salt from WaitingActivation where time_email is NULL order by time_reg"
 sqlCleanWaiting  text "delete from WaitingActivation where time_reg < (strftime('%s','now') - 86400) and time_email is not NULL"
 
@@ -1486,174 +1177,6 @@ endp
 
 
 
-proc GetID, .pParams
-begin
-        stdcall ValueByName, [.pParams], "QUERY_STRING"
-        jc      .not_found
-
-        stdcall GetQueryItem, eax, txt "id=", 0
-        test    eax, eax
-        jz      .not_found
-
-        push    eax
-        stdcall StrToNumEx, eax
-        stdcall StrDel ; from the stack
-        jc      .not_found
-
-        return
-
-.not_found:
-        stc
-        xor     eax, eax
-        return
-
-endp
-
-
-
-
-
-
-sqlGetThePostIndex text "select count(*) from Posts p where threadID = ?1 and ( p.PostTime <= (select PostTime from Posts where id = ?2) and id < ?2 ) order by PostTime, id"
-
-sqlGetThreadID text "select P.ThreadID, T.Slug from Posts P left join Threads T on P.threadID = T.id where P.id = ?"
-
-proc StrCatRedirectToPost, .hString, .postID, .pSpecial
-.stmt dd ?
-
-.page dd ?
-.slug dd ?
-
-begin
-        pushad
-
-        mov     [.slug], 0
-
-        mov     esi, [.pSpecial]
-
-        stdcall StrCat, [.hString], <"Status: 302 Found", 13, 10, "Location: /">
-
-; get the thread ID and slug
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadID, -1, eax, 0
-
-        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
-
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        jne     .error
-
-        cinvoke sqliteColumnInt, [.stmt], 0
-        mov     ebx, eax
-
-        cinvoke sqliteColumnText, [.stmt], 1
-        stdcall StrDupMem, eax
-        mov     [.slug], eax
-
-        cinvoke sqliteFinalize, [.stmt]
-
-
-; get the post index in the thread in order to compute the page, where the post is located.
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThePostIndex, -1, eax, 0
-
-        cinvoke sqliteBindInt, [.stmt], 1, ebx
-        cinvoke sqliteBindInt, [.stmt], 2, [.postID]
-
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        jne     .error
-
-        cinvoke sqliteColumnInt, [.stmt], 0     ; the index in thread.
-        cdq
-
-        mov     ecx, PAGE_LENGTH
-        div     ecx
-        mov     [.page], eax
-
-        cinvoke sqliteFinalize, [.stmt]
-
-; now compose the redirection string
-
-        cmp     [esi+TSpecialParams.dir], 0
-        je      .dir_ok
-
-        stdcall StrCat, edi, [esi+TSpecialParams.dir]
-        stdcall StrCharCat, edi, "/"
-
-.dir_ok:
-        stdcall StrCat, [.hString], [.slug]
-        stdcall StrCharCat, edi, "/"
-
-        cmp     [.page], 0
-        je      .page_ok
-
-        stdcall NumToStr, [.page], ntsDec or ntsUnsigned
-        stdcall StrCat, [.hString], eax
-        stdcall StrDel, eax
-
-.page_ok:
-        stdcall StrCharCat, [.hString], "#"
-
-        stdcall NumToStr, [.postID], ntsDec or ntsUnsigned
-        stdcall StrCat, [.hString], eax
-        stdcall StrDel, eax
-
-.finish:
-
-        stdcall StrCharCat, [.hString], $0a0d0a0d
-        stdcall StrDel, [.slug]
-
-        popad
-        return
-
-.error:
-        cinvoke sqliteFinalize, [.stmt]
-        jmp     .finish
-
-endp
-
-
-
-
-
-
-
-
-
-
-sqlPinToggle text "update threads set pinned = (pinned is NULL) or ( (pinned +1)%2) where slug = ?"
-
-proc PinThread, .pSpecial
-.stmt dd ?
-begin
-        pushad
-
-        mov     esi, [.pSpecial]
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlPinToggle, sqlPinToggle.length, eax, 0
-
-        stdcall StrPtr, [esi+TSpecialParams.thread]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteFinalize, [.stmt]
-
-        stdcall GetBackLink, esi
-        push    eax
-
-        stdcall StrMakeRedirect, 0, eax
-        stdcall StrDel ; from the stack.
-
-        mov     [esp+4*regEAX], eax
-
-        popad
-        return
-endp
-
-
 
 
 
@@ -1783,6 +1306,8 @@ begin
         popad
         return
 endp
+
+
 
 
 proc ClearTicket, .sid

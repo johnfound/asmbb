@@ -224,6 +224,9 @@ begin
         stdcall StrCompNoCase, edi, "userid"
         jc      .get_userid
 
+        stdcall StrCompNoCase, edi, txt "page"
+        jc      .get_page
+
         stdcall StrCompNoCase, edi, "permissions"
         jc      .get_permissions
 
@@ -253,6 +256,9 @@ begin
 
         stdcall StrCompNoCase, edi, "setupmode"
         jc      .get_setupmode
+
+        stdcall StrCompNoCase, edi, "search"
+        jc      .get_search
 
         stdcall GetQueryItem, edi, "posters=", 0
         test    eax, eax
@@ -330,6 +336,13 @@ end if
         stdcall NumToStr, [esi+TSpecialParams.userID], ntsDec or ntsUnsigned
         jmp     .return_value
 
+
+;..................................................................
+
+.get_page:
+
+        stdcall NumToStr, [esi+TSpecialParams.page_num], ntsDec or ntsUnsigned
+        jmp     .return_value
 
 ;..................................................................
 
@@ -450,6 +463,18 @@ endl
 .get_setupmode:
         stdcall NumToStr, [esi+TSpecialParams.setupmode], ntsDec or ntsUnsigned
 
+        jmp     .return_value
+
+
+;..................................................................
+
+.get_search:
+
+        xor     eax, eax
+        stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
+        jc      .return_value
+
+        stdcall GetQueryItem, eax, txt "s=", 0
         jmp     .return_value
 
 
@@ -706,7 +731,7 @@ sqlGetThreadPosters  text "select distinct U.id, U.nick from Posts P left join U
         ja      .contributor
 
 ; starter:
-        stdcall StrCat, ebx, 'started by: <b><a href="/userinfo/'
+        stdcall StrCat, ebx, 'started by: <b><a href="/!userinfo/'
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, ebx, eax
         stdcall StrCharCat, ebx, '">'
@@ -727,7 +752,7 @@ sqlGetThreadPosters  text "select distinct U.id, U.nick from Posts P left join U
 
 .add_contributor:
 
-        stdcall StrCat, ebx, '<a href="/userinfo/'
+        stdcall StrCat, ebx, '<a href="/!userinfo/'
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, ebx, eax
         stdcall StrCharCat, ebx, '">'

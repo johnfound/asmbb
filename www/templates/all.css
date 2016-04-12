@@ -400,7 +400,7 @@ form.settings label {
   width: 220px;
 //  line-height: 30px;
   margin-bottom: 8px;
-  padding: 0px 8px;
+  padding: 0px 16px;
   color: black;
   font-size: 16px;
   font-weight: bold;
@@ -434,6 +434,7 @@ label.checkbox {
   height: auto !important;
   padding: 0px !important;
   line-height: 0px !important;
+  margin-right: 8px;
 }
 
 label.checkbox input {

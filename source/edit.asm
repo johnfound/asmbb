@@ -10,7 +10,6 @@ sqlGetPostUser text "select userID, threadID from Posts where id = ?"
 proc EditUserMessage, .pSpecial
 .stmt dd ?
 
-.fPreview dd ?
 .source   dd ?
 .ticket   dd ?
 
@@ -18,30 +17,27 @@ proc EditUserMessage, .pSpecial
 .threadID dd ?
 .userID   dd ?
 
-.postid   dd ?
-
 begin
         pushad
 
-        mov     [.fPreview], 1  ; preview by default when handling GET requests.
-        mov     [.source], 0
-        mov     [.ticket], 0
+        xor     ebx, ebx
+        mov     [.source], ebx
+        mov     [.ticket], ebx
 
         mov     esi, [.pSpecial]
 
         stdcall StrNew
         mov     edi, eax
 
-        stdcall GetID, [esi+TSpecialParams.params]
-        jc      .error_post_id
+        cmp     [esi+TSpecialParams.page_num], ebx
+        je      .error_post_id
 
-        mov     [.postid], eax
 
 ; read the userID and threadID for the post.
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetPostUser, -1, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, [.postid]
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.page_num]
         cinvoke sqliteStep, [.stmt]
 
         cmp     eax, SQLITE_ROW
@@ -86,11 +82,6 @@ begin
         test    eax, eax
         jnz     .save_post_and_exit
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], "preview=", 0
-        stdcall StrDel, eax
-        mov     [.fPreview], eax
-
-
 .show_edit_form:
 
         cmp     [.ticket], 0
@@ -113,7 +104,7 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], ecx, -1, eax, 0
 
-        cinvoke sqliteBindInt, [.stmt], 1, [.postid]
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.page_num]
 
         stdcall StrPtr, [.ticket]
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
@@ -134,16 +125,9 @@ begin
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
 
-        stdcall StrCatTemplate, edi, "main_html_start", 0, esi
-
         stdcall StrCatTemplate, edi, "form_edit", [.stmt], esi
 
-        cmp     [.fPreview], 0
-        je      .preview_ok
-
         stdcall StrCatTemplate, edi, "preview", [.stmt], esi
-
-.preview_ok:
 
         cinvoke sqliteFinalize, [.stmt]
 
@@ -178,7 +162,7 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSavePost, -1, eax, 0
 
-        cinvoke sqliteBindInt, [.stmt], 2, [.postid]
+        cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.page_num]
         cinvoke sqliteBindInt, [.stmt], 3, LIMIT_POST_LENGTH
 
         stdcall StrPtr, [.source]
@@ -209,7 +193,7 @@ begin
         jne     .error_write
 
 
-        stdcall RegisterUnreadPost, [.postid]
+        stdcall RegisterUnreadPost, [esi+TSpecialParams.page_num]
         cmp     eax, SQLITE_DONE
         jne     .error_write
 
@@ -224,7 +208,7 @@ begin
         jne     .error_write
 
 .end_save:
-        stdcall StrCatRedirectToPost, edi, [.postid], esi
+        stdcall StrCatRedirectToPost, edi, [esi+TSpecialParams.page_num], esi
 
 .finish_clear:
 

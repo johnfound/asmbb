@@ -24,6 +24,9 @@ begin
 
         mov     esi, [.pSpecial]
 
+        test    [esi+TSpecialParams.userStatus], permAdmin
+        jz      .for_admins_only
+
         cmp     [esi+TSpecialParams.post], 0
         jne     .save_settings
 
@@ -383,7 +386,7 @@ begin
 .end_save:
         mov     ebx, eax
 
-        stdcall StrDupMem, "/settings?msg="
+        stdcall StrDupMem, "/!settings?msg="
         push    eax
 
         stdcall StrCat, eax, ebx
@@ -396,10 +399,18 @@ begin
         stdcall StrMakeRedirect, 0, eax
         stdcall StrDel ; from the stack
 
+.exit:
         mov     [esp+4*regEAX], eax
         stc
         popad
         return
+
+
+.for_admins_only:
+
+        stdcall StrMakeRedirect, 0, "/!message/only_for_admins"
+        jmp     .exit
+
 
 
 .error_post_request:

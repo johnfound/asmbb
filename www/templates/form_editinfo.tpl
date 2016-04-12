@@ -6,6 +6,7 @@
   <input type="submit" name="save" class="submit" value="Save">
 </form>
 
+[case:[sql: select [userid] = [special:userid]]| |
 <form class="user_edit_pass" method="post" action="/!changepassword">
   <h1>Change password:</h1>
   <input type="password" value="" placeholder="Present password" name="oldpass" class="password" maxlength="1024">
@@ -20,3 +21,4 @@
   <input type="text" value="" placeholder="New e-mail" name="email" class="email" maxlength="320">
   <input type="submit" name="changeemail" class="submit" value="Change email">
 </form>
+]

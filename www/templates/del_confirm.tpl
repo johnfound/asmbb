@@ -3,5 +3,5 @@
   Do you <b>really</b> want to delete the post written by "[UserName]"?
   <div class="post_preview">[minimag:[content]]</div>
   [case:[cnt_thread]| |Notice that this is the <b>last post</b> in the thread and the <b>thread will be deleted</b> as well!|Notice, that deletion can break the thread!]
-  <div class="ui"><a class="uir" href="[special:referer]">No</a> <a class="uir" href="!del?id=[postID]">Yes</a></div>
+  <div class="ui"><a class="uir" href="!by_id">No</a> <a class="uir" href="!del">Yes</a></div>
 </div>

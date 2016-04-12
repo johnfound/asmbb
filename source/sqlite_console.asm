@@ -15,9 +15,17 @@ begin
         stdcall StrNew
         mov     edi, eax
 
-        mov     eax, [.pSpecial]
-        stdcall GetQueryItem, [eax+TSpecialParams.post], "source=", 0
+        mov     esi, [.pSpecial]
+
+        test    [esi+TSpecialParams.userStatus], permAdmin
+        jz      .for_admins_only
+
+
+        stdcall GetQueryItem, [esi+TSpecialParams.post], "source=", 0
         mov     [.source], eax
+
+        stdcall StrCat, [esi+TSpecialParams.page_title], "WARNING! SQLite console. You can destroy your database here!"
+
 
 ; first output the form
 
@@ -131,10 +139,19 @@ begin
 
 .finish:
         stdcall StrDel, [.source]
+        clc
 
+.exit:
         mov     [esp+4*regEAX], edi
         popad
         return
+
+
+.for_admins_only:
+
+        stdcall StrMakeRedirect, edi, "/!message/only_for_admins"
+        stc
+        jmp     .exit
 
 
 
