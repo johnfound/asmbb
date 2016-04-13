@@ -1,27 +1,9 @@
 
-; select rowid, Content from PostFTS where PostFTS match 'post OR sim*';
-;
-; select rowid, highlight(PostFTS, 0, '<u>', '</u>') from PostFTS where PostFTS match 'post OR sim*';
 
 
-sqlSearchCnt text "select count() from PostFTS where PostFTS match ?"
 
-sqlSearch text "select ",                                                                                                       \
-                 "U.nick as UserName, ",                                                                                        \
-                 "U.id as UserID, ",                                                                                            \
-                 "T.slug, ",                                                                                                    \
-                 "strftime('%d.%m.%Y %H:%M:%S', P.postTime, 'unixepoch') as PostTime, ",                                        \
-                 "P.ReadCount, ",                                                                                               \
-                 "PostFTS.rowid, ",                                                                                             \
-                 "snippet(PostFTS, 0, '', '', '...', 16) as Content, ",                                                         \
-                 "T.Caption, ",                                                                                                 \
-                 "(select count() from UnreadPosts UP where UP.UserID = ?4 and UP.PostID = PostFTS.rowid) as Unread ",          \
-               "from PostFTS ",                                                                                                 \
-               "left join Posts P on P.id = PostFTS.rowid ",                                                                    \
-               "left join Threads T on T.id = P.threadID ",                                                                     \
-               "left join Users U on P.userID = U.id ",                                                                         \
-               "where PostFTS match ?1 order by rank limit ?2 offset ?3"
-
+sqlSearchCnt    StripText "search_cnt.sql", SQL
+sqlSearch       StripText "search.sql", SQL
 
 proc ShowSearchResults2, .hStart, .pSpecial
 .pages      dd ?
@@ -61,6 +43,8 @@ begin
 
         stdcall StrPtr, [.query]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+        call    .bind_limits
 
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteColumnInt, [.stmt], 0
@@ -106,7 +90,7 @@ begin
         imul    eax, PAGE_LENGTH
         cinvoke sqliteBindInt, [.stmt], 3, eax
 
-        cinvoke sqliteBindInt, [.stmt], 4, [esi+TSpecialParams.userID]
+        call    .bind_limits
 
 .search_loop:
         cinvoke sqliteStep, [.stmt]
@@ -143,5 +127,27 @@ begin
         mov     edi, eax
         stc
         jmp     .finish
+
+
+
+.bind_limits:
+
+        cmp     [esi+TSpecialParams.thread], 0
+        je      .thread_ok
+
+        stdcall StrPtr, [esi+TSpecialParams.thread]
+        cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
+
+.thread_ok:
+
+        cmp     [esi+TSpecialParams.dir], 0
+        je      .dir_ok
+
+        stdcall StrPtr, [esi+TSpecialParams.dir]
+        cinvoke sqliteBindText, [.stmt], 5, eax, [eax+string.len], SQLITE_STATIC
+
+.dir_ok:
+        retn
+
 
 endp
