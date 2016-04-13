@@ -1,4 +1,4 @@
-<span class="notice">Redirect after 3000ms or click.</span>
+<span class="notice">Click here</span>
 </a>
 [special:environment]
 </body>

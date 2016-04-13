@@ -7,10 +7,9 @@ sqlSavePost    text "update Posts set content = substr( ?1, 1, ?3 ), postTime = 
 sqlGetPostUser text "select userID, threadID from Posts where id = ?"
 
 
-proc EditUserMessage, .postID, .pSpecial
+proc EditUserMessage, .pSpecial
 .stmt dd ?
 
-.fPreview dd ?
 .source   dd ?
 .ticket   dd ?
 
@@ -21,20 +20,24 @@ proc EditUserMessage, .postID, .pSpecial
 begin
         pushad
 
-        mov     [.fPreview], 1  ; preview by default when handling GET requests.
-        mov     [.source], 0
-        mov     [.ticket], 0
+        xor     ebx, ebx
+        mov     [.source], ebx
+        mov     [.ticket], ebx
 
         mov     esi, [.pSpecial]
 
         stdcall StrNew
         mov     edi, eax
 
+        cmp     [esi+TSpecialParams.page_num], ebx
+        je      .error_post_id
+
+
 ; read the userID and threadID for the post.
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetPostUser, -1, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.page_num]
         cinvoke sqliteStep, [.stmt]
 
         cmp     eax, SQLITE_ROW
@@ -79,14 +82,7 @@ begin
         test    eax, eax
         jnz     .save_post_and_exit
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], "preview=", 0
-        stdcall StrDel, eax
-        mov     [.fPreview], eax
-
-
 .show_edit_form:
-
-        stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Content-type: text/html", 13, 10, 13, 10>
 
         cmp     [.ticket], 0
         jne     .ticket_ok
@@ -108,7 +104,7 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], ecx, -1, eax, 0
 
-        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.page_num]
 
         stdcall StrPtr, [.ticket]
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
@@ -129,21 +125,13 @@ begin
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
 
-        stdcall StrCatTemplate, edi, "main_html_start", 0, esi
-
-        stdcall StrCatTemplate, edi, "edit_form", [.stmt], esi
-
-        cmp     [.fPreview], 0
-        je      .preview_ok
+        stdcall StrCatTemplate, edi, "form_edit", [.stmt], esi
 
         stdcall StrCatTemplate, edi, "preview", [.stmt], esi
 
-.preview_ok:
-
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall StrCatTemplate, edi, "main_html_end", 0, esi
-
+        clc
         jmp     .finish
 
 
@@ -174,7 +162,7 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSavePost, -1, eax, 0
 
-        cinvoke sqliteBindInt, [.stmt], 2, [.postID]
+        cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.page_num]
         cinvoke sqliteBindInt, [.stmt], 3, LIMIT_POST_LENGTH
 
         stdcall StrPtr, [.source]
@@ -205,7 +193,7 @@ begin
         jne     .error_write
 
 
-        stdcall RegisterUnreadPost, [.postID]
+        stdcall RegisterUnreadPost, [esi+TSpecialParams.page_num]
         cmp     eax, SQLITE_DONE
         jne     .error_write
 
@@ -220,11 +208,13 @@ begin
         jne     .error_write
 
 .end_save:
-        stdcall StrCatRedirectToPost, edi, [.postID], [esi+TSpecialParams.tag]
+        stdcall StrCatRedirectToPost, edi, [esi+TSpecialParams.page_num], esi
 
 .finish_clear:
 
         stdcall ClearTicket, [esi+TSpecialParams.session]
+        stc
+
 
 .finish:
         stdcall StrDel, [.source]
@@ -234,41 +224,37 @@ begin
         return
 
 
+.error_post_id:
+
+        stdcall AppendError, edi, "404 Not Found", esi
+        stc
+        jmp     .finish
+
+
 .error_bad_ticket:
 
-        stdcall StrDel, edi
-        stdcall StrNew
-        mov     edi, eax
-
-        stdcall StrMakeRedirect2, edi, "/message/error_bad_ticket/", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, edi, "/!message/error_bad_ticket/"
         jmp     .finish_clear
 
 
 .error_wrong_permissions:
 
-        stdcall StrMakeRedirect2, edi, "/message/error_cant_post/", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, edi, "/!message/error_cant_post/"
         jmp     .finish_clear
 
 
 .error_missing_post:
 
         cinvoke sqliteFinalize, [.stmt]
-
-        stdcall StrDel, edi
-        stdcall StrNew
-        mov     edi, eax
-
-        stdcall StrMakeRedirect2, edi, "/message/error_post_not_exists/", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, edi, "/!message/error_post_not_exists/"
+        stc
         jmp     .finish
 
 
 .error_write:
 
-; rollback:
-
         cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
-
-        stdcall StrMakeRedirect2, edi, "/message/error_cant_write/", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, edi, "/!message/error_cant_write/"
         jmp     .finish_clear
 
 endp

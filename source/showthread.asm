@@ -27,7 +27,7 @@ sqlGetThreadInfo text "select id, caption, slug from Threads where slug = ? limi
 
 
 
-proc ShowThread, .threadSlug, .start, .pSpecial
+proc ShowThread, .pSpecial
 
 .stmt  dd ?
 .stmt2 dd ?
@@ -48,7 +48,7 @@ begin
         lea     eax, [.stmt2]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, -1, eax, 0
 
-        stdcall StrPtr, [.threadSlug]
+        stdcall StrPtr, [esi+TSpecialParams.thread]
         cinvoke sqliteBindText, [.stmt2], 1, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt2]
@@ -87,15 +87,10 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall StrDup, txt "/threads/"
-        stdcall StrCat, eax, [.threadSlug]
-        stdcall StrCharCat, eax, "/"
-
-        stdcall CreatePagesLinks, eax, 0, [.start], [.cnt]
+        stdcall CreatePagesLinks, [esi+TSpecialParams.page_num], [.cnt], 0
         mov     [.list], eax
 
         stdcall StrCat, edi, [.list]
-
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectPosts, -1, eax, 0
@@ -103,11 +98,11 @@ begin
         cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
         cinvoke sqliteBindInt, [.stmt], 2, PAGE_LENGTH
 
-        mov     eax, [.start]
+        mov     eax, [esi+TSpecialParams.page_num]
         imul    eax, PAGE_LENGTH
         cinvoke sqliteBindInt, [.stmt], 3, eax
 
-        stdcall StrPtr, [.threadSlug]
+        stdcall StrPtr, [esi+TSpecialParams.thread]
         cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteBindInt, [.stmt], 5, [esi+TSpecialParams.userID]
@@ -148,6 +143,8 @@ begin
         stdcall StrCat, edi, "</div>"   ; div.thread
 
         cinvoke sqliteFinalize, [.stmt]
+
+.exit:
         cinvoke sqliteFinalize, [.stmt2]
 
         clc
@@ -156,16 +153,146 @@ begin
         return
 
 .error:
-        cinvoke sqliteFinalize, [.stmt2]
         stdcall StrDel, edi
-        stc
-        popad
-        return
+        xor     edi, edi
+        jmp     .exit
 
 endp
 
 
 
 
+
+
+
+proc PostByID, .pSpecial
+begin
+        pushad
+
+        mov     esi, [.pSpecial]
+
+        cmp     [esi+TSpecialParams.page_num], 0
+        je      .err404
+
+        stdcall StrNew
+        stdcall StrCatRedirectToPost, eax, [esi+TSpecialParams.page_num], esi
+
+        stc
+
+.finish:
+        mov     [esp+4*regEAX], eax
+        popad
+        return
+
+.err404:
+        xor     eax, eax
+        clc
+        jmp     .finish
+
+endp
+
+
+
+
+sqlGetThreadID text "select P.ThreadID, T.Slug from Posts P left join Threads T on P.threadID = T.id where P.id = ?"
+
+sqlGetThePostIndex text "select count() from Posts p where threadID = ?1 and id < ?2 order by id"
+
+proc StrCatRedirectToPost, .hString, .postID, .pSpecial
+.stmt dd ?
+
+.page dd ?
+.slug dd ?
+
+begin
+        pushad
+
+        mov     [.slug], 0
+
+        mov     esi, [.pSpecial]
+
+        stdcall StrCat, [.hString], <"Status: 302 Found", 13, 10, "Location: /">
+
+; get the thread ID and slug
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadID, -1, eax, 0
+
+        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .error
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        mov     ebx, eax
+
+        cinvoke sqliteColumnText, [.stmt], 1
+        stdcall StrDupMem, eax
+        mov     [.slug], eax
+
+        cinvoke sqliteFinalize, [.stmt]
+
+
+; get the post index in the thread in order to compute the page, where the post is located.
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThePostIndex, -1, eax, 0
+
+        cinvoke sqliteBindInt, [.stmt], 1, ebx
+        cinvoke sqliteBindInt, [.stmt], 2, [.postID]
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .error
+
+        cinvoke sqliteColumnInt, [.stmt], 0     ; the index in thread.
+        cdq
+
+        mov     ecx, PAGE_LENGTH
+        div     ecx
+        mov     [.page], eax
+
+        cinvoke sqliteFinalize, [.stmt]
+
+; now compose the redirection string
+
+        cmp     [esi+TSpecialParams.dir], 0
+        je      .dir_ok
+
+        stdcall StrCat, [.hString], [esi+TSpecialParams.dir]
+        stdcall StrCharCat, [.hString], "/"
+
+.dir_ok:
+        stdcall StrCat, [.hString], [.slug]
+        stdcall StrCharCat, [.hString], "/"
+
+        cmp     [.page], 0
+        je      .page_ok
+
+        stdcall NumToStr, [.page], ntsDec or ntsUnsigned
+        stdcall StrCat, [.hString], eax
+        stdcall StrDel, eax
+
+.page_ok:
+        stdcall StrCharCat, [.hString], "#"
+
+        stdcall NumToStr, [.postID], ntsDec or ntsUnsigned
+        stdcall StrCat, [.hString], eax
+        stdcall StrDel, eax
+
+.finish:
+
+        stdcall StrCharCat, [.hString], $0a0d0a0d
+        stdcall StrDel, [.slug]
+
+        popad
+        return
+
+.error:
+        cinvoke sqliteFinalize, [.stmt]
+        jmp     .finish
+
+endp
 
 

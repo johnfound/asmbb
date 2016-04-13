@@ -220,18 +220,13 @@ div.thread {
   margin: auto;
 }
 
+
 h1.thread_caption {
   font-size: 20px;
   margin: 16px 0px 0px 0px;
   clear:both;
 }
 
-
-
-/* div.thread a {
-  margin-top: 8px;
-  display: inline-block;
-} */
 
 div.post {
   position: relative;
@@ -249,6 +244,7 @@ div.user_info {
   background-color: #404040;
   color: white;
   overflow: auto;
+  padding: 8px 8px 0px 8px;
 }
 
 div.search_info {
@@ -261,6 +257,7 @@ div.search_info {
 
   background-color: #404040;
   color: white;
+  overflow: auto;
 }
 
 div.post_time {
@@ -274,11 +271,12 @@ div.post_link {
   padding: 4px;
   text-align: right;
   font-size: 18px;
+  min-height: 64px;
 }
 
 div.post_sum {
   margin-left: 200px;
-  padding: 4px 4px 4px 4px;
+  padding: 4px 4px 4px 8px;
   background-color: white;
 }
 
@@ -315,6 +313,15 @@ img.avatar {
   margin: 0px auto;
   width: 128px;
   height: 128px;
+  background-color: #ffda44;
+  clear: both;
+}
+
+img.smallavatar {
+  display: block;
+  margin: 0px auto;
+  width: 64px;
+  height: 64px;
   background-color: #ffda44;
   clear: both;
 }
@@ -400,7 +407,7 @@ form.settings label {
   width: 220px;
 //  line-height: 30px;
   margin-bottom: 8px;
-  padding: 0px 8px;
+  padding: 0px 16px;
   color: black;
   font-size: 16px;
   font-weight: bold;
@@ -434,6 +441,7 @@ label.checkbox {
   height: auto !important;
   padding: 0px !important;
   line-height: 0px !important;
+  margin-right: 8px;
 }
 
 label.checkbox input {

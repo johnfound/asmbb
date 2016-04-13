@@ -1,8 +1,8 @@
 <div class="new_editor">
   <div class="ui">
-    <a class="ui" href="/list">Threads</a>
+    <a class="ui" href="/">Threads</a>
   </div>
-  <form class="register-block" method="post" target="_self" action="/register/">
+  <form class="register-block" method="post" action="/!register/">
     <h1>Register</h1>
     <input type="text" value="" placeholder="Username" name="username" class="username" maxlength="256" autofocus="on">
     <input type="text" value="" placeholder="e-mail" name="email" class="email" maxlength="320">

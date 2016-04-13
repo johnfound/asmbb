@@ -15,7 +15,7 @@ sqlSelectThreads text "select ",                                                
                                                                                                                                                                 \
                       "from Threads T left join Users UU on UU.id = StarterID ",                                                                                \
                                                                                                                                                                 \
-                      "where ?4 is null or ?4 in (select tag from threadtags tt where tt.threadid = t.id) ",                                                    \
+                      "where ?4 is null or ?4 in (select tag from threadtags tt where tt.threadid = t.id) ",                                                  \
                       "order by Pinned desc, T.LastChanged desc ",                                                                                              \
                                                                                                                                                                 \
                       "limit  ?1 ",                                                                                                                             \
@@ -24,7 +24,7 @@ sqlSelectThreads text "select ",                                                
 sqlThreadsCount  text "select count(1) from Threads t where ?1 is null or ?1 in (select tag from threadtags tt where tt.threadid = t.id)"
 
 
-proc ListThreads, .start, .pSpecial
+proc ListThreads, .pSpecial
 
 .stmt  dd ?
 .list  dd ?
@@ -40,24 +40,25 @@ begin
 ; make the title
 
         mov     ebx, [esi+TSpecialParams.page_title]
-        stdcall StrCat, ebx, "Threads list"
+        stdcall StrCat, ebx, "Threads list "
 
-        cmp     [.start], 0
+        cmp     [esi+TSpecialParams.dir], 0
+        je      .no_tag
+
+        stdcall StrCat, ebx, [esi+TSpecialParams.dir]
+
+.no_tag:
+        stdcall StrCharCat, ebx, "/"
+
+        cmp     [esi+TSpecialParams.page_num], 0
         je      .page_ok
 
-        stdcall StrCat, ebx, ", page: "
-        stdcall NumToStr, [.start], ntsDec or ntsUnsigned
+        stdcall StrCat, ebx, " page: "
+        stdcall NumToStr, [esi+TSpecialParams.page_num], ntsDec or ntsUnsigned
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax
 
 .page_ok:
-        cmp     [esi+TSpecialParams.tag], 0
-        je      .no_tag
-
-        stdcall StrCat, ebx, ", tag: "
-        stdcall StrCat, ebx, [esi+TSpecialParams.tag]
-
-.no_tag:
         mov     [esi+TSpecialParams.page_title], ebx
 
 
@@ -70,12 +71,12 @@ begin
 
 ; links to the pages.
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlThreadsCount, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlThreadsCount, sqlThreadsCount.length, eax, 0
 
-        cmp     [esi+TSpecialParams.tag], 0
+        cmp     [esi+TSpecialParams.dir], 0
         je      .tag_ok
 
-        stdcall StrPtr, [esi+TSpecialParams.tag]
+        stdcall StrPtr, [esi+TSpecialParams.dir]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
 .tag_ok:
@@ -84,7 +85,7 @@ begin
         mov     ebx, eax
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall CreatePagesLinks, txt "/list/", 0, [.start], ebx
+        stdcall CreatePagesLinks, [esi+TSpecialParams.page_num], ebx, 0
         mov     [.list], eax
 
         stdcall StrCat, edi, eax
@@ -96,7 +97,7 @@ begin
 
         cinvoke sqliteBindInt, [.stmt], 1, PAGE_LENGTH
 
-        mov     eax, [.start]
+        mov     eax, [esi+TSpecialParams.page_num]
         imul    eax, PAGE_LENGTH
         cinvoke sqliteBindInt, [.stmt], 2, eax
 
@@ -104,12 +105,13 @@ begin
 
         xor     ebx, ebx
 
-        cmp     [esi+TSpecialParams.tag], 0
-        je      .loop
+        cmp     [esi+TSpecialParams.dir], 0
+        je      .dir_ok
 
-        stdcall StrPtr, [esi+TSpecialParams.tag]
+        stdcall StrPtr, [esi+TSpecialParams.dir]
         cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
 
+.dir_ok:
 
 .loop:
         cinvoke sqliteStep, [.stmt]
@@ -137,8 +139,72 @@ begin
         cinvoke sqliteFinalize, [.stmt]
 
         mov     [esp+4*regEAX], edi
+        clc
         popad
         return
+endp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sqlPinToggle text "update threads set pinned = (pinned is NULL) or ( (pinned +1)%2) where slug = ?"
+
+proc PinThread, .pSpecial
+.stmt dd ?
+begin
+        pushad
+
+        mov     esi, [.pSpecial]
+
+        test    [esi+TSpecialParams.userStatus], permAdmin
+        jz      .for_admins_only
+
+        cmp     [esi+TSpecialParams.thread], 0
+        je      .err404
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlPinToggle, sqlPinToggle.length, eax, 0
+
+        stdcall StrPtr, [esi+TSpecialParams.thread]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+        stdcall GetBackLink, esi
+        push    eax
+
+        stdcall StrMakeRedirect, 0, eax
+        stdcall StrDel ; from the stack.
+
+.finish:
+        stc
+
+.exit:
+        mov     [esp+4*regEAX], eax
+        popad
+        return
+
+.for_admins_only:
+        stdcall StrMakeRedirect, 0, "/!message/only_for_admins"
+        jmp     .finish
+
+.err404:
+        xor     eax, eax
+        clc
+        jmp     .exit
+
 endp
 
 

@@ -3,8 +3,8 @@ LIMIT_POST_CAPTION = 512
 LIMIT_TAG_DESCRIPTION = 1024
 
 
-cNewPostForm   text "new_post_form"
-cNewThreadForm text "new_thread_form"
+cNewPostForm   text "form_new_post"
+cNewThreadForm text "form_new_thread"
 
 sqlSelectConst text "select ? as slug, ? as caption, ? as source, ? as ticket, ? as tags"
 
@@ -16,7 +16,7 @@ sqlInsertThread  text "insert into Threads ( Caption ) values ( ? )"
 sqlSetThreadSlug text "update Threads set slug = ? where id = ?"
 
 
-proc PostUserMessage2, .hSlug, .idQuote, .pSpecial
+proc PostUserMessage2, .pSpecial
 .stmt  dd ?
 .stmt2 dd ?
 
@@ -55,7 +55,7 @@ begin
 ; check the permissions.
 
         mov     eax, permThreadStart
-        cmp     [.hSlug], 0
+        cmp     [esi+TSpecialParams.thread], 0
         je      .perm_ok
 
         mov     eax, permPost
@@ -69,7 +69,7 @@ begin
 
 ; get the additional post/thread parameters
 
-        cmp     [.hSlug], 0
+        cmp     [esi+TSpecialParams.thread], 0
         jne     .get_caption_from_thread
 
 
@@ -91,11 +91,11 @@ begin
         test    eax, eax
         jz      .tags_ok
 
-        cmp     [esi+TSpecialParams.tag], 0
+        cmp     [esi+TSpecialParams.dir], 0
         je      .tags_ok
 
         stdcall StrCharCat, [.tags], ', '
-        stdcall StrCat, [.tags], [esi+TSpecialParams.tag]
+        stdcall StrCat, [.tags], [esi+TSpecialParams.dir]
 
 .tags_ok:
         jmp     .thread_ok
@@ -106,7 +106,7 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, -1, eax, 0
 
-        stdcall StrPtr, [.hSlug]
+        stdcall StrPtr, [esi+TSpecialParams.thread]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
@@ -151,18 +151,18 @@ begin
         stdcall StrDel, eax
         mov     [.fPreview], eax
 
-
-        cmp     [.idQuote], 0
-        je      .show_edit_form
-
         cmp     [.source], 0
         jne     .show_edit_form
+
+        mov     ebx, [esi+TSpecialParams.page_num]
+        test    ebx, ebx
+        jz      .show_edit_form
 
 ; get the quoted text
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetQuote, -1, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, [.idQuote]
+        cinvoke sqliteBindInt, [.stmt], 1, ebx
         cinvoke sqliteStep, [.stmt]
 
         cmp     eax, SQLITE_ROW
@@ -200,9 +200,6 @@ begin
 
 .title_set:
 
-        stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Content-type: text/html", 13, 10, 13, 10>
-        stdcall StrCatTemplate, edi, "main_html_start", 0, esi
-
         cmp     [.ticket], 0
         jne     .ticket_ok
 
@@ -215,10 +212,10 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectConst, -1, eax, 0
 
-        cmp     [.hSlug], 0
+        cmp     [esi+TSpecialParams.thread], 0
         je      .slug_ok
 
-        stdcall StrPtr, [.hSlug]
+        stdcall StrPtr, [esi+TSpecialParams.thread]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
 .slug_ok:
@@ -253,7 +250,7 @@ begin
         cinvoke sqliteStep, [.stmt]
 
         mov     ecx, cNewThreadForm
-        cmp     [.hSlug], 0
+        cmp     [esi+TSpecialParams.thread], 0
         je      .make_form
 
         mov     ecx, cNewPostForm
@@ -270,8 +267,7 @@ begin
 .preview_ok:
 
         cinvoke sqliteFinalize, [.stmt]
-
-        stdcall StrCatTemplate, edi, "main_html_end", 0, esi
+        clc
         jmp     .finish
 
 
@@ -294,10 +290,10 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
-        cmp     [.hSlug], 0
+        cmp     [esi+TSpecialParams.thread], 0
         je      .new_thread
 
-        stdcall StrDup, [.hSlug]
+        stdcall StrDup, [esi+TSpecialParams.thread]
         mov     [.slug], eax
 
         jmp     .post_in_thread
@@ -309,6 +305,7 @@ begin
 
         stdcall StrSlugify, [.caption]
         mov     [.slug], eax
+
         stdcall StrLen, eax
         test    eax, eax
         jz      .error_invalid_caption
@@ -334,7 +331,7 @@ begin
 
         stdcall NumToStr, eax, ntsDec or ntsUnsigned
 
-        stdcall StrCharCat, [.slug], "."
+        stdcall StrCharCat, [.slug], "-"
         stdcall StrCat, [.slug], eax
         stdcall StrDel, eax
 
@@ -402,7 +399,7 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
         jb      .description_ok
 
         stdcall StrByteUtf8, [edi+TArray.array+4], LIMIT_TAG_DESCRIPTION
-        stdcall StrTrim, [edi+TArray.array+4]
+        stdcall StrTrim, [edi+TArray.array+4], eax
 
         stdcall StrPtr, [edi+TArray.array+4]
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
@@ -416,13 +413,13 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
         cmp     [eax+string.len], 0
         je      .next_tag
 
+        push    eax
         cinvoke sqliteBindText, [.stmt],  1, eax, [eax+string.len], SQLITE_STATIC
 
-        stdcall StrPtr, [edi+TArray.array]
+        pop     eax
         cinvoke sqliteBindText, [.stmt2], 1, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
-
         cinvoke sqliteStep, [.stmt2]
 
         cinvoke sqliteClearBindings, [.stmt]
@@ -514,11 +511,12 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
         cinvoke sqliteFinalize, [.stmt]
 
         mov     eax, [.pSpecial]
-        stdcall StrCatRedirectToPost, edi, esi, [eax+TSpecialParams.tag]
+        stdcall StrCatRedirectToPost, edi, esi, eax
 
 .finish_clear:
         mov     eax, [.pSpecial]
         stdcall ClearTicket, [eax+TSpecialParams.session]
+        stc
 
 .finish:
         stdcall StrDel, [.slug]
@@ -540,7 +538,7 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
         call    .do_rollback
 
         mov     eax, [.pSpecial]
-        stdcall StrMakeRedirect2, edi, "/message/error_cant_write/", [eax+TSpecialParams.query]
+        stdcall StrMakeRedirect, edi, "/!message/error_cant_write/"
         jmp     .finish_clear
 
 
@@ -549,7 +547,7 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
         call    .do_rollback
 
         mov     eax, [.pSpecial]
-        stdcall StrMakeRedirect2, edi, "/message/error_invalid_caption/", [eax+TSpecialParams.query]
+        stdcall StrMakeRedirect, edi, "/!message/error_invalid_caption/"
         jmp     .finish_clear
 
 
@@ -560,7 +558,7 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
         call    .do_rollback
 
         mov     eax, [.pSpecial]
-        stdcall StrMakeRedirect2, edi, "/message/error_invalid_content", [eax+TSpecialParams.query]
+        stdcall StrMakeRedirect, edi, "/!message/error_invalid_content"
         jmp     .finish_clear
 
 
@@ -574,7 +572,7 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
 .error_wrong_permissions:
 
         mov     eax, [.pSpecial]
-        stdcall StrMakeRedirect2, edi, "/message/error_cant_post", [eax+TSpecialParams.query]
+        stdcall StrMakeRedirect, edi, "/!message/error_cant_post"
         jmp     .finish_clear
 
 
@@ -582,7 +580,7 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
 .error_thread_not_exists:
 
         mov     eax, [.pSpecial]
-        stdcall StrMakeRedirect2, edi, "/message/error_thread_not_exists", [eax+TSpecialParams.query]
+        stdcall StrMakeRedirect, edi, "/!message/error_thread_not_exists"
         jmp     .finish_clear
 
 
@@ -590,7 +588,7 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
         stdcall StrDel, edi
 
         mov     eax, [.pSpecial]
-        stdcall StrMakeRedirect2, 0, "/message/error_bad_ticket", [eax+TSpecialParams.query]
+        stdcall StrMakeRedirect, 0, "/!message/error_bad_ticket"
         mov     edi, eax
         jmp     .finish_clear
 

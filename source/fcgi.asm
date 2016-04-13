@@ -228,7 +228,7 @@ pathMySocket text "./engine.sock"
 ;
 ;
 
-sqlLogEvent text "insert into Log (process_id, timestamp, event, value, runtime) values (?1, strftime('%s','now'), (select id from Events where lower(name) = lower(?2)), ?3, ?4 )"
+sqlLogEvent text "insert into Log (process_id, timestamp, event, value, runtime) values (?1, strftime('%s','now'), ?2, ?3, ?4 )"
 sqlCleanLog text "delete from Log where timestamp < strftime('%s','now') - 86400"
 
 

@@ -2,28 +2,9 @@
 
 
 
-sqlGetTemplate text "select template from templates where id = ?"
-
-
 proc StrCatTemplate, .hString, .strTemplateID, .sql_statement, .p_special
-.stmt  dd ?
-.free  dd ?
 begin
         pushad
-        and     [.free], 0
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetTemplate, sqlGetTemplate.length+1, eax, 0
-
-        stdcall StrLen, [.strTemplateID]
-        mov     ecx, eax
-        stdcall StrPtr, [.strTemplateID]
-
-        cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        je      .get_template
-
 
         stdcall StrDupMem, "templates/"
         stdcall StrCat, eax, [.strTemplateID]
@@ -32,39 +13,20 @@ begin
 
         stdcall LoadBinaryFile, eax
         stdcall StrDel ; from the stack
-        jc      .error
+        jc      .finish
 
-        mov     [.free], eax
         mov     esi, eax
         and     dword [eax+ecx], 0
-        jmp     .process_template
 
-
-.get_template:
-
-        cinvoke sqliteColumnText, [.stmt], 0
-        mov     esi, eax
-
-.process_template:
-
-        stdcall __DoProcessTemplate2, eax, [.sql_statement], [.p_special], TRUE
+        stdcall __DoProcessTemplate2, esi, [.sql_statement], [.p_special], TRUE
 
         stdcall StrCat, [.hString], eax
         stdcall StrDel, eax
-
+        stdcall FreeMem, esi
 
 .finish:
-        cinvoke sqliteFinalize, [.stmt]
-
-        stdcall FreeMem, [.free]
         popad
         return
-
-
-.error:
-        stdcall StrCat, [.hString], "Unknown template!"
-        jmp     .finish
-
 endp
 
 
@@ -262,6 +224,15 @@ begin
         stdcall StrCompNoCase, edi, "userid"
         jc      .get_userid
 
+        stdcall StrCompNoCase, edi, txt "page"
+        jc      .get_page
+
+        stdcall StrCompNoCase, edi, txt "dir"
+        jc      .get_dir
+
+        stdcall StrCompNoCase, edi, txt "thread"
+        jc      .get_thread
+
         stdcall StrCompNoCase, edi, "permissions"
         jc      .get_permissions
 
@@ -286,23 +257,14 @@ begin
         stdcall StrCompNoCase, edi, "referer"
         jc      .get_referer
 
-        stdcall StrCompNoCase, edi, "search"
-        jc      .get_search
-
-        stdcall StrCompNoCase, edi, txt "tag"
-        jc      .get_tag
-
-        stdcall StrCompNoCase, edi, txt "urltag"
-        jc      .get_url_tag
-
-        stdcall StrCompNoCase, edi, "query"
-        jc      .get_query
-
         stdcall StrCompNoCase, edi, "alltags"
         jc      .get_all_tags
 
         stdcall StrCompNoCase, edi, "setupmode"
         jc      .get_setupmode
+
+        stdcall StrCompNoCase, edi, "search"
+        jc      .get_search
 
         stdcall GetQueryItem, edi, "posters=", 0
         test    eax, eax
@@ -380,6 +342,24 @@ end if
         stdcall NumToStr, [esi+TSpecialParams.userID], ntsDec or ntsUnsigned
         jmp     .return_value
 
+
+;..................................................................
+
+.get_page:
+
+        stdcall NumToStr, [esi+TSpecialParams.page_num], ntsDec or ntsUnsigned
+        jmp     .return_value
+
+
+;..................................................................
+
+.get_thread:
+        mov     eax, [esi+TSpecialParams.thread]
+        jmp     .return_encoded
+
+.get_dir:
+        mov     eax, [esi+TSpecialParams.dir]
+        jmp     .return_encoded
 
 ;..................................................................
 
@@ -492,42 +472,10 @@ endl
 .get_referer:
 
         stdcall GetBackLink, esi
-        push    eax
-
-        stdcall StrEncodeHTML, eax
-        stdcall StrDel ; from the stack
         jmp     .return_value
 
 ;..................................................................
 
-.get_search:
-        cmp     [esi+TSpecialParams.search], 0
-        je      .empty_query
-
-        stdcall StrDup, [esi+TSpecialParams.search]
-        jmp     .return_value
-
-;..................................................................
-
-
-.get_tag:
-        cmp     [esi+TSpecialParams.tag], 0
-        je      .empty_query
-
-        stdcall StrDup, [esi+TSpecialParams.tag]
-        jmp     .return_value
-
-
-.get_url_tag:
-        cmp     [esi+TSpecialParams.tag], 0
-        je      .empty_query
-
-        stdcall StrDupMem, txt "?tag="
-        stdcall StrCat, eax, [esi+TSpecialParams.tag]
-        jmp     .return_value
-
-
-;..................................................................
 
 .get_setupmode:
         stdcall NumToStr, [esi+TSpecialParams.setupmode], ntsDec or ntsUnsigned
@@ -537,18 +485,18 @@ endl
 
 ;..................................................................
 
-.get_query:
-        cmp     [esi+TSpecialParams.query], 0
-        je      .empty_query
+.get_search:
 
-        stdcall StrDup, [esi+TSpecialParams.query]
+        xor     eax, eax
+        stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
+        jc      .return_value
+
+        stdcall GetQueryItem, eax, txt "s=", 0
         jmp     .return_value
 
-.empty_query:
-        stdcall StrNew
-        jmp     .return_value
 
 ;..................................................................
+
 
 .scale   db 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 32, 33, 35, 37, 38
          db 40, 41, 43, 44, 46, 47, 48, 50, 51, 52, 53, 55, 56, 57, 58, 59, 60, 62, 63, 64
@@ -613,11 +561,11 @@ endl
 
         stdcall StrCat, ebx, '<a class="taglink'
 
-        cmp     [esi+TSpecialParams.tag], 0
+        cmp     [esi+TSpecialParams.dir], 0
         je      .current_ok
 
         cinvoke sqliteColumnText, [.stmt], 0
-        stdcall StrCompNoCase, eax, [esi+TSpecialParams.tag]
+        stdcall StrCompNoCase, eax, [esi+TSpecialParams.dir]
         jnc     .current_ok
 
         stdcall StrCat, ebx, ' current_tag'
@@ -657,13 +605,12 @@ endl
 
 .plural_ok:
 
-        stdcall StrCat, ebx, '." href="/list/?tag='
-
+        stdcall StrCat, ebx, '." href="/'
         cinvoke sqliteColumnText, [.stmt], 0
         stdcall StrEncodeHTML, eax
 
         stdcall StrCat, ebx, eax
-        stdcall StrCat, ebx, txt '">'
+        stdcall StrCat, ebx, txt '/">'
         stdcall StrCat, ebx, eax
         stdcall StrCat, ebx, txt '</a>'
         stdcall StrDel, eax
@@ -735,13 +682,13 @@ endl
 
 .link_title_ok:
 
-        stdcall StrCat, ebx, 'href="/list/?tag='
+        stdcall StrCat, ebx, 'href="/'
 
         cinvoke sqliteColumnText, [.stmt], 0
         stdcall StrEncodeHTML, eax
 
         stdcall StrCat, ebx, eax
-        stdcall StrCat, ebx, txt '">'
+        stdcall StrCat, ebx, txt '/">'
         stdcall StrCat, ebx, eax
         stdcall StrCat, ebx, txt '</a>'
         stdcall StrDel, eax
@@ -801,14 +748,10 @@ sqlGetThreadPosters  text "select distinct U.id, U.nick from Posts P left join U
         ja      .contributor
 
 ; starter:
-        stdcall StrCat, ebx, 'started by: <b><a href="/userinfo/'
-        cinvoke sqliteColumnText, [.stmt], 0
-        stdcall StrCat, ebx, eax
-        stdcall StrCatQuery, ebx, [esi+TSpecialParams.query]
-
-        stdcall StrCharCat, ebx, '">'
-
+        stdcall StrCat, ebx, 'started by: <b><a href="/!userinfo/'
         cinvoke sqliteColumnText, [.stmt], 1
+        stdcall StrCat, ebx, eax
+        stdcall StrCharCat, ebx, '">'
         stdcall StrCat, ebx, eax
         stdcall StrCat, ebx, '</a></b>'
 
@@ -826,14 +769,10 @@ sqlGetThreadPosters  text "select distinct U.id, U.nick from Posts P left join U
 
 .add_contributor:
 
-        stdcall StrCat, ebx, '<a href="/userinfo/'
-        cinvoke sqliteColumnText, [.stmt], 0
-        stdcall StrCat, ebx, eax
-        stdcall StrCatQuery, ebx, [esi+TSpecialParams.query]
-
-        stdcall StrCharCat, ebx, '">'
-
+        stdcall StrCat, ebx, '<a href="/!userinfo/'
         cinvoke sqliteColumnText, [.stmt], 1
+        stdcall StrCat, ebx, eax
+        stdcall StrCharCat, ebx, '">'
         stdcall StrCat, ebx, eax
         stdcall StrCharCat, ebx, '</a>'
 
@@ -1057,6 +996,9 @@ end if
 .col_loop:
 
         cinvoke sqliteColumnText, [.stmt], 0
+        test    eax, eax
+        jz      .finalize_sql
+
         stdcall StrCat, edi, eax
 
 .finalize_sql:
@@ -1395,7 +1337,7 @@ endp
 
 
 
-proc StrMakeRedirect2, .hString, .hWhere, .hQuery
+proc StrMakeRedirect, .hString, .hWhere
 begin
         push    eax
 
@@ -1417,17 +1359,6 @@ begin
 @@:
         stdcall StrCat, [.hString], "Location: "
         stdcall StrCat, [.hString], [.hWhere]
-        cmp     [.hQuery], 0
-        je      .query_ok
-
-        stdcall StrLen, [.hQuery]
-        test    eax, eax
-        jz      .query_ok
-
-        stdcall StrCharCat, [.hString], "?"
-        stdcall StrCat, [.hString], [.hQuery]
-
-.query_ok:
         stdcall StrCharCat, [.hString], $0a0d0a0d
 
         pop     eax
@@ -1465,19 +1396,19 @@ begin
 
         add     ecx, eax
 
-        stdcall StrMatchPatternNoCase, "/message/*", ecx
+        stdcall StrMatchPatternNoCase, "/!message/*", ecx
         jc      .root
 
-        stdcall StrMatchPatternNoCase, "/sqlite*", ecx
+        stdcall StrMatchPatternNoCase, "/!sqlite*", ecx
         jc      .root
 
-        stdcall StrMatchPatternNoCase, "/post*", ecx
+        stdcall StrMatchPatternNoCase, "*/!post*", ecx
         jc      .root
 
-        stdcall StrMatchPatternNoCase, "/register*", ecx
+        stdcall StrMatchPatternNoCase, "/!register*", ecx
         jc      .root
 
-        stdcall StrMatchPatternNoCase, "/edit/*", ecx
+        stdcall StrMatchPatternNoCase, "*/!edit/*", ecx
         cmp     eax, ecx
         je      .root
 
@@ -1491,31 +1422,12 @@ begin
         stc
 
 .finish:
+        push    eax
+        stdcall StrEncodeHTML, eax
+        stdcall StrDel ; from the stack
+
         mov     [esp+4*regEAX], eax
         popad
         return
 endp
 
-
-
-
-
-
-proc StrCatQuery, .hString, .hQuery
-begin
-        push    eax
-
-        cmp     [.hQuery], 0
-        je      .finish
-
-        stdcall StrLen, [.hQuery]
-        test    eax, eax
-        jz      .finish
-
-        stdcall StrCharCat, [.hString], "?"
-        stdcall StrCat, [.hString], [.hQuery]
-
-.finish:
-        pop     eax
-        return
-endp

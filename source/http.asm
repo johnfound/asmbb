@@ -1,45 +1,5 @@
 
 
-proc InitScriptVariables
-begin
-
-; first read document root.
-        stdcall GetEnvVariable, 'SCRIPT_FILENAME'
-        jnc     .root_ok
-
-        stdcall StrDupMem, txt "./"
-
-.root_ok:
-        mov     [hDocRoot], eax
-        stdcall StrSplitFilename, eax
-        stdcall StrDel, eax
-
-; then read query string
-
-        stdcall GetEnvVariable, 'QUERY_STRING'
-        jnc     .query_ok
-
-        stdcall StrNew
-
-.query_ok:
-        mov     [hQuery], eax
-
-; parse query arguments
-
-        stdcall GetQueryItem, [hQuery], txt 'cmd=', txt '0'
-        push    eax
-
-        stdcall StrToNum, eax
-        mov     [Command], eax
-
-        stdcall StrDel ; from the stack
-
-
-        clc
-        return
-endp
-
-
 
 
 proc GetQueryItem, .hQuery, .itemname, .default

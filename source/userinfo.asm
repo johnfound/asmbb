@@ -20,16 +20,20 @@ sqlGetFullUserInfo text "select ",                                              
                           "(select status & 128 <> 0) as candelall, ",                                  \
                           "(select status & 0x80000000 <> 0) as isadmin ",                              \
                         "from users u ",                                                                \
-                        "where userid = ?"
+                        "where nick = ?"
 
 
-sqlUpdateUserInfo text "update users set avatar = ?, user_desc = ? where id = ?"
+sqlUpdateUserInfo text "update users set avatar = ?, user_desc = ? where nick = ?"
 
 
-proc ShowUserInfo, .userID, .pSpecial
+proc ShowUserInfo, .UserName, .pSpecial
 .stmt dd ?
 begin
         pushad
+
+        xor     edi, edi
+        cmp     [.UserName], edi
+        je      .exit
 
         stdcall StrNew
         mov     edi, eax
@@ -41,7 +45,9 @@ begin
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetFullUserInfo, sqlGetFullUserInfo.length, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, [.userID]
+
+        stdcall StrPtr, [.UserName]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
         jne     .missing_user
@@ -59,8 +65,8 @@ begin
         test    [esi+TSpecialParams.userStatus], permAdmin
         jnz     .put_edit_form
 
-        mov     eax, [esi+TSpecialParams.userID]
-        cmp     eax, [.userID]
+        cinvoke sqliteColumnInt, [.stmt], 0
+        cmp     eax, [esi+TSpecialParams.userID]
         jne     .edit_form_ok
 
 .put_edit_form:
@@ -78,6 +84,7 @@ begin
         cinvoke sqliteFinalize, [.stmt]
         popf
 
+.exit:
         mov     [esp+4*regEAX], edi
         popad
         return
@@ -99,9 +106,8 @@ endl
         test    [esi+TSpecialParams.userStatus], permAdmin
         jnz     .permissions_ok
 
-        mov     eax, [esi+TSpecialParams.userID]
-        cmp     eax, [.userID]
-        jne     .permissions_fail
+        stdcall StrCompCase, [.UserName], [esi+TSpecialParams.userName]
+        jnc     .permissions_fail
 
 .permissions_ok:
 
@@ -134,21 +140,19 @@ endl
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 
 .user_desc_ok:
-
-        cinvoke sqliteBindInt, [.stmt], 3, [.userID]
+        stdcall StrPtr, [.UserName]
+        cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
 
 .update_end:
 
         stdcall StrDupMem, "/userinfo/"
-        mov     ebx, eax
-        stdcall NumToStr, [.userID], ntsDec or ntsUnsigned
-        stdcall StrCat, ebx, eax
-        stdcall StrDel, eax
+        stdcall StrCat, eax, [.UserName]
+        push    eax
 
-        stdcall StrMakeRedirect2, edi, ebx, [esi+TSpecialParams.query]
-        stdcall StrDel, ebx
+        stdcall StrMakeRedirect, edi, eax
+        stdcall StrDel ; from the stack
 
         stdcall StrDel, [.avatar]
         stdcall StrDel, [.user_desc]

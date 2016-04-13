@@ -1,18 +1,5 @@
 
 
-proc ShowLoginPage, .pSpecial
-begin
-        mov     eax, [.pSpecial]
-        stdcall StrCat, [eax+TSpecialParams.page_title], "Login dialog"
-
-        stdcall StrNew
-        stdcall StrCatTemplate, eax, "login_form", 0, [.pSpecial]
-        return
-endp
-
-
-
-
 
 sqlGetUserInfo   text "select id, salt, passHash, status from Users where lower(nick) = lower(?)"
 sqlInsertSession text "insert into sessions (userID, sid, last_seen) values ( ?, ?, strftime('%s','now') )"
@@ -44,6 +31,20 @@ begin
 
         mov     esi, [.pSpecial]
         mov     ebx, [esi+TSpecialParams.post]
+        test    ebx, ebx
+        jnz     .do_login_user
+
+
+        stdcall StrCat, [esi+TSpecialParams.page_title], "Login dialog"
+        stdcall StrCatTemplate, edi, "form_login", 0, esi
+
+        mov     [esp+4*regEAX], edi
+        clc
+        popad
+        return
+
+
+.do_login_user:
 
         stdcall GetQueryItem, ebx, "username=", 0
         mov     [.user], eax
@@ -167,28 +168,28 @@ begin
         test    eax, eax
         jnz     .go_back
 
-        stdcall StrMakeRedirect2, edi, "/list", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, edi, "/list"
         jmp     .finish
 
 .go_back:
-        stdcall StrMakeRedirect2, edi, eax, 0  ; go back from where came.
+        stdcall StrMakeRedirect, edi, eax
         stdcall StrDel, eax
         jmp     .finish
 
 .redirect_back_short:
 
-        stdcall StrMakeRedirect2, edi, "/message/login_missing_data/", [esi+TSpecialParams.query]  ; go backward.
+        stdcall StrMakeRedirect, edi, "/!message/login_missing_data/"
         jmp     .finish
 
 .redirect_back_bad_permissions:
 
-        stdcall StrMakeRedirect2, edi, "/message/login_bad_permissions/", [esi+TSpecialParams.query] ; go backward.
+        stdcall StrMakeRedirect, edi, "/!message/login_bad_permissions/"
         jmp     .finish
 
 
 .redirect_back_bad_password:
 
-        stdcall StrMakeRedirect2, edi, "/message/login_bad_password/", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, edi, "/!message/login_bad_password/"
 
 .finish:
         stdcall StrDel, [.user]
@@ -196,6 +197,7 @@ begin
         stdcall StrDel, [.session]
 
         mov     [esp+4*regEAX], edi
+        stc
         popad
         return
 
@@ -230,13 +232,14 @@ begin
         stdcall StrCat, edi, <"Set-Cookie: sid=; HttpOnly; Path=/; Max-Age=0", 13, 10>
 
 .finish:
-        stdcall StrNew
-        stdcall StrCatTemplate, eax, "logout", 0, [.pspecial]
+        stdcall GetBackLink, esi
+        push    eax
 
-        stdcall StrMakeRedirect2, edi, eax, 0
-        stdcall StrDel, eax
+        stdcall StrMakeRedirect, edi, eax
+        stdcall StrDel ; from the stack
 
         mov     [esp+4*regEAX], edi
+        stc
         popad
         return
 endp
@@ -244,14 +247,6 @@ endp
 
 
 
-
-
-proc ShowRegisterPage
-begin
-        stdcall StrNew
-        stdcall StrCatTemplate, eax, "register_form", 0, 0
-        return
-endp
 
 
 
@@ -287,6 +282,21 @@ begin
 
         mov     esi, [.pSpecial]
         mov     ebx, [esi+TSpecialParams.post]
+        test    ebx, ebx
+        jnz     .do_register_user
+
+
+        stdcall StrNew
+        stdcall StrCatTemplate, eax, "form_register", 0, 0
+
+        mov     [esp+4*regEAX], eax
+        clc
+        popad
+        return
+
+
+
+.do_register_user:
 
         stdcall GetQueryItem, ebx, "username=", 0
         mov     [.user], eax
@@ -397,47 +407,47 @@ begin
 
 ; the user has been created and now is waiting for email activation.
 
-        stdcall StrMakeRedirect2, 0, "/message/user_created/", [esi+TSpecialParams.query]                    ; go forward.
+        stdcall StrMakeRedirect, 0, "/!message/user_created/"
         jmp     .finish
 
 
 .error_technical_problem:
 
-        stdcall StrMakeRedirect2, 0, "/message/register_technical/", [esi+TSpecialParams.query]              ; go backward.
+        stdcall StrMakeRedirect, 0, "/!message/register_technical/"
         jmp     .finish
 
 
 .error_short_name:
 
-        stdcall StrMakeRedirect2, 0, "/message/register_short_name/", [esi+TSpecialParams.query]             ; go backward.
+        stdcall StrMakeRedirect, 0, "/!message/register_short_name/"
         jmp     .finish
 
 .error_trick:
 
-        stdcall StrMakeRedirect2, 0, "/message/register_bot/", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, 0, "/!message/register_bot/"
 
         jmp     .finish
 
 
 .error_bad_email:
-        stdcall StrMakeRedirect2, 0, "/message/register_bad_email/", [esi+TSpecialParams.query]              ; go backward.
+        stdcall StrMakeRedirect, 0, "/!message/register_bad_email/"
         jmp     .finish
 
 
 .error_short_pass:
-        stdcall StrMakeRedirect2, 0, "/message/register_short_pass/", [esi+TSpecialParams.query]             ; go backward.
+        stdcall StrMakeRedirect, 0, "/!message/register_short_pass/"
         jmp     .finish
 
 
 .error_different:
 
-        stdcall StrMakeRedirect2, 0, "/message/register_passwords_different/", [esi+TSpecialParams.query]    ; go backward.
+        stdcall StrMakeRedirect, 0, "/!message/register_passwords_different/"
         jmp     .finish
 
 
 .error_exists:
 
-        stdcall StrMakeRedirect2, 0, "/message/register_user_exists/", [esi+TSpecialParams.query]            ; go backward.
+        stdcall StrMakeRedirect, 0, "/!message/register_user_exists/"
 
 .finish:
         stdcall StrDel, [.user]
@@ -447,6 +457,7 @@ begin
         stdcall StrDel, [.secret]
 
         mov     [esp+4*regEAX], eax
+        stc
         popad
         return
 endp
@@ -465,11 +476,16 @@ sqlRollback   text  "rollback"
 
 sqlUpdateUserEmail text "update users set email = (select email from WaitingActivation where a_secret = ?1) where nick = (select nick from WaitingActivation where a_secret = ?1)"
 
-proc ActivateAccount, .hSecret
+
+proc ActivateAccount, .hSecret, .pSpecial
 .stmt dd ?
 .type dd ?
 begin
         pushad
+
+        xor     eax, eax
+        cmp     [.hSecret], eax
+        je      .exit                   ; CF=0 if jump is taken
 
 ; begin transaction
 
@@ -566,15 +582,18 @@ begin
         cmp     [.type], SQLITE_NULL
         jne     .msg_new_account
 
-        stdcall StrMakeRedirect2, 0, "/message/email_changed", 0
+        stdcall StrMakeRedirect, 0, "/!message/email_changed"
         jmp     .finish
 
 
 .msg_new_account:
-        stdcall StrMakeRedirect2, 0, "/message/congratulations", 0
+        stdcall StrMakeRedirect, 0, "/!message/congratulations"
 
 
 .finish:
+        stc
+
+.exit:
         mov     [esp+4*regEAX], eax
         popad
         return
@@ -588,7 +607,7 @@ begin
 
         cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
 
-        stdcall StrMakeRedirect2, 0, "/message/bad_secret", 0
+        stdcall StrMakeRedirect, 0, "/!message/bad_secret"
         jmp     .finish
 
 endp
@@ -706,7 +725,7 @@ begin
         stdcall UserLogout, [.pSpecial]
         stdcall StrDel, eax
 
-        stdcall StrMakeRedirect2, 0, "/message/password_changed", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, 0, "/!message/password_changed"
 
 .finish:
 
@@ -715,6 +734,7 @@ begin
         stdcall StrDel, [.newpass2]
 
         mov     [esp+4*regEAX], eax
+        stc
         popad
         return
 
@@ -722,37 +742,37 @@ begin
 .bad_user:
 
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect2, 0, "/message/register_bot", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, 0, "/!message/register_bot"
         jmp     .finish
 
 
 .bad_password:
 
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect2, 0, "/message/change_password", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, 0, "/!message/change_password"
         jmp     .finish
 
 
 .bad_parameter:
 
-        stdcall StrMakeRedirect2, 0, "/message/login_missing_data", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, 0, "/!message/login_missing_data"
         jmp     .finish
 
 
 .error_different:
 
-        stdcall StrMakeRedirect2, 0, "/message/change_different", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, 0, "/!message/change_different"
         jmp     .finish
 
 
 .error_update:
 
-        stdcall StrMakeRedirect2, 0, "/message/error_cant_write", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, 0, "/!message/error_cant_write"
         jmp     .finish
 
 
 .error_short_pass:
-        stdcall StrMakeRedirect2, 0, "/message/register_short_pass/", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, 0, "/!message/register_short_pass/"
         jmp     .finish
 
 endp
@@ -857,7 +877,7 @@ begin
         stdcall ProcessActivationEmails
         jc      .error_technical_problem
 
-        stdcall StrMakeRedirect2, 0, "/message/email_activation_sent", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, 0, "/!message/email_activation_sent"
 
 .finish:
 
@@ -867,6 +887,7 @@ begin
         stdcall StrDel, [.secret]
 
         mov     [esp+4*regEAX], eax
+        stc
         popad
         return
 
@@ -874,37 +895,37 @@ begin
 .bad_user:
 
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect2, 0, "/message/register_bot", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, 0, "/!message/register_bot"
         jmp     .finish
 
 
 .bad_password:
 
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect2, 0, "/message/change_password", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, 0, "/!message/change_password"
         jmp     .finish
 
 
 .bad_parameter:
 
-        stdcall StrMakeRedirect2, 0, "/message/login_missing_data", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, 0, "/!message/login_missing_data"
         jmp     .finish
 
 
 .error_update:
 
-        stdcall StrMakeRedirect2, 0, "/message/error_cant_write", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, 0, "/!message/error_cant_write"
         jmp     .finish
 
 
 .bad_email:
-        stdcall StrMakeRedirect2, 0, "/message/register_bad_email", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, 0, "/!message/register_bad_email"
         jmp     .finish
 
 
 .error_technical_problem:
 
-        stdcall StrMakeRedirect2, 0, "/message/register_technical", [esi+TSpecialParams.query]
+        stdcall StrMakeRedirect, 0, "/!message/register_technical"
         jmp     .finish
 
 endp

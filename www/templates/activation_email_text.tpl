@@ -14,6 +14,6 @@ If you didn't, simply ignore this email and you will never receive another email
 In order to activate your account, visit the below link from your web browser:
 ]
 
-http://[host]/activate/[secret]/
+http://[host]/!activate/[secret]/
 
 Best regards.
