@@ -9,7 +9,7 @@ cp ../www/engine asmbb/
 cp ../www/*.so asmbb/
 
 # the templates and style files.
-cp ../www/*.css asmbb/
+cp ../www/templates/*.css asmbb/templates/
 cp ../www/templates/*.tpl asmbb/templates/
 cp ../www/images/*.* asmbb/images/
 cp ../www/images/favicons/*.* asmbb/images/favicons/
@@ -19,6 +19,7 @@ cp .htaccess asmbb/
 cp lighttpd.conf asmbb/
 
 cp ../License.txt asmbb/
+cp ../manifest.uuid asmbb/
 cp install.txt asmbb/
 
 # now pack it

@@ -1,9 +1,9 @@
-C Merged\swith\sthe\sSimpleURL\sbranch\sas\sa\spreparation\sfor\sv1.1;
-D 2016-04-13T15:02:11.145
+C Release\sv1.1\sSome\sregressions\sare\spossible,\sbut\swill\sbe\sfixed\sin\sthe\sfield.
+D 2016-04-13T15:19:42.056
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
-F install/.htaccess f6b1e20e6db9a39a03722ead7f34d71bac90e0cd
-F install/asmbb.tar.gz e45d7c3b4a3f7ea54b3709caa62513e9a173e290
-F install/create_release.sh ad954053d8ad529bb6bd1a5d400d3ed37904e5c1 x
+F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
+F install/asmbb.tar.gz 6b14f22de9dbb10577dbb829fa2c93337600abfd
+F install/create_release.sh 6dd920298f7e6d3cc4caa8557e565d3ec9b164f6 x
 F install/install.txt 7d3f4f32b07d36ba1256bccb17b3b96c6fa1d004
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
 F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
@@ -132,7 +132,8 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 6e61a59921a6b372913f22cbebcc7455793d9052
 F www/templates/thread_info.tpl 0ded9ba9fb530bdc2cb026cceb49d6623e50429e
 F www/templates/userinfo.tpl 4e71cc52b631c69e0286f01af05e2390d3b79b83
-P 67a0abe2dc98ff9296cb34c456cc6931ccfc4075 2c39fa0fa42dcb076c50be6277e53a0a87cc1e63
-R 57d581c52b87cb978d9c658d0df7098b
+P 90352481278a6b34d0cdfca83d14eef2931200a9
+R 239c96cc0d350fcab05f4fe0f660b6ac
+T +sym-v1.1 *
 U johnfound
-Z 33a64f3cff7c2cfe59a958c134777fb9
+Z d08e9dd071290ab143e3a5f49f64a929

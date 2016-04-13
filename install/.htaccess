@@ -1,2 +1,3 @@
+Options  ExecCGI  
 FcgiWrapper "_FULL_PATH_TO_DOCUMENT_ROOT_HERE_/engine" virtual
 SetHandler fcgid-script
