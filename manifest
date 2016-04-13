@@ -1,5 +1,5 @@
-C Now\salmost\sall\sgoals\sof\sthis\sbranch\sare\saccomplished.\sIn\saddition,\spretty\sbig\scode\srefactoring\shas\sbeen\smade\sin\sorder\sto\smake\sit\ssmaller\nand\swith\smore\ssimple\sand\sconsistent\sstructure.\sBecause\sof\sthe\sbig\schanges,\ssome\stesting\sshould\sbe\smade\sbefore\sthe\smerging\swith\sthe\strunk.
-D 2016-04-12T21:49:57.267
+C Fixed\sbug\sin\sthe\stags\shandling\son\sposting\snew\sthread.\sThe\sslug\sand\stags\snow\sare\sclearly\sdistinct.\sThe\ssearch\scommand\sURLs\sin\sthe\stemplates\sfixed.
+D 2016-04-13T05:56:04.807
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess f6b1e20e6db9a39a03722ead7f34d71bac90e0cd
 F install/asmbb.tar.gz e45d7c3b4a3f7ea54b3709caa62513e9a173e290
@@ -23,7 +23,7 @@ F source/keywords.txt 8e374a274b6a178e582656652edb52e65fbebfb2
 F source/messages.asm 1cc42852665f2b44a574e37c0fde6624b4dab784
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 9813e1beaeeefc73eaee5c6eb20baa1aa6187abc
-F source/post.asm 68a71a49d2d05d2d8e99bc745775992ca23536f1
+F source/post.asm a3775d5d8714c0194216b8e87ca7e5309281ff8d
 F source/render.asm 98ba08f2487babf1a5260dcbba2f9072bd992bb0
 F source/search.asm 0c3acf89ade45ba0acc954631ed4481e38930583
 F source/settings.asm 2fa085873bbfc49fc33a5e8f186d30cd1fa79d7b
@@ -120,17 +120,17 @@ F www/templates/form_settings.tpl 6514baaa7f30ad528c3c1b72a52778b05e19fca7
 F www/templates/form_setup.tpl 5a388291b02221e6980a06cb7fcb2a67ddddd169
 F www/templates/form_sqlite_console.tpl 4f030921ad232aa84234baa7794b073a4f0e22d0
 F www/templates/main_html_end.tpl dbc17594a4b720a493125fd95e4a62fc5659c800
-F www/templates/main_html_start.tpl 26b5a2c09f379d81d593cb14972be33b91777f7f
+F www/templates/main_html_start.tpl 372783140a4d5fe13b8a3638984c4be400428518
 F www/templates/minimag_suffix.tpl e0ee4765a03f31868c42f12693dc9b23b8ca076e
 F www/templates/nav_list.tpl c72dc87c948c6d9c94a4d39dd399f43110f189a2
-F www/templates/nav_search.tpl 6e85f6ffe6f19e4ea3a79ecc70edd8344a97c1d0
+F www/templates/nav_search.tpl d41b3e1308e015bc6b5443be0102d20dbc93de51
 F www/templates/nav_thread.tpl 78071d3d9c821b8d8331bbb771678809bae00392
 F www/templates/post_view.tpl 835cda6b852f07c5d59c7276202c18096a002c42
 F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl e9f9e97157ed08abc746d9be4e18f60ac5ef4c6b
 F www/templates/thread_info.tpl 0ded9ba9fb530bdc2cb026cceb49d6623e50429e
 F www/templates/userinfo.tpl 4e71cc52b631c69e0286f01af05e2390d3b79b83
-P baaf6be5c170b3d6c14f46cf80273ddca11d9dd7
-R 696c46365260001d129f87f09cc04e00
+P 62d664bb6a8e4e35016d16d7f4807963097eafbf
+R 7270268c634cd388212ec681b34b329b
 U johnfound
-Z 6c2eb0243fc1cc0325dd99423828951a
+Z 5606518411a138ea247df5858e978add

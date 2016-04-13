@@ -305,6 +305,7 @@ begin
 
         stdcall StrSlugify, [.caption]
         mov     [.slug], eax
+
         stdcall StrLen, eax
         test    eax, eax
         jz      .error_invalid_caption
@@ -330,7 +331,7 @@ begin
 
         stdcall NumToStr, eax, ntsDec or ntsUnsigned
 
-        stdcall StrCharCat, [.slug], "."
+        stdcall StrCharCat, [.slug], "-"
         stdcall StrCat, [.slug], eax
         stdcall StrDel, eax
 
@@ -398,7 +399,7 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
         jb      .description_ok
 
         stdcall StrByteUtf8, [edi+TArray.array+4], LIMIT_TAG_DESCRIPTION
-        stdcall StrTrim, [edi+TArray.array+4]
+        stdcall StrTrim, [edi+TArray.array+4], eax
 
         stdcall StrPtr, [edi+TArray.array+4]
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
@@ -412,13 +413,13 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
         cmp     [eax+string.len], 0
         je      .next_tag
 
+        push    eax
         cinvoke sqliteBindText, [.stmt],  1, eax, [eax+string.len], SQLITE_STATIC
 
-        stdcall StrPtr, [edi+TArray.array]
+        pop     eax
         cinvoke sqliteBindText, [.stmt2], 1, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
-
         cinvoke sqliteStep, [.stmt2]
 
         cinvoke sqliteClearBindings, [.stmt]
