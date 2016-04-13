@@ -25,7 +25,6 @@ begin
 .start_ok:
         mov     [.start],eax
 
-
         stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
         jc      .missing_query
 
@@ -37,6 +36,10 @@ begin
 
         stdcall StrCat, [esi+TSpecialParams.page_title], "Search results for: "
         stdcall StrCat, [esi+TSpecialParams.page_title], [.query]
+
+
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+; counts the number of the search results in order to make the page links.
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSearchCnt, sqlSearchCnt.length, eax, 0
@@ -66,6 +69,60 @@ begin
         mov     [.pages], eax
 
 .pages_ok:
+
+; end of the page generation: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+; The following block make the search pages to not be generated. Only "prev" and "next" buttons are
+; placed to the search result page.
+; This way, no need to know the total number of the search results.
+;
+;        stdcall StrDupMem, '<div class="page_row">'
+;        mov     edx, eax
+;
+;        mov     eax, [.start]
+;        sub     eax, PAGE_LENGTH
+;        js      .prev_ok
+;
+;        stdcall StrCat, edx, '<a class="page_link" href="'
+;
+;        test    eax, eax
+;        jnz     .add_num
+;
+;        stdcall StrCat, edx, txt "."
+;        jmp     .num_ok
+;
+;.add_num:
+;        stdcall NumToStr, eax, ntsDec or ntsUnsigned
+;
+;        stdcall StrCat, edx, eax
+;        stdcall StrDel, eax
+;
+;.num_ok:
+;        stdcall StrCat, edx, txt "?s="
+;        stdcall StrCat, edx, [.query]
+;
+;        stdcall StrCat, edx, '">Prev</a>'
+;
+;.prev_ok:
+;        stdcall StrCat, edx, '<a class="page_link" href="'
+;
+;        mov     eax, [.start]
+;        add     eax, PAGE_LENGTH
+;        stdcall NumToStr, eax, ntsDec or ntsUnsigned
+;
+;        stdcall StrCat, edx, eax
+;        stdcall StrDel, eax
+;
+;        stdcall StrCat, edx, txt "?s="
+;        stdcall StrCat, edx, [.query]
+;
+;        stdcall StrCat, edx, '">Next</a></div>'
+;        mov     [.pages], edx
+;
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
         stdcall StrNew
         mov     edi, eax
 

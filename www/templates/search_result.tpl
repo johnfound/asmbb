@@ -6,7 +6,7 @@
     <div class="changed" style="margin-left: 8px"><img src="/images/edit.svg" width="16" height="16" alt="#">[PostTime]</div>
   </div>
   <div class="post_thread">
-    Thread: <a href="../[Slug]">[Caption]</a> Post: <a href="../[rowid]/!by_id">#[rowid]</a>
+    Thread: <a href="../[Slug]/">[Caption]</a> Post: <a href="../[rowid]/!by_id">#[rowid]</a>
   </div>
   <div class="post_sum">
     <pre>[content]</pre>

@@ -271,11 +271,12 @@ div.post_link {
   padding: 4px;
   text-align: right;
   font-size: 18px;
+  min-height: 64px;
 }
 
 div.post_sum {
   margin-left: 200px;
-  padding: 4px 4px 4px 4px;
+  padding: 4px 4px 4px 8px;
   background-color: white;
 }
 
