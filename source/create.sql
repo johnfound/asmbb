@@ -22,8 +22,8 @@ create table Users (
   avatar    blob,	     -- copy of the user avatar.
   email     text unique,     -- user email.
   Register  integer,	     -- the time when the user has activated the account.
-  LastSeen  integer	     -- the time when the user has been last seen by taking some action.
-  Lang	    text	     -- the language of the user interface.
+  LastSeen  integer,	     -- the time when the user has been last seen by taking some action.
+  Lang	    text,	     -- the language of the user interface.
   Skin	    text	     -- the name of the UI skin.
 );
 

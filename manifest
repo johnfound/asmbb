@@ -1,5 +1,5 @@
-C Second\sattempt\sto\srelease\sv1.1;\sHope\sthis\stime\severything\sis\sfixed.\s:)
-D 2016-04-13T16:36:21.229
+C Fixed\sminor\smistake\sin\sthe\sdatabase\screation\sscript.\sIt\sis\snot\simportant\snow,\sbut\swill\sbe\slater,\swhen\sskins\sand\sUI\slanguages\sare\simplemented.
+D 2016-04-13T17:11:11.495
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 8d0f7036ebc3ed75bb5102f40f6cd1d3699fbe26
@@ -10,7 +10,7 @@ F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm 06a96e11c24a87b0d6dd8397ca473520fef96bf4
 F source/commands.asm 9b9c843d390753a261709187a1aa58ef7f20b30a
-F source/create.sql 8218d0877eacbf273cde1cd176a2cdc54ecd11ce
+F source/create.sql 5a5391f137ee0e996047c2b9757f5c83bd8d455b
 F source/delete.asm 3189fdc709fe0a5c17879d279b4e4ea67e3df066
 F source/edit.asm 63d51de8d65719bcef3d71d648f3643f558c7a66
 F source/engine.asm 5657a9b0986e9a84cca426e744ab740a627f7700
@@ -132,8 +132,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 6e61a59921a6b372913f22cbebcc7455793d9052
 F www/templates/thread_info.tpl 0ded9ba9fb530bdc2cb026cceb49d6623e50429e
 F www/templates/userinfo.tpl 4e71cc52b631c69e0286f01af05e2390d3b79b83
-P c8b000b6cd72b747f46520375eb69b48428c9e30
-R 306b0324895406427353b4ce89ed438b
-T +sym-v1.1 *
+P 20f35efd0daa0f7732fdcf676df24c5602ae71fa
+R 19aff6cbefaa641a047cc9254fe7afdd
 U johnfound
-Z f17b883ca1742def53ad7764b294fba5
+Z cc2476651f8f17d02bf698fae69ef543
