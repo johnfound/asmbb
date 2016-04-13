@@ -136,6 +136,8 @@ begin
 
         xor     eax, eax
         xchg    eax, [ebx+TArray.array]
+
+        stdcall StrURLDecode, eax
         mov     [.uri], eax
 
         stdcall ListFree, ebx, StrDel

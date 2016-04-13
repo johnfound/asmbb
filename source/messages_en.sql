@@ -24,13 +24,13 @@ quick shadow in very cold day.
 A server is dying.','Server problem!',NULL);
 INSERT INTO `Messages` VALUES ('user_created','Just step remains,
 the secret, magic mail
-you shall receive.','Yes!','<a target="_self" href="/list/">Home</a>');
+you shall receive.','Yes!','<a href="/">Home</a>');
 INSERT INTO `Messages` VALUES ('congratulations','It happened,
 the journey ended at the door.
-You''re welcome.','Hooray!','<a target="_self" href="/login/">Come in</a>');
+You''re welcome.','Hooray!','<a href="/!login/">Come in</a>');
 INSERT INTO `Messages` VALUES ('bad_secret','Defeats and wins
 take turns each other.
-Now is the first.','Oh, no!','<a target="_self" href="/list/">Home</a>');
+Now is the first.','Oh, no!','<a href="/">Home</a>');
 INSERT INTO `Messages` VALUES ('login_bad_permissions','You are a sinner,
 because some man of power
 have banned you.','Forbidden!',NULL);
@@ -39,7 +39,7 @@ still have no privileges.
 Or have no longer.','Missing privileges!',NULL);
 INSERT INTO `Messages` VALUES ('error_cant_create_threads','New thread,
 new hurricane of passions,
-but not for you.','Can''t start threads!','<a target="_self" href="/list/">Home</a>');
+but not for you.','Can''t start threads!',NULL);
 INSERT INTO `Messages` VALUES ('register_bad_email','This email
 does not looks like real.
 It shall not pass!','Invalid email address!',NULL);
@@ -64,13 +64,9 @@ So, shame on you!','Cheat attempt detected!',NULL);
 INSERT INTO `Messages` VALUES ('error_bad_ticket','Simple, deep, and still.
 The old masters were patient.
 Without desires.','Can''t post right now!',NULL);
-INSERT INTO `Messages` VALUES ('missing_query','Searching nothing - 
-you now step on the right
-way to dao.
-','Search what?',NULL);
 INSERT INTO `Messages` VALUES ('password_changed','Your worthy password,
 successfully has been changed.
-You''r on the safe side.','Pasword changed!','<a target="_self" href="/login/">Login</a>');
+You''r on the safe side.','Pasword changed!','<a href="/!login/">Login</a>');
 INSERT INTO `Messages` VALUES ('change_different','Passwords different.
 Only perfect spellers may
 change their password.','Not matching passwords!',NULL);
@@ -82,7 +78,11 @@ was sent to your new email.
 To check the channel.','Check your mailbox!',NULL);
 INSERT INTO `Messages` VALUES ('email_changed','The new address to send
 a messages will never change
-the old relationship.','E-mail has been changed','<a target="_self" href="/list/">Home</a>');
+the old relationship.','E-mail has been changed!','<a href="/">Home</a>');
 INSERT INTO `Messages` VALUES ('error_cant_delete','You can''t delete it,
 still have no privileges.
 Or have no longer.','Missing privileges!',NULL);
+INSERT INTO `Messages` VALUES ('only_for_admins','Too dangerous place.
+Not allowed to enter right now.
+Maybe some day...
+','For administrators only!','<a href="/">Home</a>');

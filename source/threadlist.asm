@@ -1,25 +1,28 @@
 
 
 
-sqlSelectThreads text "select ",                                                                                                                                \
-                                                                                                                                                                \
-                        "T.id, ",                                                                                                                               \
-                        "T.Slug, ",                                                                                                                             \
-                        "Caption, ",                                                                                                                            \
-                        "strftime('%d.%m.%Y %H:%M:%S', LastChanged, 'unixepoch') as TimeChanged, ",                                                             \
-                        "(select count() from posts where threadid = T.id) as PostCount, ",                                                                     \
-                        "(select count() from posts P, UnreadPosts U where P.id = U.PostID and P.threadID = T.id and U.userID = ?3 ) as Unread, ",              \
-                        "(select P2.userid from posts P2 where threadid =T.id order by P2.id limit 1) as StarterID, ",                                          \
-                        "UU.nick as StarterName, ",                                                                                                             \
-                        "T.Pinned ",                                                                                                                            \
-                                                                                                                                                                \
-                      "from Threads T left join Users UU on UU.id = StarterID ",                                                                                \
-                                                                                                                                                                \
-                      "where ?4 is null or ?4 in (select tag from threadtags tt where tt.threadid = t.id) ",                                                  \
-                      "order by Pinned desc, T.LastChanged desc ",                                                                                              \
-                                                                                                                                                                \
-                      "limit  ?1 ",                                                                                                                             \
-                      "offset ?2 "
+
+;sqlSelectThreads text "select ",                                                                                                                                \
+;                                                                                                                                                                \
+;                        "T.id, ",                                                                                                                               \
+;                        "T.Slug, ",                                                                                                                             \
+;                        "Caption, ",                                                                                                                            \
+;                        "strftime('%d.%m.%Y %H:%M:%S', LastChanged, 'unixepoch') as TimeChanged, ",                                                             \
+;                        "(select count() from posts where threadid = T.id) as PostCount, ",                                                                     \
+;                        "(select count() from posts P, UnreadPosts U where P.id = U.PostID and P.threadID = T.id and U.userID = ?3 ) as Unread, ",              \
+;                        "(select P2.userid from posts P2 where threadid =T.id order by P2.id limit 1) as StarterID, ",                                          \
+;                        "UU.nick as StarterName, ",                                                                                                             \
+;                        "T.Pinned ",                                                                                                                            \
+;                                                                                                                                                                \
+;                      "from Threads T left join Users UU on UU.id = StarterID ",                                                                                \
+;                                                                                                                                                                \
+;                      "where ?4 is null or ?4 in (select tag from threadtags tt where tt.threadid = t.id) ",                                                  \
+;                      "order by Pinned desc, T.LastChanged desc ",                                                                                              \
+;                                                                                                                                                                \
+;                      "limit  ?1 ",                                                                                                                             \
+;                      "offset ?2 "
+
+sqlSelectThreads StripText "threadlist.sql", SQL
 
 sqlThreadsCount  text "select count(1) from Threads t where ?1 is null or ?1 in (select tag from threadtags tt where tt.threadid = t.id)"
 
@@ -93,7 +96,7 @@ begin
 ; now append the list itself.
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectThreads, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectThreads, sqlSelectThreads.length, eax, 0
 
         cinvoke sqliteBindInt, [.stmt], 1, PAGE_LENGTH
 

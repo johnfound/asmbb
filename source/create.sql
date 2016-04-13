@@ -135,7 +135,6 @@ create table Messages (
 );
 
 
-
 insert into Messages VALUES ('login_bad_password','Login incorrect.
 Only perfect spellers may
 enter this system.','Incorrect user or password!',NULL);
@@ -178,17 +177,17 @@ A server is dying.','Server problem!',NULL);
 
 insert into Messages VALUES ('user_created','Just step remains,
 the secret, magic mail
-you shall receive.','Yes!','<a target="_self" href="/list/">Home</a>');
+you shall receive.','Yes!','<a href="/">Home</a>');
 
 
 insert into Messages VALUES ('congratulations','It happened,
 the journey ended at the door.
-You''re welcome.','Hooray!','<a target="_self" href="/login/">Come in</a>');
+You''re welcome.','Hooray!','<a href="/!login/">Come in</a>');
 
 
 insert into Messages VALUES ('bad_secret','Defeats and wins
 take turns each other.
-Now is the first.','Oh, no!','<a target="_self" href="/list/">Home</a>');
+Now is the first.','Oh, no!','<a href="/">Home</a>');
 
 
 insert into Messages VALUES ('login_bad_permissions','You are a sinner,
@@ -248,7 +247,7 @@ Without desires.','Can''t post right now!',NULL);
 
 insert into Messages VALUES ('password_changed','Your worthy password,
 successfully has been changed.
-You''r on the safe side.','Pasword changed!','<a target="_self" href="/login/">Login</a>');
+You''r on the safe side.','Pasword changed!','<a href="/!login/">Login</a>');
 
 
 insert into Messages VALUES ('change_different','Passwords different.
@@ -268,12 +267,19 @@ To check the channel.','Check your mailbox!',NULL);
 
 insert into Messages VALUES ('email_changed','The new address to send
 a messages will never change
-the old relationship.','E-mail has been changed!','<a target="_self" href="/list/">Home</a>');
+the old relationship.','E-mail has been changed!','<a href="/">Home</a>');
 
 
 insert into Messages VALUES ('error_cant_delete','You can''t delete it,
 still have no privileges.
 Or have no longer.','Missing privileges!',NULL);
+
+
+insert into Messages VALUES ('only_for_admins','Too dangerous place.
+Not allowed to enter right now.
+Maybe some day...
+','For administrators only!','<a href="/">Home</a>');
+
 
 
 
@@ -293,15 +299,15 @@ create table ProcessID (
 
 
 
-CREATE VIRTUAL TABLE PostFTS using fts5( `Content`, content=Posts, content_rowid=id, tokenize='porter unicode61 remove_diacritics 1');
+CREATE VIRTUAL TABLE PostFTS using fts5( Content, content=Posts, content_rowid=id, tokenize='porter unicode61 remove_diacritics 1');
 
 
 CREATE TRIGGER PostsAI AFTER INSERT ON Posts BEGIN
-  INSERT INTO PostFTS(rowid, Content) VALUES (new.id, new.Content);
+  insert into PostFTS(rowid, Content) VALUES (new.id, new.Content);
 END;
 
 CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
-  INSERT INTO PostFTS(PostFTS, rowid, Content) VALUES('delete', old.id, old.Content);
+  insert into PostFTS(PostFTS, rowid, Content) VALUES('delete', old.id, old.Content);
 END;
 
 CREATE TRIGGER PostsAU AFTER UPDATE ON Posts BEGIN
