@@ -227,6 +227,12 @@ begin
         stdcall StrCompNoCase, edi, txt "page"
         jc      .get_page
 
+        stdcall StrCompNoCase, edi, txt "dir"
+        jc      .get_dir
+
+        stdcall StrCompNoCase, edi, txt "thread"
+        jc      .get_thread
+
         stdcall StrCompNoCase, edi, "permissions"
         jc      .get_permissions
 
@@ -343,6 +349,17 @@ end if
 
         stdcall NumToStr, [esi+TSpecialParams.page_num], ntsDec or ntsUnsigned
         jmp     .return_value
+
+
+;..................................................................
+
+.get_thread:
+        mov     eax, [esi+TSpecialParams.thread]
+        jmp     .return_encoded
+
+.get_dir:
+        mov     eax, [esi+TSpecialParams.dir]
+        jmp     .return_encoded
 
 ;..................................................................
 
@@ -979,6 +996,9 @@ end if
 .col_loop:
 
         cinvoke sqliteColumnText, [.stmt], 0
+        test    eax, eax
+        jz      .finalize_sql
+
         stdcall StrCat, edi, eax
 
 .finalize_sql:

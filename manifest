@@ -1,5 +1,5 @@
-C The\ssearch\snow\ssearches\sin\sparticular\stag\sor\sthread.
-D 2016-04-13T08:40:20.229
+C Search\snow\sworks\sproperly\swith\sthe\sroot\scommands\s(like\s!login,\s!settings,\s!sql,\setc.).\sAvatars\shas\sbeen\sadded\sto\sthe\ssearch\sresults.\s\nThe\sformatting\sof\sthe\ssearch\sresult\ssnippet\shas\sbeen\sremoved,\sbecause\smaking\ssnippet\salways\sbreaks\sthe\sformatting.
+D 2016-04-13T11:43:06.622
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess f6b1e20e6db9a39a03722ead7f34d71bac90e0cd
 F install/asmbb.tar.gz e45d7c3b4a3f7ea54b3709caa62513e9a173e290
@@ -24,9 +24,9 @@ F source/messages.asm 1cc42852665f2b44a574e37c0fde6624b4dab784
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 9813e1beaeeefc73eaee5c6eb20baa1aa6187abc
 F source/post.asm a3775d5d8714c0194216b8e87ca7e5309281ff8d
-F source/render.asm 98ba08f2487babf1a5260dcbba2f9072bd992bb0
+F source/render.asm eebd1472ff608f97c1d205390629af163f8048a9
 F source/search.asm 08f500387f4014bc0af03db3a13f757d5dcddab3
-F source/search.sql 8212579b2242e7734819bb928f2ee5e985f32b00
+F source/search.sql 738d09e5fd7c428a7f5a26aecddd6d4e117bb384
 F source/search_cnt.sql 5ef8eb89fcea8f87942f1b7c67202350dfd9ff89
 F source/settings.asm 2fa085873bbfc49fc33a5e8f186d30cd1fa79d7b
 F source/showthread.asm f1adbb02f6525dcf9d126e48e74e29cb6ce2bda2
@@ -107,7 +107,7 @@ F www/lighttpd.conf 3ac00a623c9c2a41cfdb39332a2456dab8b16f14
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/activation_email_subject.tpl 950d3451cce1b1b55eec7c9ac9c0bb415abaa34e
 F www/templates/activation_email_text.tpl 3d43a474040f226863f8b2bfa7bad91841711b96
-F www/templates/all.css 1053a42f0a3bf512c175bd66eb4c6a54a88fcbd7
+F www/templates/all.css 05c8f206d92ecba8dee2c195be077112439cfec5
 F www/templates/del_confirm.tpl 7b62ada90b819921275499b659614378cdadd253
 F www/templates/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
 F www/templates/error_html_end.tpl f390b47728814ecd8e608dd410cb2f4b0b953020
@@ -122,17 +122,17 @@ F www/templates/form_settings.tpl 6514baaa7f30ad528c3c1b72a52778b05e19fca7
 F www/templates/form_setup.tpl 5a388291b02221e6980a06cb7fcb2a67ddddd169
 F www/templates/form_sqlite_console.tpl 4f030921ad232aa84234baa7794b073a4f0e22d0
 F www/templates/main_html_end.tpl dbc17594a4b720a493125fd95e4a62fc5659c800
-F www/templates/main_html_start.tpl 372783140a4d5fe13b8a3638984c4be400428518
+F www/templates/main_html_start.tpl 7594adefad20d3e22f05f5c13111d39528921a24
 F www/templates/minimag_suffix.tpl e0ee4765a03f31868c42f12693dc9b23b8ca076e
 F www/templates/nav_list.tpl c72dc87c948c6d9c94a4d39dd399f43110f189a2
 F www/templates/nav_search.tpl d41b3e1308e015bc6b5443be0102d20dbc93de51
 F www/templates/nav_thread.tpl 78071d3d9c821b8d8331bbb771678809bae00392
 F www/templates/post_view.tpl 835cda6b852f07c5d59c7276202c18096a002c42
 F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
-F www/templates/search_result.tpl e9f9e97157ed08abc746d9be4e18f60ac5ef4c6b
+F www/templates/search_result.tpl 495b96fb4953ccf26c71ad44c5f462202cef2582
 F www/templates/thread_info.tpl 0ded9ba9fb530bdc2cb026cceb49d6623e50429e
 F www/templates/userinfo.tpl 4e71cc52b631c69e0286f01af05e2390d3b79b83
-P 10c3b7debb6b7efdca3d2e14abc280748a3329dd
-R 1f2a951f1402f93b937f54c6f6e8817c
+P 06844607bda7e27b1582e54f2b4162e1111e260b
+R ec47e7c99c79e34493068594369034d7
 U johnfound
-Z c7ffefa192d1831c3e458e3a54dd405f
+Z 3292f8ec5a45bfca1e636e4653208820

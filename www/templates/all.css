@@ -220,18 +220,13 @@ div.thread {
   margin: auto;
 }
 
+
 h1.thread_caption {
   font-size: 20px;
   margin: 16px 0px 0px 0px;
   clear:both;
 }
 
-
-
-/* div.thread a {
-  margin-top: 8px;
-  display: inline-block;
-} */
 
 div.post {
   position: relative;
@@ -249,6 +244,7 @@ div.user_info {
   background-color: #404040;
   color: white;
   overflow: auto;
+  padding: 8px 8px 0px 8px;
 }
 
 div.search_info {
@@ -261,6 +257,7 @@ div.search_info {
 
   background-color: #404040;
   color: white;
+  overflow: auto;
 }
 
 div.post_time {
@@ -315,6 +312,15 @@ img.avatar {
   margin: 0px auto;
   width: 128px;
   height: 128px;
+  background-color: #ffda44;
+  clear: both;
+}
+
+img.smallavatar {
+  display: block;
+  margin: 0px auto;
+  width: 64px;
+  height: 64px;
   background-color: #ffda44;
   clear: both;
 }

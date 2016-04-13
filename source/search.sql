@@ -2,6 +2,7 @@ select
 
   U.nick as UserName,
   U.id as UserID,
+  U.avatar as avatar,
   T.slug,
   strftime('%d.%m.%Y %H:%M:%S', P.postTime, 'unixepoch') as PostTime,
   P.ReadCount,
