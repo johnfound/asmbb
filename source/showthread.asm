@@ -1,26 +1,5 @@
 
-
-
-sqlSelectPosts   text "select ",                                                                                                                \
-                        "P.id, ",                                                                                                               \
-                        "P.threadID, ",                                                                                                         \
-                        "strftime('%d.%m.%Y %H:%M:%S', P.postTime, 'unixepoch') as PostTime, ",                                                 \
-                        "P.Content, ",                                                                                                          \
-                        "U.id as UserID, ",                                                                                                     \
-                        "U.nick as UserName, ",                                                                                                 \
-                        "U.avatar as avatar, ",                                                                                                 \
-                        "U.PostCount as UserPostCount, ",                                                                                       \
-                        "?4 as Slug, ",                                                                                                         \
-                        "(select count() from UnreadPosts UP where UP.UserID = ?5 and UP.PostID = P.id) as Unread, ",                           \
-                        "P.ReadCount ",                                                                                                         \
-                      "from ",                                                                                                                  \
-                        "Posts P left join UsersX U on ",                                                                                       \
-                          "U.id = P.userID ",                                                                                                   \
-                      "where ",                                                                                                                 \
-                        "P.threadID = ?1 and P.id >= (select px.id from posts px where px.threadID = ?1 order by px.id limit 1 offset ?3 ) ",   \
-                      "order by ",                                                                                                              \
-                        "P.id ",                                                                                                                \
-                      "limit ?2"
+sqlSelectPosts StripText "showthread.sql", SQL
 
 sqlGetPostCount  text "select count(1) from Posts where ThreadID = ?"
 sqlGetThreadInfo text "select id, caption, slug from Threads where slug = ? limit 1"
@@ -46,7 +25,7 @@ begin
         mov     esi, [.pSpecial]
 
         lea     eax, [.stmt2]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, sqlGetThreadInfo.length, eax, 0
 
         stdcall StrPtr, [esi+TSpecialParams.thread]
         cinvoke sqliteBindText, [.stmt2], 1, eax, [eax+string.len], SQLITE_STATIC
@@ -77,7 +56,7 @@ begin
 ; pages links
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetPostCount, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetPostCount, sqlGetPostCount.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
 
         cinvoke sqliteStep, [.stmt]
@@ -93,7 +72,7 @@ begin
         stdcall StrCat, edi, [.list]
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectPosts, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectPosts, sqlSelectPosts.length, eax, 0
 
         cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
         cinvoke sqliteBindInt, [.stmt], 2, PAGE_LENGTH

@@ -56,9 +56,8 @@ create table Threads (
   Pinned      integer default 0
 );
 
-
-create index idxThreads_LastChanged on Threads (LastChanged desc);
-create index idxThreads_Slug	    on Threads (Slug);
+create index idxThreadsPinnedLastChanged on Threads (Pinned desc, LastChanged desc);
+create index idxThreadsSlug on Threads (Slug);
 
 
 
@@ -75,7 +74,6 @@ create table Posts (
 
 create index idxPosts_UserID   on Posts (userID);
 create index idxPosts_ThreadID on Posts (threadID);
-create index idxPosts_Time     on Posts (postTime, id);
 
 
 create table Tags (

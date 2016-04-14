@@ -1,5 +1,5 @@
-C Fixed\sminor\smistake\sin\sthe\sdatabase\screation\sscript.\sIt\sis\snot\simportant\snow,\sbut\swill\sbe\slater,\swhen\sskins\sand\sUI\slanguages\sare\simplemented.
-D 2016-04-13T17:11:11.495
+C Work\son\sthe\sspeed\soptimizations.\sNot\sfinished.
+D 2016-04-14T15:21:06.963
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 8d0f7036ebc3ed75bb5102f40f6cd1d3699fbe26
@@ -10,11 +10,11 @@ F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm 06a96e11c24a87b0d6dd8397ca473520fef96bf4
 F source/commands.asm 9b9c843d390753a261709187a1aa58ef7f20b30a
-F source/create.sql 5a5391f137ee0e996047c2b9757f5c83bd8d455b
+F source/create.sql 399a4caffd9294483634a2772a7345888f9b06d3
 F source/delete.asm 3189fdc709fe0a5c17879d279b4e4ea67e3df066
 F source/edit.asm 63d51de8d65719bcef3d71d648f3643f558c7a66
-F source/engine.asm 5657a9b0986e9a84cca426e744ab740a627f7700
-F source/engine.fpr c0b691a40189339cc28985ed2493efa23a38dbea
+F source/engine.asm 6537b81bfae1e97582a8013d9cafd84fb7c2da6d
+F source/engine.fpr 6309287ee57548c2a57e9f8fbcd72f32a032c97e
 F source/exponential_scaling.ods b66ca0aa6f1f4dc69986c751341877b423db11e5
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 31466fa4d87b6e0c0b0321814bf52fe6746d41d0
@@ -24,17 +24,20 @@ F source/messages.asm 1cc42852665f2b44a574e37c0fde6624b4dab784
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
 F source/post.asm a3775d5d8714c0194216b8e87ca7e5309281ff8d
-F source/render.asm eebd1472ff608f97c1d205390629af163f8048a9
+F source/render.asm 378105dbca35c642f6c99331600e689347e537a1
 F source/search.asm 3cbbe8167ee728cf2040e19c577df9aafa149bb3
 F source/search.sql 738d09e5fd7c428a7f5a26aecddd6d4e117bb384
 F source/search_cnt.sql 5ef8eb89fcea8f87942f1b7c67202350dfd9ff89
 F source/settings.asm 2fa085873bbfc49fc33a5e8f186d30cd1fa79d7b
-F source/showthread.asm f1adbb02f6525dcf9d126e48e74e29cb6ce2bda2
+F source/showthread.asm 3146caa864407b0db354b119dbb6158c16d57d3c
+F source/showthread.sql b934020f4fdb5a8b2bdca34c7e3e082807db1eb1
 F source/sqlite3.asm f605d645a6cd5a75fbfc52a86ce38c0b5ab0430a
 F source/sqlite_console.asm be92fba102c4e4e6c461c63fcc4a1bf8c7fae039
 F source/threadlist.asm abe92543b2cf14446e8c6cd41aaaaee0b39b767f
+F source/threadlist.sql 1224dfd1fa036b023ca618ab8c43be39dfea7be6
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
 F source/userinfo.asm ace969463e5d99ce0fc9580164a7c8d1c2d8bc52
+F source/version.asm d2cded003c4d9bcf876da1cabd3a3a8f399b37c3
 F www/.htaccess fc8c641fc61f2a38821bdb99fb9556ddf98929a7
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
 F www/images/del_gray.svg 5e3d0ba999e37de7dfdc43292d1c14e4513573ac
@@ -107,7 +110,7 @@ F www/lighttpd.conf 3ac00a623c9c2a41cfdb39332a2456dab8b16f14
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/activation_email_subject.tpl 950d3451cce1b1b55eec7c9ac9c0bb415abaa34e
 F www/templates/activation_email_text.tpl 3d43a474040f226863f8b2bfa7bad91841711b96
-F www/templates/all.css 013a952436c832bf6b428d2202f8710d4ecc71ab
+F www/templates/all.css 7bae200087aa14ab4178d86bfd93034f3c194885
 F www/templates/del_confirm.tpl 7b62ada90b819921275499b659614378cdadd253
 F www/templates/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
 F www/templates/error_html_end.tpl f390b47728814ecd8e608dd410cb2f4b0b953020
@@ -121,7 +124,7 @@ F www/templates/form_register.tpl 3774431972f920aec810c59dc01cf8e877560e97
 F www/templates/form_settings.tpl 6514baaa7f30ad528c3c1b72a52778b05e19fca7
 F www/templates/form_setup.tpl 5a388291b02221e6980a06cb7fcb2a67ddddd169
 F www/templates/form_sqlite_console.tpl 4f030921ad232aa84234baa7794b073a4f0e22d0
-F www/templates/main_html_end.tpl dbc17594a4b720a493125fd95e4a62fc5659c800
+F www/templates/main_html_end.tpl bfe136edf1120b307792470c5c94faf20de62404
 F www/templates/main_html_start.tpl 7594adefad20d3e22f05f5c13111d39528921a24
 F www/templates/minimag_suffix.tpl e0ee4765a03f31868c42f12693dc9b23b8ca076e
 F www/templates/nav_list.tpl c72dc87c948c6d9c94a4d39dd399f43110f189a2
@@ -132,7 +135,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 6e61a59921a6b372913f22cbebcc7455793d9052
 F www/templates/thread_info.tpl 0ded9ba9fb530bdc2cb026cceb49d6623e50429e
 F www/templates/userinfo.tpl 4e71cc52b631c69e0286f01af05e2390d3b79b83
-P 20f35efd0daa0f7732fdcf676df24c5602ae71fa
-R 19aff6cbefaa641a047cc9254fe7afdd
+P 1fcaf591b726df5ed21e689075ac0d88b7a80d1d
+R ba1accd142e28988ebb06327a6b5ca61
 U johnfound
-Z cc2476651f8f17d02bf698fae69ef543
+Z beda8b159baae39e06ce6ae38c5d4da2

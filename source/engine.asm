@@ -54,6 +54,7 @@ include "accounts.asm"
 include "settings.asm"
 include "sqlite_console.asm"
 include "messages.asm"
+include "version.asm"
 
 
 iglobal

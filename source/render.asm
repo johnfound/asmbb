@@ -212,6 +212,9 @@ begin
         stdcall StrClipSpacesL, eax
         mov     edi, eax
 
+        stdcall StrCompNoCase, edi, "version"
+        jc      .get_version
+
         stdcall StrCompNoCase, edi, "timestamp"
         jc      .get_timestamp
 
@@ -318,6 +321,11 @@ end if
         mov     eax, edx
         jmp     .return_value
 
+;..................................................................
+.get_version:
+
+        mov     eax, cVersion
+        jmp     .return_value
 
 ;..................................................................
 
@@ -632,7 +640,6 @@ sqlGetThreadTags    text "select TT.tag, T.Description from ThreadTags TT left j
 
 locals
   .threadID dd ?
-  .counter  dd ?
 endl
 
         mov     ecx, eax
@@ -710,7 +717,12 @@ endl
 
 .get_thread_posters:
 
-sqlGetThreadPosters  text "select distinct U.id, U.nick from Posts P left join Users U on U.id = P.userID where p.threadid = ? order by P.id limit 11"
+sqlGetThreadPosters  text "select U.nick from Posts P left join Users U on U.id = P.userID where P.threadID = ?1 order by P.id limit 20;"
+
+locals
+  .list  dd ?
+  .fMore dd ?
+endl
 
         mov     ecx, eax
 
@@ -723,71 +735,97 @@ sqlGetThreadPosters  text "select distinct U.id, U.nick from Posts P left join U
         push    eax
         stdcall StrToNumEx, eax
         stdcall StrDel ; from the stack
-        jc      .end_thread_posters2
+        jc      .finish_thread_posters
 
-        mov     [.threadID], eax
+        push    eax
+
+        stdcall CreateArray, 4
+        mov     [.list], eax
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadPosters, sqlGetThreadPosters.length, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
 
-        and     [.counter], 0
+        pop     eax
+        cinvoke sqliteBindInt, [.stmt], 1, eax
+
+        and     [.fMore], 0
 
 .thread_posters_loop:
-        inc     [.counter]
 
         cinvoke sqliteStep, [.stmt]
+
         cmp     eax, SQLITE_ROW
         jne     .end_thread_posters
 
-        cmp     [.counter], 11
-        je      .add_more_sign
+        cinvoke sqliteColumnText, [.stmt], 0
 
-        cmp     [.counter], 2
-        je      .first_contributor
-        ja      .contributor
+        mov     edx, [.list]
+        cmp     [edx+TArray.count], 5
+        je      .end_thread_posters_more
 
-; starter:
-        stdcall StrCat, ebx, 'started by: <b><a href="/!userinfo/'
-        cinvoke sqliteColumnText, [.stmt], 1
-        stdcall StrCat, ebx, eax
-        stdcall StrCharCat, ebx, '">'
-        stdcall StrCat, ebx, eax
-        stdcall StrCat, ebx, '</a></b>'
+        stdcall ListAddDistinct, [.list], eax
+        mov     [.list], edx
 
         jmp     .thread_posters_loop
 
+.end_thread_posters_more:
 
-.first_contributor:
-
-        stdcall StrCat, ebx, '<br>joined: '
-        jmp     .add_contributor
-
-.contributor:
-
-        stdcall StrCharCat, ebx, ', '
-
-.add_contributor:
-
-        stdcall StrCat, ebx, '<a href="/!userinfo/'
-        cinvoke sqliteColumnText, [.stmt], 1
-        stdcall StrCat, ebx, eax
-        stdcall StrCharCat, ebx, '">'
-        stdcall StrCat, ebx, eax
-        stdcall StrCharCat, ebx, '</a>'
-
-        jmp     .thread_posters_loop
-
-.add_more_sign:
-
-        stdcall StrCat, ebx, txt " ..."
-
+        inc     [.fMore]
 
 .end_thread_posters:
 
         cinvoke sqliteFinalize, [.stmt]
 
-.end_thread_posters2:
+        mov     edx, [.list]
+        xor     ecx, ecx
+
+.add_posters_loop:
+        cmp     ecx, [edx+TArray.count]
+        jae     .end_add_posters
+
+        cmp     ecx, 0
+        jne     .not_first
+
+        stdcall StrCat, ebx, 'started by: <b>'
+        jmp     .add_user
+
+.not_first:
+        cmp     ecx, 1
+        jne     .not_second
+
+        stdcall StrCat, ebx, '<br>joined: '
+        jmp     .add_user
+
+.not_second:
+
+        stdcall StrCat, ebx, txt ", "
+
+.add_user:
+        stdcall StrCat, ebx, '<a href="/!userinfo/'
+        stdcall StrCat, ebx, [edx+TArray.array+4*ecx]
+        stdcall StrCat, ebx, txt '">'
+        stdcall StrCat, ebx, [edx+TArray.array+4*ecx]
+        stdcall StrCat, ebx, txt '</a>'
+
+        test    ecx, ecx
+        jnz     @f
+        stdcall StrCat, ebx, txt '</b>'
+@@:
+        inc     ecx
+        jmp     .add_posters_loop
+
+
+.end_add_posters:
+
+        cmp     [.fMore], 0
+        je      @f
+        stdcall StrCat, ebx, " and more..."
+@@:
+
+        stdcall ListFree, [.list], StrDel
+
+.finish_thread_posters:
+
         mov     eax, ebx
         jmp     .return_value
 
@@ -1431,3 +1469,40 @@ begin
         return
 endp
 
+
+
+
+;stdcall ListAddDistinct, [.list], eax
+
+
+proc ListAddDistinct, .pList, .pString
+begin
+        pushad
+
+        stdcall StrDupMem, [.pString]
+        mov     ebx, eax
+
+        mov     edx, [.pList]
+        mov     ecx, [edx+TArray.count]
+
+.loop:
+        dec     ecx
+        js      .not_found
+
+        stdcall StrCompCase, [edx+TArray.array+4*ecx], ebx
+        jnc     .loop
+
+        stdcall StrDel, ebx
+
+.finish:
+        mov     [esp+4*regEDX], edx
+        popad
+        return
+
+.not_found:
+
+        stdcall AddArrayItems, edx, 1
+        mov     [eax], ebx
+
+        jmp     .finish
+endp

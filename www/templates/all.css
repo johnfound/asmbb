@@ -877,7 +877,7 @@ div.panel input:active, div.panel input:focus, div.panel input:hover {
 textarea.sql_editor {
   display: inline-block;
   width: 100%;
-  height: 5em;
+  height: 15em;
   padding: 4px;
   margin-bottom: 8px;
   margin-top: -1px;
