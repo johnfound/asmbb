@@ -106,12 +106,26 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .finish
 
+
         inc     [.cnt]
+
+;if defined options.DebugMode & options.DebugMode
+;        stdcall GetFineTimestamp
+;        push    eax
+;end if
 
         stdcall StrCatTemplate, edi, "post_view", [.stmt], esi
 
-        cinvoke sqliteColumnInt, [.stmt], 0
+;if defined options.DebugMode & options.DebugMode
+;        stdcall GetFineTimestamp
+;        sub     eax, [esp]
+;
+;        OutputValue "Template: ", eax, 10, -1
+;        pop     eax
+;end if
 
+
+        cinvoke sqliteColumnInt, [.stmt], 0
         stdcall PostIncrementReadCount, eax
 
         mov     ebx, [esi+TSpecialParams.userID]

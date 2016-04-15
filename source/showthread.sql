@@ -6,7 +6,6 @@ select
   P.Content,
   U.id as UserID,
   U.nick as UserName,
-  U.avatar,
   U.PostCount as UserPostCount,
   ?4 as Slug,
   (select count() from UnreadPosts UP where UP.UserID = ?5 and UP.PostID = P.id) as Unread,
@@ -20,9 +19,4 @@ left join
 
   Users U on U.id = P.userID
 
-where
-
-  P.threadID = ?1
-
-limit ?2
-offset ?3
+where P.id in (select id from posts where threadid=?1 limit ?2 offset ?3);

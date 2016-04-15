@@ -55,6 +55,7 @@ include "settings.asm"
 include "sqlite_console.asm"
 include "messages.asm"
 include "version.asm"
+include "memcache.asm"
 
 
 iglobal
@@ -109,6 +110,9 @@ start:
 
         stdcall GetTimestamp
         mov     [ProcessStart], eax
+
+        stdcall CreateMemoryCache, AvatarCache
+
 
         stdcall LogEvent, "ScriptStart", logNULL, 0, 0
 
