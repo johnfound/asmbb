@@ -72,7 +72,7 @@ begin
         cinvoke sqliteFinalize, [.stmt]
 
 
-        stdcall CreatePagesLinks, [esi+TSpecialParams.page_num], [.cnt], 0
+        stdcall CreatePagesLinks2, [esi+TSpecialParams.page_num], [.cnt], 0, [esi+TSpecialParams.page_length]
         mov     [.list], eax
 
         stdcall StrCat, edi, [.list]
@@ -88,10 +88,10 @@ begin
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectPosts, sqlSelectPosts.length, eax, 0
 
         cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
-        cinvoke sqliteBindInt, [.stmt], 2, PAGE_LENGTH
+        cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.page_length]
 
         mov     eax, [esi+TSpecialParams.page_num]
-        imul    eax, PAGE_LENGTH
+        imul    eax, [esi+TSpecialParams.page_length]
         cinvoke sqliteBindInt, [.stmt], 3, eax
 
         stdcall StrPtr, [esi+TSpecialParams.thread]
@@ -254,7 +254,7 @@ begin
         cinvoke sqliteColumnInt, [.stmt], 0     ; the index in thread.
         cdq
 
-        mov     ecx, PAGE_LENGTH
+        mov     ecx, [esi+TSpecialParams.page_length]
         div     ecx
         mov     [.page], eax
 

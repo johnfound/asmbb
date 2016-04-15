@@ -1,4 +1,4 @@
-PAGE_LENGTH = 20
+DEFAULT_PAGE_LENGTH = 20
 
 ; User permissions status flags:
 
@@ -28,6 +28,7 @@ struct TSpecialParams
 ; forum global variables.
 
   .page_title      dd ?
+  .page_length     dd ?
   .setupmode       dd ?
 
 ; logged user info.
@@ -99,6 +100,14 @@ begin
 
 .title_ok:
         mov     [.special.page_title], eax
+
+
+        stdcall GetParam, 'page_length', gpInteger
+        jnc     .page_length_ok
+
+        mov     eax, DEFAULT_PAGE_LENGTH
+.page_length_ok:
+        mov     [.special.page_length], eax
 
         stdcall StrNew
         mov     edi, eax
@@ -593,7 +602,7 @@ endp
 
 
 
-proc CreatePagesLinks, .current, .count, .suffix
+proc CreatePagesLinks2, .current, .count, .suffix, .page
 begin
         pushad
 
@@ -602,7 +611,7 @@ begin
 
         mov     eax, [.count]
         cdq
-        mov     ecx, PAGE_LENGTH
+        mov     ecx, [.page]
         div     ecx
 
         test    edx, edx

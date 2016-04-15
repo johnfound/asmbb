@@ -6,6 +6,7 @@
   <label>Host:</label><input type="text" value="[host]" name="host" class="settings" size="30" maxlength="320"><br>
   <label>SMTP server/port:</label><input type="text" value="[smtp_addr]" name="smtp_addr" class="settings" size="20" maxlength="256"><input type="text" value="[smtp_port]" name="smtp_port" class="settings" size="5" maxlength="5"><br>
   <label>SMTP account:</label><input type="text" value="[smtp_user]" name="smtp_user" class="settings" size="30" maxlength="256"><br>
+  <label>Page length:</label><input type="text" value="[page_length]" name="page_length" class="settings" size="30" maxlength="256"><br>
   <label for="log_events">Log events:</label><label class="checkbox"><input type="checkbox" [log_events] name="log_events" id="log_events" class="checkbox"><span>&nbsp;</span></label><br>
   <label>Default user permissions:</label><table style="display:inline-block; vertical-align: top; border-collapse: collapse; border-spacing: 0px;"><tr>
   <td>

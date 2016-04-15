@@ -64,7 +64,7 @@ begin
         stdcall StrCat, eax, [.query]
         push    eax
 
-        stdcall CreatePagesLinks, [.start], edi, eax
+        stdcall CreatePagesLinks2, [.start], edi, eax, [esi+TSpecialParams.page_length]
         stdcall StrDel ; from the stack
         mov     [.pages], eax
 
@@ -141,10 +141,10 @@ begin
         stdcall StrPtr, [.query]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
-        cinvoke sqliteBindInt, [.stmt], 2, PAGE_LENGTH
+        cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.page_length]
 
         mov     eax, [.start]
-        imul    eax, PAGE_LENGTH
+        imul    eax, [esi+TSpecialParams.page_length]
         cinvoke sqliteBindInt, [.stmt], 3, eax
 
         call    .bind_limits

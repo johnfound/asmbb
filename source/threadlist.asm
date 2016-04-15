@@ -88,7 +88,7 @@ begin
         mov     ebx, eax
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall CreatePagesLinks, [esi+TSpecialParams.page_num], ebx, 0
+        stdcall CreatePagesLinks2, [esi+TSpecialParams.page_num], ebx, 0, [esi+TSpecialParams.page_length]
         mov     [.list], eax
 
         stdcall StrCat, edi, eax
@@ -98,10 +98,10 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectThreads, sqlSelectThreads.length, eax, 0
 
-        cinvoke sqliteBindInt, [.stmt], 1, PAGE_LENGTH
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.page_length]
 
         mov     eax, [esi+TSpecialParams.page_num]
-        imul    eax, PAGE_LENGTH
+        imul    eax, [esi+TSpecialParams.page_length]
         cinvoke sqliteBindInt, [.stmt], 2, eax
 
         cinvoke sqliteBindInt, [.stmt], 3, [esi+TSpecialParams.userID]

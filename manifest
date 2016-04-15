@@ -1,5 +1,5 @@
-C This\scheckin\scontains\smainly\sspeed\soptimizations\sof\sthe\sSQL\squeries.\s\nThe\ssqlite\slibrary\shas\sbeen\supdated\sto\s3.12,\sbut\swithout\sSTAT4\sbecause\sof\ssome\sissues\swith\sthe\sindexes.
-D 2016-04-15T08:57:51.664
+C The\ssize\sof\sthe\spages\shas\sbeen\smade\seditable\sin\sthe\sforum\ssettings.
+D 2016-04-15T11:00:37.730
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 8d0f7036ebc3ed75bb5102f40f6cd1d3699fbe26
@@ -9,11 +9,11 @@ F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
 F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm 06a96e11c24a87b0d6dd8397ca473520fef96bf4
-F source/commands.asm 9b9c843d390753a261709187a1aa58ef7f20b30a
+F source/commands.asm 17c80d6622e8990cc16a6eb4fc858016ce13fda6
 F source/create.sql 43f6b2b6ce89dc5c365f629e633c5687c302e110
 F source/delete.asm 3189fdc709fe0a5c17879d279b4e4ea67e3df066
 F source/edit.asm 63d51de8d65719bcef3d71d648f3643f558c7a66
-F source/engine.asm 6537b81bfae1e97582a8013d9cafd84fb7c2da6d
+F source/engine.asm 65580e88b93e89d81925891ce0d634a70a41d17c
 F source/engine.fpr 6309287ee57548c2a57e9f8fbcd72f32a032c97e
 F source/exponential_scaling.ods b66ca0aa6f1f4dc69986c751341877b423db11e5
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -25,15 +25,15 @@ F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
 F source/post.asm a3775d5d8714c0194216b8e87ca7e5309281ff8d
 F source/render.asm 378105dbca35c642f6c99331600e689347e537a1
-F source/search.asm 3cbbe8167ee728cf2040e19c577df9aafa149bb3
+F source/search.asm 2fab1c14f65bb8f33a3d903f68b733eeb57010a0
 F source/search.sql 738d09e5fd7c428a7f5a26aecddd6d4e117bb384
 F source/search_cnt.sql 5ef8eb89fcea8f87942f1b7c67202350dfd9ff89
-F source/settings.asm 2fa085873bbfc49fc33a5e8f186d30cd1fa79d7b
-F source/showthread.asm a4aa4533d6d7a952b8fc155a357aee7f8222f640
+F source/settings.asm 053c17bf16f933e202173a3491c1ea59c58442f4
+F source/showthread.asm f9c7f6b5ac2fc94319d7f666e10c7f998e5243e7
 F source/showthread.sql 84edbc132547a8c3399deaa2f236104e8b5e1230
 F source/sqlite3.asm f605d645a6cd5a75fbfc52a86ce38c0b5ab0430a
 F source/sqlite_console.asm be92fba102c4e4e6c461c63fcc4a1bf8c7fae039
-F source/threadlist.asm abe92543b2cf14446e8c6cd41aaaaee0b39b767f
+F source/threadlist.asm 357af1336eacdfd59554a4d5a15b41571e6fce59
 F source/threadlist.sql 1224dfd1fa036b023ca618ab8c43be39dfea7be6
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
 F source/userinfo.asm ace969463e5d99ce0fc9580164a7c8d1c2d8bc52
@@ -121,7 +121,7 @@ F www/templates/form_login.tpl 1416ca7e3d4d6ef00707968fd10d44155b0f1083
 F www/templates/form_new_post.tpl aa0053b10d8e4427965afb360459239dca9a67dc
 F www/templates/form_new_thread.tpl 09ef708bdb57713d896eb0a5846a54de0b4ccab6
 F www/templates/form_register.tpl 3774431972f920aec810c59dc01cf8e877560e97
-F www/templates/form_settings.tpl 6514baaa7f30ad528c3c1b72a52778b05e19fca7
+F www/templates/form_settings.tpl b3ffda2f4c2a5a30a4dfb2b4e24005e89c40e730
 F www/templates/form_setup.tpl 5a388291b02221e6980a06cb7fcb2a67ddddd169
 F www/templates/form_sqlite_console.tpl 4f030921ad232aa84234baa7794b073a4f0e22d0
 F www/templates/main_html_end.tpl bfe136edf1120b307792470c5c94faf20de62404
@@ -135,7 +135,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 6e61a59921a6b372913f22cbebcc7455793d9052
 F www/templates/thread_info.tpl 0ded9ba9fb530bdc2cb026cceb49d6623e50429e
 F www/templates/userinfo.tpl 4e71cc52b631c69e0286f01af05e2390d3b79b83
-P a1ed058f55be55e600fde2b9fa537f5d77a76dff
-R 7eb73e0eb44b970b8d532aba68c2b31c
+P 5c16b1a9f595f3e4a10f9caa1bba3a2bc815aa63
+R c04b5cd187fe3b70bf853f8d5ef96ae2
 U johnfound
-Z 835445af16b6f9e871a06beb1bbca242
+Z 2457d8fc8d2e162daaf517cd5e61f6c6

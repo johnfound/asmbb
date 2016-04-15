@@ -3,6 +3,7 @@
 sqlParameters   text "select ? as host, ? as smtp_addr, ? as smtp_port, ",                              \
                             "? as smtp_user, ? as forum_title, ? as log_events, ",                      \
                             "? as message, ? as error, ",                                               \
+                            "? as page_length, ",                                                       \
                             "? as user_perm0, ? as user_perm2, ? as user_perm3, ? as user_perm4, ",     \
                             "? as user_perm5, ? as user_perm6, ? as user_perm7, ? as user_perm31"
 
@@ -122,55 +123,63 @@ begin
         cinvoke sqliteBindInt, [.stmt], 8, [.error]
 
 
+        stdcall GetParam, "page_length", gpInteger
+        jnc     .page_size_ok
+
+        mov     eax, DEFAULT_PAGE_LENGTH
+
+.page_size_ok:
+        cinvoke sqliteBindInt, [.stmt], 9, eax
+
         stdcall GetParam, "user_perm", gpInteger
         mov     ebx, eax
 
         test    ebx, permLogin
         jz      @f
 
-        cinvoke sqliteBindText, [.stmt], 9, "checked", -1, SQLITE_STATIC
+        cinvoke sqliteBindText, [.stmt], 10, "checked", -1, SQLITE_STATIC
 
 @@:
         test    ebx, permPost
         jz      @f
 
-        cinvoke sqliteBindText, [.stmt], 10, "checked", -1, SQLITE_STATIC
+        cinvoke sqliteBindText, [.stmt], 11, "checked", -1, SQLITE_STATIC
 
 @@:
         test    ebx, permThreadStart
         jz      @f
 
-        cinvoke sqliteBindText, [.stmt], 11, "checked", -1, SQLITE_STATIC
+        cinvoke sqliteBindText, [.stmt], 12, "checked", -1, SQLITE_STATIC
 
 @@:
         test    ebx, permEditOwn
         jz      @f
 
-        cinvoke sqliteBindText, [.stmt], 12, "checked", -1, SQLITE_STATIC
+        cinvoke sqliteBindText, [.stmt], 13, "checked", -1, SQLITE_STATIC
 
 @@:
         test    ebx, permEditAll
         jz      @f
 
-        cinvoke sqliteBindText, [.stmt], 13, "checked", -1, SQLITE_STATIC
+        cinvoke sqliteBindText, [.stmt], 14, "checked", -1, SQLITE_STATIC
 
 @@:
         test    ebx, permDelOwn
         jz      @f
 
-        cinvoke sqliteBindText, [.stmt], 14, "checked", -1, SQLITE_STATIC
+        cinvoke sqliteBindText, [.stmt], 15, "checked", -1, SQLITE_STATIC
 
 @@:
         test    ebx, permDelAll
         jz      @f
 
-        cinvoke sqliteBindText, [.stmt], 15, "checked", -1, SQLITE_STATIC
+        cinvoke sqliteBindText, [.stmt], 16, "checked", -1, SQLITE_STATIC
 
 @@:
         test    ebx, permAdmin
         jz      @f
 
-        cinvoke sqliteBindText, [.stmt], 16, "checked", -1, SQLITE_STATIC
+        cinvoke sqliteBindText, [.stmt], 17, "checked", -1, SQLITE_STATIC
 
 @@:
 
@@ -301,7 +310,25 @@ begin
         call    .exec_write
         jc      .error_write
 
+; save page_length
 
+        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "page_length=", 0
+        test    eax, eax
+        jz      .bind_perm
+
+        stdcall StrToNumEx, eax
+        test    eax, eax
+        jz      .bind_perm
+        js      .bind_perm
+
+        cinvoke sqliteBindInt,  [.stmt], 2, eax
+        cinvoke sqliteBindText, [.stmt], 1, txt "page_length", -1, SQLITE_STATIC
+
+        call    .exec_write
+        jc      .error_write
+
+
+.bind_perm:
         xor     ebx, ebx
 
         stdcall GetQueryItem, [esi+TSpecialParams.post], txt "user_perm0=", 0
