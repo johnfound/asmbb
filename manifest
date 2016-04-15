@@ -1,5 +1,5 @@
-C Work\son\sthe\sspeed\soptimizations.\sNot\sfinished.
-D 2016-04-14T15:21:06.963
+C This\scheckin\scontains\smainly\sspeed\soptimizations\sof\sthe\sSQL\squeries.\s\nThe\ssqlite\slibrary\shas\sbeen\supdated\sto\s3.12,\sbut\swithout\sSTAT4\sbecause\sof\ssome\sissues\swith\sthe\sindexes.
+D 2016-04-15T08:57:51.664
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 8d0f7036ebc3ed75bb5102f40f6cd1d3699fbe26
@@ -10,7 +10,7 @@ F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm 06a96e11c24a87b0d6dd8397ca473520fef96bf4
 F source/commands.asm 9b9c843d390753a261709187a1aa58ef7f20b30a
-F source/create.sql 399a4caffd9294483634a2772a7345888f9b06d3
+F source/create.sql 43f6b2b6ce89dc5c365f629e633c5687c302e110
 F source/delete.asm 3189fdc709fe0a5c17879d279b4e4ea67e3df066
 F source/edit.asm 63d51de8d65719bcef3d71d648f3643f558c7a66
 F source/engine.asm 6537b81bfae1e97582a8013d9cafd84fb7c2da6d
@@ -29,8 +29,8 @@ F source/search.asm 3cbbe8167ee728cf2040e19c577df9aafa149bb3
 F source/search.sql 738d09e5fd7c428a7f5a26aecddd6d4e117bb384
 F source/search_cnt.sql 5ef8eb89fcea8f87942f1b7c67202350dfd9ff89
 F source/settings.asm 2fa085873bbfc49fc33a5e8f186d30cd1fa79d7b
-F source/showthread.asm 3146caa864407b0db354b119dbb6158c16d57d3c
-F source/showthread.sql b934020f4fdb5a8b2bdca34c7e3e082807db1eb1
+F source/showthread.asm a4aa4533d6d7a952b8fc155a357aee7f8222f640
+F source/showthread.sql 84edbc132547a8c3399deaa2f236104e8b5e1230
 F source/sqlite3.asm f605d645a6cd5a75fbfc52a86ce38c0b5ab0430a
 F source/sqlite_console.asm be92fba102c4e4e6c461c63fcc4a1bf8c7fae039
 F source/threadlist.asm abe92543b2cf14446e8c6cd41aaaaee0b39b767f
@@ -105,7 +105,7 @@ F www/images/sources/screw0.xcf 50d79cf2cc504c7f0d1499c28147a621b7aaa234
 F www/images/sources/search.svg 50eb2717ab41f19d5a617f6189290fca02470b6b
 F www/images/user.png bf7f849ee8f09b959965aa984f2a5ce7f972ce07
 F www/ld-musl-i386.so 4d44786b8676115c7df45c45ceb051c11ce14ffd x
-F www/libsqlite3.so 582c12ea2e71bd9bfe2d895e666222a40b645ac4 x
+F www/libsqlite3.so d486208742dfb9c86dc6b2bb69ccb668063f7837 x
 F www/lighttpd.conf 3ac00a623c9c2a41cfdb39332a2456dab8b16f14
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/activation_email_subject.tpl 950d3451cce1b1b55eec7c9ac9c0bb415abaa34e
@@ -135,7 +135,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 6e61a59921a6b372913f22cbebcc7455793d9052
 F www/templates/thread_info.tpl 0ded9ba9fb530bdc2cb026cceb49d6623e50429e
 F www/templates/userinfo.tpl 4e71cc52b631c69e0286f01af05e2390d3b79b83
-P 1fcaf591b726df5ed21e689075ac0d88b7a80d1d
-R ba1accd142e28988ebb06327a6b5ca61
+P a1ed058f55be55e600fde2b9fa537f5d77a76dff
+R 7eb73e0eb44b970b8d532aba68c2b31c
 U johnfound
-Z beda8b159baae39e06ce6ae38c5d4da2
+Z 835445af16b6f9e871a06beb1bbca242

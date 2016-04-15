@@ -16,13 +16,18 @@ proc ShowThread, .pSpecial
 .list dd ?
 .cnt  dd ?
 
+;if defined options.DebugMode & options.DebugMode
+;  .start dd ?
+;end if
+
 begin
         pushad
 
         stdcall StrNew
         mov     edi, eax
-
         mov     esi, [.pSpecial]
+
+        cinvoke sqliteExec, [hMainDatabase], sqlBegin, 0, 0, 0
 
         lea     eax, [.stmt2]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, sqlGetThreadInfo.length, eax, 0
@@ -66,10 +71,18 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
+
         stdcall CreatePagesLinks, [esi+TSpecialParams.page_num], [.cnt], 0
         mov     [.list], eax
 
         stdcall StrCat, edi, [.list]
+
+
+;if defined options.DebugMode & options.DebugMode
+;        stdcall GetFineTimestamp
+;        mov     [.start], eax
+;end if
+
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectPosts, sqlSelectPosts.length, eax, 0
@@ -111,6 +124,14 @@ begin
 
 
 .finish:
+
+;if defined options.DebugMode & options.DebugMode
+;        stdcall GetFineTimestamp
+;        sub     eax, [.start]
+;
+;        OutputValue "Thread fetch query time [us]: ", eax, 10, -1
+;end if
+
         cmp     [.cnt], 5
         jbe     .back_navigation_ok
 
@@ -118,13 +139,18 @@ begin
         stdcall StrCatTemplate, edi, "nav_thread", [.stmt2], esi
 
 .back_navigation_ok:
+
         stdcall StrDel, [.list]
+
         stdcall StrCat, edi, "</div>"   ; div.thread
 
         cinvoke sqliteFinalize, [.stmt]
 
 .exit:
+
         cinvoke sqliteFinalize, [.stmt2]
+
+        cinvoke sqliteExec, [hMainDatabase], sqlCommit, 0, 0, 0
 
         clc
         mov     [esp+4*regEAX], edi

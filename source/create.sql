@@ -17,21 +17,21 @@ create table Users (
   nick	    text unique,
   passHash  text unique,
   salt	    text unique,
-  status    integer,	     -- see permXXXXX constants.
-  user_desc text,	     -- free text user description.
-  avatar    blob,	     -- copy of the user avatar.
-  email     text unique,     -- user email.
-  Register  integer,	     -- the time when the user has activated the account.
-  LastSeen  integer,	     -- the time when the user has been last seen by taking some action.
-  Lang	    text,	     -- the language of the user interface.
-  Skin	    text	     -- the name of the UI skin.
+  status    integer,	       -- see permXXXXX constants.
+  user_desc text,	       -- free text user description.
+  avatar    blob,	       -- copy of the user avatar.
+  email     text unique,       -- user email.
+  Register  integer,	       -- the time when the user has activated the account.
+  LastSeen  integer,	       -- the time when the user has been last seen by taking some action.
+  Lang	    text,	       -- the language of the user interface.
+  Skin	    text,	       -- the name of the UI skin.
+  PostCount integer default 0  -- Speed optimization in order to not count the posts every time. Need automatic count.
 );
 
 
-create view UsersX as select *, (select count(1) from Posts as P where P.UserID = U.id) as PostCount from Users as U;
-
 create index idxUsers_nick on Users (nick);
 create index idxUsers_email on Users (email);
+create index idxUsersX on Users(id, nick, avatar);
 
 
 create table WaitingActivation(
@@ -74,6 +74,7 @@ create table Posts (
 
 create index idxPosts_UserID   on Posts (userID);
 create index idxPosts_ThreadID on Posts (threadID);
+create index idxPostsThreadUser on posts(threadid, userid);
 
 
 create table Tags (
@@ -102,7 +103,7 @@ create table UnreadPosts (
 
 
 create unique index idxUnreadPosts on UnreadPosts(UserID, PostID);
-
+create index idxUnreadPostsPostID on UnreadPosts(PostID);
 
 create table Attachements (
   id	   integer primary key autoincrement,
@@ -302,10 +303,12 @@ CREATE VIRTUAL TABLE PostFTS using fts5( Content, content=Posts, content_rowid=i
 
 CREATE TRIGGER PostsAI AFTER INSERT ON Posts BEGIN
   insert into PostFTS(rowid, Content) VALUES (new.id, new.Content);
+  update Users set PostCount = PostCount + 1 where Users.id = new.UserID;
 END;
 
 CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
   insert into PostFTS(PostFTS, rowid, Content) VALUES('delete', old.id, old.Content);
+  update Users set PostCount = PostCount - 1 where Users.id = old.UserID;
 END;
 
 CREATE TRIGGER PostsAU AFTER UPDATE ON Posts BEGIN
