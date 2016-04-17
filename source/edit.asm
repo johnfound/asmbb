@@ -66,18 +66,18 @@ begin
 
 
 .permissions_ok:
-        cmp     [esi+TSpecialParams.post], 0
+        cmp     [esi+TSpecialParams.post_array], 0
         je      .show_edit_form
 
 ; ok, get the action then:
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], "ticket=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "ticket", 0
         mov     [.ticket], eax
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], "source=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "source", 0
         mov     [.source], eax
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], "submit=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "submit", 0
         stdcall StrDel, eax
         test    eax, eax
         jnz     .save_post_and_exit

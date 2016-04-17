@@ -28,7 +28,7 @@ begin
         test    [esi+TSpecialParams.userStatus], permAdmin
         jz      .for_admins_only
 
-        cmp     [esi+TSpecialParams.post], 0
+        cmp     [esi+TSpecialParams.post_array], 0
         jne     .save_settings
 
         stdcall StrCat, [esi+TSpecialParams.page_title], "Forum settings page"
@@ -216,7 +216,7 @@ begin
 
 ; save host
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "host=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "host", 0
         test    eax, eax
         jz      .error_post_request
 
@@ -231,7 +231,7 @@ begin
 
 ; save smtp_addr
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "smtp_addr=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "smtp_addr", 0
         test    eax, eax
         jz      .error_post_request
 
@@ -246,7 +246,7 @@ begin
 
 ; save smtp_port
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "smtp_port=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "smtp_port", 0
         test    eax, eax
         jz      .error_post_request
 
@@ -263,7 +263,7 @@ begin
 
 ; save smtp_user
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "smtp_user=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "smtp_user", 0
         test    eax, eax
         jz      .error_post_request
 
@@ -279,7 +279,7 @@ begin
 
 ; save forum_title
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "forum_title=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "forum_title", 0
         test    eax, eax
         jz      .error_post_request
 
@@ -296,7 +296,7 @@ begin
 
         xor     ebx, ebx
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "log_events=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "log_events", 0
         test    eax, eax
         jz      .bind_log
 
@@ -312,7 +312,7 @@ begin
 
 ; save page_length
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "page_length=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "page_length", 0
         test    eax, eax
         jz      .bind_perm
 
@@ -331,56 +331,56 @@ begin
 .bind_perm:
         xor     ebx, ebx
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "user_perm0=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_perm0", 0
         push    eax
         stdcall StrToNumEx, eax
         stdcall StrDel ; from the stack.
 
         or      ebx, eax
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "user_perm2=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_perm2", 0
         push    eax
         stdcall StrToNumEx, eax
         stdcall StrDel ; from the stack.
 
         or      ebx, eax
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "user_perm3=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_perm3", 0
         push    eax
         stdcall StrToNumEx, eax
         stdcall StrDel ; from the stack.
 
         or      ebx, eax
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "user_perm4=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_perm4", 0
         push    eax
         stdcall StrToNumEx, eax
         stdcall StrDel ; from the stack.
 
         or      ebx, eax
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "user_perm5=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_perm5", 0
         push    eax
         stdcall StrToNumEx, eax
         stdcall StrDel ; from the stack.
 
         or      ebx, eax
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "user_perm6=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_perm6", 0
         push    eax
         stdcall StrToNumEx, eax
         stdcall StrDel ; from the stack.
 
         or      ebx, eax
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "user_perm7=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_perm7", 0
         push    eax
         stdcall StrToNumEx, eax
         stdcall StrDel ; from the stack.
 
         or      ebx, eax
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], txt "user_perm31=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_perm31", 0
         push    eax
         stdcall StrToNumEx, eax
         stdcall StrDel ; from the stack.
@@ -515,7 +515,7 @@ begin
 
         mov     esi, [.pSpecial]
 
-        mov     ebx, [esi+TSpecialParams.post]
+        mov     ebx, [esi+TSpecialParams.post_array]
         test    ebx, ebx
         jnz     .create_account
 
@@ -529,14 +529,15 @@ begin
         mov     ebx, eax
 
         and     [.error], 0
-        stdcall GetQueryItem, ebx, txt "err=", 0
+        stdcall GetPostString, ebx, txt "err", 0
         test    eax, eax
         jz      .error_ok
 
         inc     [.error]
+        stdcall StrDel, eax
 
 .error_ok:
-        stdcall GetQueryItem, ebx, txt "msg=", 0
+        stdcall GetPostString, ebx, txt "msg", 0
         mov     [.message], eax
 
         lea     eax, [.stmt]
@@ -573,7 +574,7 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare, [hMainDatabase], sqlCreateAdmin, sqlCreateAdmin.length, eax, 0
 
-        stdcall GetQueryItem, ebx, "admin=", 0
+        stdcall GetPostString, ebx, "admin", 0
         test    eax, eax
         jz      .error_no_data
 
@@ -587,7 +588,7 @@ begin
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_TRANSIENT
         stdcall StrDel, edi
 
-        stdcall GetQueryItem, ebx, "password=", 0
+        stdcall GetPostString, ebx, "password", 0
         test    eax, eax
         jz      .error_no_data
 
@@ -598,7 +599,7 @@ begin
         jz      .error_del_edi
 
 
-        stdcall GetQueryItem, ebx, "password2=", 0
+        stdcall GetPostString, ebx, "password2", 0
         test    eax, eax
         jz      .error_wrong_password
 
@@ -623,7 +624,7 @@ begin
         stdcall StrDel ; from the stack
         stdcall StrDel ; from the stack
 
-        stdcall GetQueryItem, ebx, "email=", 0
+        stdcall GetPostString, ebx, txt "email", 0
         test    eax, eax
         jz      .error_no_data
 

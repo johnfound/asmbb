@@ -25,7 +25,7 @@ options.DebugMode = 0
 options.AlignCode = 0
 options.ShowImported = 0
 
-options.DebugWeb = 0
+options.DebugWeb = 1
 options.DebugSQLite = 0
 
 ;HeapManager  equ ASM
@@ -43,6 +43,7 @@ include "timeproc.asm"  ; date/time utility procedures.
 include "commands.asm"
 include "render.asm"
 include "fcgi.asm"
+include "post_data.asm"
 include "threadlist.asm"
 include "showthread.asm"
 include "search.asm"
@@ -56,6 +57,8 @@ include "sqlite_console.asm"
 include "messages.asm"
 include "version.asm"
 include "memcache.asm"
+
+include "postdebug.asm"
 
 
 iglobal

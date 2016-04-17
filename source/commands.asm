@@ -19,7 +19,7 @@ struct TSpecialParams
 ; request parameters
 
   .params          dd ?
-  .post            dd ?
+  .post_array      dd ?
 
   .dir             dd ?                 ; /tag_name/
   .thread          dd ?                 ; /thread_slug/
@@ -80,18 +80,12 @@ begin
         mov     eax, [.pParams2]
         mov     [.special.params], eax
 
-        mov     eax, [.pPost2]
-        test    eax, eax
-        jz      .post_ok
+        stdcall DecodePostData, [.pPost2], [.special.params]
+        jc      .post_ok
 
-        lea     edx, [eax+TByteStream.data]
-        mov     ecx, [eax+TByteStream.size]
-
-        stdcall StrNew
-        stdcall StrCatMem, eax, edx, ecx
+        mov     [.special.post_array], eax
 
 .post_ok:
-        mov     [.special.post], eax
 
         stdcall GetParam, "forum_title", gpString
         jnc     .title_ok
@@ -291,12 +285,13 @@ begin
         stdcall StrDel, [.uri]
         stdcall StrDel, [.filename]
 
-        stdcall StrDel, [.special.post]
         stdcall StrDel, [.special.userName]
         stdcall StrDel, [.special.session]
         stdcall StrDel, [.special.dir]
         stdcall StrDel, [.special.thread]
         stdcall StrDel, [.special.page_title]
+
+        stdcall FreePostDataArray, [.special.post_array]
 
         popad
         return
@@ -375,6 +370,13 @@ begin
         mov     ecx, ShowUserInfo
         stdcall StrCompNoCase, eax, txt "!userinfo"
         jc      .exec_command2
+
+
+if defined options.DebugWeb & options.DebugWeb
+        mov     ecx, PostDebug
+        stdcall StrCompNoCase, eax, txt "!postdebug"
+        jc      .exec_command
+end if
 
 
 .is_it_tag:

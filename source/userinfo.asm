@@ -39,7 +39,7 @@ begin
         mov     edi, eax
         mov     esi, [.pSpecial]
 
-        cmp     [esi+TSpecialParams.post], 0
+        cmp     [esi+TSpecialParams.post_array], 0
         jne     .save_user_info
 
 
@@ -103,6 +103,7 @@ locals
   .user_desc    dd ?
 endl
 
+
         test    [esi+TSpecialParams.userStatus], permAdmin
         jnz     .permissions_ok
 
@@ -114,7 +115,7 @@ endl
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateUserInfo, sqlUpdateUserInfo.length, eax, 0
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], "avatar=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "avatar", 0
         mov     [.avatar], eax
         test    eax, eax
         jz      .avatar_ok
@@ -128,7 +129,7 @@ endl
 
 .avatar_ok:
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], "user_desc=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_desc", 0
         mov     [.user_desc], eax
         test    eax, eax
         jz      .user_desc_ok
@@ -147,7 +148,7 @@ endl
 
 .update_end:
 
-        stdcall StrDupMem, "/userinfo/"
+        stdcall StrDupMem, "/!userinfo/"
         stdcall StrCat, eax, [.UserName]
         push    eax
 

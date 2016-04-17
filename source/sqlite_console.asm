@@ -21,7 +21,7 @@ begin
         jz      .for_admins_only
 
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], "source=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], "source", 0
         mov     [.source], eax
 
         stdcall StrCat, [esi+TSpecialParams.page_title], "WARNING! SQLite console. You can destroy your database here!"

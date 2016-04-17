@@ -73,10 +73,10 @@ begin
         jne     .get_caption_from_thread
 
 
-        cmp     [esi+TSpecialParams.post], 0
+        cmp     [esi+TSpecialParams.post_array], 0
         je      .show_edit_form
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], "title=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "title", 0
         mov     [.caption], eax
         test    eax, eax
         jz      .title_ok
@@ -86,7 +86,7 @@ begin
 
 .title_ok:
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], "tags=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "tags", 0
         mov     [.tags], eax
         test    eax, eax
         jz      .tags_ok
@@ -124,12 +124,12 @@ begin
 
 ; get the ticket if any
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], "ticket=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "ticket", 0
         mov     [.ticket], eax
 
 ; get the source
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], "source=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "source", 0
         mov     [.source], eax
         test    eax, eax
         jz      .source_ok2
@@ -141,13 +141,13 @@ begin
 
 ; ok, get the action then:
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], "submit=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "submit", 0
         stdcall StrDel, eax
         test    eax, eax
         jnz     .create_post_and_exit
 
 
-        stdcall GetQueryItem, [esi+TSpecialParams.post], "preview=", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "preview", 0
         stdcall StrDel, eax
         mov     [.fPreview], eax
 

@@ -30,7 +30,7 @@ begin
 ; check the information
 
         mov     esi, [.pSpecial]
-        mov     ebx, [esi+TSpecialParams.post]
+        mov     ebx, [esi+TSpecialParams.post_array]
         test    ebx, ebx
         jnz     .do_login_user
 
@@ -46,14 +46,14 @@ begin
 
 .do_login_user:
 
-        stdcall GetQueryItem, ebx, "username=", 0
+        stdcall GetPostString, ebx, "username", 0
         mov     [.user], eax
 
         stdcall StrLen, eax
         test    eax, eax
         jz      .redirect_back_short
 
-        stdcall GetQueryItem, ebx, "password=", 0
+        stdcall GetPostString, ebx, "password", 0
         mov     [.password], eax
 
         stdcall StrLen, eax
@@ -164,7 +164,7 @@ begin
         stdcall StrCat, edi, [.session]
         stdcall StrCat, edi, <"; HttpOnly; Path=/", 13, 10>
 
-        stdcall GetQueryItem, ebx, "backlink=", 0
+        stdcall GetPostString, ebx, "backlink", 0
         test    eax, eax
         jnz     .go_back
 
@@ -281,7 +281,7 @@ begin
 ; check the information
 
         mov     esi, [.pSpecial]
-        mov     ebx, [esi+TSpecialParams.post]
+        mov     ebx, [esi+TSpecialParams.post_array]
         test    ebx, ebx
         jnz     .do_register_user
 
@@ -298,7 +298,7 @@ begin
 
 .do_register_user:
 
-        stdcall GetQueryItem, ebx, "username=", 0
+        stdcall GetPostString, ebx, "username", 0
         mov     [.user], eax
 
         stdcall StrLen, eax
@@ -308,16 +308,16 @@ begin
         cmp     eax, 256
         ja      .error_trick
 
-        stdcall GetQueryItem, ebx, "email=", 0
+        stdcall GetPostString, ebx, "email", 0
         mov     [.email], eax
 
         stdcall CheckEmail, eax
         jc      .error_bad_email
 
-        stdcall GetQueryItem, ebx, "password=", 0
+        stdcall GetPostString, ebx, txt "password", 0
         mov     [.password], eax
 
-        stdcall GetQueryItem, ebx, "password2=", 0
+        stdcall GetPostString, ebx, txt "password2", 0
         mov     [.password2], eax
 
         stdcall StrCompCase, [.password], [.password2]
@@ -634,9 +634,9 @@ begin
         mov     [.newpass2], eax
 
         mov     esi, [.pSpecial]
-        mov     ebx, [esi+TSpecialParams.post]
+        mov     ebx, [esi+TSpecialParams.post_array]
 
-        stdcall GetQueryItem, ebx, "oldpass=", 0
+        stdcall GetPostString, ebx, "oldpass", 0
         test    eax, eax
         jz      .bad_parameter
 
@@ -647,7 +647,7 @@ begin
         jz      .bad_parameter
 
 
-        stdcall GetQueryItem, ebx, "newpass=", 0
+        stdcall GetPostString, ebx, txt "newpass", 0
         test    eax, eax
         jz      .bad_parameter
 
@@ -660,7 +660,7 @@ begin
         cmp     eax, 5
         jbe     .error_short_pass
 
-        stdcall GetQueryItem, ebx, "newpass2=", 0
+        stdcall GetPostString, ebx, txt "newpass2", 0
         test    eax, eax
         jz      .bad_parameter
 
@@ -800,9 +800,9 @@ begin
         mov     [.secret], eax
 
         mov     esi, [.pSpecial]
-        mov     ebx, [esi+TSpecialParams.post]
+        mov     ebx, [esi+TSpecialParams.post_array]
 
-        stdcall GetQueryItem, ebx, "password=", 0
+        stdcall GetPostString, ebx, txt "password", 0
         test    eax, eax
         jz      .bad_parameter
 
@@ -813,7 +813,7 @@ begin
         jz      .bad_parameter
 
 
-        stdcall GetQueryItem, ebx, "email=", 0
+        stdcall GetPostString, ebx, txt "email", 0
         test    eax, eax
         jz      .bad_parameter
 

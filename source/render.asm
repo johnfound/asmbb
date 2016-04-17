@@ -865,7 +865,7 @@ if defined options.DebugWeb & options.DebugWeb
 
 .get_environment:
 
-        stdcall StrDupMem, <"<pre>", 13, 10>
+        stdcall StrNew
         mov     ebx, eax
 
         mov     edx, [esi+TSpecialParams.params]
@@ -875,15 +875,11 @@ if defined options.DebugWeb & options.DebugWeb
         cmp     ecx, [edx+TArray.count]
         jae     .show_post
 
-        stdcall StrEncodeHTML, [edx+TArray.array+8*ecx]
-        stdcall StrCat, ebx, eax
-        stdcall StrDel, eax
+        stdcall StrCat, ebx, [edx+TArray.array+8*ecx]
 
         stdcall StrCharCat, ebx, " = "
 
-        stdcall StrEncodeHTML, [edx+TArray.array+8*ecx+4]
-        stdcall StrCat, ebx, eax
-        stdcall StrDel, eax
+        stdcall StrCat, ebx, [edx+TArray.array+8*ecx+4]
         stdcall StrCharCat, ebx, $0a0d
 
         inc     ecx
@@ -891,17 +887,91 @@ if defined options.DebugWeb & options.DebugWeb
 
 
 .show_post:
-        mov     eax, [esi+TSpecialParams.post]
-        test    eax, eax
+        mov     edx, [esi+TSpecialParams.post_array]
+        test    edx, edx
         jz      .end_env
 
-        stdcall StrCat, ebx, <13, 10, 13, 10, "<<<<< Follows the POST data: >>>>>", 13, 10>
-        stdcall StrCat, ebx, [esi+TSpecialParams.post]
-        stdcall StrCat, ebx, <13, 10, "<<<<< Here ends the post data >>>>>", 13, 10>
+        stdcall StrCat, ebx, <13, 10, 13, 10, "(((((( Follows the POST data: ))))))", 13, 10>
+
+        xor     ecx, ecx
+
+.loop_post:
+        cmp     ecx, [edx+TArray.count]
+        jae     .end_post
+
+        stdcall StrCat, ebx, [edx+TArray.array+8*ecx+TPostDataItem.name]
+
+        stdcall StrCharCat, ebx, " = "
+
+        mov     eax, [edx+TArray.array+8*ecx+TPostDataItem.data]
+        test    eax, eax
+        jz      .next
+
+        cmp     eax, $c0000000
+        jae     .value_string
+
+        stdcall StrCat, ebx, <"[FILE_SET]", 13, 10>
+
+        push    edx ecx
+
+        mov     ecx, [eax+TArray.count]
+        lea     edx, [eax+TArray.array]
+
+
+.file_loop:
+        dec     ecx
+        js      .end_files
+
+        stdcall StrCat, ebx, '  Filename: "'
+
+        stdcall StrCat, ebx, [edx+TPostFileItem.filename]
+
+        stdcall StrCat, ebx, '"; Mime-type: "'
+
+        stdcall StrCat, ebx, [edx+TPostFileItem.mime]
+        stdcall StrDel, eax
+
+        stdcall StrCat, ebx, '"; Size: '
+
+        stdcall NumToStr, [edx+TPostFileItem.size], ntsDec or ntsUnsigned
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+
+        stdcall StrCat, ebx, <' bytes', 13, 10>
+
+        stdcall CatMemoryDump, ebx, [edx+TPostFileItem.data], [edx+TPostFileItem.size]
+
+        add     edx, sizeof.TPostFileItem
+        jmp     .file_loop
+
+.end_files:
+        pop     ecx edx
+        jmp     .next
+
+
+.value_string:
+
+        stdcall StrCat, ebx, eax
+
+.next:
+        stdcall StrCharCat, ebx, $0a0d
+        inc     ecx
+        jmp     .loop_post
+
+.end_post:
+        stdcall StrCat, ebx, <"(((((( Here ends the post data ))))))", 13, 10>
 
 .end_env:
-        stdcall StrCat, ebx, "13, 10, </pre>"
-        mov     eax, ebx
+
+if defined options.DebugMode & options.DebugMode
+        stdcall FileWriteString, [STDERR], ebx
+end if
+        stdcall StrEncodeHTML, ebx
+        stdcall StrDel, ebx
+
+        stdcall StrInsert, eax, "<pre>", 0
+        stdcall StrCat, eax, txt "</pre>"
+
         jmp     .return_value
 
 end if
@@ -1533,3 +1603,166 @@ begin
 
         jmp     .finish
 endp
+
+
+
+
+
+
+proc CatMemoryDump, .str, .ptr, .size
+.buffer rd 2
+begin
+        pushad
+
+        mov     esi, [.ptr]
+        mov     edx, [.size]
+        test    edx, edx
+        jz      .finish
+
+.loop:
+        stdcall StrCharCat, [.str], "    "
+
+        mov     eax, esi
+        sub     eax, [.ptr]
+
+        stdcall NumToStr, eax, ntsHex or ntsFixedWidth + 8
+        stdcall StrCat, [.str], eax
+        stdcall StrDel, eax
+
+        stdcall StrCharCat, [.str], ": "
+
+        mov     ecx, 16
+
+        push    esi edx
+
+.lineloop1:
+        movzx   eax, byte [esi]
+
+        stdcall NumToStr, eax, ntsHex or ntsFixedWidth + 2
+        stdcall StrCat, [.str], eax
+        stdcall StrDel, eax
+
+        stdcall StrCharCat, [.str], "  "
+
+        inc     esi
+        dec     edx
+        dec     ecx
+        jz      .ascii
+
+        test    edx, edx
+        jnz     .lineloop1
+
+
+.align_loop:
+        jecxz   .ascii
+
+        stdcall StrCharCat, [.str], "    "
+        dec     ecx
+        jnz     .align_loop
+
+
+.ascii:
+        stdcall StrCharCat, [.str], ": "
+
+        mov     ecx, 16
+        pop     edx esi
+
+.lineloop2:
+
+        xor     eax, eax
+        mov     al, [esi]
+        test    al, al
+        jns     @f
+        mov     al, "."
+@@:
+        cmp     al, " "
+        jae     @f
+        mov     al, "."
+@@:
+
+        mov     [.buffer], eax
+        mov     [.buffer+4], 0
+
+        lea     eax, [.buffer]
+        stdcall StrCat, [.str], eax
+
+        inc     esi
+        dec     edx
+        dec     ecx
+        jz      .exit
+
+        test    edx, edx
+        jnz     .lineloop2
+
+
+.exit:
+        stdcall StrCharCat, [.str], $0a0d
+
+        test    edx, edx
+        jnz     .loop
+
+        stdcall StrCharCat, [.str], $0a0d
+
+.finish:
+        popad
+        return
+
+endp
+
+
+
+
+
+
+
+
+; Print the envoronment and post data to STDERR. ONLY for debugging purposes, especially for POST requests.
+
+;proc GetDebugEnv, .pSpecial
+;
+;begin
+;        pushad
+;
+;        mov     esi, [.pSpecial]
+;
+;        stdcall StrDupMem, <"Parameters received:", 13, 10>
+;        mov     ebx, eax
+;
+;        mov     edx, [esi+TSpecialParams.params]
+;        xor     ecx, ecx
+;        test    eax, eax
+;        jz      .show_post
+;
+;.loop_env:
+;        cmp     ecx, [edx+TArray.count]
+;        jae     .show_post
+;
+;        stdcall StrCat, ebx, [edx+TArray.array+8*ecx]
+;        stdcall StrCharCat, ebx, " = "
+;
+;        stdcall StrCat, ebx, [edx+TArray.array+8*ecx+4]
+;        stdcall StrCharCat, ebx, $0a0d
+;
+;        inc     ecx
+;        jmp     .loop_env
+;
+;
+;.show_post:
+;        mov     eax, [esi+TSpecialParams.post]
+;        test    eax, eax
+;        jz      .end_env
+;
+;        stdcall StrCat, ebx, <13, 10, 13, 10, "<<<<< Follows the POST data: >>>>>", 13, 10>
+;        stdcall StrCat, ebx, [esi+TSpecialParams.post]
+;        stdcall StrCat, ebx, <13, 10, "<<<<< Here ends the post data >>>>>", 13, 10>
+;
+;.end_env:
+;        stdcall StrCat, ebx, <txt 13, 10>
+;
+;        mov     [esp+4*regEAX], ebx
+;        popad
+;        return
+;endp
+;
+;
+;
