@@ -1,8 +1,8 @@
-C One\sstep\sbefore\srelease.\sMore\schecks\sin\sthe\sPNG\svalidation.\sUser\sprogrammable\slimits\sfor\sthe\suploaded\savatars.
-D 2016-04-19T18:49:55.641
+C Binary\srelease\sv1.2
+D 2016-04-19T18:58:20.164
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
-F install/asmbb.tar.gz 8d0f7036ebc3ed75bb5102f40f6cd1d3699fbe26
+F install/asmbb.tar.gz aa3174f61bce15bd11e6115af0af8ea95f2bdd68
 F install/create_release.sh 6dd920298f7e6d3cc4caa8557e565d3ec9b164f6 x
 F install/install.txt 7d3f4f32b07d36ba1256bccb17b3b96c6fa1d004
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
@@ -143,7 +143,8 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 6e61a59921a6b372913f22cbebcc7455793d9052
 F www/templates/thread_info.tpl 0ded9ba9fb530bdc2cb026cceb49d6623e50429e
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 8e6cf88d31913c5ac99c3a6e9592e172db320f25
-R ce679548412dd9d786def20aa4884ceb
+P 5afcaf2550e53e76a5ba42f2655b95eca9226b27
+R 8f6d0b1bb80c5b216a0785e186fed639
+T +sym-v1.2 *
 U johnfound
-Z bf907d09ffa3e898d355799d027bdbe0
+Z 178f9ea3315a81f8ea526998f70debd0
