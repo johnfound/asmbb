@@ -277,10 +277,16 @@ begin
 .IEND:
 ; so, all data must be collected - process it.
 
+        test    ecx, ecx
+        jnz     .error_structure
+
         cmp     [.pData], 0
         je      .error_no_image
 
         call    .copy_chunk
+
+        cmp     esi, [.pEnd]
+        jne     .error_structure
 
 ; decompressed data buffer:
 
@@ -291,20 +297,27 @@ begin
         inc     edx                      ; one more byte for the filter byte.
         imul    edx, [.Height]
 
-        stdcall GetMem, edx
-        mov     edi, eax
-
         mov     esi, [.pData]
         mov     ecx, [.DataSize]
 
         add     esi, 2          ; first 2 bytes are ZLIB data format header. Ignore them.
         sub     ecx, 2+4        ; the last 4 bytes
 
+        cmp     ecx, edx
+        jae     .error_structure
+
+        stdcall GetMem, edx
+        mov     edi, eax
+
         stdcall Inflate, edi, edx, esi, ecx
+
+        pushf
+        stdcall FreeMem, edi
+        popf
+
         jc      .error_decompression
 
         stdcall FreeMem, [.pData]
-        stdcall FreeMem, edi
 
         mov     eax, [.res]
         mov     [esp+4*regEAX], eax

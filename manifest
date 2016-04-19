@@ -1,5 +1,5 @@
-C The\savatars\shave\sbeen\schanged\sto\sbe\suploaded\sas\sa\splain\simage\sfiles,\sinstead\sof\sbase64\sencoded\stext.\sThis\sway,\sthey\scan\sbe\scached\sin\sthe\nuser\sbrowser\sand\sthe\sspeed\sof\sbrowsing\sincreases\ssignificantly.\sThe\simages\sare\ssanitized\son\sthe\sserver\sand\sall\sunallowed\schunks\sare\nremoved\sfrom\sthe\simage.\sThe\ssize\sis\stested\sas\swell\sand\sonly\s128x128\simages\sare\sallowed\sto\sbe\suploaded.\sHope,\sthis\swill\sbe\senough\sto\s\nprevent\smost\sof\sthe\spossible\sexploits.\n\nThe\s"log_events"\sflag\snow\sis\schecked\sonly\sonce,\sat\sthe\sstart\sof\sthe\srequest\sprocessing.\s\n\nAfter\ssome\stesting,\sall\sthis\sshould\sbe\sreleased\sas\sa\sv1.2;
-D 2016-04-19T16:07:55.875
+C One\sstep\sbefore\srelease.\sMore\schecks\sin\sthe\sPNG\svalidation.\sUser\sprogrammable\slimits\sfor\sthe\suploaded\savatars.
+D 2016-04-19T18:49:55.641
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 8d0f7036ebc3ed75bb5102f40f6cd1d3699fbe26
@@ -19,7 +19,7 @@ F source/exponential_scaling.ods b66ca0aa6f1f4dc69986c751341877b423db11e5
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 86d9df1ecec6f5d5cac77ef0bd8597df826bfb74
 F source/http.asm a72cf433a5b99aec153709f3c9bfa73c2ea4ef49
-F source/images_png.asm 36d80f9d3180eafb496d468d4613024f9d85e443
+F source/images_png.asm cb69d9eafb85f6e61c526a3dcff4c7f2c3f4ebd6
 F source/keywords.txt 8e374a274b6a178e582656652edb52e65fbebfb2
 F source/memcache.asm aa97cfe9ae95a5dc9d6d2c55c87d1bfbb488d14a
 F source/messages.asm 1cc42852665f2b44a574e37c0fde6624b4dab784
@@ -40,7 +40,7 @@ F source/sqlite_console.asm 17e7b5211b127d0f317047e75fadc41f6e4ce5ae
 F source/threadlist.asm 357af1336eacdfd59554a4d5a15b41571e6fce59
 F source/threadlist.sql 1224dfd1fa036b023ca618ab8c43be39dfea7be6
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
-F source/userinfo.asm 3b035256626af4e2ede5c225c372bea97e50203b
+F source/userinfo.asm ae487cd89b2960c48464db7f4c560bd4894790be
 F source/users_online.asm a5776af30b415d80269b97426e7c56d7393f9fff
 F source/version.asm d2cded003c4d9bcf876da1cabd3a3a8f399b37c3
 F www/.htaccess fc8c641fc61f2a38821bdb99fb9556ddf98929a7
@@ -117,7 +117,7 @@ F www/lighttpd.conf 3ac00a623c9c2a41cfdb39332a2456dab8b16f14
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/activation_email_subject.tpl 950d3451cce1b1b55eec7c9ac9c0bb415abaa34e
 F www/templates/activation_email_text.tpl 3d43a474040f226863f8b2bfa7bad91841711b96
-F www/templates/all.css c57a6509fce0b64ff4180d4a088fead2f0aeacaf
+F www/templates/all.css 799175f293692a1d0eb2785175d012492b8ed399
 F www/templates/del_confirm.tpl 7b62ada90b819921275499b659614378cdadd253
 F www/templates/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
 F www/templates/error_html_end.tpl f390b47728814ecd8e608dd410cb2f4b0b953020
@@ -143,7 +143,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 6e61a59921a6b372913f22cbebcc7455793d9052
 F www/templates/thread_info.tpl 0ded9ba9fb530bdc2cb026cceb49d6623e50429e
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 4fbf5cb19fe7c5bf86e87e28843ca2220c443504
-R 48f4ac741398ca0f81726dfe20e13ea9
+P 8e6cf88d31913c5ac99c3a6e9592e172db320f25
+R ce679548412dd9d786def20aa4884ceb
 U johnfound
-Z 59eaa5c563c547a9366946f98954be2e
+Z bf907d09ffa3e898d355799d027bdbe0

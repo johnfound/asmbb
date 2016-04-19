@@ -350,7 +350,7 @@ div.post_info a {
 
 div.post_text {
   margin-left: 200px;
-  padding: 16px 8px 32px 8px;
+  padding: 16px;
   background-color: white;
   min-height: 190px;
 }
@@ -971,12 +971,12 @@ p.attribution {
 
 /* Headings */
 
-h1 { font-size: 21px; margin-top: 32px; }
-h2 { font-size: 20px; margin-top: 32px; }
-h3 { font-size: 19px; margin-top: 32px; }
-h4 { font-size: 18px; margin-top: 32px; }
-h5 { font-size: 16px; margin-top: 32px; }
-h6 { font-size: 16px; margin-top: 32px; }
+h1 { font-size: 21px; margin-top: 16px; }
+h2 { font-size: 20px; margin-top: 16px; }
+h3 { font-size: 19px; margin-top: 16px; }
+h4 { font-size: 18px; margin-top: 16px; }
+h5 { font-size: 16px; margin-top: 16px; }
+h6 { font-size: 16px; margin-top: 16px; }
 
 
 /* paragraph style */
@@ -991,6 +991,7 @@ div.post_text p {
 div.post_text p.uli {
   display: list-item;
   list-style: disc inside;
+  margin-bottom: 1em;
 }
 
 

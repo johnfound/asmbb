@@ -313,9 +313,29 @@ begin
         stdcall StrCompCase, [ebx+TPostFileItem.mime], "image/png"
         jnc     .update_end
 
-;        DebugMsg "Now sanitize the PNG."
+; First check the forum limits:
 
-        stdcall SanitizeImagePng, [ebx+TPostFileItem.data], [ebx+TPostFileItem.size], 128, 128
+        stdcall GetParam, "avatar_max_size", gpInteger
+        jnc     @f
+        mov     eax, MAX_AVATAR_SIZE
+@@:
+        cmp     [ebx+TPostFileItem.size], eax
+        ja      .update_end
+
+
+        stdcall GetParam, "avatar_width", gpInteger
+        jnc     @f
+        mov     eax, 128
+@@:
+        mov     ecx, eax
+
+        stdcall GetParam, "avatar_height", gpInteger
+        jnc     @f
+        mov     eax, 128
+@@:
+
+;        DebugMsg "Now sanitize the PNG."
+        stdcall SanitizeImagePng, [ebx+TPostFileItem.data], [ebx+TPostFileItem.size], ecx, eax
         jc      .update_end
 
         mov     [.img_ptr], eax
