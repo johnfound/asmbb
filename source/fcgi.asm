@@ -203,13 +203,13 @@ endp
 pathMySocket text "./engine.sock"
 
 
-;create table if not exists RequestsLog (
-;  process_id integer,      -- the unique process id
+;create table Log (
+;  process_id integer,   -- the unique process id
 ;  timestamp  integer,
-;  event      integer,      -- what event is logged - start process, end process, start request, end request
-;  value      text          -- details in variable form.
-;)
-
+;  event      text       -- what event is logged - start process, end process, start request, end request
+;  value      text,      -- details in variable form.
+;  runtime    integer
+;);
 ; GOOD report queries:
 ;
 ; select process_id, strftime('%d.%m.%Y %H:%M:%S', timestamp, 'unixepoch') as `Time`, E.name, value from log L left join Events E on event = E.id order by timestamp desc;
@@ -242,9 +242,8 @@ proc LogEvent, .event, .log_type, .value, .runtime
 begin
         pushad
 
-        stdcall GetParam, "log_events", gpInteger
-        test    eax, eax
-        jz      .finish
+        cmp     [fLogEvents], 0
+        je      .finish
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLogEvent, sqlLogEvent.length, eax, 0
@@ -360,6 +359,14 @@ begin
         mov     [.requestParams], eax
         mov     [.requestPost], eax
         xor     esi, esi
+
+        stdcall GetParam, "log_events", gpInteger
+        mov     [fLogEvents], eax
+
+        test    eax, eax
+        jz      .main_loop
+
+; only when the logging is ON
 
         stdcall GetUniqueID
         mov     [.threadID], eax
@@ -557,23 +564,32 @@ begin
 ; Processing of the request. Here all data is ready, so serve the request!
 
 .serve_request:
+
+        cmp     [fLogEvents], 0
+        je      .log_serve_ok
         stdcall ValueByName, [.requestParams], "REQUEST_URI"
         stdcall LogEvent, "RequestServeStart", logText, eax, 0
+.log_serve_ok:
 
+        ; SERVE THE REQUEST HERE
         stdcall ServeOneRequest, [.hSocket], [.requestID], [.requestParams], [.requestPost], [.start_time]
 
         stdcall LogEvent, "RequestServeEnd", logNULL, 0, 0
-
 
 .request_complete:
 
         stdcall FCGI_send_end_request, [.hSocket], [.requestID], FCGI_REQUEST_COMPLETE
         jc      .finish
 
+
+        cmp     [fLogEvents], 0
+        je      .log_req_end_ok
+
         stdcall GetFineTimestamp
         sub     eax, [.start_time]
-
         stdcall LogEvent, "RequestEnd", logNumber, [.threadID], eax
+
+.log_req_end_ok:
 
         test    [.requestFlags], FCGI_KEEP_CONN
         jnz     .main_loop
@@ -585,10 +601,14 @@ begin
 
         stdcall SocketClose, [.hSocket]
 
+        cmp     [fLogEvents], 0
+        je      .log_thread_end_ok
+
         stdcall GetFineTimestamp
         sub     eax, [.thread_start]
-
         stdcall LogEvent, "ThreadEnd", logNumber, [.threadID], eax
+
+.log_thread_end_ok:
 
         stdcall Terminate, 0
 
@@ -983,6 +1003,9 @@ begin
         pushad
 
         mov     esi, [.pArray]
+        test    esi, esi
+        jz      .not_found
+
         xor     ecx, ecx
 
 .loop:

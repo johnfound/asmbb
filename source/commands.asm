@@ -331,6 +331,10 @@ begin
         pop     eax
         jne     .is_it_tag
 
+        mov     ecx, UserAvatar
+        stdcall StrCompNoCase, eax, txt "!avatar"
+        jc      .exec_command2
+
         mov     ecx, UserLogin
         stdcall StrCompNoCase, eax, txt "!login"
         jc      .exec_command
@@ -369,6 +373,10 @@ begin
 
         mov     ecx, ShowUserInfo
         stdcall StrCompNoCase, eax, txt "!userinfo"
+        jc      .exec_command2
+
+        mov     ecx, UpdateUserAvatar
+        stdcall StrCompNoCase, eax, txt "!avatar_upload"
         jc      .exec_command2
 
 

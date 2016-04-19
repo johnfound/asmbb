@@ -1,5 +1,5 @@
   <div class="user_desc">
-    <img class="profile_avatar" src="[avatar]">
+    <img class="profile_avatar" src="/!avatar/[username]?v=[AVer]">
     <h1>[username]</h1>
     [minimag:[user_desc]]
   </div>

@@ -214,10 +214,6 @@ begin
         stdcall StrClipSpacesL, eax
         mov     edi, eax
 
-        stdcall GetQueryItem, edi, "avatar=", 0
-        test    eax, eax
-        jnz     .get_avatar
-
         stdcall StrCompNoCase, edi, "version"
         jc      .get_version
 
@@ -714,28 +710,6 @@ endl
 
 .end_thread_tags2:
         mov     eax, ebx
-        jmp     .return_value
-
-;..................................................................
-
-.get_avatar:
-        mov     ecx, eax
-
-        stdcall __DoProcessTemplate2, ecx, [.sql_stmt], [.pSpecial], FALSE
-        stdcall StrDel, ecx
-
-        push    eax
-        stdcall StrToNumEx, eax
-        stdcall StrDel ; from the stack
-        jc      .end_avatar
-
-        stdcall GetUserAvatar, eax
-        jc      .end_avatar
-
-        jmp     .return_encoded
-
-.end_avatar:
-        xor     eax, eax
         jmp     .return_value
 
 ;..................................................................

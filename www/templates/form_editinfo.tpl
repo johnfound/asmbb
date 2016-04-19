@@ -1,7 +1,11 @@
+<form class="user_edit_info" method="post" enctype="multipart/form-data" action="/!avatar_upload/[username]">
+  <label>Avatar:<span class="small">(.png only; Maximal size: 10KB; Size: 128x128px)</span></label>
+  <input type="file" class="browse" name="avatar">
+  <input type="submit" name="submit" class="submit" value="Upload">
+</form>
+
 <form class="user_edit_info" method="post" action="/!userinfo/[username]">
-  <label>Avatar:<span class="small"> (base64 encoded image, 128x128px native size)</span></label>
-  <textarea class="avatar" name="avatar">[avatar]</textarea>
-  <label>User description:<span class="small"> (formatted text)</span></label>
+  <label>User description:<span class="small"> (Formatted text)</span></label>
   <textarea class="user_desc" name="user_desc">[user_desc]</textarea>
   <input type="submit" name="save" class="submit" value="Save">
 </form>
@@ -22,3 +26,4 @@
   <input type="submit" name="changeemail" class="submit" value="Change email">
 </form>
 ]
+

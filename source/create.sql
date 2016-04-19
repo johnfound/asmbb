@@ -20,6 +20,7 @@ create table Users (
   status    integer,	       -- see permXXXXX constants.
   user_desc text,	       -- free text user description.
   avatar    blob,	       -- copy of the user avatar.
+  av_time   integer,	     -- the time the avatar has been latest changed.
   email     text unique,       -- user email.
   Register  integer,	       -- the time when the user has activated the account.
   LastSeen  integer,	       -- the time when the user has been last seen by taking some action.

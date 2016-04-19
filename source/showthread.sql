@@ -7,6 +7,7 @@ select
   U.id as UserID,
   U.nick as UserName,
   U.PostCount as UserPostCount,
+  U.av_time as AVer,
   ?4 as Slug,
   (select count() from UnreadPosts UP where UP.UserID = ?5 and UP.PostID = P.id) as Unread,
   P.ReadCount

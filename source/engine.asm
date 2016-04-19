@@ -25,7 +25,7 @@ options.DebugMode = 0
 options.AlignCode = 0
 options.ShowImported = 0
 
-options.DebugWeb = 1
+options.DebugWeb = 0
 options.DebugSQLite = 0
 
 ;HeapManager  equ ASM
@@ -56,7 +56,7 @@ include "settings.asm"
 include "sqlite_console.asm"
 include "messages.asm"
 include "version.asm"
-include "memcache.asm"
+include "images_png.asm"
 
 include "postdebug.asm"
 
@@ -73,10 +73,12 @@ uglobal
   ProcessID     dd ?
   ProcessStart  dd ?
   fOwnSocket    dd ?
+  fLogEvents    dd ?
 endg
 
 
-rb 73
+rb 173
+
 
 start:
         InitializeAll
@@ -114,8 +116,8 @@ start:
         stdcall GetTimestamp
         mov     [ProcessStart], eax
 
-        stdcall CreateMemoryCache, AvatarCache
-
+        stdcall GetParam, "log_events", gpInteger
+        mov     [fLogEvents], eax
 
         stdcall LogEvent, "ScriptStart", logNULL, 0, 0
 
@@ -127,10 +129,15 @@ start:
 
 .terminate:
 
+
+        cmp     [fLogEvents], 0
+        je      .log_script_end_ok
+
         stdcall GetTimestamp
         sub     eax, [ProcessStart]
-
         stdcall LogEvent, "ScriptEnd", logNULL, 0, eax
+
+.log_script_end_ok:
 
         mov     ebx, 300        ; 300x10ms = 3000ms
 

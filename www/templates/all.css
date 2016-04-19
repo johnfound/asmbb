@@ -1207,6 +1207,7 @@ form.user_edit_pass {
   padding: 16px;
   background-color: #d0d0d0;
   margin-bottom: 16px;
+  clear: left;
 }
 
 form.user_edit_pass h1 {
@@ -1223,6 +1224,7 @@ form.user_edit_info label {
   color: black;
   font-size: 18px;
   font-weight: bold;
+  display: block;
 }
 
 textarea.user_desc {
@@ -1240,19 +1242,17 @@ textarea.user_desc {
   outline-style: none;
 }
 
-textarea.avatar {
-  width: 100%;
-  height: 8em;
-  display: block;
-  margin: 0px 0px 16px 0px;
-  padding: 4px;
 
-  font-family: "Liberation Mono", "Courier New", monospaced;
-  background-color: white;
-  resize: vertical;
-  overflow: auto;
-  border-style: none;
-  outline-style: none;
+input.browse {
+    width: 100%;
+    margin-bottom: 16px;
+    font-size: 16px;
+    padding: 0px;
+    outline: none;
+    border: none;
+
+    background-color: white;
+    color: black;
 }
 
 
@@ -1263,7 +1263,6 @@ div.user_stat {
   width: calc(67% - 16px);
   padding: 16px;
   background-color: white;
-  clear: none;
   margin-bottom: 16px;
 }
 

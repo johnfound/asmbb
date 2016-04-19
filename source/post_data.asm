@@ -163,7 +163,6 @@ begin
         stdcall StrCatMem, eax, ebx, ecx
         mov     [.filename], eax            ; temporary storage for the filename
 
-
         inc     esi
 
         lea     eax, [esi+4]
@@ -199,7 +198,6 @@ begin
         stdcall StrNew
         stdcall StrCatMem, eax, ebx, ecx
         mov     [.mime], eax            ; temporary storage for the mime type.
-
 
 .get_content:
         cmp     dword [esi], $0a0d0a0d
@@ -499,9 +497,9 @@ begin
         jae     .boundary_exit
 
         repe cmpsb
-        jz      .boundary_found
+        je      .boundary_found
 
-        mov     esi, [edx-1]
+        lea     esi, [edx-1]
         jmp     .boundary_loop
 
 .boundary_found:
