@@ -2,8 +2,10 @@
 
 
 sqlGetUserInfo   text "select id, salt, passHash, status from Users where lower(nick) = lower(?)"
-sqlInsertSession text "insert into sessions (userID, sid, last_seen) values ( ?, ?, strftime('%s','now') )"
-sqlCheckSession  text "select sid from sessions where userID = ?"
+sqlInsertSession text "insert into sessions (userID, sid, FromIP, last_seen) values ( ?, ?, ?, strftime('%s','now') )"
+sqlUpdateSession text "update Sessions set userID = ?, FromIP = ?3, last_seen = strftime('%s','now') where sid = ?2"
+sqlCheckSession  text "select sid from sessions where userID = ? and fromIP = ?"
+sqlCleanSessions text "delete from sessions where last_seen < (strftime('%s','now') - 2592000)"
 
 
 proc UserLogin, .pSpecial
@@ -16,6 +18,8 @@ proc UserLogin, .pSpecial
 .session  dd ?
 .status   dd ?
 
+.ip dd ?
+
 begin
         pushad
 
@@ -26,6 +30,8 @@ begin
 
         stdcall StrNew
         mov     edi, eax
+
+        cinvoke sqliteExec, [hMainDatabase], sqlCleanSessions, sqlCleanSessions.length, 0, 0
 
 ; check the information
 
@@ -45,6 +51,15 @@ begin
 
 
 .do_login_user:
+
+        stdcall ValueByName, [esi+TSpecialParams.params], "REMOTE_ADDR"
+        jc      .ip_ok
+
+        stdcall StrIP2Num, eax
+        jc      .ip_ok
+
+        mov     [.ip], eax
+.ip_ok:
 
         stdcall GetPostString, ebx, "username", 0
         mov     [.user], eax
@@ -119,6 +134,7 @@ begin
         cinvoke sqlitePrepare, [hMainDatabase], sqlCheckSession, -1, eax, 0
 
         cinvoke sqliteBindInt, [.stmt], 1, [.userID]
+        cinvoke sqliteBindInt, [.stmt], 2, [.ip]
 
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
@@ -128,42 +144,51 @@ begin
         stdcall StrDupMem, eax
         mov     [.session], eax
 
-        jmp     .set_the_cookie
-
 
 .new_session:
-
         cinvoke sqliteFinalize, [.stmt]
+
+        mov     ecx, sqlUpdateSession
+
+        cmp     [.session], 0
+        jne     .session_ok
 
         stdcall GetRandomString, 32
         mov     [.session], eax
 
+        mov     ecx, sqlInsertSession
+
+.session_ok:
 
 ; Insert new session record.
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertSession, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], ecx, -1, eax, 0
 
         cinvoke sqliteBindInt, [.stmt], 1, [.userID]
 
         stdcall StrPtr, [.session]
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 
+        cinvoke sqliteBindInt, [.stmt], 3, [.ip]
+
         cinvoke sqliteStep, [.stmt]
-
-; check for error here!
-
-
-; now, set some cookies
-
-.set_the_cookie:
+        mov     esi, eax
 
         cinvoke sqliteFinalize, [.stmt]
+
+        cmp     esi, SQLITE_DONE
+        jne     .finalize               ; it is some error in the database, so don't set the cookie!
+
+
+; now, set some cookies (It is session cookie only!)
 
         stdcall StrCat, edi, "Set-Cookie: sid="
         stdcall StrCat, edi, [.session]
         stdcall StrCat, edi, <"; HttpOnly; Path=/", 13, 10>
 
+
+.finalize:
         stdcall GetPostString, ebx, "backlink", 0
         test    eax, eax
         jnz     .go_back

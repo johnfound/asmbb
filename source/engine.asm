@@ -25,7 +25,7 @@ options.DebugMode = 0
 options.AlignCode = 0
 options.ShowImported = 0
 
-options.DebugWeb = 0
+options.DebugWeb = 1
 options.DebugSQLite = 0
 
 ;HeapManager  equ ASM
