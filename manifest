@@ -1,5 +1,5 @@
-C Some\sfixes\sin\sthe\ssession\shandling,\spreventing\slong\slasting\ssessions\sand\supdating\sthe\sinformation\sfor\sthe\slast\slogin\sof\sthe\susers.\nAlso,\sthe\sdisplayed\sversion\snumber\shas\sbeen\sfixed\sand\sthe\sbinary\spackage\supdated\sin\saccordance.
-D 2016-04-20T16:57:31.644
+C Some\ssimplification\sof\sthe\sCSS\swithout\schanging\sthe\slayout.\sIt\sis\smore\sDillo\scompatible\snow.
+D 2016-04-21T21:09:01.246
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz eed4c25675fb12761c9e98a94994a777c062f1c6
@@ -117,7 +117,7 @@ F www/lighttpd.conf 3ac00a623c9c2a41cfdb39332a2456dab8b16f14
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/activation_email_subject.tpl 950d3451cce1b1b55eec7c9ac9c0bb415abaa34e
 F www/templates/activation_email_text.tpl 3d43a474040f226863f8b2bfa7bad91841711b96
-F www/templates/all.css 799175f293692a1d0eb2785175d012492b8ed399
+F www/templates/all.css c4207ae8b2898fd07d3e08a6726197d0d3c484a9
 F www/templates/del_confirm.tpl 7b62ada90b819921275499b659614378cdadd253
 F www/templates/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
 F www/templates/error_html_end.tpl f390b47728814ecd8e608dd410cb2f4b0b953020
@@ -138,12 +138,12 @@ F www/templates/minimag_suffix.tpl e0ee4765a03f31868c42f12693dc9b23b8ca076e
 F www/templates/nav_list.tpl c72dc87c948c6d9c94a4d39dd399f43110f189a2
 F www/templates/nav_search.tpl d41b3e1308e015bc6b5443be0102d20dbc93de51
 F www/templates/nav_thread.tpl 78071d3d9c821b8d8331bbb771678809bae00392
-F www/templates/post_view.tpl 57a91d53a341ce21f9bbc804c482befeb50e9ea1
+F www/templates/post_view.tpl 4b9d97709b8869fdd15c57b6d62375f18cb8da5d
 F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
-F www/templates/search_result.tpl 6e61a59921a6b372913f22cbebcc7455793d9052
+F www/templates/search_result.tpl a968ba9a5faec0507f7db06519bbd3e333540c5f
 F www/templates/thread_info.tpl 0ded9ba9fb530bdc2cb026cceb49d6623e50429e
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P ccb03bd8156891861d93a32bdb4c7e7a345e6a2a
-R d25c53632ecb45ae15dc88a3da4646a7
+P ff6807f999d64a82e9083e171a8f7865419dd8d2
+R 72e1d26ced4bb0bb2ae0868b92b05c63
 U johnfound
-Z 752525fad0f87e381b4d4f7644c68cfc
+Z 5dd7be005e1cfcba401ea0c0430294fe

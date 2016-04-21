@@ -104,7 +104,6 @@ div.threads_list {
   overflow: hidden;
   zoom: 1;
   margin-bottom: 8px;
-  overflow: visible;
 }
 
 
@@ -115,12 +114,12 @@ div.thread_info {
 
   float: left;
   position: absolute;
-  width: 200px;
+  width: 184px;
+  width: calc(200px - 0px);
   left: 0px;
   top: 0px;
   bottom: 0px;
-  padding: 8px 8px 0px 8px;
-  overflow: visible;
+  padding: 8px 8px 8px 8px;
 }
 
 
@@ -156,6 +155,10 @@ div.changed {
   bottom: 8px;
 }
 
+div.changed img {
+  margin-right: 8px;
+}
+
 div.thread_link {
   background-color: white;
   padding: 16px;
@@ -166,16 +169,18 @@ div.thread_link {
 a.thread_link {
   font-size: 16px;
   font-weight: bold;
-}
 
+}
 
 div.thread_tags {
   background-color: #ffda44;
-  padding: 8px;
-  padding-left: 216px;
-  min-height: 32px;
-
+  padding: 8px 8px 8px 216px;
   font-size: 12px;
+}
+
+a.ttlink {
+  margin: 0px;
+  padding: 0px;
 }
 
 
@@ -236,28 +241,29 @@ div.post {
 div.user_info {
   float: left;
   position: absolute;
-  width: 200px;
+  width: 184px;
+  width: calc(200px - 0px);
   left: 0px;
   top: 0px;
   bottom: 0px;
+  padding: 8px;
 
   background-color: #404040;
   color: white;
-  overflow: auto;
-  padding: 8px 8px 0px 8px;
 }
 
 div.search_info {
   float: left;
   position: absolute;
-  width: 200px;
+  width: 184px;
+  width: calc(200px - 0px);
   left: 0px;
   top: 0px;
   bottom: 0px;
+  padding: 8px;
 
   background-color: #404040;
   color: white;
-  overflow: auto;
 }
 
 div.post_time {
@@ -286,7 +292,6 @@ div.post_thread {
   padding: 8px;
   background-color: #ffda44;
   font-size: 12px;
-  overflow: auto;
 }
 
 div.post_thread a {
@@ -297,12 +302,13 @@ div.post_thread a {
 img.unread_icon {
   display: block;
   float: left;
-  margin: 8px;
+  margin: 0px 8px 0px 0px;
 }
 
 a.user_name {
   display: block;
-  padding: 8px;
+  padding: 4px;
+  margin-bottom: 16px;
   color: #ffda44;
   font-weight: bold;
   background-color: #404040;
@@ -310,7 +316,7 @@ a.user_name {
 
 img.avatar {
   display: block;
-  margin: 0px auto;
+  margin: 0px;
   width: 128px;
   height: 128px;
   background-color: #ffda44;
@@ -319,7 +325,7 @@ img.avatar {
 
 img.smallavatar {
   display: block;
-  margin: 0px auto;
+  margin: 0px;
   width: 64px;
   height: 64px;
   background-color: #ffda44;
@@ -336,11 +342,9 @@ div.user_pcnt {
 
 
 div.post_info {
-  margin-left: 200px;
-  padding: 8px;
+  padding: 8px 8px 8px 216px;
   background-color: #ffda44;
   font-size: 12px;
-  overflow: auto;
 }
 
 
@@ -349,8 +353,7 @@ div.post_info a {
 }
 
 div.post_text {
-  margin-left: 200px;
-  padding: 16px;
+  padding: 16px 16px 16px 216px;
   background-color: white;
   min-height: 190px;
 }
@@ -361,6 +364,7 @@ div.post_text {
 div.page_row {
   margin-bottom: 16px;
   margin-top: 16px;
+  text-align: left;
 }
 
 a.page_link {
