@@ -163,7 +163,6 @@ begin
 
         mov     [.mime], eax
 
-
         mov     [.timelo], 0
         mov     [.timehi], 0
 

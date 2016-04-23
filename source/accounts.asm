@@ -64,12 +64,18 @@ begin
         stdcall GetPostString, ebx, "username", 0
         mov     [.user], eax
 
+        test    eax, eax
+        jz      .redirect_back_short
+
         stdcall StrLen, eax
         test    eax, eax
         jz      .redirect_back_short
 
         stdcall GetPostString, ebx, "password", 0
         mov     [.password], eax
+
+        test    eax, eax
+        jz      .redirect_back_short
 
         stdcall StrLen, eax
         test    eax, eax
@@ -341,9 +347,13 @@ begin
 
         stdcall GetPostString, ebx, txt "password", 0
         mov     [.password], eax
+        test    eax, eax
+        jz      .error_short_pass
 
         stdcall GetPostString, ebx, txt "password2", 0
         mov     [.password2], eax
+        test    eax, eax
+        jz      .error_short_pass
 
         stdcall StrCompCase, [.password], [.password2]
         jnc     .error_different

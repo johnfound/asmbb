@@ -1,19 +1,19 @@
-C Some\ssimplification\sof\sthe\sCSS\swithout\schanging\sthe\slayout.\sIt\sis\smore\sDillo\scompatible\snow.
-D 2016-04-21T21:09:01.246
+C Fixed\ssome\smissing\schecks\sin\sthe\saccount\shandling.\sThe\sdefault\s(anonymous)\savatar\snow\sis\sserved\swithout\nredirections.\sThis\sshould\smake\scaching\sbetter\sand\smakes\sDillo\sbrowser\shappy.\nBecause\sof\sthe\sfirst\schange,\sbinary\spackage\shas\sbeen\sreleased.
+D 2016-04-23T10:52:07.371
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
-F install/asmbb.tar.gz eed4c25675fb12761c9e98a94994a777c062f1c6
+F install/asmbb.tar.gz e9e9c0b0673b7dc033f3791f4ae9b2daae1ab0da
 F install/create_release.sh 6dd920298f7e6d3cc4caa8557e565d3ec9b164f6 x
 F install/install.txt 7d3f4f32b07d36ba1256bccb17b3b96c6fa1d004
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
 F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
-F source/accounts.asm 33f130526ee368674acf839a12e762e928b6b839
-F source/commands.asm 4b278b3374aca2284a1bcafcecd0f5092e4139dc
+F source/accounts.asm 4c068cca96d63be1830662f2acdfd0cc0517afd0
+F source/commands.asm 06ff1d2ae80709ceaf1234e61a08af7c91cf939e
 F source/create.sql 015d9723b5e2952084868a0d47325f0afbb0ed8a
 F source/delete.asm 3189fdc709fe0a5c17879d279b4e4ea67e3df066
 F source/edit.asm e3103f9052eeeede991f430394a7786dd63f8120
-F source/engine.asm 8640ef80904401efbeb3d032a808cbafdb515812
+F source/engine.asm 2a1b4d3baa13012d82ab62a0ef093a07dc7584ac
 F source/engine.fpr 9829152f985efc93468f6f839bcabb44dbf68ee6
 F source/exponential_scaling.ods b66ca0aa6f1f4dc69986c751341877b423db11e5
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -29,7 +29,7 @@ F source/post.asm 5d4027a653e410c3155b352193f91f6f81b49e46
 F source/post_data.asm 38939702e70776735062323dd82cf808b64e33e8
 F source/postdebug.asm 13ab4ebf2fc7b35d7fa36853b533236860b641f7
 F source/render.asm d90c0f1cce60becf41626a401b1c6d542587284a
-F source/search.asm 2fab1c14f65bb8f33a3d903f68b733eeb57010a0
+F source/search.asm 17a83dc6eaba15f1e4af23e33e0a1f57cfd6af55
 F source/search.sql 738d09e5fd7c428a7f5a26aecddd6d4e117bb384
 F source/search_cnt.sql 5ef8eb89fcea8f87942f1b7c67202350dfd9ff89
 F source/settings.asm 78163f286c579de51a70a4cd1756406ca3a4077f
@@ -40,7 +40,7 @@ F source/sqlite_console.asm 17e7b5211b127d0f317047e75fadc41f6e4ce5ae
 F source/threadlist.asm 357af1336eacdfd59554a4d5a15b41571e6fce59
 F source/threadlist.sql 1224dfd1fa036b023ca618ab8c43be39dfea7be6
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
-F source/userinfo.asm ae487cd89b2960c48464db7f4c560bd4894790be
+F source/userinfo.asm d1d651bf42ee142e149ae66496c848e37729ae36
 F source/users_online.asm a5776af30b415d80269b97426e7c56d7393f9fff
 F source/version.asm 005e0a7357ab5ff42d1c47557832be5bd1f3343f
 F www/.htaccess fc8c641fc61f2a38821bdb99fb9556ddf98929a7
@@ -143,7 +143,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl a968ba9a5faec0507f7db06519bbd3e333540c5f
 F www/templates/thread_info.tpl 0ded9ba9fb530bdc2cb026cceb49d6623e50429e
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P ff6807f999d64a82e9083e171a8f7865419dd8d2
-R 72e1d26ced4bb0bb2ae0868b92b05c63
+P ae167e86a5891b50c466bf3c66d3d99b945806da
+R c9348a096f39b8153bdf8daf39d61845
 U johnfound
-Z 5dd7be005e1cfcba401ea0c0430294fe
+Z 45db7f31482efb7a996dde002435faa6

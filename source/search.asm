@@ -54,7 +54,7 @@ begin
         mov     edi, eax
         cinvoke sqliteFinalize, [.stmt]
 
-        OutputValue "Results count:", edi, 10, -1
+;        OutputValue "Results count:", edi, 10, -1
 
         mov     [.pages], edi
         test    edi, edi

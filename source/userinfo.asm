@@ -171,6 +171,8 @@ begin
 
         xor     edi, edi
         mov     [.stmt], edi
+        mov     [.timeRetLo], edi
+        mov     [.timeRetHi], edi
 
         cmp     [.UserName], edi
         je      .exit
@@ -178,6 +180,20 @@ begin
         stdcall StrNew
         mov     edi, eax
         mov     esi, [.pSpecial]
+
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_IF_MODIFIED_SINCE"
+        jc      .time_ok
+
+        lea     edx, [.date]
+        stdcall DecodeHTTPDate, eax, edx
+        jc      .time_ok
+
+        stdcall DateTimeToTime, edx
+
+        mov     [.timeRetLo], eax
+        mov     [.timeRetHi], edx
+
+.time_ok:
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetUserAvatar, sqlGetUserAvatar.length, eax, 0
@@ -189,36 +205,73 @@ begin
         jne     .default_avatar
 
         cinvoke sqliteColumnInt64, [.stmt], 1
-        mov     [.timeRetLo], eax
-        mov     [.timeRetHi], edx
-
-        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_IF_MODIFIED_SINCE"
-        jc      .get_avatar
-
-        lea     edx, [.date]
-        stdcall DecodeHTTPDate, eax, edx
-        jc      .get_avatar
-
-        stdcall DateTimeToTime, edx
 
         cmp     edx, [.timeRetHi]
-        jb      .get_avatar
-        ja      .not_changed
+        ja      .get_avatar
+        jb      .not_changed
 
         cmp     eax, [.timeRetLo]
-        jb      .get_avatar
+        ja      .get_avatar
 
 .not_changed:
 
         stdcall StrCat, edi, <"Status: 304 Not Modified", 13, 10, 13, 10>
+        stc
         jmp     .finish
+
 
 .default_avatar:
-        stdcall StrMakeRedirect, edi, "/images/anon.png"
+
+        lea     eax, [.timeRetLo]
+        stdcall GetFileIfNewer, "images/anon.png", [.timeRetLo], [.timeRetHi], eax
+        jc      .error_read
+
+        test    eax, eax
+        jz      .not_changed
+
+        mov     esi, eax
+        mov     ebx, ecx
+
+        call    .compose_answer
+
+        stdcall FreeMem, esi
+        stc
         jmp     .finish
 
-.get_avatar:
 
+.error_read:
+
+        DebugMsg "Error reading default avatar."
+
+        stdcall StrDel, edi
+        xor     edi, edi
+        clc
+        jmp     .finish
+
+
+.get_avatar:
+        cinvoke sqliteColumnBytes, [.stmt], 0
+        mov     ebx, eax
+        cinvoke sqliteColumnBlob, [.stmt], 0
+        mov     esi, eax
+
+.return_avatar:
+
+        call    .compose_answer
+        stc
+
+.finish:
+        pushf
+        cinvoke sqliteFinalize, [.stmt]
+        popf
+
+.exit:
+        mov     [esp+4*regEAX], edi
+        popad
+        return
+
+
+.compose_answer:
         stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Cache-control: max-age=1000000">
 
         stdcall FormatHTTPTime, [.timeRetLo], [.timeRetHi]
@@ -226,26 +279,15 @@ begin
         stdcall StrCat, edi, eax
         stdcall StrDel, eax
 
-        cinvoke sqliteColumnBytes, [.stmt], 0
-        mov     ebx, eax
-
         stdcall StrCat, edi, <13, 10, "Content-type: image/png", 13, 10, "Content-length: ">
         stdcall NumToStr, ebx, ntsDec or ntsUnsigned
         stdcall StrCat, edi, eax
         stdcall StrCat, edi, <txt 13, 10, 13, 10>
         stdcall StrDel, eax
 
-        cinvoke sqliteColumnBlob, [.stmt], 0
-        stdcall StrCatMem, edi, eax, ebx
+        stdcall StrCatMem, edi, esi, ebx
+        retn
 
-.finish:
-        cinvoke sqliteFinalize, [.stmt]
-        stc
-
-.exit:
-        mov     [esp+4*regEAX], edi
-        popad
-        return
 endp
 
 
