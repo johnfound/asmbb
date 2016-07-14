@@ -1,8 +1,8 @@
-C Added\sbetter\sonline\suser\scounting\sand\sthe\sguests\sstatistics.\sFixed\sseveral\sbugs.\s\nA\slot\sof\swork\son\sthe\stemplates.\sSome\spreparation\sfor\smore\sfunctional\sSQLite\sconsole\swith\nlibrary\sof\ssql\squeries.\sPreparations\sfor\sthe\snext\srelease.
-D 2016-07-14T11:15:24.515
+C Updated\sbinary\spackage.
+D 2016-07-14T11:16:41.190
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
-F install/asmbb.tar.gz 478ab305bee421231724c1901466f46681dba03a
+F install/asmbb.tar.gz 4e742bbf6188230f4db0ff4edcd70376b9fdd511
 F install/create_release.sh 6dd920298f7e6d3cc4caa8557e565d3ec9b164f6 x
 F install/install.txt 7d3f4f32b07d36ba1256bccb17b3b96c6fa1d004
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
@@ -154,7 +154,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/thread_info.tpl efecee871772c5fc3eb3df6ef15f61e8036c912b
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 9c696387c7c1a1d17358ef1ba6deecf5c0dba8a7
-R a7d1962c7a1439ffe7e47f0f9a699010
+P e5111f32037c5cc46a1120e99a78cb5cd03b9e56
+R f70ab9edfe5b1f833f540ab4e83839a9
 U johnfound
-Z 2ec703da3aacfa8046a7feb3edbe7474
+Z 4afd78731f3ff95924951e51b2e1beca
