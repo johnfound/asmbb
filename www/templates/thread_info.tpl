@@ -1,7 +1,7 @@
 <div class="thread_summary">
   <div class="thread_info">
     [case:[special:isadmin]||<a href="[Slug]/!pinit">]
-      [case:[Pinned]|[case:[special:isadmin]||<img class="pinned" src="/images/screw0.png">]|<img class="pinned" src="/images/screw.png">]
+    [case:[Pinned]|[case:[special:isadmin]||<img class="pinned" src="/images/screw0.png">]|<img class="pinned" src="/images/screw.png">]
     [case:[special:isadmin]||</a>]
     <div class="post_cnt">
       [case:[special:userid]| |<a title="Mark thread as read." href="[Slug]/!markread">]<img src="/images/[case:[Unread]|posts_gray.svg|posts.svg]" width="32" height="32" alt="#">[case:[special:userid]| |</a>]

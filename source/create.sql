@@ -12,6 +12,14 @@ insert into Params values ('user_perm', '29');	-- permLogin + permPost + permThr
 insert into Params values ('log_events', '0');
 
 
+create table Guests (
+  addr	   integer primary key not null,
+  LastSeen integer
+);
+
+create index idxGuests_time on Guests(LastSeen);
+
+
 create table Users (
   id	    integer primary key autoincrement,
   nick	    text unique,
@@ -20,7 +28,7 @@ create table Users (
   status    integer,	       -- see permXXXXX constants.
   user_desc text,	       -- free text user description.
   avatar    blob,	       -- copy of the user avatar.
-  av_time   integer,	     -- the time the avatar has been latest changed.
+  av_time   integer,	       -- the time the avatar has been latest changed.
   email     text unique,       -- user email.
   Register  integer,	       -- the time when the user has activated the account.
   LastSeen  integer,	       -- the time when the user has been last seen by taking some action.
@@ -30,9 +38,11 @@ create table Users (
 );
 
 
+
 create index idxUsers_nick on Users (nick);
 create index idxUsers_email on Users (email);
 create index idxUsersX on Users(id, nick, avatar);
+create index idxUsers_LastSeen on Users(LastSeen);
 
 
 create table WaitingActivation(
@@ -125,6 +135,9 @@ create table Sessions (
   unique (userID, fromIP)
 );
 
+
+create index idxSessions_UserID on Sessions(UserID);
+create index idxSessions_Sid on Sessions(sid);
 
 
 create table Messages (
@@ -286,7 +299,7 @@ Maybe some day...
 create table Log (
   process_id integer,	-- the unique process id
   timestamp  integer,
-  event      text	-- what event is logged - start process, end process, start request, end request
+  event      text,	-- what event is logged - start process, end process, start request, end request
   value      text,	-- details in variable form.
   runtime    integer
 );
@@ -317,6 +330,12 @@ CREATE TRIGGER PostsAU AFTER UPDATE ON Posts BEGIN
   INSERT INTO PostFTS(rowid, Content) VALUES (new.id, new.Content);
 END;
 
+
+
+create table ScratchPad (
+  name	 text primary key not null,
+  source text
+);
 
 
 

@@ -1,5 +1,4 @@
 
-;        stdcall SQLiteConsole, [.pPost], [.pParams], eax
 
 sqlSource  text 'select ? as source'
 

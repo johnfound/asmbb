@@ -840,6 +840,7 @@ begin
         stdcall SetUserLastSeen, eax
 
 .finish:
+        stdcall InsertGuest, [.pSpecial]
         popad
         return
 endp
@@ -1111,6 +1112,8 @@ begin
 
 
         stdcall SendEmail, [.smtp_addr], [.smtp_port], [.host], [.from], [.to], [.subj], [.body], 0
+        stdcall LogEvent, "EmailSent", logText, eax, 0
+        stdcall StrDel, eax
 
 .finish:
         pushf
@@ -1219,6 +1222,41 @@ begin
         popad
         return
 endp
+
+
+
+sqlInsertGuest   text "insert or replace into Guests values (?, strftime('%s','now'))"
+sqlClipGuests    text "delete from Guests where LastSeen < strftime('%s','now') - 864000"
+
+proc InsertGuest, .pSpecial
+.stmt dd ?
+begin
+        pushad
+
+        mov     esi, [.pSpecial]
+        stdcall ValueByName, [esi+TSpecialParams.params], "REMOTE_ADDR"
+        jc      .finish
+
+        stdcall StrIP2Num, eax
+        jc      .finish
+
+        mov     ebx, eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertGuest, sqlInsertGuest.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, ebx
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+.finish:
+        cinvoke sqliteExec, [hMainDatabase], sqlClipGuests, 0, 0, 0
+        popad
+        return
+endp
+
+
+
+
 
 
 

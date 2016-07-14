@@ -245,6 +245,8 @@ begin
         cmp     [fLogEvents], 0
         je      .finish
 
+        DebugMsg "Event will be logged!"
+
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLogEvent, sqlLogEvent.length, eax, 0
 

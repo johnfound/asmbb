@@ -214,6 +214,9 @@ begin
         stdcall StrClipSpacesL, eax
         mov     edi, eax
 
+        stdcall StrCompNoCase, edi, "visitors"
+        jc      .get_visitors
+
         stdcall StrCompNoCase, edi, "version"
         jc      .get_version
 
@@ -332,8 +335,16 @@ end if
 ;..................................................................
 
 .get_title:
+
         mov     eax, [esi+TSpecialParams.page_title]
         jmp     .return_encoded
+
+;..................................................................
+
+.get_visitors:
+
+        stdcall UsersOnline
+        jmp     .return_value
 
 ;..................................................................
 
@@ -622,7 +633,7 @@ endl
         stdcall StrCat, ebx, eax
         stdcall StrCat, ebx, txt '/">'
         stdcall StrCat, ebx, eax
-        stdcall StrCat, ebx, txt '</a>'
+        stdcall StrCat, ebx, txt '</a> '
         stdcall StrDel, eax
 
         jmp     .tag_loop

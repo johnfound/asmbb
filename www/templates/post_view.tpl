@@ -3,7 +3,7 @@
   <div class="user_info">
     <img class="unread_icon" src="/images/[case:[Unread]|onepost_gray.svg|onepost.svg]">
     <a class="user_name" href="/!userinfo/[UserName]">[UserName]</a>
-    <center><img class="avatar" src="/!avatar/[UserName]?v=[AVer]"></center>
+    <div class="center"><img class="avatar" src="/!avatar/[UserName]?v=[AVer]"></div>
     <div class="user_pcnt">Posts: [UserPostCount]</div>
   </div>
   <div class="post_info">

@@ -18,6 +18,11 @@ input {
   font-family: inherit;
 }
 
+.center {
+  text-align: center;
+  width: 100%;
+}
+
 /* header styles */
 
 div.header {
@@ -48,38 +53,35 @@ form#search_form {
   transform: translate(50%, 50%);
   -webkit-transform: translate(50%, 50%);
   -moz-transform: translate(50%, 50%);
-
 }
 
-input#search_line {
+.search_line {
   height: 32px;
   padding: 4px;
   border: none;
   background-color: #404040;
   color: white;
+  margin: 0px;
 }
 
 
-input#search_line:focus {
+.search_line:focus {
   background-color: white;
   color: black;
 }
 
 
-input#search_btn  {
-  float: right;
+.icon_btn  {
+  border-style: none;
+  vertical-align: top;
+  background-color: #f06060;
+  color: white;
   width: 32px;
   height: 32px;
-
-  border-style: none;
-  padding: 4px;
-
-  background-color: #f06060;
-  background-image: url('/images/search.svg');
-  color: white;
+  text-align: center;
 }
 
-input#search_btn:hover  {
+.icon_btn:hover  {
   background-color: #ff7b81;
 }
 
@@ -153,6 +155,7 @@ div.changed {
   font-size: 80%;
   position: absolute;
   bottom: 8px;
+  margin-top: 8px;
 }
 
 div.changed img {
@@ -162,7 +165,7 @@ div.changed img {
 div.thread_link {
   background-color: white;
   padding: 16px;
-  padding-left: 216px;
+  border-left: solid 200px #404040;
   min-height: 64px;
 }
 
@@ -174,7 +177,8 @@ a.thread_link {
 
 div.thread_tags {
   background-color: #ffda44;
-  padding: 8px 8px 8px 216px;
+  padding: 8px;
+  border-left: solid 200px #404040;
   font-size: 12px;
 }
 
@@ -281,7 +285,7 @@ div.post_link {
 }
 
 div.post_sum {
-  margin-left: 200px;
+  border-left: solid 200px #404040;
   padding: 4px 4px 4px 8px;
   background-color: white;
 }
@@ -315,20 +319,20 @@ a.user_name {
 }
 
 img.avatar {
-  display: block;
   margin: 0px;
   width: 128px;
   height: 128px;
+  display: inline-block;
   background-color: #ffda44;
   clear: both;
 }
 
 img.smallavatar {
-  display: block;
   margin: 0px;
   width: 64px;
   height: 64px;
   background-color: #ffda44;
+  display: inline-block;
   clear: both;
 }
 
@@ -342,7 +346,8 @@ div.user_pcnt {
 
 
 div.post_info {
-  padding: 8px 8px 8px 216px;
+  padding: 8px;
+  border-left: solid 200px #404040;
   background-color: #ffda44;
   font-size: 12px;
 }
@@ -353,7 +358,8 @@ div.post_info a {
 }
 
 div.post_text {
-  padding: 16px 16px 16px 216px;
+  padding: 16px 16px 16px 16px;
+  border-left: solid 200px #404040;
   background-color: white;
   min-height: 190px;
 }
