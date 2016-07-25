@@ -1,8 +1,8 @@
-C Some\swork\son\sthe\stag\slist\sformatting.\sIt\swas\sdone,\sbecause\sthe\sChromium\sbrouser\sdoes\snot\nhandle\s"display:table-cell"\sthe\ssame\sway\sas\sFirefox.\sNow\sthe\swrapping\sand\scompatibility\sis\smuch\sbetter,\sbut\sthe\sselected\stag\srectangle\sis\snot\sthe\ssame\ssize.
-D 2016-07-25T11:28:44.090
+C Binary\spackage\supdated.
+D 2016-07-25T11:31:15.271
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
-F install/asmbb.tar.gz 4e742bbf6188230f4db0ff4edcd70376b9fdd511
+F install/asmbb.tar.gz 96b90799196ace590be688f251ba11ba9677620e
 F install/create_release.sh 6dd920298f7e6d3cc4caa8557e565d3ec9b164f6 x
 F install/install.txt 7d3f4f32b07d36ba1256bccb17b3b96c6fa1d004
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
@@ -154,7 +154,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/thread_info.tpl efecee871772c5fc3eb3df6ef15f61e8036c912b
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P a07f6c86c48afe811ac4403c78db8689d80ce47a
-R fb2b97d35cf97a9f75166a3e68154c1e
+P aecbe02e7fb3c123c7756b236fb8d706d9b68de8
+R 7e2bf2b8740dd1409174eae841a554ef
 U johnfound
-Z 7e513299628fb51bfda6bb2c558127b5
+Z e49c4f32a7a109f09538f483576f8206
