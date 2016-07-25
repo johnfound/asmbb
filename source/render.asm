@@ -633,7 +633,7 @@ endl
         stdcall StrCat, ebx, eax
         stdcall StrCat, ebx, txt '/">'
         stdcall StrCat, ebx, eax
-        stdcall StrCat, ebx, txt '</a> '
+        stdcall StrCat, ebx, txt '</a>'
         stdcall StrDel, eax
 
         jmp     .tag_loop

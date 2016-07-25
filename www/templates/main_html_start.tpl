@@ -27,6 +27,7 @@
   <meta name="msapplication-config" content="/images/favicons/browserconfig.xml">
   <meta name="theme-color" content="#d80027">
 
+  <meta name="majestic-site-verification" content="MJ12_bc129603-7485-4ef7-926e-5107cec9b5de">
 </head>
 
 <body>
@@ -42,3 +43,4 @@
   </div>
 
 <div class="tags"><a class="taglink" title="Show all threads" href="/"><img src="/images/posts.svg" alt="All"></a>[special:alltags]</div>
+

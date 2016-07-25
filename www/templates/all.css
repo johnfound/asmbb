@@ -200,12 +200,14 @@ div.tags {
   background-color: #404040;
   font-size: 28px;
   font-weight: normal;
+  word-wrap: break-all;
 }
 
 a.taglink {
-  padding: 0px 4px;
+  padding: 4px;
   color: white;
-  display: table-cell;
+  display:inline-block;
+  word-wrap: keep-all;
 }
 
 a.current_tag {

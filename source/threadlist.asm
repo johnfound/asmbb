@@ -65,7 +65,7 @@ begin
         mov     [esi+TSpecialParams.page_title], ebx
 
 
-        stdcall StrCat, edi, '<div class="threads_list">'
+        stdcall StrCat, edi, <txt '<div class="threads_list">', 13, 10>
 
 ; navigation tool bar
 
@@ -136,7 +136,7 @@ begin
         stdcall StrCatTemplate, edi, "nav_list", 0, esi
 
 .back_navigation_ok:
-        stdcall StrCat, edi, "</div>"   ; div.threads_list
+        stdcall StrCat, edi, <txt "</div>", 13, 10>   ; div.threads_list
 
         stdcall StrDel, [.list]
         cinvoke sqliteFinalize, [.stmt]
