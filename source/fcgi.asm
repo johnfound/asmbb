@@ -569,8 +569,10 @@ begin
 
         cmp     [fLogEvents], 0
         je      .log_serve_ok
+
         stdcall ValueByName, [.requestParams], "REQUEST_URI"
         stdcall LogEvent, "RequestServeStart", logText, eax, 0
+
 .log_serve_ok:
 
         ; SERVE THE REQUEST HERE
@@ -582,7 +584,6 @@ begin
 
         stdcall FCGI_send_end_request, [.hSocket], [.requestID], FCGI_REQUEST_COMPLETE
         jc      .finish
-
 
         cmp     [fLogEvents], 0
         je      .log_req_end_ok
