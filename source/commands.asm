@@ -100,6 +100,7 @@ begin
         jnc     .page_length_ok
 
         mov     eax, DEFAULT_PAGE_LENGTH
+
 .page_length_ok:
         mov     [.special.page_length], eax
 
@@ -198,11 +199,6 @@ begin
 
         stdcall StrCat, edi, <13, 10, "Content-type: ">
         stdcall StrCat, edi, [.mime]
-
-        stdcall StrCat, edi, <13, 10, "Content-length: ">
-        stdcall NumToStr, ecx, ntsDec or ntsUnsigned
-        stdcall StrCat, edi, eax
-        stdcall StrDel, eax
 
         stdcall StrCharCat, edi, $0a0d0a0d
 
