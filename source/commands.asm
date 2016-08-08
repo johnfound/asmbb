@@ -179,18 +179,35 @@ begin
         mov     [.timehi], edx
 
 .get_file:
+
+        if defined options.DebugMode & options.DebugMode
+
+           Message "File request: "
+
+           stdcall StrPtr, [.filename]
+           Output  eax
+
+           DebugMsg
+
+        end if
+
+
         lea     eax, [.timeRet]
         stdcall GetFileIfNewer, [.filename], [.timelo], [.timehi], eax
         jc      .error404_no_list_free
 
+        DebugMsg "File exists."
+
         test    eax, eax
         jz      .send_304_not_modified
+
+        DebugMsg "File is to be returned."
 
         mov     esi, eax
 
 ; serve the file.
 
-        stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Cache-control: max-age=1000000", 13, 10>
+        stdcall StrCat, edi, <"Cache-control: max-age=1000000", 13, 10>
 
         stdcall FormatHTTPTime, [.timeRet], [.timeRet+4]
         stdcall StrCat, edi, "Last-modified: "
@@ -215,6 +232,7 @@ begin
 
 
 .send_304_not_modified:
+        DebugMsg "File is cached, not to be send."
 
         stdcall StrCat, edi, <"Status: 304 Not Modified", 13, 10, 13, 10>
         jmp     .send_simple_result2
@@ -253,7 +271,7 @@ begin
 
 .output_forum_html:     ; Status: 200 OK
 
-        stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Content-type: text/html; charset=utf-8", 13, 10, 13, 10>
+        stdcall StrCat, edi, <"Content-type: text/html; charset=utf-8", 13, 10, 13, 10>
 
         lea     edx, [.special]
         stdcall StrCatTemplate, edi, "main_html_start", 0, edx

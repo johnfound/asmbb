@@ -272,18 +272,14 @@ begin
 
 
 .compose_answer:
-        stdcall StrCat, edi, <"Status: 200 OK", 13, 10, "Cache-control: max-age=1000000">
+        stdcall StrCat, edi, <"Cache-control: max-age=1000000">
 
         stdcall FormatHTTPTime, [.timeRetLo], [.timeRetHi]
         stdcall StrCat, edi, <13, 10, "Last-modified: ">
         stdcall StrCat, edi, eax
         stdcall StrDel, eax
 
-        stdcall StrCat, edi, <13, 10, "Content-type: image/png", 13, 10, "Content-length: ">
-        stdcall NumToStr, ebx, ntsDec or ntsUnsigned
-        stdcall StrCat, edi, eax
-        stdcall StrCat, edi, <txt 13, 10, 13, 10>
-        stdcall StrDel, eax
+        stdcall StrCat, edi, <13, 10, "Content-type: image/png", 13, 10, 13, 10>
 
         stdcall StrCatMem, edi, esi, ebx
         retn

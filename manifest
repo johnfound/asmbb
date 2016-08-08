@@ -1,5 +1,5 @@
-C Formatting\ssource
-D 2016-08-01T19:22:18.766
+C Fixed\ssome\sCGI\sprotocol\sissues\s(wrong\sheader\s\slines).\sAdded\ssome\sdebugging\scommands.
+D 2016-08-08T08:21:30.290
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 96b90799196ace590be688f251ba11ba9677620e
@@ -9,7 +9,7 @@ F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
 F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm 4c068cca96d63be1830662f2acdfd0cc0517afd0
-F source/commands.asm bcfd026332af5b355386fdba5c73f56e2c36e24b
+F source/commands.asm 79a023484bb3f8ee0b1db485accd96d0e6468e03
 F source/create.sql ea06d19b408a0a1b5731ec02e6aeeba7e42af9b6
 F source/delete.asm 3189fdc709fe0a5c17879d279b4e4ea67e3df066
 F source/edit.asm e3103f9052eeeede991f430394a7786dd63f8120
@@ -17,7 +17,7 @@ F source/engine.asm 29c3a7503ed2601424359ed378a7a29e1dc708de
 F source/engine.fpr d2968e543f6c14171e9cbbc6f0eaac32b42fe56f
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
-F source/fcgi.asm 294241486d61a8c08f17fab9d619bf4f52d00fbd
+F source/fcgi.asm c346f04f48ca18c04ca10b4eb5a937366e5e0c5c
 F source/http.asm cad8f08506de3c0d56b72eaa7068de495f606139
 F source/images_png.asm cb69d9eafb85f6e61c526a3dcff4c7f2c3f4ebd6
 F source/keywords.txt 8e374a274b6a178e582656652edb52e65fbebfb2
@@ -40,7 +40,7 @@ F source/sqlite_console.asm 96dbf17ad285a8fbc0b1c5e434b40e7c84c8584e
 F source/threadlist.asm 7b7da44184ee4f96d0da4fba1aed6910e3f1c97d
 F source/threadlist.sql 1224dfd1fa036b023ca618ab8c43be39dfea7be6
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
-F source/userinfo.asm d1d651bf42ee142e149ae66496c848e37729ae36
+F source/userinfo.asm 4057a87ebeae3250dcc17cac67d3c0b448d449ff
 F source/users_online.asm 445aa3ddc9a7e62612aa09e0ae3395a29711a61d
 F source/util.sql 6d07e21a95ae1dcdf345e4b2e0b0f780cd707169
 F source/version.asm 629d2b9b931f90661cc53d4bb81a9379c7bad1ff
@@ -154,7 +154,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/thread_info.tpl efecee871772c5fc3eb3df6ef15f61e8036c912b
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 4160e7fcbddf818f1a7ad81dc33b2b30a30829aa
-R 1bab7f46a25703f90977594af4b43932
+P 1099bab101612053ac75ab3a8cced40bf798e901
+R b2ae96ce1310cb428543ca39c9f558d2
 U johnfound
-Z 463c72147a0ccc3af340dafbc086a2ca
+Z e31eb52530e25807d0e66691770eff37
