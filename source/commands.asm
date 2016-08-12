@@ -462,7 +462,7 @@ end if
         stdcall StrCompNoCase, eax, txt "!markread"
         jc      .exec_command
 
-        mov     ecx, PostUserMessage2
+        mov     ecx, PostUserMessage
         stdcall StrCompNoCase, eax, txt "!post"
         jc      .exec_command
 
@@ -796,6 +796,13 @@ begin
         mov     [edi+TSpecialParams.userName], eax
         mov     [edi+TSpecialParams.userStatus], eax
         mov     [edi+TSpecialParams.session], eax
+
+        stdcall GetParam, "anon_perm", gpInteger
+        jc      .anon_ok
+
+        mov     [edi+TSpecialParams.userStatus], eax
+
+.anon_ok:
 
         xor     ebx, ebx
 
@@ -1338,6 +1345,7 @@ endp
 
 
 sqlSetTicket text "update Sessions set Ticket = ? where sid = ?"
+
 
 proc SetUniqueTicket, .sid
 .stmt dd ?

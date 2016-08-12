@@ -16,7 +16,7 @@ sqlInsertThread  text "insert into Threads ( Caption ) values ( ? )"
 sqlSetThreadSlug text "update Threads set slug = ? where id = ?"
 
 
-proc PostUserMessage2, .pSpecial
+proc PostUserMessage, .pSpecial
 .stmt  dd ?
 .stmt2 dd ?
 

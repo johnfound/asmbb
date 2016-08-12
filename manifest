@@ -1,15 +1,15 @@
-C Fixed\ssome\sCGI\sprotocol\sissues\s(wrong\sheader\s\slines).\sAdded\ssome\sdebugging\scommands.
-D 2016-08-08T08:21:30.290
+C Some\sattempt\sto\smake\sanonymous\sposting.\sNot\ssuccessful\sfor\snow,\sbecause\nthe\sposting\sof\smessages\sand\sbot\sprotection\sdepends\son\sthe\suser\ssessions.
+D 2016-08-12T10:40:16.927
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
-F install/asmbb.tar.gz 96b90799196ace590be688f251ba11ba9677620e
+F install/asmbb.tar.gz 25a76b190fac7dc47cfb98141d765a46302c8af2
 F install/create_release.sh 6dd920298f7e6d3cc4caa8557e565d3ec9b164f6 x
 F install/install.txt 7d3f4f32b07d36ba1256bccb17b3b96c6fa1d004
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
 F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm 4c068cca96d63be1830662f2acdfd0cc0517afd0
-F source/commands.asm 79a023484bb3f8ee0b1db485accd96d0e6468e03
+F source/commands.asm 5a3e56e26f4a9c71e895af0b16274d765299b173
 F source/create.sql ea06d19b408a0a1b5731ec02e6aeeba7e42af9b6
 F source/delete.asm 3189fdc709fe0a5c17879d279b4e4ea67e3df066
 F source/edit.asm e3103f9052eeeede991f430394a7786dd63f8120
@@ -25,7 +25,7 @@ F source/memcache.asm aa97cfe9ae95a5dc9d6d2c55c87d1bfbb488d14a
 F source/messages.asm 1cc42852665f2b44a574e37c0fde6624b4dab784
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
-F source/post.asm 5d4027a653e410c3155b352193f91f6f81b49e46
+F source/post.asm bddd1b0788c2ba7ad9e71ff9ed4edb828ea8b0ae
 F source/post_data.asm 38939702e70776735062323dd82cf808b64e33e8
 F source/postdebug.asm 13ab4ebf2fc7b35d7fa36853b533236860b641f7
 F source/render.asm 617ca7deaf02f6ecb9cdd16f6d913855148caffb
@@ -154,7 +154,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/thread_info.tpl efecee871772c5fc3eb3df6ef15f61e8036c912b
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 1099bab101612053ac75ab3a8cced40bf798e901
-R b2ae96ce1310cb428543ca39c9f558d2
+P caa5509c67bfd89d8115e15eb78395198affbdd8
+R e82aa9d9c7fde38a14ef04580b3c6bc3
 U johnfound
-Z e31eb52530e25807d0e66691770eff37
+Z bbf317e8e65046aaff8a1c69d77b07b3
