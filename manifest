@@ -1,5 +1,5 @@
-C Some\sattempt\sto\smake\sanonymous\sposting.\sNot\ssuccessful\sfor\snow,\sbecause\nthe\sposting\sof\smessages\sand\sbot\sprotection\sdepends\son\sthe\suser\ssessions.
-D 2016-08-12T10:40:16.927
+C Added\ssmall\sconsole\sutility\sgenerating\spairs\shash/salf\sfor\sthe\sgiven\spassword.\s\nUseful\sfor\sadministrators\sfor\smanually\sreseting\spasswords.
+D 2016-11-12T17:47:35.055
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 25a76b190fac7dc47cfb98141d765a46302c8af2
@@ -7,6 +7,8 @@ F install/create_release.sh 6dd920298f7e6d3cc4caa8557e565d3ec9b164f6 x
 F install/install.txt 7d3f4f32b07d36ba1256bccb17b3b96c6fa1d004
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
 F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
+F source/ResetPassword.asm 3db446095c81027fd6d73cbfcbd4a04aea050554
+F source/ResetPassword.fpr a918b521c082081a93fda41de12c929e5636b84b
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm 4c068cca96d63be1830662f2acdfd0cc0517afd0
 F source/commands.asm 5a3e56e26f4a9c71e895af0b16274d765299b173
@@ -154,7 +156,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/thread_info.tpl efecee871772c5fc3eb3df6ef15f61e8036c912b
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P caa5509c67bfd89d8115e15eb78395198affbdd8
-R e82aa9d9c7fde38a14ef04580b3c6bc3
+P 508ce862235f9f806c4621ba5bb07d52cd27b952
+R 8cae17775f0934195a74f9209a9ac6fb
 U johnfound
-Z bbf317e8e65046aaff8a1c69d77b07b3
+Z 4e33c3a205548201fbab60e929ab4076
