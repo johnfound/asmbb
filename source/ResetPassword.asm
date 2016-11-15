@@ -27,7 +27,14 @@ start:
 
         stdcall GetCmdArguments
 
-        stdcall HashPassword, [eax+TArray.array+4]
+        xor     ecx, ecx
+        cmp     [eax+TArray.count], 3
+        jb      .new_salt
+
+        mov     ecx, [eax+TArray.array+8]
+
+.new_salt:
+        stdcall HashPassword, [eax+TArray.array+4], ecx
 
         stdcall FileWriteString, [STDOUT], eax
         stdcall FileWriteString, [STDOUT], cCRLF
@@ -40,13 +47,18 @@ start:
 cCRLF text 13, 10
 
 
-proc HashPassword, .hPassword
+proc HashPassword, .hPassword, .hSalt
 begin
 ; First the salt:
+
+        mov     eax, [.hSalt]
+        test    eax, eax
+        jnz     .salt_ok
 
         stdcall GetRandomString, 32
         jc      .finish
 
+.salt_ok:
         mov     edx, eax
         stdcall StrDup, eax
         push    eax
