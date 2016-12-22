@@ -155,6 +155,14 @@ begin
         stdcall StrCat, eax, [.uri]
         mov     [.filename], eax
 
+        stdcall StrMatchPattern, "*.well-known/*", [.uri]
+        jnc     .check_file_type
+
+        mov     [.mime], mimeText
+        jmp     .get_file_if_newer
+
+.check_file_type:
+
         stdcall StrExtractExt, [.filename]
         push    eax
 
@@ -163,6 +171,8 @@ begin
         jc      .analize_uri
 
         mov     [.mime], eax
+
+.get_file_if_newer:
 
         mov     [.timelo], 0
         mov     [.timehi], 0
@@ -868,10 +878,11 @@ endp
 
 
 
-
+sqlLogBadCookie text "insert into BadCookies values (?, ?, ?)"
 
 
 proc GetCookieValue, .pParams, .name
+.stmt dd ?
 begin
         pushad
 
@@ -895,9 +906,43 @@ begin
         jne     .next
 
         stdcall StrCompNoCase, [edi+TArray.array], [.name]
-        jnc     .next
+        jc      .found
 
-; found
+; log not matching cookies.
+
+        pushad
+
+        mov     ebx, [esi+TArray.array+4*ecx]
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLogBadCookie, -1, eax, 0
+
+        stdcall StrPtr, ebx
+        cinvoke sqliteBindText, [.stmt], 1, eax, -1, SQLITE_STATIC
+
+        stdcall ValueByName, [.pParams], "HTTP_USER_AGENT"
+        jc      .agent_ok
+
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 2, eax, -1, SQLITE_STATIC
+
+.agent_ok:
+        stdcall ValueByName, [.pParams], "REMOTE_ADDR"
+        jc      .remote_ok
+
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 3, eax, -1, SQLITE_STATIC
+
+.remote_ok:
+
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+        popad
+
+        jmp     .next
+
+.found:
         xor     eax, eax
         xchg    eax, [edi+TArray.array+4]
         mov     [esp+4*regEAX], eax

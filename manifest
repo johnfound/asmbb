@@ -1,5 +1,5 @@
-C Some\swork\son\sResetPassword\sutility.
-D 2016-11-15T11:46:00.002
+C Implemented\slogging\sof\sthe\scookies\snot\sset\sby\sthe\sengine.\sImplemented\sproperly\shandling\sof\sthe\sLet's\sencript\scertificates.
+D 2016-12-22T11:21:38.281
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 25a76b190fac7dc47cfb98141d765a46302c8af2
@@ -11,8 +11,8 @@ F source/ResetPassword.asm 282ad76329ba5c8d6fb8c31d3469bb483e7f34e5
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm 4c068cca96d63be1830662f2acdfd0cc0517afd0
-F source/commands.asm 5a3e56e26f4a9c71e895af0b16274d765299b173
-F source/create.sql ea06d19b408a0a1b5731ec02e6aeeba7e42af9b6
+F source/commands.asm 71152f7ca4e740d704431b5de06d03bd92315ec6
+F source/create.sql f4c219735c2e41944a2ee59352b5414281331b85
 F source/delete.asm 3189fdc709fe0a5c17879d279b4e4ea67e3df066
 F source/edit.asm e3103f9052eeeede991f430394a7786dd63f8120
 F source/engine.asm 29c3a7503ed2601424359ed378a7a29e1dc708de
@@ -156,7 +156,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/thread_info.tpl efecee871772c5fc3eb3df6ef15f61e8036c912b
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P d2dbdbba8f613cbdeef3d072354e597033bd97a8
-R b7508e107057ff1a840c117b7e927e32
+P c6221a60f2d93916b7d53196223a3e11a0ca2fde
+R 414fb88380958b87b5a27efa5973222e
 U johnfound
-Z b595762b6e716e71248a127207535dd1
+Z 658f93d70a4a23bd6b3f723b043e7cc6

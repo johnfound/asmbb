@@ -8,12 +8,12 @@ create table Params (
 );
 
 
-insert into Params values ('user_perm', '29');	-- permLogin + permPost + permThreadStart + permEditOwn
+insert into Params values ('user_perm', '29');  -- permLogin + permPost + permThreadStart + permEditOwn
 insert into Params values ('log_events', '0');
 
 
 create table Guests (
-  addr	   integer primary key not null,
+  addr     integer primary key not null,
   LastSeen integer
 );
 
@@ -21,19 +21,19 @@ create index idxGuests_time on Guests(LastSeen);
 
 
 create table Users (
-  id	    integer primary key autoincrement,
-  nick	    text unique,
+  id        integer primary key autoincrement,
+  nick      text unique,
   passHash  text unique,
-  salt	    text unique,
-  status    integer,	       -- see permXXXXX constants.
-  user_desc text,	       -- free text user description.
-  avatar    blob,	       -- copy of the user avatar.
-  av_time   integer,	       -- the time the avatar has been latest changed.
+  salt      text unique,
+  status    integer,           -- see permXXXXX constants.
+  user_desc text,              -- free text user description.
+  avatar    blob,              -- copy of the user avatar.
+  av_time   integer,           -- the time the avatar has been latest changed.
   email     text unique,       -- user email.
-  Register  integer,	       -- the time when the user has activated the account.
-  LastSeen  integer,	       -- the time when the user has been last seen by taking some action.
-  Lang	    text,	       -- the language of the user interface.
-  Skin	    text,	       -- the name of the UI skin.
+  Register  integer,           -- the time when the user has activated the account.
+  LastSeen  integer,           -- the time when the user has been last seen by taking some action.
+  Lang      text,              -- the language of the user interface.
+  Skin      text,              -- the name of the UI skin.
   PostCount integer default 0  -- Speed optimization in order to not count the posts every time. Need automatic count.
 );
 
@@ -49,7 +49,7 @@ create table WaitingActivation(
   id integer primary key,
   nick text unique,
   passHash text unique,
-  salt	text unique,
+  salt  text unique,
   email text unique,
   ip_from text unique,
   time_reg   integer,
@@ -60,8 +60,8 @@ create table WaitingActivation(
 
 
 create table Threads (
-  id	      integer primary key autoincrement,
-  Slug	      text unique,
+  id          integer primary key autoincrement,
+  Slug        text unique,
   Caption     text,
   LastChanged integer,
   Pinned      integer default 0
@@ -73,11 +73,11 @@ create index idxThreadsSlug on Threads (Slug);
 
 
 create table Posts (
-  id	      integer primary key autoincrement,
+  id          integer primary key autoincrement,
   threadID    integer references Threads(id) on delete cascade,
   userID      integer references Users(id) on delete cascade,
 
-  postTime    integer,	-- based on postTime the posts are sorted in the thread.
+  postTime    integer,  -- based on postTime the posts are sorted in the thread.
   ReadCount   integer,
   Content     text
 );
@@ -89,7 +89,7 @@ create index idxPostsThreadUser on posts(threadid, userid);
 
 
 create table Tags (
-  Tag	      text primary key,
+  Tag         text primary key,
   Importance  integer not null default 0,
   Description text
 );
@@ -99,7 +99,7 @@ create table Tags (
 
 create table ThreadTags (
   ThreadID integer references Threads(id) on delete cascade,
-  Tag	   text references Tags(Tag) on delete cascade on update cascade
+  Tag      text references Tags(Tag) on delete cascade on update cascade
 );
 
 
@@ -109,7 +109,7 @@ create unique index idxThreadTagsUnique on ThreadTags ( ThreadID, Tag );
 create table UnreadPosts (
   UserID integer references Users(id) on delete cascade,
   PostID integer references Posts(id) on delete cascade,
-  Time	 integer
+  Time   integer
 );
 
 
@@ -117,11 +117,11 @@ create unique index idxUnreadPosts on UnreadPosts(UserID, PostID);
 create index idxUnreadPostsPostID on UnreadPosts(PostID);
 
 create table Attachements (
-  id	   integer primary key autoincrement,
+  id       integer primary key autoincrement,
   postID   integer references Posts(id) on delete cascade,
   filename text,
   notes    text,
-  file	   blob
+  file     blob
 );
 
 
@@ -129,7 +129,7 @@ create table Attachements (
 create table Sessions (
   userID    integer references Users(id) on delete cascade,
   fromIP    text,
-  sid	    text,
+  sid       text,
   last_seen integer,
   ticket    text,
   unique (userID, fromIP)
@@ -141,10 +141,10 @@ create index idxSessions_Sid on Sessions(sid);
 
 
 create table Messages (
-  id	 text primary key,
-  msg	 text,
+  id     text primary key,
+  msg    text,
   header text,
-  link	 text
+  link   text
 );
 
 
@@ -297,10 +297,10 @@ Maybe some day...
 
 
 create table Log (
-  process_id integer,	-- the unique process id
+  process_id integer,   -- the unique process id
   timestamp  integer,
-  event      text,	-- what event is logged - start process, end process, start request, end request
-  value      text,	-- details in variable form.
+  event      text,      -- what event is logged - start process, end process, start request, end request
+  value      text,      -- details in variable form.
   runtime    integer
 );
 
@@ -333,10 +333,15 @@ END;
 
 
 create table ScratchPad (
-  name	 text primary key not null,
+  name   text primary key not null,
   source text
 );
 
 
+create table BadCookies (
+  cookie text,
+  agent  text,
+  remote text
+);
 
 COMMIT;
