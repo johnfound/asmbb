@@ -1,5 +1,5 @@
-C Implemented\slogging\sof\sthe\scookies\snot\sset\sby\sthe\sengine.\sImplemented\sproperly\shandling\sof\sthe\sLet's\sencript\scertificates.
-D 2016-12-22T11:21:38.281
+C Fixed\sstupid\sregression\son\sthe\sadmin\saccount\ssetup.
+D 2016-12-24T15:38:04.480
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 25a76b190fac7dc47cfb98141d765a46302c8af2
@@ -16,7 +16,7 @@ F source/create.sql f4c219735c2e41944a2ee59352b5414281331b85
 F source/delete.asm 3189fdc709fe0a5c17879d279b4e4ea67e3df066
 F source/edit.asm e3103f9052eeeede991f430394a7786dd63f8120
 F source/engine.asm 29c3a7503ed2601424359ed378a7a29e1dc708de
-F source/engine.fpr d2968e543f6c14171e9cbbc6f0eaac32b42fe56f
+F source/engine.fpr f4ec51e2b52e1daf9d757b32a1d0addc96e70803
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm c346f04f48ca18c04ca10b4eb5a937366e5e0c5c
@@ -34,7 +34,7 @@ F source/render.asm 617ca7deaf02f6ecb9cdd16f6d913855148caffb
 F source/search.asm 17a83dc6eaba15f1e4af23e33e0a1f57cfd6af55
 F source/search.sql 738d09e5fd7c428a7f5a26aecddd6d4e117bb384
 F source/search_cnt.sql 5ef8eb89fcea8f87942f1b7c67202350dfd9ff89
-F source/settings.asm 78163f286c579de51a70a4cd1756406ca3a4077f
+F source/settings.asm af1f0d7db514ce7535335b51a7b0b0e3928277b8
 F source/showthread.asm cd8de03b70f6bb7df88505f9133fa94dc83c2ccc
 F source/showthread.sql 331dcb2817dbe06063987d5f0ea8674e0969abaa
 F source/sqlite3.asm f605d645a6cd5a75fbfc52a86ce38c0b5ab0430a
@@ -46,7 +46,7 @@ F source/userinfo.asm 4057a87ebeae3250dcc17cac67d3c0b448d449ff
 F source/users_online.asm 445aa3ddc9a7e62612aa09e0ae3395a29711a61d
 F source/util.sql 6d07e21a95ae1dcdf345e4b2e0b0f780cd707169
 F source/version.asm 629d2b9b931f90661cc53d4bb81a9379c7bad1ff
-F www/.htaccess fc8c641fc61f2a38821bdb99fb9556ddf98929a7
+F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
 F www/images/anon.png f1150ae9c16cb5dd89c7f9f6c502bb6128783519
 F www/images/del_gray.svg 5e3d0ba999e37de7dfdc43292d1c14e4513573ac
@@ -156,7 +156,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/thread_info.tpl efecee871772c5fc3eb3df6ef15f61e8036c912b
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P c6221a60f2d93916b7d53196223a3e11a0ca2fde
-R 414fb88380958b87b5a27efa5973222e
+P a6ca37a82d7e74b9242176cdc3559eaa5cc7da43
+R 786a6fbbce05872516aec0cd8e29ff60
 U johnfound
-Z 658f93d70a4a23bd6b3f723b043e7cc6
+Z 5f4742670c01d3389815c5cfc8218fd8

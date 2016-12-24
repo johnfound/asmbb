@@ -524,12 +524,12 @@ begin
 
         stdcall StrCat, [esi+TSpecialParams.page_title], "Create the first admin account!"
 
-
         stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
         mov     ebx, eax
 
         and     [.error], 0
-        stdcall GetPostString, ebx, txt "err", 0
+
+        stdcall GetQueryItem, ebx, txt "err=", 0
         test    eax, eax
         jz      .error_ok
 
@@ -537,7 +537,7 @@ begin
         stdcall StrDel, eax
 
 .error_ok:
-        stdcall GetPostString, ebx, txt "msg", 0
+        stdcall GetQueryItem, ebx, txt "msg=", 0
         mov     [.message], eax
 
         lea     eax, [.stmt]
