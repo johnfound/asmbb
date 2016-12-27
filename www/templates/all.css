@@ -150,6 +150,10 @@ div.unread_cnt {
   font-size: 12px;
 }
 
+div.unread_cnt a {
+  color: white;
+}
+
 
 div.changed {
   font-size: 80%;

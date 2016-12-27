@@ -7,7 +7,7 @@
       [case:[special:userid]| |<a title="Mark thread as read." href="[Slug]/!markread">]<img src="/images/[case:[Unread]|posts_gray.svg|posts.svg]" width="32" height="32" alt="#">[case:[special:userid]| |</a>]
       [PostCount] [case:[PostCount]|posts|post|posts]
     </div>
-    <div class="unread_cnt">([Unread] unread)</div>
+    <div class="unread_cnt">([case:[Unread]| |<a href="[Slug]/#[FirstUnread]" title="Go to first unread post.">][Unread] unread[case:[Unread]| |</a>])</div>
     <div class="changed"><img src="/images/edit.svg" width="16" height="16" alt="#">[TimeChanged]</div>
   </div>
   <div class="thread_link">

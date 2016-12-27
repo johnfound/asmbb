@@ -1,5 +1,5 @@
-C Fixed\sstupid\sregression\son\sthe\sadmin\saccount\ssetup.
-D 2016-12-24T15:38:04.480
+C Implemented\s"Goto\sfirst\sunread\spost"\slink\sin\sthe\sthread\slist.
+D 2016-12-27T12:35:29.680
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 25a76b190fac7dc47cfb98141d765a46302c8af2
@@ -40,7 +40,7 @@ F source/showthread.sql 331dcb2817dbe06063987d5f0ea8674e0969abaa
 F source/sqlite3.asm f605d645a6cd5a75fbfc52a86ce38c0b5ab0430a
 F source/sqlite_console.asm 96dbf17ad285a8fbc0b1c5e434b40e7c84c8584e
 F source/threadlist.asm 7b7da44184ee4f96d0da4fba1aed6910e3f1c97d
-F source/threadlist.sql 1224dfd1fa036b023ca618ab8c43be39dfea7be6
+F source/threadlist.sql bc3f076f97ef62f383cb7c8d15b96980ceec7e89
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
 F source/userinfo.asm 4057a87ebeae3250dcc17cac67d3c0b448d449ff
 F source/users_online.asm 445aa3ddc9a7e62612aa09e0ae3395a29711a61d
@@ -130,7 +130,7 @@ F www/lighttpd.conf 3ac00a623c9c2a41cfdb39332a2456dab8b16f14
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/activation_email_subject.tpl 950d3451cce1b1b55eec7c9ac9c0bb415abaa34e
 F www/templates/activation_email_text.tpl 3d43a474040f226863f8b2bfa7bad91841711b96
-F www/templates/all.css 4b53e6751f8e84eb68733fa37c0b3daff1a49c96
+F www/templates/all.css 5810d03831be3671c418d8dcac63f476de6c4962
 F www/templates/del_confirm.tpl 7b62ada90b819921275499b659614378cdadd253
 F www/templates/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
 F www/templates/error_html_end.tpl f390b47728814ecd8e608dd410cb2f4b0b953020
@@ -154,9 +154,9 @@ F www/templates/nav_thread.tpl 78071d3d9c821b8d8331bbb771678809bae00392
 F www/templates/post_view.tpl e5ba4beb6e5a0043cf542ae70034041b82392c53
 F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
-F www/templates/thread_info.tpl efecee871772c5fc3eb3df6ef15f61e8036c912b
+F www/templates/thread_info.tpl f24e850f6770c6bc12d7fcdf25bb6dbe38c1d306
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P a6ca37a82d7e74b9242176cdc3559eaa5cc7da43
-R 786a6fbbce05872516aec0cd8e29ff60
+P 2a9877be8487251d9b4dfecd9fc5b4c9de929951
+R 68809d8f54df2794805b3313d0cc219e
 U johnfound
-Z 5f4742670c01d3389815c5cfc8218fd8
+Z 70fa5854472098476c95040b4074215e
