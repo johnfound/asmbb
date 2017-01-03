@@ -1,5 +1,5 @@
-C Fixed\sbug\sin\suser\sregistration\sform.
-D 2017-01-03T11:53:55.758
+C Fixed\stwo\sbugs\sin\sthe\sregistration\sform:\sA\sXSS\sand\sa\scrash\son\sinvalid\se-mail.
+D 2017-01-03T22:45:40.870
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 25a76b190fac7dc47cfb98141d765a46302c8af2
@@ -10,7 +10,7 @@ F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
 F source/ResetPassword.asm 282ad76329ba5c8d6fb8c31d3469bb483e7f34e5
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
-F source/accounts.asm 742f0cc5a25a854a2fdc50b9949e28b984f46fd9
+F source/accounts.asm 1beb6575e0a103b5ff7cc7429d9c2496f9375460
 F source/commands.asm 71152f7ca4e740d704431b5de06d03bd92315ec6
 F source/create.sql f4c219735c2e41944a2ee59352b5414281331b85
 F source/delete.asm 3189fdc709fe0a5c17879d279b4e4ea67e3df066
@@ -156,7 +156,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/thread_info.tpl f24e850f6770c6bc12d7fcdf25bb6dbe38c1d306
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P d3be4ec6f441ea487b42159b53b65ecf59c9d76d
-R ff12479c925fdb35c03916eb267fbab6
+P 930d7bcfcd750ee087e4c5d3f9e3b6744abad3bf
+R 7fbe3780520db3691ff3e73f755b65e0
 U johnfound
-Z b5dcb3eac36b41f321fe6115c17b9187
+Z a2fea215230e90e48393070812c28897

@@ -335,6 +335,9 @@ begin
         test    eax, eax
         jz      .error_short_name
 
+        stdcall ValidateUserName, [.user]
+        jnc     .error_short_name
+
         stdcall StrLen, eax
         cmp     eax, 3
         jbe     .error_short_name
@@ -344,6 +347,9 @@ begin
 
         stdcall GetPostString, ebx, "email", 0
         mov     [.email], eax
+
+        test    eax, eax
+        jz      .error_bad_email
 
         stdcall CheckEmail, eax
         jc      .error_bad_email
@@ -968,3 +974,15 @@ begin
 
 endp
 
+
+
+
+proc ValidateUserName, .hName
+begin
+        push    eax
+        stdcall StrEncodeHTML, [.hName]
+        stdcall StrCompCase, [.hName], eax
+        stdcall StrDel, eax
+        pop     eax
+        return
+endp
