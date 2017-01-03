@@ -332,6 +332,9 @@ begin
         stdcall GetPostString, ebx, "username", 0
         mov     [.user], eax
 
+        test    eax, eax
+        jz      .error_short_name
+
         stdcall StrLen, eax
         cmp     eax, 3
         jbe     .error_short_name
