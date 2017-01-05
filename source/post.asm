@@ -10,7 +10,7 @@ sqlSelectConst text "select ? as slug, ? as caption, ? as source, ? as ticket, ?
 
 sqlGetQuote   text "select U.nick, P.content from Posts P left join Users U on U.id = P.userID where P.id = ?"
 
-sqlInsertPost text "insert into Posts ( ThreadID, UserID, PostTime, Content, ReadCount) values (?, ?, strftime('%s','now'), ?, 0)"
+sqlInsertPost text "insert into Posts ( ThreadID, UserID, PostTime, Content, Rendered, ReadCount) values (?, ?, strftime('%s','now'), ?, ?, 0)"
 sqlUpdateThreads text "update Threads set LastChanged = strftime('%s','now') where id = ?"
 sqlInsertThread  text "insert into Threads ( Caption ) values ( ? )"
 sqlSetThreadSlug text "update Threads set slug = ? where id = ?"
@@ -29,6 +29,7 @@ proc PostUserMessage, .pSpecial
 .count    dd ?
 
 .source   dd ?
+.rendered dd ?
 .ticket   dd ?
 
 .postID   dd ?
@@ -41,6 +42,7 @@ begin
         mov     [.fPreview], eax  ; preview by default when handling GET requests.
         mov     [.slug], eax
         mov     [.source], eax
+        mov     [.rendered], eax
         mov     [.caption], eax
         mov     [.tags], eax
         mov     [.ticket], eax
@@ -467,6 +469,15 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
         cmp     [.source], 0
         je      .error_invalid_content
 
+; render the source
+
+        stdcall StrDup, [.source]
+        stdcall FormatPostText, eax
+        mov     [.rendered], eax
+
+
+; bind the source
+
         stdcall StrPtr, [.source]
 
         mov     ecx, [eax+string.len]
@@ -474,6 +485,16 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
         jz      .error_invalid_content
 
         cinvoke sqliteBindText, [.stmt], 3, eax, ecx, SQLITE_STATIC
+
+; bind the rendered htmlt
+
+        stdcall StrPtr, [.rendered]
+        mov     ecx, [eax+string.len]
+        test    ecx, ecx
+        jz      .error_invalid_content
+
+        cinvoke sqliteBindText, [.stmt], 4, eax, ecx, SQLITE_STATIC
+
 
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_DONE
@@ -521,6 +542,7 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
 .finish:
         stdcall StrDel, [.slug]
         stdcall StrDel, [.source]
+        stdcall StrDel, [.rendered]
         stdcall StrDel, [.caption]
         stdcall StrDel, [.tags]
         stdcall StrDel, [.ticket]

@@ -129,6 +129,9 @@ begin
         stdcall StrMatchPatternNoCase, "minimag:*", edi
         jc      .process_minimag
 
+        stdcall StrMatchPatternNoCase, "html:*", edi
+        jc      .process_html
+
         stdcall StrMatchPatternNoCase, "case:*", edi
         jc      .process_case
 
@@ -977,6 +980,17 @@ end if
         jmp     .return_value
 
 
+.process_html:
+
+        stdcall StrSplit, edi, 5
+        stdcall StrDel, edi
+        stdcall StrClipSpacesL, eax
+        mov     edi, eax
+
+        stdcall __DoProcessTemplate2, edi, [.sql_stmt], [.pSpecial], FALSE
+
+        jmp     .return_value
+
 
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1694,6 +1708,69 @@ begin
 
 endp
 
+
+
+
+
+sqlSelectAllPosts text "select id, content from Posts"
+sqlUpdateHTML     text "update Posts set Rendered = ?1 where id = ?2"
+
+proc RenderAll, .pSpecial
+.stmt dd ?
+.stmt2 dd ?
+begin
+        pushad
+
+        mov     esi, [.pSpecial]
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectAllPosts, -1, eax, 0
+
+        lea     eax, [.stmt2]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateHTML, -1, eax, 0
+
+.loop:
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .finish
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        mov     ebx, eax
+
+        cinvoke sqliteColumnText, [.stmt], 1
+        stdcall StrDupMem, eax
+
+        stdcall FormatPostText, eax
+        mov     edi, eax
+
+        cinvoke sqliteBindInt, [.stmt2], 2, ebx
+
+        stdcall StrPtr, edi
+        cinvoke sqliteBindText, [.stmt2], 1, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt2]
+        cinvoke sqliteReset, [.stmt2]
+
+        stdcall StrDel, edi
+
+        jmp     .loop
+
+.finish:
+        cinvoke sqliteFinalize, [.stmt2]
+        cinvoke sqliteFinalize, [.stmt]
+
+        stdcall GetBackLink, esi
+        push    eax
+
+        stdcall StrMakeRedirect, 0, eax
+        stdcall StrDel ; from the stack
+
+        mov     [esp+4*regEAX], eax
+        stc
+
+        popad
+        return
+endp
 
 
 

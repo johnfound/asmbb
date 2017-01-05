@@ -3,7 +3,7 @@ select
   P.id,
   P.threadID,
   strftime('%d.%m.%Y %H:%M:%S', P.postTime, 'unixepoch') as PostTime,
-  P.Content,
+  P.Rendered,
   U.id as UserID,
   U.nick as UserName,
   U.PostCount as UserPostCount,

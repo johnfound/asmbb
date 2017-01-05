@@ -164,6 +164,8 @@ begin
 .check_file_type:
 
         stdcall StrExtractExt, [.filename]
+        jc      .analize_uri
+
         push    eax
 
         stdcall GetMimeType, eax

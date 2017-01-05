@@ -79,7 +79,8 @@ create table Posts (
 
   postTime    integer,  -- based on postTime the posts are sorted in the thread.
   ReadCount   integer,
-  Content     text
+  Content     text,
+  Rendered    text
 );
 
 

@@ -1,5 +1,5 @@
-C Fixed\stwo\sbugs\sin\sthe\sregistration\sform:\sA\sXSS\sand\sa\scrash\son\sinvalid\se-mail.
-D 2017-01-03T22:45:40.870
+C Implemented\srendered\sHTML\scache.\sDevelopment\stime\smeasured:\s78\sminutes.\sAll\schanged\sare\sin\sthis\scheckin.
+D 2017-01-05T18:02:15.075
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 25a76b190fac7dc47cfb98141d765a46302c8af2
@@ -11,12 +11,12 @@ F source/ResetPassword.asm 282ad76329ba5c8d6fb8c31d3469bb483e7f34e5
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm 1beb6575e0a103b5ff7cc7429d9c2496f9375460
-F source/commands.asm 71152f7ca4e740d704431b5de06d03bd92315ec6
-F source/create.sql f4c219735c2e41944a2ee59352b5414281331b85
+F source/commands.asm 3dd36370e827ecc4daecf85b122089809911df24
+F source/create.sql 6252f0b089ff4751852b933345ee07dd36d410ab
 F source/delete.asm 3189fdc709fe0a5c17879d279b4e4ea67e3df066
-F source/edit.asm e3103f9052eeeede991f430394a7786dd63f8120
+F source/edit.asm 6580ba0513daf390f9696d2deebf3a3a411a2569
 F source/engine.asm 29c3a7503ed2601424359ed378a7a29e1dc708de
-F source/engine.fpr f4ec51e2b52e1daf9d757b32a1d0addc96e70803
+F source/engine.fpr 79a5d5f4fa207d643a6104b5c9182f6f76e417ce
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm c346f04f48ca18c04ca10b4eb5a937366e5e0c5c
@@ -27,16 +27,16 @@ F source/memcache.asm aa97cfe9ae95a5dc9d6d2c55c87d1bfbb488d14a
 F source/messages.asm 1cc42852665f2b44a574e37c0fde6624b4dab784
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
-F source/post.asm bddd1b0788c2ba7ad9e71ff9ed4edb828ea8b0ae
+F source/post.asm d78f3e686c1f9f2585e46649b04ed2d2743ec68b
 F source/post_data.asm 38939702e70776735062323dd82cf808b64e33e8
 F source/postdebug.asm 13ab4ebf2fc7b35d7fa36853b533236860b641f7
-F source/render.asm 617ca7deaf02f6ecb9cdd16f6d913855148caffb
+F source/render.asm 6f88b788e34655f6e9117ea0eee7c5164b4bb5af
 F source/search.asm 17a83dc6eaba15f1e4af23e33e0a1f57cfd6af55
 F source/search.sql 738d09e5fd7c428a7f5a26aecddd6d4e117bb384
 F source/search_cnt.sql 5ef8eb89fcea8f87942f1b7c67202350dfd9ff89
 F source/settings.asm af1f0d7db514ce7535335b51a7b0b0e3928277b8
-F source/showthread.asm cd8de03b70f6bb7df88505f9133fa94dc83c2ccc
-F source/showthread.sql 331dcb2817dbe06063987d5f0ea8674e0969abaa
+F source/showthread.asm 7b14ebf763963ff7feeff92d09665dbb0a77964d
+F source/showthread.sql c575ee2fcbe60d8b878d78d44c477aeb4aece163
 F source/sqlite3.asm f605d645a6cd5a75fbfc52a86ce38c0b5ab0430a
 F source/sqlite_console.asm 96dbf17ad285a8fbc0b1c5e434b40e7c84c8584e
 F source/threadlist.asm 7b7da44184ee4f96d0da4fba1aed6910e3f1c97d
@@ -46,7 +46,7 @@ F source/userinfo.asm 4057a87ebeae3250dcc17cac67d3c0b448d449ff
 F source/users_online.asm 445aa3ddc9a7e62612aa09e0ae3395a29711a61d
 F source/util.sql 6d07e21a95ae1dcdf345e4b2e0b0f780cd707169
 F source/version.asm 629d2b9b931f90661cc53d4bb81a9379c7bad1ff
-F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
+F www/.htaccess 921c6e26fd6b34022f7469bb17cc568bf4de9343
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
 F www/images/anon.png f1150ae9c16cb5dd89c7f9f6c502bb6128783519
 F www/images/del_gray.svg 5e3d0ba999e37de7dfdc43292d1c14e4513573ac
@@ -151,12 +151,15 @@ F www/templates/minimag_suffix.tpl e0ee4765a03f31868c42f12693dc9b23b8ca076e
 F www/templates/nav_list.tpl 0a15e81a1d5d08087d4be4e1e6a68aeb63dd790c
 F www/templates/nav_search.tpl d41b3e1308e015bc6b5443be0102d20dbc93de51
 F www/templates/nav_thread.tpl 78071d3d9c821b8d8331bbb771678809bae00392
-F www/templates/post_view.tpl e5ba4beb6e5a0043cf542ae70034041b82392c53
+F www/templates/post_view.tpl 12ee01808d145ede6239b6c33dbe34f570c878f1
 F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/thread_info.tpl f24e850f6770c6bc12d7fcdf25bb6dbe38c1d306
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 930d7bcfcd750ee087e4c5d3f9e3b6744abad3bf
-R 7fbe3780520db3691ff3e73f755b65e0
+P 18ace583a3fc0624c4f4e9da172d0bbaae4a7c06
+R d4534e0b17b51b6ea45f66c6de890caf
+T *branch * HTMLCache
+T *sym-HTMLCache *
+T -sym-trunk *
 U johnfound
-Z a2fea215230e90e48393070812c28897
+Z 27dd923397c15b80726fdbfc9280deb8

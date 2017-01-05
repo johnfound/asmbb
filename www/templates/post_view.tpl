@@ -16,6 +16,6 @@
     </div>
   </div>
   <div class="post_text">
-    [minimag:[content]]
+    [html:[rendered]]
   </div>
 </div>
