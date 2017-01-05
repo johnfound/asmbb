@@ -250,6 +250,9 @@ begin
 
 
 .get_avatar:
+        mov     [.timeRetHi], edx
+        mov     [.timeRetLo], eax
+
         cinvoke sqliteColumnBytes, [.stmt], 0
         mov     ebx, eax
         cinvoke sqliteColumnBlob, [.stmt], 0

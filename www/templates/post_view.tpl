@@ -16,6 +16,6 @@
     </div>
   </div>
   <div class="post_text">
-    [html:[rendered]]
+    [html:[Rendered]]
   </div>
 </div>

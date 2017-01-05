@@ -1712,7 +1712,7 @@ endp
 
 
 
-sqlSelectAllPosts text "select id, content from Posts"
+sqlSelectAllPosts text "select id, content from Posts where rendered is null limit 1000"
 sqlUpdateHTML     text "update Posts set Rendered = ?1 where id = ?2"
 
 proc RenderAll, .pSpecial
@@ -1722,6 +1722,9 @@ begin
         pushad
 
         mov     esi, [.pSpecial]
+
+        test    [esi+TSpecialParams.userStatus], permAdmin
+        jz      .for_admins_only
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectAllPosts, -1, eax, 0
@@ -1759,17 +1762,24 @@ begin
         cinvoke sqliteFinalize, [.stmt2]
         cinvoke sqliteFinalize, [.stmt]
 
+.finish2:
         stdcall GetBackLink, esi
         push    eax
 
         stdcall StrMakeRedirect, 0, eax
         stdcall StrDel ; from the stack
 
+.exit:
         mov     [esp+4*regEAX], eax
         stc
-
         popad
         return
+
+.for_admins_only:
+
+        stdcall StrMakeRedirect, 0, "/!message/only_for_admins"
+        stc
+        jmp     .exit
 endp
 
 
