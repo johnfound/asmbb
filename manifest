@@ -1,5 +1,5 @@
-C Admin\spermissions\sfor\s!render_all\sfunction.\sFixed\sbug\sin\sthe\savatar\simages\sbrowser\scaching.
-D 2017-01-05T19:31:26.937
+C Missing\sfile\sadded.
+D 2017-01-06T06:41:43.466
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 25a76b190fac7dc47cfb98141d765a46302c8af2
@@ -11,7 +11,7 @@ F source/ResetPassword.asm 282ad76329ba5c8d6fb8c31d3469bb483e7f34e5
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm 1beb6575e0a103b5ff7cc7429d9c2496f9375460
-F source/commands.asm 3dd36370e827ecc4daecf85b122089809911df24
+F source/commands.asm 09e8c535b5a621aeeb6d3a0e7eeb1448cb6af9a8
 F source/create.sql 6252f0b089ff4751852b933345ee07dd36d410ab
 F source/delete.asm 3189fdc709fe0a5c17879d279b4e4ea67e3df066
 F source/edit.asm 6580ba0513daf390f9696d2deebf3a3a411a2569
@@ -156,7 +156,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/thread_info.tpl f24e850f6770c6bc12d7fcdf25bb6dbe38c1d306
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 8b5016ce39246bea66cb5d0da379a1e7e9125c80
-R 6dd9f854b8301c3f05002a2a192c905b
+P d86f8027078fe46ad971836cd95631b3639202d6
+R f5da771d6116da7155f6fe3dccb58de6
 U johnfound
-Z 3b3c37acdb8cffd16567ca91aa0ce9c3
+Z a7a9b8a7c10740e39230a9261830b5f4
