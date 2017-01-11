@@ -1,5 +1,2 @@
-RewriteCond %{HTTPS} off
-RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-FcgidWrapper "/home/asm32inf/board/engine" virtual
+FcgidWrapper "/FULL/PATH/TO/engine" virtual
 SetHandler fcgid-script

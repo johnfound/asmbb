@@ -1,5 +1,5 @@
-C Missing\sfile\sadded.
-D 2017-01-06T06:41:43.466
+C Fixed\sbug\sin\sthe\smain_html_start.tpl;\s.htaccess\sfile\sfixed\sto\sits\sabstract\sform.
+D 2017-01-11T19:20:10.183
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 25a76b190fac7dc47cfb98141d765a46302c8af2
@@ -46,7 +46,7 @@ F source/userinfo.asm 9ad624aeea7668d5892dbcef9a26eed971f5efa2
 F source/users_online.asm 445aa3ddc9a7e62612aa09e0ae3395a29711a61d
 F source/util.sql 6d07e21a95ae1dcdf345e4b2e0b0f780cd707169
 F source/version.asm 629d2b9b931f90661cc53d4bb81a9379c7bad1ff
-F www/.htaccess 921c6e26fd6b34022f7469bb17cc568bf4de9343
+F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
 F www/images/anon.png f1150ae9c16cb5dd89c7f9f6c502bb6128783519
 F www/images/del_gray.svg 5e3d0ba999e37de7dfdc43292d1c14e4513573ac
@@ -146,7 +146,7 @@ F www/templates/form_settings.tpl b3ffda2f4c2a5a30a4dfb2b4e24005e89c40e730
 F www/templates/form_setup.tpl 5a388291b02221e6980a06cb7fcb2a67ddddd169
 F www/templates/form_sqlite_console.tpl 54e3ae4b30ef1095168b2133dbf95d28aec8d39e
 F www/templates/main_html_end.tpl a869356d32ce73bdee89d4a7512e14a9e08b6a3c
-F www/templates/main_html_start.tpl f00c8bc244f044f2f8f4284222903e06aeda7af8
+F www/templates/main_html_start.tpl 033fc02e8d211dca052e3b7b39e37e3c1e9b3638
 F www/templates/minimag_suffix.tpl e0ee4765a03f31868c42f12693dc9b23b8ca076e
 F www/templates/nav_list.tpl 0a15e81a1d5d08087d4be4e1e6a68aeb63dd790c
 F www/templates/nav_search.tpl d41b3e1308e015bc6b5443be0102d20dbc93de51
@@ -156,7 +156,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/thread_info.tpl f24e850f6770c6bc12d7fcdf25bb6dbe38c1d306
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P d86f8027078fe46ad971836cd95631b3639202d6
-R f5da771d6116da7155f6fe3dccb58de6
+P 2a83ac24bfa3b29191d2fcbb9b54079f380d2566
+R 0c545573ef5725daa4e9c62ddcd97b16
 U johnfound
-Z a7a9b8a7c10740e39230a9261830b5f4
+Z c26a180ca27c29068d6a12d8a7d69b87

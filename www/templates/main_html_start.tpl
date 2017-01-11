@@ -36,7 +36,7 @@
       [case:[special:userid]|<a href="/!login/">Login</a><br><a href="/!register/">Register</a>|
       <a href="/!logout">Logout ( [special:username] )</a><br><a href="/!userinfo/[special:username]">User profile</a>]
     </div>
-    <form class="tags" id="search_form" action="[case:[special:dir][special:thread]|/|[case:[special:search]||../]]!search/" method="get" >
+    <form class="tags" id="search_form" action="[case:[special:dir]|/|[case:[special:search]||../]]!search/" method="get" >
       <input class="search_line" type="edit" size="40" name="s" placeholder="search" value="[special:search]"><input class="icon_btn"  type="image" src="/images/search.svg" alt="?" >
     </form>
     <h1>AsmBB demo</h1>
