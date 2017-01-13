@@ -78,7 +78,7 @@ uglobal
 endg
 
 
-rb 173
+;rb 173
 
 
 start:

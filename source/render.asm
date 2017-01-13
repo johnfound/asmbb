@@ -516,6 +516,13 @@ endl
         jc      .return_value
 
         stdcall GetQueryItem, eax, txt "s=", 0
+        test    eax, eax
+        jz      .return_value
+
+        push    eax
+        stdcall StrEncodeHTML, eax
+        stdcall StrDel ; from the stack
+
         jmp     .return_value
 
 

@@ -1,5 +1,5 @@
-C Fixed\sbug\sin\sthe\smain_html_start.tpl;\s.htaccess\sfile\sfixed\sto\sits\sabstract\sform.
-D 2017-01-11T19:20:10.183
+C Fixed\sXSS\sproblem\sin\sthe\ssearch\sinput.
+D 2017-01-13T11:34:04.737
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 25a76b190fac7dc47cfb98141d765a46302c8af2
@@ -15,7 +15,7 @@ F source/commands.asm 09e8c535b5a621aeeb6d3a0e7eeb1448cb6af9a8
 F source/create.sql 6252f0b089ff4751852b933345ee07dd36d410ab
 F source/delete.asm 3189fdc709fe0a5c17879d279b4e4ea67e3df066
 F source/edit.asm 6580ba0513daf390f9696d2deebf3a3a411a2569
-F source/engine.asm 29c3a7503ed2601424359ed378a7a29e1dc708de
+F source/engine.asm 11ae66ab648bcc582ef9c84e28f9c38fcb7d06b2
 F source/engine.fpr 79a5d5f4fa207d643a6104b5c9182f6f76e417ce
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -30,7 +30,7 @@ F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
 F source/post.asm d78f3e686c1f9f2585e46649b04ed2d2743ec68b
 F source/post_data.asm 38939702e70776735062323dd82cf808b64e33e8
 F source/postdebug.asm 13ab4ebf2fc7b35d7fa36853b533236860b641f7
-F source/render.asm c6316f8617d16809b7610d6586b16b04b526930a
+F source/render.asm 19084104fcb51865c61d5046cd4e53e69f6d0f18
 F source/search.asm 17a83dc6eaba15f1e4af23e33e0a1f57cfd6af55
 F source/search.sql 738d09e5fd7c428a7f5a26aecddd6d4e117bb384
 F source/search_cnt.sql 5ef8eb89fcea8f87942f1b7c67202350dfd9ff89
@@ -130,7 +130,7 @@ F www/lighttpd.conf 3ac00a623c9c2a41cfdb39332a2456dab8b16f14
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/activation_email_subject.tpl 950d3451cce1b1b55eec7c9ac9c0bb415abaa34e
 F www/templates/activation_email_text.tpl 3d43a474040f226863f8b2bfa7bad91841711b96
-F www/templates/all.css 5810d03831be3671c418d8dcac63f476de6c4962
+F www/templates/all.css a2c0f37790e83dfd98fa66157fbd14cb994c3b97
 F www/templates/del_confirm.tpl 7b62ada90b819921275499b659614378cdadd253
 F www/templates/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
 F www/templates/error_html_end.tpl f390b47728814ecd8e608dd410cb2f4b0b953020
@@ -156,7 +156,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/thread_info.tpl f24e850f6770c6bc12d7fcdf25bb6dbe38c1d306
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 2a83ac24bfa3b29191d2fcbb9b54079f380d2566
-R 0c545573ef5725daa4e9c62ddcd97b16
+P fecae83232c4c61a1fee85cf66b5f17822a4718f
+R 89414cc30fd54b4963bdba29042ac4e1
 U johnfound
-Z c26a180ca27c29068d6a12d8a7d69b87
+Z 7861acaa831e20cfa9dc49918ebbe7ad
