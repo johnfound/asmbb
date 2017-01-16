@@ -5,7 +5,6 @@ sqlGetPostCount  text "select count(1) from Posts where ThreadID = ?"
 sqlGetThreadInfo text "select id, caption, slug from Threads where slug = ? limit 1"
 
 
-
 proc ShowThread, .pSpecial
 
 .stmt  dd ?
@@ -106,24 +105,9 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .finish
 
-
         inc     [.cnt]
 
-;if defined options.DebugMode & options.DebugMode
-;        stdcall GetFineTimestamp
-;        push    eax
-;end if
-
         stdcall StrCatTemplate, edi, "post_view", [.stmt], esi
-
-;if defined options.DebugMode & options.DebugMode
-;        stdcall GetFineTimestamp
-;        sub     eax, [esp]
-;
-;        OutputValue "Template: ", eax, 10, -1
-;        pop     eax
-;end if
-
 
         cinvoke sqliteColumnInt, [.stmt], 0
         stdcall PostIncrementReadCount, eax
@@ -138,13 +122,6 @@ begin
 
 
 .finish:
-
-;if defined options.DebugMode & options.DebugMode
-;        stdcall GetFineTimestamp
-;        sub     eax, [.start]
-;
-;        OutputValue "Thread fetch query time [us]: ", eax, 10, -1
-;end if
 
         cmp     [.cnt], 5
         jbe     .back_navigation_ok

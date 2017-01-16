@@ -164,6 +164,8 @@ begin
 .check_file_type:
 
         stdcall StrExtractExt, [.filename]
+        jc      .analize_uri
+
         push    eax
 
         stdcall GetMimeType, eax
@@ -401,6 +403,10 @@ begin
         mov     ecx, UpdateUserAvatar
         stdcall StrCompNoCase, eax, txt "!avatar_upload"
         jc      .exec_command2
+
+        mov     ecx, RenderAll
+        stdcall StrCompNoCase, eax, txt "!render_all"
+        jc      .exec_command
 
 
 if defined options.DebugWeb & options.DebugWeb

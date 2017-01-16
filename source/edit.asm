@@ -3,7 +3,7 @@
 
 sqlReadPost    text "select P.id, T.caption, P.content as source, ?2 as Ticket from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
 sqlEditedPost  text "select P.id, T.caption, ?3 as source, ?2 as Ticket from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
-sqlSavePost    text "update Posts set content = substr( ?1, 1, ?3 ), postTime = strftime('%s','now') where id = ?2"
+sqlSavePost    text "update Posts set content = ?1, rendered = ?2, postTime = strftime('%s','now') where id = ?3"
 sqlGetPostUser text "select userID, threadID from Posts where id = ?"
 
 
@@ -11,6 +11,7 @@ proc EditUserMessage, .pSpecial
 .stmt dd ?
 
 .source   dd ?
+.rendered dd ?
 .ticket   dd ?
 
 .res      dd ?
@@ -22,6 +23,7 @@ begin
 
         xor     ebx, ebx
         mov     [.source], ebx
+        mov     [.rendered], ebx
         mov     [.ticket], ebx
 
         mov     esi, [.pSpecial]
@@ -162,8 +164,18 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSavePost, -1, eax, 0
 
-        cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.page_num]
-        cinvoke sqliteBindInt, [.stmt], 3, LIMIT_POST_LENGTH
+        cinvoke sqliteBindInt, [.stmt], 3, [esi+TSpecialParams.page_num]
+
+        stdcall StrByteUtf8, [.source], LIMIT_POST_LENGTH
+        stdcall StrTrim, [.source], eax
+
+; render the source
+
+        stdcall StrDup, [.source]
+        stdcall FormatPostText, eax
+        mov     [.rendered], eax
+
+; bind the source
 
         stdcall StrPtr, [.source]
 
@@ -172,6 +184,17 @@ begin
         jz      .error_write
 
         cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
+
+; bind the html
+
+        stdcall StrPtr, [.rendered]
+
+        mov     ecx, [eax+string.len]
+        test    ecx, ecx
+        jz      .error_write
+
+        cinvoke sqliteBindText, [.stmt], 2, eax, ecx, SQLITE_STATIC
+
 
         cinvoke sqliteStep, [.stmt]
         mov     ebx, eax
@@ -218,6 +241,7 @@ begin
 
 .finish:
         stdcall StrDel, [.source]
+        stdcall StrDel, [.rendered]
         stdcall StrDel, [.ticket]
         mov     [esp+4*regEAX], edi
         popad
