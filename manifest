@@ -1,5 +1,5 @@
-C Implemented\sHTML\scache\sof\sthe\sposts.\sImproves\sthe\srendering\sspeed,\sespecially\son\sbig\sposts.
-D 2017-01-16T14:50:57.714
+C Fixes\ssmall\sbug\sin\sthe\ssearch\sengine\s-\sduplicated\sresults\son\sposts\shaving\sseveral\stags\sattached.
+D 2017-01-16T14:53:20.832
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 25a76b190fac7dc47cfb98141d765a46302c8af2
@@ -32,7 +32,7 @@ F source/post_data.asm 38939702e70776735062323dd82cf808b64e33e8
 F source/postdebug.asm 13ab4ebf2fc7b35d7fa36853b533236860b641f7
 F source/render.asm 19084104fcb51865c61d5046cd4e53e69f6d0f18
 F source/search.asm 17a83dc6eaba15f1e4af23e33e0a1f57cfd6af55
-F source/search.sql 738d09e5fd7c428a7f5a26aecddd6d4e117bb384
+F source/search.sql 7fb4f78030d5485357720f11ce5276c8f808c5f1
 F source/search_cnt.sql 5ef8eb89fcea8f87942f1b7c67202350dfd9ff89
 F source/settings.asm af1f0d7db514ce7535335b51a7b0b0e3928277b8
 F source/showthread.asm 7b14ebf763963ff7feeff92d09665dbb0a77964d
@@ -156,7 +156,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/thread_info.tpl f24e850f6770c6bc12d7fcdf25bb6dbe38c1d306
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 18ace583a3fc0624c4f4e9da172d0bbaae4a7c06 9052cb248830a9b207bc499e9593164169c82f8a
-R 89414cc30fd54b4963bdba29042ac4e1
+P 0b3a0cb23bc7cf68b7e50468d6ea278a3e508635
+R 64725822d56ff573a28f1b875f027e77
 U johnfound
-Z 7052fb1bfcd20b83fa60787b2f16d115
+Z 6942a09e7c9b6017ffc3c5471e37a988

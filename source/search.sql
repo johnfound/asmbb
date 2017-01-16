@@ -1,4 +1,4 @@
-select
+select distinct
 
   U.nick as UserName,
   U.id as UserID,
