@@ -42,5 +42,5 @@
     <h1>AsmBB demo</h1>
   </div>
 
-<div class="tags"><a class="taglink" title="Show all threads" href="/"><img src="/images/posts.svg" alt="All"></a>[special:alltags]</div>
+<div class="tags"><a class="taglink" title="Show all threads" href="/"><img src="/images/[case:[special:dir]|posts.svg|posts_gray.svg]" alt="All"></a>[special:alltags]</div>
 

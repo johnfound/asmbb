@@ -1,5 +1,5 @@
-C Fixes\ssmall\sbug\sin\sthe\ssearch\sengine\s-\sduplicated\sresults\son\sposts\shaving\sseveral\stags\sattached.
-D 2017-01-16T14:53:20.832
+C Faster\sSQL\squery\sfor\sthread\s\slists\swithin\ssome\stag.\sSlightly\simproved\sroot\sicon\sin\sthe\staglist.
+D 2017-01-16T14:55:51.215
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 25a76b190fac7dc47cfb98141d765a46302c8af2
@@ -40,7 +40,7 @@ F source/showthread.sql c575ee2fcbe60d8b878d78d44c477aeb4aece163
 F source/sqlite3.asm f605d645a6cd5a75fbfc52a86ce38c0b5ab0430a
 F source/sqlite_console.asm 96dbf17ad285a8fbc0b1c5e434b40e7c84c8584e
 F source/threadlist.asm 7b7da44184ee4f96d0da4fba1aed6910e3f1c97d
-F source/threadlist.sql bc3f076f97ef62f383cb7c8d15b96980ceec7e89
+F source/threadlist.sql f07efe157ef0713c65d91f66158d69060e93429a
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
 F source/userinfo.asm 9ad624aeea7668d5892dbcef9a26eed971f5efa2
 F source/users_online.asm 445aa3ddc9a7e62612aa09e0ae3395a29711a61d
@@ -146,7 +146,7 @@ F www/templates/form_settings.tpl b3ffda2f4c2a5a30a4dfb2b4e24005e89c40e730
 F www/templates/form_setup.tpl 5a388291b02221e6980a06cb7fcb2a67ddddd169
 F www/templates/form_sqlite_console.tpl 54e3ae4b30ef1095168b2133dbf95d28aec8d39e
 F www/templates/main_html_end.tpl a869356d32ce73bdee89d4a7512e14a9e08b6a3c
-F www/templates/main_html_start.tpl 033fc02e8d211dca052e3b7b39e37e3c1e9b3638
+F www/templates/main_html_start.tpl a77f3f14e0042c8dbcfbd3391b32b11f6903005a
 F www/templates/minimag_suffix.tpl e0ee4765a03f31868c42f12693dc9b23b8ca076e
 F www/templates/nav_list.tpl 0a15e81a1d5d08087d4be4e1e6a68aeb63dd790c
 F www/templates/nav_search.tpl d41b3e1308e015bc6b5443be0102d20dbc93de51
@@ -156,7 +156,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/thread_info.tpl f24e850f6770c6bc12d7fcdf25bb6dbe38c1d306
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 0b3a0cb23bc7cf68b7e50468d6ea278a3e508635
-R 64725822d56ff573a28f1b875f027e77
+P 3597c623909c3e95bcdfab3ee28411a3550e3986
+R e8f54ee236d8ade55e0cac5ad262e40f
 U johnfound
-Z 6942a09e7c9b6017ffc3c5471e37a988
+Z 551bf368b9dbb968c2b14cf135120c80

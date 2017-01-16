@@ -1,4 +1,4 @@
-select
+select distinct
 
   id,
   Slug,
@@ -10,9 +10,9 @@ select
   (select PostID from posts P3, UnreadPosts U2 where P3.id = U2.PostID and P3.threadID = T.id and U2.userID = ?3 limit 1) as FirstUnread
 
 from
-  Threads T
+  Threads T left join ThreadTags TT on TT.ThreadID = T.id
 
-where ?4 is null or ?4 in (select Tag from ThreadTags TT where TT.threadID = T.id)
+where ?4 is null or TT.Tag = ?4
 
 order by Pinned desc, LastChanged desc
 
