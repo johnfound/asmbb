@@ -37,12 +37,26 @@ create table Users (
   PostCount integer default 0  -- Speed optimization in order to not count the posts every time. Need automatic count.
 );
 
-
-
 create index idxUsers_nick on Users (nick);
 create index idxUsers_email on Users (email);
 create index idxUsersX on Users(id, nick, avatar);
 create index idxUsers_LastSeen on Users(LastSeen);
+
+
+create table UserLog (
+  userID   integer  default NULL references Users(id) on delete cascade on update cascade,   -- If == NULL, it means the user is not logged in. See userAddr.
+  userAddr integer,                                                                          -- The IP address of the user or the guests;
+  Time     integer,                                                                          -- time the user make some action.
+  Activity integer default NULL,                                                             -- id of the forum place. This constant depends on the engine.
+  Param    integer default NULL                                                              -- if the place has some ID, write it here. It depends on Place value and can be thread ID, post ID or user profile ID, etc.
+);
+
+
+create table LogMessages (
+  Activity      integer;
+  Template      text;
+);
+
 
 
 create table WaitingActivation(

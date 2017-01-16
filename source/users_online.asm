@@ -78,3 +78,48 @@ begin
         popad
         return
 endp
+
+
+
+
+
+; Users tracking/activities.
+
+
+uaUnknown       = 0
+uaLoggingIn     = 1
+uaLoggingOut    = 2
+uaThreadList    = 3     ; The tag ID or NULL.
+uaReadingThread = 4     ; ThreadID.
+uaWritingPost   = 5     ; ThreadID where.
+uaEditingPost   = 6     ; PostID editting.
+uaUserProfile   = 7     ; UserID reading.
+uaAdminThings   = 8
+uaTrackingUsers = 9
+
+
+;create table UserLog (
+;  userID integer  default NULL references Users(id) on delete cascade on update cascade,     -- If == NULL, it means the user is not logged in. See userAddr.
+;  userAddr integer,                                                                          -- The IP address of the user or the guests;
+;  Time   integer,                                                                            -- time the user make some action.
+;  Place  integer default NULL,                                                               -- id of the forum place. This constant depends on the engine.
+;  PlaceID integer default NULL                                                               -- if the place has some ID, write it here. It depends on Place value and can be thread ID, post ID or user profile ID, etc.
+;);
+
+
+sqlLogUserActivity text "insert into UserLog values userID = ?1, userAddr = ?2, Time = strftime('%s','now'), Activity = ?3, Param = ?4"
+
+
+proc LogUserActivity, .userID, .activity, .param
+begin
+
+
+
+
+
+
+
+
+
+        return
+endp
