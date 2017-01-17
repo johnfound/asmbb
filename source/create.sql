@@ -45,7 +45,7 @@ create index idxUsers_LastSeen on Users(LastSeen);
 
 create table UserLog (
   userID   integer  default NULL references Users(id) on delete cascade on update cascade,   -- If == NULL, it means the user is not logged in. See userAddr.
-  userAddr integer,                                                                          -- The IP address of the user or the guests;
+  remoteIP integer,                                                                          -- The IP address of the user or the guests;
   Time     integer,                                                                          -- time the user make some action.
   Activity integer default NULL,                                                             -- id of the forum place. This constant depends on the engine.
   Param    integer default NULL                                                              -- if the place has some ID, write it here. It depends on Place value and can be thread ID, post ID or user profile ID, etc.
@@ -53,8 +53,8 @@ create table UserLog (
 
 
 create table LogMessages (
-  Activity      integer;
-  Template      text;
+  Activity      integer,
+  Template      text
 );
 
 

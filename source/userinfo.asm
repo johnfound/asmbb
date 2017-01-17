@@ -64,6 +64,9 @@ begin
         jnz     .put_edit_form
 
         cinvoke sqliteColumnInt, [.stmt], 0
+
+        stdcall LogUserActivity, esi, uaUserProfile, eax
+
         cmp     eax, [esi+TSpecialParams.userID]
         jne     .edit_form_ok
 

@@ -1,5 +1,5 @@
-C Start\sof\sthe\simplementation\sof\sthe\sfunctions\slike\s"Who\sis\sonline"\sand\slist\sof\sactive\susers\sand\sguests.
-D 2017-01-16T15:15:38.272
+C Started\sthe\swork\son\sthe\suser\sactivities\sloging.
+D 2017-01-17T14:45:23.200
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 25a76b190fac7dc47cfb98141d765a46302c8af2
@@ -10,9 +10,9 @@ F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
 F source/ResetPassword.asm 282ad76329ba5c8d6fb8c31d3469bb483e7f34e5
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
-F source/accounts.asm 1beb6575e0a103b5ff7cc7429d9c2496f9375460
-F source/commands.asm 09e8c535b5a621aeeb6d3a0e7eeb1448cb6af9a8
-F source/create.sql 75bd3bea1b9fe1373be119ba5fcab93f9a2b8ff8
+F source/accounts.asm c1df0ead328b02a87393aded98dcbf256e966c7e
+F source/commands.asm f3b877bb9c2ab0b2911b3d19bb9dd68f6b2e472f
+F source/create.sql e954dc2298878067a146dde18ec6c0d6d45f308e
 F source/delete.asm 3189fdc709fe0a5c17879d279b4e4ea67e3df066
 F source/edit.asm 6580ba0513daf390f9696d2deebf3a3a411a2569
 F source/engine.asm 11ae66ab648bcc582ef9c84e28f9c38fcb7d06b2
@@ -34,16 +34,16 @@ F source/render.asm 19084104fcb51865c61d5046cd4e53e69f6d0f18
 F source/search.asm 17a83dc6eaba15f1e4af23e33e0a1f57cfd6af55
 F source/search.sql 7fb4f78030d5485357720f11ce5276c8f808c5f1
 F source/search_cnt.sql 5ef8eb89fcea8f87942f1b7c67202350dfd9ff89
-F source/settings.asm af1f0d7db514ce7535335b51a7b0b0e3928277b8
-F source/showthread.asm 7b14ebf763963ff7feeff92d09665dbb0a77964d
+F source/settings.asm 176e71a67a6bec187a383e1ed211539558ce51ec
+F source/showthread.asm b147a9d62e8f08c3c63e134a0d77f443c86011cd
 F source/showthread.sql c575ee2fcbe60d8b878d78d44c477aeb4aece163
 F source/sqlite3.asm f605d645a6cd5a75fbfc52a86ce38c0b5ab0430a
-F source/sqlite_console.asm 96dbf17ad285a8fbc0b1c5e434b40e7c84c8584e
-F source/threadlist.asm 7b7da44184ee4f96d0da4fba1aed6910e3f1c97d
+F source/sqlite_console.asm c122d32f6e394a5429621d388b53bb18ff393501
+F source/threadlist.asm f2688691d13d3847d755080501af494201c36176
 F source/threadlist.sql f07efe157ef0713c65d91f66158d69060e93429a
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
-F source/userinfo.asm 9ad624aeea7668d5892dbcef9a26eed971f5efa2
-F source/users_online.asm f38ecc0566fc06d494b71144b1930bfe02949877
+F source/userinfo.asm 7130f9b09dd416ebcfb4029cc1515da52b268661
+F source/users_online.asm b97be62577d052f97094e6a8836a56af922620bc
 F source/util.sql 6d07e21a95ae1dcdf345e4b2e0b0f780cd707169
 F source/version.asm 629d2b9b931f90661cc53d4bb81a9379c7bad1ff
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
@@ -156,10 +156,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/thread_info.tpl f24e850f6770c6bc12d7fcdf25bb6dbe38c1d306
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P a2196c954a8f88faaa1ef6247c4ad6aa43f5b75d
-R 5a349be5f073ce7af6f7098f9eb02e9c
-T *branch * ActiveUsers
-T *sym-ActiveUsers *
-T -sym-trunk *
+P 9088aeb7ba447a5245e082f183d122e72d65cd6b
+R aa0a09b357230f3751b255b679c26a3d
 U johnfound
-Z b1df2ff4f9fb56e037e317e2ce6c1eb8
+Z f437eb4945b5fd07b36f77139d971d17

@@ -40,6 +40,10 @@ begin
         stdcall StrNew
         mov     edi, eax
 
+
+        stdcall LogUserActivity, esi, uaThreadList, 0
+
+
 ; make the title
 
         mov     ebx, [esi+TSpecialParams.page_title]

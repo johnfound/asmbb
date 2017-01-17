@@ -28,6 +28,8 @@ begin
         test    [esi+TSpecialParams.userStatus], permAdmin
         jz      .for_admins_only
 
+        stdcall LogUserActivity, esi, uaAdminThings, 0
+
         cmp     [esi+TSpecialParams.post_array], 0
         jne     .save_settings
 

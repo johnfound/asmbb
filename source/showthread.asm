@@ -26,6 +26,8 @@ begin
         mov     edi, eax
         mov     esi, [.pSpecial]
 
+        stdcall LogUserActivity, esi, uaReadingThread, 0
+
         cinvoke sqliteExec, [hMainDatabase], sqlBegin, 0, 0, 0
 
         lea     eax, [.stmt2]

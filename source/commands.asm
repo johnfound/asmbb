@@ -40,7 +40,7 @@ struct TSpecialParams
   .userLang        dd ?         ; not used right now.
   .userSkin        dd ?         ; not used right now.
   .session         dd ?
-
+  .remoteIP        dd ?
 ends
 
 
@@ -812,6 +812,7 @@ begin
         mov     [edi+TSpecialParams.userName], eax
         mov     [edi+TSpecialParams.userStatus], eax
         mov     [edi+TSpecialParams.session], eax
+        mov     [edi+TSpecialParams.remoteIP], eax
 
         stdcall GetParam, "anon_perm", gpInteger
         jc      .anon_ok
@@ -820,6 +821,15 @@ begin
 
 .anon_ok:
 
+        stdcall ValueByName, [edi+TSpecialParams.params], "REMOTE_ADDR"
+        jc      .ip_ok
+
+        stdcall StrIP2Num, eax
+        jc      .ip_ok
+
+        mov     [edi+TSpecialParams.remoteIP], eax
+
+.ip_ok:
         xor     ebx, ebx
 
         lea     eax, [.stmt]
@@ -1298,7 +1308,7 @@ endp
 
 
 sqlInsertGuest   text "insert or replace into Guests values (?, strftime('%s','now'))"
-sqlClipGuests    text "delete from Guests where LastSeen < strftime('%s','now') - 864000"
+sqlClipGuests    text "delete from Guests where LastSeen < strftime('%s','now') - 864000"     ; 10 days = 864000 seconds
 
 proc InsertGuest, .pSpecial
 .stmt dd ?
@@ -1306,21 +1316,13 @@ begin
         pushad
 
         mov     esi, [.pSpecial]
-        stdcall ValueByName, [esi+TSpecialParams.params], "REMOTE_ADDR"
-        jc      .finish
-
-        stdcall StrIP2Num, eax
-        jc      .finish
-
-        mov     ebx, eax
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertGuest, sqlInsertGuest.length, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, ebx
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.remoteIP]
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 
-.finish:
         cinvoke sqliteExec, [hMainDatabase], sqlClipGuests, 0, 0, 0
         popad
         return

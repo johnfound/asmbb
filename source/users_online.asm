@@ -87,15 +87,16 @@ endp
 
 
 uaUnknown       = 0
-uaLoggingIn     = 1
+ uaLoggingIn     = 1
 uaLoggingOut    = 2
-uaThreadList    = 3     ; The tag ID or NULL.
-uaReadingThread = 4     ; ThreadID.
-uaWritingPost   = 5     ; ThreadID where.
-uaEditingPost   = 6     ; PostID editting.
-uaUserProfile   = 7     ; UserID reading.
-uaAdminThings   = 8
-uaTrackingUsers = 9
+ uaRegistering   = 3
+ uaThreadList    = 4     ; The tag ID or NULL.
+ uaReadingThread = 5     ; ThreadID.
+uaWritingPost   = 6     ; ThreadID where.
+uaEditingPost   = 7     ; PostID editting.
+ uaUserProfile   = 8     ; UserID reading.
+ uaAdminThings   = 9
+uaTrackingUsers = 10
 
 
 ;create table UserLog (
@@ -107,19 +108,93 @@ uaTrackingUsers = 9
 ;);
 
 
-sqlLogUserActivity text "insert into UserLog values userID = ?1, userAddr = ?2, Time = strftime('%s','now'), Activity = ?3, Param = ?4"
+sqlLogUserActivity text "insert into UserLog(userID, remoteIP, Time, Activity, Param) values (?1, ?2, strftime('%s','now'), ?3, ?4)"
 
 
-proc LogUserActivity, .userID, .activity, .param
+proc LogUserActivity, .pSpecialData, .activity, .param
+.stmt dd ?
 begin
+        pushad
 
+        mov     esi, [.pSpecialData]
 
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLogUserActivity, sqlLogUserActivity.length, eax, 0
+        cmp     eax, SQLITE_OK
+        jne     .finish
 
+        mov     ebx, [.activity]
 
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.userID]
+        cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.remoteIP]
+        cinvoke sqliteBindInt, [.stmt], 3, ebx
 
+        xor     edx, edx
+        xor     ecx, ecx        ; param type. 0 = number
 
+        cmp     ebx, uaThreadList
+        jne     .no_list
 
+        mov     edx, [esi+TSpecialParams.dir]
+        jmp     .param_ok
 
+.no_list:
 
+        cmp     ebx, uaReadingThread
+        jne     .no_thread
+
+        mov     edx, [esi+TSpecialParams.thread]
+        jmp     .param_ok
+
+.no_thread:
+
+        cmp     ebx, uaUserProfile
+        jne     .no_profile
+
+        mov     edx, [.param]
+        dec     ecx            ;; == -1 == number
+        jmp     .param_ok
+
+.no_profile:
+
+        cmp     ebx, uaWritingPost
+        jne     .no_writing
+
+        mov     edx, [esi+TSpecialParams.dir]
+        jmp     .param_ok
+
+.no_writing:
+
+        cmp     ebx, uaEditingPost
+        jne     .no_edit
+
+        mov     edx, [esi+TSpecialParams.page_num]
+        dec     ecx
+        jmp     .param_ok
+
+.no_edit:
+
+.param_ok:
+        test    ecx, ecx
+        jz      .bind_string
+
+        cinvoke sqliteBindInt, [.stmt], 4, edx
+        jmp     .bind_ok
+
+.bind_string:
+        test    edx, edx
+        jz      .bind_ok
+
+        stdcall StrPtr, edx
+
+        cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
+
+.bind_ok:
+
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+.finish:
+        popad
         return
 endp

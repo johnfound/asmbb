@@ -18,8 +18,6 @@ proc UserLogin, .pSpecial
 .session  dd ?
 .status   dd ?
 
-.ip dd ?
-
 begin
         pushad
 
@@ -40,6 +38,7 @@ begin
         test    ebx, ebx
         jnz     .do_login_user
 
+        stdcall LogUserActivity, esi, uaLoggingIn, 0
 
         stdcall StrCat, [esi+TSpecialParams.page_title], "Login dialog"
         stdcall StrCatTemplate, edi, "form_login", 0, esi
@@ -51,15 +50,6 @@ begin
 
 
 .do_login_user:
-
-        stdcall ValueByName, [esi+TSpecialParams.params], "REMOTE_ADDR"
-        jc      .ip_ok
-
-        stdcall StrIP2Num, eax
-        jc      .ip_ok
-
-        mov     [.ip], eax
-.ip_ok:
 
         stdcall GetPostString, ebx, "username", 0
         mov     [.user], eax
@@ -140,7 +130,7 @@ begin
         cinvoke sqlitePrepare, [hMainDatabase], sqlCheckSession, -1, eax, 0
 
         cinvoke sqliteBindInt, [.stmt], 1, [.userID]
-        cinvoke sqliteBindInt, [.stmt], 2, [.ip]
+        cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.remoteIP]
 
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
@@ -176,14 +166,15 @@ begin
         stdcall StrPtr, [.session]
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 
-        cinvoke sqliteBindInt, [.stmt], 3, [.ip]
+        cinvoke sqliteBindInt, [.stmt], 3, [esi+TSpecialParams.remoteIP]
 
         cinvoke sqliteStep, [.stmt]
-        mov     esi, eax
+        push    eax
 
         cinvoke sqliteFinalize, [.stmt]
 
-        cmp     esi, SQLITE_DONE
+        pop     eax
+        cmp     eax, SQLITE_DONE
         jne     .finalize               ; it is some error in the database, so don't set the cookie!
 
 
@@ -199,7 +190,7 @@ begin
         test    eax, eax
         jnz     .go_back
 
-        stdcall StrMakeRedirect, edi, "/list"
+        stdcall StrMakeRedirect, edi, txt "/"
         jmp     .finish
 
 .go_back:
@@ -294,7 +285,6 @@ proc RegisterNewUser, .pSpecial
 .password2 dd ?
 .email     dd ?
 .secret    dd ?
-.ip_from   dd ?
 
 .email_text dd ?
 
@@ -307,7 +297,6 @@ begin
         mov     [.password2], eax
         mov     [.email], eax
         mov     [.secret], eax
-        mov     [.ip_from], eax
 
 ; check the information
 
@@ -316,6 +305,7 @@ begin
         test    ebx, ebx
         jnz     .do_register_user
 
+        stdcall LogUserActivity, esi, uaRegistering, 0
 
         stdcall StrNew
         stdcall StrCatTemplate, eax, "form_register", 0, 0
@@ -375,13 +365,6 @@ begin
         cmp     eax, 1024
         ja      .error_trick
 
-        mov     eax, [.pSpecial]
-        stdcall ValueByName, [eax+TSpecialParams.params], "REMOTE_ADDR"
-        stdcall StrIP2Num, eax
-        jc      .error_technical_problem
-
-        mov     [.ip_from], eax
-
 ; hash the password
 
         stdcall HashPassword, [.password]
@@ -431,7 +414,7 @@ begin
         stdcall StrPtr, [.email]
         cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
 
-        cinvoke sqliteBindInt, [.stmt], 5, [.ip_from]
+        cinvoke sqliteBindInt, [.stmt], 5, [esi+TSpecialParams.remoteIP]
 
         stdcall StrPtr, [.secret]
         cinvoke sqliteBindText, [.stmt], 6, eax, [eax+string.len], SQLITE_STATIC
