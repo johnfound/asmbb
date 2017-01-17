@@ -68,6 +68,7 @@ begin
         test    [esi+TSpecialParams.userStatus], eax
         jz      .error_wrong_permissions
 
+        stdcall LogUserActivity, esi, uaWritingPost, 0
 
 ; get the additional post/thread parameters
 

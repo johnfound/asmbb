@@ -88,15 +88,16 @@ endp
 
 uaUnknown       = 0
  uaLoggingIn     = 1
-uaLoggingOut    = 2
+ uaLoggingOut    = 2
  uaRegistering   = 3
  uaThreadList    = 4     ; The tag ID or NULL.
  uaReadingThread = 5     ; ThreadID.
-uaWritingPost   = 6     ; ThreadID where.
-uaEditingPost   = 7     ; PostID editting.
- uaUserProfile   = 8     ; UserID reading.
- uaAdminThings   = 9
-uaTrackingUsers = 10
+ uaWritingPost   = 6     ; ThreadID where.
+ uaEditingPost   = 7     ; PostID editting.
+ uaDeletingPost  = 8
+ uaUserProfile   = 9     ; UserID reading.
+ uaAdminThings   = 10
+uaTrackingUsers = 11
 
 
 ;create table UserLog (

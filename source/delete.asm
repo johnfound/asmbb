@@ -41,6 +41,9 @@ begin
 
 
 .perm_ok:
+
+        stdcall LogUserActivity, esi, uaDeletingPost, 0
+
         stdcall StrCat, [esi+TSpecialParams.page_title], "Delete confirmation"
         stdcall StrCatTemplate, ebx, "del_confirm", [.stmt], [.pSpecial]
 

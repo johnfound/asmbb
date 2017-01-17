@@ -1,5 +1,5 @@
-C Started\sthe\swork\son\sthe\suser\sactivities\sloging.
-D 2017-01-17T14:45:23.200
+C Work\son\susers\sactivities.
+D 2017-01-17T22:49:23.179
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 25a76b190fac7dc47cfb98141d765a46302c8af2
@@ -10,11 +10,11 @@ F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
 F source/ResetPassword.asm 282ad76329ba5c8d6fb8c31d3469bb483e7f34e5
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
-F source/accounts.asm c1df0ead328b02a87393aded98dcbf256e966c7e
+F source/accounts.asm e5ec5c61716d90894d315968b0be757891cde6b8
 F source/commands.asm f3b877bb9c2ab0b2911b3d19bb9dd68f6b2e472f
 F source/create.sql e954dc2298878067a146dde18ec6c0d6d45f308e
-F source/delete.asm 3189fdc709fe0a5c17879d279b4e4ea67e3df066
-F source/edit.asm 6580ba0513daf390f9696d2deebf3a3a411a2569
+F source/delete.asm 36fd981600798c8d748151a4565f63bc46bca842
+F source/edit.asm 66e6605bc0c34fa8635e8b5fc301a1acf5f85a46
 F source/engine.asm 11ae66ab648bcc582ef9c84e28f9c38fcb7d06b2
 F source/engine.fpr 79a5d5f4fa207d643a6104b5c9182f6f76e417ce
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
@@ -27,7 +27,7 @@ F source/memcache.asm aa97cfe9ae95a5dc9d6d2c55c87d1bfbb488d14a
 F source/messages.asm 1cc42852665f2b44a574e37c0fde6624b4dab784
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
-F source/post.asm d78f3e686c1f9f2585e46649b04ed2d2743ec68b
+F source/post.asm 534f628e00b5d99cecbe39490c393a24e6f0a70e
 F source/post_data.asm 38939702e70776735062323dd82cf808b64e33e8
 F source/postdebug.asm 13ab4ebf2fc7b35d7fa36853b533236860b641f7
 F source/render.asm 19084104fcb51865c61d5046cd4e53e69f6d0f18
@@ -43,7 +43,7 @@ F source/threadlist.asm f2688691d13d3847d755080501af494201c36176
 F source/threadlist.sql f07efe157ef0713c65d91f66158d69060e93429a
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
 F source/userinfo.asm 7130f9b09dd416ebcfb4029cc1515da52b268661
-F source/users_online.asm b97be62577d052f97094e6a8836a56af922620bc
+F source/users_online.asm 023801ecb6fc92d089564e54ddd52529f74ef117
 F source/util.sql 6d07e21a95ae1dcdf345e4b2e0b0f780cd707169
 F source/version.asm 629d2b9b931f90661cc53d4bb81a9379c7bad1ff
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
@@ -156,7 +156,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/thread_info.tpl f24e850f6770c6bc12d7fcdf25bb6dbe38c1d306
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 9088aeb7ba447a5245e082f183d122e72d65cd6b
-R aa0a09b357230f3751b255b679c26a3d
+P 61d96d51a74bff175c0be9e72bba9b6e2c3e3c06
+R 71fdfacb9ff7d8b00cf7ff8ce013b615
 U johnfound
-Z f437eb4945b5fd07b36f77139d971d17
+Z 65f67cdfc041cdd8c30b4721c8c2dd77

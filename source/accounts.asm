@@ -240,6 +240,8 @@ begin
 
         mov     esi, [.pspecial]
 
+        stdcall LogUserActivity, esi, uaLoggingOut, 0
+
         cmp     [esi+TSpecialParams.session], 0
         je      .finish
 

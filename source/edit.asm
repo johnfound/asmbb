@@ -68,6 +68,9 @@ begin
 
 
 .permissions_ok:
+
+        stdcall LogUserActivity, esi, uaEditingPost, 0
+
         cmp     [esi+TSpecialParams.post_array], 0
         je      .show_edit_form
 
