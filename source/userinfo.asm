@@ -50,6 +50,7 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .missing_user
 
+        stdcall LogUserActivity, esi, uaUserProfile, [.UserName]
 
         stdcall StrCat, [esi+TSpecialParams.page_title], "Profile for: "
         cinvoke sqliteColumnText, [.stmt], 1
@@ -64,8 +65,6 @@ begin
         jnz     .put_edit_form
 
         cinvoke sqliteColumnInt, [.stmt], 0
-
-        stdcall LogUserActivity, esi, uaUserProfile, eax
 
         cmp     eax, [esi+TSpecialParams.userID]
         jne     .edit_form_ok

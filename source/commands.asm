@@ -408,6 +408,10 @@ begin
         stdcall StrCompNoCase, eax, txt "!render_all"
         jc      .exec_command
 
+        mov     ecx, UserActivityTable
+        stdcall StrCompNoCase, eax, txt "!users_online"
+        jc      .exec_command
+
 
 if defined options.DebugWeb & options.DebugWeb
         mov     ecx, PostDebug

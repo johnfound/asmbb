@@ -95,7 +95,7 @@ uaUnknown       = 0
  uaWritingPost   = 6     ; ThreadID where.
  uaEditingPost   = 7     ; PostID editting.
  uaDeletingPost  = 8
- uaUserProfile   = 9     ; UserID reading.
+ uaUserProfile   = 9     ; UserName reading.
  uaAdminThings   = 10
 uaTrackingUsers = 11
 
@@ -153,7 +153,6 @@ begin
         jne     .no_profile
 
         mov     edx, [.param]
-        dec     ecx            ;; == -1 == number
         jmp     .param_ok
 
 .no_profile:
@@ -161,7 +160,7 @@ begin
         cmp     ebx, uaWritingPost
         jne     .no_writing
 
-        mov     edx, [esi+TSpecialParams.dir]
+        mov     edx, [esi+TSpecialParams.thread]
         jmp     .param_ok
 
 .no_writing:
@@ -174,6 +173,15 @@ begin
         jmp     .param_ok
 
 .no_edit:
+
+        cmp     ebx, uaDeletingPost
+        jne     .no_delete
+
+        mov     edx, [esi+TSpecialParams.page_num]
+        dec     ecx
+        jmp     .param_ok
+
+.no_delete:
 
 .param_ok:
         test    ecx, ecx
@@ -196,6 +204,151 @@ begin
         cinvoke sqliteFinalize, [.stmt]
 
 .finish:
+        popad
+        return
+endp
+
+
+
+
+iglobal
+  sqlGetUsersActivity StripText 'users_online.sql', SQL
+                      dd   0
+endg
+
+proc UserActivityTable, .pSpecialData
+
+.stmt dd ?
+
+begin
+        pushad
+
+        stdcall StrNew
+        mov     edi, eax
+
+        stdcall LogUserActivity, [.pSpecialData], uaTrackingUsers, 0
+
+        stdcall StrCat, edi, '<div class="users_online"><table class="users_table"><tr><th>User</th><th>Time</th><th>Activity</th></tr>'
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetUsersActivity, sqlGetUsersActivity.length, eax, 0
+        cmp     eax, SQLITE_OK
+        jne     .finish
+
+.loop:
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .finalize
+
+        stdcall StrCat, edi, txt '<tr>'
+
+
+; user name
+        stdcall StrCat, edi, txt '<td>'
+
+        cinvoke sqliteColumnText, [.stmt], 0
+        test    eax, eax
+        jnz     .make_user
+
+        stdcall StrCat, edi, txt "Guest"
+
+        cinvoke sqliteColumnInt, [.stmt], 4
+        movzx   edx, al
+        xor     dl, ah
+        shr     edx, 16
+        xor     dl, al
+        xor     dl, ah
+
+        stdcall NumToStr, edx, ntsHex or ntsFixedWidth or 2
+        stdcall StrCat, edi, eax
+        stdcall StrDel, eax
+
+        jmp     .end_user
+
+.make_user:
+        stdcall StrCat, edi, '<a href="/!userinfo/'
+        stdcall StrCat, edi, eax
+        stdcall StrCharCat, edi, '">'
+        stdcall StrCat, edi, eax
+        stdcall StrCat, edi, txt '</a>'
+
+.end_user:
+        stdcall StrCat, edi, txt '</td>'
+
+
+; date
+
+        stdcall StrCat, edi, txt '<td>'
+        cinvoke sqliteColumnText, [.stmt], 3
+        stdcall StrCat, edi, eax
+        stdcall StrCat, edi, txt '</td>'
+
+; activity
+
+        stdcall StrCat, edi, txt '<td>'
+
+        stdcall GetActivityArgs, [.stmt]
+        stdcall StrCatTemplate, edi, eax, ebx, [.pSpecialData]
+
+        stdcall StrDel, eax
+        cinvoke sqliteFinalize, ebx
+
+        stdcall StrCat, edi, txt '</td>'
+
+; end of the row
+
+        stdcall StrCat, edi, txt '</tr>'
+
+        jmp     .loop
+
+.finalize:
+
+        cinvoke sqliteFinalize, [.stmt]
+
+.finish:
+        stdcall StrCat, edi, txt '</table></div>'
+
+        mov     [esp+4*regEAX], edi
+        clc
+        popad
+        return
+endp
+
+
+
+; returns:
+;
+;   name of the template in eax
+;   SQLite statement in ebx
+;
+
+
+  sqlOnlineParam text "select ?1 as Param"
+
+
+proc GetActivityArgs, .sqlStatement
+.stmt dd ?
+begin
+        pushad
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlOnlineParam, sqlOnlineParam.length, eax, 0
+
+        stdcall StrDupMem, "activity"
+        mov     [esp+4*regEAX], eax
+        mov     ebx, eax
+
+        cinvoke sqliteColumnText, [.sqlStatement], 1
+        stdcall StrCat, ebx, eax
+
+        cinvoke sqliteColumnText, [.sqlStatement], 2
+        cinvoke sqliteBindText, [.stmt], 1, eax, -1, SQLITE_TRANSIENT
+
+        cinvoke sqliteStep, [.stmt]
+
+        mov     ebx, [.stmt]
+        mov     [esp+4*regEBX], ebx
+
         popad
         return
 endp

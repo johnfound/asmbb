@@ -1,4 +1,4 @@
-<p class="timestamp">Online now: [special:visitors]<br><br>Script run time: [special:timestamp] ms</p>
+<p class="timestamp"><a href="/!users_online" title="Detailed list of user activities.">Online</a> now: [special:visitors]<br><br>Script run time: [special:timestamp] ms</p>
 <p class="attribution">
   [special:version]<br>
   <b>&copy;2016 John Found</b>; Licensed under <b>EUPL</b>.<br>

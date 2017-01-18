@@ -413,7 +413,7 @@ div.set_page {
 form.settings {
     width: 640px;
     padding: 16px;
-    background: #d0d0d0; 
+    background: #d0d0d0;
     margin: 16px auto 16px auto;
 }
 
@@ -953,6 +953,55 @@ table.sql_rows td {
 }
 
 
+/* Users online table styles */
+
+div.users_online {
+  width: 95%;
+  max-width: 1280px;
+  margin: auto;
+
+  background-color: white;
+  padding: 8px;
+  font-size: 13px;
+}
+
+
+table.users_table {
+  border-collapse: collapse;
+  border: 2px solid gray;
+  width: 100%;
+
+  font-size: 16px;
+}
+
+table.users_table th {
+  border: 2px solid black;
+  padding: 8px;
+  max-width: 300px;
+  text-align: center;
+}
+
+table.users_table td {
+  border: 2px solid gray;
+  padding: 8px;
+  max-width: 400px;
+  text-align: left;
+  vertical-align: top;
+
+  white-space: pre-wrap;       /* css-3 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  word-break: break-all;
+}
+
+table.users_table td:nth-of-type(1) {
+  width: 1px;
+  white-space: nowrap;
+}
+
+table.users_table td:nth-of-type(2) {
+  width: 1px;
+  white-space: nowrap;
+}
 
 
 
@@ -1001,7 +1050,7 @@ div.post_text p {
    text-align: justify;
    margin-top: 0.75em;
    margin-bottom: 0.75em;
-   word-wrap: break-word;	
+   word-wrap: break-word;
 }
 
 div.post_text p.uli {
@@ -1203,7 +1252,7 @@ div.user_desc p {
    text-align: justify;
    margin-top: 0.75em;
    margin-bottom: 0.75em;
-   word-wrap: break-word;	
+   word-wrap: break-word;
 }
 
 
