@@ -1,5 +1,5 @@
-C Started\swork\son\sthe\sUI\stexts\sinternationalization.\sThe\sbrowser\stitle\smessages.
-D 2017-01-19T07:32:03.217
+C Small\sCSS\sbug\sfixed.
+D 2017-01-19T12:56:11.385
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 25a76b190fac7dc47cfb98141d765a46302c8af2
@@ -144,7 +144,7 @@ F www/templates/activity6.tpl 79b6319799e162869c14998a0ce7bb40ba0d040c
 F www/templates/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
 F www/templates/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
-F www/templates/all.css d67bcef14934def9b64e7175e9ff6812f09b9d7f
+F www/templates/all.css d9351aaa08d1314db3984c386ecbe32503a7f6ad
 F www/templates/del_confirm.tpl 7b62ada90b819921275499b659614378cdadd253
 F www/templates/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
 F www/templates/error_html_end.tpl f390b47728814ecd8e608dd410cb2f4b0b953020
@@ -170,7 +170,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/thread_info.tpl f24e850f6770c6bc12d7fcdf25bb6dbe38c1d306
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P d3cb033f98e3e829c2ce694af32fe7e437df4731
-R 9c5b96854b05d88a956ea10f28a6bd91
+P af0bca701c8df321267086784673d6bb7fb60a5d
+R 0a65bac9aabe6572a5603cb1ac27f33c
 U johnfound
-Z 83e69755a2b763990baed213a308b506
+Z 9c06f0356bed16ecd9524bb455daf81b
