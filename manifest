@@ -1,5 +1,5 @@
-C Small\sCSS\sbug\sfixed.
-D 2017-01-19T12:56:11.385
+C Fixed\sXSS\sbug\sin\s[sql:]\stemplate\soperator.
+D 2017-01-19T12:56:52.259
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 25a76b190fac7dc47cfb98141d765a46302c8af2
@@ -30,7 +30,7 @@ F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
 F source/post.asm 083100f222950671d825a5275c12f97319a52d48
 F source/post_data.asm 38939702e70776735062323dd82cf808b64e33e8
 F source/postdebug.asm 13ab4ebf2fc7b35d7fa36853b533236860b641f7
-F source/render.asm 19084104fcb51865c61d5046cd4e53e69f6d0f18
+F source/render.asm de9ca979182dc4f999ca0caafcd857a46cabb1b0
 F source/search.asm 221f2cac15b0cb4091b44fd03620028820a473b0
 F source/search.sql 7fb4f78030d5485357720f11ce5276c8f808c5f1
 F source/search_cnt.sql 5ef8eb89fcea8f87942f1b7c67202350dfd9ff89
@@ -170,7 +170,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/thread_info.tpl f24e850f6770c6bc12d7fcdf25bb6dbe38c1d306
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P af0bca701c8df321267086784673d6bb7fb60a5d
-R 0a65bac9aabe6572a5603cb1ac27f33c
+P 3e3a79de387bdde9a02f336b122036d9a66f683f
+R 8870e7705a06d915c41d074f82b668f3
 U johnfound
-Z 9c06f0356bed16ecd9524bb455daf81b
+Z 0b36935b7057cedd9ef1b80423d7ce93

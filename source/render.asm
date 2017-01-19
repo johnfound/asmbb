@@ -187,9 +187,7 @@ begin
 
 
 .encode:
-
         stdcall StrEncodeHTML, eax
-
 
 .return_value:
         stdcall StrDel, edi
@@ -1149,7 +1147,8 @@ end if
 .end_sql:
         stdcall ListFree, esi, StrDel
 
-        mov     eax, edi
+        stdcall StrEncodeHTML, edi
+        stdcall StrDel, edi
         xor     edi, edi
         jmp     .return_value
 
