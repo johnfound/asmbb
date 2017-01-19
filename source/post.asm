@@ -194,12 +194,12 @@ begin
         cmp     [.caption], 0
         je      .title_new_thread
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], "Posting in: "
+        stdcall StrCat, [esi+TSpecialParams.page_title], cPostingInTitle
         stdcall StrCat, [esi+TSpecialParams.page_title], [.caption]
         jmp     .title_set
 
 .title_new_thread:
-        stdcall StrCat, [esi+TSpecialParams.page_title], "New thread posting"
+        stdcall StrCat, [esi+TSpecialParams.page_title], cNewThreadTitle
 
 .title_set:
 

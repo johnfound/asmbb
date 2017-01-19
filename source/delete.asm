@@ -44,7 +44,7 @@ begin
 
         stdcall LogUserActivity, esi, uaDeletingPost, 0
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], "Delete confirmation"
+        stdcall StrCat, [esi+TSpecialParams.page_title], cPostDeleteTitle
         stdcall StrCatTemplate, ebx, "del_confirm", [.stmt], [.pSpecial]
 
 .finish_ok_fin:

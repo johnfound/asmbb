@@ -34,7 +34,7 @@ begin
 
         mov     [.query], eax
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], "Search results for: "
+        stdcall StrCat, [esi+TSpecialParams.page_title], cSearchResultsTitle
         stdcall StrCat, [esi+TSpecialParams.page_title], [.query]
 
 

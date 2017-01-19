@@ -52,7 +52,7 @@ begin
 
         stdcall LogUserActivity, esi, uaUserProfile, [.UserName]
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], "Profile for: "
+        stdcall StrCat, [esi+TSpecialParams.page_title], cUserProfileTitle
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
 

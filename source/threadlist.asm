@@ -47,7 +47,7 @@ begin
 ; make the title
 
         mov     ebx, [esi+TSpecialParams.page_title]
-        stdcall StrCat, ebx, "Threads list "
+        stdcall StrCat, ebx, cThreadListTitle
 
         cmp     [esi+TSpecialParams.dir], 0
         je      .no_tag

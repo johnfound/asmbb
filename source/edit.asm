@@ -125,7 +125,7 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .error_missing_post
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], "Editing page: "
+        stdcall StrCat, [esi+TSpecialParams.page_title], cEditingPageTitle
 
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, [esi+TSpecialParams.page_title], eax

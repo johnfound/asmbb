@@ -40,7 +40,7 @@ begin
 
         stdcall LogUserActivity, esi, uaLoggingIn, 0
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], "Login dialog"
+        stdcall StrCat, [esi+TSpecialParams.page_title], cLoginDialogTitle
         stdcall StrCatTemplate, edi, "form_login", 0, esi
 
         mov     [esp+4*regEAX], edi
