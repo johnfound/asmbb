@@ -1,5 +1,5 @@
-C Work\son\sthe\susers\sonline\slist.
-D 2017-01-19T07:29:37.440
+C Added\smissing\sfile\sto\sthe\sproject\s-\sthe\sSQL\sfor\sthe\susers\sonline.
+D 2017-01-19T07:31:04.902
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 25a76b190fac7dc47cfb98141d765a46302c8af2
@@ -44,6 +44,7 @@ F source/threadlist.sql f07efe157ef0713c65d91f66158d69060e93429a
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
 F source/userinfo.asm 13b8b401373a8145f1f8700715950068c3971d82
 F source/users_online.asm 726e48d7ce1e8306b4d3d7d3013f1529a4d7110c
+F source/users_online.sql 17d2355b533217d45f12dfb0aac745647a5918e6
 F source/util.sql 6d07e21a95ae1dcdf345e4b2e0b0f780cd707169
 F source/version.asm 629d2b9b931f90661cc53d4bb81a9379c7bad1ff
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
@@ -168,7 +169,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/thread_info.tpl f24e850f6770c6bc12d7fcdf25bb6dbe38c1d306
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 515ec20d6584dd8bacfca3c9523369de7623e1fe
-R 40d62df3ea8a4da6bfaa793cc388df0a
+P 89367c6090ad4db197afe28124792ce4c6e1c7ff
+R 684c0ebd4b289c55db53bc7c3bfbd903
 U johnfound
-Z 2b95b69e4ebf58eb14f5339d8542f42c
+Z 4f4f353bed6f54c033e2e28d8c74e556
