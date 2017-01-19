@@ -100,17 +100,9 @@ uaUnknown       = 0
 uaTrackingUsers = 11
 
 
-;create table UserLog (
-;  userID integer  default NULL references Users(id) on delete cascade on update cascade,     -- If == NULL, it means the user is not logged in. See userAddr.
-;  userAddr integer,                                                                          -- The IP address of the user or the guests;
-;  Time   integer,                                                                            -- time the user make some action.
-;  Place  integer default NULL,                                                               -- id of the forum place. This constant depends on the engine.
-;  PlaceID integer default NULL                                                               -- if the place has some ID, write it here. It depends on Place value and can be thread ID, post ID or user profile ID, etc.
-;);
-
 
 sqlLogUserActivity text "insert into UserLog(userID, remoteIP, Time, Activity, Param) values (?1, ?2, strftime('%s','now'), ?3, ?4)"
-
+sqlClipHistory     text "delete from UserLog where Time < strftime('%s','now') - 864000"
 
 proc LogUserActivity, .pSpecialData, .activity, .param
 .stmt dd ?
@@ -125,8 +117,13 @@ begin
         jne     .finish
 
         mov     ebx, [.activity]
+        mov     eax, [esi+TSpecialParams.userID]
+        test    eax, eax
+        jz      .userOK
 
         cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.userID]
+
+.userOK:
         cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.remoteIP]
         cinvoke sqliteBindInt, [.stmt], 3, ebx
 
@@ -203,6 +200,8 @@ begin
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 
+        cinvoke sqliteExec, [hMainDatabase], sqlClipHistory, 0, 0, 0
+
 .finish:
         popad
         return
@@ -223,10 +222,14 @@ proc UserActivityTable, .pSpecialData
 begin
         pushad
 
+        mov     esi, [.pSpecialData]
+
+        stdcall StrCat, [esi+TSpecialParams.page_title], cUsersOnlineTitle
+
         stdcall StrNew
         mov     edi, eax
 
-        stdcall LogUserActivity, [.pSpecialData], uaTrackingUsers, 0
+        stdcall LogUserActivity, esi, uaTrackingUsers, 0
 
         stdcall StrCat, edi, '<div class="users_online"><table class="users_table"><tr><th>User</th><th>Time</th><th>Activity</th></tr>'
 
@@ -288,7 +291,7 @@ begin
         stdcall StrCat, edi, txt '<td>'
 
         stdcall GetActivityArgs, [.stmt]
-        stdcall StrCatTemplate, edi, eax, ebx, [.pSpecialData]
+        stdcall StrCatTemplate, edi, eax, ebx, esi
 
         stdcall StrDel, eax
         cinvoke sqliteFinalize, ebx
