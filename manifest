@@ -1,5 +1,5 @@
-C Working\susers\sonline\sfeature.\sNeeds\stesting\sfor\smemory\sleaks.
-D 2017-01-18T15:21:43.547
+C Added\sindexes\sfor\sUserLog\stable.
+D 2017-01-19T07:27:13.497
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 25a76b190fac7dc47cfb98141d765a46302c8af2
@@ -12,7 +12,7 @@ F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm e5ec5c61716d90894d315968b0be757891cde6b8
 F source/commands.asm c4cc79013510327893cd554c1cdd11e58399d253
-F source/create.sql e954dc2298878067a146dde18ec6c0d6d45f308e
+F source/create.sql 48426bb24a11455cfc0fe1a134435123ce6ad622
 F source/delete.asm 36fd981600798c8d748151a4565f63bc46bca842
 F source/edit.asm 66e6605bc0c34fa8635e8b5fc301a1acf5f85a46
 F source/engine.asm 11ae66ab648bcc582ef9c84e28f9c38fcb7d06b2
@@ -168,7 +168,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/thread_info.tpl f24e850f6770c6bc12d7fcdf25bb6dbe38c1d306
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P e3f39bc3c9ef44d624b6e47e2c32bec0613907ce
-R 05d5e2fca17a80c100718e42cc660c36
+P 81124722767c97a016147deadc14d00d58ea91a6
+R bb9d66f6c43bc03dd2db0b58cd079ef1
 U johnfound
-Z be86e1805fe801928707eeada6a9883d
+Z 2c837be6a2a95fbda62650f73ab74315

@@ -43,20 +43,18 @@ create index idxUsersX on Users(id, nick, avatar);
 create index idxUsers_LastSeen on Users(LastSeen);
 
 
-create table UserLog (
-  userID   integer  default NULL references Users(id) on delete cascade on update cascade,   -- If == NULL, it means the user is not logged in. See userAddr.
-  remoteIP integer,                                                                          -- The IP address of the user or the guests;
-  Time     integer,                                                                          -- time the user make some action.
-  Activity integer default NULL,                                                             -- id of the forum place. This constant depends on the engine.
-  Param    integer default NULL                                                              -- if the place has some ID, write it here. It depends on Place value and can be thread ID, post ID or user profile ID, etc.
+CREATE TABLE UserLog (
+  userID integer,
+  remoteIP integer,
+  Time integer,
+  Activity integer,
+  Param integer,
+  foreign key (userID) references Users(id) on delete cascade on update cascade
 );
 
-
-create table LogMessages (
-  Activity      integer,
-  Template      text
-);
-
+create index idxUserLogTime on UserLog(time);
+create index idxUserLogUserIP on UserLog(UserID, remoteIP);
+create index idxUserLogUserID on UserLog(UserID);
 
 
 create table WaitingActivation(
