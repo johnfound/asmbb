@@ -1,5 +1,5 @@
-C Removed\sredundant\ssource\sfile.\sFixed\stemplate\stext.
-D 2017-01-20T06:48:39.315
+C Renamed\sall.css\sto\sstyles.css;\sNow\sall.css\sis\sresult\sof\scompilation\sof\sstyle.css\swith\ssome\sLESS\scompiler.\sA\sscript\scompile_styles.sh\sis\sprovided.\sSmall\schanges\sin\srender.asm\sto\sinclude\sthe\sname\sof\sthe\stag\sin\sthe\shint\stext,\sin\sorder\sto\sprovide\seasier\sreading\sof\sthe\ssmallest\stags.
+D 2017-01-20T13:55:44.655
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 25a76b190fac7dc47cfb98141d765a46302c8af2
@@ -16,7 +16,7 @@ F source/create.sql 48426bb24a11455cfc0fe1a134435123ce6ad622
 F source/delete.asm 64d173cf0ee0df77a8843408b427bdb02b384bd9
 F source/edit.asm 2b390830ae7266c84367f422e925a55f9e0f624f
 F source/engine.asm e483a3bdb9b239c4fe152b7d682cdd261ffe9ba1
-F source/engine.fpr 85e49c30daf03f69cfb91c5b1aa3b4a555ff11b5
+F source/engine.fpr c3869dc57bd976d6d2698acf150a27ccfed765bd
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm c346f04f48ca18c04ca10b4eb5a937366e5e0c5c
@@ -29,7 +29,7 @@ F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
 F source/post.asm 083100f222950671d825a5275c12f97319a52d48
 F source/post_data.asm 38939702e70776735062323dd82cf808b64e33e8
 F source/postdebug.asm 13ab4ebf2fc7b35d7fa36853b533236860b641f7
-F source/render.asm de9ca979182dc4f999ca0caafcd857a46cabb1b0
+F source/render.asm 0ddaba54971ab19e95c61ca6791235a389ad3d2a
 F source/search.asm 221f2cac15b0cb4091b44fd03620028820a473b0
 F source/search.sql 7fb4f78030d5485357720f11ce5276c8f808c5f1
 F source/search_cnt.sql 5ef8eb89fcea8f87942f1b7c67202350dfd9ff89
@@ -143,7 +143,7 @@ F www/templates/activity6.tpl 79b6319799e162869c14998a0ce7bb40ba0d040c
 F www/templates/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
 F www/templates/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
-F www/templates/all.css d9351aaa08d1314db3984c386ecbe32503a7f6ad
+F www/templates/compile_styles.sh 051bdb609ffd7c79f1b2102aaa10caa33498f140 x
 F www/templates/del_confirm.tpl 7b62ada90b819921275499b659614378cdadd253
 F www/templates/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
 F www/templates/error_html_end.tpl f390b47728814ecd8e608dd410cb2f4b0b953020
@@ -158,7 +158,7 @@ F www/templates/form_register.tpl 3774431972f920aec810c59dc01cf8e877560e97
 F www/templates/form_settings.tpl b3ffda2f4c2a5a30a4dfb2b4e24005e89c40e730
 F www/templates/form_setup.tpl 5a388291b02221e6980a06cb7fcb2a67ddddd169
 F www/templates/form_sqlite_console.tpl 54e3ae4b30ef1095168b2133dbf95d28aec8d39e
-F www/templates/main_html_end.tpl 10e79078a12351fcbce8a8acfc3c7b7fe9b5e15d
+F www/templates/main_html_end.tpl 7ee85e4b40279db6d3c1426586c351df852ead6f
 F www/templates/main_html_start.tpl a77f3f14e0042c8dbcfbd3391b32b11f6903005a
 F www/templates/minimag_suffix.tpl e0ee4765a03f31868c42f12693dc9b23b8ca076e
 F www/templates/nav_list.tpl 0a15e81a1d5d08087d4be4e1e6a68aeb63dd790c
@@ -167,9 +167,10 @@ F www/templates/nav_thread.tpl 78071d3d9c821b8d8331bbb771678809bae00392
 F www/templates/post_view.tpl 1c660a22cabb39002958ef46faaecb52673d9065
 F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
+F www/templates/styles.css e898b9a8afa09a995c9852394c805ba40aa7d682 w www/templates/all.css
 F www/templates/thread_info.tpl f24e850f6770c6bc12d7fcdf25bb6dbe38c1d306
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P bca8a23f12d81f44099c6bbafd1d75fa6ce2ef74
-R 823d78a9486453ff3112f54faf5e767e
+P 717cd6b22c8b92e915da56582fdfce1b21c0a75e
+R 7b713afe97d5faa3e6dc197f261419bc
 U johnfound
-Z b9c9dfbef045ab1f470fbb974b7612d4
+Z 98cf0972ddc4323d12e72a56a35b826c

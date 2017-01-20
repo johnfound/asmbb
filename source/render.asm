@@ -611,6 +611,14 @@ endl
 
         stdcall StrCat, ebx, txt '%;" title="'
 
+        cinvoke sqliteColumnText, [.stmt], 0
+        stdcall StrEncodeHTML, eax
+        mov     edi, eax
+
+        stdcall StrCharCat, ebx, "["
+        stdcall StrCat, ebx, edi
+        stdcall StrCharCat, ebx, "]: "
+
         cinvoke sqliteColumnText, [.stmt], 2
         test    eax, eax
         jz      .title_ok
@@ -635,15 +643,13 @@ endl
 .plural_ok:
 
         stdcall StrCat, ebx, '." href="/'
-        cinvoke sqliteColumnText, [.stmt], 0
-        stdcall StrEncodeHTML, eax
 
-        stdcall StrCat, ebx, eax
+        stdcall StrCat, ebx, edi
         stdcall StrCat, ebx, txt '/">'
-        stdcall StrCat, ebx, eax
+        stdcall StrCat, ebx, edi
         stdcall StrCat, ebx, txt '</a>'
-        stdcall StrDel, eax
 
+        stdcall StrDel, edi
         jmp     .tag_loop
 
 
