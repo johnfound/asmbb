@@ -1,1 +1,1 @@
-The user is seeng who is online.
+Viewing online list

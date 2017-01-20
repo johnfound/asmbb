@@ -1,5 +1,5 @@
-C Fixed\sXSS\sbug\sin\s[sql:]\stemplate\soperator.
-D 2017-01-19T12:56:52.259
+C Removed\sredundant\ssource\sfile.\sFixed\stemplate\stext.
+D 2017-01-20T06:48:39.315
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 25a76b190fac7dc47cfb98141d765a46302c8af2
@@ -23,7 +23,6 @@ F source/fcgi.asm c346f04f48ca18c04ca10b4eb5a937366e5e0c5c
 F source/http.asm cad8f08506de3c0d56b72eaa7068de495f606139
 F source/images_png.asm cb69d9eafb85f6e61c526a3dcff4c7f2c3f4ebd6
 F source/keywords.txt 8e374a274b6a178e582656652edb52e65fbebfb2
-F source/memcache.asm aa97cfe9ae95a5dc9d6d2c55c87d1bfbb488d14a
 F source/messages.asm 1cc42852665f2b44a574e37c0fde6624b4dab784
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
@@ -135,7 +134,7 @@ F www/templates/activation_email_text.tpl 3d43a474040f226863f8b2bfa7bad91841711b
 F www/templates/activity0.tpl 604635d7badaffb337aa5419b32e8bb70b3f658a
 F www/templates/activity1.tpl 08c17b90d0740eaf1350f8cf039f9de9778bc7a1
 F www/templates/activity10.tpl 2ff361dad8ba2fc41916f34ade27f5b1bdd9f905
-F www/templates/activity11.tpl 1e74f9c6efced35d0a97562e3cb64a29b2fd06eb
+F www/templates/activity11.tpl adfc421bd8d000c52a7b03eddde3e72193f61d69
 F www/templates/activity2.tpl 56e2d424b3fa2d47dfb3e39c84dc979e02783ef4
 F www/templates/activity3.tpl 151d90f8a6ac52cfd53a32d38786496bb7c12d11
 F www/templates/activity4.tpl c7716e192f34f996d9f9f167c99d71ba8711e954
@@ -170,7 +169,7 @@ F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/thread_info.tpl f24e850f6770c6bc12d7fcdf25bb6dbe38c1d306
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 3e3a79de387bdde9a02f336b122036d9a66f683f
-R 8870e7705a06d915c41d074f82b668f3
+P bca8a23f12d81f44099c6bbafd1d75fa6ce2ef74
+R 823d78a9486453ff3112f54faf5e767e
 U johnfound
-Z 0b36935b7057cedd9ef1b80423d7ce93
+Z b9c9dfbef045ab1f470fbb974b7612d4
