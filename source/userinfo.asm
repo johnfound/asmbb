@@ -1,5 +1,6 @@
 MAX_AVATAR_SIZE = 50*1024
 MAX_USER_DESC   = 10*1024
+MAX_SKIN_NAME   = 256
 
 
 
@@ -305,23 +306,16 @@ proc UpdateUserAvatar, .UserName, .pSpecial
 begin
         pushad
 
-;        DebugMsg "Avatar upload!"
-
         xor     edi, edi
         mov     [.stmt], edi
         mov     [.img_ptr], edi
         mov     esi, [.pSpecial]
-
-;        OutputValue "User name:", [.UserName], 16, 8
-;        OutputValue "Post data:", [esi+TSpecialParams.post_array], 16, 8
 
         cmp     [.UserName], edi
         je      .exit
 
         cmp     [esi+TSpecialParams.post_array], edi
         je      .exit
-
-;        DebugMsg "Post data OK!"
 
         stdcall StrNew
         mov     edi, eax
@@ -333,8 +327,6 @@ begin
         jnc     .permissions_fail
 
 .permissions_ok:
-
-;        DebugMsg "Permissions OK!"
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateUserAvatar, sqlUpdateUserAvatar.length, eax, 0
@@ -377,7 +369,6 @@ begin
         mov     eax, 128
 @@:
 
-;        DebugMsg "Now sanitize the PNG."
         stdcall SanitizeImagePng, [ebx+TPostFileItem.data], [ebx+TPostFileItem.size], ecx, eax
         jc      .update_end
 
@@ -423,4 +414,90 @@ begin
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+endp
+
+
+
+sqlUpdateUserSkin text "update Users set skin = ? where nick = ?"
+
+
+proc UpdateUserSkin, .UserName, .pSpecial
+  .stmt      dd ?
+  .skin_name dd ?
+begin
+        pushad
+
+        xor     edi, edi
+        mov     esi, [.pSpecial]
+
+        cmp     [.UserName], edi
+        je      .exit
+
+        cmp     [esi+TSpecialParams.post_array], edi
+        je      .exit
+
+        stdcall StrNew
+        mov     edi, eax
+
+        test    [esi+TSpecialParams.userStatus], permAdmin
+        jnz     .permissions_ok
+
+        stdcall StrCompCase, [.UserName], [esi+TSpecialParams.userName]
+        jnc     .permissions_fail
+
+.permissions_ok:
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateUserSkin, sqlUpdateUserSkin.length, eax, 0
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "skin", 0
+        mov     ebx, eax
+        test    eax, eax
+        jz      .update_end
+
+        stdcall StrByteUtf8, ebx, MAX_SKIN_NAME
+        stdcall StrTrim, ebx, eax
+
+        stdcall StrPtr, ebx
+        cmp     byte [eax], "0"
+        jne     .bind_skin
+        cmp     [eax+string.len], 1
+        jne     .bind_skin
+
+        cinvoke sqliteBindNull, [.stmt], 1              ; default skin!
+        jmp     .bind_user
+
+.bind_skin:
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+.bind_user:
+        stdcall StrPtr, [.UserName]
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+        stdcall StrDel, ebx
+
+.update_end:
+        cinvoke sqliteFinalize, [.stmt]
+
+        stdcall StrDupMem, "/!userinfo/"
+        stdcall StrCat, eax, [.UserName]
+        push    eax
+
+        stdcall StrMakeRedirect, edi, eax
+        stdcall StrDel ; from the stack
+
+        jmp     .finish
+
+.permissions_fail:
+
+        stdcall AppendError, edi, "403 Forbidden", [.pSpecial]
+
+.finish:
+        stc
+
+.exit:
+        mov     [esp+4*regEAX], edi
+        popad
+        return
 endp

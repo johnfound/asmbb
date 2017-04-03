@@ -41,6 +41,7 @@ struct TSpecialParams
   .userSkin        dd ?         ; not used right now.
   .session         dd ?
   .remoteIP        dd ?
+  .remotePort      dd ?
 ends
 
 
@@ -311,6 +312,7 @@ begin
         stdcall StrDel, [.filename]
 
         stdcall StrDel, [.special.userName]
+        stdcall StrDel, [.special.userSkin]
         stdcall StrDel, [.special.session]
         stdcall StrDel, [.special.dir]
         stdcall StrDel, [.special.thread]
@@ -402,6 +404,10 @@ begin
 
         mov     ecx, UpdateUserAvatar
         stdcall StrCompNoCase, eax, txt "!avatar_upload"
+        jc      .exec_command2
+
+        mov     ecx, UpdateUserSkin
+        stdcall StrCompNoCase, eax, txt "!setskin"
         jc      .exec_command2
 
         mov     ecx, RenderAll
@@ -796,7 +802,7 @@ endp
 
 
 
-sqlGetSession    text "select userID, nick, status, last_seen from sessions left join users on id = userID where sid = ?"
+sqlGetSession    text "select userID, nick, status, last_seen, Skin from sessions left join users on id = userID where sid = ?"
 sqlGetUserExists text "select 1 from users limit 1"
 
 ; returns:
@@ -817,6 +823,7 @@ begin
         mov     [edi+TSpecialParams.userStatus], eax
         mov     [edi+TSpecialParams.session], eax
         mov     [edi+TSpecialParams.remoteIP], eax
+        mov     [edi+TSpecialParams.userSkin], eax
 
         stdcall GetParam, "anon_perm", gpInteger
         jc      .anon_ok
@@ -834,6 +841,16 @@ begin
         mov     [edi+TSpecialParams.remoteIP], eax
 
 .ip_ok:
+
+        stdcall ValueByName, [edi+TSpecialParams.params], "REMOTE_PORT"
+        jc      .port_ok
+
+        stdcall StrToNumEx, eax
+        mov     [edi+TSpecialParams.remotePort], eax
+
+
+.port_ok:
+
         xor     ebx, ebx
 
         lea     eax, [.stmt]
@@ -876,6 +893,33 @@ begin
 
         cinvoke sqliteColumnInt, [.stmt], 2
         mov     [edi+TSpecialParams.userStatus], eax
+
+; user skin
+
+        cinvoke sqliteColumnText, [.stmt], 4
+        test    eax, eax
+        jz      .skin_ok
+
+        stdcall StrDupMem, eax
+        stdcall StrCharCat, eax, "/"
+        mov     [edi+TSpecialParams.userSkin], eax
+
+; check skin existence.
+
+        stdcall StrDup, "templates/"
+        stdcall StrCat, eax, [edi+TSpecialParams.userSkin]
+        stdcall StrCat, eax, "all.css"
+        push    eax
+
+        stdcall FileExists, eax
+        stdcall StrDel ; from the stack
+        jnc     .skin_ok
+
+        xor     eax, eax
+        xchg    eax, [edi+TSpecialParams.userSkin]
+        stdcall StrDel, eax
+
+.skin_ok:
 
         stdcall StrDup, ebx
         mov     [edi+TSpecialParams.session], eax

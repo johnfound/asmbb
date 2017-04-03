@@ -142,6 +142,7 @@ create table Attachements (
 create table Sessions (
   userID    integer references Users(id) on delete cascade,
   fromIP    text,
+  fromPort  integer,
   sid       text,
   last_seen integer,
   ticket    text,

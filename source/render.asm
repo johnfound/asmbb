@@ -6,15 +6,23 @@ proc StrCatTemplate, .hString, .strTemplateID, .sql_statement, .p_special
 begin
         pushad
 
-        stdcall StrDupMem, "templates/"
-        stdcall StrCat, eax, [.strTemplateID]
-        stdcall StrCharCat, eax, ".tpl"
+        mov     edi, [.p_special]
+
+        call    .filename
+        push    eax
+
+        stdcall LoadBinaryFile, eax
+        stdcall StrDel ; from the stack
+        jnc     .file_ok
+
+        call    .fallback
         push    eax
 
         stdcall LoadBinaryFile, eax
         stdcall StrDel ; from the stack
         jc      .finish
 
+.file_ok:
         mov     esi, eax
         and     dword [eax+ecx], 0
 
@@ -27,6 +35,27 @@ begin
 .finish:
         popad
         return
+
+.filename:
+        stdcall StrDupMem, "templates/"
+
+        test    edi, edi
+        jz      @f
+        cmp     [edi+TSpecialParams.userSkin], 0
+        je      @f
+        stdcall StrCat, eax, [edi+TSpecialParams.userSkin]
+@@:
+        stdcall StrCat, eax, [.strTemplateID]
+        stdcall StrCharCat, eax, ".tpl"
+        retn
+
+
+.fallback:
+        stdcall StrDupMem, "templates/"
+        stdcall StrCat, eax, [.strTemplateID]
+        stdcall StrCharCat, eax, ".tpl"
+        retn
+
 endp
 
 
@@ -233,6 +262,9 @@ begin
         stdcall StrCompNoCase, edi, "userid"
         jc      .get_userid
 
+        stdcall StrCompNoCase, edi, txt "skin"
+        jc      .get_skin
+
         stdcall StrCompNoCase, edi, txt "page"
         jc      .get_page
 
@@ -274,6 +306,9 @@ begin
 
         stdcall StrCompNoCase, edi, "search"
         jc      .get_search
+
+        stdcall StrCompNoCase, edi, txt "skins"
+        jc      .get_skins
 
         stdcall GetQueryItem, edi, "posters=", 0
         test    eax, eax
@@ -364,6 +399,77 @@ end if
         stdcall NumToStr, [esi+TSpecialParams.userID], ntsDec or ntsUnsigned
         jmp     .return_value
 
+
+;..................................................................
+
+.get_skin:
+        mov     eax, [esi+TSpecialParams.userSkin]
+        jmp     .return_encoded
+
+;..................................................................
+
+.get_skins:
+        push    ebx edi
+
+        stdcall StrNew
+        mov     ebx, eax
+
+        stdcall StrDup, "templates/"
+        push    eax
+
+        stdcall DirectoryRead, eax
+        stdcall StrDel ; from the stack.
+        jc      .finish_skins
+
+        mov     edi, eax
+        mov     ecx, [edi+TArray.count]
+
+.dir_loop:
+        dec     ecx
+        js      .end_of_dir
+
+        cmp     [edi+TArray.array+8*ecx+TDirItem.Type], ftDirectory
+        jne     .next_file
+
+        stdcall StrPtr, [edi+TArray.array+8*ecx+TDirItem.hFilename]
+        jc      .next_file
+
+        cmp     byte [eax], '.'
+        je      .next_file
+
+        stdcall StrCat, ebx, '<option value="'
+        stdcall StrCat, ebx, [edi+TArray.array+8*ecx+TDirItem.hFilename]
+        stdcall StrCharCat, ebx, '" '
+
+        cmp     [esi+TSpecialParams.userSkin], 0
+        je      .selected_ok
+
+        stdcall StrDup, [edi+TArray.array+8*ecx+TDirItem.hFilename]
+        stdcall StrCharCat, eax, '/'
+        stdcall StrCompCase, eax, [esi+TSpecialParams.userSkin]
+        stdcall StrDel, eax
+        jnc     .selected_ok
+
+        stdcall StrCat, ebx, txt ' selected="selected"'
+
+.selected_ok:
+        stdcall StrCharCat, ebx, '>'
+        stdcall StrCat, ebx, [edi+TArray.array+8*ecx+TDirItem.hFilename]
+        stdcall StrCat, ebx, <'</option>', 13, 10>
+
+.next_file:
+        stdcall StrDel, [edi+TArray.array+8*ecx+TDirItem.hFilename]
+        jmp     .dir_loop
+
+.end_of_dir:
+
+        stdcall FreeMem, edi
+
+.finish_skins:
+
+        mov     eax, ebx
+        pop     edi ebx
+        jmp     .return_value
 
 ;..................................................................
 
@@ -828,7 +934,9 @@ endl
 
 .add_user:
         stdcall StrCat, ebx, '<a href="/!userinfo/'
-        stdcall StrCat, ebx, [edx+TArray.array+4*ecx]
+        stdcall StrURLEncode, [edx+TArray.array+4*ecx]
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
         stdcall StrCat, ebx, txt '">'
         stdcall StrCat, ebx, [edx+TArray.array+4*ecx]
         stdcall StrCat, ebx, txt '</a>'
