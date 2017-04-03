@@ -198,31 +198,35 @@ a.ttlink {
 div.tags {
   width: 95%;
   max-width: 1280px;
-  margin: 16px auto;
+  margin: 8px auto;
   padding: 4px;
 
   background-color: #404040;
   font-size: 28px;
   font-weight: normal;
   word-wrap: break-all;
+
+  line-height: 80%;
 }
 
 a.taglink {
-  padding: 4px;
+  padding: 0px 4px;
   color: white;
   display:inline-block;
   word-wrap: keep-all;
 }
 
+
 a.current_tag {
   background-color: #ffda44;
   color: black;
+  padding: 4px;
 }
 
 
 a.taglink img {
   vertical-align: middle;
-  margin-right: 8px;
+  margin-right: 4px;
 }
 
 
@@ -238,14 +242,14 @@ div.thread {
 
 h1.thread_caption {
   font-size: 20px;
-  margin: 16px 0px 0px 0px;
+  margin: 8px 0px 0px 0px;
   clear:both;
 }
 
 
 div.post {
   position: relative;
-  margin-top: 16px;
+  margin-top: 8px;
 }
 
 div.user_info {
@@ -318,7 +322,7 @@ img.unread_icon {
 a.user_name {
   display: block;
   padding: 4px;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   color: #ffda44;
   font-weight: bold;
   background-color: #404040;
@@ -374,8 +378,8 @@ div.post_text {
 /* Pages links styles */
 
 div.page_row {
-  margin-bottom: 16px;
-  margin-top: 16px;
+  margin-bottom: 8px;
+  margin-top: 8px;
   text-align: left;
 }
 
@@ -393,7 +397,6 @@ span.current_page {
   text-align: center;
   display:inline-block;
   min-width: 32px;
-  font-weight: bold;
   color: white;
 }
 
@@ -413,15 +416,14 @@ div.set_page {
 form.settings {
     width: 640px;
     padding: 16px;
-    background: #d0d0d0; 
-    margin: 16px auto 16px auto;
+    background: #d0d0d0;
+    margin: 8px auto 8px auto;
 }
 
 form.settings label {
   display: inline-block;
   text-align: right;
   width: 220px;
-//  line-height: 30px;
   margin-bottom: 8px;
   padding: 0px 16px;
   color: black;
@@ -539,7 +541,7 @@ form.login-block, form.register-block {
     width: 320px;
     padding: 16px;
     background: #ffda44;
-    margin: 16px auto 48px auto;
+    margin: 8px auto 48px auto;
 }
 
 form.login-block h1, form.register-block h1, form.settings h1 {
@@ -550,14 +552,14 @@ form.login-block h1, form.register-block h1, form.settings h1 {
     font-size: 20px;
     font-variant: small-caps;
     margin-top: 0;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     padding: 8px;
 }
 
 input.username, input.email, input.password {
     width: 100%;
     height: 38px;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     font-size: 16px;
     padding: 0 20px 0 50px;
     outline: none;
@@ -631,8 +633,8 @@ span.separator {
 
 div.ui {
   width: 100%;
-  margin: 16px 0px;
-  overflow: auto;
+  margin: 8px 0px;
+  overflow: hidden;
 }
 
 a.ui, a.ui:visited {
@@ -701,7 +703,7 @@ div.message_block {
   font-size: 20px;
   width: 640px;
   background: white;
-  margin: 16px auto;
+  margin: 8px auto;
   text-align: center;
   padding: 20px;
 //  border-top: 16px solid #f06060;
@@ -745,7 +747,7 @@ div.confirm {
   font-size: 18px;
   width: 640px;
   background: white;
-  margin: 16px auto;
+  margin: 8px auto;
   text-align: left;
   padding: 16px;
   clear: both;
@@ -754,7 +756,7 @@ div.confirm {
 
 
 div.post_preview {
-  margin: 16px 0px;
+  margin: 8px 0px;
   padding: 8px;
   background-color: #d0d0d0;
   text-align: left;
@@ -771,7 +773,7 @@ div.editor {
   top: 16px;
   width: 640px;
   max-width: 60%;
-  margin: 16px;
+  margin: 8px;
   opacity: 0.6;
 
   overflow: auto;
@@ -953,6 +955,55 @@ table.sql_rows td {
 }
 
 
+/* Users online table styles */
+
+div.users_online {
+  width: 95%;
+  max-width: 1280px;
+  margin: auto;
+
+  background-color: white;
+  padding: 8px;
+  font-size: 13px;
+}
+
+
+table.users_table {
+  border-collapse: collapse;
+  border: 2px solid gray;
+  width: 100%;
+
+  font-size: 16px;
+}
+
+table.users_table th {
+  border: 2px solid black;
+  padding: 8px;
+  max-width: 300px;
+  text-align: center;
+}
+
+table.users_table td {
+  border: 2px solid gray;
+  padding: 8px;
+  max-width: 400px;
+  text-align: left;
+  vertical-align: top;
+
+  white-space: pre-wrap;       /* css-3 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  word-break: break-all;
+}
+
+table.users_table td:nth-of-type(1) {
+  width: 1px;
+  white-space: nowrap;
+}
+
+table.users_table td:nth-of-type(2) {
+  width: 1px;
+  white-space: nowrap;
+}
 
 
 
@@ -963,15 +1014,16 @@ p.timestamp {
   width: 95%;
   max-width: 1280px;
   margin: auto;
-  margin-top: 16px;
-  padding: 4px;
+  margin-top: 8px;
+  padding: 8px;
+  line-height: 1.5em;
 }
 
 p.attribution {
   width: 95%;
   max-width: 1280px;
   margin: auto;
-  margin-top: 16px;
+  margin-top: 8px;
   padding: 4px 0px;
   border-top: 4px solid gray;
 }
@@ -987,12 +1039,12 @@ p.attribution {
 
 /* Headings */
 
-h1 { font-size: 21px; margin-top: 16px; }
-h2 { font-size: 20px; margin-top: 16px; }
-h3 { font-size: 19px; margin-top: 16px; }
-h4 { font-size: 18px; margin-top: 16px; }
-h5 { font-size: 16px; margin-top: 16px; }
-h6 { font-size: 16px; margin-top: 16px; }
+h1 { font-size: 21px; margin-top: 8px; }
+h2 { font-size: 20px; margin-top: 8px; }
+h3 { font-size: 19px; margin-top: 8px; }
+h4 { font-size: 18px; margin-top: 8px; }
+h5 { font-size: 16px; margin-top: 8px; }
+h6 { font-size: 16px; margin-top: 8px; }
 
 
 /* paragraph style */
@@ -1001,7 +1053,7 @@ div.post_text p {
    text-align: justify;
    margin-top: 0.75em;
    margin-bottom: 0.75em;
-   word-wrap: break-word;	
+   word-wrap: break-word;
 }
 
 div.post_text p.uli {
@@ -1067,7 +1119,7 @@ img.ico {
 img.txt {
   border-style: none;
   border-width: 0px;
-  margin: 16px auto;
+  margin: 8px auto;
   display: block;
   max-width: 95%;
 }
@@ -1078,8 +1130,8 @@ img.txt1 {
   display: block;
   float: left;
   clear: left;
-  margin-right: 16px;
-  margin-bottom: 16px;
+  margin-right: 8px;
+  margin-bottom: 8px;
 }
 
 img.txt2 {
@@ -1088,8 +1140,8 @@ img.txt2 {
   display: block;
   float: right;
   clear: right;
-  margin-left: 16px;
-  margin-bottom: 16px;
+  margin-left: 8px;
+  margin-bottom: 8px;
 }
 
 
@@ -1182,7 +1234,7 @@ div.user_desc {
   background-color: white;
   padding: 16px;
   overflow: auto;
-  margin: 0px 0px 16px 0px;
+  margin: 0px 0px 8px 0px;
   vertical-align: top;
 }
 
@@ -1193,7 +1245,7 @@ div.user_desc h1 {
 
 img.profile_avatar {
   float: left;
-  margin: 0px 16px 16px 0px;
+  margin: 0px 8px 8px 0px;
   width: 128px;
   height: 128px;
   background-color: #ffda44;
@@ -1203,7 +1255,7 @@ div.user_desc p {
    text-align: justify;
    margin-top: 0.75em;
    margin-bottom: 0.75em;
-   word-wrap: break-word;	
+   word-wrap: break-word;
 }
 
 
@@ -1214,7 +1266,7 @@ form.user_edit_info {
   width: calc(67% - 16px);
   padding: 16px;
   background-color: #d0d0d0;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 
 form.user_edit_pass {
@@ -1223,7 +1275,7 @@ form.user_edit_pass {
   width: 33%;
   padding: 16px;
   background-color: #d0d0d0;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   clear: left;
 }
 
@@ -1248,7 +1300,7 @@ textarea.user_desc {
   width: 100%;
   height: 16em;
   display: block;
-  margin: 0px 0px 16px 0px;
+  margin: 0px 0px 8px 0px;
   padding: 4px;
 
   font-family: "Liberation Mono", "Courier New", monospaced;
@@ -1262,7 +1314,7 @@ textarea.user_desc {
 
 input.browse {
     width: 100%;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     font-size: 16px;
     padding: 0px;
     outline: none;
@@ -1280,7 +1332,7 @@ div.user_stat {
   width: calc(67% - 16px);
   padding: 16px;
   background-color: white;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 
 

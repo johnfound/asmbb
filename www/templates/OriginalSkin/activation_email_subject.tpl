@@ -1,0 +1,1 @@
+[case:[salt]|Email change confirmation for http://[host]|Account activation link for http://[host]]

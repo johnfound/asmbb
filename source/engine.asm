@@ -37,6 +37,8 @@ include "%lib%/freshlib.asm"
 
 uses sqlite3:"%TargetOS%/sqlite3.inc"
 
+include "text_constants.asm"
+
 include "sqlite3.asm"   ; sqlite utility functions.
 include "http.asm"
 include "timeproc.asm"  ; date/time utility procedures.
@@ -83,6 +85,8 @@ endg
 
 start:
         InitializeAll
+
+        stdcall SetLanguage, 'EN'       ; It should be elsewhere!
 
         if ~( defined options.DebugSQLite & options.DebugSQLite )
           mov   eax, [_sqlitePrepare_v2]

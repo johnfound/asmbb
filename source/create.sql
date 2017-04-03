@@ -37,12 +37,24 @@ create table Users (
   PostCount integer default 0  -- Speed optimization in order to not count the posts every time. Need automatic count.
 );
 
-
-
 create index idxUsers_nick on Users (nick);
 create index idxUsers_email on Users (email);
 create index idxUsersX on Users(id, nick, avatar);
 create index idxUsers_LastSeen on Users(LastSeen);
+
+
+CREATE TABLE UserLog (
+  userID integer,
+  remoteIP integer,
+  Time integer,
+  Activity integer,
+  Param integer,
+  foreign key (userID) references Users(id) on delete cascade on update cascade
+);
+
+create index idxUserLogTime on UserLog(time);
+create index idxUserLogUserIP on UserLog(UserID, remoteIP);
+create index idxUserLogUserID on UserLog(UserID);
 
 
 create table WaitingActivation(
@@ -130,6 +142,7 @@ create table Attachements (
 create table Sessions (
   userID    integer references Users(id) on delete cascade,
   fromIP    text,
+  fromPort  integer,
   sid       text,
   last_seen integer,
   ticket    text,

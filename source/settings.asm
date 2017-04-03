@@ -28,10 +28,12 @@ begin
         test    [esi+TSpecialParams.userStatus], permAdmin
         jz      .for_admins_only
 
+        stdcall LogUserActivity, esi, uaAdminThings, 0
+
         cmp     [esi+TSpecialParams.post_array], 0
         jne     .save_settings
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], "Forum settings page"
+        stdcall StrCat, [esi+TSpecialParams.page_title], cForumSettingsTitle
 
         stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
         mov     ebx, eax
@@ -522,7 +524,7 @@ begin
 
 ; show the admin creation dialog.
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], "Create the first admin account!"
+        stdcall StrCat, [esi+TSpecialParams.page_title], cCreateAdminTitle
 
         stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
         mov     ebx, eax

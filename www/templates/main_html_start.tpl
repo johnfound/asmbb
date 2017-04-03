@@ -3,8 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>[special:title]</title>
-  <link rel="stylesheet" href="/templates/all.css">
-
+  <link rel="stylesheet" href="/templates/[special:skin]all.css" type="text/css" />
   <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
   <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
@@ -20,7 +19,7 @@
   <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
   <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
   <link rel="manifest" href="/images/favicons/manifest.json">
-  <link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#d80027">
+  <link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg">
   <link rel="shortcut icon" href="/images/favicons/favicon.ico">
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
@@ -37,10 +36,9 @@
       <a href="/!logout">Logout ( [special:username] )</a><br><a href="/!userinfo/[special:username]">User profile</a>]
     </div>
     <form class="tags" id="search_form" action="[case:[special:dir]|/|[case:[special:search]||../]]!search/" method="get" >
-      <input class="search_line" type="edit" size="40" name="s" placeholder="search" value="[special:search]"><input class="icon_btn"  type="image" src="/images/search.svg" alt="?" >
+      <input class="search_line" type="search" size="40" name="s" placeholder="search" value="[special:search]"><input class="icon_btn"  type="image" src="/images/search.svg" alt="?" >
     </form>
     <h1>AsmBB demo</h1>
   </div>
 
-<div class="tags"><a class="taglink" title="Show all threads" href="/"><img src="/images/[case:[special:dir]|posts.svg|posts_gray.svg]" alt="All"></a>[special:alltags]</div>
-
+<div class="tags"><a class="taglink" title="Show all threads" href="/"><img src="/images/[case:[special:dir]|posts_red.svg|posts_black.svg]" width="32" height="32" alt="All"></a>[special:alltags]</div>

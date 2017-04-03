@@ -40,7 +40,8 @@ struct TSpecialParams
   .userLang        dd ?         ; not used right now.
   .userSkin        dd ?         ; not used right now.
   .session         dd ?
-
+  .remoteIP        dd ?
+  .remotePort      dd ?
 ends
 
 
@@ -311,6 +312,7 @@ begin
         stdcall StrDel, [.filename]
 
         stdcall StrDel, [.special.userName]
+        stdcall StrDel, [.special.userSkin]
         stdcall StrDel, [.special.session]
         stdcall StrDel, [.special.dir]
         stdcall StrDel, [.special.thread]
@@ -404,8 +406,16 @@ begin
         stdcall StrCompNoCase, eax, txt "!avatar_upload"
         jc      .exec_command2
 
+        mov     ecx, UpdateUserSkin
+        stdcall StrCompNoCase, eax, txt "!setskin"
+        jc      .exec_command2
+
         mov     ecx, RenderAll
         stdcall StrCompNoCase, eax, txt "!render_all"
+        jc      .exec_command
+
+        mov     ecx, UserActivityTable
+        stdcall StrCompNoCase, eax, txt "!users_online"
         jc      .exec_command
 
 
@@ -792,7 +802,7 @@ endp
 
 
 
-sqlGetSession    text "select userID, nick, status, last_seen from sessions left join users on id = userID where sid = ?"
+sqlGetSession    text "select userID, nick, status, last_seen, Skin from sessions left join users on id = userID where sid = ?"
 sqlGetUserExists text "select 1 from users limit 1"
 
 ; returns:
@@ -812,6 +822,8 @@ begin
         mov     [edi+TSpecialParams.userName], eax
         mov     [edi+TSpecialParams.userStatus], eax
         mov     [edi+TSpecialParams.session], eax
+        mov     [edi+TSpecialParams.remoteIP], eax
+        mov     [edi+TSpecialParams.userSkin], eax
 
         stdcall GetParam, "anon_perm", gpInteger
         jc      .anon_ok
@@ -819,6 +831,25 @@ begin
         mov     [edi+TSpecialParams.userStatus], eax
 
 .anon_ok:
+
+        stdcall ValueByName, [edi+TSpecialParams.params], "REMOTE_ADDR"
+        jc      .ip_ok
+
+        stdcall StrIP2Num, eax
+        jc      .ip_ok
+
+        mov     [edi+TSpecialParams.remoteIP], eax
+
+.ip_ok:
+
+        stdcall ValueByName, [edi+TSpecialParams.params], "REMOTE_PORT"
+        jc      .port_ok
+
+        stdcall StrToNumEx, eax
+        mov     [edi+TSpecialParams.remotePort], eax
+
+
+.port_ok:
 
         xor     ebx, ebx
 
@@ -862,6 +893,33 @@ begin
 
         cinvoke sqliteColumnInt, [.stmt], 2
         mov     [edi+TSpecialParams.userStatus], eax
+
+; user skin
+
+        cinvoke sqliteColumnText, [.stmt], 4
+        test    eax, eax
+        jz      .skin_ok
+
+        stdcall StrDupMem, eax
+        stdcall StrCharCat, eax, "/"
+        mov     [edi+TSpecialParams.userSkin], eax
+
+; check skin existence.
+
+        stdcall StrDup, "templates/"
+        stdcall StrCat, eax, [edi+TSpecialParams.userSkin]
+        stdcall StrCat, eax, "all.css"
+        push    eax
+
+        stdcall FileExists, eax
+        stdcall StrDel ; from the stack
+        jnc     .skin_ok
+
+        xor     eax, eax
+        xchg    eax, [edi+TSpecialParams.userSkin]
+        stdcall StrDel, eax
+
+.skin_ok:
 
         stdcall StrDup, ebx
         mov     [edi+TSpecialParams.session], eax
@@ -1298,7 +1356,7 @@ endp
 
 
 sqlInsertGuest   text "insert or replace into Guests values (?, strftime('%s','now'))"
-sqlClipGuests    text "delete from Guests where LastSeen < strftime('%s','now') - 864000"
+sqlClipGuests    text "delete from Guests where LastSeen < strftime('%s','now') - 864000"     ; 10 days = 864000 seconds
 
 proc InsertGuest, .pSpecial
 .stmt dd ?
@@ -1306,21 +1364,13 @@ begin
         pushad
 
         mov     esi, [.pSpecial]
-        stdcall ValueByName, [esi+TSpecialParams.params], "REMOTE_ADDR"
-        jc      .finish
-
-        stdcall StrIP2Num, eax
-        jc      .finish
-
-        mov     ebx, eax
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertGuest, sqlInsertGuest.length, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, ebx
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.remoteIP]
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 
-.finish:
         cinvoke sqliteExec, [hMainDatabase], sqlClipGuests, 0, 0, 0
         popad
         return

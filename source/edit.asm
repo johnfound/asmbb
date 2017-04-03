@@ -68,6 +68,9 @@ begin
 
 
 .permissions_ok:
+
+        stdcall LogUserActivity, esi, uaEditingPost, 0
+
         cmp     [esi+TSpecialParams.post_array], 0
         je      .show_edit_form
 
@@ -122,7 +125,7 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .error_missing_post
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], "Editing page: "
+        stdcall StrCat, [esi+TSpecialParams.page_title], cEditingPageTitle
 
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, [esi+TSpecialParams.page_title], eax

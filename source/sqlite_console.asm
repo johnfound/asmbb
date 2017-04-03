@@ -19,11 +19,12 @@ begin
         test    [esi+TSpecialParams.userStatus], permAdmin
         jz      .for_admins_only
 
+        stdcall LogUserActivity, esi, uaAdminThings, 0
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], "source", 0
         mov     [.source], eax
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], "WARNING! SQLite console. You can destroy your database here!"
+        stdcall StrCat, [esi+TSpecialParams.page_title], cSQLiteConsoleTitle
 
 
 ; first output the form

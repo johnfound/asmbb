@@ -2,7 +2,7 @@
 
 struct TPostDataItem
   .name         dd ?            ; the name of the form field.
-  .data         dd ?            ; pointer to the TArray of TFileItem or handle of a string.
+  .data         dd ?            ; pointer to the TArray of TPostFileItem or handle of a string.
 ends
 
 
