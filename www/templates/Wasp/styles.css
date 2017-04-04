@@ -1311,17 +1311,29 @@ textarea.user_desc {
   outline-style: none;
 }
 
+select.skin {
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+
+  background-color: white;
+  border: none;
+}
+
 
 input.browse {
-    width: 100%;
-    margin-bottom: 8px;
-    font-size: 16px;
-    padding: 0px;
-    outline: none;
-    border: none;
+  width: 100%;
+  margin-bottom: 8px;
+  font-size: 16px;
+  padding: 0px;
+  outline: none;
+  border: none;
 
-    background-color: white;
-    color: black;
+  background-color: white;
+  color: black;
 }
 
 

@@ -3,6 +3,7 @@ MAX_USER_DESC   = 10*1024
 MAX_SKIN_NAME   = 256
 
 
+SKIN_FIELD_INDEX = 5
 
 sqlGetFullUserInfo text "select ",                                                                      \
                           "id as userid, ",                                                             \
@@ -10,6 +11,7 @@ sqlGetFullUserInfo text "select ",                                              
                           "av_time as AVer, ",                                                          \
                           "status, ",                                                                   \
                           "user_desc, ",                                                                \
+                          "skin, ",                                                                     \
                           "strftime('%d.%m.%Y %H:%M:%S', LastSeen, 'unixepoch') as LastSeen, ",         \
                           "(select count(1) from posts p where p.userid = u.id ) as totalposts, ",      \
                           "(select status & 1 <> 0) as canlogin, ",                                     \

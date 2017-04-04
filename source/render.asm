@@ -202,7 +202,6 @@ begin
 
         cinvoke sqliteColumnText, [.sql_stmt], ebx
 
-
 .return_encoded:
 
         test    eax, eax
@@ -307,7 +306,7 @@ begin
         stdcall StrCompNoCase, edi, "search"
         jc      .get_search
 
-        stdcall StrCompNoCase, edi, txt "skins"
+        stdcall StrCompNoCase, edi, "skins"
         jc      .get_skins
 
         stdcall GetQueryItem, edi, "posters=", 0
@@ -409,7 +408,19 @@ end if
 ;..................................................................
 
 .get_skins:
+locals
+  .current dd ?
+endl
         push    ebx edi
+
+        mov     eax, [.sql_stmt]
+        test    eax, eax
+        jz      .cskin_ok
+
+        cinvoke sqliteColumnText, eax, SKIN_FIELD_INDEX
+
+.cskin_ok:
+        mov     [.current], eax
 
         stdcall StrNew
         mov     ebx, eax
@@ -441,13 +452,7 @@ end if
         stdcall StrCat, ebx, [edi+TArray.array+8*ecx+TDirItem.hFilename]
         stdcall StrCharCat, ebx, '" '
 
-        cmp     [esi+TSpecialParams.userSkin], 0
-        je      .selected_ok
-
-        stdcall StrDup, [edi+TArray.array+8*ecx+TDirItem.hFilename]
-        stdcall StrCharCat, eax, '/'
-        stdcall StrCompCase, eax, [esi+TSpecialParams.userSkin]
-        stdcall StrDel, eax
+        stdcall StrCompCase, [edi+TArray.array+8*ecx+TDirItem.hFilename], [.current]
         jnc     .selected_ok
 
         stdcall StrCat, ebx, txt ' selected="selected"'

@@ -1234,7 +1234,7 @@ textarea.user_desc {
 
   font-family: "Liberation Mono", "Courier New", monospaced;
   overflow: auto;
-  border: 2px solid @clText2;
+  border: 2px solid @clImportant;
   outline-style: none;
 }
 
@@ -1243,6 +1243,7 @@ select.skin {
   width: 100%;
   font-size: 18px;
   font-weight: bold;
+  color: @clImportant;
 
   background-color: transparent;
   border: none;
@@ -1259,6 +1260,7 @@ input.browse {
   border: none;
 
   background-color: transparent;
+  color: @clImportant;
   border-bottom: 2px solid @clImportant;
 }
 
