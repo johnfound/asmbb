@@ -5,7 +5,7 @@
 
 @clMain: #ffffff;
 @clImportant: #D5331E;
-@clTitle: #E8D3D1;
+@clTitle: #E8D3E8;
 
 @clText1: rgba(0, 0, 0, 1.0);
 @clText2: rgba(0, 0, 0, 0.7);
@@ -197,7 +197,7 @@ div.tags {
 }
 
 a.taglink {
-  padding: 4px;
+  margin: 0px 4px;
   color: @clText1;
   display:inline-block;
   word-wrap: keep-all;
@@ -205,6 +205,8 @@ a.taglink {
 
 
 a.current_tag {
+  margin: 0px;
+  border: 4px solid @clImportant;
   background-color: @clImportant;
   color: @clMain;
 }

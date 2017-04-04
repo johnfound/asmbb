@@ -1,5 +1,5 @@
-C Fixed\sbug\sin\s[special:skins]\stemplate\sparameter.\sSome\swork\son\sthe\sskins.
-D 2017-04-04T07:31:01.567
+C Fixing\ssome\sstyles\sissues;
+D 2017-04-04T07:51:54.491
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz a31fefe214f54c494d072119f9f662ebe965c9b4
@@ -218,10 +218,10 @@ F www/templates/nav_thread.tpl 09d3cb72fbd3437c40b6589c4002d29de2c82150
 F www/templates/post_view.tpl bcb1afd2fd47c380eb2714c6f3a9d1500dcf8c19
 F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 793cb60caa676c77325c60b225d65097aaf1d689
-F www/templates/styles.css 372cdc6b823097bb802df4a1cd1adacea166f57b
+F www/templates/styles.css 6be055c8056a43d5ec48ca58ae5253d63a28f86a
 F www/templates/thread_info.tpl cb23b6c68e4bb0ef4395824830754c7e99875c17
 F www/templates/userinfo.tpl 1aeeb2aeab0b48e7a18d925e039d377f2e3cf1c6
-P dc744b9c77620a7ad08f99af0e1bfc13b5178a02
-R f1770750838759a10a3133d35fdaed39
+P aa4e0c5e0f41559f6644cad6bf00f52803e69ee0
+R f1f2126f469e1515f02f17a124a76e46
 U johnfound
-Z a086e2cfbee4c320303f36a521ca8a6f
+Z d29bf14c84ab85cc03cc791330c7c683
