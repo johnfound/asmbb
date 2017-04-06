@@ -1,4 +1,3 @@
-<div class="user_flex">
   <div class="user_desc">
     <img class="profile_avatar" src="/!avatar/[username]?v=[AVer]">
     <h1>[username]</h1>
@@ -21,4 +20,3 @@
       <li>Has written <b>[totalposts]</b> post[case:[totalposts]|s||s] on the forum.</li>
     </ul>
   </div>
-</div>

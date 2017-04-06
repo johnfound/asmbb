@@ -1,16 +1,30 @@
-body {
-  font-size: 16px;
-  font-family: Verdana,sans-serif;
-  background-color: #d0d0d0;
-}
+/* Compile with:
+       cless style.css -o all.css
+*/
 
-body * {
-  box-sizing: border-box;
-  padding: 0px;
+
+@clMain: #ffffff;
+@clImportant: #D5331E;
+@clTitle: transparent;
+
+@clText1: rgba(0, 0, 0, 1.0);
+@clText2: rgba(0, 0, 0, 0.7);
+@clText3: rgba(0, 0, 0, 0.4);
+
+body {
+  background-color: @clMain;
+  color: @clText1;
+  font: 16px "Trebuchet MS",Helvetica,Arial,sans-serif;
+  margin: 0px auto;
+  padding: 15px 0px;
+  * {
+    box-sizing: border-box;
+    padding: 0px;
+  }
 }
 
 a {
-  color: black;
+  color: inherit;
 }
 
 input {
@@ -23,6 +37,7 @@ input {
   width: 100%;
 }
 
+
 /* header styles */
 
 div.header {
@@ -30,14 +45,15 @@ div.header {
   width: 95%;
   max-width: 1280px;
   margin: 0px auto 0px auto;
-  background-color: #ffda44;
   overflow: auto;
 }
 
 div.header h1 {
   float: left;
-  font-size: 36px;
-  margin: 8px 0px 8px 16px;
+  font-size: 48px;
+  font-weight: bold;
+  margin: 8px 8px 8px 0px;
+  color: @clImportant;
 }
 
 
@@ -50,7 +66,7 @@ form#search_form {
   bottom: 50%;
   right: 50%;
 
-  transform: translate(50%, 50%);
+          transform: translate(50%, 50%);
   -webkit-transform: translate(50%, 50%);
   -moz-transform: translate(50%, 50%);
 }
@@ -59,22 +75,22 @@ form#search_form {
   height: 32px;
   padding: 4px;
   border: none;
-  background-color: #404040;
-  color: white;
+  background-color: transparent;
+  color: @clText2;
   margin: 0px;
+  border-bottom: 2px solid @clText3;
 }
 
 
 .search_line:focus {
-  background-color: white;
-  color: black;
+  border-bottom: 2px solid @clImportant;
 }
 
 
 .icon_btn  {
   border-style: none;
   vertical-align: top;
-  background-color: #f06060;
+  background-color: @clText3;
   color: white;
   width: 32px;
   height: 32px;
@@ -82,9 +98,23 @@ form#search_form {
 }
 
 .icon_btn:hover  {
-  background-color: #ff7b81;
+  background-color: @clTitle;
 }
 
+/* login/logout info on the pages */
+
+div.login_interface {
+  float: right;
+  margin-right: 16px;
+  text-align: right;
+  color: @clText1;
+}
+
+div.login_interface a {
+  text-align: right;
+  display: inline;
+  line-height: 1.5em;
+}
 
 
 /* Threads list styles */
@@ -92,57 +122,29 @@ form#search_form {
 
 div.threads_list {
   width: 95%;
-  position: relative;
   max-width: 1280px;
   margin: auto;
   clear: both;
 }
 
 
-.thread_summary {
-  background-color: white;
-
-  position: relative;
-  overflow: hidden;
-  zoom: 1;
-  margin-bottom: 8px;
+div.thread_summary {
+  border-top: 2px solid @clText3;
+  display: flex;
 }
 
 
 div.thread_info {
-  background-color: #404040;
-  color: white;
-  text-align: left;
+  padding: 8px;
+  flex-shrink: 0;
 
-  float: left;
-  position: absolute;
-  width: 184px;
-  width: calc(200px - 0px);
-  left: 0px;
-  top: 0px;
-  bottom: 0px;
-  padding: 8px 8px 8px 8px;
-}
+  img {
+    vertical-align: middle;
+  }
 
-
-div.thread_info img {
-  margin-right: 8px;
-  vertical-align: middle;
-}
-
-
-div.thread_info img.pinned {
-  float: right;
-  position: absolute;
-  right: 8px;
-  top: 8px;
-  margin: 0px;
-}
-
-
-
-div.post_cnt {
-
+  img.pinned {
+    float: right;
+  }
 }
 
 
@@ -150,47 +152,32 @@ div.unread_cnt {
   font-size: 12px;
 }
 
-div.unread_cnt a {
-  color: white;
-}
-
-
 div.changed {
   font-size: 80%;
-  position: absolute;
-  bottom: 8px;
   margin-top: 8px;
-}
 
-div.changed img {
-  margin-right: 8px;
+  img {
+    margin-right: 8px;
+  }
 }
 
 div.thread_link {
-  background-color: white;
   padding: 8px;
-  border-left: solid 200px #404040;
-  min-height: 64px;
+  flex-grow: 1;
 }
 
 a.thread_link {
   font-size: 16px;
   font-weight: bold;
-
+  color: @clImportant;
+  word-break: break-all;
+  display: block;
 }
 
 div.thread_tags {
-  background-color: #ffda44;
-  padding: 8px;
-  border-left: solid 200px #404040;
+  padding: 8px 8px 8px 0px;
   font-size: 12px;
 }
-
-a.ttlink {
-  margin: 0px;
-  padding: 0px;
-}
-
 
 
 /* tag list styles */
@@ -198,10 +185,10 @@ a.ttlink {
 div.tags {
   width: 95%;
   max-width: 1280px;
-  margin: 8px auto;
-  padding: 4px;
+  margin: 0px auto;
+  padding: 8px 4px;
 
-  background-color: #404040;
+  background-color: @clTitle;
   font-size: 28px;
   font-weight: normal;
   word-wrap: break-all;
@@ -210,17 +197,18 @@ div.tags {
 }
 
 a.taglink {
-  padding: 0px 4px;
-  color: white;
+  margin: 0px 4px;
+  color: @clText1;
   display:inline-block;
   word-wrap: keep-all;
 }
 
 
 a.current_tag {
-  background-color: #ffda44;
-  color: black;
-  padding: 4px;
+  margin: 0px;
+  border: 4px solid @clImportant;
+  background-color: @clImportant;
+  color: @clMain;
 }
 
 
@@ -241,70 +229,58 @@ div.thread {
 
 
 h1.thread_caption {
-  font-size: 20px;
+  font-size: 24px;
+  font-weight: bold;
   margin: 8px 0px 0px 0px;
   clear:both;
+  color: @clImportant;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 
 div.post {
-  position: relative;
+  border-top: 2px solid @clText3;
   margin-top: 8px;
+  display: flex;
+}
+
+div.post_cont {
+  flex-grow: 1;
+  overflow: hidden;
 }
 
 div.user_info {
-  float: left;
-  position: absolute;
-  width: 184px;
-  width: calc(200px - 0px);
-  left: 0px;
-  top: 0px;
-  bottom: 0px;
   padding: 8px;
-
-  background-color: #404040;
-  color: white;
 }
 
 div.search_info {
-  float: left;
-  position: absolute;
-  width: 184px;
-  width: calc(200px - 0px);
-  left: 0px;
-  top: 0px;
-  bottom: 0px;
   padding: 8px;
+}
 
-  background-color: #404040;
-  color: white;
+div.search_cont {
+  flex-grow: 1;
 }
 
 div.post_time {
   padding: 8px;
   text-align: left;
   font-size: 12px;
-  background-color: #404040;
 }
 
 div.post_link {
   padding: 4px;
   text-align: right;
   font-size: 18px;
-  min-height: 64px;
 }
 
 div.post_sum {
-  border-left: solid 200px #404040;
   padding: 4px 4px 4px 8px;
-  background-color: white;
 }
 
 
 div.post_thread {
-  margin-left: 200px;
   padding: 8px;
-  background-color: #ffda44;
   font-size: 12px;
 }
 
@@ -323,9 +299,8 @@ a.user_name {
   display: block;
   padding: 4px;
   margin-bottom: 8px;
-  color: #ffda44;
+  color: @clImportant;
   font-weight: bold;
-  background-color: #404040;
 }
 
 img.avatar {
@@ -333,7 +308,6 @@ img.avatar {
   width: 128px;
   height: 128px;
   display: inline-block;
-  background-color: #ffda44;
   clear: both;
 }
 
@@ -341,7 +315,6 @@ img.smallavatar {
   margin: 0px;
   width: 64px;
   height: 64px;
-  background-color: #ffda44;
   display: inline-block;
   clear: both;
 }
@@ -351,14 +324,12 @@ div.user_pcnt {
   padding: 8px;
   text-align: left;
   font-size: 12px;
-  background-color: #404040;
 }
 
 
 div.post_info {
   padding: 8px;
-  border-left: solid 200px #404040;
-  background-color: #ffda44;
+  color: @clImportant;
   font-size: 12px;
 }
 
@@ -369,9 +340,6 @@ div.post_info a {
 
 div.post_text {
   padding: 16px 16px 16px 16px;
-  border-left: solid 200px #404040;
-  background-color: white;
-  min-height: 190px;
 }
 
 
@@ -384,31 +352,29 @@ div.page_row {
 }
 
 a.page_link {
-  background-color: #ffda44;
   padding: 4px;
   text-align: center;
   display:inline-block;
   min-width: 32px;
 }
 
+
 span.current_page {
-  background-color: #f06060;
+  background-color: @clImportant;
   padding: 4px;
   text-align: center;
   display:inline-block;
   min-width: 32px;
-  color: white;
+  color: @clMain;
 }
 
 
 /* settings form styles */
 
 div.set_page {
-  position: relative;
   width: 95%;
   max-width: 1280px;
   margin: 0px auto 0px auto;
-  background-color: #404040;
   overflow: auto;
   padding: 16px;
 }
@@ -416,7 +382,6 @@ div.set_page {
 form.settings {
     width: 640px;
     padding: 16px;
-    background: #d0d0d0;
     margin: 8px auto 8px auto;
 }
 
@@ -445,9 +410,10 @@ input.settings {
     padding: 0px 8px;
     outline: none;
     border: none;
+    border-bottom: 2px solid @clImportant;
 
-    background-color: white;
-    color: black;
+    background-color: @clMain;
+    color: @clText1;
     background-position: 12px -10px;
     background-repeat: no-repeat;
     background-size: 24px 120px;
@@ -458,7 +424,6 @@ label.checkbox {
   width: auto !important;
   height: auto !important;
   padding: 0px !important;
-  line-height: 0px !important;
   margin-right: 8px;
 }
 
@@ -468,12 +433,13 @@ label.checkbox input {
 
 label.checkbox span {
     width: 20px;
-    line-height: 12px;
+    line-height: 16px;
     display: inline-block;
-    background-color: white;
-    color: white;
-    font-size: 16px;
-    border: 4px solid white;
+    background-color: transparent;
+    color: transparent;
+    font-size: 30px;
+    line-height: 16px;
+    border: 2px solid @clImportant;
 }
 
 label.checkbox input:checked + span {
@@ -484,10 +450,9 @@ label.checkbox input:checked + span {
 
 input.button {
     height: 38px;
-    width: 128px;
-    background: #ff656c;
+    background: transparent;
     border: none;
-    color: white;
+    color: @clText1;
     font-weight: bold;
     font-size: 16px;
     font-variant: small-caps;
@@ -495,11 +460,8 @@ input.button {
     cursor: pointer;
     text-align: center;
     padding: 0px;
+    text-decoration: underline;
     display: block;
-}
-
-input.button:hover {
-    background: #ff7b81;
 }
 
 
@@ -540,20 +502,16 @@ h1.msg {
 form.login-block, form.register-block {
     width: 320px;
     padding: 16px;
-    background: #ffda44;
     margin: 8px auto 48px auto;
 }
 
 form.login-block h1, form.register-block h1, form.settings h1 {
     height: 38px;
-    text-align: center;
-    color: white;
-    background-color: #404040;
+    color: @clImportant;
     font-size: 20px;
     font-variant: small-caps;
-    margin-top: 0;
+    margin-top: 0px;
     margin-bottom: 8px;
-    padding: 8px;
 }
 
 input.username, input.email, input.password {
@@ -564,9 +522,10 @@ input.username, input.email, input.password {
     padding: 0 20px 0 50px;
     outline: none;
     border: none;
+    border-bottom: 2px solid @clImportant;
 
-    background-color: white;
-    color: black;
+    background-color: transparent;
+    color: @clText1;
     background-position: 12px -10px;
     background-repeat: no-repeat;
     background-size: 24px 120px;
@@ -592,10 +551,9 @@ input.username:focus, input.email:focus, input.password:focus {
 
 input.submit {
     height: 38px;
-    width: 100%;
-    background: #ff656c;
+    background: transparent;
     border: none;
-    color: white;
+    color: @clText1;
     font-weight: bold;
     font-size: 16px;
     font-variant: small-caps;
@@ -603,25 +561,12 @@ input.submit {
     cursor: pointer;
     text-align: center;
     padding: 0px;
-    display: block;
+    display: inline-block;
+    text-decoration: underline;
 }
 
 input.submit:hover {
-    background: #ff7b81;
-}
-
-/* login/logout info on the pages */
-
-div.login_interface {
-  float: right;
-  margin-right: 16px;
-  text-align: right;
-}
-
-div.login_interface a {
-  text-align: right;
-  display: inline;
-  line-height: 1.5em;
+    color: @clImportant;
 }
 
 span.separator {
@@ -633,43 +578,25 @@ span.separator {
 
 div.ui {
   width: 100%;
-  margin: 8px 0px;
+  margin: 16px 0px;
   overflow: hidden;
 }
 
 a.ui, a.ui:visited {
+  font-weight: bold;
   display: block !important;
   float: left !important;
-  padding: 4px 8px !important;
-  margin: 0px 8px 0px 0px !important;
-
-  background-color: #e05050 !important;
-  color: white !important;
-  text-decoration: none !important;
-}
-
-a.ui:hover, a.ui:active {
-  background-color: #ff656c !important;
-  color: white !important;
+  margin: 0px 16px 0px 0px !important;
 }
 
 a.uir, a.uir:visited {
+  font-weight: bold;
   display: block !important;
   float: right !important;
-  padding: 4px 8px !important;
-  margin: 0px 0px 0px 8px !important;
-
-  background-color: #e05050 !important;
-  color: white !important;
-  text-decoration: none !important;
+  margin: 0px 0px 0px 16px !important;
 }
 
-a.uir:hover, a.uir:active {
-  background-color: #ff656c !important;
-}
-
-
-/* Post editing buttons style */
+        /* Post editing buttons style */
 
 div.edit_tools {
   float: right;
@@ -706,7 +633,6 @@ div.message_block {
   margin: 8px auto;
   text-align: center;
   padding: 20px;
-//  border-top: 16px solid #f06060;
   clear: both;
   color: #000;
 }
@@ -774,7 +700,7 @@ div.editor {
   width: 640px;
   max-width: 60%;
   margin: 8px;
-  opacity: 0.6;
+  opacity: 0.5;
 
   overflow: auto;
 }
@@ -794,26 +720,27 @@ div.new_editor {
 
 
 #editform {
-  padding: 16px;
-  background-color: gray;
+  padding: 0px 16px 16px 16px;
+  background-color: @clTitle;
+  border: 2px solid @clImportant;
 }
 
 h1.fakeedit {
   width: 100%;
-  border-style: none;
   padding: 4px;
-  margin: 8px 0px 8px 0px;
+  margin: 0px;
 
-  background-color: #e0e0e0;
-  color: #404040;
+  color: @clText3;
+
+  border-bottom: 2px solid @clText2;
   font-weight: bold;
   font-size: inherit;
 }
 
 div.editor p, div.new_editor p{
-  color: white;
+  color: @clImportant;
   font-weight: bold;
-  margin: 0px 0px 4px 0px;
+  margin: 16px 0px 4px 0px;
 }
 
 span.small {
@@ -833,73 +760,58 @@ div.edit_groupR {
   padding-left: 8px;
 }
 
-input.title {
+input.title, input.tags {
   display: inline-block;
   width: 100%;
-  border-style: none;
+  border: none;
+  border: 2px solid @clImportant;
   padding: 4px;
   margin-bottom: 8px;
 
-  background-color: white;
+  background-color: @clMain;
 }
-
-input.tags {
-  display: inline-block;
-  width: 100%;
-
-  border-style: none;
-  padding: 4px;
-  margin-bottom: 8px;
-
-  background-color: white;
-}
-
 
 textarea.editor {
-  display: inline-block;
+  display: block;
   width: 100%;
   height: 20em;
   padding: 4px;
   margin-bottom: 8px;
   margin-top: -1px;
-  border-style: none;
+  border: 2px solid @clImportant;
   outline-style: none;
   overflow: auto;
   resize: vertical;
 
   font-family: "Liberation Mono", "Courier New", monospaced;
-  background-color: white;
+  background-color: @clMain;
 }
 
 div.panel {
-  display: inline-block;
-  width: 100%;
   text-align: left;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 
 div.panel input {
-  border-style: none;
   padding: 4px;
 
-  background-color: #f06060;
-  color: white;
+  border: none;
+  background-color: transparent;
+  text-decoration: underline;
+  font-weight: bold;
 }
 
-div.panel input:active, div.panel input:focus, div.panel input:hover {
-  background-color: #ff656c;
-}
 
 /* sqlite console styles */
 
 textarea.sql_editor {
-  display: inline-block;
+  display: block;
   width: 100%;
   height: 15em;
   padding: 4px;
   margin-bottom: 8px;
   margin-top: -1px;
-  border-style: none;
+  border: 2px solid @clImportant;
   outline-style: none;
   overflow: auto;
   resize: vertical;
@@ -1010,7 +922,7 @@ table.users_table td:nth-of-type(2) {
 /* common styles */
 
 p.timestamp {
-  background-color: #ffda44;
+  background-color: @clTitle;
   width: 95%;
   max-width: 1280px;
   margin: auto;
@@ -1053,7 +965,8 @@ div.post_text p {
    text-align: justify;
    margin-top: 0.75em;
    margin-bottom: 0.75em;
-   word-wrap: break-word;
+   text-overflow: ellipsis;
+   overflow: hidden;
 }
 
 div.post_text p.uli {
@@ -1178,23 +1091,21 @@ table.txt td {
 /* block quotes */
 
 div.bq {
-  border: 2px solid #808080;
+  border: 2px solid @clText2;
 
   box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.2);
   padding: 0em 0.7em 0.1em 1em;
-  margin:  1em;
+  margin:  2em 1em 1em 1em;
 
-  background-color: #f8f8f8;
   clear: both;
 }
 
 h1.bq
 {
-  margin-left: -0.5em;
   margin-top: -1.2em;
   padding: 0.2em 0.3em 0.2em 0.3em;
 
-  border: 2px solid #808080;
+  border: 2px solid @clText2;
 
   box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.2);
   background: white;
@@ -1203,11 +1114,11 @@ h1.bq
   font-size: 1em;
   font-weight: normal;
 
-  float: left;
   clear: both;
 
   max-width: 150px;
   overflow: hidden;
+  display: inline-block;
 }
 
 div.right div.bq, div.right h1.bq {
@@ -1221,21 +1132,18 @@ div.user_profile {
   width: 95%;
   max-width: 1280px;
   margin: 0px auto 0px auto;
-  background-color: #404040;
   overflow: auto;
-  padding: 16px;
+}
+
+div.user_flex {
+  display: flex;
 }
 
 div.user_desc {
-  float: left;
-  display: block;
-  width: 33%;
   max-height: 50%;
-  background-color: white;
-  padding: 16px;
   overflow: auto;
-  margin: 0px 0px 8px 0px;
-  vertical-align: top;
+  margin: 16px 16px 16px 0px;
+  width: 800px;
 }
 
 div.user_desc h1 {
@@ -1248,103 +1156,17 @@ img.profile_avatar {
   margin: 0px 8px 8px 0px;
   width: 128px;
   height: 128px;
-  background-color: #ffda44;
 }
 
 div.user_desc p {
    text-align: justify;
-   margin-top: 0.75em;
+   margin-top: 1em;
    margin-bottom: 0.75em;
    word-wrap: break-word;
 }
 
-
-form.user_edit_info {
-  float: right;
-  display: block;
-  width: 60%;
-  width: calc(67% - 16px);
-  padding: 16px;
-  background-color: #d0d0d0;
-  margin-bottom: 8px;
-}
-
-form.user_edit_pass {
-  float: left;
-  display: block;
-  width: 33%;
-  padding: 16px;
-  background-color: #d0d0d0;
-  margin-bottom: 8px;
-  clear: left;
-}
-
-form.user_edit_pass h1 {
-  text-align: left;
-  margin: 0px 0px 8px 0px;
-  color: black;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-form.user_edit_info label {
-  text-align: left;
-  margin: 0px 0px 8px 0px;
-  color: black;
-  font-size: 18px;
-  font-weight: bold;
-  display: block;
-}
-
-textarea.user_desc {
-  width: 100%;
-  height: 16em;
-  display: block;
-  margin: 0px 0px 8px 0px;
-  padding: 4px;
-
-  font-family: "Liberation Mono", "Courier New", monospaced;
-  background-color: white;
-  resize: vertical;
-  overflow: auto;
-  border-style: none;
-  outline-style: none;
-}
-
-select.skin {
-  display: block;
-  width: 100%;
-  margin-bottom: 8px;
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-
-  background-color: white;
-  border: none;
-}
-
-
-input.browse {
-  width: 100%;
-  margin-bottom: 8px;
-  font-size: 16px;
-  padding: 0px;
-  outline: none;
-  border: none;
-
-  background-color: white;
-  color: black;
-}
-
-
 div.user_stat {
-  float: right;
-  display: block;
-  width: 60%;
-  width: calc(67% - 16px);
-  padding: 16px;
-  background-color: white;
-  margin-bottom: 8px;
+  margin: 16px 0px 16px 0px;
 }
 
 
@@ -1357,3 +1179,73 @@ div.user_stat li {
   list-style: disc inside;
   margin-bottom: 4px;
 }
+
+form.user_edit_info {
+  padding: 16px 16px 16px 0px;
+  width:800px;
+}
+
+form.user_edit_attr {
+  padding: 16px;
+}
+
+
+form.user_edit_pass {
+  width: 33%;
+  padding: 16px 16px 16px 0px;
+}
+
+form.user_edit_pass h1 {
+  text-align: left;
+  margin: 0px 0px 8px 0px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+form.user_edit_info label {
+  text-align: left;
+  margin: 0px 0px 8px 0px;
+  font-size: 18px;
+  font-weight: bold;
+  display: block;
+}
+
+textarea.user_desc {
+  width: 100%;
+  height: 16em;
+  margin: 16px 0px;
+  padding: 4px;
+
+  font-family: "Liberation Mono", "Courier New", monospaced;
+  overflow: auto;
+  border: 2px solid @clImportant;
+  outline-style: none;
+}
+
+select.skin {
+  display: block;
+  width: 100%;
+  font-size: 18px;
+  font-weight: bold;
+  color: @clImportant;
+
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid @clImportant;
+}
+
+
+input.browse {
+  width: 100%;
+  margin-bottom: 8px;
+  font-size: 16px;
+  padding: 0px;
+  outline: none;
+  border: none;
+
+  background-color: transparent;
+  color: @clImportant;
+  border-bottom: 2px solid @clImportant;
+}
+
+
