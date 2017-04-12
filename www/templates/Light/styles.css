@@ -721,7 +721,7 @@ div.new_editor {
 
 #editform {
   padding: 0px 16px 16px 16px;
-  background-color: @clTitle;
+  background-color: @clMain;
   border: 2px solid @clImportant;
 }
 

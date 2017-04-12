@@ -1,5 +1,5 @@
-C Fixed\smissing\sfiles\sin\sthe\sproject\sfile\s"engine.fpr";\sMore\suser\sfriendly\sResetPassword\sutility\sprogram.
-D 2017-04-12T07:29:48.518
+C White\sbackground\sfor\sthe\sedit\sform.
+D 2017-04-12T13:22:00.114
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz a31fefe214f54c494d072119f9f662ebe965c9b4
@@ -177,7 +177,7 @@ F www/templates/Light/nav_thread.tpl 09d3cb72fbd3437c40b6589c4002d29de2c82150
 F www/templates/Light/post_view.tpl bcb1afd2fd47c380eb2714c6f3a9d1500dcf8c19
 F www/templates/Light/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/Light/search_result.tpl 793cb60caa676c77325c60b225d65097aaf1d689
-F www/templates/Light/styles.css c8b882220c44bdc329d1ecf825966facacca5575
+F www/templates/Light/styles.css 477b81ca499bc554f9e978a8152e249ab59b7e68
 F www/templates/Light/thread_info.tpl cb23b6c68e4bb0ef4395824830754c7e99875c17
 F www/templates/Light/userinfo.tpl 1aeeb2aeab0b48e7a18d925e039d377f2e3cf1c6
 F www/templates/Wasp/activation_email_subject.tpl 950d3451cce1b1b55eec7c9ac9c0bb415abaa34e
@@ -262,7 +262,7 @@ F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/styles.css 8105319d6578d9f9f878567f13cea84ef6ad4f5b
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 972dd8c4dd238737f6bf1f99e40766df60ada888
-R 4dc46b17e649e68efa8f35c45fdf1f59
+P 5bfe4674c8409dcb240f91bde90b707604fe50b0
+R ef3126ea3dc70db85f8dbb5c08e4feff
 U johnfound
-Z 419b21ce958ee0eea6841982e19522df
+Z 48c6da83ae61a62a1d0a523e9b44d8cb
