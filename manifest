@@ -1,5 +1,5 @@
-C The\snew\sskin\sseparated.\sThe\sdefault\sskin\sset\sto\sWasp\stheme.
-D 2017-04-06T12:08:01.216
+C Fixed\smissing\sfiles\sin\sthe\sproject\sfile\s"engine.fpr";\sMore\suser\sfriendly\sResetPassword\sutility\sprogram.
+D 2017-04-12T07:29:48.518
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz a31fefe214f54c494d072119f9f662ebe965c9b4
@@ -9,7 +9,7 @@ F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
 F source/Documents/FastCGI\sSpecification.html e2fc06a5abf1b3505c665e108ce3ad28b636095a
 F source/Documents/rfc7578.txt 5dff43151910fe753f8649b08d650137f07a96ff
 F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
-F source/ResetPassword.asm 282ad76329ba5c8d6fb8c31d3469bb483e7f34e5
+F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm e733112da9d4d1b77b776280dfff30f1b291dbb1
@@ -18,7 +18,7 @@ F source/create.sql 38894df85555ecd91dac2505d294e379e40b88e4
 F source/delete.asm 64d173cf0ee0df77a8843408b427bdb02b384bd9
 F source/edit.asm 2b390830ae7266c84367f422e925a55f9e0f624f
 F source/engine.asm e483a3bdb9b239c4fe152b7d682cdd261ffe9ba1
-F source/engine.fpr ec5b95c732133e6ac4f82c75860b71f810376404
+F source/engine.fpr 3e52d7592d43d0dd3ca335bdc0f31c0c18305e06
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm c346f04f48ca18c04ca10b4eb5a937366e5e0c5c
@@ -262,7 +262,7 @@ F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/styles.css 8105319d6578d9f9f878567f13cea84ef6ad4f5b
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P f762a58155692b78905b636aa0833a0ff93c8dfb
-R bdee988962bf9726f9392a5aa2467b5d
+P 972dd8c4dd238737f6bf1f99e40766df60ada888
+R 4dc46b17e649e68efa8f35c45fdf1f59
 U johnfound
-Z 2529fe62f96455d4b78a9b244022a4ea
+Z 419b21ce958ee0eea6841982e19522df

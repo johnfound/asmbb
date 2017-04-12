@@ -18,16 +18,15 @@ include "%lib%/freshlib.inc"
 
 include "%lib%/freshlib.asm"
 
-; include your includes here.
-
 start:
         InitializeAll
-
-; place your code here.
 
         stdcall GetCmdArguments
 
         xor     ecx, ecx
+        cmp     [eax+TArray.count], 2
+        jb      .show_help
+
         cmp     [eax+TArray.count], 3
         jb      .new_salt
 
@@ -36,15 +35,25 @@ start:
 .new_salt:
         stdcall HashPassword, [eax+TArray.array+4], ecx
 
-        stdcall FileWriteString, [STDOUT], eax
+        push    eax
+        stdcall FileWriteString, [STDOUT], "Hash: "
+        stdcall FileWriteString, [STDOUT] ; from the stack
         stdcall FileWriteString, [STDOUT], cCRLF
+        stdcall FileWriteString, [STDOUT], "Salt: "
         stdcall FileWriteString, [STDOUT], edx
         stdcall FileWriteString, [STDOUT], cCRLF
 
+.finish:
         FinalizeAll
         stdcall TerminateAll, 0
 
 cCRLF text 13, 10
+CRLF equ 13, 10
+
+.show_help:
+
+        stdcall FileWriteString, [STDOUT], <"This program computes the hash of password for AsmBB,", CRLF, "using the given salt or generating a new salt string.", CRLF, CRLF, "Syntax:", CRLF, CRLF, "ResetPassword password [salt]", CRLF, CRLF>
+        jmp     .finish
 
 
 proc HashPassword, .hPassword, .hSalt
