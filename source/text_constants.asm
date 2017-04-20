@@ -37,7 +37,7 @@ cEditingPageTitle       itext   EN: "Editing page: ",           \
                                 BG: "Редактиране на: "
 
 cSQLiteConsoleTitle     itext   EN: "WARNING! SQLite console. You can destroy your database here!",     \
-                                RU: "ВНИМАНИЕ! Конзоль SQLite. Возможно повреждения базы данных!",      \
+                                RU: "ВНИМАНИЕ! Конзоль SQLite. Возможно повреждение базы данных!",      \
                                 BG: "ВНИМАНИЕ! SQLite конзола. От тук е възможно да повредите базата данни!"
 
 cCreateAdminTitle       itext   EN: "Create the admin account!",                \

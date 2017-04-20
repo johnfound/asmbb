@@ -1,5 +1,5 @@
-C White\sbackground\sfor\sthe\sedit\sform.
-D 2017-04-12T13:22:00.114
+C Added\sa\sClient\sfield\sin\sthe\sGUESTS\stable\sfor\sstoring\sthe\sHTTP_USER_AGENT\sfields\sfrom\sthe\srequest.\sThe\sgoal\sis\sto\sdetect\sthe\sbots\sby\sthis\sfield.
+D 2017-04-20T13:27:11.545
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz a31fefe214f54c494d072119f9f662ebe965c9b4
@@ -13,8 +13,8 @@ F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm e733112da9d4d1b77b776280dfff30f1b291dbb1
-F source/commands.asm 800cac3f41ca00a74cbbe5b5f9db791bee4b99a8
-F source/create.sql 38894df85555ecd91dac2505d294e379e40b88e4
+F source/commands.asm 77cb83d5965c1329ee40600a474e19f5bb80d514
+F source/create.sql b42708afe64eb65809850e3ff814b6a8a4c38f80
 F source/delete.asm 64d173cf0ee0df77a8843408b427bdb02b384bd9
 F source/edit.asm 2b390830ae7266c84367f422e925a55f9e0f624f
 F source/engine.asm e483a3bdb9b239c4fe152b7d682cdd261ffe9ba1
@@ -41,14 +41,14 @@ F source/showthread.asm b147a9d62e8f08c3c63e134a0d77f443c86011cd
 F source/showthread.sql c575ee2fcbe60d8b878d78d44c477aeb4aece163
 F source/sqlite3.asm f605d645a6cd5a75fbfc52a86ce38c0b5ab0430a
 F source/sqlite_console.asm b5a76b2f91a21a45e7518e57c77767829376224d
-F source/text_constants.asm b8c3aa3d1c2186e3a35e871876f0a1c7f0891bb5
+F source/text_constants.asm dbf4ed39cbe0a8f490b4bc4981c21e95c17549e4
 F source/threadlist.asm cbce5aa7a1beed794c7e55c4abcef2727e79160a
 F source/threadlist.sql f07efe157ef0713c65d91f66158d69060e93429a
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
 F source/userinfo.asm 612a50dc9cf8cb2167911e137e6b63afb4dc3f9e
 F source/users_online.asm 726e48d7ce1e8306b4d3d7d3013f1529a4d7110c
 F source/users_online.sql 17d2355b533217d45f12dfb0aac745647a5918e6
-F source/util.sql 6d07e21a95ae1dcdf345e4b2e0b0f780cd707169
+F source/util.sql 77ab61a32e3471ae7f9188453107e44c03796d61
 F source/version.asm 629d2b9b931f90661cc53d4bb81a9379c7bad1ff
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
@@ -262,7 +262,7 @@ F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/styles.css 8105319d6578d9f9f878567f13cea84ef6ad4f5b
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 5bfe4674c8409dcb240f91bde90b707604fe50b0
-R ef3126ea3dc70db85f8dbb5c08e4feff
+P 2c6fe4d71100859f38d06a5abb3673a1af478ba1
+R 7ffab2b6d7b87db97bcb69cdf7ec513e
 U johnfound
-Z 48c6da83ae61a62a1d0a523e9b44d8cb
+Z 46ce165bc89b4b9abf0fe86790208cb9

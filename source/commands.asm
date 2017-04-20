@@ -1355,7 +1355,7 @@ endp
 
 
 
-sqlInsertGuest   text "insert or replace into Guests values (?, strftime('%s','now'))"
+sqlInsertGuest   text "insert or replace into Guests values (?, strftime('%s','now'), ?)"
 sqlClipGuests    text "delete from Guests where LastSeen < strftime('%s','now') - 864000"     ; 10 days = 864000 seconds
 
 proc InsertGuest, .pSpecial
@@ -1368,6 +1368,11 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertGuest, sqlInsertGuest.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.remoteIP]
+
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_USER_AGENT"
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 

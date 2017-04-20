@@ -14,7 +14,8 @@ insert into Params values ('log_events', '0');
 
 create table Guests (
   addr     integer primary key not null,
-  LastSeen integer
+  LastSeen integer,
+  Client   text
 );
 
 create index idxGuests_time on Guests(LastSeen);
