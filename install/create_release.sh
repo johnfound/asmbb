@@ -43,15 +43,21 @@ cp install.txt asmbb/
 # now pack it
 tar -czf asmbb.tar.gz asmbb/
 
-#rm asmbb/templates/*
-#rmdir asmbb/templates/
+rm asmbb/templates/Light/*
+rmdir asmbb/templates/Light/
 
-#rm asmbb/images/favicons/*
-#rmdir asmbb/images/favicons/
+rm asmbb/templates/Wasp/*
+rmdir asmbb/templates/Wasp/
 
-#rm asmbb/images/*
-#rmdir asmbb/images/
+rm asmbb/templates/*
+rmdir asmbb/templates/
 
-#rm asmbb/*
-#rm asmbb/.htaccess
-#rmdir asmbb
+rm asmbb/images/favicons/*
+rmdir asmbb/images/favicons/
+
+rm asmbb/images/*
+rmdir asmbb/images/
+
+rm asmbb/*
+rm asmbb/.htaccess
+rmdir asmbb
