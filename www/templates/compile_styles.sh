@@ -1,2 +1,2 @@
 #!/usr/bin/bash
-clessc styles.css -o all.css
+clessc styles.less -o all.css
