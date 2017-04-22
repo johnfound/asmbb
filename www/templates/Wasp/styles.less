@@ -1,3 +1,9 @@
+/* Compile with:
+       cless style.css -o all.css
+*/
+
+@clColor1: #ffcc40;
+
 body {
   font-size: 16px;
   font-family: Verdana,sans-serif;
@@ -30,7 +36,7 @@ div.header {
   width: 95%;
   max-width: 1280px;
   margin: 0px auto 0px auto;
-  background-color: #ffda44;
+  background-color: @clColor1;
   overflow: auto;
 }
 
@@ -180,7 +186,7 @@ a.thread_link {
 }
 
 div.thread_tags {
-  background-color: #ffda44;
+  background-color: @clColor1;
   padding: 8px;
   border-left: solid 200px #404040;
   font-size: 12px;
@@ -218,7 +224,7 @@ a.taglink {
 
 
 a.current_tag {
-  background-color: #ffda44;
+  background-color: @clColor1;
   color: black;
   padding: 4px;
 }
@@ -304,7 +310,7 @@ div.post_sum {
 div.post_thread {
   margin-left: 200px;
   padding: 8px;
-  background-color: #ffda44;
+  background-color: @clColor1;
   font-size: 12px;
 }
 
@@ -323,7 +329,7 @@ a.user_name {
   display: block;
   padding: 4px;
   margin-bottom: 8px;
-  color: #ffda44;
+  color: @clColor1;
   font-weight: bold;
   background-color: #404040;
 }
@@ -333,7 +339,7 @@ img.avatar {
   width: 128px;
   height: 128px;
   display: inline-block;
-  background-color: #ffda44;
+  background-color: @clColor1;
   clear: both;
 }
 
@@ -341,7 +347,7 @@ img.smallavatar {
   margin: 0px;
   width: 64px;
   height: 64px;
-  background-color: #ffda44;
+  background-color: @clColor1;
   display: inline-block;
   clear: both;
 }
@@ -358,7 +364,7 @@ div.user_pcnt {
 div.post_info {
   padding: 8px;
   border-left: solid 200px #404040;
-  background-color: #ffda44;
+  background-color: @clColor1;
   font-size: 12px;
 }
 
@@ -384,7 +390,7 @@ div.page_row {
 }
 
 a.page_link {
-  background-color: #ffda44;
+  background-color: @clColor1;
   padding: 4px;
   text-align: center;
   display:inline-block;
@@ -540,7 +546,7 @@ h1.msg {
 form.login-block, form.register-block {
     width: 320px;
     padding: 16px;
-    background: #ffda44;
+    background: @clColor1;
     margin: 8px auto 48px auto;
 }
 
@@ -1010,7 +1016,7 @@ table.users_table td:nth-of-type(2) {
 /* common styles */
 
 p.timestamp {
-  background-color: #ffda44;
+  background-color: @clColor1;
   width: 95%;
   max-width: 1280px;
   margin: auto;
@@ -1248,7 +1254,7 @@ img.profile_avatar {
   margin: 0px 8px 8px 0px;
   width: 128px;
   height: 128px;
-  background-color: #ffda44;
+  background-color: @clColor1;
 }
 
 div.user_desc p {
