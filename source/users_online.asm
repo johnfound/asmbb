@@ -101,7 +101,7 @@ uaTrackingUsers = 11
 
 
 
-sqlLogUserActivity text "insert into UserLog(userID, remoteIP, Time, Activity, Param) values (?1, ?2, strftime('%s','now'), ?3, ?4)"
+sqlLogUserActivity text "insert into UserLog(userID, remoteIP, Time, Activity, Param, Client) values (?1, ?2, strftime('%s','now'), ?3, ?4, ?5)"
 sqlClipHistory     text "delete from UserLog where Time < strftime('%s','now') - 864000"
 
 proc LogUserActivity, .pSpecialData, .activity, .param
@@ -197,6 +197,13 @@ begin
 
 .bind_ok:
 
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_USER_AGENT"
+        jc      .client_ok
+
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 5, eax, [eax+string.len], SQLITE_STATIC
+
+.client_ok:
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 
@@ -206,6 +213,7 @@ begin
         popad
         return
 endp
+
 
 
 
@@ -253,7 +261,17 @@ begin
         test    eax, eax
         jnz     .make_user
 
+        cinvoke sqliteColumnText, [.stmt], 5
+        stdcall IsBot, eax
+        jc      .bot
+
         stdcall StrCat, edi, txt "Guest"
+        jmp     .user_ok
+
+.bot:
+        stdcall StrCat, edi, txt "Robot"
+
+.user_ok:
 
         cinvoke sqliteColumnInt, [.stmt], 4
         movzx   edx, al
@@ -316,6 +334,20 @@ begin
         popad
         return
 endp
+
+
+proc IsBot, .hClient
+begin
+        stdcall StrMatchPatternNoCase, txt "*bot*", [.hClient]
+        jc      .yes
+        stdcall StrMatchPatternNoCase, txt "*crawl*", [.hClient]
+        jc      .yes
+        stdcall StrMatchPatternNoCase, txt "*spider*", [.hClient]
+.yes:
+        return
+endp
+
+
 
 
 

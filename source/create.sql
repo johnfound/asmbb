@@ -20,7 +20,6 @@ create table Guests (
 
 create index idxGuests_time on Guests(LastSeen);
 
-
 create table Users (
   id        integer primary key autoincrement,
   nick      text unique,
@@ -43,19 +42,21 @@ create index idxUsers_email on Users (email);
 create index idxUsersX on Users(id, nick, avatar);
 create index idxUsers_LastSeen on Users(LastSeen);
 
-
 CREATE TABLE UserLog (
   userID integer,
   remoteIP integer,
   Time integer,
   Activity integer,
   Param integer,
+  Client text,
   foreign key (userID) references Users(id) on delete cascade on update cascade
 );
+
 
 create index idxUserLogTime on UserLog(time);
 create index idxUserLogUserIP on UserLog(UserID, remoteIP);
 create index idxUserLogUserID on UserLog(UserID);
+create index idxUserLigClient on UserLog(Client);
 
 
 create table WaitingActivation(
@@ -71,7 +72,6 @@ create table WaitingActivation(
 );
 
 
-
 create table Threads (
   id          integer primary key autoincrement,
   Slug        text unique,
@@ -80,9 +80,9 @@ create table Threads (
   Pinned      integer default 0
 );
 
+
 create index idxThreadsPinnedLastChanged on Threads (Pinned desc, LastChanged desc);
 create index idxThreadsSlug on Threads (Slug);
-
 
 
 create table Posts (

@@ -1,5 +1,5 @@
-C A\slittle\sbit\sdarker\syellow\sin\sthe\sdefault\sand\s"wasp"\sskins.
-D 2017-04-22T11:35:51.734
+C Identifying\srobots\sfor\sthe\suser\sactivities\slist.
+D 2017-04-23T09:55:05.377
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 4ce0e437e5b8ab0e19dc2dee58a3718e01ffb466
@@ -13,8 +13,8 @@ F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm e733112da9d4d1b77b776280dfff30f1b291dbb1
-F source/commands.asm 77cb83d5965c1329ee40600a474e19f5bb80d514
-F source/create.sql b42708afe64eb65809850e3ff814b6a8a4c38f80
+F source/commands.asm a8ac8084268d9ea139528141fd64e4f6b12a669b
+F source/create.sql cfcb55ee0a748ada0cd3138d0dd2bd5a8373553a
 F source/delete.asm 64d173cf0ee0df77a8843408b427bdb02b384bd9
 F source/edit.asm 2b390830ae7266c84367f422e925a55f9e0f624f
 F source/engine.asm e483a3bdb9b239c4fe152b7d682cdd261ffe9ba1
@@ -46,8 +46,8 @@ F source/threadlist.asm cbce5aa7a1beed794c7e55c4abcef2727e79160a
 F source/threadlist.sql f07efe157ef0713c65d91f66158d69060e93429a
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
 F source/userinfo.asm 612a50dc9cf8cb2167911e137e6b63afb4dc3f9e
-F source/users_online.asm 726e48d7ce1e8306b4d3d7d3013f1529a4d7110c
-F source/users_online.sql 17d2355b533217d45f12dfb0aac745647a5918e6
+F source/users_online.asm d84c1b10c8395d5d43770fa0f612ff0cd12ac588
+F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/util.sql 77ab61a32e3471ae7f9188453107e44c03796d61
 F source/version.asm e7c740b52e96d2e86544db8e9550be9120a679b2
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
@@ -262,7 +262,7 @@ F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/styles.less e6953f5d4ff27c96b5d406c6c7c30c7cf1d05565
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 648f3a660d887e45d1fef5a065a2f272da993f8c
-R fd2683f384b24cb40eb9a5f7161fb436
+P eb528520a8a618ea2564b76c899a2d8b570b10ea
+R 5459e67f176eadbcb11f86111c971c67
 U johnfound
-Z d33ba47c3c4ef5fbf84f00a7c6e42f34
+Z 5705f2773fe0cdfdd61e029df1a0d2b6

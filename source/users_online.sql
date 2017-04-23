@@ -4,7 +4,8 @@ select
   UL.Activity,
   UL.Param,
   strftime('%H:%M:%S', UL.Time, 'unixepoch') as Time,
-  remoteIP
+  remoteIP,
+  Client
 
 from
 
@@ -14,5 +15,5 @@ where
 
   UL.time > strftime('%s', 'now')-300
 
-group by userid, remoteIP
+group by userid, remoteIP, Client
 order by rowid desc;

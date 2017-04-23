@@ -1370,9 +1370,10 @@ begin
         cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.remoteIP]
 
         stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_USER_AGENT"
+        jc      @f
         stdcall StrPtr, eax
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
-
+@@:
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 
