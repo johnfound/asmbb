@@ -1,5 +1,5 @@
-C Added\snew\sactivity\sfor\sthe\suser\slogging\s(uaEditingThread=12)\sand\sthe\srespective\stemplates.\sRemoved\ssome\scommented\sout\ssource.\sCode\scleanup.
-D 2017-04-24T18:04:12.892
+C Small\sfixes\sto\ssome\stemplates\sand\sthe\sstyles.
+D 2017-04-24T18:32:56.210
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 4ce0e437e5b8ab0e19dc2dee58a3718e01ffb466
@@ -176,11 +176,11 @@ F www/templates/Light/main_html_start.tpl ad671efccb31142e7304fb43098bdc4f85af0b
 F www/templates/Light/minimag_suffix.tpl e0ee4765a03f31868c42f12693dc9b23b8ca076e
 F www/templates/Light/nav_list.tpl 0a15e81a1d5d08087d4be4e1e6a68aeb63dd790c
 F www/templates/Light/nav_search.tpl d41b3e1308e015bc6b5443be0102d20dbc93de51
-F www/templates/Light/nav_thread.tpl 09d3cb72fbd3437c40b6589c4002d29de2c82150
+F www/templates/Light/nav_thread.tpl 603dcbe14b87a8f6cda2adbb549d73611d43d513
 F www/templates/Light/post_view.tpl bcb1afd2fd47c380eb2714c6f3a9d1500dcf8c19
 F www/templates/Light/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/Light/search_result.tpl 793cb60caa676c77325c60b225d65097aaf1d689
-F www/templates/Light/styles.less 477b81ca499bc554f9e978a8152e249ab59b7e68
+F www/templates/Light/styles.less 487436fd1ba1e308bcf5e64a916aa71a86b31fed
 F www/templates/Light/thread_info.tpl cb23b6c68e4bb0ef4395824830754c7e99875c17
 F www/templates/Light/userinfo.tpl 1aeeb2aeab0b48e7a18d925e039d377f2e3cf1c6
 F www/templates/Wasp/activation_email_subject.tpl 950d3451cce1b1b55eec7c9ac9c0bb415abaa34e
@@ -219,11 +219,11 @@ F www/templates/Wasp/main_html_start.tpl 42c4f4a90f3573f16128a5fdb883c964d794ecf
 F www/templates/Wasp/minimag_suffix.tpl e0ee4765a03f31868c42f12693dc9b23b8ca076e
 F www/templates/Wasp/nav_list.tpl 0a15e81a1d5d08087d4be4e1e6a68aeb63dd790c
 F www/templates/Wasp/nav_search.tpl d41b3e1308e015bc6b5443be0102d20dbc93de51
-F www/templates/Wasp/nav_thread.tpl 78071d3d9c821b8d8331bbb771678809bae00392
+F www/templates/Wasp/nav_thread.tpl 603dcbe14b87a8f6cda2adbb549d73611d43d513
 F www/templates/Wasp/post_view.tpl 1c660a22cabb39002958ef46faaecb52673d9065
 F www/templates/Wasp/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/Wasp/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
-F www/templates/Wasp/styles.less e6953f5d4ff27c96b5d406c6c7c30c7cf1d05565
+F www/templates/Wasp/styles.less a0a73bdfb0bb9651a77e6a8667d446f5b5d45247
 F www/templates/Wasp/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/Wasp/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
 F www/templates/activation_email_subject.tpl 950d3451cce1b1b55eec7c9ac9c0bb415abaa34e
@@ -269,7 +269,7 @@ F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/styles.less f1a5bdf4419d18238a632748fd992129ca92a16b
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 046995b91af9b0ed401061fa4e2ede0837d0239d
-R 2a6217d7d5157721fdf68dace8427218
+P 3b41df5d763e05b8ad7da8bd902b95ee943b12ad
+R d5a2f486123dabb4727f29ddd06e2dcf
 U johnfound
-Z c989a21e47e66adc568b814611c062ec
+Z 8250ca245f247a516a741fbc83b464c9
