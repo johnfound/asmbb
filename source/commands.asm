@@ -23,7 +23,7 @@ struct TSpecialParams
 
   .dir             dd ?                 ; /tag_name/
   .thread          dd ?                 ; /thread_slug/
-  .page_num        dd ?                 ; /1234
+  .page_num        dd ?                 ; /1234 - can be the number of the page, or the ID of a post.
 
 ; forum global variables.
 

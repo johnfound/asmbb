@@ -86,7 +86,7 @@ endp
 ; Users tracking/activities.
 
 
-uaUnknown       = 0
+ uaUnknown       = 0
  uaLoggingIn     = 1
  uaLoggingOut    = 2
  uaRegistering   = 3
@@ -97,7 +97,8 @@ uaUnknown       = 0
  uaDeletingPost  = 8
  uaUserProfile   = 9     ; UserName reading.
  uaAdminThings   = 10
-uaTrackingUsers = 11
+ uaTrackingUsers = 11
+ uaEditingThread = 12    ; ThreadID
 
 
 
@@ -128,7 +129,7 @@ begin
         cinvoke sqliteBindInt, [.stmt], 3, ebx
 
         xor     edx, edx
-        xor     ecx, ecx        ; param type. 0 = number
+        xor     ecx, ecx        ; param type. 0 = string
 
         cmp     ebx, uaThreadList
         jne     .no_list
@@ -180,6 +181,14 @@ begin
 
 .no_delete:
 
+        cmp     ebx, uaEditingThread
+        jne     .no_edit_thread
+
+        mov     edx, [esi+TSpecialParams.thread]
+        jmp     .param_ok
+
+.no_edit_thread:
+
 .param_ok:
         test    ecx, ecx
         jz      .bind_string
@@ -220,7 +229,6 @@ endp
 
 iglobal
   sqlGetUsersActivity StripText 'users_online.sql', SQL
-                      dd   0
 endg
 
 proc UserActivityTable, .pSpecialData

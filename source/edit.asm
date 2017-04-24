@@ -285,8 +285,10 @@ begin
 endp
 
 
+iglobal
+  sqlGetAllThreadAttr StripText "thread_attr.sql", SQL
+endg
 
-sqlGetAllThreadAttr StripText "thread_attr.sql", SQL
 sqlSavePostTitle    text      "update threads set slug = ?1, Caption = ?2, LastChanged = strftime('%s','now') where id = ?3"
 
 proc EditThreadAttr, .pSpecial
@@ -379,6 +381,8 @@ begin
         jne     .error_wrong_permissions
 
 .permissions_ok:
+
+        stdcall LogUserActivity, esi, uaEditingThread, 0
 
         cmp     [esi+TSpecialParams.post_array], 0
         jne     .save_attributes
