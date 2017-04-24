@@ -61,7 +61,7 @@ include "messages.asm"
 include "version.asm"
 include "images_png.asm"
 
-include "postdebug.asm"
+;include "postdebug.asm"
 
 
 iglobal

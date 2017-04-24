@@ -2,7 +2,7 @@
 sqlSelectPosts StripText "showthread.sql", SQL
 
 sqlGetPostCount  text "select count(1) from Posts where ThreadID = ?"
-sqlGetThreadInfo text "select id, caption, slug from Threads where slug = ? limit 1"
+sqlGetThreadInfo text "select T.id, T.caption, T.slug, (select userID from Posts P where P.threadID=T.id order by P.id limit 1) as UserID from Threads T where T.slug = ?1 limit 1"
 
 
 proc ShowThread, .pSpecial
@@ -46,18 +46,6 @@ begin
         stdcall StrCat, edi, '<div class="thread">'
 
         stdcall StrCatTemplate, edi, "nav_thread", [.stmt2], esi
-
-        stdcall StrCat, edi, '<h1 class="thread_caption">'
-
-        cinvoke sqliteColumnText, [.stmt2], 1
-
-        stdcall StrEncodeHTML, eax
-        stdcall StrCat, edi, eax
-        stdcall StrCat, [esi+TSpecialParams.page_title], eax
-        stdcall StrDel, eax
-
-        stdcall StrCat, edi, '</h1>'
-
 
 ; pages links
 

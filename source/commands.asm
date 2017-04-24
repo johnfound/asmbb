@@ -496,6 +496,10 @@ end if
         stdcall StrCompNoCase, eax, txt "!edit"
         jc      .exec_command
 
+        mov     ecx, EditThreadAttr
+        stdcall StrCompNoCase, eax, txt "!edit_thread"
+        jc      .exec_command
+
         mov     ecx, DeleteConfirmation
         stdcall StrCompNoCase, eax, txt "!confirm"
         jc      .exec_command

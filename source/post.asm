@@ -84,7 +84,7 @@ begin
         test    eax, eax
         jz      .title_ok
 
-        stdcall StrByteUtf8, [.caption], 512
+        stdcall StrByteUtf8, [.caption], LIMIT_POST_CAPTION
         stdcall StrTrim, [.caption], eax
 
 .title_ok:
@@ -334,7 +334,7 @@ begin
 
         stdcall NumToStr, eax, ntsDec or ntsUnsigned
 
-        stdcall StrCharCat, [.slug], "-"
+        stdcall StrCharCat, [.slug], "."
         stdcall StrCat, [.slug], eax
         stdcall StrDel, eax
 
@@ -354,92 +354,94 @@ begin
 
 ; here process the tags
 
-        cmp     [.tags], 0
-        je      .post_in_thread
+        stdcall SaveThreadTags, [.tags], [.threadID]
 
-        pushad
-
-        stdcall StrSplitList, [.tags], ",", FALSE
-        mov     esi, eax
-
-        mov     ebx, [esi+TArray.count]
-
-        test    ebx, ebx
-        jz      .finish_tags
-
-        mov     [.count], 4
-
-sqlInsertTags        text "insert or ignore into Tags (tag, description) values (lower(?), ?)"
-sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?), ?)"
-
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertTags, sqlInsertTags.length, eax, 0
-        test    eax, eax
-        jnz     .rollback
-
-        lea     eax, [.stmt2]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertThreadTags, sqlInsertThreadTags.length, eax, 0
-        test    eax, eax
-        jnz     .rollback
-
-        cinvoke sqliteBindInt,  [.stmt2], 2, [.threadID]
-
-.tag_loop:
-        dec     ebx
-        js      .finish_tags
-
-        dec     [.count]
-        js      .finish_tags    ; 4 tags limit!
-
-        stdcall StrSplitList, [esi+TArray.array+4*ebx], ":", FALSE
-        mov     edi, eax
-
-        cmp     [edi+TArray.count], 0
-        je      .next_tag
-
-        cmp     [edi+TArray.count], 2
-        jb      .description_ok
-
-        stdcall StrByteUtf8, [edi+TArray.array+4], LIMIT_TAG_DESCRIPTION
-        stdcall StrTrim, [edi+TArray.array+4], eax
-
-        stdcall StrPtr, [edi+TArray.array+4]
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
-
-.description_ok:
-
-        stdcall StrTagify, [edi+TArray.array]
-
-        stdcall StrPtr, [edi+TArray.array]
-
-        cmp     [eax+string.len], 0
-        je      .next_tag
-
-        push    eax
-        cinvoke sqliteBindText, [.stmt],  1, eax, [eax+string.len], SQLITE_STATIC
-
-        pop     eax
-        cinvoke sqliteBindText, [.stmt2], 1, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteStep, [.stmt2]
-
-        cinvoke sqliteClearBindings, [.stmt]
-        cinvoke sqliteReset, [.stmt]
-        cinvoke sqliteReset, [.stmt2]
-
-.next_tag:
-        stdcall ListFree, edi, StrDel
-        jmp     .tag_loop
-
-.finish_tags:
-        cinvoke sqliteFinalize, [.stmt]
-        cinvoke sqliteFinalize, [.stmt2]
-
-        stdcall ListFree, esi, StrDel
-
-        popad
+;        cmp     [.tags], 0
+;        je      .post_in_thread
+;
+;        pushad
+;
+;        stdcall StrSplitList, [.tags], ",", FALSE
+;        mov     esi, eax
+;
+;        mov     ebx, [esi+TArray.count]
+;
+;        test    ebx, ebx
+;        jz      .finish_tags
+;
+;        mov     [.count], 4
+;
+;sqlInsertTags        text "insert or ignore into Tags (tag, description) values (lower(?), ?)"
+;sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?), ?)"
+;
+;
+;        lea     eax, [.stmt]
+;        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertTags, sqlInsertTags.length, eax, 0
+;        test    eax, eax
+;        jnz     .rollback
+;
+;        lea     eax, [.stmt2]
+;        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertThreadTags, sqlInsertThreadTags.length, eax, 0
+;        test    eax, eax
+;        jnz     .rollback
+;
+;        cinvoke sqliteBindInt,  [.stmt2], 2, [.threadID]
+;
+;.tag_loop:
+;        dec     ebx
+;        js      .finish_tags
+;
+;        dec     [.count]
+;        js      .finish_tags    ; 4 tags limit!
+;
+;        stdcall StrSplitList, [esi+TArray.array+4*ebx], ":", FALSE
+;        mov     edi, eax
+;
+;        cmp     [edi+TArray.count], 0
+;        je      .next_tag
+;
+;        cmp     [edi+TArray.count], 2
+;        jb      .description_ok
+;
+;        stdcall StrByteUtf8, [edi+TArray.array+4], LIMIT_TAG_DESCRIPTION
+;        stdcall StrTrim, [edi+TArray.array+4], eax
+;
+;        stdcall StrPtr, [edi+TArray.array+4]
+;        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+;
+;.description_ok:
+;
+;        stdcall StrTagify, [edi+TArray.array]
+;
+;        stdcall StrPtr, [edi+TArray.array]
+;
+;        cmp     [eax+string.len], 0
+;        je      .next_tag
+;
+;        push    eax
+;        cinvoke sqliteBindText, [.stmt],  1, eax, [eax+string.len], SQLITE_STATIC
+;
+;        pop     eax
+;        cinvoke sqliteBindText, [.stmt2], 1, eax, [eax+string.len], SQLITE_STATIC
+;
+;        cinvoke sqliteStep, [.stmt]
+;        cinvoke sqliteStep, [.stmt2]
+;
+;        cinvoke sqliteClearBindings, [.stmt]
+;        cinvoke sqliteReset, [.stmt]
+;        cinvoke sqliteReset, [.stmt2]
+;
+;.next_tag:
+;        stdcall ListFree, edi, StrDel
+;        jmp     .tag_loop
+;
+;.finish_tags:
+;        cinvoke sqliteFinalize, [.stmt]
+;        cinvoke sqliteFinalize, [.stmt2]
+;
+;        stdcall ListFree, esi, StrDel
+;
+;        popad
 
 
 .post_in_thread:
@@ -580,7 +582,6 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
 
         call    .do_rollback
 
-        mov     eax, [.pSpecial]
         stdcall StrMakeRedirect, edi, "/!message/error_invalid_content"
         jmp     .finish_clear
 
@@ -594,7 +595,6 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
 
 .error_wrong_permissions:
 
-        mov     eax, [.pSpecial]
         stdcall StrMakeRedirect, edi, "/!message/error_cant_post"
         jmp     .finish_clear
 
@@ -602,7 +602,6 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
 
 .error_thread_not_exists:
 
-        mov     eax, [.pSpecial]
         stdcall StrMakeRedirect, edi, "/!message/error_thread_not_exists"
         jmp     .finish_clear
 
@@ -610,15 +609,125 @@ sqlInsertThreadTags  text "insert into ThreadTags(tag, threadID) values (lower(?
 .error_bad_ticket:
         stdcall StrDel, edi
 
-        mov     eax, [.pSpecial]
         stdcall StrMakeRedirect, 0, "/!message/error_bad_ticket"
         mov     edi, eax
         jmp     .finish_clear
-
-
 
 endp
 
 
 
+
+sqlDelAllTags        text  "delete from ThreadTags where threadID = ?1"
+sqlInsertTags        text  "insert or ignore into Tags (tag, description) values (lower(?1), ?2)"
+sqlInsertThreadTags  text  "insert into ThreadTags(tag, threadID) values (lower(?1), ?2)"
+
+proc SaveThreadTags, .tags, .threadID
+.stmt  dd ?
+.stmt2 dd ?
+.count dd ?
+begin
+        pushad
+
+        xor     eax, eax
+        mov     [.stmt], eax
+        mov     [.stmt2], eax
+
+; remove all tags
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlDelAllTags, sqlDelAllTags.length, eax, 0
+        test    eax, eax
+        jnz     .end_del
+
+        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+.end_del:
+        cmp     [.tags], eax
+        je      .finish
+
+        stdcall StrSplitList, [.tags], ",", FALSE
+        mov     esi, eax
+
+        mov     ebx, [esi+TArray.count]
+
+        test    ebx, ebx
+        jz      .finish_tags
+
+        mov     [.count], 4
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertTags, sqlInsertTags.length, eax, 0
+        test    eax, eax
+        jnz     .finish_tags
+
+        lea     eax, [.stmt2]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertThreadTags, sqlInsertThreadTags.length, eax, 0
+        test    eax, eax
+        jnz     .finish_tags
+
+        cinvoke sqliteBindInt,  [.stmt2], 2, [.threadID]
+
+.tag_loop:
+        dec     ebx
+        js      .finish_tags
+
+        dec     [.count]
+        js      .finish_tags    ; 4 tags limit!
+
+        stdcall StrSplitList, [esi+TArray.array+4*ebx], ":", FALSE
+        mov     edi, eax
+
+        cmp     [edi+TArray.count], 0
+        je      .next_tag
+
+        cmp     [edi+TArray.count], 2
+        jb      .description_ok
+
+        stdcall StrByteUtf8, [edi+TArray.array+4], LIMIT_TAG_DESCRIPTION
+        stdcall StrTrim, [edi+TArray.array+4], eax
+
+        stdcall StrPtr, [edi+TArray.array+4]
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
+.description_ok:
+
+        stdcall StrTagify, [edi+TArray.array]
+        stdcall StrPtr, [edi+TArray.array]
+
+        cmp     [eax+string.len], 0
+        je      .next_tag
+
+        push    eax
+        cinvoke sqliteBindText, [.stmt],  1, eax, [eax+string.len], SQLITE_STATIC
+
+        pop     eax
+        cinvoke sqliteBindText, [.stmt2], 1, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteStep, [.stmt2]
+
+        cinvoke sqliteClearBindings, [.stmt]
+        cinvoke sqliteReset, [.stmt]
+        cinvoke sqliteReset, [.stmt2]
+
+.next_tag:
+        stdcall ListFree, edi, StrDel
+        jmp     .tag_loop
+
+
+.finish_tags:
+
+        stdcall ListFree, esi, StrDel
+
+.finalize:
+        cinvoke sqliteFinalize, [.stmt]
+        cinvoke sqliteFinalize, [.stmt2]
+
+.finish:
+        popad
+        return
+endp
 
