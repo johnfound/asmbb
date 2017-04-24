@@ -262,6 +262,9 @@ begin
         jnz     .make_user
 
         cinvoke sqliteColumnText, [.stmt], 5
+        test    eax, eax
+        jz      .bot
+
         stdcall IsBot, eax
         jc      .bot
 
