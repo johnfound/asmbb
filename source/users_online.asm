@@ -247,7 +247,15 @@ begin
 
         stdcall LogUserActivity, esi, uaTrackingUsers, 0
 
-        stdcall StrCat, edi, '<div class="users_online"><table class="users_table"><tr><th>User</th><th>Time</th><th>Activity</th></tr>'
+        stdcall StrCat, edi, '<div class="users_online"><table class="users_table"><tr><th>User</th><th>Time</th><th>Activity</th>'
+
+        test    [esi+TSpecialParams.userStatus], permAdmin
+        jz      .admin_ok
+
+        stdcall StrCat, edi, '<th>IP address</th><th>User agent</ht>'
+
+.admin_ok:
+        stdcall StrCat, edi, '</tr>'
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetUsersActivity, sqlGetUsersActivity.length, eax, 0
@@ -327,6 +335,28 @@ begin
 
         stdcall StrCat, edi, txt '</td>'
 
+; if admin, put some details:
+
+        test    [esi+TSpecialParams.userStatus], permAdmin
+        jz      .admin_ok2
+
+        stdcall StrCat, edi, txt '<td>'
+
+        cinvoke sqliteColumnInt, [.stmt], 4
+        stdcall IP2Str, eax
+        stdcall StrCat, edi, eax
+
+        stdcall StrCat, edi, ' <a href="/!ban_ip/'
+        stdcall StrCat, edi, eax
+        stdcall StrCat, edi, txt '"><img src="/images/ban.svg" width="18" height="18" title="Ban this IP address"></a></td><td>'
+        stdcall StrDel, eax
+
+        cinvoke sqliteColumnText, [.stmt], 5
+        stdcall StrCat, edi, eax
+
+        stdcall StrCat, edi, txt '</td>'
+
+.admin_ok2:
 ; end of the row
 
         stdcall StrCat, edi, txt '</tr>'

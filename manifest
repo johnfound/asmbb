@@ -1,5 +1,5 @@
-C Small\sfixes\sto\ssome\stemplates\sand\sthe\sstyles.
-D 2017-04-24T18:32:56.210
+C For\sthe\sadmins,\sthe\sonline\susers\slist\sshould\sdisplay\smore\sdetails.
+D 2017-04-25T09:16:35.537
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 4ce0e437e5b8ab0e19dc2dee58a3718e01ffb466
@@ -47,7 +47,7 @@ F source/threadlist.asm 430985929ceaafdc5c323ea9042ced303d2d270f
 F source/threadlist.sql f07efe157ef0713c65d91f66158d69060e93429a
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
 F source/userinfo.asm 612a50dc9cf8cb2167911e137e6b63afb4dc3f9e
-F source/users_online.asm fd20c6536078ae62f2ab196bb87f0d25703111f5
+F source/users_online.asm 13b21136ae31877f748d53d85118fa32ff9658de
 F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/util.sql 77ab61a32e3471ae7f9188453107e44c03796d61
 F source/version.asm e7c740b52e96d2e86544db8e9550be9120a679b2
@@ -269,7 +269,7 @@ F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/styles.less f1a5bdf4419d18238a632748fd992129ca92a16b
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 3b41df5d763e05b8ad7da8bd902b95ee943b12ad
-R d5a2f486123dabb4727f29ddd06e2dcf
+P f4620f70b9e8b705f302226751356d50197f07f7
+R dfe83a9266ab4d399486c57f76e8360d
 U johnfound
-Z 8250ca245f247a516a741fbc83b464c9
+Z 0f10b0a70c48748380aed66b7b269e57
