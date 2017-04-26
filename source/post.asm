@@ -278,6 +278,13 @@ begin
 
 .create_post_and_exit:
 
+        inc     [.fPreview]
+
+        cmp     [.caption], 0
+        je      .show_edit_form
+
+        dec     [.fPreview]
+
 ; check the ticket
 
         stdcall CheckTicket, [.ticket], [esi+TSpecialParams.session]

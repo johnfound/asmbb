@@ -1,5 +1,5 @@
-C For\sthe\sadmins,\sthe\sonline\susers\slist\sshould\sdisplay\smore\sdetails.
-D 2017-04-25T09:16:35.537
+C Fixed\sa\sbug\scausing\scrashing\swhen\sposting\sthread\swithout\stitle\sspecified.
+D 2017-04-26T10:58:04.872
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 4ce0e437e5b8ab0e19dc2dee58a3718e01ffb466
@@ -28,7 +28,7 @@ F source/keywords.txt 8e374a274b6a178e582656652edb52e65fbebfb2
 F source/messages.asm 1cc42852665f2b44a574e37c0fde6624b4dab784
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
-F source/post.asm 1c775f5bd0ec20ea4d48afc8616d9639ccbe8f14
+F source/post.asm 0483e8677b43d9c23afe34b557033800fe96e0bd
 F source/post_data.asm 84db4f379374e7f9184640602b7db882893d9359
 F source/postdebug.asm 13ab4ebf2fc7b35d7fa36853b533236860b641f7
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
@@ -269,7 +269,7 @@ F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/styles.less f1a5bdf4419d18238a632748fd992129ca92a16b
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P f4620f70b9e8b705f302226751356d50197f07f7
-R dfe83a9266ab4d399486c57f76e8360d
+P 4e2ccd9f269c8d9becb9a8e83ba5135c5adb6a96
+R 8b1bc995906516f8dae8a7a4afac70ef
 U johnfound
-Z 0f10b0a70c48748380aed66b7b269e57
+Z 55cbd1ab270dbeb4d12124620361b7f9
