@@ -352,8 +352,10 @@ begin
         stdcall StrDel, eax
 
         cinvoke sqliteColumnText, [.stmt], 5
+        test    eax, eax
+        jz      @f
         stdcall StrCat, edi, eax
-
+@@:
         stdcall StrCat, edi, txt '</td>'
 
 .admin_ok2:

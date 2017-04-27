@@ -1,5 +1,5 @@
-C More\scheap\sstatistics\sfor\sthe\sfooter\sof\sthe\sforum.
-D 2017-04-27T11:57:17.439
+C Bugfix\sfor\sthe\sadmin\sonline\susers\spage.
+D 2017-04-27T14:08:15.378
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 4ce0e437e5b8ab0e19dc2dee58a3718e01ffb466
@@ -49,7 +49,7 @@ F source/threadlist.asm 430985929ceaafdc5c323ea9042ced303d2d270f
 F source/threadlist.sql f07efe157ef0713c65d91f66158d69060e93429a
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
 F source/userinfo.asm 612a50dc9cf8cb2167911e137e6b63afb4dc3f9e
-F source/users_online.asm 13b21136ae31877f748d53d85118fa32ff9658de
+F source/users_online.asm 4385c7a683fba6f30b7a4530c7201a4f54c25e0d
 F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/util.sql 77ab61a32e3471ae7f9188453107e44c03796d61
 F source/version.asm e7c740b52e96d2e86544db8e9550be9120a679b2
@@ -274,7 +274,7 @@ F www/templates/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
 F www/templates/styles.less ddc960c12c3354fcc7f39e2af7560ae2e3adfd41
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 1d8e7f93ede8e761c4847e7d380ba7c54ce43f3d
-R 2d0471f963d52d4f74af87e9645d3063
+P 6884968897541d252c91cc9bdb3847e70e3af9dd
+R 82e1b214e5545726c7f3f178dfbe346e
 U johnfound
-Z f3d32c4c22578de4f4751b33c5253da6
+Z 5c067e0efebc3edd2ca20f4b9d175b6c
