@@ -3,7 +3,12 @@
 <head>
   <meta charset="utf-8">
   <title>[special:title]</title>
+  <meta name="description" content="[special:description]">
+  <meta name="keywords" content="[special:keywords]">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="stylesheet" href="/templates/[special:skin]all.css" type="text/css" />
+
   <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
   <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
@@ -25,8 +30,6 @@
   <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
   <meta name="msapplication-config" content="/images/favicons/browserconfig.xml">
   <meta name="theme-color" content="#d80027">
-
-  <meta name="majestic-site-verification" content="MJ12_bc129603-7485-4ef7-926e-5107cec9b5de">
 </head>
 
 <body>

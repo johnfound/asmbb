@@ -258,6 +258,12 @@ begin
         stdcall StrCompNoCase, edi, "title"
         jc      .get_title
 
+        stdcall StrCompNoCase, edi, "description"
+        jc      .get_description
+
+        stdcall StrCompNoCase, edi, "keywords"
+        jc      .get_keywords
+
         stdcall StrCompNoCase, edi, "username"
         jc      .get_username
 
@@ -375,6 +381,16 @@ end if
 .get_title:
 
         mov     eax, [esi+TSpecialParams.page_title]
+        jmp     .return_encoded
+
+.get_description:
+
+        mov     eax, [esi+TSpecialParams.description]
+        jmp     .return_encoded
+
+.get_keywords:
+
+        mov     eax, [esi+TSpecialParams.keywords]
         jmp     .return_encoded
 
 ;..................................................................

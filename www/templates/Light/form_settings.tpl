@@ -2,7 +2,10 @@
 [case:[message]|<h1 class="hidden msg">Message</h1>|<h1 id="message" class="msg [case:[error]|info|error]">[message]</h1>]
 <form class="settings" method="post" action="/!settings">
   <h1>Forum engine settings</h1>
-  <label>Form title:</label><input type="text" value="[forum_title]" name="forum_title" class="settings" size="30" maxlength="512"><br><br>
+  <label>Form title:</label><input type="text" value="[forum_title]" name="forum_title" class="settings" size="30" maxlength="512"><br>
+  <label>Description:</label><input type="text" value="[description]" name="description" class="settings" size="30" maxlength="256"><br>
+  <label>Keywords:</label><input type="text" value="[keywords]" name="keywords" class="settings" size="30" maxlength="256"><br>
+  <br>
   <label>Host:</label><input type="text" value="[host]" name="host" class="settings" size="30" maxlength="320"><br>
   <label>SMTP server/port:</label><input type="text" value="[smtp_addr]" name="smtp_addr" class="settings" size="20" maxlength="256"><input type="text" value="[smtp_port]" name="smtp_port" class="settings" size="6" maxlength="5"><br>
   <label>SMTP account:</label><input type="text" value="[smtp_user]" name="smtp_user" class="settings" size="30" maxlength="256"><br>

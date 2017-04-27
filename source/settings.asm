@@ -1,11 +1,11 @@
 
 
-sqlParameters   text "select ? as host, ? as smtp_addr, ? as smtp_port, ",                              \
-                            "? as smtp_user, ? as forum_title, ? as log_events, ",                      \
-                            "? as message, ? as error, ",                                               \
-                            "? as page_length, ",                                                       \
-                            "? as user_perm0, ? as user_perm2, ? as user_perm3, ? as user_perm4, ",     \
-                            "? as user_perm5, ? as user_perm6, ? as user_perm7, ? as user_perm31"
+sqlParameters   text "select ?1 as host, ?2 as smtp_addr, ?3 as smtp_port, ",                                   \
+                            "?4 as smtp_user, ?5 as forum_title, ?18 as Description, ?19 as Keywords, ",        \
+                            "?6 as log_events, ?7 as message, ?8 as error, ",                                   \
+                            "?9 as page_length, ",                                                              \
+                            "?10 as user_perm0, ?11 as user_perm2, ?12 as user_perm3, ?13 as user_perm4, ",     \
+                            "?14 as user_perm5, ?15 as user_perm6, ?16 as user_perm7, ?17 as user_perm31"
 
 sqlUpdateParams text "insert or replace into Params values (?, ?)"
 
@@ -104,6 +104,26 @@ begin
         stdcall StrDel ; from the stack
 
 .title_ok:
+
+        stdcall GetParam, txt "description", gpString
+        jc      .description_ok
+
+        push    eax
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 18, eax, [eax+string.len], SQLITE_TRANSIENT
+        stdcall StrDel ; from the stack
+
+.description_ok:
+
+        stdcall GetParam, txt "keywords", gpString
+        jc      .keywords_ok
+
+        push    eax
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 19, eax, [eax+string.len], SQLITE_TRANSIENT
+        stdcall StrDel ; from the stack
+
+.keywords_ok:
 
         stdcall GetParam, txt "log_events", gpInteger
         jc      .log_events_ok
@@ -289,6 +309,36 @@ begin
         stdcall StrPtr, eax
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_TRANSIENT
         cinvoke sqliteBindText, [.stmt], 1, txt "forum_title", -1, SQLITE_STATIC
+        stdcall StrDel ; from the stack.
+
+        call    .exec_write
+        jc      .error_write
+
+; save description
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "description", 0
+        test    eax, eax
+        jz      .error_post_request
+
+        push    eax
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_TRANSIENT
+        cinvoke sqliteBindText, [.stmt], 1, txt "description", -1, SQLITE_STATIC
+        stdcall StrDel ; from the stack.
+
+        call    .exec_write
+        jc      .error_write
+
+; save keywords
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "keywords", 0
+        test    eax, eax
+        jz      .error_post_request
+
+        push    eax
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_TRANSIENT
+        cinvoke sqliteBindText, [.stmt], 1, txt "keywords", -1, SQLITE_STATIC
         stdcall StrDel ; from the stack.
 
         call    .exec_write

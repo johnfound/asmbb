@@ -28,6 +28,8 @@ struct TSpecialParams
 ; forum global variables.
 
   .page_title      dd ?
+  .description     dd ?
+  .keywords        dd ?
   .page_length     dd ?
   .setupmode       dd ?
 
@@ -96,6 +98,21 @@ begin
 .title_ok:
         mov     [.special.page_title], eax
 
+        stdcall GetParam, "desription", gpString
+        jnc     .description_ok
+
+        stdcall StrDupMem, txt "AsmBB forum demo installation."
+
+.description_ok:
+        mov     [.special.description], eax
+
+        stdcall GetParam, "keywords", gpString
+        jnc     .keywords_ok
+
+        stdcall StrDupMem, txt "asmbb, asm, assembly, assembler, assembly language, forum, message board, buletin board"
+
+.keywords_ok:
+        mov     [.special.keywords], eax
 
         stdcall GetParam, 'page_length', gpInteger
         jnc     .page_length_ok
@@ -317,6 +334,8 @@ begin
         stdcall StrDel, [.special.dir]
         stdcall StrDel, [.special.thread]
         stdcall StrDel, [.special.page_title]
+        stdcall StrDel, [.special.description]
+        stdcall StrDel, [.special.keywords]
 
         stdcall FreePostDataArray, [.special.post_array]
 
