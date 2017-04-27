@@ -249,6 +249,9 @@ begin
         stdcall StrCompNoCase, edi, "version"
         jc      .get_version
 
+        stdcall StrCompNoCase, edi, "stats"
+        jc      .get_stats
+
         stdcall StrCompNoCase, edi, "timestamp"
         jc      .get_timestamp
 
@@ -379,6 +382,13 @@ end if
 .get_visitors:
 
         stdcall UsersOnline
+        jmp     .return_value
+
+;..................................................................
+
+.get_stats:
+
+        stdcall Statistics, esi
         jmp     .return_value
 
 ;..................................................................
