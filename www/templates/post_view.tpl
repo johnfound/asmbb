@@ -1,9 +1,9 @@
 <a id="[id]"></a>
 <div class="post">
   <div class="user_info">
-    <img class="unread_icon" src="/images/[case:[Unread]|onepost_gray.svg|onepost.svg]">
+    <img class="unread_icon" alt="U/R" src="/images/[case:[Unread]|onepost_gray.svg|onepost.svg]">
     <a class="user_name" href="/!userinfo/[UserName]">[UserName]</a>
-    <div class="center"><img class="avatar" src="/!avatar/[UserName]?v=[AVer]"></div>
+    <div class="center"><img class="avatar" alt=":)" src="/!avatar/[UserName]?v=[AVer]"></div>
     <div class="user_pcnt">Posts: [UserPostCount]</div>
   </div>
   <div class="post_info">
@@ -16,6 +16,8 @@
     </div>
   </div>
   <div class="post_text">
-    [html:[Rendered]]
+    <article>
+      [html:[Rendered]]
+    </article>
   </div>
 </div>

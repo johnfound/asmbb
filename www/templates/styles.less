@@ -32,42 +32,45 @@ input {
 /* header styles */
 
 div.header {
-  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   width: 95%;
   max-width: 1280px;
   margin: 0px auto 0px auto;
   background-color: @clColor1;
+  background-image: url("/images/yellow_back.png");
+  background-position: -150px 0%;
+  background-size: cover;
   overflow: auto;
 }
 
 div.header h1 {
-  float: left;
   font-size: 36px;
-  margin: 8px 0px 8px 16px;
+  margin: 8px auto 8px 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 
 /* Search form styles */
 
 form#search_form {
-  position: absolute;
-  display: inline-block;
-
-  bottom: 50%;
-  right: 50%;
-
-  transform: translate(50%, 50%);
-  -webkit-transform: translate(50%, 50%);
-  -moz-transform: translate(50%, 50%);
+  position: relative;
+  width: 95%;
+  max-width: 1280px;
+  margin: 8px auto;
 }
 
 .search_line {
   height: 32px;
-  padding: 4px;
+  width: 100%;
+  margin: 0px auto;
+  padding: 4px 8px;
   border: none;
   background-color: #404040;
   color: white;
-  margin: 0px;
+  display:block;
 }
 
 
@@ -78,12 +81,15 @@ form#search_form {
 
 
 .icon_btn  {
+  position: absolute;
+  right: 4px;
+  top: 4px;
   border-style: none;
   vertical-align: top;
   background-color: #f06060;
   color: white;
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   text-align: center;
 }
 
@@ -98,7 +104,6 @@ form#search_form {
 
 div.threads_list {
   width: 95%;
-  position: relative;
   max-width: 1280px;
   margin: auto;
   clear: both;
@@ -332,6 +337,8 @@ a.user_name {
   color: @clColor1;
   font-weight: bold;
   background-color: #404040;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 img.avatar {
@@ -410,7 +417,6 @@ span.current_page {
 /* settings form styles */
 
 div.set_page {
-  position: relative;
   width: 95%;
   max-width: 1280px;
   margin: 0px auto 0px auto;
@@ -619,7 +625,6 @@ input.submit:hover {
 /* login/logout info on the pages */
 
 div.login_interface {
-  float: right;
   margin-right: 16px;
   text-align: right;
 }

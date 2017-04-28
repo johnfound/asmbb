@@ -34,15 +34,17 @@
 
 <body>
   <div class="header">
+    <h1>AsmBB demo</h1>
     <div class="login_interface">
       [case:[special:userid]|<a href="/!login/">Login</a><br><a href="/!register/">Register</a>|
       <a href="/!logout">Logout ( [special:username] )</a><br><a href="/!userinfo/[special:username]">User profile</a>]
     </div>
-    <form class="tags" id="search_form" action="[case:[special:dir]|/|[case:[special:search]||../]]!search/" method="get" >
-      <input class="search_line" type="search" size="40" name="s" placeholder="search" value="[special:search]"><input class="icon_btn"  type="image" src="/images/search.svg" alt="?" >
-    </form>
-    <h1>AsmBB demo</h1>
   </div>
 
-<div class="tags"><a class="taglink" title="Show all threads" href="/"><img src="/images/[case:[special:dir]|posts.svg|posts_gray.svg]" width="32" height="32" alt="All"></a>[special:alltags]</div>
+  <form class="tags" id="search_form" action="[case:[special:dir]|/|[case:[special:search]||../]]!search/" method="get" >
+    <input class="search_line" type="search" name="s" placeholder="search" value="[special:search]">
+    <input class="icon_btn"  type="image" src="/images/search.svg" alt="?" >
+  </form>
+
+  <div class="tags"><a class="taglink" title="Show all threads" href="/"><img src="/images/[case:[special:dir]|posts.svg|posts_gray.svg]" width="32" height="32" alt="All"></a>[special:alltags]</div>
 
