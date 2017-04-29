@@ -1,7 +1,7 @@
 ; select not processed messages but not older than 1h.
 sqlSelectChat text "select id, time(time, 'unixepoch') as time, user, message from ChatLog where id > ?1 and time >  strftime('%s', 'now') - 3600;"
 
-cContentTypeEvent text 'Content-Type: text/event-stream;', 13, 10, "Transfer-Encoding: chunked;", 13, 10, "Cache-Control: no-cache;" ,13, 10, 13, 10
+cContentTypeEvent text 'Content-Type: text/event-stream', 13, 10, "X-Accel-Buffering: no", 13, 10, 13, 10
 cKeepAlive        text ': AsmBB', 13, 10, 13, 10
 
 

@@ -1,5 +1,5 @@
-C Now\sthe\schat\sseems\sto\swork,\smore\sor\sless.
-D 2017-04-29T14:53:13.277
+C The\schat\shas\sbeen\smade\soptional,\swith\sparameter\s"chat_enabled";
+D 2017-04-29T19:56:59.502
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 4ce0e437e5b8ab0e19dc2dee58a3718e01ffb466
@@ -13,8 +13,8 @@ F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm e733112da9d4d1b77b776280dfff30f1b291dbb1
-F source/chat.asm 3d4303f578cd69bbc1e9686f2b6ec1f439e83802
-F source/commands.asm d4e9457967213480da72343a95ff53fb5dd584a5
+F source/chat.asm 73d74ade5015f1e7737815500ddf14f459a02b5e
+F source/commands.asm a8fd14681c44cc3a002f5876f7cc176a857b2f14
 F source/create.sql 685e1ecfa87f534426147da2132fcd0abf59c04c
 F source/delete.asm 64d173cf0ee0df77a8843408b427bdb02b384bd9
 F source/edit.asm be74de1ce8a3ec1372555d88f9e28fc1c3970cf2
@@ -274,10 +274,10 @@ F www/templates/post_view.tpl f617c0ed98f527e7dc2767894eef45cd9df0add2
 F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
-F www/templates/styles.less b8a4ce44fecfa4dc8e6e82c77e12e045abbb690e
+F www/templates/styles.less a6755c2fcfe9d099d6f38b084a6b2fc1ca8c9596
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 99e43ae5893aa018130f17ff9d9288431a88b310
-R d9543cd41dbb22973b971bc3917c8814
+P 3d1dd549f68dfc3eff22e68000c94b02a2008574
+R 2456704451ce775d7eebf6dba2b86b89
 U johnfound
-Z 8d06b38b811d0dd6d8c14bca813596d5
+Z 3e79ce4c4c09d820990d2ab92fe3f953

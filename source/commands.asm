@@ -437,6 +437,11 @@ begin
         stdcall StrCompNoCase, eax, txt "!users_online"
         jc      .exec_command
 
+        stdcall GetParam, "chat_enabled", gpInteger
+        jc      .chat_ok
+        test    eax, eax
+        jz      .chat_ok
+
         mov     ecx, ChatPage
         stdcall StrCompNoCase, eax, txt "!chat"
         jc      .exec_command
@@ -444,6 +449,7 @@ begin
         stdcall StrCompNoCase, eax, txt "!chat_events"
         jc      .exec_command_chat
 
+.chat_ok:
 
 if defined options.DebugWeb & options.DebugWeb
         mov     ecx, PostDebug
