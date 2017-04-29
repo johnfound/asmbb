@@ -797,6 +797,7 @@ div.editor:hover {
 
 
 div.new_editor {
+  position: relative;
   width: 95%;
   max-width: 1280px;
   clear: both;
@@ -805,6 +806,7 @@ div.new_editor {
 
 
 #editform {
+  position: relative;
   padding: 16px;
   background-color: gray;
 }
@@ -902,6 +904,21 @@ div.panel input:active, div.panel input:focus, div.panel input:hover {
 }
 
 /* sqlite console styles */
+
+.icon_btn2  {
+  border-style: none;
+  vertical-align: top;
+  background-color: #f06060;
+  color: white;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+}
+
+.icon_btn2:hover  {
+  background-color: #ff7b81;
+}
+
 
 textarea.sql_editor {
   display: inline-block;
@@ -1389,6 +1406,18 @@ div.user_stat li {
   color: white;
   resize: vertical;
   padding: 8px;
+
+  p {
+    margin: 4px 0px;
+  }
+
+  b {
+    color: @clColor1;
+  }
+
+  span {
+    font-size: 80%;
+  }
 }
 
 #chat_form {

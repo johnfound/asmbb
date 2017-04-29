@@ -59,7 +59,7 @@ begin
         stdcall ValueByName, [.pCGIParams], 'CONTENT_TYPE'
         jc      .bad_request
 
-        stdcall StrCompNoCase, eax, 'application/x-www-form-urlencoded'
+        stdcall StrMatchPatternNoCase, 'application/x-www-form-urlencoded*', eax
         jc      .url_encoded_post
 
         stdcall GetQueryItem, eax, 'multipart/form-data; boundary=', 0
@@ -390,7 +390,8 @@ begin
         xchg    eax, [.name]
 
         mov     [edi+TPostDataItem.name], eax
-        jecxz   .url_encoded_post
+        test    ecx, ecx
+        jz      .url_encoded_post
 
         stdcall StrNew
         stdcall StrCatMem, eax, ebx, ecx

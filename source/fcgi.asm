@@ -605,7 +605,6 @@ begin
 .finish:
         DebugMsg "Don't keep connection"
 
-
         stdcall FreeMem, esi
         call    .FreeAllocations
 
