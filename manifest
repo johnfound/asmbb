@@ -1,5 +1,5 @@
-C Added\sbackground\sto\sthe\sheader.\sAlso,\ssmall\simprovements\sto\sthe\sdefault\sskin.\sNotice\sthat\snow\sit\sis\snot\sthe\ssame\sas\sWasp/
-D 2017-04-28T18:27:03.633
+C Started\swork\son\sthe\sreal-time\schat\spart\sof\sthe\sforum.\sWork\son\sthe\sprotocol\sand\spreparations.
+D 2017-04-29T11:15:59.896
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 4ce0e437e5b8ab0e19dc2dee58a3718e01ffb466
@@ -13,12 +13,13 @@ F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm e733112da9d4d1b77b776280dfff30f1b291dbb1
-F source/commands.asm a3721f3cc286186116aa813e07b1f3e04e3947cf
-F source/create.sql cfcb55ee0a748ada0cd3138d0dd2bd5a8373553a
+F source/chat.asm a671babc8670eb45ce3aafcace82293108293cfd
+F source/commands.asm d4e9457967213480da72343a95ff53fb5dd584a5
+F source/create.sql 21c8164b4af868a8bf6164dc490022b62ec1ebe7
 F source/delete.asm 64d173cf0ee0df77a8843408b427bdb02b384bd9
 F source/edit.asm be74de1ce8a3ec1372555d88f9e28fc1c3970cf2
-F source/engine.asm 91e3fe1f998ed64d56714fa40b540ba61cef743c
-F source/engine.fpr a97f53da409aea1dc3fae26698e40c307154a0be
+F source/engine.asm 7e4d5d98c9871822a3b3c3849aa826c1d2594b07
+F source/engine.fpr 77f82d69445d3a576b2d92ec26f72bdcbbb322d9
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm c346f04f48ca18c04ca10b4eb5a937366e5e0c5c
@@ -140,7 +141,7 @@ F www/images/user.png bf7f849ee8f09b959965aa984f2a5ce7f972ce07
 F www/images/yellow_back.png 5e6ab56d8245a36b59995f22c411989be636e99b
 F www/ld-musl-i386.so 4d44786b8676115c7df45c45ceb051c11ce14ffd x
 F www/libsqlite3.so d486208742dfb9c86dc6b2bb69ccb668063f7837 x
-F www/lighttpd.conf 3ac00a623c9c2a41cfdb39332a2456dab8b16f14
+F www/lighttpd.conf 5ad94fe2311e771f83df6226c0d398e9e3d0fddb
 F www/robots.txt 29ebc362f19cf42108c2eb8724086f1a16035594
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/Light/activation_email_subject.tpl 950d3451cce1b1b55eec7c9ac9c0bb415abaa34e
@@ -246,6 +247,7 @@ F www/templates/activity6.tpl 79b6319799e162869c14998a0ce7bb40ba0d040c
 F www/templates/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
 F www/templates/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
+F www/templates/chat.tpl 3e13aab3b76457f999dc383ab3b5ff1221d813c1
 F www/templates/compile_styles.sh 461a9b0e5774b10703f10f7196cea3062886f2b6 x
 F www/templates/del_confirm.tpl 7b62ada90b819921275499b659614378cdadd253
 F www/templates/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
@@ -263,7 +265,7 @@ F www/templates/form_settings.tpl c1bd0001d86e0da30aa91c0cd84b5d1d1e3094f7
 F www/templates/form_setup.tpl 5a388291b02221e6980a06cb7fcb2a67ddddd169
 F www/templates/form_sqlite_console.tpl 54e3ae4b30ef1095168b2133dbf95d28aec8d39e
 F www/templates/main_html_end.tpl 00886d75d362866e8d35962c72fdac0042dc5131
-F www/templates/main_html_start.tpl c99169c282477e22b70ffeb19223883c0fc432d5
+F www/templates/main_html_start.tpl da5cc744b5885552210657e9a92909c1da2cd0a3
 F www/templates/minimag_suffix.tpl e0ee4765a03f31868c42f12693dc9b23b8ca076e
 F www/templates/nav_list.tpl 0a15e81a1d5d08087d4be4e1e6a68aeb63dd790c
 F www/templates/nav_search.tpl d41b3e1308e015bc6b5443be0102d20dbc93de51
@@ -272,10 +274,13 @@ F www/templates/post_view.tpl f617c0ed98f527e7dc2767894eef45cd9df0add2
 F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
-F www/templates/styles.less e8ffa9fde2d724badcbf59ba2529af262fd9167f
+F www/templates/styles.less f605668b1950876c2025412235bf1efe16097f6d
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 35098fd8a536da02f79a538c133524d63e9cdb2d
-R 3959322e9b539d149f7056eefae90d64
+P 62585975debdb6a5a97b073f6da3153e130f6255
+R a4a31dbbcba64878c914895038ea28d1
+T *branch * RealTimeChat
+T *sym-RealTimeChat *
+T -sym-trunk *
 U johnfound
-Z 1028f622802e1c09a3787ca4831a0346
+Z bf9a8402346a2b2159340df678ae7676

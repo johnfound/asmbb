@@ -62,6 +62,8 @@ include "messages.asm"
 include "version.asm"
 include "images_png.asm"
 
+include "chat.asm"
+
 ;include "postdebug.asm"
 
 

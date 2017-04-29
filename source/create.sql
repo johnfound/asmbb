@@ -359,4 +359,14 @@ create table BadCookies (
   remote text
 );
 
+create table ChatLog {
+  id          integer primary key autoincrement,
+  time        integer,
+  userID      integer references Users(id) on delete cascade,
+  Message     text
+}
+
+create index idxChatLog on ChatLog(id desc);
+
+
 COMMIT;

@@ -437,6 +437,13 @@ begin
         stdcall StrCompNoCase, eax, txt "!users_online"
         jc      .exec_command
 
+        mov     ecx, ChatPage
+        stdcall StrCompNoCase, eax, txt "!chat"
+        jc      .exec_command
+
+        stdcall StrCompNoCase, eax, txt "!chat_events"
+        jc      .exec_command_chat
+
 
 if defined options.DebugWeb & options.DebugWeb
         mov     ecx, PostDebug
@@ -595,6 +602,14 @@ end if
 
         jmp     .output_forum_html
 
+;..................................................................................
+; Special command that ends only when the server close the connection.
+
+.exec_command_chat:
+
+        lea     eax, [.special]
+        stdcall ChatRealTime, [.hSocket], [.requestID], eax
+        jmp     .final_clean
 
 ;..................................................................................
 
