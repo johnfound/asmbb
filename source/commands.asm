@@ -437,10 +437,8 @@ begin
         stdcall StrCompNoCase, eax, txt "!users_online"
         jc      .exec_command
 
-        stdcall GetParam, "chat_enabled", gpInteger
+        stdcall ChatDisabled
         jc      .chat_ok
-        test    eax, eax
-        jz      .chat_ok
 
         mov     ecx, ChatPage
         stdcall StrCompNoCase, eax, txt "!chat"

@@ -1,5 +1,5 @@
-C The\schat\shas\sbeen\smade\soptional,\swith\sparameter\s"chat_enabled";
-D 2017-04-29T19:56:59.502
+C Chat\soptional\sthrough\s"chat_enabled"\sparameter.\sFixed\sthe\sresponse\son\sPOST\srequests\sto\s"!chat";
+D 2017-04-30T06:50:44.980
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 4ce0e437e5b8ab0e19dc2dee58a3718e01ffb466
@@ -13,12 +13,12 @@ F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm e733112da9d4d1b77b776280dfff30f1b291dbb1
-F source/chat.asm 73d74ade5015f1e7737815500ddf14f459a02b5e
-F source/commands.asm a8fd14681c44cc3a002f5876f7cc176a857b2f14
+F source/chat.asm 2aa011465f4a7bb6f454400b7a9ca82c45ee424c
+F source/commands.asm 89fc08c5441d6a047876cf527884c734583cf1ed
 F source/create.sql 685e1ecfa87f534426147da2132fcd0abf59c04c
 F source/delete.asm 64d173cf0ee0df77a8843408b427bdb02b384bd9
 F source/edit.asm be74de1ce8a3ec1372555d88f9e28fc1c3970cf2
-F source/engine.asm f5623f531b27fc433264238bfafffccbbe65d714
+F source/engine.asm d5ecec4ef7f23064a92aa038dc4c6a85850ffb03
 F source/engine.fpr 77f82d69445d3a576b2d92ec26f72bdcbbb322d9
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -277,7 +277,7 @@ F www/templates/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
 F www/templates/styles.less a6755c2fcfe9d099d6f38b084a6b2fc1ca8c9596
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 3d1dd549f68dfc3eff22e68000c94b02a2008574
-R 2456704451ce775d7eebf6dba2b86b89
+P c083bbc53fcf20e13cee79542d470163e875792b
+R fe315111aa4a9264b7436a6c0db30826
 U johnfound
-Z 3e79ce4c4c09d820990d2ab92fe3f953
+Z d120edbe482154b7926acda3bd35b742

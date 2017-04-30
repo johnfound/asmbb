@@ -64,7 +64,7 @@ include "images_png.asm"
 
 include "chat.asm"
 
-;include "postdebug.asm"
+include "postdebug.asm"
 
 
 iglobal
