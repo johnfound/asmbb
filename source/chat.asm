@@ -1,14 +1,17 @@
 ; select not processed messages but not older than 1h.
-sqlSelectChat text "select id, time(time, 'unixepoch') as time, user, message from ChatLog where id > ?1 and time >  strftime('%s', 'now') - 3600;"
+sqlSelectChat text "select id, time, user, message from ChatLog where id > ?1 and time >  strftime('%s', 'now') - 3600;"
 
-cContentTypeEvent text 'Content-Type: text/event-stream', 13, 10, "X-Accel-Buffering: no", 13, 10, "Transfer-Encoding: chunked", 13, 10, 13, 10
+cContentTypeEvent text 'Content-Type: text/event-stream', 13, 10, 13, 10  ;"X-Accel-Buffering: no", 13, 10, "Transfer-Encoding: chunked", 13, 10, 13, 10
 cKeepAlive        text ': AsmBB', 13, 10, 13, 10
 
 
 proc ChatRealTime, .hSocket, .requestID, .pSpecialParams
 .stmt dd ?
+.current dd ?
 begin
         pushad
+
+        mov     esi, [.pSpecialParams]
 
 ;        stdcall FileWriteString, [STDERR], "Chat thread started. Socket="
 ;        stdcall NumToStr, [.hSocket], ntsHex or ntsFixedWidth  or ntsUnsigned + 8
@@ -17,10 +20,24 @@ begin
 ;        stdcall StrDel ; from the stack.
 ;        stdcall FileWriteString, [STDERR], cNewLine
 
+        stdcall StrDupMem, 'The user <b class=\"chatuser\">'
+        mov     edi, eax
+        stdcall ChatUserName, esi
+        stdcall StrCat, edi, eax
+        stdcall StrDel, eax
+        stdcall StrCat, edi, "</b> entered chat. Connection #"
+        stdcall NumToStr, [.hSocket], ntsDec or ntsUnsigned
+        stdcall StrCat, edi, eax
+        stdcall StrDel, eax
+
+        stdcall LogToChat, edi
+        stdcall StrDel, edi
+
         stdcall FCGI_output, [.hSocket], [.requestID], cContentTypeEvent, cContentTypeEvent.length, FALSE
         jc      .finish_events
 
-        xor     ebx, ebx  ; the latest sent message ID
+        xor     ebx, ebx
+        mov     [.current], ebx
 
 .event_loop:
         lea     eax, [.stmt]
@@ -32,31 +49,31 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .reset_and_pause
 
-        stdcall StrDupMem, txt "data: <p><span>("
+        stdcall StrDupMem, txt 'data: { "id":'
         mov     edi, eax
+
+        cinvoke sqliteColumnText, [.stmt], 0
+        stdcall StrCat, edi, eax
+        stdcall StrCat, edi, txt ', "time": '
 
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, edi, eax
-        stdcall StrCat, edi, txt ")</span> "
+        stdcall StrCat, edi, txt ', "user": "'
 
         cinvoke sqliteColumnText, [.stmt], 2
         stdcall StrEncodeHTML, eax
 
-        stdcall StrCat, edi, txt " <b>"
         stdcall StrCat, edi, eax
-        stdcall StrCat, edi, txt "</b>: "
+        stdcall StrCat, edi, txt '", "text": "'
         stdcall StrDel, eax
 
         cinvoke sqliteColumnText, [.stmt], 3
-        stdcall StrEncodeHTML, eax
-
         stdcall StrCat, edi, eax
-        stdcall StrDel, eax
-
-        stdcall StrCat, edi, <txt "</p>", 13, 10, 13, 10>
+        stdcall StrCat, edi, <txt '" }', 13, 10, 13, 10>
 
         stdcall StrPtr, edi
         stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], FALSE
+        stdcall StrDel, edi
         jc      .finish_events
 
         cinvoke sqliteColumnInt, [.stmt], 0
@@ -66,13 +83,14 @@ begin
 
 .reset_and_pause:
 
-        test    ebx, ebx
-        jnz     .keep_ok
+        cmp     ebx, [.current]
+        jne     .keep_ok
 
         stdcall FCGI_output, [.hSocket], [.requestID], cKeepAlive, cKeepAlive.length, FALSE
         jc      .finish_events
 
 .keep_ok:
+        mov     [.current], ebx
         cinvoke sqliteFinalize, [.stmt]
         stdcall Sleep, 100
         jmp     .event_loop
@@ -81,6 +99,19 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
         stdcall FCGI_output, [.hSocket], [.requestID], 0, 0, TRUE
+
+        stdcall StrDupMem, 'The user <b class=\"chatuser\">'
+        mov     edi, eax
+        stdcall ChatUserName, esi
+        stdcall StrCat, edi, eax
+        stdcall StrDel, eax
+        stdcall StrCat, edi, "</b> leaved chat. Connection #"
+        stdcall NumToStr, [.hSocket], ntsDec or ntsUnsigned
+        stdcall StrCat, edi, eax
+        stdcall StrDel, eax
+
+        stdcall LogToChat, edi
+        stdcall StrDel, edi
 
 ;        stdcall FileWriteString, [STDERR], "Chat thread ended. Socket="
 ;        stdcall NumToStr, [.hSocket], ntsHex or ntsFixedWidth  or ntsUnsigned + 8
@@ -97,7 +128,6 @@ endp
 
 
 sqlPostChatMessage text "insert into chatlog (time, user, message) values (strftime('%s', 'now'), ?1, ?2);"
-cAnonymous         text "Anon"
 
 proc ChatPage, .pSpecial
 .stmt dd ?
@@ -110,6 +140,8 @@ begin
         mov     esi, [.pSpecial]
         cmp     [esi+TSpecialParams.post_array], 0
         jne     .post_new_message
+
+        stdcall LogUserActivity, esi, uaChatting, 0
 
         stdcall StrCatTemplate, edi, txt "chat", 0, [.pSpecial]
 
@@ -133,31 +165,15 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlPostChatMessage, sqlPostChatMessage.length, eax, 0
 
-        stdcall StrPtr, ebx
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+        stdcall StrEncodeHTML, ebx
+        push    eax
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_TRANSIENT
+        stdcall StrDel ; from the stack
 
-        xor     ecx, ecx
-        mov     edx, [esi+TSpecialParams.userName]
-        test    edx, edx
-        jnz     @f
-
-        mov     edx, cAnonymous
-        mov     eax, [esi+TSpecialParams.remoteIP]
-        mov     cl, al
-        xor     cl, ah
-        shr     eax, 16
-        xor     cl, al
-        xor     cl, ah
-
-@@:
-        stdcall StrDup, edx
+        stdcall ChatUserName, esi
         mov     ebx, eax
-        jecxz   @f
 
-        stdcall NumToStr, ecx, ntsHex or ntsUnsigned or ntsFixedWidth + 2
-        stdcall StrCat, ebx, eax
-        stdcall StrDel, eax
-@@:
         stdcall StrPtr, ebx
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
@@ -173,6 +189,63 @@ begin
         popad
         return
 
+endp
+
+
+cAnonymous         text "Anon"
+
+proc ChatUserName, .pSpecial
+begin
+        pushad
+        mov     esi, [.pSpecial]
+
+        mov     edx, [esi+TSpecialParams.userName]
+        test    edx, edx
+        jnz     .real_name
+
+        stdcall StrDupMem, cAnonymous
+        mov     edx, eax
+
+        movzx   eax, byte [esi+TSpecialParams.remoteIP]
+        xor     al, byte [esi+TSpecialParams.remoteIP+1]
+        xor     al, byte [esi+TSpecialParams.remoteIP+2]
+        xor     al, byte [esi+TSpecialParams.remoteIP+3]
+        stdcall NumToStr, eax, ntsHex or ntsUnsigned or ntsFixedWidth + 2
+        stdcall StrCat, edx, eax
+        stdcall StrDel, eax
+        jmp     .name_ok
+
+.real_name:
+        stdcall StrDup, edx
+        mov     edx, eax
+
+.name_ok:
+        mov     [esp+4*regEAX], edx
+        popad
+        return
+endp
+
+
+;sqlPostChatMessage text "insert into chatlog (time, user, message) values (strftime('%s', 'now'), ?1, ?2);"
+
+proc LogToChat, .hTxt
+.stmt dd ?
+begin
+        pushad
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlPostChatMessage, sqlPostChatMessage.length, eax, 0
+
+        cinvoke sqliteBindText, [.stmt], 1, txt "AsmBB", 5, SQLITE_STATIC
+
+        stdcall StrPtr, [.hTxt]
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+        popad
+        return
 endp
 
 

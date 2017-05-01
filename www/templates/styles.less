@@ -66,7 +66,7 @@ form#search_form {
   height: 32px;
   width: 100%;
   margin: 0px auto;
-  padding: 4px 8px;
+  padding: 4px 36px 4px 8px;
   border: none;
   background-color: #404040;
   color: white;
@@ -644,7 +644,7 @@ span.separator {
 
 div.ui {
   width: 100%;
-  margin: 8px 0px;
+  margin: 8px 0px 0px 0px;
   overflow: hidden;
 }
 
@@ -652,7 +652,7 @@ a.ui, a.ui:visited {
   display: block !important;
   float: left !important;
   padding: 4px 8px !important;
-  margin: 0px 8px 8px 0px !important;
+  margin: 0px 8px 0px 0px !important;
 
   background-color: #e05050 !important;
   color: white !important;
@@ -1397,9 +1397,7 @@ div.user_stat li {
 /* Chat page styles */
 
 #chatlog {
-  width: 95%;
-  max-width: 1280px;
-  margin: 16px auto;
+  margin: 8px 0px 0px 0px;
   height: 300px;
   overflow: auto;
   background-color: #404040;
@@ -1415,14 +1413,40 @@ div.user_stat li {
     color: @clColor1;
   }
 
+  a {
+    color: #c0c0ff;
+  }
+
+  span {
+    font-size: 80%;
+  }
+
+}
+
+#syslog {
+  margin: 8px 0px 0px 0px;
+  height: 75px;
+  overflow: auto;
+  background-color: #404040;
+  color: white;
+  padding: 8px;
+
+  p {
+    margin: 4px 0px;
+    font-size: 80%;
+  }
+
+  b {
+    color: @clColor1;
+  }
+
   span {
     font-size: 80%;
   }
 }
 
+
 #chat_form {
   position: relative;
-  width: 95%;
-  max-width: 1280px;
-  margin: 16px auto;
+  margin: 8px auto;
 }

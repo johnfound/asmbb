@@ -2,3 +2,4 @@ User-agent: *
 Allow: *
 Disallow: /!login
 Disallow: /!register
+Disallow: /!chat
