@@ -8,6 +8,7 @@ cKeepAlive        text ': AsmBB', 13, 10, 13, 10
 proc ChatRealTime, .hSocket, .requestID, .pSpecialParams
 .stmt dd ?
 .current dd ?
+.unique  dd ?
 begin
         pushad
 
@@ -20,15 +21,16 @@ begin
 ;        stdcall StrDel ; from the stack.
 ;        stdcall FileWriteString, [STDERR], cNewLine
 
+        stdcall GetRandomString, 4
+        mov     [.unique], eax
+
         stdcall StrDupMem, 'The user <b class=\"chatuser\">'
         mov     edi, eax
         stdcall ChatUserName, esi
         stdcall StrCat, edi, eax
         stdcall StrDel, eax
         stdcall StrCat, edi, "</b> entered chat. Connection #"
-        stdcall NumToStr, [.hSocket], ntsDec or ntsUnsigned
-        stdcall StrCat, edi, eax
-        stdcall StrDel, eax
+        stdcall StrCat, edi, [.unique]
 
         stdcall LogToChat, edi
         stdcall StrDel, edi
@@ -106,12 +108,11 @@ begin
         stdcall StrCat, edi, eax
         stdcall StrDel, eax
         stdcall StrCat, edi, "</b> leaved chat. Connection #"
-        stdcall NumToStr, [.hSocket], ntsDec or ntsUnsigned
-        stdcall StrCat, edi, eax
-        stdcall StrDel, eax
+        stdcall StrCat, edi, [.unique]
 
         stdcall LogToChat, edi
         stdcall StrDel, edi
+        stdcall StrDel, [.unique]
 
 ;        stdcall FileWriteString, [STDERR], "Chat thread ended. Socket="
 ;        stdcall NumToStr, [.hSocket], ntsHex or ntsFixedWidth  or ntsUnsigned + 8

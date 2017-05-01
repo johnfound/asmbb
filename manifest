@@ -1,5 +1,5 @@
-C Work\son\sthe\sreal-time\schat.\sWorks\spretty\sgood\snow.
-D 2017-05-01T20:52:39.172
+C Random\sstring\sIDs\sfor\sthe\schat\sconnections.
+D 2017-05-01T21:24:08.692
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 4ce0e437e5b8ab0e19dc2dee58a3718e01ffb466
@@ -13,7 +13,7 @@ F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm e733112da9d4d1b77b776280dfff30f1b291dbb1
-F source/chat.asm 2e99f97be747f101226bf8ec2d535df02183713e
+F source/chat.asm 8862a4df0366fa30d04915a648bb331465c99298
 F source/commands.asm 89fc08c5441d6a047876cf527884c734583cf1ed
 F source/create.sql 685e1ecfa87f534426147da2132fcd0abf59c04c
 F source/delete.asm 64d173cf0ee0df77a8843408b427bdb02b384bd9
@@ -279,7 +279,7 @@ F www/templates/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
 F www/templates/styles.less abc36a1d48dccf5858ce5707a96eff1ed4c8f2f4
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P d5e042df13b241160851d853c8a41679819d1c15
-R 75432aa29643e93bd42f578dd9e9f1f2
+P 9e391a12776ed05f08bf9d907bb17f405c630c60
+R cf9fd86f05dbc3ea653bee310cc5987a
 U johnfound
-Z 5143320c86a8a21111a4e3a1863b83fa
+Z 7f209331b6e556449f35c504facca2de
