@@ -1,5 +1,5 @@
-C The\schat\sSSE\sthread\shas\sbeen\smade\sto\ssync\sby\sshared\smemory\sand\sfutex,\sinstead\sof\stimers\sand\spolling\sthe\sdatabase.\sThis\sapproach\sshould\simprove\sthe\sreaction\sspeed\sand\slower\sthe\sCPU\sload.
-D 2017-05-02T19:05:53.343
+C Fixed\ssmall\sproblem\sin\sthe\schat\sJS.
+D 2017-05-02T19:27:00.655
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 4ce0e437e5b8ab0e19dc2dee58a3718e01ffb466
@@ -250,7 +250,7 @@ F www/templates/activity6.tpl 79b6319799e162869c14998a0ce7bb40ba0d040c
 F www/templates/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
 F www/templates/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
-F www/templates/chat.tpl b0b4a46efed54aba3bf36e3f6094ea0e21edce69
+F www/templates/chat.tpl 0a120133cc531049ae7a58f2e4313a569d5ae2fe
 F www/templates/compile_styles.sh 461a9b0e5774b10703f10f7196cea3062886f2b6 x
 F www/templates/del_confirm.tpl 7b62ada90b819921275499b659614378cdadd253
 F www/templates/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
@@ -280,7 +280,7 @@ F www/templates/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
 F www/templates/styles.less 2df5e8e3360139c3113cb08cd16cb0ab46616144
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P c5331864175236b807859d21999678ffdb2cb378
-R 1bac57e4de732a9fe548013e409e0da7
+P 0b3db548a7660318f99e5b2e5d2e640f6288ba98
+R bede919fb387a5a93d144311d39d6d60
 U johnfound
-Z b714b36c9e3f19c69d933d298cb2041b
+Z b426e206db688de50c6dfc29b43d98a1

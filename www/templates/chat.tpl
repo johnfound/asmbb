@@ -1,6 +1,7 @@
   <script type='text/javascript'>
     var source = null;
     var connected = false;
+    document.body.onload = connect();
 
     function linkify(inputText) {
         var replacedText, replacePattern1;
@@ -93,7 +94,6 @@
       source.onerror = OnError;
     };
 
-    connect();
   </script>
 
   <div class="threads_list">
