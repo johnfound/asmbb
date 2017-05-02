@@ -10,10 +10,16 @@ proc ChatRealTime, .hSocket, .requestID, .pSpecialParams
 .current dd ?
 .unique  dd ?
 .count   dd ?
+.futex   dd ?
 begin
         pushad
 
+        DebugMsg "Started chat long life thread! >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+
         mov     esi, [.pSpecialParams]
+
+        cmp     [fChatTerminate], 0
+        jne     .error_no_permissions
 
         call    ChatPermissions
         jc      .error_no_permissions
@@ -40,11 +46,22 @@ begin
         mov     [.count], 30
 
 .event_loop:
+
+        mov     eax, [pChatFutex]       ; get the old value of the sync futex.
+        mov     eax, [eax]
+        mov     [.futex], eax
+
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectChat, sqlSelectChat.length, eax, 0
+        cmp     eax, SQLITE_OK
+        jne     .finish         ; closed database?
+
         cinvoke sqliteBindInt, [.stmt], 1, ebx
 
 .fetch_loop:
+        cmp     [fChatTerminate], 0
+        jne     .finish_events
+
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
         jne     .reset_and_pause
@@ -97,12 +114,20 @@ begin
 .keep_ok:
         mov     [.current], ebx
         cinvoke sqliteFinalize, [.stmt]
-        stdcall Sleep, 100
+
+        cmp     [fChatTerminate], 0
+        jne     .finish
+
+        stdcall WaitForChatMessages, [.futex]
+        jc      .finish
         jmp     .event_loop
+
 
 .finish_events:
 
         cinvoke sqliteFinalize, [.stmt]
+
+.finish:
 
         stdcall StrDupMem, 'The user <b class=\"chatuser\">'
         mov     edi, eax
@@ -118,10 +143,14 @@ begin
 
         stdcall FCGI_output, [.hSocket], [.requestID], 0, 0, TRUE
 
+        DebugMsg "Finished chat long life thread! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+
         popad
         return
 
 .error_no_permissions:
+
+        DebugMsg "Finished chat long life thread! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
         stdcall StrNew
         push    eax
@@ -205,6 +234,8 @@ begin
 
         stdcall StrDel, ebx
 
+        stdcall SignalNewMessage
+
 .finish_post:
         stdcall StrCat, edi, <"Content-type: text/plain", 13, 10, 13, 10, "OK">
 
@@ -268,6 +299,8 @@ begin
 
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
+
+        stdcall SignalNewMessage
 
         popad
         return

@@ -1,5 +1,5 @@
-C Permissions\scontrol\son\sthe\sreal-time\schat\saccess.\sIntroduced\snew\spermission\s"permChat"\sand\stwo\sparameters:\s"chat_anon"\sand\s"chat_enabled"\sfor\sglobal\senable/disable\sof\sthe\schat,\sdepending\son\sthe\sserver\sfeatures.
-D 2017-05-02T06:09:21.966
+C The\schat\sSSE\sthread\shas\sbeen\smade\sto\ssync\sby\sshared\smemory\sand\sfutex,\sinstead\sof\stimers\sand\spolling\sthe\sdatabase.\sThis\sapproach\sshould\simprove\sthe\sreaction\sspeed\sand\slower\sthe\sCPU\sload.
+D 2017-05-02T19:05:53.343
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 4ce0e437e5b8ab0e19dc2dee58a3718e01ffb466
@@ -13,13 +13,14 @@ F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm e733112da9d4d1b77b776280dfff30f1b291dbb1
-F source/chat.asm 3186a4e4b43b23411f977eef208c3203b9130e38
+F source/chat.asm 92051368e75848be3572650644ce6eabedafc5cc
+F source/chat_ipc.asm 89dba244b3b490820bddcf6239b4d5437190d147
 F source/commands.asm 27963fe3fe79eab57fdafa9765b6132085f47e29
 F source/create.sql 685e1ecfa87f534426147da2132fcd0abf59c04c
 F source/delete.asm 64d173cf0ee0df77a8843408b427bdb02b384bd9
 F source/edit.asm be74de1ce8a3ec1372555d88f9e28fc1c3970cf2
-F source/engine.asm d5ecec4ef7f23064a92aa038dc4c6a85850ffb03
-F source/engine.fpr 85053d20802799f9523cade98bf3a90960bc7198
+F source/engine.asm baf9b9f34689ef7dcf3001b55562799b44c57a64
+F source/engine.fpr 0aab5a5e96f6d29f60a873084f423c5cb085b177
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 68f9999f2963208696d28d118d42681332edf910
@@ -142,7 +143,7 @@ F www/images/user.png bf7f849ee8f09b959965aa984f2a5ce7f972ce07
 F www/images/yellow_back.png 5e6ab56d8245a36b59995f22c411989be636e99b
 F www/ld-musl-i386.so 4d44786b8676115c7df45c45ceb051c11ce14ffd x
 F www/libsqlite3.so d486208742dfb9c86dc6b2bb69ccb668063f7837 x
-F www/lighttpd.conf 5ad94fe2311e771f83df6226c0d398e9e3d0fddb
+F www/lighttpd.conf 3569b7b44a6855ec7652b6d54f180a8cd0e77c02
 F www/robots.txt 1f19cb38e5bc7508fde66876fab2dfdd453f96c6
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/Light/activation_email_subject.tpl 950d3451cce1b1b55eec7c9ac9c0bb415abaa34e
@@ -279,7 +280,7 @@ F www/templates/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
 F www/templates/styles.less 2df5e8e3360139c3113cb08cd16cb0ab46616144
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 84094755a6e432f6b66be10c8992a3b446bc9ccb
-R 68ca461fc107af61150eed29f86d48bd
+P c5331864175236b807859d21999678ffdb2cb378
+R 1bac57e4de732a9fe548013e409e0da7
 U johnfound
-Z 98420b1a777355946b5a967a53199482
+Z b714b36c9e3f19c69d933d298cb2041b
