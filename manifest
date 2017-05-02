@@ -1,5 +1,5 @@
-C Random\sstring\sIDs\sfor\sthe\schat\sconnections.
-D 2017-05-01T21:24:08.692
+C Permissions\scontrol\son\sthe\sreal-time\schat\saccess.\sIntroduced\snew\spermission\s"permChat"\sand\stwo\sparameters:\s"chat_anon"\sand\s"chat_enabled"\sfor\sglobal\senable/disable\sof\sthe\schat,\sdepending\son\sthe\sserver\sfeatures.
+D 2017-05-02T06:09:21.966
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 4ce0e437e5b8ab0e19dc2dee58a3718e01ffb466
@@ -13,8 +13,8 @@ F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm e733112da9d4d1b77b776280dfff30f1b291dbb1
-F source/chat.asm 8862a4df0366fa30d04915a648bb331465c99298
-F source/commands.asm 89fc08c5441d6a047876cf527884c734583cf1ed
+F source/chat.asm 3186a4e4b43b23411f977eef208c3203b9130e38
+F source/commands.asm 27963fe3fe79eab57fdafa9765b6132085f47e29
 F source/create.sql 685e1ecfa87f534426147da2132fcd0abf59c04c
 F source/delete.asm 64d173cf0ee0df77a8843408b427bdb02b384bd9
 F source/edit.asm be74de1ce8a3ec1372555d88f9e28fc1c3970cf2
@@ -33,11 +33,11 @@ F source/post.asm 0483e8677b43d9c23afe34b557033800fe96e0bd
 F source/post_data.asm 42ff743822eb1aacb01730e4b7511cc5967900e4
 F source/postdebug.asm 13ab4ebf2fc7b35d7fa36853b533236860b641f7
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
-F source/render.asm 4f04e1735a8db718761868a3f1f53c1d8923d61d
+F source/render.asm 317c73e7d0dbf67a8be93c07e4dc491e26471a63
 F source/search.asm 221f2cac15b0cb4091b44fd03620028820a473b0
 F source/search.sql 7fb4f78030d5485357720f11ce5276c8f808c5f1
 F source/search_cnt.sql 5ef8eb89fcea8f87942f1b7c67202350dfd9ff89
-F source/settings.asm 3b3583a03b1552aaf9480566b7856998a0850da5
+F source/settings.asm dabd0a9e0b15b141efe5fc9aef13cf60d0ae1d7c
 F source/showthread.asm 6f9a31228099b010d6b59c335cafd1aae57ccd2b
 F source/showthread.sql c575ee2fcbe60d8b878d78d44c477aeb4aece163
 F source/sqlite3.asm f605d645a6cd5a75fbfc52a86ce38c0b5ab0430a
@@ -50,7 +50,7 @@ F source/threadlist.asm 430985929ceaafdc5c323ea9042ced303d2d270f
 F source/threadlist.sql f07efe157ef0713c65d91f66158d69060e93429a
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
 F source/userinfo.asm 612a50dc9cf8cb2167911e137e6b63afb4dc3f9e
-F source/users_online.asm f72bea7a92e1b4a3a960dd257829eed68afd9455
+F source/users_online.asm 52bbaf21784ea1520bd84c5b7e01d98ae1434d14
 F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/util.sql 77ab61a32e3471ae7f9188453107e44c03796d61
 F source/version.asm e7c740b52e96d2e86544db8e9550be9120a679b2
@@ -263,23 +263,23 @@ F www/templates/form_new_post.tpl aa0053b10d8e4427965afb360459239dca9a67dc
 F www/templates/form_new_thread.tpl 0c57fbe8cbc6efef8c7c424b4226c5dad26e2773
 F www/templates/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/form_register.tpl 32a0f1b803e3c317ac623eb507446ab90603b3d5
-F www/templates/form_settings.tpl c1bd0001d86e0da30aa91c0cd84b5d1d1e3094f7
+F www/templates/form_settings.tpl 81e0f0e6711dcb25466bbb8a359709fb8be6c1c4
 F www/templates/form_setup.tpl 5a388291b02221e6980a06cb7fcb2a67ddddd169
 F www/templates/form_sqlite_console.tpl 59ac80c1b6816e3b4f749fbf9d6414ff8c79e7fc
 F www/templates/main_html_end.tpl 00886d75d362866e8d35962c72fdac0042dc5131
 F www/templates/main_html_start.tpl fdaff92b7d8d7f49a8dd6041ff9c3f84e505e07c
 F www/templates/minimag_suffix.tpl e0ee4765a03f31868c42f12693dc9b23b8ca076e
-F www/templates/nav_list.tpl 3c62e3f2e6e1e443200a3ac4ad4e332ecae248d6
+F www/templates/nav_list.tpl 70b35f73b750d1a0d8cf67c0a26fbccae8594489
 F www/templates/nav_search.tpl d41b3e1308e015bc6b5443be0102d20dbc93de51
 F www/templates/nav_thread.tpl 2283246bc3669b01eacee8d471e2a8facabaf97a
 F www/templates/post_view.tpl f617c0ed98f527e7dc2767894eef45cd9df0add2
 F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
-F www/templates/styles.less abc36a1d48dccf5858ce5707a96eff1ed4c8f2f4
+F www/templates/styles.less 2df5e8e3360139c3113cb08cd16cb0ab46616144
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 9e391a12776ed05f08bf9d907bb17f405c630c60
-R cf9fd86f05dbc3ea653bee310cc5987a
+P 84094755a6e432f6b66be10c8992a3b446bc9ccb
+R 68ca461fc107af61150eed29f86d48bd
 U johnfound
-Z 7f209331b6e556449f35c504facca2de
+Z 98420b1a777355946b5a967a53199482

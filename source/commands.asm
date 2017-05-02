@@ -9,6 +9,8 @@ permEditOwn     = 16
 permEditAll     = 32
 permDelOwn      = 64
 permDelAll      = 128
+permChat        = 256
+
 permAdmin       = $80000000
 
 

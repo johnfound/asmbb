@@ -296,7 +296,7 @@ begin
         cinvoke sqliteColumnInt, [.stmt], 4
         movzx   edx, al
         xor     dl, ah
-        shr     edx, 16
+        shr     eax, 16
         xor     dl, al
         xor     dl, ah
 

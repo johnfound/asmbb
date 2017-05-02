@@ -303,6 +303,9 @@ begin
         stdcall StrCompNoCase, edi, "candel"
         jc      .can_del
 
+        stdcall StrCompNoCase, edi, "canchat"
+        jc      .can_chat
+
         stdcall StrCompNoCase, edi, "referer"
         jc      .get_referer
 
@@ -624,7 +627,21 @@ endl
         pop     eax
         jmp     .return_value
 
+;..................................................................
 
+.can_chat:
+        stdcall StrDupMem, txt "1"
+        push    eax
+
+        call    ChatPermissions
+        jnc     .chat_ok
+
+        stdcall StrPtr, [esp]
+        mov     byte [eax], "0"
+
+.chat_ok:
+        pop     eax
+        jmp     .return_value
 
 ;..................................................................
 

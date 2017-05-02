@@ -9,17 +9,14 @@ proc ChatRealTime, .hSocket, .requestID, .pSpecialParams
 .stmt dd ?
 .current dd ?
 .unique  dd ?
+.count   dd ?
 begin
         pushad
 
         mov     esi, [.pSpecialParams]
 
-;        stdcall FileWriteString, [STDERR], "Chat thread started. Socket="
-;        stdcall NumToStr, [.hSocket], ntsHex or ntsFixedWidth  or ntsUnsigned + 8
-;        push    eax
-;        stdcall FileWriteString, [STDERR], eax
-;        stdcall StrDel ; from the stack.
-;        stdcall FileWriteString, [STDERR], cNewLine
+        call    ChatPermissions
+        jc      .error_no_permissions
 
         stdcall GetRandomString, 4
         mov     [.unique], eax
@@ -40,6 +37,7 @@ begin
 
         xor     ebx, ebx
         mov     [.current], ebx
+        mov     [.count], 30
 
 .event_loop:
         lea     eax, [.stmt]
@@ -88,6 +86,11 @@ begin
         cmp     ebx, [.current]
         jne     .keep_ok
 
+        dec     [.count]
+        jns     .keep_ok
+
+        mov     [.count], 30
+
         stdcall FCGI_output, [.hSocket], [.requestID], cKeepAlive, cKeepAlive.length, FALSE
         jc      .finish_events
 
@@ -100,7 +103,6 @@ begin
 .finish_events:
 
         cinvoke sqliteFinalize, [.stmt]
-        stdcall FCGI_output, [.hSocket], [.requestID], 0, 0, TRUE
 
         stdcall StrDupMem, 'The user <b class=\"chatuser\">'
         mov     edi, eax
@@ -114,12 +116,20 @@ begin
         stdcall StrDel, edi
         stdcall StrDel, [.unique]
 
-;        stdcall FileWriteString, [STDERR], "Chat thread ended. Socket="
-;        stdcall NumToStr, [.hSocket], ntsHex or ntsFixedWidth  or ntsUnsigned + 8
-;        push    eax
-;        stdcall FileWriteString, [STDERR], eax
-;        stdcall StrDel ; from the stack.
-;        stdcall FileWriteString, [STDERR], cNewLine
+        stdcall FCGI_output, [.hSocket], [.requestID], 0, 0, TRUE
+
+        popad
+        return
+
+.error_no_permissions:
+
+        stdcall StrNew
+        push    eax
+        stdcall AppendError, eax, "403 Forbidden", esi
+
+        stdcall StrPtr, eax
+        stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], TRUE
+        stdcall StrDel ; from the stack
 
         popad
         return
@@ -139,6 +149,12 @@ begin
         mov     edi, eax
 
         mov     esi, [.pSpecial]
+
+; the user permissions
+
+        call    ChatPermissions
+        jc      .error_no_permissions
+
         cmp     [esi+TSpecialParams.post_array], 0
         jne     .post_new_message
 
@@ -150,6 +166,12 @@ begin
         mov     [esp+4*regEAX], edi
         popad
         return
+
+.error_no_permissions:
+
+        stdcall AppendError, edi, "403 Forbidden", esi
+        jmp     .finish_replace
+
 
 .post_new_message:
 
@@ -185,6 +207,8 @@ begin
 
 .finish_post:
         stdcall StrCat, edi, <"Content-type: text/plain", 13, 10, 13, 10, "OK">
+
+.finish_replace:
         stc
         mov     [esp+4*regEAX], edi
         popad
@@ -265,5 +289,27 @@ begin
 
 .finish:
         pop     eax
+        return
+endp
+
+
+proc ChatPermissions    ; esi is pointer to TSpecialParams
+begin
+        stdcall GetParam, "chat_anon", gpInteger
+        jc      .check_permissions
+
+        test    eax, eax
+        jnz     .permissions_ok
+
+.check_permissions:
+
+        test    [esi+TSpecialParams.userStatus], permChat
+        jnz     .permissions_ok
+
+        stc
+        return
+
+.permissions_ok:
+        clc
         return
 endp
