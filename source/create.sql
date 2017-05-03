@@ -359,10 +359,13 @@ create table BadCookies (
   remote text
 );
 
+
 create table ChatLog (
   id          integer primary key autoincrement,
   time        integer,
   user        text,
+  original    text,
+  status      integer,
   Message     text
 );
 

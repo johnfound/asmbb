@@ -62,14 +62,18 @@ endp
 
 
 proc WaitForChatMessages, .value
+.timeout lnx_timespec
 begin
         pushad
+
+        mov     [.timeout.tv_sec], 3
+        mov     [.timeout.tv_nsec], 0
 
         mov     eax, sys_futex
         mov     ebx, [pChatFutex]
         mov     ecx, FUTEX_WAIT
         mov     edx, [.value]
-        xor     esi, esi
+        lea     esi, [.timeout]
 
         cmp     edx, [ebx]      ; don't make system call if obvious.
         jne     .no_wait

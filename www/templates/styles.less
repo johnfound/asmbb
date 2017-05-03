@@ -1,12 +1,12 @@
 /* Compile with:
-       cless style.css -o all.css
+   cless style.css -o all.css
 */
 
 @clColor1: #ffcc40;
 
 body {
   font-size: 16px;
-  font-family: Verdana,sans-serif;
+  font-family: Verdana, sans-serif;
   background-color: #d0d0d0;
 }
 
@@ -1399,12 +1399,13 @@ div.user_stat li {
 
 #chatlog {
   margin: 8px 0px 0px 0px;
-  height: 300px;
   overflow: auto;
   background-color: #404040;
   color: white;
   resize: vertical;
   padding: 8px;
+  align-self: stretch;
+  flex-grow: 1;
 
   p {
     margin: 4px 0px;
@@ -1425,8 +1426,8 @@ div.user_stat li {
 }
 
 #syslog {
-  margin: 8px 0px 0px 0px;
-  height: 75px;
+  margin: 8px 0px 0px 8px;
+  width: 200px;
   overflow: auto;
   background-color: #404040;
   color: white;
@@ -1435,6 +1436,16 @@ div.user_stat li {
   p {
     margin: 4px 0px;
     font-size: 80%;
+  }
+
+  p.user {
+    font-weight: bold;
+    color: @clColor1;
+  }
+
+  p.gray_user {
+    font-weight: bold;
+    color: #808080;
   }
 
   b {
@@ -1447,7 +1458,43 @@ div.user_stat li {
 }
 
 
+div.flex {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  height: 300px;
+}
+
+
+
 #chat_form {
+  display: flex;
   position: relative;
   margin: 8px auto;
+
+  input {
+    height: 32px;
+    border: none;
+    background-color: #404040;
+    color: white;
+    display:block;
+  }
+
+  input:focus {
+    background-color: white;
+    color: black;
+  }
+
+  .chat_line {
+    flex-grow: 2;
+    padding: 4px 36px 4px 8px;
+  }
+
+  .chat_user {
+    width: 200px;
+    padding: 4px;
+    text-align: right;
+    margin-right: 8px;
+  }
 }
+
