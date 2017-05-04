@@ -1,5 +1,5 @@
-C New\schat\sprotocol,\snew\slayout.\sCan\sbe\sconsidered\sas\schat\sv2.0;
-D 2017-05-03T13:29:01.505
+C All\schanges\smade\sduring\sa\slong\stest\ssession\son\sthe\schat\swith\sthe\s\susers\sof\sbgdev.org;
+D 2017-05-04T06:02:09.466
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 4ce0e437e5b8ab0e19dc2dee58a3718e01ffb466
@@ -13,7 +13,7 @@ F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm e733112da9d4d1b77b776280dfff30f1b291dbb1
-F source/chat.asm ed1c2be2f2ebe7ea7fd313cbfd53a7df2c221b55
+F source/chat.asm 21bdb8c9ff7d8290ee68c2f188c8156209660027
 F source/chat_ipc.asm d5c8c2736c5441596368962dc53baa3fe43b40be
 F source/commands.asm 27963fe3fe79eab57fdafa9765b6132085f47e29
 F source/create.sql 5ec91b39abf804c0d0fc823c951cab83054145b1
@@ -250,7 +250,7 @@ F www/templates/activity6.tpl 79b6319799e162869c14998a0ce7bb40ba0d040c
 F www/templates/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
 F www/templates/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
-F www/templates/chat.tpl 897558c7769003668c5065e8f3e158558f4123b0
+F www/templates/chat.tpl 9b0dba2758c3df6279d7143f650021de7a5c646a
 F www/templates/compile_styles.sh 461a9b0e5774b10703f10f7196cea3062886f2b6 x
 F www/templates/del_confirm.tpl 7b62ada90b819921275499b659614378cdadd253
 F www/templates/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
@@ -268,7 +268,7 @@ F www/templates/form_settings.tpl 81e0f0e6711dcb25466bbb8a359709fb8be6c1c4
 F www/templates/form_setup.tpl 5a388291b02221e6980a06cb7fcb2a67ddddd169
 F www/templates/form_sqlite_console.tpl 59ac80c1b6816e3b4f749fbf9d6414ff8c79e7fc
 F www/templates/main_html_end.tpl 00886d75d362866e8d35962c72fdac0042dc5131
-F www/templates/main_html_start.tpl 293d6cc42a1160e9dc5cc8fc387f197b9ca59b57
+F www/templates/main_html_start.tpl b6e5c1a429ce8ff19aa7ad98a3af993b655f891f
 F www/templates/minimag_suffix.tpl e0ee4765a03f31868c42f12693dc9b23b8ca076e
 F www/templates/nav_list.tpl 70b35f73b750d1a0d8cf67c0a26fbccae8594489
 F www/templates/nav_search.tpl d41b3e1308e015bc6b5443be0102d20dbc93de51
@@ -277,10 +277,10 @@ F www/templates/post_view.tpl f617c0ed98f527e7dc2767894eef45cd9df0add2
 F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
-F www/templates/styles.less c2574b7efd34ad27c8de628c4ff21088ca2b8908
+F www/templates/styles.less 2841d9dc3bc004710828c837a030005b260b743d
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 610b864b3c38a742256f71fffe3d867216cb5a6a
-R 154edbf6d599266a66513029546c4630
+P 03bed9d54f37fbcf3e67b6de41581e71c0232d94
+R 43c39896c3d10517264e426475962c03
 U johnfound
-Z 1f0ecfbec8bd0f47cef67a8bd60b63ca
+Z 4ccd16e85705d236cddab7cfa1e780dc

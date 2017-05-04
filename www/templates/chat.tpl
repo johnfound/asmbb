@@ -11,6 +11,51 @@
     }
 
 
+    function replaceEmoticons(text) {
+      var emoticons = {
+        ':-)' : 'smile.svg',
+        ':)'  : 'smile.svg',
+        ':-D' : 'lol.svg',
+        ':D'  : 'lol.svg',
+        ':-Д' : 'lol.svg',
+        ':Д'  : 'lol.svg',
+        '&gt;:-(': 'angry.svg',
+        '&gt;:(' : 'angry.svg',
+        ':-(' : 'sad.svg',
+        ':('  : 'sad.svg',
+        ':`-(': 'cry.svg',
+        ':ч-(': 'cry.svg',
+        ':ч(' : 'cry.svg',
+        ':`(' : 'cry.svg',
+        ';-)' : 'wink.svg',
+        ';)'  : 'wink.svg',
+        ':-P' : 'tongue2.svg',
+        ':P'  : 'tongue2.svg',
+        ':-Р' : 'tongue2.svg',
+        ':Р'  : 'tongue2.svg',
+        ':-П' : 'tongue2.svg',
+        ':П'  : 'tongue2.svg'
+      };
+      var url = "/images/chatemoticons/";
+      var patterns = [];
+      var metachars = /[[\]{}()*+?.\\|^$\-,&#\s]/g;
+
+      // build a regex pattern for each defined property
+      for (var i in emoticons) {
+        if (emoticons.hasOwnProperty(i)) { // escape metacharacters
+          patterns.push('('+i.replace(metachars, "\\$&")+')');
+        }
+      }
+
+      // build the regular expression and replace
+      return text.replace(new RegExp(patterns.join('|'),'g'), function (match) {
+        return typeof emoticons[match] != 'undefined' ? '<img src="'+url+emoticons[match]+'">' : match;
+      });
+    }
+
+//    replaceEmoticons('this is a simple test :-) :-| :D :)');
+
+
 // essential code.
 
     var source = null;
@@ -58,13 +103,18 @@
      if (keyCode == '13') UserRename();
     };
 
+    function InsertNick(element) {
+      edit_line.value = '@' + element.textContent + ': ' + edit_line.value;
+      edit_line.focus();
+    };
+
     function UserRename(e) {
-     var new_user = user_line.value;
-     if (new_user && new_user != old_user) {
-       UserStatusChange(old_user, 0);
-       UserStatusChange(new_user, 1);
-       old_user = new_user;
-     };
+      var new_user = user_line.value;
+      if (new_user && new_user != old_user) {
+        UserStatusChange(old_user, 0);
+        UserStatusChange(new_user, 1);
+        old_user = new_user;
+      };
     };
 
     function UserStatusChange (username, new_status) {
@@ -101,9 +151,7 @@
         var seconds = "0" + date.getSeconds();
         var Time = hours.substr(-2) + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 
-        var para = '<p id="chat' + msg.id + '"><span>(' + Time + ')</span> <b>' + msg.user + '</b>: ';
-
-        para += linkify(msg.text) + '</p>';
+        var para = '<p id="chat' + msg.id + '"><span>(' + Time + ')</span> <span onclick="InsertNick(this)"  class="nick" title="' + msg.originalname + '">' + msg.user + '</span>: ' + linkify(replaceEmoticons(msg.text)) + '</p>';
 
         chat_log.innerHTML += para;
         chat_log.scrollTop = chat_log.scrollHeight;
@@ -115,7 +163,7 @@
 
       var userid = encodeURIComponent('user:' + msg.originalname);
       var userel = document.getElementById(userid);
-      var para = '<p class="user" id="' + userid + '">' + msg.user + ' <span>(' + msg.originalname + ')</span></p>';
+      var para = '<p class="user" onclick="InsertNick(this)" id="' + userid + '" title="' + msg.originalname + '">' + msg.user + '</p>';
 
       if ( userel ) {
 

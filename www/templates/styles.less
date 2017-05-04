@@ -1402,17 +1402,22 @@ div.user_stat li {
   overflow: auto;
   background-color: #404040;
   color: white;
-  resize: vertical;
   padding: 8px;
   align-self: stretch;
-  flex-grow: 1;
+  flex-grow: 8;
 
   p {
     margin: 4px 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  b {
+  span.nick {
     color: @clColor1;
+    font-size: 100%;
+    font-weight: bold;
+    font-size: 100%;
+    cursor: pointer;
   }
 
   a {
@@ -1421,6 +1426,12 @@ div.user_stat li {
 
   span {
     font-size: 80%;
+  }
+
+  img {
+    height: 20px;
+    width: 20px;
+    vertical-align: middle;
   }
 
 }
@@ -1432,10 +1443,11 @@ div.user_stat li {
   background-color: #404040;
   color: white;
   padding: 8px;
+  flex-grow: 1;
 
   p {
     margin: 4px 0px;
-    font-size: 80%;
+    cursor: pointer;
   }
 
   p.user {
@@ -1448,13 +1460,6 @@ div.user_stat li {
     color: #808080;
   }
 
-  b {
-    color: @clColor1;
-  }
-
-  span {
-    font-size: 80%;
-  }
 }
 
 
@@ -1463,6 +1468,8 @@ div.flex {
   align-items: stretch;
   width: 100%;
   height: 300px;
+  resize: vertical;
+  overflow: auto;
 }
 
 

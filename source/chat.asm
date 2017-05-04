@@ -6,9 +6,8 @@ cKeepAlive        text ': AsmBB', 13, 10, 13, 10
 
 
 proc ChatRealTime, .hSocket, .requestID, .pSpecialParams
-.stmt dd ?
+.stmt    dd ?
 .current dd ?
-;.unique  dd ?
 .futex   dd ?
 begin
         pushad
@@ -22,20 +21,6 @@ begin
 
         call    ChatPermissions
         jc      .error_no_permissions
-
-;        stdcall GetRandomString, 4
-;        mov     [.unique], eax
-;
-;        stdcall StrDupMem, 'The user <b class=\"chatuser\">'
-;        mov     edi, eax
-;        stdcall ChatUserName, esi
-;        stdcall StrCat, edi, eax
-;        stdcall StrDel, eax
-;        stdcall StrCat, edi, "</b> entered chat. Connection #"
-;        stdcall StrCat, edi, [.unique]
-;
-;        stdcall LogToChat, edi
-;        stdcall StrDel, edi
 
         stdcall FCGI_output, [.hSocket], [.requestID], cContentTypeEvent, cContentTypeEvent.length, FALSE
         jc      .finish
@@ -87,16 +72,16 @@ begin
         stdcall StrCat, edi, txt '", '
         stdcall StrDel, eax
 
+        stdcall StrCat, edi, txt '"originalname": "'
+        cinvoke sqliteColumnText, [.stmt], 3
+        stdcall StrCat, edi, eax
+        stdcall StrCat, edi, txt '", '
+
         cinvoke sqliteColumnType, [.stmt], 5
         cmp     eax, SQLITE_NULL
         jne     .message_event
 
         stdcall StrInsert, edi, <txt 'event: status', 13, 10>, 0
-        stdcall StrCat, edi, txt '"originalname": "'
-
-        cinvoke sqliteColumnText, [.stmt], 3
-        stdcall StrCat, edi, eax
-        stdcall StrCat, edi, txt '", '
 
         stdcall StrCat, edi, txt '"status": "'
         cinvoke sqliteColumnText, [.stmt], 4
@@ -154,18 +139,6 @@ begin
 
 .finish:
 
-;        stdcall StrDupMem, 'The user <b class=\"chatuser\">'
-;        mov     edi, eax
-;        stdcall ChatUserName, esi
-;        stdcall StrCat, edi, eax
-;        stdcall StrDel, eax
-;        stdcall StrCat, edi, "</b> leaved chat. Connection #"
-;        stdcall StrCat, edi, [.unique]
-;
-;        stdcall LogToChat, edi
-;        stdcall StrDel, edi
-;        stdcall StrDel, [.unique]
-
         DebugMsg "Finished chat long life thread!"
 
         popad
@@ -173,7 +146,7 @@ begin
 
 .error_no_permissions:
 
-        DebugMsg "Finished chat long life thread!"
+        DebugMsg "Finished chat long life thread with ERROR 403!"
 
         stdcall StrNew
         push    eax
@@ -255,15 +228,17 @@ begin
 .user_ok:
         mov     edi, eax
 
-; debug only!!!
-;        stdcall FileWriteString, [STDERR], ebx
-;        stdcall FileWriteString, [STDERR], cNewLine
-
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlPostChatMessage, sqlPostChatMessage.length, eax, 0
 
         test    ebx, ebx
         jz      .status_msg
+
+        stdcall StrClipSpacesR, ebx
+        stdcall StrClipSpacesL, ebx
+        stdcall StrLen, ebx
+        test    eax, eax
+        jz      .finish_query
 
         stdcall StrEncodeHTML, ebx
         stdcall StrDel, ebx
@@ -293,6 +268,9 @@ begin
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
+
+.finish_query:
+
         cinvoke sqliteFinalize, [.stmt]
 
         stdcall StrDel, ebx
@@ -346,29 +324,28 @@ begin
 endp
 
 
-;sqlPostChatMessage text "insert into chatlog (time, user, message) values (strftime('%s', 'now'), ?1, ?2);"
 
-proc LogToChat, .hTxt
-.stmt dd ?
-begin
-        pushad
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlPostChatMessage, sqlPostChatMessage.length, eax, 0
-
-        cinvoke sqliteBindText, [.stmt], 1, txt "AsmBB", 5, SQLITE_STATIC
-
-        stdcall StrPtr, [.hTxt]
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteFinalize, [.stmt]
-
-        stdcall SignalNewMessage
-
-        popad
-        return
-endp
+;proc LogToChat, .hTxt
+;.stmt dd ?
+;begin
+;        pushad
+;
+;        lea     eax, [.stmt]
+;        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlPostChatMessage, sqlPostChatMessage.length, eax, 0
+;
+;        cinvoke sqliteBindText, [.stmt], 1, txt "AsmBB", 5, SQLITE_STATIC
+;
+;        stdcall StrPtr, [.hTxt]
+;        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+;
+;        cinvoke sqliteStep, [.stmt]
+;        cinvoke sqliteFinalize, [.stmt]
+;
+;        stdcall SignalNewMessage
+;
+;        popad
+;        return
+;endp
 
 
 

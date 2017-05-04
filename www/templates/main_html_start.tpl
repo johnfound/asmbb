@@ -7,7 +7,7 @@
   <meta name="keywords" content="[special:keywords]">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="/templates/[special:skin]all.css?v=4" type="text/css" />
+  <link rel="stylesheet" href="/templates/[special:skin]all.css?v=15" type="text/css" />
 
   <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
@@ -29,7 +29,7 @@
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
   <meta name="msapplication-config" content="/images/favicons/browserconfig.xml">
-  <meta name="theme-color" content="#d80027">
+  <meta name="theme-color" content="#ffcc40">
 </head>
 
 <body>
