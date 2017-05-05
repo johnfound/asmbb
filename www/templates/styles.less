@@ -1397,14 +1397,15 @@ div.user_stat li {
 
 /* Chat page styles */
 
+
 #chatlog {
   margin: 8px 0px 0px 0px;
   overflow: auto;
   background-color: #404040;
   color: white;
   padding: 8px;
-  align-self: stretch;
   flex-grow: 8;
+  flex-shrink: 8;
 
   p {
     margin: 4px 0px;
@@ -1436,27 +1437,34 @@ div.user_stat li {
 
 }
 
+
 #syslog {
   margin: 8px 0px 0px 8px;
-  width: 200px;
   overflow: auto;
   background-color: #404040;
   color: white;
   padding: 8px;
   flex-grow: 1;
+  flex-shrink: 0;
+  max-width: 30%;
 
   p {
     margin: 4px 0px;
     cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: bold;
   }
 
   p.user {
-    font-weight: bold;
     color: @clColor1;
   }
 
+  p.fake_user {
+    color: #ff0000;
+  }
+
   p.gray_user {
-    font-weight: bold;
     color: #808080;
   }
 
@@ -1466,10 +1474,10 @@ div.user_stat li {
 div.flex {
   display: flex;
   align-items: stretch;
-  width: 100%;
-  height: 300px;
-  resize: vertical;
+  height: 500px;
   overflow: auto;
+  resize: vertical;
+  padding-bottom: 8px;
 }
 
 
@@ -1477,7 +1485,7 @@ div.flex {
 #chat_form {
   display: flex;
   position: relative;
-  margin: 8px auto;
+  margin: 0px auto 8px auto;
 
   input {
     height: 32px;

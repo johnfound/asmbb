@@ -1,6 +1,20 @@
+  <style>
+    .tags { display: none; }
+  </style>
+
+
   <script type='text/javascript'>
 
 // some extras and utilities
+
+    //show online user in mobille
+    function ShowOnline() {
+      if (document.getElementById("syslog").classList.contains('show_div')) {
+        document.getElementById("syslog").classList.remove('show_div');
+      } else {
+        document.getElementById("syslog").classList.add('show_div');
+      }
+    }
 
     function linkify(inputText) {
         var replacedText, replacePattern1;
@@ -58,13 +72,13 @@
 
 // essential code.
 
-    var source = null;
-    var connected = false;
+    var source;
     var edit_line;
     var user_line;
     var chat_log;
     var sys_log;
     var old_user = "[username]";
+    var session = "[session]";
 
 // Entering the chat.
 
@@ -74,7 +88,7 @@
       chat_log  = document.getElementById("chatlog");
       sys_log   = document.getElementById("syslog");
 
-      source = new EventSource("/!chat_events");
+      source = new EventSource("/!chat_events?sid="+session);
 
       source.onmessage = OnPush;
       source.onopen = OnConnect;
@@ -82,25 +96,20 @@
 
       source.addEventListener('message', OnPush);
       source.addEventListener('status', OnUserStatus);
-
-      UserRename();
     };
 
 //  Leaving the chat.
 
     window.onbeforeunload = function (e) {
-      UserStatusChange(old_user, 0);
+      source.close();
+      UserStatusChange(0);
       return null;
     };
 
-    function KeyPress(e) {
-     var keyCode = e.keyCode;
-     if (keyCode == '13') SendMessage();
-    };
-
-    function KeyPress2(e) {
-     var keyCode = e.keyCode;
-     if (keyCode == '13') UserRename();
+    function KeyPress(e, proc) {
+      if (e.keyCode == '13') {
+        proc();
+      };
     };
 
     function InsertNick(element) {
@@ -110,22 +119,29 @@
 
     function UserRename(e) {
       var new_user = user_line.value;
-      if (new_user && new_user != old_user) {
-        UserStatusChange(old_user, 0);
-        UserStatusChange(new_user, 1);
-        old_user = new_user;
+
+      if ( new_user != old_user ) {
+        DoUserRename(new_user);
+//        old_user = new_user;
       };
     };
 
-    function UserStatusChange (username, new_status) {
-      if (username) {
-        var http = new XMLHttpRequest();
+    function DoUserRename (newname) {
+      var http = new XMLHttpRequest();
 
-        http.open("POST", "!chat", true);
-        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        http.send("username=" + encodeURIComponent(username) + "&status=" + new_status);
-      };
+      http.open("POST", "!chat", true);
+      http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      http.send("username=" + encodeURIComponent(newname) + "&sid=" + session);
     };
+
+    function UserStatusChange(status) {
+      var http = new XMLHttpRequest();
+
+      http.open("POST", "!chat", true);
+      http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      http.send("status=" + status + "&sid=" + session);
+    };
+
 
     function SendMessage() {
       if (edit_line.value) {
@@ -133,7 +149,7 @@
 
         http.open("POST", "!chat", true);
         http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        http.send("chat_message=" + encodeURIComponent(edit_line.value) + "&username=" + encodeURIComponent(old_user));
+        http.send("chat_message=" + encodeURIComponent(edit_line.value) + "&sid=" + session);
 
         edit_line.value = "";
         edit_line.focus();
@@ -142,70 +158,85 @@
 
     function OnPush(e) {
 
-      var msg = JSON.parse(e.data);
+      var msgset = JSON.parse(e.data);
 
-      if ( ! document.getElementById("chat" + msg.id) ) {
-        var date = new Date(msg.time*1000);
-        var hours = "0" + date.getHours();
-        var minutes = "0" + date.getMinutes();
-        var seconds = "0" + date.getSeconds();
-        var Time = hours.substr(-2) + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+      for (var i in msgset.msgs) {
+        var msg = msgset.msgs[i];
 
-        var para = '<p id="chat' + msg.id + '"><span>(' + Time + ')</span> <span onclick="InsertNick(this)"  class="nick" title="' + msg.originalname + '">' + msg.user + '</span>: ' + linkify(replaceEmoticons(msg.text)) + '</p>';
+        if ( ! document.getElementById("chat" + msg.id) ) {
+          var date = new Date(msg.time*1000);
+          var hours = "0" + date.getHours();
+          var minutes = "0" + date.getMinutes();
+          var seconds = "0" + date.getSeconds();
+          var Time = hours.substr(-2) + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 
-        chat_log.innerHTML += para;
-        chat_log.scrollTop = chat_log.scrollHeight;
+          var para = '<p id="chat' + msg.id + '"><span>(' + Time + ')</span> <span onclick="InsertNick(this)"  class="nick" title="' + msg.originalname + '">' + msg.user + '</span>: ' + linkify(replaceEmoticons(msg.text)) + '</p>';
+
+          chat_log.innerHTML += para;
+          chat_log.scrollTop = chat_log.scrollHeight;
+        };
       };
     };
 
     function OnUserStatus (e) {
-      var msg = JSON.parse(e.data);
+      var msgset = JSON.parse(e.data);
 
-      var userid = encodeURIComponent('user:' + msg.originalname);
-      var userel = document.getElementById(userid);
-      var para = '<p class="user" onclick="InsertNick(this)" id="' + userid + '" title="' + msg.originalname + '">' + msg.user + '</p>';
+      for (var i in msgset.users) {
+        var usr = msgset.users[i];
 
-      if ( userel ) {
+        var userid = 'user_' + usr.session;
+        var userel = document.getElementById(userid);
+        var para = '<p class="user" onclick="InsertNick(this)" id="' + userid + '" title="' + usr.originalname + '">' + usr.user + '</p>';
 
-        if ( msg.status == 0 ) {
-          userel.parentNode.removeChild(userel);
+        if (usr.session == session) {
+          user_line.innerHTML = usr.user;
+          user_line.value = user_line.textContent;
+          old_user = user_line.textContent;
         };
 
-        if ( msg.status == 2 ) {
-          userel.className = "gray_user";
-        };
+        if ( userel ) {
 
-        if ( msg.status == 1 ) {
-          userel.className = "user";
-        }
+          userel.innerHTML = usr.user;
 
-      } else {
-        if ( msg.status != 0 ) {
-          sys_log.innerHTML += para;
-          userel = document.getElementById(userid);
-          if ( msg.status == 2 ) {
+          if ( usr.status == 0 ) {
+            userel.parentNode.removeChild(userel);
+          };
+
+          if ( usr.status == 2 ) {
             userel.className = "gray_user";
+          };
+
+          if ( usr.status == 1 ) {
+            if ( usr.originalname != usr.user) {
+              userel.className = "fake_user";
+            } else {
+              userel.className = "user";
+            };
+          };
+
+        } else {
+          if ( usr.status != 0 ) {
+            sys_log.innerHTML += para;
+            userel = document.getElementById(userid);
+
+            if ( usr.originalname != usr.user) {
+              userel.className = "fake_user";
+            };
+
+            if ( usr.status == 2 ) {
+              userel.className = "gray_user";
+            };
           };
         };
       };
     };
 
     function OnConnect(e) {
-      if ( ! connected ) {
-//        sys_log.innerHTML += "<p>Connection established.</p>";
-//        sys_log.scrollTop = sys_log.scrollHeight;
-        connected = true;
-        UserStatusChange(old_user, 1);
-      };
+      // display connection status here.
     };
 
     function OnError(e) {
-      if ( connected ) {
-//        sys_log.innerHTML += "<p>Connection interrupted. Reconnecting...</p>";
-//        sys_log.scrollTop = sys_log.scrollHeight;
-        connected = false;
-        UserStatusChange(old_user, 2);
-      };
+      UserStatusChange(2);
     };
 
   </script>
@@ -219,8 +250,8 @@
       <div id="syslog"></div>
     </div>
     <div id="chat_form">
-      <input class="chat_user" type="edit" placeholder="Username" id="chat_user" value="[username]" onkeypress="KeyPress2(event)" onChange="UserRename()">
-      <input class="chat_line" type="edit" placeholder="Type here" id="chat_message" autofocus onkeypress="KeyPress(event)">
+      <input class="chat_user" type="edit" placeholder="Username" id="chat_user" value="[username]" onkeypress="KeyPress(event, UserRename)" onChange="UserRename()">
+      <input class="chat_line" type="edit" placeholder="Type here" id="chat_message" autofocus onkeypress="KeyPress(event, SendMessage)">
       <img class="icon_btn" id="chat_submit" src="/images/edit_white.svg" alt="?" onclick="SendMessage()">
     </div>
   </div>

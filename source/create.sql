@@ -365,9 +365,17 @@ create table ChatLog (
   time        integer,
   user        text,
   original    text,
-  status      integer,
   Message     text
 );
 
+
+create table ChatUsers (
+  session     text unique not null,
+  key         text,
+  time        integer,
+  username    text,
+  original    text,
+  status      integer
+);
 
 COMMIT;
