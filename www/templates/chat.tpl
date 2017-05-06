@@ -149,12 +149,24 @@
 
         http.open("POST", "!chat", true);
         http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        http.send("chat_message=" + encodeURIComponent(edit_line.value) + "&sid=" + session);
+
+        var p = "chat_message=" + encodeURIComponent(edit_line.value) + "&sid=" + session;
+        http.send(p);
 
         edit_line.value = "";
         edit_line.focus();
       };
     };
+
+    function MakeUserStr(user, original) {
+      if (user == original) {
+        var c = "user";
+      } else {
+        var c = "user fake";
+      };
+      return '<span onclick="InsertNick(this)" class="' + c + '" title="' + original + '">' + user + '</span>';
+    }
+
 
     function OnPush(e) {
 
@@ -170,7 +182,7 @@
           var seconds = "0" + date.getSeconds();
           var Time = hours.substr(-2) + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 
-          var para = '<p id="chat' + msg.id + '"><span>(' + Time + ')</span> <span onclick="InsertNick(this)"  class="nick" title="' + msg.originalname + '">' + msg.user + '</span>: ' + linkify(replaceEmoticons(msg.text)) + '</p>';
+          var para = '<p id="chat' + msg.id + '"><span>(' + Time + ')</span> ' + MakeUserStr(msg.user, msg.originalname) + ': ' + linkify(replaceEmoticons(msg.text)) + '</p>';
 
           chat_log.innerHTML += para;
           chat_log.scrollTop = chat_log.scrollHeight;

@@ -1,3 +1,7 @@
+CHAT_MAX_USER_NAME = 20
+CHAT_MAX_MESSAGE = 1000
+
+
 ; select not processed messages but not older than 1h.
 sqlSelectChat text "select id, time, user, original, message from ChatLog where id > ?1 and time >  strftime('%s', 'now') - 3600;"
 sqlSelectUsers text "select time, session, username, original, status, _ROWID_ from ChatUsers where _ROWID_ > ?1;"
@@ -104,7 +108,7 @@ begin
         stdcall StrCat, edi, txt ', "user": "'
 
         cinvoke sqliteColumnText, [.stmt], 2
-        stdcall StrEncodeHTML, eax
+        stdcall StrEncodeJS, eax
         stdcall StrCat, edi, eax
         stdcall StrDel, eax
         stdcall StrCat, edi, txt '", "originalname": "'
@@ -113,7 +117,9 @@ begin
         stdcall StrCat, edi, eax
         stdcall StrCat, edi, txt '", "text": "'
         cinvoke sqliteColumnText, [.stmt], 4
+        stdcall StrEncodeJS, eax
         stdcall StrCat, edi, eax
+        stdcall StrDel, eax
         stdcall StrCat, edi, txt '" }'
 
         inc     [.cnt]
@@ -178,7 +184,7 @@ begin
         cinvoke sqliteColumnText, [.stmt], 2
         test    eax, eax
         jz      @f
-        stdcall StrEncodeHTML, eax
+        stdcall StrEncodeJS, eax
         stdcall StrCat, edi, eax
         stdcall StrDel, eax
 @@:
@@ -338,15 +344,17 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlPostChatMessage, sqlPostChatMessage.length, eax, 0
 
+; message text sanitation
+
+        stdcall StrByteUtf8, ebx, CHAT_MAX_MESSAGE
+        stdcall StrTrim, ebx, eax
+
         stdcall StrClipSpacesR, ebx
         stdcall StrClipSpacesL, ebx
+
         stdcall StrLen, ebx
         test    eax, eax
         jz      .finish_query
-
-        stdcall StrEncodeHTML, ebx
-        stdcall StrDel, ebx
-        mov     ebx, eax
 
         stdcall StrPtr, ebx
         cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
@@ -577,7 +585,7 @@ proc RenameChatUser, .session, .newname, .original
 begin
         pushad
 
-        stdcall StrByteUtf8, [.newname], 20
+        stdcall StrByteUtf8, [.newname], CHAT_MAX_USER_NAME
         stdcall StrTrim, [.newname], eax
 
         stdcall StrClipSpacesR, [.newname]
@@ -635,4 +643,88 @@ begin
 
         popad
         return
+endp
+
+
+
+
+proc StrEncodeJS, .hString
+begin
+        pushad
+
+        stdcall StrLen, [.hString]
+        mov     ecx, eax
+
+        stdcall StrNew
+        mov     [esp+4*regEAX], eax
+
+        shl     ecx, 3                  ; memory x8
+
+        stdcall StrSetCapacity, eax, ecx
+        mov     edi, eax
+        mov     ebx, eax
+
+        stdcall StrPtr, [.hString]
+        mov     esi, eax
+
+        xor     eax, eax
+
+.loop:
+        lodsb
+
+        test    al, al
+        jz      .end_of_string
+
+        cmp     al, ' '
+        jb      .loop
+
+        cmp     al, '<'
+        je      .char_less_then
+        cmp     al, '>'
+        je      .char_greater_then
+        cmp     al, '"'
+        je      .char_quote
+        cmp     al, '&'
+        je      .char_amp
+
+        cmp     al, "\"
+        jne     .store
+
+        stosb
+.store:
+        stosb
+        jmp     .loop
+
+.end_of_string:
+        mov     [edi], eax
+        sub     edi, ebx
+        mov     [ebx+string.len], edi
+
+        popad
+        return
+
+
+.char_less_then:
+        mov     dword [edi], '&lt;'
+        add     edi, 4
+        jmp     .loop
+
+.char_greater_then:
+        mov     dword [edi], '&gt;'
+        add     edi, 4
+        jmp     .loop
+
+
+.char_quote:
+        mov     dword [edi], '&quo'
+        mov     word [edi+4],'t;'
+        add     edi, 6
+        jmp     .loop
+
+.char_amp:
+        mov     dword [edi], '&amp'
+        mov     byte [edi+4], ';'
+        add     edi, 5
+        jmp     .loop
+
 endp

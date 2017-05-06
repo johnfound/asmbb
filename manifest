@@ -1,5 +1,5 @@
-C Working\sversion\sof\sthe\susers\shandling.\sIt\sseems\sto\swork\sOK,\sonly\sneeds\ssome\stest\son\sthe\sreal\sserver.
-D 2017-05-05T22:40:26.433
+C Limiting\sthe\slength\sof\sthe\smessages,\sproper\sjson\sescapement,\swork\son\sthe\sJS.
+D 2017-05-06T06:53:53.117
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz 4ce0e437e5b8ab0e19dc2dee58a3718e01ffb466
@@ -13,7 +13,7 @@ F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm e733112da9d4d1b77b776280dfff30f1b291dbb1
-F source/chat.asm 06b876b53e812110bdb19a497ab67bff70a8d7d3
+F source/chat.asm 7b284b2abf90f664973e5638b9b1db446a4ab355
 F source/chat_ipc.asm d5c8c2736c5441596368962dc53baa3fe43b40be
 F source/commands.asm 27963fe3fe79eab57fdafa9765b6132085f47e29
 F source/create.sql d2b7972dd62c9e5da629b6754f826647fe807ff6
@@ -250,7 +250,7 @@ F www/templates/activity6.tpl 79b6319799e162869c14998a0ce7bb40ba0d040c
 F www/templates/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
 F www/templates/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
-F www/templates/chat.tpl 6e274e348699be66a328d5a91c5f1de4b09381fb
+F www/templates/chat.tpl c532cf3d921f6e12446a731bc93a4c3df0097f8d
 F www/templates/compile_styles.sh 461a9b0e5774b10703f10f7196cea3062886f2b6 x
 F www/templates/del_confirm.tpl 7b62ada90b819921275499b659614378cdadd253
 F www/templates/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
@@ -277,10 +277,10 @@ F www/templates/post_view.tpl f617c0ed98f527e7dc2767894eef45cd9df0add2
 F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
-F www/templates/styles.less 0cece382e2bca17d2149f99070108bc05c1354d3
+F www/templates/styles.less b0d4290a65f185a651a02144722f0bd45c83c10f
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 0c5d2bb5972eee2c9a40342cb5aec439cf1ff3f2
-R 4483c5b69d8844b29225003e8c22ce4c
+P ddf17c7d9bab865b0f32e3f10a4e5aad11ba361e
+R 1d501e8adbf46a484e5786bd438cae8d
 U johnfound
-Z 4e66d4af1042dff14588df3356e2d221
+Z 8aaa50b4505def71b1e1545cc385c959
