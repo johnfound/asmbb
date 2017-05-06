@@ -1,9 +1,9 @@
-C Limiting\sthe\slength\sof\sthe\smessages,\sproper\sjson\sescapement,\swork\son\sthe\sJS.
-D 2017-05-06T06:53:53.117
+C Binary\spackage\supdated\sto\sthe\sversion\swith\sthe\schat.
+D 2017-05-06T07:01:41.913
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
-F install/asmbb.tar.gz 4ce0e437e5b8ab0e19dc2dee58a3718e01ffb466
-F install/create_release.sh 055cc8a7c0be8191269a9455b6187be33a0c8975 x
+F install/asmbb.tar.gz bed654e1766c119643bf1e2aa84e5face9c54e74
+F install/create_release.sh 1ef97a4b7851ee8e57780ced941a568639999e1d x
 F install/install.txt 7d3f4f32b07d36ba1256bccb17b3b96c6fa1d004
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
 F source/Documents/FastCGI\sSpecification.html e2fc06a5abf1b3505c665e108ce3ad28b636095a
@@ -280,7 +280,7 @@ F www/templates/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
 F www/templates/styles.less b0d4290a65f185a651a02144722f0bd45c83c10f
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P ddf17c7d9bab865b0f32e3f10a4e5aad11ba361e
-R 1d501e8adbf46a484e5786bd438cae8d
+P c3efc33733d1f2011c3cb7c667b2276c75e42b36
+R 5d6b5e223ecde34b85974f450cf7d29b
 U johnfound
-Z 8aaa50b4505def71b1e1545cc385c959
+Z 88bb452e7ffda4624cc74dd798a2aa98

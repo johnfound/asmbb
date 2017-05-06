@@ -5,6 +5,8 @@ mkdir asmbb/templates/Light/
 mkdir asmbb/templates/Wasp/
 mkdir asmbb/images/
 mkdir asmbb/images/favicons/
+mkdir asmbb/images/emoticons/
+mkdir asmbb/images/chatemoticons/
 
 # complile less files
 
@@ -31,6 +33,8 @@ cp ../www/templates/Wasp/*.tpl asmbb/templates/Wasp/
 # images
 cp ../www/images/*.* asmbb/images/
 cp ../www/images/favicons/*.* asmbb/images/favicons/
+cp ../www/images/emoticons/*.* asmbb/images/emoticons/
+cp ../www/images/chatemoticons/*.* asmbb/images/chatemoticons/
 
 # example config files for apache and lighttpd
 cp .htaccess asmbb/
@@ -54,6 +58,12 @@ rmdir asmbb/templates/
 
 rm asmbb/images/favicons/*
 rmdir asmbb/images/favicons/
+
+rm asmbb/images/emoticons/*
+rmdir asmbb/images/emoticons/
+
+rm asmbb/images/chatemoticons/*
+rmdir asmbb/images/chatemoticons/
 
 rm asmbb/images/*
 rmdir asmbb/images/
