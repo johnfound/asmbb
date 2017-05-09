@@ -1,5 +1,5 @@
-C Binary\spackage\supdated\sto\sthe\sversion\swith\sthe\schat.
-D 2017-05-06T07:01:41.913
+C The\s3rd\sversion\sof\sthe\schat\susers\shandling.\sHope\sless\sbuggy\sthis\stime.
+D 2017-05-09T11:47:18.504
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz bed654e1766c119643bf1e2aa84e5face9c54e74
@@ -13,10 +13,10 @@ F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm e733112da9d4d1b77b776280dfff30f1b291dbb1
-F source/chat.asm 7b284b2abf90f664973e5638b9b1db446a4ab355
-F source/chat_ipc.asm d5c8c2736c5441596368962dc53baa3fe43b40be
-F source/commands.asm 27963fe3fe79eab57fdafa9765b6132085f47e29
-F source/create.sql d2b7972dd62c9e5da629b6754f826647fe807ff6
+F source/chat.asm ec35241e77231a1190784c983f76db199ce309fd
+F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
+F source/commands.asm 0f572d52d525f2d6fdb862a715ca7de5f0181b32
+F source/create.sql d9fd0be2f25d3e5d6b7b9aed92d82fd75eafea74
 F source/delete.asm 64d173cf0ee0df77a8843408b427bdb02b384bd9
 F source/edit.asm be74de1ce8a3ec1372555d88f9e28fc1c3970cf2
 F source/engine.asm baf9b9f34689ef7dcf3001b55562799b44c57a64
@@ -250,7 +250,7 @@ F www/templates/activity6.tpl 79b6319799e162869c14998a0ce7bb40ba0d040c
 F www/templates/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
 F www/templates/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
-F www/templates/chat.tpl c532cf3d921f6e12446a731bc93a4c3df0097f8d
+F www/templates/chat.tpl 49b076ac2373a09087edfa01136d078861ff0c4a
 F www/templates/compile_styles.sh 461a9b0e5774b10703f10f7196cea3062886f2b6 x
 F www/templates/del_confirm.tpl 7b62ada90b819921275499b659614378cdadd253
 F www/templates/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
@@ -268,7 +268,7 @@ F www/templates/form_settings.tpl 81e0f0e6711dcb25466bbb8a359709fb8be6c1c4
 F www/templates/form_setup.tpl 5a388291b02221e6980a06cb7fcb2a67ddddd169
 F www/templates/form_sqlite_console.tpl 59ac80c1b6816e3b4f749fbf9d6414ff8c79e7fc
 F www/templates/main_html_end.tpl 00886d75d362866e8d35962c72fdac0042dc5131
-F www/templates/main_html_start.tpl 18cb1605a814fa9ff35a6729e98b6da6ca784761
+F www/templates/main_html_start.tpl 9b325cfdf21a882a0ad015ca023261e48d60c184
 F www/templates/minimag_suffix.tpl e0ee4765a03f31868c42f12693dc9b23b8ca076e
 F www/templates/nav_list.tpl 70b35f73b750d1a0d8cf67c0a26fbccae8594489
 F www/templates/nav_search.tpl d41b3e1308e015bc6b5443be0102d20dbc93de51
@@ -280,7 +280,7 @@ F www/templates/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
 F www/templates/styles.less b0d4290a65f185a651a02144722f0bd45c83c10f
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P c3efc33733d1f2011c3cb7c667b2276c75e42b36
-R 5d6b5e223ecde34b85974f450cf7d29b
+P 00c220a7b866bd02c69086815dbcf4cebb6a2306
+R 4aa712cc55c4c341506f3f4b4a37e7e3
 U johnfound
-Z 88bb452e7ffda4624cc74dd798a2aa98
+Z 8bdb37051739004deea7e6c6e7d690d4

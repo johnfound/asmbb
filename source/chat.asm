@@ -2,26 +2,27 @@ CHAT_MAX_USER_NAME = 20
 CHAT_MAX_MESSAGE = 1000
 
 
-; select not processed messages but not older than 1h.
-sqlSelectChat text "select id, time, user, original, message from ChatLog where id > ?1 and time >  strftime('%s', 'now') - 3600;"
-sqlSelectUsers text "select time, session, username, original, status, _ROWID_ from ChatUsers where _ROWID_ > ?1;"
+sqlSelectChat           text "select id, time, user, original, message from ChatLog where id > ?1 and time >  strftime('%s', 'now') - 3600;"
+sqlSelectUsers          text "select time, session, username, original, status, force from ChatUsers where status<>0 order by original;"
 
-cContentTypeEvent text 'Content-Type: text/event-stream', 13, 10, "Access-Control-Allow-Origin: *", 13, 10, 13, 10  ;"X-Accel-Buffering: no", 13, 10, "Transfer-Encoding: chunked", 13, 10, 13, 10
-cKeepAlive        text ': AsmBB', 13, 10, 13, 10
+sqlUpdateChatSession    text "update ChatUsers set time = strftime('%s', 'now'), force = NULL where session = ?1;"
+sqlDeleteClosedSessions text "update ChatUsers set status = 0 where time < strftime('%s', 'now') - 5; delete from ChatUsers where time < strftime('%s', 'now') - 86400;"           ; 10 seconds timeout of the chat session.
 
+cContentTypeEvent text 'Content-Type: text/event-stream', 13, 10, "Access-Control-Allow-Origin: *", 13, 10, 13, 10, "retry: 1000", 13, 10, 13, 10  ;"X-Accel-Buffering: no", 13, 10, "Transfer-Encoding: chunked", 13, 10, 13, 10
+cKeepAlive        text ': ', 13, 10, 13, 10
+
+cTrue   text "true"
+cFalse  text "false"
 
 proc ChatRealTime, .hSocket, .requestID, .pSpecialParams
 .stmt    dd ?
 .futex   dd ?
-.unique  dd ?
 .session dd ?
 .cnt     dd ?
 .total   dd ?
 
-.msg_from  dd ?
-.user_from dd ?
-
-.rowID  dd ?
+.msg_from   dd ?
+.prev_users dd ?
 
 begin
         pushad
@@ -30,6 +31,7 @@ begin
 
         mov     esi, [.pSpecialParams]
         xor     edi, edi
+        mov     [.prev_users], edi
 
         cmp     [fChatTerminate], 0
         jne     .finish_socket
@@ -37,24 +39,40 @@ begin
         call    ChatPermissions
         jc      .error_no_permissions
 
+        stdcall GetCookieValue, [esi+TSpecialParams.params], "chatsid"
+        jnc     .session_ok
+
+        stdcall GetRandomString, 32
+
+.session_ok:
+        mov     [.session], eax
+
+; set cookie.
+
+        stdcall StrNew
+        stdcall StrCat, eax, "Set-Cookie: chatsid="
+        stdcall StrCat, eax, [.session]
+        stdcall StrCat, eax, <"; Path=/", 13, 10>
+
+        push    eax
+        stdcall StrPtr, eax
+        stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], FALSE
+        stdcall StrDel ; from the stack
+
         stdcall FCGI_output, [.hSocket], [.requestID], cContentTypeEvent, cContentTypeEvent.length, FALSE
         jc      .finish
 
-        stdcall GetRandomString, 16
-        mov     [.unique], eax
-
-        stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
-        stdcall GetQueryItem, eax, txt "sid=", 0
-        mov     [.session], eax
-        test    eax, eax
-        jz      .finish_socket
-
         stdcall EnterChat, esi, [.session]
-        mov     [.rowID], eax
 
-        xor     eax, eax
+        and     [.msg_from], 0
+
+        stdcall ValueByName, [esi+TSpecialParams.params], "Last-Event-ID"
+        jc      .event_loop_msg
+
+        stdcall StrToNumEx, eax
         mov     [.msg_from], eax
-        mov     [.user_from], eax
+
+        OutputValue "Read messages from ID: ", eax, 10, -1
 
 .event_loop_msg:
 
@@ -74,9 +92,6 @@ begin
 
         cinvoke sqliteBindInt, [.stmt], 1, [.msg_from]
 
-        OutputValue "Fetch messages from: ", [.msg_from], 10, -1
-
-        stdcall StrDel, edi
         stdcall StrDupMem, <txt 'event: message', 13, 10, 'data: { "msgs": [ '>         ; start of the messages data set.
         mov     edi, eax
 
@@ -108,9 +123,12 @@ begin
         stdcall StrCat, edi, txt ', "user": "'
 
         cinvoke sqliteColumnText, [.stmt], 2
+        test    eax, eax
+        jz      @f
         stdcall StrEncodeJS, eax
         stdcall StrCat, edi, eax
         stdcall StrDel, eax
+@@:
         stdcall StrCat, edi, txt '", "originalname": "'
 
         cinvoke sqliteColumnText, [.stmt], 3
@@ -133,26 +151,39 @@ begin
         cmp     [.cnt], 0
         je      .messages_ok
 
-        stdcall StrCat, edi, <txt " ] }", 13, 10, 13, 10>
+        stdcall StrCat, edi, <txt " ] }", 13, 10>
+        stdcall StrCat, edi, txt "id: "
+        stdcall NumToStr, [.msg_from], ntsDec or ntsUnsigned
+        stdcall StrCat, edi, eax
+        stdcall StrDel, eax
+        stdcall StrCat, edi, <txt 13, 10, 13, 10>
         stdcall StrPtr, edi
         stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], FALSE
         jc      .finish
 
 .messages_ok:
 
-; From here, send the users status changes.
+        cinvoke sqliteExec, [hMainDatabase], sqlDeleteClosedSessions, 0, 0, 0
+        cinvoke sqliteChanges, [hMainDatabase]
+        test    eax, eax
+        jz      .sess_not_changed
 
-        and     [.cnt], 0       ; the count of the fetched records.
+        stdcall SignalNewMessage
+        inc     [.futex]   ; don't wakeup, because the changes are already sent.
+
+.sess_not_changed:
+
+; From here, send the users list.
+
+        and     [.cnt], 0
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectUsers, sqlSelectUsers.length, eax, 0
         cmp     eax, SQLITE_OK
         jne     .finish_socket
 
-        cinvoke sqliteBindInt, [.stmt], 1, [.user_from]
-
         stdcall StrDel, edi
-        stdcall StrDupMem, <txt 'event: status', 13, 10, 'data: { "users": [ '>         ; start of the messages data set.
+        stdcall StrDupMem, <txt 'event: users_online', 13, 10, 'data: { "users": [ '>         ; start of the messages data set.
         mov     edi, eax
 
 .fetch_loop_user:
@@ -162,7 +193,6 @@ begin
         jne     .finish_user_set
 
         cinvoke sqliteColumnInt, [.stmt], 5
-        mov     [.user_from], eax
 
 ; is there previous record?
         cmp     [.cnt], 0
@@ -172,14 +202,16 @@ begin
 
 .comma_ok2:
 
-        stdcall StrCat, edi, '{ "session": "'
+        stdcall StrCat, edi, '{ "flagSelf": '
 
         cinvoke sqliteColumnText, [.stmt], 1
-        test    eax, eax
-        jz      @f
-        stdcall StrCat, edi, eax
+        mov     ecx, cTrue
+        stdcall StrCompCase, eax, [.session]
+        jc      @f
+        mov     ecx, cFalse
 @@:
-        stdcall StrCat, edi, txt '", "user": "'
+        stdcall StrCat, edi, ecx
+        stdcall StrCat, edi, txt ', "user": "'
 
         cinvoke sqliteColumnText, [.stmt], 2
         test    eax, eax
@@ -197,29 +229,50 @@ begin
 @@:
         stdcall StrCat, edi, txt '", "status": '
         cinvoke sqliteColumnText, [.stmt], 4
-        test    eax, eax
-        jz      @f
         stdcall StrCat, edi, eax
-@@:
+
         stdcall StrCat, edi, txt ' }'
 
+        cinvoke sqliteColumnInt, [.stmt], 5
+        test    eax, eax
+        jz      .force_ok
+
+; force sending the users!
+        xor     eax, eax
+        xchg    eax, [.prev_users]
+        stdcall StrDel, eax
+
+.force_ok:
+
         inc     [.cnt]
-        inc     [.total]
         jmp     .fetch_loop_user
 
 .finish_user_set:
 
         cinvoke sqliteFinalize, [.stmt]
 
-        cmp     [.cnt], 0
-        je      .users_ok
-
         stdcall StrCat, edi, <txt " ] }", 13, 10, 13, 10>
-        stdcall StrPtr, edi
+
+        stdcall StrCompCase, edi, [.prev_users]
+        stdcall StrDel, [.prev_users]
+        mov     [.prev_users], edi
+        mov     edi, 0
+        jc      .users_ok
+
+        stdcall StrPtr, [.prev_users]
         stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], FALSE
         jc      .finish
 
 .users_ok:
+
+; Update the time and force fields of the current user.
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateChatSession, sqlUpdateChatSession.length, eax, 0
+        stdcall StrPtr, [.session]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
 
         cmp     [fChatTerminate], 0
         jne     .finish_socket
@@ -231,20 +284,19 @@ begin
         jc      .finish
 
 .keep_alive_ok:
+
         stdcall WaitForChatMessages, [.futex]
         jc      .finish_socket
         jmp     .event_loop_msg
-
 
 .finish_socket:
 
         stdcall FCGI_output, [.hSocket], [.requestID], 0, 0, TRUE
 
 .finish:
-        stdcall ExitChat, esi, [.session], [.rowID]
 
         stdcall StrDel, edi
-        stdcall StrDel, [.unique]
+        stdcall StrDel, [.prev_users]
         stdcall StrDel, [.session]
 
         DebugMsg "Finished chat long life thread!"
@@ -272,7 +324,6 @@ endp
 
 
 sqlPostChatMessage text "insert into chatlog (time, user, original, message) values (strftime('%s', 'now'), (select username from chatusers where session = ?1), ?2, ?3);"
-sqlChatParams      text "select ?1 as username, ?2 as session;"
 
 proc ChatPage, .pSpecial
 .stmt dd ?
@@ -292,29 +343,10 @@ begin
         stdcall StrCat, [esi+TSpecialParams.page_title], cChatTitle
         stdcall LogUserActivity, esi, uaChatting, 0
 
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlChatParams, sqlChatParams.length, eax, 0
-
-        stdcall ChatUserName, [.pSpecial]
-        push    eax
-        stdcall StrPtr, eax
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_TRANSIENT
-        stdcall StrDel ; from the stack
-
-        stdcall GetRandomString, 32
-        push    eax
-        stdcall StrPtr, eax
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_TRANSIENT
-        stdcall StrDel ; from the stack
-
-        cinvoke sqliteStep, [.stmt]
-
         stdcall StrNew
         mov     edi, eax
 
-        stdcall StrCatTemplate, edi, txt "chat", [.stmt], [.pSpecial]
-
-        cinvoke sqliteFinalize, [.stmt]
+        stdcall StrCatTemplate, edi, txt "chat", 0, [.pSpecial]
 
         clc
         mov     [esp+4*regEAX], edi
@@ -331,15 +363,35 @@ begin
 
 .post_new_message:
 
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "sid", 0
-        mov     edi, eax
-        test    eax, eax
-        jz      .error_no_permissions
+        xor     edi, edi
+        stdcall GetCookieValue, [esi+TSpecialParams.params], "chatsid"
+        jc      .error_no_permissions
 
+        mov     edi, eax
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "cmd", 0
+        test    eax, eax
+        jz      .finish
+
+        stdcall StrCompCase, eax, txt "message"
+        jc      .post_message
+
+        stdcall StrCompCase, eax, txt "rename"
+        jc      .rename_user
+
+        stdcall StrCompCase, eax, txt "status"
+        jc      .change_status
+
+        stdcall StrDel, eax
+        jmp     .finish
+
+
+.post_message:
+        stdcall StrDel, eax
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "chat_message", 0
         mov     ebx, eax
         test    eax, eax
-        jz      .user_status_change
+        jz      .finish
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlPostChatMessage, sqlPostChatMessage.length, eax, 0
@@ -373,14 +425,13 @@ begin
 .finish_query:
 
         cinvoke sqliteFinalize, [.stmt]
-
-        stdcall StrDel, edi
-        stdcall StrDel, ebx
-
         stdcall SignalNewMessage
 
+        stdcall StrDel, ebx
+
 .finish:
-        stdcall StrDupMem, <"Content-type: text/plain", 13, 10, 13, 10, "OK">
+        stdcall StrDel, edi
+        stdcall StrDupMem, <"Content-type: text/plain", 13, 10, 13, 10, "OK", 13, 10>
         mov     edi, eax
 
 .finish_replace:
@@ -390,37 +441,30 @@ begin
         return
 
 
-.user_status_change:
+.rename_user:
+        stdcall StrDel, eax
+        stdcall GetPostString, [esi+TSpecialParams.post_array], "username", txt "  "
 
-        stdcall ChatUserName, esi
         mov     edx, eax
+        stdcall ChatUserName, esi
+        stdcall RenameChatUser, edi, edx, eax
 
-        stdcall GetPostString, [esi+TSpecialParams.post_array], "username", 0
-        test    eax, eax
-        jz      .maybe_status_change
-
-        stdcall RenameChatUser, edi, eax, edx
-        stdcall StrDel, edi
+        stdcall StrDel, eax
         stdcall StrDel, edx
         jmp     .finish
 
 
-.maybe_status_change:
-
-        stdcall StrDel, edx
-
+.change_status:
+        stdcall StrDel, eax
         stdcall GetPostString, [esi+TSpecialParams.post_array], "status", 0
         test    eax, eax
-        jz      .status_ok
+        jz      .finish
 
         push    eax
         stdcall StrToNumEx, eax
         stdcall StrDel ; from the stack
 
         stdcall SetUserStatus, edi, eax
-
-.status_ok:
-        stdcall StrDel, edi
         jmp     .finish
 
 
@@ -481,6 +525,7 @@ begin
 endp
 
 
+
 proc ChatPermissions    ; esi is pointer to TSpecialParams
 begin
         stdcall GetParam, "chat_anon", gpInteger
@@ -504,7 +549,7 @@ endp
 
 
 
-sqlEnterChat text "insert or replace into ChatUsers(session, time, username, original, status) values ( ?1, strftime('%s', 'now'), ?3, ?3, 1 );"
+sqlEnterChat text "insert into ChatUsers(session, time, username, original, status) values ( ?1, strftime('%s', 'now'), ?3, ?3, 1 );"
 
 proc EnterChat, .pSpecial, .session
 .stmt dd ?
@@ -529,14 +574,20 @@ begin
         cinvoke sqliteFinalize, [.stmt]
         stdcall StrDel, esi
 
-        cmp     ebx, SQLITE_DONE
-        jne     .error
+        OutputValue "Insert session result: ", ebx, 10, -1
 
-        cinvoke sqliteLastInsertRowID, [hMainDatabase]
-        mov     [esp+4*regEAX], eax
+        cmp     ebx, SQLITE_DONE
+        jne     .update_existing
 
         stdcall SignalNewMessage
 
+        clc
+        popad
+        return
+
+.update_existing:
+
+        stdcall SetUserStatus, [.session], 1
         clc
         popad
         return
@@ -549,36 +600,7 @@ endp
 
 
 
-
-sqlLogoutChat text "insert or replace into ChatUsers(time, session, username, original, status) select time, session, username, original, 0 from ChatUsers where session = ?1 and _ROWID_ = ?2;"
-
-proc ExitChat, .pSpecialParams, .session, .rowid
-.stmt dd ?
-begin
-        pushad
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLogoutChat, sqlLogoutChat.length, eax, 0
-
-        stdcall StrPtr, [.session]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-        cinvoke sqliteBindInt, [.stmt], 2, [.rowid]
-        cinvoke sqliteStep, [.stmt]
-
-        cinvoke sqliteChanges, [hMainDatabase]
-        stdcall NumToStr, eax, ntsDec
-
-        cinvoke sqliteFinalize, [.stmt]
-
-        stdcall SignalNewMessage
-
-.finish:
-        popad
-        return
-endp
-
-
-sqlRenameChatUser text "insert or replace into ChatUsers(time, session, username, original, status) select strftime('%s', 'now'), session, ?2, original, status from ChatUsers where session = ?1;"
+sqlRenameChatUser text "update ChatUsers set username=?2, original=?3, time=strftime('%s', 'now'), force=1 where session=?1;"
 
 proc RenameChatUser, .session, .newname, .original
 .stmt dd ?
@@ -606,6 +628,9 @@ begin
         stdcall StrPtr, [.newname]
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 
+        stdcall StrPtr, [.original]
+        cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
+
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 
@@ -622,7 +647,7 @@ endp
 
 
 
-sqlSetUserStatus text "insert or replace into ChatUsers(time, session, username, original, status) select strftime('%s', 'now'), session, username, original, ?2 from ChatUsers where session = ?1;"
+sqlSetUserStatus text "update ChatUsers set status = ?2, time = strftime('%s', 'now') where session = ?1;"
 
 proc SetUserStatus, .session, .status
 .stmt dd ?
@@ -636,11 +661,15 @@ begin
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
         cinvoke sqliteBindInt, [.stmt], 2, [.status]
         cinvoke sqliteStep, [.stmt]
-
         cinvoke sqliteFinalize, [.stmt]
+
+        cinvoke sqliteChanges, [hMainDatabase]
+        test    eax, eax
+        jz      .finish
 
         stdcall SignalNewMessage
 
+.finish:
         popad
         return
 endp

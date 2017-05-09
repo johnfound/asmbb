@@ -368,14 +368,13 @@ create table ChatLog (
   Message     text
 );
 
-
 create table ChatUsers (
   session     text unique not null,
-  key         text,
   time        integer,
   username    text,
   original    text,
-  status      integer
+  status      integer,
+  force       integer
 );
 
 COMMIT;

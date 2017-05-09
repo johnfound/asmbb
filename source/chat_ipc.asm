@@ -1,8 +1,10 @@
 SHARED_BLOCK_SIZE = 4096
+CHAT_WAKE_TIMEOUT = 3
+
 
 uglobal
-  fChatTerminate dd ?
-  pChatFutex     dd ?
+  fChatTerminate  dd ?
+  pChatFutex      dd ?
 endg
 
 
@@ -66,7 +68,7 @@ proc WaitForChatMessages, .value
 begin
         pushad
 
-        mov     [.timeout.tv_sec], 3
+        mov     [.timeout.tv_sec], CHAT_WAKE_TIMEOUT
         mov     [.timeout.tv_nsec], 0
 
         mov     eax, sys_futex
