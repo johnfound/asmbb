@@ -27,28 +27,30 @@
 
     function replaceEmoticons(text) {
       var emoticons = {
-        ':-)' : 'smile.svg',
-        ':)'  : 'smile.svg',
-        ':-D' : 'lol.svg',
-        ':D'  : 'lol.svg',
-        ':-Д' : 'lol.svg',
-        ':Д'  : 'lol.svg',
-        '&gt;:-(': 'angry.svg',
-        '&gt;:(' : 'angry.svg',
-        ':-(' : 'sad.svg',
-        ':('  : 'sad.svg',
-        ':`-(': 'cry.svg',
-        ':ч-(': 'cry.svg',
-        ':ч(' : 'cry.svg',
-        ':`(' : 'cry.svg',
-        ';-)' : 'wink.svg',
-        ';)'  : 'wink.svg',
-        ':-P' : 'tongue2.svg',
-        ':P'  : 'tongue2.svg',
-        ':-Р' : 'tongue2.svg',
-        ':Р'  : 'tongue2.svg',
-        ':-П' : 'tongue2.svg',
-        ':П'  : 'tongue2.svg'
+        ':LOL:': 'rofl.gif',
+        ':lol:': 'rofl.gif',
+        ':ЛОЛ:': 'rofl.gif',
+        ':лол:': 'rofl.gif',
+        ':-)' : 'smile.gif',
+        ':)'  : 'smile.gif',
+        ':-D' : 'lol.gif',
+        ':D'  : 'lol.gif',
+        ':-Д' : 'lol.gif',
+        ':Д'  : 'lol.gif',
+        '&gt;:-(': 'angry.gif',
+        '&gt;:(' : 'angry.gif',
+        ':-(' : 'sad.gif',
+        ':('  : 'sad.gif',
+        ':`-(': 'cry.gif',
+        ':`(' : 'cry.gif',
+        ':\'-(': 'cry.gif',
+        ':\'(':  'cry.gif',
+        ';-)' : 'wink.gif',
+        ';)'  : 'wink.gif',
+        ':-P' : 'tongue.gif',
+        ':P'  : 'tongue.gif',
+        ':-П' : 'tongue.gif',
+        ':П'  : 'tongue.gif'
       };
       var url = "/images/chatemoticons/";
       var patterns = [];
@@ -67,8 +69,19 @@
       });
     }
 
-//    replaceEmoticons('this is a simple test :-) :-| :D :)');
-
+    function notify(Msg) {
+      if (!("Notification" in window)) {
+        alert("This browser does not support desktop notification");
+      } else if (Notification.permission === "granted") {
+               var notification = new Notification(Msg);
+             } else if (Notification.permission !== "denied") {
+                      Notification.requestPermission( function (permission) {
+                        if (permission === "granted") {
+                          var notification = new Notification(Msg);
+                        }
+                      });
+                    }
+    }
 
 // essential code.
 
@@ -160,6 +173,7 @@
     function OnMessage(e) {
 
       var msgset = JSON.parse(e.data);
+      var cnt = 0;
 
       for (var i in msgset.msgs) {
         var msg = msgset.msgs[i];
@@ -175,8 +189,11 @@
 
           chat_log.innerHTML += para;
           chat_log.scrollTop = chat_log.scrollHeight;
+          cnt++;
         };
       };
+
+      if (cnt && document.hidden) notify("New messages in the chat.");
     };
 
     function OnUserOnline (e) {

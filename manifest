@@ -1,5 +1,5 @@
-C The\sbinary\srelease\sof\sthe\spervious\scheckin.
-D 2017-05-09T11:50:18.029
+C Added\sthe\semoticons\sfor\sthe\schat.
+D 2017-05-10T07:57:41.337
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz ce6f39e0c62bf63ef7cefe1f6bfa709a9c1e5dcf
@@ -13,7 +13,7 @@ F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm e733112da9d4d1b77b776280dfff30f1b291dbb1
-F source/chat.asm ec35241e77231a1190784c983f76db199ce309fd
+F source/chat.asm 8ad44d0b90f21a438ca09280c925c88385b88fb6
 F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
 F source/commands.asm 0f572d52d525f2d6fdb862a715ca7de5f0181b32
 F source/create.sql d9fd0be2f25d3e5d6b7b9aed92d82fd75eafea74
@@ -59,6 +59,14 @@ F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
 F www/images/anon.png f1150ae9c16cb5dd89c7f9f6c502bb6128783519
 F www/images/ban.svg 546185941f28a293e8f23727192c8c40258da120
+F www/images/chatemoticons/angry.gif d43a06f17649f6c9da6c85ff3dbbf0e4853f0520
+F www/images/chatemoticons/cry.gif 44fbe228ae5fda20c3e83a7b8175fe7981afaf57
+F www/images/chatemoticons/lol.gif 305f1546cdceaee6d5118c7cf739874c86c4200e
+F www/images/chatemoticons/rofl.gif c9624e02cd3a3e89c227ab6c3ac17ea0d9edf283
+F www/images/chatemoticons/sad.gif a4ca623ef9f7ccdbf7680c4201f590bc1a2f8896
+F www/images/chatemoticons/smile.gif b9a29d9c77e9e2f9a37da58d9c23df69d6f8517a
+F www/images/chatemoticons/tongue.gif 1f0e43256d9b04e3c714a07a9d8dc6628199b4d9
+F www/images/chatemoticons/wink.gif 2e56ed1aa4446e248c7666030924d7090afcbd66
 F www/images/del_gray.svg 5e3d0ba999e37de7dfdc43292d1c14e4513573ac
 F www/images/del_white.svg 94d8d830628cf60965d5e4c6b35458aadeeafbe1
 F www/images/del_yellow.svg 4e5a9f095589877453cab43addb74386bd16c348
@@ -250,7 +258,7 @@ F www/templates/activity6.tpl 79b6319799e162869c14998a0ce7bb40ba0d040c
 F www/templates/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
 F www/templates/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
-F www/templates/chat.tpl 49b076ac2373a09087edfa01136d078861ff0c4a
+F www/templates/chat.tpl 512dd2fd5701d754ecfe733e01a6419fab049246
 F www/templates/compile_styles.sh 461a9b0e5774b10703f10f7196cea3062886f2b6 x
 F www/templates/del_confirm.tpl 7b62ada90b819921275499b659614378cdadd253
 F www/templates/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
@@ -277,10 +285,10 @@ F www/templates/post_view.tpl f617c0ed98f527e7dc2767894eef45cd9df0add2
 F www/templates/preview.tpl 22943684322f4aa248427b0dbf2976e0a1312971
 F www/templates/search_result.tpl 8e05d20d003879aff057ceab636b254e0a20cca7
 F www/templates/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
-F www/templates/styles.less b0d4290a65f185a651a02144722f0bd45c83c10f
+F www/templates/styles.less 73765689db1ce0fb331b3d61c2dd469b326a07f6
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 63dc27433b43e2aaffb355cb6e4fb198a96a4923
-R a207a877551edd8192e7aabd1a844426
+P c59f9b59a018241c7bfed4bce5865d1f0645b6c2
+R 821dd014a849a83bb362884f30a40a5b
 U johnfound
-Z 0ba704b0f8c57db0e247d5953f1ee687
+Z e0ab5e0075f66d05cc008f17b92f95ab
