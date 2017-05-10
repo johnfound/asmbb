@@ -1105,6 +1105,10 @@ begin
         stdcall StrCompNoCase, [.extension], txt ".json"
         jc      .mime_ok
 
+        mov     eax, mimeJS
+        stdcall StrCompNoCase, [.extension], txt ".js"
+        jc      .mime_ok
+
         xor     eax, eax
         stc
         return
@@ -1120,6 +1124,7 @@ mimeIcon  text "image/x-icon"
 mimeHTML  text "text/html; charset=utf-8"
 mimeXML   text "text/xml"
 mimeJson  text "application/json"
+mimeJS    text "text/javascript"
 mimeText  text "text/plain; charset=utf-8"
 mimeCSS   text "text/css; charset=utf-8"
 mimePNG   text "image/png"
