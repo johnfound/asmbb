@@ -1,5 +1,5 @@
-C Changed\sthe\ssmiles\sfor\sthe\sforum\swith\sanimated\spixel\ssmiles.
-D 2017-05-10T08:06:34.276
+C Added\sthe\s.gif\semoticons.
+D 2017-05-10T08:07:16.136
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz ce6f39e0c62bf63ef7cefe1f6bfa709a9c1e5dcf
@@ -76,6 +76,14 @@ F www/images/edit_gray.svg a1b01c72f16833c8bad8eb058ff298cb3d5fb320
 F www/images/edit_white.svg 32de0d55e734823a33792baa4e6be2291dbcf55d
 F www/images/edit_yellow.svg 5656f9fc0d0cca2206c557d94313689a1e30e87b
 F www/images/email.png 24f356bd043c4d2c9ab64314a341690d6e71bf94
+F www/images/emoticons/angry.gif 20500d3b94175c345946ad8bb149068d1d5c2b1a
+F www/images/emoticons/cry.gif b821d5e08564af307ac3c71f945dddfa8ea6452c
+F www/images/emoticons/lol.gif 0e9fe36570a78b40ed0baf0a08b0f0ca6e5e9605
+F www/images/emoticons/rofl.gif 907a534a661a9a090665496f07b5361501c7ba91
+F www/images/emoticons/sad.gif 29a61168f0546302de3fe9d1ddd963d62cf85d93
+F www/images/emoticons/smile.gif e15f0be2a0607a061f46d297f80b982d95ec4ce5
+F www/images/emoticons/tongue.gif f37a376e83402b21c9770767728282b08e7e495e
+F www/images/emoticons/wink.gif fea56f9c71694b38842aa0f6295d26cc330fcca7
 F www/images/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
 F www/images/favicons/android-chrome-144x144.png c52089920b0e4f7c740199f58fa9162fc71cf4cc
 F www/images/favicons/android-chrome-192x192.png 8947adffc183a46500f6e97baec557e7c4dd9ac7
@@ -280,7 +288,7 @@ F www/templates/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
 F www/templates/styles.less 73765689db1ce0fb331b3d61c2dd469b326a07f6
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 6822ec2acc4f40f9e3c9a8c92a7d989b9a30173e
-R 8cc0cfaa55e50eabccf8f990a0b05509
+P f58691ce9e8b04424191f5fa4f48237dc9f405b7
+R 83afeabbb3d106ca3f3acb3767a8a3d6
 U johnfound
-Z f1ed60be37f273c0ffb50588c2d30672
+Z 5789b1587fd021246519364b30ffc623
