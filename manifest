@@ -1,5 +1,5 @@
-C Added\s.js\sfile\sformat\sas\srecogniseable\smime\stype.
-D 2017-05-10T15:14:32.196
+C Better\sbehavior\son\schanging\sthe\suser\sname\son\sthe\sfly.\s(for\sexample\swhen\sloging\sin/out\sto\sthe\sforum).
+D 2017-05-10T16:59:49.115
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz ce6f39e0c62bf63ef7cefe1f6bfa709a9c1e5dcf
@@ -13,13 +13,13 @@ F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm e733112da9d4d1b77b776280dfff30f1b291dbb1
-F source/chat.asm 8ad44d0b90f21a438ca09280c925c88385b88fb6
+F source/chat.asm 570c01a8e6b2d1d9d361f2e87644adae8a207f62
 F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
 F source/commands.asm 02fe7e19c2cb07f355d0515f5873643a819d1522
 F source/create.sql d9fd0be2f25d3e5d6b7b9aed92d82fd75eafea74
 F source/delete.asm 64d173cf0ee0df77a8843408b427bdb02b384bd9
 F source/edit.asm be74de1ce8a3ec1372555d88f9e28fc1c3970cf2
-F source/engine.asm baf9b9f34689ef7dcf3001b55562799b44c57a64
+F source/engine.asm 5cd8bab2e3555170c75fa97e2272e04d167e871c
 F source/engine.fpr 0aab5a5e96f6d29f60a873084f423c5cb085b177
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -288,7 +288,7 @@ F www/templates/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
 F www/templates/styles.less 73765689db1ce0fb331b3d61c2dd469b326a07f6
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P b5d962f69348a514c70aaf551c32cea35f7effef
-R 891afe2bce7875db3fe8c1a3a8be2301
+P ee7c1725921299eb46b0e903edf9d37a5413177a
+R f2116e752c9bcd4c62a17260707d9eb8
 U johnfound
-Z dd1fdb2bedb0f2a6a5cb9d6a2ae34d11
+Z d834db14965e0620bcc71efd46e95f38

@@ -550,46 +550,38 @@ endp
 
 
 
-sqlEnterChat text "insert into ChatUsers(session, time, username, original, status) values ( ?1, strftime('%s', 'now'), ?3, ?3, 1 );"
+sqlEnterChat         text "insert into ChatUsers(session, time, username, original, status) values ( ?1, strftime('%s', 'now'), ?2, ?2, 1 );"
+sqlActivateSession   text "update ChatUsers set time=strftime('%s', 'now'), original=?2, status=1, username = (case when username <> original then username else ?2 end) where session=?1;"
 
 proc EnterChat, .pSpecial, .session
 .stmt dd ?
 begin
         pushad
 
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlEnterChat, sqlEnterChat.length, eax, 0
-
-        stdcall StrPtr, [.session]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-
         stdcall ChatUserName, [.pSpecial]
         mov     esi, eax
 
-        stdcall StrPtr, esi
-        cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteStep, [.stmt]
-        mov     ebx, eax
-
-        cinvoke sqliteFinalize, [.stmt]
-        stdcall StrDel, esi
-
-        OutputValue "Insert session result: ", ebx, 10, -1
+        mov     edx, sqlEnterChat
+        call    .ExecSQL
 
         cmp     ebx, SQLITE_DONE
-        jne     .update_existing
+        je      .notify
 
+        mov     edx, sqlActivateSession
+        call    .ExecSQL
+
+        cmp     ebx, SQLITE_DONE
+        je      .notify
+
+        stc
+        jmp     .finish
+
+.notify:
         stdcall SignalNewMessage
-
         clc
-        popad
-        return
 
-.update_existing:
-
-        stdcall SetUserStatus, [.session], 1
-        clc
+.finish:
+        stdcall StrDel, esi
         popad
         return
 
@@ -597,6 +589,23 @@ begin
         stc
         popad
         return
+
+.ExecSQL:
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], edx, -1, eax, 0
+
+        stdcall StrPtr, [.session]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+        stdcall StrPtr, esi
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
+
+        cinvoke sqliteFinalize, [.stmt]
+        retn
+
 endp
 
 
@@ -674,6 +683,7 @@ begin
         popad
         return
 endp
+
 
 
 
