@@ -1,7 +1,7 @@
 
 
 sqlParameters   text "select ?1 as host, ?2 as smtp_addr, ?3 as smtp_port, ",                                   \
-                            "?4 as smtp_user, ?5 as forum_title, ?18 as Description, ?19 as Keywords, ",        \
+                            "?4 as smtp_user, ?5 as forum_title, ?19 as Description, ?20 as Keywords, ",        \
                             "?6 as log_events, ?7 as message, ?8 as error, ",                                   \
                             "?9 as page_length, ",                                                              \
                             "?10 as user_perm0, ?11 as user_perm2, ?12 as user_perm3, ?13 as user_perm4, ",     \
@@ -110,7 +110,7 @@ begin
 
         push    eax
         stdcall StrPtr, eax
-        cinvoke sqliteBindText, [.stmt], 18, eax, [eax+string.len], SQLITE_TRANSIENT
+        cinvoke sqliteBindText, [.stmt], 19, eax, [eax+string.len], SQLITE_TRANSIENT
         stdcall StrDel ; from the stack
 
 .description_ok:
@@ -120,7 +120,7 @@ begin
 
         push    eax
         stdcall StrPtr, eax
-        cinvoke sqliteBindText, [.stmt], 19, eax, [eax+string.len], SQLITE_TRANSIENT
+        cinvoke sqliteBindText, [.stmt], 20, eax, [eax+string.len], SQLITE_TRANSIENT
         stdcall StrDel ; from the stack
 
 .keywords_ok:

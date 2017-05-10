@@ -1,5 +1,5 @@
-C Added\sthe\s.gif\semoticons.
-D 2017-05-10T08:07:16.136
+C Fixed\sbug\sin\sthe\ssettings\sform.
+D 2017-05-10T08:45:51.690
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz ce6f39e0c62bf63ef7cefe1f6bfa709a9c1e5dcf
@@ -38,7 +38,7 @@ F source/render.asm 317c73e7d0dbf67a8be93c07e4dc491e26471a63
 F source/search.asm 221f2cac15b0cb4091b44fd03620028820a473b0
 F source/search.sql 7fb4f78030d5485357720f11ce5276c8f808c5f1
 F source/search_cnt.sql 5ef8eb89fcea8f87942f1b7c67202350dfd9ff89
-F source/settings.asm dabd0a9e0b15b141efe5fc9aef13cf60d0ae1d7c
+F source/settings.asm 77a81b4236cfc4aa7575934135d9628e679f8fcd
 F source/showthread.asm 6f9a31228099b010d6b59c335cafd1aae57ccd2b
 F source/showthread.sql c575ee2fcbe60d8b878d78d44c477aeb4aece163
 F source/sqlite3.asm f605d645a6cd5a75fbfc52a86ce38c0b5ab0430a
@@ -288,7 +288,7 @@ F www/templates/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
 F www/templates/styles.less 73765689db1ce0fb331b3d61c2dd469b326a07f6
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P f58691ce9e8b04424191f5fa4f48237dc9f405b7
-R 83afeabbb3d106ca3f3acb3767a8a3d6
+P 477b9cbe86a7c1e3e4f0ee07da74bb6bb43c1888
+R 205ca496534362d6f6e9b8f608329af6
 U johnfound
-Z 5789b1587fd021246519364b30ffc623
+Z 3fbfd8ad8a8661fada7a9552490e48d0
