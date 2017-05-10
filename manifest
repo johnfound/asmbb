@@ -1,5 +1,5 @@
-C Added\sthe\semoticons\sfor\sthe\schat.
-D 2017-05-10T07:57:41.337
+C Changed\sthe\ssmiles\sfor\sthe\sforum\swith\sanimated\spixel\ssmiles.
+D 2017-05-10T08:06:34.276
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz ce6f39e0c62bf63ef7cefe1f6bfa709a9c1e5dcf
@@ -76,14 +76,6 @@ F www/images/edit_gray.svg a1b01c72f16833c8bad8eb058ff298cb3d5fb320
 F www/images/edit_white.svg 32de0d55e734823a33792baa4e6be2291dbcf55d
 F www/images/edit_yellow.svg 5656f9fc0d0cca2206c557d94313689a1e30e87b
 F www/images/email.png 24f356bd043c4d2c9ab64314a341690d6e71bf94
-F www/images/emoticons/angry.svg 9a13052df8092e2190ead99bfd3c3ce652ba34af
-F www/images/emoticons/cry.svg fd8625938accd48f89db9afaabaacabffc42f954
-F www/images/emoticons/lol.svg de2fcee1cf93b7deb9e5556cc799fb85b784a73a
-F www/images/emoticons/sad.svg 6e22918df284a7e59715f7dbc4b1e8886ca1373f
-F www/images/emoticons/smile.svg 90f8172311a11daccea34a6670440f01877a3061
-F www/images/emoticons/tongue1.svg 3a949d377fb87c34f65d4bea3b68a2ebb43d0a17
-F www/images/emoticons/tongue2.svg dcef9a82fd762d5655eba39c45c32f3f7cc6e732
-F www/images/emoticons/wink.svg 0391c16877bb131837a1bd2de30ae5b12dc2dedf
 F www/images/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
 F www/images/favicons/android-chrome-144x144.png c52089920b0e4f7c740199f58fa9162fc71cf4cc
 F www/images/favicons/android-chrome-192x192.png 8947adffc183a46500f6e97baec557e7c4dd9ac7
@@ -277,7 +269,7 @@ F www/templates/form_setup.tpl 5a388291b02221e6980a06cb7fcb2a67ddddd169
 F www/templates/form_sqlite_console.tpl 59ac80c1b6816e3b4f749fbf9d6414ff8c79e7fc
 F www/templates/main_html_end.tpl 00886d75d362866e8d35962c72fdac0042dc5131
 F www/templates/main_html_start.tpl 9b325cfdf21a882a0ad015ca023261e48d60c184
-F www/templates/minimag_suffix.tpl e0ee4765a03f31868c42f12693dc9b23b8ca076e
+F www/templates/minimag_suffix.tpl 5933424eae01ba6838b2817ef2527847f9a13a0a
 F www/templates/nav_list.tpl 70b35f73b750d1a0d8cf67c0a26fbccae8594489
 F www/templates/nav_search.tpl d41b3e1308e015bc6b5443be0102d20dbc93de51
 F www/templates/nav_thread.tpl 2283246bc3669b01eacee8d471e2a8facabaf97a
@@ -288,7 +280,7 @@ F www/templates/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
 F www/templates/styles.less 73765689db1ce0fb331b3d61c2dd469b326a07f6
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P c59f9b59a018241c7bfed4bce5865d1f0645b6c2
-R 821dd014a849a83bb362884f30a40a5b
+P 6822ec2acc4f40f9e3c9a8c92a7d989b9a30173e
+R 8cc0cfaa55e50eabccf8f990a0b05509
 U johnfound
-Z e0ab5e0075f66d05cc008f17b92f95ab
+Z f1ed60be37f273c0ffb50588c2d30672
