@@ -1,5 +1,5 @@
-C Fixed\sbug\sin\sthe\ssettings\sform.
-D 2017-05-10T08:45:51.690
+C Fixed\ssmall\sbug\sin\sthe\sfile\smime\stype\sdetection.
+D 2017-05-10T08:53:35.495
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz ce6f39e0c62bf63ef7cefe1f6bfa709a9c1e5dcf
@@ -15,7 +15,7 @@ F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm e733112da9d4d1b77b776280dfff30f1b291dbb1
 F source/chat.asm 8ad44d0b90f21a438ca09280c925c88385b88fb6
 F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
-F source/commands.asm 0f572d52d525f2d6fdb862a715ca7de5f0181b32
+F source/commands.asm 52533646dd5062232ccf6e9328999bb1f53ccdfc
 F source/create.sql d9fd0be2f25d3e5d6b7b9aed92d82fd75eafea74
 F source/delete.asm 64d173cf0ee0df77a8843408b427bdb02b384bd9
 F source/edit.asm be74de1ce8a3ec1372555d88f9e28fc1c3970cf2
@@ -288,7 +288,7 @@ F www/templates/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
 F www/templates/styles.less 73765689db1ce0fb331b3d61c2dd469b326a07f6
 F www/templates/thread_info.tpl f505398ef3c696138b3783192dc5e6b77d349b64
 F www/templates/userinfo.tpl 2de02e6bdaae149ca6a7e9d0db9b86dd46ad7f9f
-P 477b9cbe86a7c1e3e4f0ee07da74bb6bb43c1888
-R 205ca496534362d6f6e9b8f608329af6
+P 6a13022fa3c93b55c45862e5af13941ef04becfc
+R eee94876fe079bff32993d65f201227a
 U johnfound
-Z 3fbfd8ad8a8661fada7a9552490e48d0
+Z f67d1ea46e68f2435b5865dd3e06a9d1

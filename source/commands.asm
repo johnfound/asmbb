@@ -1067,7 +1067,7 @@ begin
         stdcall StrCompNoCase, [.extension], txt ".html"
         jc      .mime_ok
 
-        stdcall StrCompNoCase, [.extension], txt ".html"
+        stdcall StrCompNoCase, [.extension], txt ".htm"
         jc      .mime_ok
 
         mov     eax, mimeCSS
