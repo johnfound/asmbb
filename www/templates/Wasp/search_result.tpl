@@ -1,5 +1,5 @@
 <div class="post">
-  <div class="search_info unread[Unread]">
+  <div class="search_info unread[case:[Unread]|0|1]">
     <a class="user_name" href="/!userinfo/[UserName]">[UserName]</a>
     <img class="smallavatar" src="/!avatar/[username]?v=[AVer]">
     <div class="changed">[PostTime]</div>

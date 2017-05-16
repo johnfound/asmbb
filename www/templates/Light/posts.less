@@ -1,0 +1,131 @@
+@import "skin_variables.lsi";
+
+/* Thread view styles */
+
+div.thread {
+  width: 95%;
+  max-width: 1280px;
+  margin: auto;
+}
+
+h1.thread_caption {
+  font-size: 20px;
+  margin: 32px 0px 0px 0px;
+  clear:both;
+
+  a {
+    margin-left: 4px;
+    display: inline-block;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 18px;
+    height: 18px;
+    background-image: url(".images/edit_gray.svg");
+  }
+}
+
+div.post {
+  position: relative;
+  margin-top: 8px;
+}
+
+div.user_info {
+  float: left;
+  position: absolute;
+  width: 200px;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  padding: 8px;
+
+  background-color: @clDarkBG;
+  background-repeat: no-repeat;
+  background-position: 8px 8px;
+  color: @clDarkFG;
+}
+
+.unread0 {
+  background-image: url(".images/onepost_gray.svg");
+}
+
+.unread1 {
+  background-image: url(".images/onepost.svg");
+}
+
+a.user_name {
+  display: block;
+  padding-top: 4px;
+  text-indent: 40px;
+  color: @clColor1FG;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+img.avatar {
+  margin: 16px auto 0px auto;
+  width: 128px;
+  height: 128px;
+  display: block;
+  background-color: @clColor1;
+}
+
+div.user_pcnt {
+  margin-top: 8px;
+  text-align: left;
+  font-size: 12px;
+  background-color: @clDarkBG;
+}
+
+div.post_info {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  padding: 4px;
+  border-left: solid 200px @clDarkBG;
+  background-color: @clColor1;
+  color: @clColor1FG;
+  font-size: 12px;
+}
+
+div.last_edit {
+  margin-right: auto;
+}
+
+div.edit_tools {
+  a {
+    margin-right: 8px;
+
+    display: inline-block;
+    vertical-align: middle;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 18px;
+    height: 18px;
+  }
+
+  .icon_quote {
+    background-image: url(".images/quote.svg");
+  }
+
+  .icon_edit {
+    background-image: url(".images/edit_gray.svg");
+  }
+
+  .icon_del {
+    background-image: url(".images/del_gray.svg");
+  }
+}
+
+
+div.post_text {
+  padding: 16px 16px 16px 16px;
+  border-left: solid 200px @clDarkBG;
+  background-color: @clArticleBG;
+  min-height: 190px;
+}
+
+

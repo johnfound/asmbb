@@ -1,0 +1,106 @@
+@import "skin_variables.lsi";
+
+div.thread {
+  width: 95%;
+  max-width: 1280px;
+  margin: auto;
+}
+
+div.post {
+  position: relative;
+  margin-top: 8px;
+}
+
+div.search_info {
+  float: left;
+  position: absolute;
+  width: 184px;
+  width: calc(200px - 0px);
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  padding: 8px;
+
+  background-color: @clDarkBG;
+  color: @clDarkFG;
+  background-repeat: no-repeat;
+  background-position: 8px 8px;
+}
+
+.unread0 {
+  background-image: url(".images/onepost_gray.svg");
+}
+
+.unread1 {
+  background-image: url(".images/onepost.svg");
+}
+
+
+div.post_thread {
+  margin-left: 200px;
+  padding: 8px;
+  background-color: @clColor1;
+  font-size: 12px;
+}
+
+div.post_thread a {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+a.user_name {
+  display: block;
+  padding-top: 4px;
+  text-indent: 40px;
+  color: @clColor1FG;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+img.smallavatar {
+  margin: 16px auto 0px auto;
+  width: 64px;
+  height: 64px;
+  display: block;
+  background-color: @clColor1;
+}
+
+div.post_thread {
+  margin-left: 200px;
+  padding: 8px;
+  background-color: @clColor1;
+  font-size: 12px;
+}
+
+div.post_thread a {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+div.post_sum {
+  border-left: solid 200px #404040;
+  padding: 4px 4px 4px 8px;
+  background-color: white;
+}
+
+
+div.post_link {
+  padding: 4px;
+  text-align: right;
+  font-size: 18px;
+  min-height: 64px;
+}
+
+
+div.changed {
+  font-size: 80%;
+  position: absolute;
+  bottom: 8px;
+  margin-top: 8px;
+
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  background-image: url(".images/edit.svg");
+  text-indent: 24px;
+}

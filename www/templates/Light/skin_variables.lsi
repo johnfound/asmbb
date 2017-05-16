@@ -1,0 +1,24 @@
+@clColor1: white;
+@clColor1FG: #ffcc40;
+
+@clFakeUser: #ff80FF;
+@clBodyBG: white;
+@clBodyFG: black;
+@clDarkBG: white;
+@clDarkFG: black;
+
+@clArticleBG: white;
+@clArticleFG: black;
+
+@clFormBG: white;
+@clDisabledBG: #e0e0e0;
+@clDisabledFG: #404040;
+
+@clEditorBG: #e0e0e0;
+@clEditorFG: black;
+
+@clButtonBG: white;
+@clButtonFG: black;
+
+@clButtonActiveBG: #e0e0e0;
+@clButtonActiveFG: black;
