@@ -149,6 +149,8 @@ begin
 
         call    .bind_limits
 
+        cinvoke sqliteBindInt, [.stmt], 6, [esi+TSpecialParams.userID]
+
 .search_loop:
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW

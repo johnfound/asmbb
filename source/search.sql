@@ -9,7 +9,7 @@ select distinct
   PostFTS.rowid,
   snippet(PostFTS, 0, '', '', '...', 16) as Content,
   T.Caption,
-  (select count() from UnreadPosts UP where UP.UserID = ?4 and UP.PostID = PostFTS.rowid) as Unread
+  (select count() from UnreadPosts UP where UP.UserID = ?6 and UP.PostID = PostFTS.rowid) as Unread
 
 from
   PostFTS

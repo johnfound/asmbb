@@ -34,6 +34,7 @@ struct TSpecialParams
   .keywords        dd ?
   .page_length     dd ?
   .setupmode       dd ?
+  .pStyles         dd ?
 
 ; logged user info.
 
@@ -116,6 +117,9 @@ begin
 .keywords_ok:
         mov     [.special.keywords], eax
 
+        stdcall CreateArray, 4
+        mov     [.special.pStyles], eax
+
         stdcall GetParam, 'page_length', gpInteger
         jnc     .page_length_ok
 
@@ -166,6 +170,11 @@ begin
 
         stdcall ListFree, ebx, StrDel
 
+; check for skin redirection.
+
+        stdcall StrPtr, [.uri]
+        cmp     word [eax], "/~"
+        je      .redirect_to_skin
 
 ; first check for supported file format.
 
@@ -262,10 +271,24 @@ begin
 
         jmp     .final_clean
 
+.redirect_to_skin:
+
+        lea     edx, [eax+2]
+
+        lea     eax, [.special]
+        stdcall GetLoggedUser, eax
+
+        stdcall StrDupMem, "/templates/"
+        cmp     [.special.userSkin], 0
+        je      @f
+        stdcall StrCat, eax, [.special.userSkin]
+@@:
+        stdcall StrCat, eax, edx
+        stdcall StrMakeRedirect, edi, eax
+        stdcall StrDel, eax
+        jmp     .send_simple_result2
 
 .send_304_not_modified:
-        DebugMsg "File is cached, not to be send."
-
         stdcall StrCat, edi, <"Status: 304 Not Modified", 13, 10, 13, 10>
         jmp     .send_simple_result2
 
@@ -338,6 +361,7 @@ begin
         stdcall StrDel, [.special.page_title]
         stdcall StrDel, [.special.description]
         stdcall StrDel, [.special.keywords]
+        stdcall ListFree, [.special.pStyles], StrDel
 
         stdcall FreePostDataArray, [.special.post_array]
 

@@ -34,7 +34,6 @@ options.DebugSQLite = 0
 
 include "%lib%/freshlib.asm"
 
-
 uses sqlite3:"%TargetOS%/sqlite3.inc"
 
 include "text_constants.asm"
@@ -84,7 +83,7 @@ uglobal
 endg
 
 
-;rb 373
+rb 373
 
 
 start:

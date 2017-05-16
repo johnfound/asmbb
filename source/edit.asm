@@ -174,7 +174,7 @@ begin
 ; render the source
 
         stdcall StrDup, [.source]
-        stdcall FormatPostText, eax
+        stdcall FormatPostText, eax, esi
         mov     [.rendered], eax
 
 ; bind the source

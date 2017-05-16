@@ -310,7 +310,7 @@ begin
         stdcall LogUserActivity, esi, uaRegistering, 0
 
         stdcall StrNew
-        stdcall StrCatTemplate, eax, "form_register", 0, 0
+        stdcall StrCatTemplate, eax, "form_register", 0, esi
 
         mov     [esp+4*regEAX], eax
         clc

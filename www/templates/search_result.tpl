@@ -1,9 +1,8 @@
 <div class="post">
-  <div class="search_info">
-    <img class="unread_icon" src="/images/[case:[Unread]|onepost_gray.svg|onepost.svg]">
+  <div class="search_info unread[Unread]">
     <a class="user_name" href="/!userinfo/[UserName]">[UserName]</a>
-    <div class="center"><img class="smallavatar" src="/!avatar/[username]?v=[AVer]"></div>
-    <div class="changed" style="margin-left: 8px"><img src="/images/edit.svg" width="16" height="16" alt="#">[PostTime]</div>
+    <img class="smallavatar" src="/!avatar/[username]?v=[AVer]">
+    <div class="changed">[PostTime]</div>
   </div>
   <div class="post_thread">
     Thread: <a href="../[Slug]/">[Caption]</a> Post: <a href="../[rowid]/!by_id">#[rowid]</a>

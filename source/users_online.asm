@@ -248,6 +248,9 @@ begin
 
         stdcall LogUserActivity, esi, uaTrackingUsers, 0
 
+        stdcall ListAddDistinct, [esi+TSpecialParams.pStyles], "users_online.css"
+        mov     [esi+TSpecialParams.pStyles], edx
+
         stdcall StrCat, edi, '<div class="users_online"><table class="users_table"><tr><th>User</th><th>Time</th><th>Activity</th>'
 
         test    [esi+TSpecialParams.userStatus], permAdmin
@@ -347,10 +350,10 @@ begin
         stdcall IP2Str, eax
         stdcall StrCat, edi, eax
 
-        stdcall StrCat, edi, ' <a href="/!ban_ip/'
+        stdcall StrCat, edi, ' <a class="ban_link" href="/!ban_ip/'
         stdcall StrCat, edi, eax
-        stdcall StrCat, edi, txt '"><img src="/images/ban.svg" width="18" height="18" title="Ban this IP address"></a></td><td>'
         stdcall StrDel, eax
+        stdcall StrCat, edi, txt '"></a></td><td>'
 
         cinvoke sqliteColumnText, [.stmt], 5
         test    eax, eax

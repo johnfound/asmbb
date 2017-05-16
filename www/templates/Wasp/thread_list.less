@@ -1,0 +1,138 @@
+@import "skin_variables.lsi";
+
+/* Threads list styles */
+
+div.threads_list {
+  width: 95%;
+  max-width: 1280px;
+  margin: auto;
+  clear: both;
+}
+
+
+.thread_summary {
+  background-color: white;
+
+  position: relative;
+  overflow: hidden;
+  zoom: 1;
+  margin-bottom: 8px;
+}
+
+
+div.thread_info {
+  background-color: @clDarkBG;
+  color: white;
+  text-align: left;
+
+  float: left;
+  position: absolute;
+  width: 184px;
+  width: calc(200px - 0px);
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  padding: 8px 8px 8px 8px;
+
+  a.unread {
+    margin-right: 8px;
+
+    display: inline-block;
+    vertical-align: middle;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+  }
+
+  .unread0 {
+    background-image: url(".images/posts_gray.svg");
+  }
+
+  .unread1 {
+    background-image: url(".images/posts.svg");
+  }
+
+}
+
+
+.pinned {
+  display: block;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  width: 16px;
+  height: 16px;
+  margin: 0px !important;
+  border: 0px;
+}
+
+.pin0 {
+  background-image: url(".images/pinned0.png");
+}
+
+.pin1 {
+  background-image: url(".images/pinned.png");
+}
+
+
+div.post_cnt {
+
+}
+
+div.unread_cnt {
+  font-size: 12px;
+  a {
+    color: @clDarkFG;
+  }
+}
+
+
+div.changed {
+  font-size: 80%;
+  position: absolute;
+  bottom: 8px;
+  margin-top: 8px;
+
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  background-image: url(".images/edit.svg");
+  text-indent: 24px;
+}
+
+
+div.thread_link {
+  background-color: white;
+  padding: 8px;
+  border-left: solid 200px @clDarkBG;
+  min-height: 64px;
+}
+
+
+a.thread_link {
+  font-size: 16px;
+  font-weight: bold;
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+div.thread_tags {
+  background-color: @clColor1;
+  padding: 8px;
+  border-left: solid 200px @clDarkBG;
+  font-size: 12px;
+}
+
+a.ttlink {
+  margin: 0px;
+  padding: 0px;
+}
+
+
+span.small {
+  font-size: 80%;
+  font-weight: normal;
+}

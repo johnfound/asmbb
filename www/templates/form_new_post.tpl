@@ -1,3 +1,7 @@
+[css:navigation.css]
+[css:posts.css]
+[css:postnew.css]
+
 <div class="new_editor">
   <div class="ui">
     <a class="ui" href="[case:[special:page]||../]../">Thread list</a>

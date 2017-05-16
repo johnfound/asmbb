@@ -1,0 +1,150 @@
+@import "skin_variables.lsi";
+
+/* User profile page */
+
+div.user_profile {
+  position: relative;
+  width: 95%;
+  max-width: 1280px;
+  margin: 0px auto 0px auto;
+  background-color: #404040;
+  overflow: auto;
+  padding: 16px;
+}
+
+div.user_desc {
+  float: left;
+  display: block;
+  width: 33%;
+  max-height: 50%;
+  background-color: white;
+  padding: 16px;
+  overflow: auto;
+  margin: 0px 0px 8px 0px;
+  vertical-align: top;
+
+  h1 {
+    text-align: center;
+    margin-top: 0px;
+  }
+
+  p {
+     text-align: justify;
+     margin-top: 0.75em;
+     margin-bottom: 0.75em;
+     word-wrap: break-word;
+  }
+
+}
+
+
+img.profile_avatar {
+  float: left;
+  margin: 0px 8px 8px 0px;
+  width: 128px;
+  height: 128px;
+  background-color: @clColor1;
+}
+
+
+form.user_edit_info {
+  float: right;
+  display: block;
+  width: 60%;
+  width: calc(67% - 16px);
+  padding: 16px;
+  background-color: #d0d0d0;
+  margin-bottom: 8px;
+}
+
+form.user_edit_pass {
+  float: left;
+  display: block;
+  width: 33%;
+  padding: 16px;
+  background-color: #d0d0d0;
+  margin-bottom: 8px;
+  clear: left;
+
+  h1 {
+    text-align: left;
+    margin: 0px 0px 8px 0px;
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  label {
+    text-align: left;
+    margin: 0px 0px 8px 0px;
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+  }
+}
+
+
+
+textarea.user_desc {
+  width: 100%;
+  height: 16em;
+  display: block;
+  margin: 0px 0px 8px 0px;
+  padding: 4px;
+
+  font-family: "Liberation Mono", "Courier New", monospaced;
+  background-color: white;
+  resize: vertical;
+  overflow: auto;
+  border-style: none;
+  outline-style: none;
+}
+
+select.skin {
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+
+  background-color: white;
+  border: none;
+}
+
+
+input.browse {
+  width: 100%;
+  margin-bottom: 8px;
+  font-size: 16px;
+  padding: 0px;
+  outline: none;
+  border: none;
+
+  background-color: white;
+  color: black;
+}
+
+
+div.user_stat {
+  float: right;
+  display: block;
+  width: 60%;
+  width: calc(67% - 16px);
+  padding: 16px;
+  background-color: white;
+  margin-bottom: 8px;
+
+  h1 {
+    text-align: left;
+    margin-top: 0px;
+  }
+
+  li {
+    list-style: disc inside;
+    margin-bottom: 4px;
+  }
+}
+
+

@@ -1,3 +1,8 @@
+[css:navigation.css]
+[css:posts.css]
+[css:postnew.css]
+[css:threadnew.css]
+
 <div class="new_editor">
   <div class="ui">
     <a class="ui" href=".">The thread</a>

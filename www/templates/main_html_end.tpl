@@ -12,7 +12,6 @@
   Created with <b><a href="http://fresh.flatassembler.net">Fresh IDE</a></b><br><br>
 
   Icons are made by <a href="http://www.flaticon.com/authors/egor-rumyantsev">Egor Rumyantsev</a> from <a href="http://www.flaticon.com">www.flaticon.com</a><br>
-  Emoticons are <a href="http://www.freepik.com/">designed by Freepik</a>
 </div>
 [special:environment]
 </body>

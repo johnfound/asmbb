@@ -7,8 +7,8 @@
   <meta name="keywords" content="[special:keywords]">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="/templates/[special:skin]all.css?v=23" type="text/css" />
-
+  <link rel="stylesheet" href="/templates/[special:skin]common.css" type="text/css">
+  [special:allstyles]
   <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
   <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
@@ -43,7 +43,7 @@
 
   <form class="tags" id="search_form" action="[case:[special:dir]|/|[case:[special:search]||../]]!search/" method="get" >
     <input class="search_line" type="search" name="s" placeholder="search" value="[special:search]">
-    <input class="icon_btn"  type="image" src="/images/search.svg" alt="?" >
+    <input class="icon_btn search_icon"  type="submit" value="">
   </form>
 
-  <div class="tags"><a class="taglink" title="Show all threads" href="/"><img src="/images/[case:[special:dir]|posts.svg|posts_gray.svg]" width="32" height="32" alt="All"></a>[special:alltags]</div>
+  <div class="tags"><a class="tagicon [case:[special:dir]|current|not_current]" title="Show all threads" href="/"></a>[special:alltags]</div>
