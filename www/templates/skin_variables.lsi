@@ -1,6 +1,7 @@
 @clColor1: #ffcc40;
 @clFakeUser: #ff80FF;
-@clBody: #d0d0d0;
+@clBodyBG: #d0d0d0;
+@clBodyFG: black;
 @clDarkBG: #404040;
 @clDarkFG: white;
 

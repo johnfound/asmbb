@@ -1,5 +1,5 @@
-C Added\sthe\ssome\smissing\sfiles\sfor\sthe\sprevious\scheckin.\s:)
-D 2017-05-16T16:14:32.872
+C Fixed\sthe\sfirst\srun\ssetup\spage\sstyles.
+D 2017-05-16T17:19:15.249
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz ce6f39e0c62bf63ef7cefe1f6bfa709a9c1e5dcf
@@ -271,8 +271,8 @@ F www/templates/Wasp/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/Wasp/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
 F www/templates/Wasp/chat.less a561e2b92f2bf8ae527b871e72ee61931d32803c
 F www/templates/Wasp/chat.tpl 52b0460d7258da9a7df7187aad60d0f0eb2fef46
-F www/templates/Wasp/common.less c5de3634db1338cb9c3a2763a1d33bcaa5584395
-F www/templates/Wasp/compile_styles.sh e47c8deec5c3f72e2172e91d5811205f9ecca599 x
+F www/templates/Wasp/common.less 6328f91f8ce651c40d8eb935089f59c1a2090908
+F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 557fcfa25e30e6f57d7850b9d56c11ed4a918d63
 F www/templates/Wasp/delete.less 726105b6ac913c53aa1530da71bacaf57f6c264d
 F www/templates/Wasp/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
@@ -287,7 +287,7 @@ F www/templates/Wasp/form_new_thread.tpl 9c1da9ea5b40fe7e0f881f88f31c5b04fed2f38
 F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/Wasp/form_register.tpl 17e04b8fc2296c31bbf97c701fe48e46da816699
 F www/templates/Wasp/form_settings.tpl 29ec58479fa00aa8f4eab772248e9ea12cf2a035
-F www/templates/Wasp/form_setup.tpl 5a388291b02221e6980a06cb7fcb2a67ddddd169
+F www/templates/Wasp/form_setup.tpl 58a7c7ebaa5d793b255c2eca2d7f76fa97ffecdb
 F www/templates/Wasp/form_sqlite_console.tpl bedbf751806827982becff7feb4dcb86309b2355
 F www/templates/Wasp/login.less 370617978bc1dced53c66a7decbaefffa2c5936f
 F www/templates/Wasp/main_html_end.tpl 721ac095265156f7be3549413c34ab18d434541a
@@ -305,8 +305,8 @@ F www/templates/Wasp/posts.less 18d2bd2387df196b723be15acc91168547eb81f7
 F www/templates/Wasp/preview.tpl fb40e8c69c78b02cadf18dc82ed90131aff0a839
 F www/templates/Wasp/search.less f921b3c97df99b69cdca7bec95eb9b80bf7d661a
 F www/templates/Wasp/search_result.tpl efa562603aa675cc89730d977b44e9a2797c0dbc
-F www/templates/Wasp/settings.less 26de3369681cd6b7a9e355dad92acda5e9b4dbe5
-F www/templates/Wasp/skin_variables.lsi 61b1bf2841ab0367f94b9a17d9ef567abda8aeb1
+F www/templates/Wasp/settings.less 674c5684a9d75aba6eb030b583779e37eda787f3
+F www/templates/Wasp/skin_variables.lsi 295507b08e189abbf37e0b2cfc8ce717341678f9
 F www/templates/Wasp/sqlite.less 69cd2a2a3a085718516fda5199795e753209193d
 F www/templates/Wasp/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
 F www/templates/Wasp/thread_info.tpl 7cf1db13fce67744f32a044c2b99c0db1ea56d86
@@ -332,8 +332,8 @@ F www/templates/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
 F www/templates/chat.less a561e2b92f2bf8ae527b871e72ee61931d32803c
 F www/templates/chat.tpl 52b0460d7258da9a7df7187aad60d0f0eb2fef46
-F www/templates/common.less c5de3634db1338cb9c3a2763a1d33bcaa5584395
-F www/templates/compile_styles.sh e47c8deec5c3f72e2172e91d5811205f9ecca599 x
+F www/templates/common.less 6328f91f8ce651c40d8eb935089f59c1a2090908
+F www/templates/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/del_confirm.tpl 557fcfa25e30e6f57d7850b9d56c11ed4a918d63
 F www/templates/delete.less 726105b6ac913c53aa1530da71bacaf57f6c264d
 F www/templates/error.css 5d9de944fe6322d58164da7ce96baf6103af896d
@@ -348,7 +348,7 @@ F www/templates/form_new_thread.tpl 9c1da9ea5b40fe7e0f881f88f31c5b04fed2f38f
 F www/templates/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/form_register.tpl 17e04b8fc2296c31bbf97c701fe48e46da816699
 F www/templates/form_settings.tpl 29ec58479fa00aa8f4eab772248e9ea12cf2a035
-F www/templates/form_setup.tpl 5a388291b02221e6980a06cb7fcb2a67ddddd169
+F www/templates/form_setup.tpl 58a7c7ebaa5d793b255c2eca2d7f76fa97ffecdb
 F www/templates/form_sqlite_console.tpl bedbf751806827982becff7feb4dcb86309b2355
 F www/templates/login.less 370617978bc1dced53c66a7decbaefffa2c5936f
 F www/templates/main_html_end.tpl 721ac095265156f7be3549413c34ab18d434541a
@@ -366,8 +366,8 @@ F www/templates/posts.less 18d2bd2387df196b723be15acc91168547eb81f7
 F www/templates/preview.tpl fb40e8c69c78b02cadf18dc82ed90131aff0a839
 F www/templates/search.less f921b3c97df99b69cdca7bec95eb9b80bf7d661a
 F www/templates/search_result.tpl efa562603aa675cc89730d977b44e9a2797c0dbc
-F www/templates/settings.less 26de3369681cd6b7a9e355dad92acda5e9b4dbe5
-F www/templates/skin_variables.lsi 61b1bf2841ab0367f94b9a17d9ef567abda8aeb1
+F www/templates/settings.less 674c5684a9d75aba6eb030b583779e37eda787f3
+F www/templates/skin_variables.lsi 295507b08e189abbf37e0b2cfc8ce717341678f9
 F www/templates/sqlite.less 69cd2a2a3a085718516fda5199795e753209193d
 F www/templates/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
 F www/templates/thread_info.tpl 7cf1db13fce67744f32a044c2b99c0db1ea56d86
@@ -376,7 +376,7 @@ F www/templates/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/userinfo.less f83c13f92b51381176d13c0696b1d4a94f12168e
 F www/templates/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/users_online.less c5abb940dab78a863881fee53d85e0454a5d410c
-P 222b3649e9cf450a9d9f017280e0126b8df245ea
-R e207821f4cfc924899bc155cce27286a
+P caa9635338f29428b07470d06ea5d21e58b0579b
+R 96fcf35f8d7777578fc687c42a16ef35
 U johnfound
-Z 23cee71f70dea1efffc370969e34c0f1
+Z 56fbe46e6ae00fd4ff6bcf69d59496cc

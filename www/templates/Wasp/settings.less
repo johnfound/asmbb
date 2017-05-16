@@ -14,14 +14,14 @@ div.set_page {
 form.settings {
   width: 640px;
   padding: 16px;
-  background: @clBody;
+  background-color: @clBodyBG;
   margin: 8px auto 8px auto;
 
   h1 {
     height: 38px;
     text-align: center;
-    color: white;
-    background-color: #404040;
+    color: @clDarkFG;
+    background-color: @clDarkBG;
     font-size: 20px;
     font-variant: small-caps;
     margin-top: 0;
@@ -35,7 +35,6 @@ form.settings {
     width: 220px;
     margin-bottom: 8px;
     padding: 0px 16px;
-    color: black;
     font-size: 16px;
     font-weight: bold;
   }
@@ -58,11 +57,8 @@ input.settings {
     outline: none;
     border: none;
 
-    background-color: white;
-    color: black;
-    background-position: 12px -10px;
-    background-repeat: no-repeat;
-    background-size: 24px 120px;
+    background-color: @clEditorBG;
+    color: @clEditorFG;
 }
 
 label.checkbox {

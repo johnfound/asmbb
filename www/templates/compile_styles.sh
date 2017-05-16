@@ -6,5 +6,3 @@ do
   clessc "$file" -o "${file%.*}.css"
 
 done
-
-#clessc styles.less -o all.css
