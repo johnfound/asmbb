@@ -1,3 +1,7 @@
+[css:navigation.css]
+[css:posts.css]
+[css:posteditor.css]
+
 <div class="editor" id="editor">
   <div class="ui">
     <a class="ui" href="../">Thread list</a>

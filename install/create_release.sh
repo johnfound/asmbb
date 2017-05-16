@@ -1,16 +1,37 @@
 #!/bin/bash
+
 mkdir asmbb
+
 mkdir asmbb/templates/
+mkdir asmbb/templates/.images/
+mkdir asmbb/templates/.images/emoticons/
+mkdir asmbb/templates/.images/chatemoticons/
+
 mkdir asmbb/templates/Light/
+mkdir asmbb/templates/Light/.images/
+mkdir asmbb/templates/Light/.images/emoticons/
+mkdir asmbb/templates/Light/.images/chatemoticons/
+
 mkdir asmbb/templates/Wasp/
+mkdir asmbb/templates/Wasp/.images/
+mkdir asmbb/templates/Wasp/.images/emoticons/
+mkdir asmbb/templates/Wasp/.images/chatemoticons/
+
 mkdir asmbb/images/
 mkdir asmbb/images/favicons/
 
 # complile less files
 
-clessc ../www/templates/styles.less -o ../www/templates/all.css
-clessc ../www/templates/Light/styles.less -o ../www/templates/Light/all.css
-clessc ../www/templates/Wasp/styles.less -o ../www/templates/Wasp/all.css
+cd ../www/templates/
+./compile_styles.sh
+
+cd Wasp/
+./compile_styles.sh
+
+cd ../Light/
+./compile_styles.sh
+
+cd ../../../install/
 
 # engine files
 cp ../www/engine asmbb/
@@ -29,8 +50,24 @@ cp ../www/templates/Wasp/*.css asmbb/templates/Wasp/
 cp ../www/templates/Wasp/*.tpl asmbb/templates/Wasp/
 
 # images
-cp ../www/images/*.* asmbb/images/
+
+cp ../www/images/favicon.ico asmbb/images/
 cp ../www/images/favicons/*.* asmbb/images/favicons/
+
+# default skin
+cp ../www/templates/.images/*.* asmbb/templates/.images/
+cp ../www/templates/.images/emoticons/*.* asmbb/templates/.images/emoticons/
+cp ../www/templates/.images/chatemoticons/*.* asmbb/templates/.images/chatemoticons/
+
+# Wasp skin
+cp ../www/templates/Wasp/.images/*.* asmbb/templates/Wasp/.images/
+cp ../www/templates/Wasp/.images/emoticons/*.* asmbb/templates/Wasp/.images/emoticons/
+cp ../www/templates/Wasp/.images/chatemoticons/*.* asmbb/templates/Wasp/.images/chatemoticons/
+
+# Light skin
+cp ../www/templates/Light/.images/*.* asmbb/templates/Light/.images/
+cp ../www/templates/Light/.images/emoticons/*.* asmbb/templates/Light/.images/emoticons/
+cp ../www/templates/Light/.images/chatemoticons/*.* asmbb/templates/Light/.images/chatemoticons/
 
 # example config files for apache and lighttpd
 cp .htaccess asmbb/
@@ -43,21 +80,4 @@ cp install.txt asmbb/
 # now pack it
 tar -czf asmbb.tar.gz asmbb/
 
-rm asmbb/templates/Light/*
-rmdir asmbb/templates/Light/
-
-rm asmbb/templates/Wasp/*
-rmdir asmbb/templates/Wasp/
-
-rm asmbb/templates/*
-rmdir asmbb/templates/
-
-rm asmbb/images/favicons/*
-rmdir asmbb/images/favicons/
-
-rm asmbb/images/*
-rmdir asmbb/images/
-
-rm asmbb/*
-rm asmbb/.htaccess
-rmdir asmbb
+rm -rf asmbb/

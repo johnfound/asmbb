@@ -34,7 +34,6 @@ options.DebugSQLite = 0
 
 include "%lib%/freshlib.asm"
 
-
 uses sqlite3:"%TargetOS%/sqlite3.inc"
 
 include "text_constants.asm"
@@ -62,7 +61,10 @@ include "messages.asm"
 include "version.asm"
 include "images_png.asm"
 
-;include "postdebug.asm"
+include "chat.asm"
+include "chat_ipc.asm"
+
+include "postdebug.asm"
 
 
 iglobal
@@ -81,11 +83,14 @@ uglobal
 endg
 
 
-;rb 173
+rb 373
 
 
 start:
         InitializeAll
+
+        stdcall InitChatIPC
+        jc      .finish
 
         stdcall SetLanguage, 'EN'       ; It should be elsewhere!
 
@@ -135,7 +140,6 @@ start:
 
 .terminate:
 
-
         cmp     [fLogEvents], 0
         je      .log_script_end_ok
 
@@ -145,7 +149,7 @@ start:
 
 .log_script_end_ok:
 
-        mov     ebx, 300        ; 300x10ms = 3000ms
+        mov     ebx, 30        ; 300x10ms = 300ms
 
 .wait_close:
         cinvoke sqliteClose, [hMainDatabase]
@@ -161,8 +165,8 @@ start:
         pop     eax
 
 .database_closed:
+        and     [hMainDatabase], 0
         OutputValue "Result of sqliteClose:", eax, 10, -1
-
         cinvoke sqliteShutdown
 
 .finish:
@@ -175,6 +179,11 @@ proc OnForcedTerminate as procForcedTerminateHandler
 begin
 
         DebugMsg "OnForcedTerminate"
+
+        lock inc [fChatTerminate]
+        stdcall SignalNewMessage        ; should close the connections!
+
+        stdcall Sleep, 100
 
         cmp     [fOwnSocket], 0
         je      start.terminate

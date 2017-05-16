@@ -1,3 +1,5 @@
+[css:settings.css]
+
 <div class="set_page">
 <form class="settings" method="post" action="/!adminrulez">
   <h1>Admin account setup</h1>

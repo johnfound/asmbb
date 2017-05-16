@@ -1,4 +1,7 @@
-<div class="new_editor">
+[css:navigation.css]
+[css:login.css]
+
+<div class="login">
   <div class="ui">
     <a class="ui" href="/">Threads</a>
   </div>

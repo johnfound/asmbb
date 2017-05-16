@@ -1,11 +1,11 @@
 
 
 sqlParameters   text "select ?1 as host, ?2 as smtp_addr, ?3 as smtp_port, ",                                   \
-                            "?4 as smtp_user, ?5 as forum_title, ?18 as Description, ?19 as Keywords, ",        \
+                            "?4 as smtp_user, ?5 as forum_title, ?19 as Description, ?20 as Keywords, ",        \
                             "?6 as log_events, ?7 as message, ?8 as error, ",                                   \
                             "?9 as page_length, ",                                                              \
                             "?10 as user_perm0, ?11 as user_perm2, ?12 as user_perm3, ?13 as user_perm4, ",     \
-                            "?14 as user_perm5, ?15 as user_perm6, ?16 as user_perm7, ?17 as user_perm31"
+                            "?14 as user_perm5, ?15 as user_perm6, ?16 as user_perm7, ?17 as user_perm8, ?18 as user_perm31"
 
 sqlUpdateParams text "insert or replace into Params values (?, ?)"
 
@@ -110,7 +110,7 @@ begin
 
         push    eax
         stdcall StrPtr, eax
-        cinvoke sqliteBindText, [.stmt], 18, eax, [eax+string.len], SQLITE_TRANSIENT
+        cinvoke sqliteBindText, [.stmt], 19, eax, [eax+string.len], SQLITE_TRANSIENT
         stdcall StrDel ; from the stack
 
 .description_ok:
@@ -120,7 +120,7 @@ begin
 
         push    eax
         stdcall StrPtr, eax
-        cinvoke sqliteBindText, [.stmt], 19, eax, [eax+string.len], SQLITE_TRANSIENT
+        cinvoke sqliteBindText, [.stmt], 20, eax, [eax+string.len], SQLITE_TRANSIENT
         stdcall StrDel ; from the stack
 
 .keywords_ok:
@@ -198,13 +198,18 @@ begin
         cinvoke sqliteBindText, [.stmt], 16, "checked", -1, SQLITE_STATIC
 
 @@:
-        test    ebx, permAdmin
+        test    ebx, permChat
         jz      @f
 
         cinvoke sqliteBindText, [.stmt], 17, "checked", -1, SQLITE_STATIC
 
 @@:
+        test    ebx, permAdmin
+        jz      @f
 
+        cinvoke sqliteBindText, [.stmt], 18, "checked", -1, SQLITE_STATIC
+
+@@:
         cinvoke sqliteStep, [.stmt]
 
         stdcall StrNew
@@ -426,6 +431,13 @@ begin
         or      ebx, eax
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_perm7", 0
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack.
+
+        or      ebx, eax
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_perm8", 0
         push    eax
         stdcall StrToNumEx, eax
         stdcall StrDel ; from the stack.

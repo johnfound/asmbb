@@ -7,8 +7,8 @@
   <meta name="keywords" content="[special:keywords]">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="/templates/[special:skin]all.css" type="text/css" />
-
+  <link rel="stylesheet" href="/templates/[special:skin]common.css" type="text/css">
+  [special:allstyles]
   <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
   <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
@@ -29,20 +29,21 @@
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
   <meta name="msapplication-config" content="/images/favicons/browserconfig.xml">
-  <meta name="theme-color" content="#d80027">
+  <meta name="theme-color" content="#ffcc40">
 </head>
 
 <body>
   <div class="header">
+    <h1>AsmBB demo</h1>
     <div class="login_interface">
       [case:[special:userid]|<a href="/!login/">Login</a><br><a href="/!register/">Register</a>|
       <a href="/!logout">Logout ( [special:username] )</a><br><a href="/!userinfo/[special:username]">User profile</a>]
     </div>
-    <form class="tags" id="search_form" action="[case:[special:dir]|/|[case:[special:search]||../]]!search/" method="get" >
-      <input class="search_line" type="search" size="40" name="s" placeholder="search" value="[special:search]"><input class="icon_btn"  type="image" src="/images/search.svg" alt="?" >
-    </form>
-    <h1>AsmBB demo</h1>
   </div>
 
-<div class="tags"><a class="taglink" title="Show all threads" href="/"><img src="/images/[case:[special:dir]|posts.svg|posts_gray.svg]" width="32" height="32" alt="All"></a>[special:alltags]</div>
+  <form class="tags" id="search_form" action="[case:[special:dir]|/|[case:[special:search]||../]]!search/" method="get" >
+    <input class="search_line" type="search" name="s" placeholder="search" value="[special:search]">
+    <input class="icon_btn search_icon"  type="submit" value="">
+  </form>
 
+  <div class="tags"><a class="tagicon [case:[special:dir]|current|not_current]" title="Show all threads" href="/"></a>[special:alltags]</div>

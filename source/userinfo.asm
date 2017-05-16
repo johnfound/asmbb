@@ -227,8 +227,18 @@ begin
 
 .default_avatar:
 
-        lea     eax, [.timeRetLo]
-        stdcall GetFileIfNewer, "images/anon.png", [.timeRetLo], [.timeRetHi], eax
+        stdcall StrDupMem, "templates/"
+
+        mov     ecx, [esi+TSpecialParams.userSkin]
+        jecxz   @f
+        stdcall StrCat, eax, ecx
+@@:
+        stdcall StrCat, eax, ".images/anon.png"
+        push    eax
+
+        lea     ecx, [.timeRetLo]
+        stdcall GetFileIfNewer, eax, [.timeRetLo], [.timeRetHi], ecx
+        stdcall StrDel ; from the stack
         jc      .error_read
 
         test    eax, eax

@@ -1,3 +1,8 @@
+[css:navigation.css]
+[css:posts.css]
+[css:postnew.css]
+[css:threadnew.css]
+
 <div class="new_editor">
   <div class="ui">
     <a class="ui" href=".">Thread list</a>
@@ -7,7 +12,7 @@
       <p>Title:</p>
       <input class="title" type="edit" value="[caption]" placeholder="Thread title" name="title" autofocus>
     </div><div class="edit_groupR">
-      <p>Tags: <span class="small">(max 3, comma delimited, no spaces)</span> [case:[special:tag]| |+ "[special:tag]"]</p>
+      <p>Tags: <span class="small">(max 3, comma delimited, no spaces)</span> [case:[special:dir]| |+ "[special:dir]"]</p>
       <input class="tags"  type="edit" value="[tags]" name="tags" placeholder="some tags here"><br>
     </div>
     <p>Post content:</p>

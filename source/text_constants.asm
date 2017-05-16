@@ -51,3 +51,11 @@ cCreateAdminTitle       itext   EN: "Create the admin account!",                
 cThreadListTitle        itext   EN: "Threads list ",    \
                                 RU: "Темы ",            \
                                 BG: "Теми "
+
+cChatTitle              itext   EN: "Chat ",            \
+                                RU: "Чат ",             \
+                                BG: "Чат "
+
+cAnonName               itext   EN: "Anon",             \
+                                RU: "Анон",             \
+                                BG: "Анон"

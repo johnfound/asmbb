@@ -1,3 +1,7 @@
+[css:navigation.css]
+[css:delete.css]
+[css:markdown.css]
+
 <div class="confirm">
   <h1 class="msg warning">Delete [case:[cnt_thread]| |post and thread|post]?</h1><br>
   Do you <b>really</b> want to delete the post written by "[UserName]"?

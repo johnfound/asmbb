@@ -9,6 +9,8 @@ permEditOwn     = 16
 permEditAll     = 32
 permDelOwn      = 64
 permDelAll      = 128
+permChat        = 256
+
 permAdmin       = $80000000
 
 
@@ -32,6 +34,7 @@ struct TSpecialParams
   .keywords        dd ?
   .page_length     dd ?
   .setupmode       dd ?
+  .pStyles         dd ?
 
 ; logged user info.
 
@@ -114,6 +117,9 @@ begin
 .keywords_ok:
         mov     [.special.keywords], eax
 
+        stdcall CreateArray, 4
+        mov     [.special.pStyles], eax
+
         stdcall GetParam, 'page_length', gpInteger
         jnc     .page_length_ok
 
@@ -164,6 +170,11 @@ begin
 
         stdcall ListFree, ebx, StrDel
 
+; check for skin redirection.
+
+        stdcall StrPtr, [.uri]
+        cmp     word [eax], "/~"
+        je      .redirect_to_skin
 
 ; first check for supported file format.
 
@@ -260,10 +271,24 @@ begin
 
         jmp     .final_clean
 
+.redirect_to_skin:
+
+        lea     edx, [eax+2]
+
+        lea     eax, [.special]
+        stdcall GetLoggedUser, eax
+
+        stdcall StrDupMem, "/templates/"
+        cmp     [.special.userSkin], 0
+        je      @f
+        stdcall StrCat, eax, [.special.userSkin]
+@@:
+        stdcall StrCat, eax, edx
+        stdcall StrMakeRedirect, edi, eax
+        stdcall StrDel, eax
+        jmp     .send_simple_result2
 
 .send_304_not_modified:
-        DebugMsg "File is cached, not to be send."
-
         stdcall StrCat, edi, <"Status: 304 Not Modified", 13, 10, 13, 10>
         jmp     .send_simple_result2
 
@@ -336,6 +361,7 @@ begin
         stdcall StrDel, [.special.page_title]
         stdcall StrDel, [.special.description]
         stdcall StrDel, [.special.keywords]
+        stdcall ListFree, [.special.pStyles], StrDel
 
         stdcall FreePostDataArray, [.special.post_array]
 
@@ -437,6 +463,17 @@ begin
         stdcall StrCompNoCase, eax, txt "!users_online"
         jc      .exec_command
 
+        stdcall ChatDisabled
+        jc      .chat_ok
+
+        mov     ecx, ChatPage
+        stdcall StrCompNoCase, eax, txt "!chat"
+        jc      .exec_command
+
+        stdcall StrCompNoCase, eax, txt "!chat_events"
+        jc      .exec_command_chat
+
+.chat_ok:
 
 if defined options.DebugWeb & options.DebugWeb
         mov     ecx, PostDebug
@@ -595,6 +632,14 @@ end if
 
         jmp     .output_forum_html
 
+;..................................................................................
+; Special command that ends only when the server close the connection.
+
+.exec_command_chat:
+
+        lea     eax, [.special]
+        stdcall ChatRealTime, [.hSocket], [.requestID], eax
+        jmp     .final_clean
 
 ;..................................................................................
 
@@ -965,9 +1010,6 @@ endp
 
 
 
-sqlLogBadCookie text "insert into BadCookies values (?, ?, ?)"
-
-
 proc GetCookieValue, .pParams, .name
 .stmt dd ?
 begin
@@ -993,43 +1035,9 @@ begin
         jne     .next
 
         stdcall StrCompNoCase, [edi+TArray.array], [.name]
-        jc      .found
+        jnc     .next
 
-; log not matching cookies.
-
-        pushad
-
-        mov     ebx, [esi+TArray.array+4*ecx]
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLogBadCookie, -1, eax, 0
-
-        stdcall StrPtr, ebx
-        cinvoke sqliteBindText, [.stmt], 1, eax, -1, SQLITE_STATIC
-
-        stdcall ValueByName, [.pParams], "HTTP_USER_AGENT"
-        jc      .agent_ok
-
-        stdcall StrPtr, eax
-        cinvoke sqliteBindText, [.stmt], 2, eax, -1, SQLITE_STATIC
-
-.agent_ok:
-        stdcall ValueByName, [.pParams], "REMOTE_ADDR"
-        jc      .remote_ok
-
-        stdcall StrPtr, eax
-        cinvoke sqliteBindText, [.stmt], 3, eax, -1, SQLITE_STATIC
-
-.remote_ok:
-
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteFinalize, [.stmt]
-
-        popad
-
-        jmp     .next
-
-.found:
+;.found:
         xor     eax, eax
         xchg    eax, [edi+TArray.array+4]
         mov     [esp+4*regEAX], eax
@@ -1039,7 +1047,6 @@ begin
 .next:
         stdcall ListFree, edi, StrDel
         jmp     .loop
-
 
 .end_loop:
         stdcall ListFree, esi, StrDel
@@ -1084,7 +1091,7 @@ begin
         stdcall StrCompNoCase, [.extension], txt ".html"
         jc      .mime_ok
 
-        stdcall StrCompNoCase, [.extension], txt ".html"
+        stdcall StrCompNoCase, [.extension], txt ".htm"
         jc      .mime_ok
 
         mov     eax, mimeCSS
@@ -1122,6 +1129,10 @@ begin
         stdcall StrCompNoCase, [.extension], txt ".json"
         jc      .mime_ok
 
+        mov     eax, mimeJS
+        stdcall StrCompNoCase, [.extension], txt ".js"
+        jc      .mime_ok
+
         xor     eax, eax
         stc
         return
@@ -1137,6 +1148,7 @@ mimeIcon  text "image/x-icon"
 mimeHTML  text "text/html; charset=utf-8"
 mimeXML   text "text/xml"
 mimeJson  text "application/json"
+mimeJS    text "text/javascript"
 mimeText  text "text/plain; charset=utf-8"
 mimeCSS   text "text/css; charset=utf-8"
 mimePNG   text "image/png"

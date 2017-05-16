@@ -1,18 +1,19 @@
 <a id="[id]"></a>
 <div class="post">
-  <div class="user_info">
-    <img class="unread_icon" alt="U/R" src="/images/[case:[Unread]|onepost_gray.svg|onepost.svg]">
-    <a class="user_name" href="/!userinfo/[UserName]">[UserName]</a>
-    <div class="center"><img class="avatar" alt=":)" src="/!avatar/[UserName]?v=[AVer]"></div>
+  <div class="user_info unread[Unread]">
+    <a class="user_name" href="/!userinfo/[UserName]">[UserName]
+    <img class="avatar" alt=":)" src="/!avatar/[UserName]?v=[AVer]"></a>
     <div class="user_pcnt">Posts: [UserPostCount]</div>
   </div>
   <div class="post_info">
-    <a href="#[id]">#[id]</a>
-    Last edited: [PostTime], read: [ReadCount] [case:[ReadCount]|times|time|times]
+    <div class="last_edit">
+      <a href="#[id]">#[id]</a>
+      Last edited: [PostTime], read: [ReadCount] [case:[ReadCount]|times|time|times]
+    </div>
     <div class="edit_tools">
-      [case:[special:canpost]| |<a class="quote_btn" href="[id]/!post"><img class="quote_icon" src="/images/quote.svg" alt="Quote | "></a>]
-      [case:[special:canedit]| |<a class="edit_btn" href="[id]/!edit"><img class="edit_icon" src="/images/edit_gray.svg" alt="Edit | "></a>]
-      [case:[special:candel] | |<a class="del_btn" href="[id]/!confirm"><img class="del_icon" src="/images/del_gray.svg" alt="Delete"></a>]
+      [case:[special:canpost]| |<a class="icon_quote" href="[id]/!post"></a>]
+      [case:[special:canedit]| |<a class="icon_edit"  href="[id]/!edit"></a>]
+      [case:[special:candel] | |<a class="icon_del"   href="[id]/!confirm"></a>]
     </div>
   </div>
   <div class="post_text">

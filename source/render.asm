@@ -78,6 +78,7 @@ begin
 
 .outer:
         mov     ebx, esi
+        xor     ecx, ecx
 
 .inner:
         mov     cl, [esi]
@@ -160,6 +161,9 @@ begin
 
         stdcall StrMatchPatternNoCase, "html:*", edi
         jc      .process_html
+
+        stdcall StrMatchPatternNoCase, "css:*", edi
+        jc      .process_css
 
         stdcall StrMatchPatternNoCase, "case:*", edi
         jc      .process_case
@@ -258,6 +262,9 @@ begin
         stdcall StrCompNoCase, edi, "title"
         jc      .get_title
 
+        stdcall StrCompNoCase, edi, "allstyles"
+        jc      .get_all_styles
+
         stdcall StrCompNoCase, edi, "description"
         jc      .get_description
 
@@ -302,6 +309,9 @@ begin
 
         stdcall StrCompNoCase, edi, "candel"
         jc      .can_del
+
+        stdcall StrCompNoCase, edi, "canchat"
+        jc      .can_chat
 
         stdcall StrCompNoCase, edi, "referer"
         jc      .get_referer
@@ -392,6 +402,34 @@ end if
 
         mov     eax, [esi+TSpecialParams.keywords]
         jmp     .return_encoded
+
+;..................................................................
+.get_all_styles:
+
+        mov     edx, [esi+TSpecialParams.pStyles]
+        xor     ecx, ecx
+
+        stdcall StrNew
+        mov     ebx, eax
+
+.loop_styles:
+        cmp     ecx, [edx+TArray.count]
+        jae     .end_styles
+
+        stdcall StrCat, ebx, '<link rel="stylesheet" href="/templates/'
+        cmp     [esi+TSpecialParams.userSkin], 0
+        je      @f
+        stdcall StrCat, ebx, [esi+TSpecialParams.userSkin]
+@@:
+        stdcall StrCat, ebx, [edx+TArray.array+4*ecx]
+        stdcall StrCat, ebx, <txt '" type="text/css">', 13, 10>
+
+        inc     ecx
+        jmp     .loop_styles
+
+.end_styles:
+        mov     eax, ebx
+        jmp     .return_value
 
 ;..................................................................
 
@@ -624,7 +662,21 @@ endl
         pop     eax
         jmp     .return_value
 
+;..................................................................
 
+.can_chat:
+        stdcall StrDupMem, txt "1"
+        push    eax
+
+        call    ChatPermissions
+        jnc     .chat_ok
+
+        stdcall StrPtr, [esp]
+        mov     byte [eax], "0"
+
+.chat_ok:
+        pop     eax
+        jmp     .return_value
 
 ;..................................................................
 
@@ -1124,9 +1176,9 @@ end if
         stdcall StrClipSpacesL, eax
         mov     edi, eax
 
-        stdcall __DoProcessTemplate2, edi, [.sql_stmt], [.pSpecial], FALSE
+        stdcall __DoProcessTemplate2, edi, [.sql_stmt], esi, FALSE
 
-        stdcall FormatPostText, eax
+        stdcall FormatPostText, eax, esi
         jmp     .return_value
 
 
@@ -1137,14 +1189,27 @@ end if
         stdcall StrClipSpacesL, eax
         mov     edi, eax
 
-        stdcall __DoProcessTemplate2, edi, [.sql_stmt], [.pSpecial], FALSE
-
+        stdcall __DoProcessTemplate2, edi, [.sql_stmt], esi, FALSE
         jmp     .return_value
 
 
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.process_css:
+
+        stdcall StrSplit, edi, 4
+        stdcall StrDel, edi
+        stdcall StrClipSpacesL, eax
+        mov     edi, eax
+
+        stdcall StrPtr, edi
+        stdcall ListAddDistinct, [esi+TSpecialParams.pStyles], eax
+        mov     [esi+TSpecialParams.pStyles], edx
+
+        xor     eax, eax
+        jmp     .return_value
 
 
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .process_case:
 
         stdcall StrSplit, edi, 5
@@ -1305,15 +1370,14 @@ endp
 
 
 
-proc FormatPostText, .hText
+proc FormatPostText, .hText, .pSpecial
 
 .result TMarkdownResults
 
 begin
         stdcall StrCatTemplate, [.hText], "minimag_suffix", 0, 0
-
         lea     eax, [.result]
-        stdcall TranslateMarkdown, [.hText], FixMiniMagLink, 0, eax
+        stdcall TranslateMarkdown2, [.hText], FixMiniMagLink, 0, eax, 0
 
         stdcall StrDel, [.hText]
         stdcall StrDel, [.result.hIndex]
@@ -1326,12 +1390,13 @@ endp
 
 
 
-proc FixMiniMagLink, .ptrLink, .ptrBuffer
+proc FixMiniMagLink, .ptrLink, .ptrBuffer, .lParam
 begin
         pushad
 
         mov     edi, [.ptrBuffer]
         mov     esi, [.ptrLink]
+
         cmp     byte [esi], '#'
         je      .finish         ; it is internal link
 
@@ -1382,7 +1447,7 @@ begin
         jmp     .protocol_ok
 
 .not_js:
-        cmp     dword [esi+ecx], "http"
+        cmp     dword [esi+ecx], "http"         ; ECX < 0 here!!!
         jne     .add_https
 
 .not_absolute:
@@ -1391,8 +1456,9 @@ begin
 
 ; it is absolute URL, exit
 .finish:
-        mov     [esp+4*regEAX], edi     ; return the end address.
-        mov     [esp+4*regEDX], esi     ; return the start of the link.
+        mov     [esp+4*regEAX], edi     ; return where to copy the remaining of the address. Destination!
+        mov     [esp+4*regEDX], esi     ; return from where to copy the remaining of the address. Source!
+
         popad
         return
 endp
@@ -1894,7 +1960,7 @@ begin
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrDupMem, eax
 
-        stdcall FormatPostText, eax
+        stdcall FormatPostText, eax, esi
         mov     edi, eax
 
         cinvoke sqliteBindInt, [.stmt2], 2, ebx

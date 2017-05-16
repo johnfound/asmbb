@@ -359,4 +359,22 @@ create table BadCookies (
   remote text
 );
 
+
+create table ChatLog (
+  id          integer primary key autoincrement,
+  time        integer,
+  user        text,
+  original    text,
+  Message     text
+);
+
+create table ChatUsers (
+  session     text unique not null,
+  time        integer,
+  username    text,
+  original    text,
+  status      integer,
+  force       integer
+);
+
 COMMIT;
