@@ -32,18 +32,18 @@ div.post_text p.uli {
 
 div.code {
   text-align: left;
-  font-family: 'Source Code Pro', monospace;
+  font-family: @FontMonospace;
   font-size: 1em;
   font-weight: 700;
   border-left-style: solid;
   border-left-width: 0.5em;
-  border-left-color: #ff6060;
+  border-left-color: @clColor1FG;
   padding-left: 0.5em;
   margin-bottom: 0.5em;
 }
 
 pre {
-  font-family: 'Source Code Pro', monospace;
+  font-family: @FontMonospace;
   font-size: 1em;
   margin: 0px;
   padding: 1em 0em 1em 0em;
@@ -55,14 +55,14 @@ pre {
 
 
 code {
-  font-family: 'Source Code Pro', monospace;
+  font-family: @FontMonospace;
   font-weight: bold;
 }
 
 pre>code {
   display: block;
   white-space: pre;
-  font-family: 'Source Code Pro', monospace;
+  font-family: @FontMonospace;
   font-size: 1em;
   font-style: normal;
   overflow: auto;
@@ -115,7 +115,7 @@ table.txt {
    border-right-width: 2px;
    border-bottom-width: 2px;
    border-style: solid;
-   border-color: #404040;
+   border-color: @clSeparator;
    margin: 0.2em;
    background-color: white;
    border-collapse: collapse;
@@ -130,7 +130,7 @@ table.txt td {
    border-right-width: 0px;
    border-bottom-width: 0px;
    border-style: solid;
-   border-color: #404040;
+   border-color: @clSeparator;
    padding-left: 0.2em;
    padding-right: 0.2em;
    padding-top: 0.1em;
@@ -143,13 +143,13 @@ table.txt td {
 /* block quotes */
 
 div.bq {
-  border: 2px solid #808080;
+  border: 2px solid @clSeparator;
 
   box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.2);
   padding: 0em 0.7em 0.1em 1em;
   margin:  1em;
 
-  background-color: #f8f8f8;
+  background-color: @clDarkBG;
   clear: both;
 }
 
@@ -159,11 +159,11 @@ h1.bq
   margin-top: -1.2em;
   padding: 0.2em 0.3em 0.2em 0.3em;
 
-  border: 2px solid #808080;
+  border: 2px solid @clSeparator;
 
   box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.2);
   background: white;
-  color: #808080;
+  color: @clColor1FG;
 
   font-size: 1em;
   font-weight: normal;
@@ -175,6 +175,3 @@ h1.bq
   overflow: hidden;
 }
 
-div.right div.bq, div.right h1.bq {
-  background-color: #303030;
-}

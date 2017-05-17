@@ -9,36 +9,21 @@ div.threads_list {
   clear: both;
 }
 
-
 .thread_summary {
-  background-color: white;
-
-  position: relative;
+  display: flex;
+  align-items: center;
   overflow: hidden;
-  zoom: 1;
   margin-bottom: 8px;
-}
+  padding-bottom: 8px;
+  border-bottom: 2px solid @clSeparator;
 
-
-div.thread_info {
-  background-color: @clDarkBG;
-  color: @clDarkFG;
-  text-align: left;
-
-  float: left;
-  position: absolute;
-  width: 184px;
-  width: calc(200px - 0px);
-  left: 0px;
-  top: 0px;
-  bottom: 0px;
-  padding: 8px 8px 8px 8px;
+  div {
+    margin-right: 16px;
+    flex-shrink: 0;
+  }
 
   a.unread {
-    margin-right: 8px;
-
-    display: inline-block;
-    vertical-align: middle;
+    display: block;
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -53,19 +38,14 @@ div.thread_info {
   .unread1 {
     background-image: url(".images/posts.svg");
   }
-
 }
-
 
 .pinned {
   display: block;
-  position: absolute;
-  right: 8px;
-  top: 8px;
-  width: 16px;
-  height: 16px;
-  margin: 0px !important;
-  border: 0px;
+  width: 32px;
+  height: 32px;
+  margin: 0px auto;
+  background-repeat: no-repeat;
 }
 
 .pin0 {
@@ -77,36 +57,24 @@ div.thread_info {
 }
 
 
-div.post_cnt {
+div.col_unread {
+  width: 32px;
+}
 
+div.col_center {
+  text-align: center;
 }
 
 div.unread_cnt {
   font-size: 12px;
-  a {
-    color: @clDarkFG;
-  }
+  margin: 0px;
 }
-
-
-div.changed {
-  font-size: 80%;
-  position: absolute;
-  bottom: 8px;
-  margin-top: 8px;
-
-  background-size: 16px 16px;
-  background-repeat: no-repeat;
-  background-image: url(".images/edit.svg");
-  text-indent: 24px;
-}
-
 
 div.thread_link {
-  background-color: white;
-  padding: 8px;
-  border-left: solid 200px @clDarkBG;
-  min-height: 64px;
+  flex-grow: 1;
+  width: 0px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 
@@ -117,13 +85,7 @@ a.thread_link {
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-div.thread_tags {
-  background-color: @clColor1;
-  padding: 8px;
-  border-left: solid 200px @clDarkBG;
-  font-size: 12px;
+  color: @clColor1FG;
 }
 
 a.ttlink {
@@ -131,8 +93,15 @@ a.ttlink {
   padding: 0px;
 }
 
-
 span.small {
+  display: block;
   font-size: 80%;
   font-weight: normal;
+  br {
+    display: none;
+  }
+
+  b {
+    margin-right: 4px;
+  }
 }

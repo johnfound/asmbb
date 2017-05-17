@@ -418,9 +418,11 @@ end if
 
         stdcall StrCat, ebx, '<link rel="stylesheet" href="/templates/'
         cmp     [esi+TSpecialParams.userSkin], 0
-        je      @f
+        je      .end_skin
+
         stdcall StrCat, ebx, [esi+TSpecialParams.userSkin]
-@@:
+
+.end_skin:
         stdcall StrCat, ebx, [edx+TArray.array+4*ecx]
         stdcall StrCat, ebx, <txt '" type="text/css">', 13, 10>
 

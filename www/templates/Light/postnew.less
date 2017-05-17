@@ -6,8 +6,9 @@ div.new_editor {
   max-width: 1280px;
   clear: both;
   margin: 8px auto;
+
   p{
-    color: white;
+    color: @clColor1FG;
     font-weight: bold;
     margin: 0px 0px 4px 0px;
   }
@@ -47,6 +48,8 @@ textarea.editor {
 
   font-family: "Liberation Mono", "Courier New", monospaced;
   background-color: @clEditorBG;
+  color: @clEditorFG;
+  border: 2px solid @clSeparator;
 }
 
 div.panel {

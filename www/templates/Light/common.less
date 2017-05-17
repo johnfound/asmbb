@@ -2,7 +2,7 @@
 
 body {
   font-size: 16px;
-  font-family: "Trebuchet MS",Helvetica,Arial,sans-serif;
+  font-family: @FontMain;
   background-color: @clBodyBG;
   color: @clBodyFG;
 
@@ -63,14 +63,16 @@ form#search_form {
   margin: 0px auto;
   padding: 4px 36px 4px 8px;
   border: none;
-  background-color: @clDarkBG;
-  color: @clDarkFG;
+  background-color: @clEditorBG;
+  border-bottom: 2px solid @clSeparator;
+  color: @clEditorFG;
   display:block;
 }
 
 
 .search_line:focus {
   background-color: @clEditorBG;
+  border: 2px solid @clSeparator;
   color: @clEditorFG;
 }
 
@@ -81,15 +83,16 @@ form#search_form {
   top: 4px;
   border-style: none;
   vertical-align: top;
-  background-color: #f06060;
-  color: white;
+  background-color: @clButtonFG;
+  color: @clButtonBG;
   width: 24px;
   height: 24px;
   text-align: center;
 }
 
 .icon_btn:hover  {
-  background-color: #ff7b81;
+  background-color: @clButtonActiveBG;
+  color: @clButtonActiveFG;
 }
 
 .search_icon {
@@ -135,14 +138,14 @@ div.tags {
   width: 95%;
   max-width: 1280px;
   margin: 8px auto;
-  padding: 4px;
+  padding: 8px 0px;
 
-  background-color: @clDarkBG;
   font-size: 28px;
   font-weight: normal;
   word-wrap: break-all;
 
   line-height: 80%;
+  border-bottom: 2px solid @clSeparator;
 }
 
 a.taglink {
@@ -156,8 +159,8 @@ a.taglink {
 
 
 a.current_tag {
-  background-color: @clColor1;
-  color: @clColor1FG;
+  background-color: @clColor1FG;
+  color: @clColor1;
 }
 
 .tagicon {

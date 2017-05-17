@@ -1,10 +1,10 @@
 @clColor1: white;
-@clColor1FG: #ffcc40;
+@clColor1FG: #105289;
 
 @clFakeUser: #ff80FF;
 @clBodyBG: white;
 @clBodyFG: black;
-@clDarkBG: white;
+@clDarkBG: #f8f8f8;
 @clDarkFG: black;
 
 @clArticleBG: white;
@@ -14,11 +14,16 @@
 @clDisabledBG: #e0e0e0;
 @clDisabledFG: #404040;
 
-@clEditorBG: #e0e0e0;
+@clEditorBG: white;
 @clEditorFG: black;
 
 @clButtonBG: white;
-@clButtonFG: black;
+@clButtonFG: #105289;
 
-@clButtonActiveBG: #e0e0e0;
-@clButtonActiveFG: black;
+@clButtonActiveBG: #1e98ff;
+@clButtonActiveFG: white;
+
+@clSeparator: #c0c0c0;
+
+@FontMain: "Droid Sans",sans-serif,Arial;
+@FontMonospace: Consolas,"Courier New",Courier,monospace;

@@ -872,6 +872,7 @@ endp
 
 sqlGetSession    text "select userID, nick, status, last_seen, Skin from sessions left join users on id = userID where sid = ?"
 sqlGetUserExists text "select 1 from users limit 1"
+SKIN_CHECK_FILE  text "main_html_start.tpl"
 
 ; returns:
 ;   EAX: string with the logged user name
@@ -976,7 +977,7 @@ begin
 
         stdcall StrDup, "templates/"
         stdcall StrCat, eax, [edi+TSpecialParams.userSkin]
-        stdcall StrCat, eax, "all.css"
+        stdcall StrCat, eax, SKIN_CHECK_FILE
         push    eax
 
         stdcall FileExists, eax
