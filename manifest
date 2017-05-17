@@ -1,5 +1,5 @@
-C Fixing\sthe\sskins,\sespecially\sLight,\sbut\sthere\sare\sstill\sbugs\sin\sthe\sdefault\sand\sWasp\sskins.\sMust\sbe\simproved\sand\sfixed\sfor\sthe\srelease.
-D 2017-05-16T19:19:27.534
+C One\smore\somitted\sfile\sadded.
+D 2017-05-17T05:20:17.988
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz a25fbcf74b8bdbe98434456d1d9209cefaab2c34
@@ -21,7 +21,7 @@ F source/create.sql d9fd0be2f25d3e5d6b7b9aed92d82fd75eafea74
 F source/delete.asm 64d173cf0ee0df77a8843408b427bdb02b384bd9
 F source/edit.asm 7f9dcd521d3536126be0d81430b2e9f454a09f5a
 F source/engine.asm 758ac58f1c27e6a5b1dde76bfb7d393081b72424
-F source/engine.fpr 03656d18945ee921a94c152c111820de19a6835f
+F source/engine.fpr ffc035c273de0464179a691b1b94a34441be77b1
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 68f9999f2963208696d28d118d42681332edf910
@@ -224,7 +224,6 @@ F www/templates/Light/activity6.tpl 79b6319799e162869c14998a0ce7bb40ba0d040c
 F www/templates/Light/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
 F www/templates/Light/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/Light/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
-F www/templates/Light/all.css 6afc2726b7e0c098f5b4c0de96a968241cb4a394
 F www/templates/Light/chat.less c05223c5811c789e88ae8219161e1853696b3551
 F www/templates/Light/chat.tpl 52b0460d7258da9a7df7187aad60d0f0eb2fef46
 F www/templates/Light/common.less 70e5303bf06364f1a616e233e150c91a26fd991e
@@ -377,6 +376,7 @@ F www/templates/Wasp/thread_list.less bc116e97a4245aacfc49a0092087732f91fc62ec
 F www/templates/Wasp/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/Wasp/userinfo.less f83c13f92b51381176d13c0696b1d4a94f12168e
 F www/templates/Wasp/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
+F www/templates/Wasp/users_online.less c5abb940dab78a863881fee53d85e0454a5d410c
 F www/templates/activation_email_subject.tpl 950d3451cce1b1b55eec7c9ac9c0bb415abaa34e
 F www/templates/activation_email_text.tpl 3d43a474040f226863f8b2bfa7bad91841711b96
 F www/templates/activity0.tpl 604635d7badaffb337aa5419b32e8bb70b3f658a
@@ -439,7 +439,7 @@ F www/templates/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/userinfo.less f83c13f92b51381176d13c0696b1d4a94f12168e
 F www/templates/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/users_online.less c5abb940dab78a863881fee53d85e0454a5d410c
-P ca294a5089db01ae7d4744afb471a3785e21f866
-R 4a519c98e4f4c3be4347ade05d5e0443
+P 3e193ce9ae1f8dcc107413b097924ecf4d36e6b4
+R 3f5df44901a1ff790e1d37dde0548d0b
 U johnfound
-Z bb8e8c9197fa391277eff9757108037d
+Z 4f0a493f606def861b3a3c819dab8de3
