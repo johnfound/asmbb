@@ -177,9 +177,14 @@ begin
 
         stdcall StrPtr, [.uri]
         cmp     word [eax], "/~"
+        jne     .check_format
+
+        cmp     byte [eax], "/"
         je      .redirect_to_skin
 
 ; first check for supported file format.
+
+.check_format:
 
         stdcall StrPtr, [.root]
 
@@ -276,12 +281,12 @@ begin
 
 .redirect_to_skin:
 
-        lea     edx, [eax+2]
+        lea     edx, [eax+3]
 
         lea     eax, [.special]
         stdcall GetLoggedUser, eax
 
-        stdcall StrDupMem, "/templates/"
+        stdcall StrDupMem, txt "/"
         stdcall StrCat, eax, [.special.userSkin]
         stdcall StrCat, eax, edx
         stdcall StrMakeRedirect, edi, eax
@@ -873,7 +878,7 @@ endp
 sqlGetSession    text "select userID, nick, status, last_seen, Skin from sessions left join users on id = userID where sid = ?"
 sqlGetUserExists text "select 1 from users limit 1"
 SKIN_CHECK_FILE  text "main_html_start.tpl"
-cDefaultSkin     text "Default/"
+cDefaultSkin     text "templates/_default/"
 
 ; returns:
 ;   EAX: string with the logged user name
@@ -969,14 +974,16 @@ begin
         test    eax, eax
         jz      .skin_ok
 
-        stdcall StrDupMem, eax
-        stdcall StrCharCat, eax, "/"
+        push    eax
+
+        stdcall StrDupMem, "templates/"
+        stdcall StrCat, eax ; from the stack
+        stdcall StrCat, eax, txt "/"
         mov     ebx, eax
 
 ; check skin existence.
 
-        stdcall StrDupMem, "templates/"
-        stdcall StrCat, eax, ebx
+        stdcall StrDup, ebx
         stdcall StrCat, eax, SKIN_CHECK_FILE
         push    eax
 

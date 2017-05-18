@@ -40,14 +40,13 @@ begin
         test    edi, edi
         jz      .fallback
 
-        stdcall StrDupMem, "templates/"
-        stdcall StrCat, eax, [edi+TSpecialParams.userSkin]
+        stdcall StrDup, [edi+TSpecialParams.userSkin]
         stdcall StrCat, eax, [.strTemplateID]
         stdcall StrCharCat, eax, ".tpl"
         retn
 
 .fallback:
-        stdcall StrDupMem, "templates/Default/"
+        stdcall StrDupMem, cDefaultSkin
         stdcall StrCat, eax, [.strTemplateID]
         stdcall StrCharCat, eax, ".tpl"
         retn
@@ -411,7 +410,7 @@ end if
         cmp     ecx, [edx+TArray.count]
         jae     .end_styles
 
-        stdcall StrCat, ebx, '<link rel="stylesheet" href="/templates/'
+        stdcall StrCat, ebx, '<link rel="stylesheet" href="'
         stdcall StrCat, ebx, [esi+TSpecialParams.userSkin]
         stdcall StrCat, ebx, [edx+TArray.array+4*ecx]
         stdcall StrCat, ebx, <txt '" type="text/css">', 13, 10>

@@ -227,8 +227,7 @@ begin
 
 .default_avatar:
 
-        stdcall StrDupMem, "templates/"
-        stdcall StrCat, eax, [esi+TSpecialParams.userSkin]
+        stdcall StrDup, [esi+TSpecialParams.userSkin]
         stdcall StrCat, eax, "_images/anon.png"
         push    eax
 
