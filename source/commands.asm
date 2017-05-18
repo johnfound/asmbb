@@ -177,14 +177,9 @@ begin
 
         stdcall StrPtr, [.uri]
         cmp     word [eax], "/~"
-        jne     .check_format
-
-        cmp     byte [eax], "/"
         je      .redirect_to_skin
 
 ; first check for supported file format.
-
-.check_format:
 
         stdcall StrPtr, [.root]
 
@@ -281,7 +276,7 @@ begin
 
 .redirect_to_skin:
 
-        lea     edx, [eax+3]
+        lea     edx, [eax+2]
 
         lea     eax, [.special]
         stdcall GetLoggedUser, eax
@@ -979,11 +974,11 @@ begin
         stdcall StrDupMem, "templates/"
         stdcall StrCat, eax ; from the stack
         stdcall StrCat, eax, txt "/"
-        mov     ebx, eax
+        mov     edx, eax
 
 ; check skin existence.
 
-        stdcall StrDup, ebx
+        stdcall StrDup, edx
         stdcall StrCat, eax, SKIN_CHECK_FILE
         push    eax
 
@@ -991,10 +986,10 @@ begin
         stdcall StrDel ; from the stack
         jc      .free_skin
 
-        xchg    ebx, [edi+TSpecialParams.userSkin]
+        xchg    edx, [edi+TSpecialParams.userSkin]
 
 .free_skin:
-        stdcall StrDel, ebx
+        stdcall StrDel, edx
 
 .skin_ok:
 
