@@ -228,12 +228,8 @@ begin
 .default_avatar:
 
         stdcall StrDupMem, "templates/"
-
-        mov     ecx, [esi+TSpecialParams.userSkin]
-        jecxz   @f
-        stdcall StrCat, eax, ecx
-@@:
-        stdcall StrCat, eax, ".images/anon.png"
+        stdcall StrCat, eax, [esi+TSpecialParams.userSkin]
+        stdcall StrCat, eax, "_images/anon.png"
         push    eax
 
         lea     ecx, [.timeRetLo]

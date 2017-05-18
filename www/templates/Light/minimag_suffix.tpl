@@ -2,31 +2,31 @@
 ;end
 ;kill
 
-[?:)]  /~.images/emoticons/smile.gif
-[?:-)] /~.images/emoticons/smile.gif
-[?smile] /~.images/emoticons/smile.gif
+[?:)]  /~/_images/emoticons/smile.gif
+[?:-)] /~/_images/emoticons/smile.gif
+[?smile] /~/_images/emoticons/smile.gif
 
-[?;)]  /~.images/emoticons/wink.gif
-[?;-)] /~.images/emoticons/wink.gif
-[?wink]  /~.images/emoticons/wink.gif
+[?;)]  /~/_images/emoticons/wink.gif
+[?;-)] /~/_images/emoticons/wink.gif
+[?wink]  /~/_images/emoticons/wink.gif
 
-[?:D]  /~.images/emoticons/lol.gif
-[?:-D] /~.images/emoticons/lol.gif
-[?lol]  /~.images/emoticons/lol.gif
+[?:D]  /~/_images/emoticons/lol.gif
+[?:-D] /~/_images/emoticons/lol.gif
+[?lol]  /~/_images/emoticons/lol.gif
 
-[?rofl] /~.images/emoticons/rofl.gif
+[?rofl] /~/_images/emoticons/rofl.gif
 
-[?:(]  /~.images/emoticons/sad.gif
-[?:-(] /~.images/emoticons/sad.gif
-[?sad]  /~.images/emoticons/sad.gif
+[?:(]  /~/_images/emoticons/sad.gif
+[?:-(] /~/_images/emoticons/sad.gif
+[?sad]  /~/_images/emoticons/sad.gif
 
-[?:'(]  /~.images/emoticons/cry.gif
-[?:'-(] /~.images/emoticons/cry.gif
-[?cry]  /~.images/emoticons/cry.gif
+[?:'(]  /~/_images/emoticons/cry.gif
+[?:'-(] /~/_images/emoticons/cry.gif
+[?cry]  /~/_images/emoticons/cry.gif
 
-[?:P]  /~.images/emoticons/tongue.gif
-[?:-P] /~.images/emoticons/tongue.gif
+[?:P]  /~/_images/emoticons/tongue.gif
+[?:-P] /~/_images/emoticons/tongue.gif
 
-[?>:(]   /~.images/emoticons/angry.gif
-[?>:-(]  /~.images/emoticons/angry.gif
-[?angry] /~.images/emoticons/angry.gif
+[?>:(]   /~/_images/emoticons/angry.gif
+[?>:-(]  /~/_images/emoticons/angry.gif
+[?angry] /~/_images/emoticons/angry.gif

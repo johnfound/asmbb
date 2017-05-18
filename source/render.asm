@@ -35,26 +35,22 @@ begin
         popad
         return
 
-.filename:
-        stdcall StrDupMem, "templates/"
 
+.filename:
         test    edi, edi
-        jz      @f
-        cmp     [edi+TSpecialParams.userSkin], 0
-        je      @f
+        jz      .fallback
+
+        stdcall StrDupMem, "templates/"
         stdcall StrCat, eax, [edi+TSpecialParams.userSkin]
-@@:
         stdcall StrCat, eax, [.strTemplateID]
         stdcall StrCharCat, eax, ".tpl"
         retn
-
 
 .fallback:
         stdcall StrDupMem, "templates/Default/"
         stdcall StrCat, eax, [.strTemplateID]
         stdcall StrCharCat, eax, ".tpl"
         retn
-
 endp
 
 
@@ -416,10 +412,7 @@ end if
         jae     .end_styles
 
         stdcall StrCat, ebx, '<link rel="stylesheet" href="/templates/'
-        cmp     [esi+TSpecialParams.userSkin], 0
-        je      .end_skin
         stdcall StrCat, ebx, [esi+TSpecialParams.userSkin]
-.end_skin:
         stdcall StrCat, ebx, [edx+TArray.array+4*ecx]
         stdcall StrCat, ebx, <txt '" type="text/css">', 13, 10>
 
@@ -507,6 +500,9 @@ endl
 
         stdcall StrPtr, [edi+TArray.array+8*ecx+TDirItem.hFilename]
         jc      .next_file
+
+        cmp     byte [eax], '_'
+        je      .next_file
 
         cmp     byte [eax], '.'
         je      .next_file

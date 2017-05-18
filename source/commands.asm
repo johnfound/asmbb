@@ -86,6 +86,9 @@ begin
         mov     eax, [.pParams2]
         mov     [.special.params], eax
 
+        stdcall StrDupMem, cDefaultSkin
+        mov     [.special.userSkin], eax
+
         stdcall DecodePostData, [.pPost2], [.special.params]
         jc      .post_ok
 
@@ -279,10 +282,7 @@ begin
         stdcall GetLoggedUser, eax
 
         stdcall StrDupMem, "/templates/"
-        cmp     [.special.userSkin], 0
-        je      @f
         stdcall StrCat, eax, [.special.userSkin]
-@@:
         stdcall StrCat, eax, edx
         stdcall StrMakeRedirect, edi, eax
         stdcall StrDel, eax
@@ -873,7 +873,7 @@ endp
 sqlGetSession    text "select userID, nick, status, last_seen, Skin from sessions left join users on id = userID where sid = ?"
 sqlGetUserExists text "select 1 from users limit 1"
 SKIN_CHECK_FILE  text "main_html_start.tpl"
-cDefaultSkin     text "Default"
+cDefaultSkin     text "Default/"
 
 ; returns:
 ;   EAX: string with the logged user name
@@ -893,7 +893,6 @@ begin
         mov     [edi+TSpecialParams.userStatus], eax
         mov     [edi+TSpecialParams.session], eax
         mov     [edi+TSpecialParams.remoteIP], eax
-        mov     [edi+TSpecialParams.userSkin], eax
 
         stdcall GetParam, "anon_perm", gpInteger
         jc      .anon_ok
@@ -968,27 +967,27 @@ begin
 
         cinvoke sqliteColumnText, [.stmt], 4
         test    eax, eax
-        jnz     @f
-        mov     eax, cDefaultSkin
-@@:
+        jz      .skin_ok
+
         stdcall StrDupMem, eax
         stdcall StrCharCat, eax, "/"
-        mov     [edi+TSpecialParams.userSkin], eax
+        mov     ebx, eax
 
 ; check skin existence.
 
-        stdcall StrDup, "templates/"
-        stdcall StrCat, eax, [edi+TSpecialParams.userSkin]
+        stdcall StrDupMem, "templates/"
+        stdcall StrCat, eax, ebx
         stdcall StrCat, eax, SKIN_CHECK_FILE
         push    eax
 
         stdcall FileExists, eax
         stdcall StrDel ; from the stack
-        jnc     .skin_ok
+        jc      .free_skin
 
-        stdcall StrDupMem, cDefaultSkin
-        xchg    eax, [edi+TSpecialParams.userSkin]
-        stdcall StrDel, eax
+        xchg    ebx, [edi+TSpecialParams.userSkin]
+
+.free_skin:
+        stdcall StrDel, ebx
 
 .skin_ok:
 
