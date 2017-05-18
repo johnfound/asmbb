@@ -42,11 +42,11 @@ input.username, input.email, input.password {
     font-size: 16px;
     padding: 0 20px 0 50px;
     outline: none;
-    border: none;
+    border: 2px solid @clSeparator;
 
     background-color: @clEditorBG;
     color: @clEditorFG;
-    background-position: 12px -10px;
+    background-position: 12px -14px;
     background-repeat: no-repeat;
     background-size: 24px 120px;
 }
@@ -66,7 +66,7 @@ input.password {
 }
 
 input.username:focus, input.email:focus, input.password:focus {
-    background-position: 12px -70px;
+    background-position: 12px -74px;
 }
 
 input.submit {
@@ -87,4 +87,5 @@ input.submit {
 
 input.submit:hover {
     background: @clButtonActiveBG;
+    color: @clButtonActiveFG;
 }

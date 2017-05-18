@@ -7,7 +7,7 @@ div.user_profile {
   width: 95%;
   max-width: 1280px;
   margin: 0px auto 0px auto;
-  background-color: #404040;
+  background-color: @clFormBG;
   overflow: auto;
   padding: 16px;
 }
@@ -99,28 +99,31 @@ textarea.user_desc {
   overflow: auto;
   border-style: none;
   outline-style: none;
+  border: 2px solid @clSeparator;
 }
 
 select.skin {
   display: block;
   width: 100%;
+  height: 32px;
   margin-bottom: 8px;
   font-size: 18px;
   font-weight: bold;
   text-align: center;
 
   background-color: white;
-  border: none;
+  border: 2px solid @clSeparator;
 }
 
 
 input.browse {
   width: 100%;
+//  height: 32px;
   margin-bottom: 8px;
   font-size: 16px;
   padding: 0px;
   outline: none;
-  border: none;
+  border: 2px solid @clSeparator;
 
   background-color: white;
   color: black;

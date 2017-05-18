@@ -16,6 +16,8 @@ div.threads_list {
   margin-bottom: 8px;
   padding-bottom: 8px;
   border-bottom: 2px solid @clSeparator;
+  background-repeat: no-repeat;
+  background-position: center;
 
   div {
     margin-right: 16px;
@@ -63,20 +65,40 @@ div.col_unread {
 
 div.col_center {
   text-align: center;
+  flex-shrink: 1;
 }
 
 div.unread_cnt {
-  font-size: 12px;
+  font-size: 80%;
   margin: 0px;
+  flex-shrink: 1;
 }
 
 div.thread_link {
   flex-grow: 1;
-  width: 0px;
-  background-repeat: no-repeat;
-  background-position: center;
+  width: 100px;
 }
 
+div.col_tags {
+  width: 200px;
+  flex-shrink: 1;
+  color: transparent;
+  font-size: 80%;
+
+  a {
+    display: inline-block;
+    background-color: @clButtonFG;
+    color: @clButtonBG;
+    text-decoration: none;
+    padding: 2px 4px;
+    margin-bottom: 2px;
+    border-radius: 8px 0px 0px 8px;
+  }
+
+  a:hover {
+    background-color: @clButtonActiveBG;
+  }
+}
 
 a.thread_link {
   font-size: 16px;
@@ -88,20 +110,10 @@ a.thread_link {
   color: @clColor1FG;
 }
 
-a.ttlink {
-  margin: 0px;
-  padding: 0px;
-}
-
 span.small {
   display: block;
   font-size: 80%;
   font-weight: normal;
-  br {
-    display: none;
-  }
-
-  b {
-    margin-right: 4px;
-  }
+  br { display: none; }
+  b { margin-right: 8px; }
 }

@@ -30,14 +30,14 @@ textarea.sql_editor {
   padding: 4px;
   margin-bottom: 8px;
   margin-top: -1px;
-  border-style: none;
+  border: 2px solid @clSeparator;
   outline-style: none;
   overflow: auto;
   resize: vertical;
 
   font-family: "Liberation Mono", "Courier New", monospaced;
   background-color: @clEditorBG;
-  color: @clEditorFG;	
+  color: @clEditorFG;
 }
 
 
@@ -47,7 +47,6 @@ div.sql_exec {
   margin: auto;
 
   background-color: white;
-  padding: 8px;
   font-size: 13px;
 }
 
@@ -89,7 +88,8 @@ table.sql_rows td {
 input.title {
   display: inline-block;
   width: 100%;
-  border-style: none;
+  border: 2px solid @clSeparator;
+  outline-style: none;
   padding: 4px;
   margin-bottom: 8px;
 
@@ -105,6 +105,7 @@ div.panel {
 
   input {
     border-style: none;
+    outline-style: none;
     padding: 4px;
 
     background-color: @clButtonBG;
@@ -113,11 +114,13 @@ div.panel {
 
   input:active, input:focus, input:hover {
     background-color: @clButtonActiveBG;
+    color: @clButtonActiveFG;
   }
 }
 
 
 .button {
+  border: 2px solid @clSeparator;
   display: inline-block;
   vertical-align: top;
   background-color: @clButtonBG;
@@ -129,11 +132,12 @@ div.panel {
 }
 
 .button:hover {
-  background-color: @clButtonActiveBG;
+  border: 2px solid @clButtonActiveBG;
 }
 
 .btn_edit {
-  background-image: url(".images/edit_white.svg");
+  background-image: url(".images/edit.svg");
+  background-size: 20px 20px;
 }
 
 .btn_save {
@@ -141,5 +145,6 @@ div.panel {
 }
 
 .btn_del {
-  background-image: url(".images/del_white.svg");
+  background-image: url(".images/del.svg");
+  background-size: 20px 20px;
 }

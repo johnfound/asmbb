@@ -38,14 +38,25 @@ div.header {
   background-position: -180px 0%;
   background-size: cover;
   overflow: auto;
+
+  h1 {
+    font-size: 36px;
+    margin: 8px auto 8px 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: @clButtonActiveBG
+  }
+
+  div {
+    text-align: right;
+    a {
+      text-align: right;
+      display: inline;
+      line-height: 1.5em;
+    }
+  }
 }
 
-div.header h1 {
-  font-size: 36px;
-  margin: 8px auto 8px 16px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
 
 /* Search form styles */
@@ -105,15 +116,14 @@ form#search_form {
 /* Footer styles */
 
 div.footer {
-  background-color: @clDarkBG;
-  color: @clDarkFG;
   font-size: 90%;
   width: 95%;
   max-width: 1280px;
   margin: auto;
   margin-top: 8px;
-  padding: 8px;
   line-height: 1em;
+  padding: 16px 0px;
+
   p {
     margin: 4px 0px 0px 0px;
   }
@@ -142,25 +152,34 @@ div.tags {
 
   font-size: 28px;
   font-weight: normal;
-  word-wrap: break-all;
+  word-wrap: break-word;
 
   line-height: 80%;
   border-bottom: 2px solid @clSeparator;
 }
 
 a.taglink {
-  padding: 4px;
+  padding: 2px 4px;
+  margin-right: 4px;
   color: @clDarkFG;
   display:inline-block;
   max-width: 20%;
+  min-width: 32px;
   overflow: hidden;
   text-overflow: ellipsis;
+  border-radius: 8px 0px 0px 8px;
+  border: 1px solid @clSeparator;
+  text-decoration: none;
+  text-align: center;
 }
 
 
 a.current_tag {
   background-color: @clColor1FG;
   color: @clColor1;
+  border: 1px solid @clColor1FG;
+  border-radius: 8px 0px 0px 8px;
+  text-decoration: none;
 }
 
 .tagicon {
@@ -182,21 +201,6 @@ a.current_tag {
 .not_current {
   background-image: url(".images/posts_gray.svg");
 }
-
-
-/* login/logout info on the pages */
-
-div.login_interface {
-  margin-right: 16px;
-  text-align: right;
-
-  a {
-    text-align: right;
-    display: inline;
-    line-height: 1.5em;
-  }
-}
-
 
 /* messages screen */
 

@@ -10,7 +10,7 @@
 @clArticleBG: white;
 @clArticleFG: black;
 
-@clFormBG: white;
+@clFormBG: #d0d0d0;
 @clDisabledBG: #e0e0e0;
 @clDisabledFG: #404040;
 

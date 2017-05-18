@@ -238,8 +238,10 @@
       <div id="syslog"></div>
     </div>
     <div id="chat_form">
-      <input class="chat_user" type="edit" placeholder="Username" id="chat_user" onkeypress="KeyPress(event, UserRename)" onChange="UserRename()">
-      <input class="chat_line" type="edit" placeholder="Type here" id="chat_message" autofocus onkeypress="KeyPress(event, SendMessage)">
-      <a class="icon_btn" id="chat_submit" alt="?" onclick="SendMessage()"></a>
+      <div class="chat_line">
+        <input size="1" type="edit" placeholder="Type here" id="chat_message" autofocus onkeypress="KeyPress(event, SendMessage)">
+        <a id="chat_submit" alt="?" onclick="SendMessage()"></a>
+      </div>
+      <input type="edit"  size="1" placeholder="Username" id="chat_user" onkeypress="KeyPress(event, UserRename)" onChange="UserRename()">
     </div>
   </div>

@@ -17,6 +17,7 @@ div.chat {
   margin: 8px 0px 0px 0px;
   overflow: auto;
   background-color: @clEditorBG;
+  border: 2px solid @clSeparator;
   color: @clEditorFG;
   padding: 8px;
   flex-grow: 8;
@@ -61,16 +62,16 @@ div.chat {
   overflow: auto;
   background-color: @clEditorBG;
   color: @clEditorFG;
+  border: 2px solid @clSeparator;
   padding: 8px;
   flex-grow: 1;
-  flex-shrink: 0;
+  flex-shrink: 1;
   max-width: 30%;
 
   p {
     margin: 4px 0px;
     cursor: pointer;
     overflow: hidden;
-    text-overflow: ellipsis;
     font-weight: bold;
   }
 
@@ -101,33 +102,48 @@ div.flex {
 
 #chat_form {
   display: flex;
+  align-items: stretch;
   position: relative;
   margin: 0px auto 8px auto;
 
-  input {
-    height: 32px;
-    border: none;
-    background-color: @clEditorBG;
-    color: @clEditorFG;
-    display:block;
-  }
-
   .chat_line {
-    flex-grow: 2;
-    padding: 4px 36px 4px 8px;
-  }
-
-  .chat_user {
-    width: 200px;
-    padding: 4px;
-    text-align: right;
+    position: relative;
+    flex-grow: 8;
+    flex-shrink: 8;
+    padding: 0px;
     margin-right: 8px;
   }
 }
 
+#chat_message {
+  height: 32px;
+  width: 100%;
+  background-color: @clEditorBG;
+  color: @clEditorFG;
+  display:block;
+  border: 2px solid @clSeparator;
+  padding: 0px 32px 0px 8px;
+}
+
+#chat_user {
+  max-width: 30%;
+  flex-grow: 1;
+  flex-shrink: 1;
+  padding: 4px;
+  text-align: left;
+  border: 2px solid @clSeparator;
+}
+
 
 #chat_submit {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  width: 24px;
+  height: 24px;
+  display: inline-block;
   background-position: center;
-  background-size: 24px 24px;
-  background-image: url(".images/edit_white.svg");
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  background-image: url(".images/edit.svg");
 }
