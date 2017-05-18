@@ -1,6 +1,6 @@
 
 
-
+cDefaultSkin text "Default/"
 
 proc StrCatTemplate, .hString, .strTemplateID, .sql_statement, .p_special
 begin
@@ -39,12 +39,14 @@ begin
 .filename:
         stdcall StrDupMem, "templates/"
 
+        mov     ecx, cDefaultSkin
         test    edi, edi
         jz      @f
         cmp     [edi+TSpecialParams.userSkin], 0
         je      @f
-        stdcall StrCat, eax, [edi+TSpecialParams.userSkin]
+        mov     ecx, [edi+TSpecialParams.userSkin]
 @@:
+        stdcall StrCat, eax, ecx
         stdcall StrCat, eax, [.strTemplateID]
         stdcall StrCharCat, eax, ".tpl"
         retn

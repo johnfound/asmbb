@@ -873,6 +873,7 @@ endp
 sqlGetSession    text "select userID, nick, status, last_seen, Skin from sessions left join users on id = userID where sid = ?"
 sqlGetUserExists text "select 1 from users limit 1"
 SKIN_CHECK_FILE  text "main_html_start.tpl"
+cDefaultSkin     text "Default"
 
 ; returns:
 ;   EAX: string with the logged user name
@@ -967,8 +968,9 @@ begin
 
         cinvoke sqliteColumnText, [.stmt], 4
         test    eax, eax
-        jz      .skin_ok
-
+        jnz     @f
+        mov     eax, cDefaultSkin
+@@:
         stdcall StrDupMem, eax
         stdcall StrCharCat, eax, "/"
         mov     [edi+TSpecialParams.userSkin], eax
@@ -984,7 +986,7 @@ begin
         stdcall StrDel ; from the stack
         jnc     .skin_ok
 
-        xor     eax, eax
+        stdcall StrDupMem, cDefaultSkin
         xchg    eax, [edi+TSpecialParams.userSkin]
         stdcall StrDel, eax
 
