@@ -1,5 +1,5 @@
-C The\sDefault\sskin\shas\sbeen\sreplaced\sby\ssymlink.
-D 2017-05-18T12:33:58.660
+C Duplicated\simages,\sreplaced\swith\ssymlinks.
+D 2017-05-18T12:58:31.203
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz a25fbcf74b8bdbe98434456d1d9209cefaab2c34
@@ -21,7 +21,7 @@ F source/create.sql d9fd0be2f25d3e5d6b7b9aed92d82fd75eafea74
 F source/delete.asm 64d173cf0ee0df77a8843408b427bdb02b384bd9
 F source/edit.asm 7f9dcd521d3536126be0d81430b2e9f454a09f5a
 F source/engine.asm 758ac58f1c27e6a5b1dde76bfb7d393081b72424
-F source/engine.fpr 75fef7657a380ab6c53e9614592a20cbc805e699
+F source/engine.fpr 4155d6f2a2c3450ac198b4f0aa737445850c69a8
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 68f9999f2963208696d28d118d42681332edf910
@@ -35,7 +35,7 @@ F source/post.asm 85a041cddd7b2b37092dc420733cfbfbe99ea1b5
 F source/post_data.asm 42ff743822eb1aacb01730e4b7511cc5967900e4
 F source/postdebug.asm 13ab4ebf2fc7b35d7fa36853b533236860b641f7
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
-F source/render.asm e6069ba587cb0b4c8b231d4e194fca8df4170e96
+F source/render.asm 813069e5538a783ba38e6176296eec53b8375f28
 F source/search.asm 364bae021bc85456b93265e7ff90953a2ea18ff2
 F source/search.sql e7e5d5ddc15000a1cb60c65cfc20d2358e49f471
 F source/search_cnt.sql 5ef8eb89fcea8f87942f1b7c67202350dfd9ff89
@@ -58,7 +58,25 @@ F source/util.sql 77ab61a32e3471ae7f9188453107e44c03796d61
 F source/version.asm e7c740b52e96d2e86544db8e9550be9120a679b2
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
+F www/images/chat_menu.svg d8485817c3e745dcb8b981bb80d264f18365e377 w www/templates/Wasp/.images/chat_menu.svg
+F www/images/chat_user.svg 852b9ac428c278409ec89ad580abbeb883d5df72 w www/templates/Wasp/.images/chat_user.svg
 F www/images/download.svg 04b28da1997aa6f0464b7d8f6592d339acd7aa27
+F www/images/emoticons_dark/angry.gif d43a06f17649f6c9da6c85ff3dbbf0e4853f0520 w www/templates/Wasp/.images/chatemoticons/angry.gif
+F www/images/emoticons_dark/cry.gif 44fbe228ae5fda20c3e83a7b8175fe7981afaf57 w www/templates/Wasp/.images/chatemoticons/cry.gif
+F www/images/emoticons_dark/lol.gif 305f1546cdceaee6d5118c7cf739874c86c4200e w www/templates/Wasp/.images/chatemoticons/lol.gif
+F www/images/emoticons_dark/rofl.gif c9624e02cd3a3e89c227ab6c3ac17ea0d9edf283 w www/templates/Wasp/.images/chatemoticons/rofl.gif
+F www/images/emoticons_dark/sad.gif a4ca623ef9f7ccdbf7680c4201f590bc1a2f8896 w www/templates/Wasp/.images/chatemoticons/sad.gif
+F www/images/emoticons_dark/smile.gif b9a29d9c77e9e2f9a37da58d9c23df69d6f8517a w www/templates/Wasp/.images/chatemoticons/smile.gif
+F www/images/emoticons_dark/tongue.gif 1f0e43256d9b04e3c714a07a9d8dc6628199b4d9 w www/templates/Wasp/.images/chatemoticons/tongue.gif
+F www/images/emoticons_dark/wink.gif 2e56ed1aa4446e248c7666030924d7090afcbd66 w www/templates/Wasp/.images/chatemoticons/wink.gif
+F www/images/emoticons_light/angry.gif 20500d3b94175c345946ad8bb149068d1d5c2b1a w www/templates/Wasp/.images/emoticons/angry.gif
+F www/images/emoticons_light/cry.gif b821d5e08564af307ac3c71f945dddfa8ea6452c w www/templates/Wasp/.images/emoticons/cry.gif
+F www/images/emoticons_light/lol.gif 0e9fe36570a78b40ed0baf0a08b0f0ca6e5e9605 w www/templates/Wasp/.images/emoticons/lol.gif
+F www/images/emoticons_light/rofl.gif 907a534a661a9a090665496f07b5361501c7ba91 w www/templates/Wasp/.images/emoticons/rofl.gif
+F www/images/emoticons_light/sad.gif 29a61168f0546302de3fe9d1ddd963d62cf85d93 w www/templates/Wasp/.images/emoticons/sad.gif
+F www/images/emoticons_light/smile.gif e15f0be2a0607a061f46d297f80b982d95ec4ce5 w www/templates/Wasp/.images/emoticons/smile.gif
+F www/images/emoticons_light/tongue.gif f37a376e83402b21c9770767728282b08e7e495e w www/templates/Wasp/.images/emoticons/tongue.gif
+F www/images/emoticons_light/wink.gif fea56f9c71694b38842aa0f6295d26cc330fcca7 w www/templates/Wasp/.images/emoticons/wink.gif
 F www/images/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
 F www/images/favicons/android-chrome-144x144.png c52089920b0e4f7c740199f58fa9162fc71cf4cc
 F www/images/favicons/android-chrome-192x192.png 8947adffc183a46500f6e97baec557e7c4dd9ac7
@@ -122,7 +140,7 @@ F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/Default f665bce295c3e95d6f87dcb68a58f799d3b56c5c l
 F www/templates/Light/.images/anon.png f1150ae9c16cb5dd89c7f9f6c502bb6128783519
 F www/templates/Light/.images/ban.svg 546185941f28a293e8f23727192c8c40258da120
-F www/templates/Light/.images/chatemoticons 22f5eabea13a027f4bf81f9262260150930d523f l
+F www/templates/Light/.images/chatemoticons 6f2fb8dfd71252d2cdbe7b9b1d330c5859872e31 l
 F www/templates/Light/.images/chatemoticons/angry.gif 20500d3b94175c345946ad8bb149068d1d5c2b1a
 F www/templates/Light/.images/chatemoticons/cry.gif b821d5e08564af307ac3c71f945dddfa8ea6452c
 F www/templates/Light/.images/chatemoticons/lol.gif 0e9fe36570a78b40ed0baf0a08b0f0ca6e5e9605
@@ -134,6 +152,7 @@ F www/templates/Light/.images/chatemoticons/wink.gif fea56f9c71694b38842aa0f6295
 F www/templates/Light/.images/del.svg c5df3b6d3843942db429c4cbca9ef0432e33560e
 F www/templates/Light/.images/edit.svg d16c1aac143d288243264a4d5f8584afbb3017b4
 F www/templates/Light/.images/email.png 24f356bd043c4d2c9ab64314a341690d6e71bf94
+F www/templates/Light/.images/emoticons 6f2fb8dfd71252d2cdbe7b9b1d330c5859872e31 l
 F www/templates/Light/.images/emoticons/angry.gif 20500d3b94175c345946ad8bb149068d1d5c2b1a
 F www/templates/Light/.images/emoticons/cry.gif b821d5e08564af307ac3c71f945dddfa8ea6452c
 F www/templates/Light/.images/emoticons/lol.gif 0e9fe36570a78b40ed0baf0a08b0f0ca6e5e9605
@@ -217,44 +236,21 @@ F www/templates/Light/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/Light/users_online.less 0afab1a5b09c980a54597abc4ff464e700271768
 F www/templates/Wasp/.images/anon.png f1150ae9c16cb5dd89c7f9f6c502bb6128783519
 F www/templates/Wasp/.images/ban.svg 546185941f28a293e8f23727192c8c40258da120
-F www/templates/Wasp/.images/chat_menu.svg d8485817c3e745dcb8b981bb80d264f18365e377
-F www/templates/Wasp/.images/chat_user.svg 852b9ac428c278409ec89ad580abbeb883d5df72
-F www/templates/Wasp/.images/chatemoticons/angry.gif d43a06f17649f6c9da6c85ff3dbbf0e4853f0520
-F www/templates/Wasp/.images/chatemoticons/cry.gif 44fbe228ae5fda20c3e83a7b8175fe7981afaf57
-F www/templates/Wasp/.images/chatemoticons/lol.gif 305f1546cdceaee6d5118c7cf739874c86c4200e
-F www/templates/Wasp/.images/chatemoticons/rofl.gif c9624e02cd3a3e89c227ab6c3ac17ea0d9edf283
-F www/templates/Wasp/.images/chatemoticons/sad.gif a4ca623ef9f7ccdbf7680c4201f590bc1a2f8896
-F www/templates/Wasp/.images/chatemoticons/smile.gif b9a29d9c77e9e2f9a37da58d9c23df69d6f8517a
-F www/templates/Wasp/.images/chatemoticons/tongue.gif 1f0e43256d9b04e3c714a07a9d8dc6628199b4d9
-F www/templates/Wasp/.images/chatemoticons/wink.gif 2e56ed1aa4446e248c7666030924d7090afcbd66
+F www/templates/Wasp/.images/chatemoticons 92b583a5a5e7d203c807f62b3733d6e731355681 l
 F www/templates/Wasp/.images/del_gray.svg 5e3d0ba999e37de7dfdc43292d1c14e4513573ac
 F www/templates/Wasp/.images/del_white.svg 94d8d830628cf60965d5e4c6b35458aadeeafbe1
-F www/templates/Wasp/.images/del_yellow.svg 4e5a9f095589877453cab43addb74386bd16c348
 F www/templates/Wasp/.images/edit.svg 2f003198c4acd6bb294e25be53f1299713cffdb8
 F www/templates/Wasp/.images/edit_gray.svg a1b01c72f16833c8bad8eb058ff298cb3d5fb320
 F www/templates/Wasp/.images/edit_white.svg 32de0d55e734823a33792baa4e6be2291dbcf55d
-F www/templates/Wasp/.images/edit_yellow.svg 5656f9fc0d0cca2206c557d94313689a1e30e87b
 F www/templates/Wasp/.images/email.png 24f356bd043c4d2c9ab64314a341690d6e71bf94
-F www/templates/Wasp/.images/emoticons/angry.gif 20500d3b94175c345946ad8bb149068d1d5c2b1a
-F www/templates/Wasp/.images/emoticons/cry.gif b821d5e08564af307ac3c71f945dddfa8ea6452c
-F www/templates/Wasp/.images/emoticons/lol.gif 0e9fe36570a78b40ed0baf0a08b0f0ca6e5e9605
-F www/templates/Wasp/.images/emoticons/rofl.gif 907a534a661a9a090665496f07b5361501c7ba91
-F www/templates/Wasp/.images/emoticons/sad.gif 29a61168f0546302de3fe9d1ddd963d62cf85d93
-F www/templates/Wasp/.images/emoticons/smile.gif e15f0be2a0607a061f46d297f80b982d95ec4ce5
-F www/templates/Wasp/.images/emoticons/tongue.gif f37a376e83402b21c9770767728282b08e7e495e
-F www/templates/Wasp/.images/emoticons/wink.gif fea56f9c71694b38842aa0f6295d26cc330fcca7
+F www/templates/Wasp/.images/emoticons 6f2fb8dfd71252d2cdbe7b9b1d330c5859872e31 l
 F www/templates/Wasp/.images/onepost.svg 41b518db5955c7192d1272566a64bb0ae2da17f1
 F www/templates/Wasp/.images/onepost_gray.svg e24f6a889dd6389c2a0a045b06e7761616cba763
-F www/templates/Wasp/.images/onepost_gray2.svg 3f05181f7dcd6cf71ba92fa8bf46fb325f370066
-F www/templates/Wasp/.images/onepost_red.svg 56936252e400b348e68ff712532d5f7aed79e237
 F www/templates/Wasp/.images/pass.png 53421227820c5bd598095a41606845d13e23155f
 F www/templates/Wasp/.images/pinned.png 85d1316adcbbfc75a913bfbc876988f1a6482b20
 F www/templates/Wasp/.images/pinned0.png 066a3c6e31fb2da342f34602eff8b35cb18f3fc3
 F www/templates/Wasp/.images/posts.svg c08363ff513355b7dacdbe877c6bcf2db7149e29
-F www/templates/Wasp/.images/posts_black.svg ea1c86fe8f33f473306b05b6355b986416b0de8c
 F www/templates/Wasp/.images/posts_gray.svg 809ee9b2688df16ae2f4fec535612e22f7bf6d9c
-F www/templates/Wasp/.images/posts_gray2.svg 29611ad6893074aa180aece7c7689d1211860505
-F www/templates/Wasp/.images/posts_red.svg b112b9d717f568eee69d26f03c7750ea6d5fae6f
 F www/templates/Wasp/.images/quote.svg a57dfe55abff5e0685326195e49180c32bf2565c
 F www/templates/Wasp/.images/save.svg af0ea2e281c54c48c36dd963f446272ce0f9036e
 F www/templates/Wasp/.images/search.svg 90e00602639894b0b6e388b7841a27002f6ba2e4
@@ -322,7 +318,7 @@ F www/templates/Wasp/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/Wasp/userinfo.less f83c13f92b51381176d13c0696b1d4a94f12168e
 F www/templates/Wasp/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/Wasp/users_online.less c5abb940dab78a863881fee53d85e0454a5d410c
-P 215b89e0010054d7dea775e83c6efdbcd386b027
-R d78280bec9bd2c36fc00ff1c28950f52
+P 1f0f4f8d7e8ee73249315710ec6a0cce301eac17
+R 5ef0baf4dbe9b6170cb022c03dc359f8
 U johnfound
-Z 159658bea4a3fec1b83527b6845af054
+Z 95ebf365676b7738fa161b750abdd976

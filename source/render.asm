@@ -1,6 +1,5 @@
 
 
-cDefaultSkin text "Default/"
 
 proc StrCatTemplate, .hString, .strTemplateID, .sql_statement, .p_special
 begin
