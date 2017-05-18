@@ -38,21 +38,19 @@ begin
 .filename:
         stdcall StrDupMem, "templates/"
 
-        mov     ecx, cDefaultSkin
         test    edi, edi
         jz      @f
         cmp     [edi+TSpecialParams.userSkin], 0
         je      @f
-        mov     ecx, [edi+TSpecialParams.userSkin]
+        stdcall StrCat, eax, [edi+TSpecialParams.userSkin]
 @@:
-        stdcall StrCat, eax, ecx
         stdcall StrCat, eax, [.strTemplateID]
         stdcall StrCharCat, eax, ".tpl"
         retn
 
 
 .fallback:
-        stdcall StrDupMem, "templates/"
+        stdcall StrDupMem, "templates/Default/"
         stdcall StrCat, eax, [.strTemplateID]
         stdcall StrCharCat, eax, ".tpl"
         retn
@@ -420,9 +418,7 @@ end if
         stdcall StrCat, ebx, '<link rel="stylesheet" href="/templates/'
         cmp     [esi+TSpecialParams.userSkin], 0
         je      .end_skin
-
         stdcall StrCat, ebx, [esi+TSpecialParams.userSkin]
-
 .end_skin:
         stdcall StrCat, ebx, [edx+TArray.array+4*ecx]
         stdcall StrCat, ebx, <txt '" type="text/css">', 13, 10>

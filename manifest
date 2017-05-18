@@ -1,5 +1,5 @@
-C Duplicated\simages,\sreplaced\swith\ssymlinks.
-D 2017-05-18T12:58:31.203
+C Fixed\ssmall\sbug\sin\sthe\srender.
+D 2017-05-18T13:15:43.048
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz a25fbcf74b8bdbe98434456d1d9209cefaab2c34
@@ -35,7 +35,7 @@ F source/post.asm 85a041cddd7b2b37092dc420733cfbfbe99ea1b5
 F source/post_data.asm 42ff743822eb1aacb01730e4b7511cc5967900e4
 F source/postdebug.asm 13ab4ebf2fc7b35d7fa36853b533236860b641f7
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
-F source/render.asm 813069e5538a783ba38e6176296eec53b8375f28
+F source/render.asm cadef0890918935628e6215a1acce3917ee6e20a
 F source/search.asm 364bae021bc85456b93265e7ff90953a2ea18ff2
 F source/search.sql e7e5d5ddc15000a1cb60c65cfc20d2358e49f471
 F source/search_cnt.sql 5ef8eb89fcea8f87942f1b7c67202350dfd9ff89
@@ -58,25 +58,25 @@ F source/util.sql 77ab61a32e3471ae7f9188453107e44c03796d61
 F source/version.asm e7c740b52e96d2e86544db8e9550be9120a679b2
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
-F www/images/chat_menu.svg d8485817c3e745dcb8b981bb80d264f18365e377 w www/templates/Wasp/.images/chat_menu.svg
-F www/images/chat_user.svg 852b9ac428c278409ec89ad580abbeb883d5df72 w www/templates/Wasp/.images/chat_user.svg
+F www/images/chat_menu.svg d8485817c3e745dcb8b981bb80d264f18365e377
+F www/images/chat_user.svg 852b9ac428c278409ec89ad580abbeb883d5df72
 F www/images/download.svg 04b28da1997aa6f0464b7d8f6592d339acd7aa27
-F www/images/emoticons_dark/angry.gif d43a06f17649f6c9da6c85ff3dbbf0e4853f0520 w www/templates/Wasp/.images/chatemoticons/angry.gif
-F www/images/emoticons_dark/cry.gif 44fbe228ae5fda20c3e83a7b8175fe7981afaf57 w www/templates/Wasp/.images/chatemoticons/cry.gif
-F www/images/emoticons_dark/lol.gif 305f1546cdceaee6d5118c7cf739874c86c4200e w www/templates/Wasp/.images/chatemoticons/lol.gif
-F www/images/emoticons_dark/rofl.gif c9624e02cd3a3e89c227ab6c3ac17ea0d9edf283 w www/templates/Wasp/.images/chatemoticons/rofl.gif
-F www/images/emoticons_dark/sad.gif a4ca623ef9f7ccdbf7680c4201f590bc1a2f8896 w www/templates/Wasp/.images/chatemoticons/sad.gif
-F www/images/emoticons_dark/smile.gif b9a29d9c77e9e2f9a37da58d9c23df69d6f8517a w www/templates/Wasp/.images/chatemoticons/smile.gif
-F www/images/emoticons_dark/tongue.gif 1f0e43256d9b04e3c714a07a9d8dc6628199b4d9 w www/templates/Wasp/.images/chatemoticons/tongue.gif
-F www/images/emoticons_dark/wink.gif 2e56ed1aa4446e248c7666030924d7090afcbd66 w www/templates/Wasp/.images/chatemoticons/wink.gif
-F www/images/emoticons_light/angry.gif 20500d3b94175c345946ad8bb149068d1d5c2b1a w www/templates/Wasp/.images/emoticons/angry.gif
-F www/images/emoticons_light/cry.gif b821d5e08564af307ac3c71f945dddfa8ea6452c w www/templates/Wasp/.images/emoticons/cry.gif
-F www/images/emoticons_light/lol.gif 0e9fe36570a78b40ed0baf0a08b0f0ca6e5e9605 w www/templates/Wasp/.images/emoticons/lol.gif
-F www/images/emoticons_light/rofl.gif 907a534a661a9a090665496f07b5361501c7ba91 w www/templates/Wasp/.images/emoticons/rofl.gif
-F www/images/emoticons_light/sad.gif 29a61168f0546302de3fe9d1ddd963d62cf85d93 w www/templates/Wasp/.images/emoticons/sad.gif
-F www/images/emoticons_light/smile.gif e15f0be2a0607a061f46d297f80b982d95ec4ce5 w www/templates/Wasp/.images/emoticons/smile.gif
-F www/images/emoticons_light/tongue.gif f37a376e83402b21c9770767728282b08e7e495e w www/templates/Wasp/.images/emoticons/tongue.gif
-F www/images/emoticons_light/wink.gif fea56f9c71694b38842aa0f6295d26cc330fcca7 w www/templates/Wasp/.images/emoticons/wink.gif
+F www/images/emoticons_dark/angry.gif d43a06f17649f6c9da6c85ff3dbbf0e4853f0520
+F www/images/emoticons_dark/cry.gif 44fbe228ae5fda20c3e83a7b8175fe7981afaf57
+F www/images/emoticons_dark/lol.gif 305f1546cdceaee6d5118c7cf739874c86c4200e
+F www/images/emoticons_dark/rofl.gif c9624e02cd3a3e89c227ab6c3ac17ea0d9edf283
+F www/images/emoticons_dark/sad.gif a4ca623ef9f7ccdbf7680c4201f590bc1a2f8896
+F www/images/emoticons_dark/smile.gif b9a29d9c77e9e2f9a37da58d9c23df69d6f8517a
+F www/images/emoticons_dark/tongue.gif 1f0e43256d9b04e3c714a07a9d8dc6628199b4d9
+F www/images/emoticons_dark/wink.gif 2e56ed1aa4446e248c7666030924d7090afcbd66
+F www/images/emoticons_light/angry.gif 20500d3b94175c345946ad8bb149068d1d5c2b1a
+F www/images/emoticons_light/cry.gif b821d5e08564af307ac3c71f945dddfa8ea6452c
+F www/images/emoticons_light/lol.gif 0e9fe36570a78b40ed0baf0a08b0f0ca6e5e9605
+F www/images/emoticons_light/rofl.gif 907a534a661a9a090665496f07b5361501c7ba91
+F www/images/emoticons_light/sad.gif 29a61168f0546302de3fe9d1ddd963d62cf85d93
+F www/images/emoticons_light/smile.gif e15f0be2a0607a061f46d297f80b982d95ec4ce5
+F www/images/emoticons_light/tongue.gif f37a376e83402b21c9770767728282b08e7e495e
+F www/images/emoticons_light/wink.gif fea56f9c71694b38842aa0f6295d26cc330fcca7
 F www/images/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
 F www/images/favicons/android-chrome-144x144.png c52089920b0e4f7c740199f58fa9162fc71cf4cc
 F www/images/favicons/android-chrome-192x192.png 8947adffc183a46500f6e97baec557e7c4dd9ac7
@@ -318,7 +318,7 @@ F www/templates/Wasp/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/Wasp/userinfo.less f83c13f92b51381176d13c0696b1d4a94f12168e
 F www/templates/Wasp/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/Wasp/users_online.less c5abb940dab78a863881fee53d85e0454a5d410c
-P 1f0f4f8d7e8ee73249315710ec6a0cce301eac17
-R 5ef0baf4dbe9b6170cb022c03dc359f8
+P c34c7e62565ac87e18f450f43bd69240f67d1c97
+R 44806ff5392ef69eb26861c5643dca0f
 U johnfound
-Z 95ebf365676b7738fa161b750abdd976
+Z e2e394ed0bbe0e31f3eee9ff48c72d6a
