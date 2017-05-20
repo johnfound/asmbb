@@ -39,8 +39,16 @@ edit the file .htaccess (Apache) or lighttpd.conf (lighttpd) -
 Change the "_FULL_PATH_TO_DOCUMENT_ROOT_HERE_" placeholder to the real
 path to your document root (it depends on the web server settings).
 
+When using another web server, prepare the configuration yourself.
+
 Upload all files (and direcrories) of the package to the document_root directory 
-of your web server.
+of your web server. 
+
+IMPORTANT: The package contains some symlinks. Ensure they are
+uploaded together with the files. Notice, that FTP can't upload symlinks. 
+
+The simplest way is to upload the tarball to the server and unpack there 
+by using cpanel tools, ssh or any other way.
 
 Test the forum by loading the web site in your favourite browser.
 
