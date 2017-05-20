@@ -39,12 +39,12 @@ edit the file .htaccess (Apache) or lighttpd.conf (lighttpd) -
 Change the "_FULL_PATH_TO_DOCUMENT_ROOT_HERE_" placeholder to the real
 path to your document root (it depends on the web server settings).
 
-When using another web server, prepare the configuration yourself.
+If using another web server, prepare the configuration by yourself.
 
 Upload all files (and direcrories) of the package to the document_root directory 
 of your web server. 
 
-IMPORTANT: The package contains some symlinks. Ensure they are
+IMPORTANT: The package may contain some symlinks. Ensure they are
 uploaded together with the files. Notice, that FTP can't upload symlinks. 
 
 The simplest way is to upload the tarball to the server and unpack there 
@@ -53,6 +53,29 @@ by using cpanel tools, ssh or any other way.
 Test the forum by loading the web site in your favourite browser.
 
 As simple as that. 
+
+
+
+## Easy Installation on Apache by FTP
+
+Download the package "unpack.tar.gz" from: 
+
+http://asm32.info/fossil/repo/asmbb/doc/trunk/install/unpack.tar.gz
+
+Untar it. There are 2 files: ".htaccess" and "unpack.sh";
+
+Upload these 2 files and "asmbb.tar.gz" on the server document_root via ftp or 
+any other way. The root directory must contain these 3 files:
+
+.htaccess
+asmbb.tar.gz
+unpack.sh
+
+Load in some browser: http://your_web_size/unpack.sh
+
+The script will unpack all files, prepare the proper .htaccess file and redirect you
+to the new created forum working in setup mode.
+
 
 
 ## Introduction to the forum configuration.

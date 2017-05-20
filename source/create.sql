@@ -8,8 +8,9 @@ create table Params (
 );
 
 
-insert into Params values ('user_perm', '29');  -- permLogin + permPost + permThreadStart + permEditOwn
-insert into Params values ('log_events', '0');
+insert into Params values ('user_perm', 349);  -- permLogin + permPost + permThreadStart + permEditOwn + permDelOwn + permChat
+insert into Params values ('log_events', 0);
+insert into Params values ('chat_enabled", 1);
 
 
 create table Guests (

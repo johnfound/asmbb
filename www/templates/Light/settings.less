@@ -14,7 +14,7 @@ div.set_page {
 form.settings {
   width: 640px;
   padding: 16px;
-  background-color: @clBodyBG;
+  background-color: @clFormBG;
   margin: 8px auto 8px auto;
 
   h1 {
@@ -49,16 +49,16 @@ form.settings {
 
 
 input.settings {
-    display: inline-block;
-    height: 38px;
-    margin: 0px 8px 8px 0px;
-    font-size: 16px;
-    padding: 0px 8px;
-    outline: none;
-    border: none;
+  display: inline-block;
+  height: 38px;
+  margin: 0px 8px 8px 0px;
+  font-size: 16px;
+  padding: 0px 8px;
+  outline: none;
+  border: 2px solid @clSeparator;
 
-    background-color: @clEditorBG;
-    color: @clEditorFG;
+  background-color: @clEditorBG;
+  color: @clEditorFG;
 }
 
 label.checkbox {
@@ -75,12 +75,12 @@ label.checkbox {
 
   span {
       width: 20px;
-      line-height: 12px;
+      line-height: 16px;
       display: inline-block;
       background-color: white;
       color: white;
       font-size: 16px;
-      border: 4px solid white;
+      border: 2px solid @clSeparator;
   }
 
   input:checked + span {
@@ -94,9 +94,9 @@ label.checkbox {
 input.button {
     height: 38px;
     width: 128px;
-    background: #ff656c;
+    background-color: @clButtonBG;
+    color: @clButtonFG;
     border: none;
-    color: white;
     font-weight: bold;
     font-size: 16px;
     font-variant: small-caps;
@@ -108,7 +108,8 @@ input.button {
 }
 
 input.button:hover {
-    background: #ff7b81;
+    background: @clButtonActiveBG;
+    color: @clButtonActiveFG;
 }
 
 
