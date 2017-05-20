@@ -1,9 +1,10 @@
-C Fixed\ssome\smissed\sproblems.\sAlmost\sready\sfor\srelease,\sbut\sneeds\ssome\sadditional\stesting\son\sthe\sdemo\sforum.
-D 2017-05-18T17:10:49.737
+C Preparation\sfor\sa\srelease.\sSmall\sfix\sof\sthe\sLight\stheme.
+D 2017-05-20T06:49:31.941
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz a25fbcf74b8bdbe98434456d1d9209cefaab2c34
-F install/create_release.sh b5d5236553566fe94eec9ca8834983909acdf528 x
+F install/create_release.sh 9611de7512c0316fd835fa6e3dd392808ae53ded x
+F install/exclude.txt 7a13d3b234403011a6197353261b9b0fdbcc106f
 F install/install.txt 7d3f4f32b07d36ba1256bccb17b3b96c6fa1d004
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
 F source/Documents/FastCGI\sSpecification.html e2fc06a5abf1b3505c665e108ce3ad28b636095a
@@ -173,7 +174,7 @@ F www/templates/Light/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/Light/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
 F www/templates/Light/chat.less c77a7f67bddfc6b5e2b153b0630c65303d63b446
 F www/templates/Light/chat.tpl 9f7a1616043e5a0fdb619e9e348fd5c7c20b32ee
-F www/templates/Light/common.less 8d1880efe384066a1ede35ab40ae5856b29ccdee
+F www/templates/Light/common.less 86ca02e3921e85a3c14b0c31006be0768a458444
 F www/templates/Light/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Light/del_confirm.tpl 557fcfa25e30e6f57d7850b9d56c11ed4a918d63
 F www/templates/Light/delete.less 726105b6ac913c53aa1530da71bacaf57f6c264d
@@ -199,7 +200,7 @@ F www/templates/Light/minimag_suffix.tpl 847d280354a3b3a9d59f16e89e32ba660b8e4ec
 F www/templates/Light/nav_list.tpl 51190784c1e056e238d398219990a6a8fee7b46d
 F www/templates/Light/nav_search.tpl 1b6ad716b4920383af35907879e6faf8b8cdc426
 F www/templates/Light/nav_thread.tpl 153eedecaa33ba4ae4b02a903a0bf1bc803c962b
-F www/templates/Light/navigation.less 9fd19d8a5de5a350134acc53e8ab668ca7736023
+F www/templates/Light/navigation.less ad9a7ef14baffe4b60b8a19d5a473d7e8f6f9d4b
 F www/templates/Light/post_view.tpl cc3a981281e16b44a39eabc8f2fb6af864230cc0
 F www/templates/Light/posteditor.less cfcb05a403a36c2c2317dca6633258f48d40d506
 F www/templates/Light/postnew.less ac7aa8021944df83ac5a57d4cef3f1edf653faac
@@ -302,7 +303,7 @@ F www/templates/Wasp/userinfo.less f83c13f92b51381176d13c0696b1d4a94f12168e
 F www/templates/Wasp/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/Wasp/users_online.less 483ac04b5913db397e8dec63da98d13571a135a2
 F www/templates/_default f665bce295c3e95d6f87dcb68a58f799d3b56c5c l
-P 82fa9daf0cd50c4f23fb97fd9ede02441ec5ead7
-R e1ed5e02d9bc81ced86b5bd1ffc08028
+P 48891f7d5afe851f6628115306c988cce335ff73
+R 46d78a69d4a870dd43e87cf730616969
 U johnfound
-Z f66022317cafb7b840cfd8b7d2bbcf35
+Z d1fd1a6e7f04fdce335a86d5543519a9
