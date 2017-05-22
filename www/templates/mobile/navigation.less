@@ -1,0 +1,59 @@
+@import "skin_variables.lsi";
+
+/* Main user interface toolbar */
+
+div.ui {
+  width: 100%;
+  margin: 8px 0px 0px 0px;
+  overflow: hidden;
+}
+
+a.ui, a.uir {
+  display: block !important;
+  padding: 4px 8px !important;
+  background-color: @clButtonBG !important;
+  color: @clButtonFG !important;
+  text-decoration: none !important;
+}
+
+a.ui {
+  float: left !important;
+  margin: 0px 8px 0px 0px !important;
+}
+
+a.uir {
+  float: right !important;
+  margin: 0px 0px 0px 8px !important;
+
+}
+
+a.ui:hover, a.ui:active, a.uir:hover, a.uir:active {
+  background-color: @clButtonActiveBG !important;
+  color: @clButtonActiveFG !important;
+}
+
+
+/* Pages links styles */
+
+div.page_row {
+  margin-bottom: 8px;
+  margin-top: 8px;
+  text-align: left;
+}
+
+a.page_link {
+  background-color: @clColor1;
+  padding: 4px;
+  text-align: center;
+  display:inline-block;
+  min-width: 32px;
+}
+
+span.current_page {
+  background-color: @clButtonBG;
+  padding: 4px;
+  text-align: center;
+  display:inline-block;
+  min-width: 32px;
+  color: @clButtonFG;
+}
