@@ -3,8 +3,6 @@
 /* settings form styles */
 
 div.set_page {
-  width: 95%;
-  max-width: 1280px;
   margin: 0px auto 0px auto;
   background-color: @clDarkBG;
   overflow: auto;
@@ -12,8 +10,7 @@ div.set_page {
 }
 
 form.settings {
-  width: 640px;
-  padding: 16px;
+  padding: 8px;
   background-color: @clBodyBG;
   margin: 8px auto 8px auto;
 
@@ -30,26 +27,27 @@ form.settings {
   }
 
   label {
-    display: inline-block;
-    text-align: right;
-    width: 220px;
-    margin-bottom: 8px;
-    padding: 0px 16px;
+    display: block;
+    text-align: left;
+    padding: 0px;
     font-size: 16px;
     font-weight: bold;
+    margin-top: 16px;
   }
 
   label.line {
     width: auto;
     display: block;
     text-align: left;
+    margin-bottom: 16px;
   }
 
 }
 
 
 input.settings {
-    display: inline-block;
+    display: block;
+    width: 100%;
     height: 38px;
     margin: 0px 8px 8px 0px;
     font-size: 16px;
@@ -92,8 +90,9 @@ label.checkbox {
 
 
 input.button {
+    display: block;
     height: 38px;
-    width: 128px;
+    width: 100%;
     background: #ff656c;
     border: none;
     color: white;
@@ -104,7 +103,7 @@ input.button {
     cursor: pointer;
     text-align: center;
     padding: 0px;
-    display: block;
+    margin-top: 32px;
 }
 
 input.button:hover {
@@ -119,6 +118,9 @@ h1.msg {
   color: white;
   display: block;
   opacity: 1.0;
+  position: absolute;
+  left: 16px;
+  right: 16px;
 }
 
 .info {

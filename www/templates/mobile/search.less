@@ -1,65 +1,34 @@
 @import "skin_variables.lsi";
 
-div.thread {
-  width: 95%;
-  max-width: 1280px;
-  margin: auto;
-}
-
 div.post {
-  position: relative;
   margin-top: 8px;
+  background-color: @clPostBG;
 }
 
-div.search_info {
+div.avatar {
   float: left;
-  position: absolute;
-  width: 184px;
-  width: calc(200px - 0px);
-  left: 0px;
-  top: 0px;
-  bottom: 0px;
   padding: 8px;
-
+  margin: 8px;
   background-color: @clDarkBG;
-  color: @clDarkFG;
-  background-repeat: no-repeat;
-  background-position: 8px 8px;
-}
-
-.unread0 {
-  background-image: url("_images/onepost_gray.svg");
-}
-
-.unread1 {
-  background-image: url("_images/onepost.svg");
 }
 
 
-div.post_thread {
-  margin-left: 200px;
-  padding: 8px;
-  background-color: @clColor1;
-  font-size: 12px;
-}
-
-div.post_thread a {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-a.user_name {
-  display: block;
-  padding-top: 4px;
-  text-indent: 40px;
-  color: @clColor1;
-  font-weight: bold;
+.user_name {
+  clear: both;
+  margin: 0px 8px;
+  padding-bottom: 8px;
+  color: @clPostFG;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 80%;
+
+  a {
+    font-weight: bold;
+  }
+
 }
 
 img.smallavatar {
-  margin: 16px auto 0px auto;
   width: 64px;
   height: 64px;
   display: block;
@@ -67,40 +36,48 @@ img.smallavatar {
 }
 
 div.post_thread {
-  margin-left: 200px;
   padding: 8px;
   background-color: @clColor1;
   font-size: 12px;
+
+  a {
+    font-size: 16px;
+    font-weight: bold;
+    flex-grow: 1;
+  }
+
+  * {
+    margin: 0px 8px;
+  }
+
 }
 
-div.post_thread a {
-  font-size: 16px;
-  font-weight: bold;
-}
 
 div.post_sum {
-  border-left: solid 200px #404040;
-  padding: 4px 4px 4px 8px;
-  background-color: white;
+  pre {
+    font-family: 'Source Code Pro', monospace;
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 }
 
 
-div.post_link {
-  padding: 4px;
-  text-align: right;
-  font-size: 18px;
-  min-height: 64px;
+a.block_link {
+  display: block;
+  margin: 8px;
+  float: right;
 }
 
 
 div.changed {
   font-size: 80%;
-  position: absolute;
-  bottom: 8px;
-  margin-top: 8px;
+  display: inline-block;
+  padding-top: 4px;
+  vertical-align: center;
 
   background-size: 16px 16px;
   background-repeat: no-repeat;
-  background-image: url("_images/edit.svg");
+  background-image: url("_images/edit_gray.svg");
   text-indent: 24px;
 }

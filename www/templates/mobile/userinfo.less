@@ -3,25 +3,19 @@
 /* User profile page */
 
 div.user_profile {
-  position: relative;
-  width: 95%;
-  max-width: 1280px;
   margin: 0px auto 0px auto;
   background-color: #404040;
   overflow: auto;
-  padding: 16px;
+  padding: 8px;
 }
 
 div.user_desc {
-  float: left;
   display: block;
-  width: 33%;
-  max-height: 50%;
-  background-color: white;
-  padding: 16px;
+  background-color: @clPostBG;
+  color: @clPostFG;
+  padding: 8px;
   overflow: auto;
-  margin: 0px 0px 8px 0px;
-  vertical-align: top;
+  margin-bottom: 8px;
 
   h1 {
     text-align: center;
@@ -48,23 +42,15 @@ img.profile_avatar {
 
 
 form.user_edit_info {
-  float: right;
-  display: block;
-  width: 60%;
-  width: calc(67% - 16px);
-  padding: 16px;
-  background-color: #d0d0d0;
+  padding: 8px;
+  background-color: @clBodyBG;
   margin-bottom: 8px;
 }
 
 form.user_edit_pass {
-  float: left;
-  display: block;
-  width: 33%;
-  padding: 16px;
-  background-color: #d0d0d0;
+  padding: 8px;
+  background-color: @clBodyBG;
   margin-bottom: 8px;
-  clear: left;
 
   h1 {
     text-align: left;
@@ -109,7 +95,8 @@ select.skin {
   font-weight: bold;
   text-align: center;
 
-  background-color: white;
+  background-color: @clEditorBG;
+  color: @clEditorFG;
   border: none;
 }
 
@@ -128,12 +115,8 @@ input.browse {
 
 
 div.user_stat {
-  float: right;
-  display: block;
-  width: 60%;
-  width: calc(67% - 16px);
-  padding: 16px;
-  background-color: white;
+  padding: 8px;
+  background-color: @clPostBG;
   margin-bottom: 8px;
 
   h1 {

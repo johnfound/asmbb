@@ -8,10 +8,12 @@
   </div>
   <form id="editform" action="/!sqlite/" method="post">
     <p>Script name:</p>
-    <input class="title" style="width: 80%; height: 32px;" size="40" type="edit" value="" placeholder="Script name" name="name">
-    <a class="button btn_edit" href="/"></a>
-    <a class="button btn_save" href="/"></a>
-    <a class="button btn_del"  href="/"></a>
+    <div class="toolbar">
+      <input class="title" type="edit" value="" placeholder="Script name" name="name">
+      <a class="button btn_edit" href="/"></a>
+      <a class="button btn_save" href="/"></a>
+      <a class="button btn_del"  href="/"></a>
+    </div>
     <p>SQL statement:</p>
     <textarea class="sql_editor" name="source" id="source"  placeholder="SQL">[source]</textarea>
     <div class="panel">

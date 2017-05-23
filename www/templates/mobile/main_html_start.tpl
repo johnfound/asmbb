@@ -34,7 +34,7 @@
 
 <body>
   <div class="header">
-    <h1>AsmBB demo</h1>
+    <h1>AsmBB&nbsp;demo</h1>
     <div class="login_interface">
       [case:[special:userid]|<a href="/!login/">Login</a><br><a href="/!register/">Register</a>|
       <a href="/!logout">Logout ( [special:username] )</a><br><a href="/!userinfo/[special:username]">User profile</a>]
@@ -46,4 +46,7 @@
     <input class="icon_btn search_icon"  type="submit" value="">
   </form>
 
-  <div class="tags"><a class="tagicon [case:[special:dir]|current|not_current]" title="Show all threads" href="/"></a>[special:alltags]</div>
+  <label class="drop_down">Tags ▼ [case:[special:dir]||([special:dir])]
+    <input type="checkbox" class="drop_down">
+    <div class="tags"><a class="tagicon [case:[special:dir]|current|not_current]" title="Show all threads" href="/"></a>[special:alltags]</div>
+  </label>

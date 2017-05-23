@@ -5,6 +5,9 @@
 @clDarkBG: #404040;
 @clDarkFG: white;
 
+@clPostBG: white;
+@clPostFG: black;
+
 @clFormBG: #808080;
 @clDisabledBG: #e0e0e0;
 @clDisabledFG: #404040;
@@ -17,3 +20,5 @@
 
 @clButtonActiveBG: #ff656c;
 @clButtonActiveFG: white;
+
+@clSpacer: #808080;

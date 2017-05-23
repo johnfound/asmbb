@@ -37,6 +37,7 @@ code.block {
   padding: 0.5em;
   margin: 0.5em 0px;
   overflow: auto;
+  text-overflow: ellipsis;
 
   white-space: pre;
 
@@ -46,6 +47,7 @@ code.block {
 code {
   font-family: 'Source Code Pro', monospace;
   font-weight: bold;
+  word-break: break-all;
 }
 
 
@@ -125,35 +127,29 @@ div.bq {
   border: 2px solid #808080;
 
   box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.2);
-  padding: 0em 0.7em 0.1em 1em;
-  margin:  1em;
+  padding: 8px;
 
   background-color: #f8f8f8;
+  overflow: auto;
   clear: both;
 }
 
 h1.bq
 {
-  margin-left: -0.5em;
-  margin-top: -1.2em;
-  padding: 0.2em 0.3em 0.2em 0.3em;
-
-  border: 2px solid #808080;
-
-  box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.2);
-  background: white;
-  color: #808080;
+  margin: 0px;
+  padding: 2px;
+  background-color: @clColor1;
 
   font-size: 1em;
-  font-weight: normal;
-
-  float: left;
+  font-style: italic;
   clear: both;
 
-  max-width: 150px;
   overflow: hidden;
 }
 
-div.right div.bq, div.right h1.bq {
-  background-color: #303030;
+h1.bq::after {
+  content: " wrote:";
+  font-size: 80%;
+  font-weight: normal;
 }
+

@@ -1,5 +1,5 @@
-C Attempt\sto\smake\sdecent\smobile\sskin.
-D 2017-05-22T08:29:45.711
+C Work\son\sthe\smobile\sskin.
+D 2017-05-23T13:48:13.918
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz ba6f4644950fd2ff12e0c1a3ee9d0b966a3f4579
@@ -25,7 +25,7 @@ F source/create.sql 2a29e0cbff1f6fa5b5e72acb05d4b88457a2835a
 F source/delete.asm 64d173cf0ee0df77a8843408b427bdb02b384bd9
 F source/edit.asm 7f9dcd521d3536126be0d81430b2e9f454a09f5a
 F source/engine.asm 758ac58f1c27e6a5b1dde76bfb7d393081b72424
-F source/engine.fpr 4155d6f2a2c3450ac198b4f0aa737445850c69a8
+F source/engine.fpr 09ff47e925c60fffb719015a66fb8b700a7e164d
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 68f9999f2963208696d28d118d42681332edf910
@@ -326,7 +326,7 @@ F www/templates/mobile/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/mobile/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
 F www/templates/mobile/chat.less 75b2e1320a88d5f93a311ea942de32bf27120e9f
 F www/templates/mobile/chat.tpl 548988d2ae571ee54a2fe49661202938eb869e75
-F www/templates/mobile/common.less fc7548427bb72642a2e0907e89dcb8f4e0f57a80
+F www/templates/mobile/common.less 6f46065df567c0fa6d253944edc132d26fec660e
 F www/templates/mobile/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/mobile/del_confirm.tpl 557fcfa25e30e6f57d7850b9d56c11ed4a918d63
 F www/templates/mobile/delete.less 726105b6ac913c53aa1530da71bacaf57f6c264d
@@ -334,19 +334,19 @@ F www/templates/mobile/error_html_end.tpl f390b47728814ecd8e608dd410cb2f4b0b9530
 F www/templates/mobile/error_html_start.tpl 801e0e24f9f1ef1414db805c786fe36c29d97361
 F www/templates/mobile/form_edit.tpl d5cb9b82c9d024bfb3bd938e65558165b8ad4d1a
 F www/templates/mobile/form_edit_thread.tpl 493028b82db528bbedb5af9d51a95c7635a741ee
-F www/templates/mobile/form_editinfo.tpl f1c742cc26cc7839c74b52fb00939a2cd98b9d4a
+F www/templates/mobile/form_editinfo.tpl 8bc162547a5695f6a57a10c0986edb3058bd437f
 F www/templates/mobile/form_login.tpl effcc0fe1708dce7d6196204e1fa9d3ff01d38f5
 F www/templates/mobile/form_new_post.tpl 7536a5fab7c7786441862491267b022c1146895f
 F www/templates/mobile/form_new_thread.tpl 9c1da9ea5b40fe7e0f881f88f31c5b04fed2f38f
 F www/templates/mobile/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/mobile/form_register.tpl 17e04b8fc2296c31bbf97c701fe48e46da816699
-F www/templates/mobile/form_settings.tpl 29ec58479fa00aa8f4eab772248e9ea12cf2a035
+F www/templates/mobile/form_settings.tpl 09fe318f3542617d0b134c65e5de24891b93ac46
 F www/templates/mobile/form_setup.tpl 58a7c7ebaa5d793b255c2eca2d7f76fa97ffecdb
-F www/templates/mobile/form_sqlite_console.tpl bedbf751806827982becff7feb4dcb86309b2355
+F www/templates/mobile/form_sqlite_console.tpl 25d1d2e46da991b8a0956f4a7d281f8ce1c0ea2a
 F www/templates/mobile/login.less 81a52aaca31e749d5891d87c813a7af10511347e
 F www/templates/mobile/main_html_end.tpl 721ac095265156f7be3549413c34ab18d434541a
-F www/templates/mobile/main_html_start.tpl cde00b59d4256f8cedc4cdcd9d99105555ebd1cd
-F www/templates/mobile/markdown.less 1adac3c4d7fbd3eb60bc40e1091259117207201b
+F www/templates/mobile/main_html_start.tpl bb349fb1fdbc0d7aa8480e5b60a06dce5ca0d7aa
+F www/templates/mobile/markdown.less b9bc5bb423613956c944778bc874eb02d1a6d614
 F www/templates/mobile/minimag_suffix.tpl 847d280354a3b3a9d59f16e89e32ba660b8e4eca
 F www/templates/mobile/nav_list.tpl 51190784c1e056e238d398219990a6a8fee7b46d
 F www/templates/mobile/nav_search.tpl 1b6ad716b4920383af35907879e6faf8b8cdc426
@@ -354,25 +354,22 @@ F www/templates/mobile/nav_thread.tpl 153eedecaa33ba4ae4b02a903a0bf1bc803c962b
 F www/templates/mobile/navigation.less d932a26d1965bbd88fc8604feaa4e15d7a46cbf6
 F www/templates/mobile/post_view.tpl cff015d33b69c28a3859b3f7f9a0a9e63f5afca6
 F www/templates/mobile/posteditor.less a8d6f9d361ef468fc21eba71b50dfbb32e709baf
-F www/templates/mobile/postnew.less e967ad06ba602cb8ec023152792a2d4bea7d650a
-F www/templates/mobile/posts.less dad486e1a2f59ff3e5c8a5cb5ee5a4181deba816
+F www/templates/mobile/postnew.less a5cb57f4632876c94da1d0d303af221af3a9dd41
+F www/templates/mobile/posts.less 818303100073c7007e9ff6346305d0198d3fc7c5
 F www/templates/mobile/preview.tpl fb40e8c69c78b02cadf18dc82ed90131aff0a839
-F www/templates/mobile/search.less 31920eeb8c2405208cff16dc8937df3d14fd7e4d
-F www/templates/mobile/search_result.tpl 13d525f9eb148dd1a77384b7661f6b5bc31939d0
-F www/templates/mobile/settings.less 674c5684a9d75aba6eb030b583779e37eda787f3
-F www/templates/mobile/skin_variables.lsi 295507b08e189abbf37e0b2cfc8ce717341678f9
-F www/templates/mobile/sqlite.less 5f303147b93203c15372486bd17f825dc2ae63a2
+F www/templates/mobile/search.less b1247c46882ba9ed6f5853a2579038ea3e2c130b
+F www/templates/mobile/search_result.tpl a494acb90270eefd7087e0cebfd701b681717a7d
+F www/templates/mobile/settings.less ff8cc0950f24d27cc508f85395210d79b4cb5ce8
+F www/templates/mobile/skin_variables.lsi 4cc229bbbabd7530e02aa0b9eb294c56492b0673
+F www/templates/mobile/sqlite.less 07748bcd7dc4e000fb2a06e53a9e4cf443092691
 F www/templates/mobile/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
-F www/templates/mobile/thread_info.tpl f505e8cfe8b2ddd9848bd2f99498f37b849d2dd6
-F www/templates/mobile/thread_list.less 18a880f75bc2ad000e06533cf46c0630d9002969
+F www/templates/mobile/thread_info.tpl 196c8da01b91b3d803d7cb4415fb0b5a87dabb91
+F www/templates/mobile/thread_list.less be8ffc92fc4fb8412f454a0fe1b4264ce84eefaf
 F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
-F www/templates/mobile/userinfo.less f83c13f92b51381176d13c0696b1d4a94f12168e
+F www/templates/mobile/userinfo.less 4e590946b352471a1ed3ed9bdc66343aa051b1bc
 F www/templates/mobile/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/mobile/users_online.less 483ac04b5913db397e8dec63da98d13571a135a2
-P 4ad5747f3c2d8f3c1e48cd8798834b3b7d45cec9
-R bdfd2e960501f9051bae781f2c3097cd
-T *branch * MobileSkin
-T *sym-MobileSkin *
-T -sym-trunk *
+P a8296d7e481cd0a3646ff64f75e2441325375a28
+R 68be6cacc2be960023bec8cc549fd074
 U johnfound
-Z 0b3d3d0fa0de9b818c42f45142b32366
+Z ac10dffd4578ecdf7b4f4c4a3a0abe5d

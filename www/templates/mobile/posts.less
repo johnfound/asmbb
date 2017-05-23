@@ -3,8 +3,6 @@
 /* Thread view styles */
 
 div.thread {
-  width: 95%;
-  max-width: 1280px;
   margin: auto;
 }
 
@@ -26,14 +24,13 @@ h1.thread_caption {
 }
 
 div.post {
-  position: relative;
   margin-top: 8px;
 }
 
 div.user_info {
   float: left;
   padding: 8px;
-  margin: 16px;
+  margin: 8px;
   max-width: 200px;
 
   background-color: @clDarkBG;
@@ -62,17 +59,14 @@ a.user_name {
 
 img.avatar {
   margin: 16px auto 0px auto;
-  width: 128px;
-  height: 128px;
+  width: 64px;
   display: block;
   background-color: @clColor1;
 }
 
 div.user_pcnt {
   margin-top: 8px;
-  text-align: left;
-  font-size: 12px;
-  background-color: @clDarkBG;
+  font-size: 80%;
 }
 
 div.post_info {
@@ -117,9 +111,17 @@ div.edit_tools {
 
 
 div.post_text {
-  padding: 16px 16px 16px 16px;
-  background-color: @clDarkFG;
-  min-height: 190px;
+  padding: 8px 8px 0px 8px;
+  background-color: @clPostBG;
+  color: @clPostFG;
 }
 
+// In order to not allow the floating user info escaped from short posts.
 
+div.post_text::after {
+  content: " ";
+  display: block;
+  height: 1px;
+  clear: both;
+  margin-top: 7px;
+}

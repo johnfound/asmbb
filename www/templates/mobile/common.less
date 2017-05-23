@@ -31,8 +31,6 @@ div.header {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  width: 95%;
-  max-width: 1280px;
   margin: 0px auto 0px auto;
   background-color: @clColor1;
   background-image: url("_images/yellow_back.png");
@@ -53,8 +51,6 @@ div.header h1 {
 
 form#search_form {
   position: relative;
-  width: 95%;
-  max-width: 1280px;
   margin: 8px auto;
 }
 
@@ -106,8 +102,6 @@ div.footer {
   background-color: @clDarkBG;
   color: white;
   font-size: 90%;
-  width: 95%;
-  max-width: 1280px;
   margin: auto;
   margin-top: 8px;
   padding: 8px;
@@ -122,8 +116,6 @@ div.footer {
 }
 
 div.attribution {
-  width: 95%;
-  max-width: 1280px;
   margin: auto;
   margin-top: 8px;
   padding: 4px 0px;
@@ -133,9 +125,7 @@ div.attribution {
 /* tag list styles */
 
 div.tags {
-  width: 95%;
-  max-width: 1280px;
-  margin: 8px auto;
+  margin: 0px auto;
   padding: 4px;
 
   background-color: @clDarkBG;
@@ -150,7 +140,7 @@ a.taglink {
   padding: 4px;
   color: white;
   display:inline-block;
-  max-width: 20%;
+  max-width: 150px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -237,3 +227,24 @@ div.message {
   color: black;
   display: inline-block;
 }
+
+label.drop_down {
+  background-color: @clDarkBG;
+  color: @clDarkFG;
+  display: block;
+  padding: 8px;
+
+}
+
+input.drop_down {
+ display: none;
+}
+
+input.drop_down + div {
+    display: none;
+}
+
+input.drop_down:checked + div {
+  display: block;
+}
+
