@@ -3,31 +3,30 @@
 /* Main user interface toolbar */
 
 div.ui {
-  width: 100%;
-  margin: 8px 0px 0px 0px;
-  overflow: hidden;
+  margin: 8px -4px 0px -4px;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
-a.ui, a.uir {
-  display: block !important;
-  padding: 4px 8px !important;
-  background-color: @clButtonBG !important;
-  color: @clButtonFG !important;
-  text-decoration: none !important;
+.spacer {
+  display: block;
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 
 a.ui {
-  float: left !important;
-  margin: 0px 8px 0px 0px !important;
+  display: block;
+  padding: 4px 8px;
+  margin: 4px;
+  background-color: @clButtonBG;
+  color: @clButtonFG;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
-a.uir {
-  float: right !important;
-  margin: 0px 0px 0px 8px !important;
-
-}
-
-a.ui:hover, a.ui:active, a.uir:hover, a.uir:active {
+a.ui:hover, a.ui:active {
   background-color: @clButtonActiveBG !important;
   color: @clButtonActiveFG !important;
 }

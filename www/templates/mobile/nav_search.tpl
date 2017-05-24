@@ -3,5 +3,9 @@
 
 <div class="ui">
   <a class="ui" style="color: white" href="..">Back</a>
-  [case:[special:isadmin]| |<a class="uir" href="/!sqlite">SQL console</a><a class="uir" href="/!settings">Settings</a>]
+  <span class="spacer"></span>
+  [case:[special:isadmin]| |
+    <a class="ui" href="/!settings">Settings</a>
+    <a class="ui" href="/!sqlite">SQL console</a>
+  ]
 </div>

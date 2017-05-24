@@ -2,12 +2,12 @@
 [css:posts.css]
 [css:posteditor.css]
 
-<div class="editor" id="editor">
-  <div class="ui">
-    <a class="ui" href="../">Thread list</a>
-    <a class="ui" href="!by_id">Back</a>
-  </div>
-  <form id="editform" action="!edit" method="post">
+<div class="ui">
+  <a class="ui" href="../">The thread</a>
+  <a class="ui" href="!by_id">Back</a>
+</div>
+
+<form id="editform" action="!edit#preview" method="post">
     <p>Thread title:</p>
     <h1 class="fakeedit">[caption]</h1>
     <p>Post content:</p>
@@ -17,5 +17,4 @@
       <input type="submit" name="preview" value="Preview" >
       <input type="hidden" name="ticket" value="[Ticket]" >
     </div>
-  </form>
-</div>
+</form>

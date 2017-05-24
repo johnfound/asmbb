@@ -9,6 +9,7 @@
 @clPostFG: black;
 
 @clFormBG: #808080;
+@clFormFG: white;
 @clDisabledBG: #e0e0e0;
 @clDisabledFG: #404040;
 

@@ -29,22 +29,25 @@ input {
 
 div.header {
   display: flex;
-  justify-content: flex-end;
   align-items: center;
-  margin: 0px auto 0px auto;
+  flex-wrap: wrap;
   background-color: @clColor1;
   background-image: url("_images/yellow_back.png");
-  background-position: -180px 0%;
-  background-size: cover;
   overflow: auto;
+
+  h1 {
+    font-size: 36px;
+    margin: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  a {
+    display:block;
+    margin: 8px;
+  }
 }
 
-div.header h1 {
-  font-size: 36px;
-  margin: 8px auto 8px 16px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
 
 /* Search form styles */
@@ -125,15 +128,17 @@ div.attribution {
 /* tag list styles */
 
 div.tags {
-  margin: 0px auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   padding: 4px;
 
   background-color: @clDarkBG;
   font-size: 28px;
   font-weight: normal;
-  word-wrap: break-all;
 
-  line-height: 80%;
+  overflow: auto;
+  margin: 8px 0px;
 }
 
 a.taglink {
@@ -190,13 +195,12 @@ div.login_interface {
 
 div.message_block {
   font-size: 20px;
-  width: 640px;
-  background: white;
-  margin: 8px auto;
+  background: @clPostBG;
+  color: @clPostFG;
+  margin: 8px 0px;
   text-align: center;
   padding: 20px;
   clear: both;
-  color: #000;
 }
 
 div.message_block h1 {
@@ -227,24 +231,3 @@ div.message {
   color: black;
   display: inline-block;
 }
-
-label.drop_down {
-  background-color: @clDarkBG;
-  color: @clDarkFG;
-  display: block;
-  padding: 8px;
-
-}
-
-input.drop_down {
- display: none;
-}
-
-input.drop_down + div {
-    display: none;
-}
-
-input.drop_down:checked + div {
-  display: block;
-}
-

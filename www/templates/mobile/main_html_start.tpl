@@ -1,3 +1,6 @@
+[css:common.css]
+[css:navigation.css]
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +10,6 @@
   <meta name="keywords" content="[special:keywords]">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="/[special:skin]common.css" type="text/css">
   [special:allstyles]
   <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
@@ -35,10 +37,14 @@
 <body>
   <div class="header">
     <h1>AsmBB&nbsp;demo</h1>
-    <div class="login_interface">
-      [case:[special:userid]|<a href="/!login/">Login</a><br><a href="/!register/">Register</a>|
-      <a href="/!logout">Logout ( [special:username] )</a><br><a href="/!userinfo/[special:username]">User profile</a>]
-    </div>
+    <span class="spacer"></span>
+    [case:[special:userid]|
+      <a href="/!login/">Login</a>
+      <a href="/!register/">Register</a>
+    |
+      <a href="/!logout">Logout ( [special:username] )</a>
+      <a href="/!userinfo/[special:username]">User profile</a>
+    ]
   </div>
 
   <form class="tags" id="search_form" action="[case:[special:dir]|/|[case:[special:search]||../]]!search/" method="get" >
@@ -46,7 +52,4 @@
     <input class="icon_btn search_icon"  type="submit" value="">
   </form>
 
-  <label class="drop_down">Tags ▼ [case:[special:dir]||([special:dir])]
-    <input type="checkbox" class="drop_down">
-    <div class="tags"><a class="tagicon [case:[special:dir]|current|not_current]" title="Show all threads" href="/"></a>[special:alltags]</div>
-  </label>
+  <div class="tags"><a class="tagicon [case:[special:dir]|current|not_current]" title="Show all threads" href="/"></a>[special:alltags]</div>

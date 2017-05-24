@@ -1,45 +1,16 @@
 @import "skin_variables.lsi";
 
-div.editor {
-  position: fixed;
-  right: 2.5%;
-  top: 16px;
-  width: 640px;
-  max-width: 60%;
-  margin: 8px;
-  opacity: 0.6;
-
+#editform {
   overflow: auto;
+  margin-top: 8px;
+  padding: 16px;
+  background-color: @clFormBG;
 
-  a {
-    color: white;
+  p {
+    color: @clFormFG;
     font-weight: bold;
     margin: 0px 0px 4px 0px;
   }
-}
-
-
-div.editor:hover {
-  opacity: 1;
-}
-
-#editform {
-  position: relative;
-  padding: 16px;
-  margin: 8px 0px 0px 0px;
-  background-color: @clFormBG;
-}
-
-h1.fakeedit {
-  width: 100%;
-  border-style: none;
-  padding: 4px;
-  margin: 8px 0px 8px 0px;
-
-  background-color: @clDisabledBG;
-  color: @clDisabledFG;
-  font-weight: bold;
-  font-size: inherit;
 }
 
 textarea.editor {
@@ -78,3 +49,13 @@ div.panel {
 }
 
 
+h1.fakeedit {
+  border-style: none;
+  padding: 4px;
+  margin: 8px 0px 8px 0px;
+
+  background-color: @clDisabledBG;
+  color: @clDisabledFG;
+  font-weight: bold;
+  font-size: inherit;
+}
