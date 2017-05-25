@@ -1,31 +1,137 @@
 @import "skin_variables.lsi";
 
-.tags, .footer {
-  display: none;
+.tags, .footer, .attribution, .header {
+  display: none !important;
 }
 
-div.chat {
-  width: 95%;
-  max-width: 1280px;
-  margin: auto;
-  clear: both;
+body {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 0px; right: 0px; top: 0px; bottom: 0px;
+  margin: 0px;
+}
+
+#header {
+  display: block;
+  flex-shrink: 0;
+  background-color: @clColor1;
+  color: black;
+  background-image: url("_images/yellow_back.png");
+
+  font-size: 36px;
+  font-weight: bold;
+  padding-left: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+}
+
+div {
+  display: flex;
+
+  label {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 32px;
+    background: rgba(0, 0, 0, 0);
+  }
+}
+
+* {
+  transition: 0.25s ease-in-out;
 }
 
 
+#chat {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex-grow: 1;
+  overflow: hidden;
+}
 
-#chatlog {
-  margin: 8px 0px 0px 0px;
-  overflow: auto;
+
+#drawer, #chatboard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  height: 64px;
+
+  overflow: hidden;
+}
+
+
+#drawer {
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  label {
+    display: block;
+  }
+}
+
+
+#chatboard {
+  flex-grow: 1;
+  flex-shrink: 1;
+
+  label {
+    display: none;
+  }
+}
+
+
+#syslog {
+  display: block;
+  flex-grow: 1;
+  padding: 4px;
+
   background-color: @clDarkBG;
   color: @clDarkFG;
-  padding: 8px;
-  flex-grow: 8;
-  flex-shrink: 8;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  p {
+    margin: 4px 0px;
+    cursor: pointer;
+    overflow: hidden;
+    font-weight: bold;
+    display: inline;
+    &:after {
+      content: ", ";
+    }
+  }
+
+  p.user {
+    color: @clColor1;
+  }
+
+  p.fake_user {
+    color: @clFakeUser;
+  }
+
+  p.gray_user {
+    color: @clDisabledFG;
+  }
+}
+
+#chatlog {
+  display: block;
+  flex-grow: 1;
+  padding: 4px;
+  background: @clDarkBG;
+  color: @clDarkFG;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   p {
     margin: 4px 0px;
     overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   span {
@@ -56,83 +162,49 @@ div.chat {
 }
 
 
-#syslog {
-  margin: 8px 0px 0px 8px;
-  overflow: auto;
+
+#toggle_page  {
+  display:none;
+
+  &:checked {
+
+    & ~ #drawer {
+      flex-grow:1;
+      flex-shrink:1;
+      #syslog p {
+        display: block;
+        &:after {
+          content: "";
+        }
+      }
+      label {
+        display: none;
+      }
+    }
+
+    & ~ #chatboard {
+      flex-grow:0;
+      flex-shrink:0;
+      label {
+        display: block;
+      }
+    }
+  }
+}
+
+
+input.edit {
+  height: 32px;
+  padding: 4px;
+  border: none;
   background-color: @clDarkBG;
   color: @clDarkFG;
-  padding: 8px;
-  flex-grow: 1;
+  display:block;
+  flex-grow: 0;
   flex-shrink: 0;
-  max-width: 30%;
-
-  p {
-    margin: 4px 0px;
-    cursor: pointer;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: bold;
-  }
-
-  p.user {
-    color: @clColor1;
-  }
-
-  p.fake_user {
-    color: @clFakeUser;
-  }
-
-  p.gray_user {
-    color: @clDisabledFG;
-  }
-
 }
 
-
-div.flex {
-  display: flex;
-  align-items: stretch;
-  height: 500px;
-  overflow: auto;
-  resize: vertical;
-  padding-bottom: 8px;
-}
-
-
-#chat_form {
-  display: flex;
-  position: relative;
-  margin: 0px auto 8px auto;
-
-  input {
-    height: 32px;
-    border: none;
-    background-color: @clDarkBG;
-    color: @clDarkFG;
-    display:block;
-  }
-
-  input:focus {
-    background-color: @clEditorBG;
-    color: @clEditorFG;
-  }
-
-  .chat_line {
-    flex-grow: 2;
-    padding: 4px 36px 4px 8px;
-  }
-
-  .chat_user {
-    width: 200px;
-    padding: 4px;
-    text-align: right;
-    margin-right: 8px;
-  }
-}
-
-
-#chat_submit {
-  background-position: center;
-  background-size: 24px 24px;
-  background-image: url("_images/edit_white.svg");
+input.edit:focus {
+  background-color: @clEditorBG;
+  color: @clEditorFG;
 }

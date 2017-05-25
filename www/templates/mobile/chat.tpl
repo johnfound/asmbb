@@ -89,6 +89,12 @@
     var chat_log;
     var sys_log;
 
+// user interface handling.
+
+    function DrawerShow(f) {
+      document.getElementById("toggle_page").checked = f;
+    }
+
 // Entering the chat.
 
     document.body.onload = function () {
@@ -229,17 +235,23 @@
 
   </script>
 
-  <div class="chat">
-    <div class="ui">
-      <a class="ui" href="/">Forum</a>
-    </div>
-    <div class="flex">
+  <a id="header" href="/">
+    AsmBB chat
+  </a>
+
+  <div id="chat">
+    <input type="checkbox" id="toggle_page">
+
+    <div id="chatboard">
+      <label for="toggle_page"></label>
       <div id="chatlog"></div>
-      <div id="syslog"></div>
+      <input class="edit" type="text" placeholder="Type here" id="chat_message" autofocus onkeypress="KeyPress(event, SendMessage)" onfocus="DrawerShow(false)">
     </div>
-    <div id="chat_form">
-      <input class="chat_user" type="edit" placeholder="Username" id="chat_user" onkeypress="KeyPress(event, UserRename)" onChange="UserRename()">
-      <input class="chat_line" type="edit" placeholder="Type here" id="chat_message" autofocus onkeypress="KeyPress(event, SendMessage)">
-      <a class="icon_btn" id="chat_submit" alt="?" onclick="SendMessage()"></a>
+
+    <div id="drawer">
+      <label for="toggle_page"></label>
+      <div id="syslog"></div>
+      <input class="edit" type="text" placeholder="Username" id="chat_user" onkeypress="KeyPress(event, UserRename)" onChange="UserRename()" onfocus="DrawerShow(true)">
     </div>
   </div>
+
