@@ -46,7 +46,7 @@ begin
         retn
 
 .fallback:
-        stdcall StrDupMem, cDefaultSkin
+        stdcall GetDefaultSkin, edi
         stdcall StrCat, eax, [.strTemplateID]
         stdcall StrCharCat, eax, ".tpl"
         retn
@@ -1994,6 +1994,49 @@ begin
 endp
 
 
+
+cDefaultSkin       text "Wasp"
+cDefaultMobileSkin text "mobile"
+
+proc GetDefaultSkin, .pSpecial
+begin
+        pushad
+
+        mov     esi, [.pSpecial]
+        stdcall StrDupMem, "templates/"
+        mov     ebx, eax
+
+        test    esi, esi
+        jz      .desktop
+
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_USER_AGENT"
+        jc      .desktop
+
+        stdcall StrMatchPattern, txt "*Mobi*", eax
+        jc      .mobile
+
+.desktop:
+        stdcall GetParam, txt "default_skin", gpString
+        jnc     .found
+
+        stdcall StrDupMem, cDefaultSkin
+        jmp     .found
+
+.mobile:
+        stdcall GetParam, txt "default_mobile_skin", gpString
+        jnc     .found
+
+        stdcall StrDupMem, cDefaultMobileSkin
+
+.found:
+        stdcall StrCat, ebx, eax
+        stdcall StrCat, ebx, txt "/"
+        stdcall StrDel, eax
+
+        mov     [esp+4*regEAX], ebx
+        popad
+        return
+endp
 
 
 

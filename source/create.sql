@@ -10,7 +10,9 @@ create table Params (
 
 insert into Params values ('user_perm', 349);  -- permLogin + permPost + permThreadStart + permEditOwn + permDelOwn + permChat
 insert into Params values ('log_events', 0);
-insert into Params values ('chat_enabled", 1);
+insert into Params values ('chat_enabled', 1);
+insert into Params values ('default_skin', 'Wasp');
+insert into Params values ('default_mobile_skin', 'mobile');
 
 
 create table Guests (
