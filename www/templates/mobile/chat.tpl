@@ -111,12 +111,12 @@
       var txt = edit_line.value;
       if (txt) {
 
-        if ( /^![\w|!]+$/.test(txt) ) {
+        if ( /^!.+$/.test(txt) ) {
 
           if (/^!+$/.test(txt)) {
             UserRename( '' );
           } else {
-            UserRename(txt.replace(/^!(\w+)$/,'$1'));
+            UserRename(txt.replace(/^!(.+)$/,'$1'));
           };
 
           edit_line.value = "";
@@ -206,7 +206,7 @@
         sys_log.appendChild(p);
 
         if (usr.flagSelf) {
-          edit_line.placeholder = "Chat as: " + usr.user + " (!rename, !! default)";
+          edit_line.placeholder = "Chat as: " + usr.user + " (!new_name, !! default)";
         };
       };
     };
