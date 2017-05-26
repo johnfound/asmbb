@@ -1,5 +1,6 @@
 {
-	"name": "AsmBB",
+  "short_name": "AsmBB",
+	"name": "AsmBB forum demo",
 	"icons": [
 		{
 			"src": "\/images\/favicons\/android-chrome-36x36.png",
@@ -37,5 +38,7 @@
 			"type": "image\/png",
 			"density": 4
 		}
-	]
+	],
+  "start_url": "/",
+  "display": "fullscreen"
 }

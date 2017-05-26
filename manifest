@@ -1,5 +1,5 @@
-C Fixed\ssmall\sbug\sin\sthe\snickname\schanging\sfor\sthe\smobile\sskin.
-D 2017-05-26T13:05:09.984
+C Fixed\ssmall\sbugs,\saffecting\sscrolling\sof\sthe\schat\sarea\sand\sgecko\sspecific\sthing.
+D 2017-05-26T19:44:01.350
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz ba6f4644950fd2ff12e0c1a3ee9d0b966a3f4579
@@ -105,7 +105,7 @@ F www/images/favicons/favicon-194x194.png 759197b4f552b6b659ce381b3073f40e9b205b
 F www/images/favicons/favicon-32x32.png 9f0f46321ef1fe7bf891e218d6ffc101c5dadc64
 F www/images/favicons/favicon-96x96.png 4b6beb9d12e6f6e10a370bf7b3c939d7acc04d20
 F www/images/favicons/favicon.ico f24f15cca73ff8e87072cb07791eed8a7b978cb9
-F www/images/favicons/manifest.json 55216482084662a2dd0a73b069173f534a181ffd
+F www/images/favicons/manifest.json 74b3587e20a4283b44e669ab3ae2e6d2e0fbd9a0
 F www/images/favicons/mstile-144x144.png ed3b024566a85b54ce2aa012f7c783ebbfc42160
 F www/images/favicons/mstile-150x150.png a3322a6dd73c66454b57d135d9c537b8c8eaff17
 F www/images/favicons/mstile-310x150.png d572c5e3ffffff1b9d0664b2f5a5db1c70934ae4
@@ -322,8 +322,8 @@ F www/templates/mobile/activity6.tpl 79b6319799e162869c14998a0ce7bb40ba0d040c
 F www/templates/mobile/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
 F www/templates/mobile/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/mobile/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
-F www/templates/mobile/chat.less ed4687ff3ae3cbfb5c36c72969dee793fef15075
-F www/templates/mobile/chat.tpl 4eff2b53d43f0f2651551472c5132ce217509790
+F www/templates/mobile/chat.less 448a92a4536ab48bd72aeac44a68f3e889789c50
+F www/templates/mobile/chat.tpl 29bf259afef7be47c81b0f450e1899b183dd99b8
 F www/templates/mobile/common.less 7fff1c739dc229001e3c90a05ad742c834e9d4f5
 F www/templates/mobile/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/mobile/del_confirm.tpl f7475fdde0d37c6bcd90435f5f075512ff6d5e34
@@ -367,7 +367,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 4e590946b352471a1ed3ed9bdc66343aa051b1bc
 F www/templates/mobile/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/mobile/users_online.less 236f3c44e5a2c6136cea704ffc3843ee58f607ad
-P 8c726ac7a5a344e86e8bac67515ea023ef1aad5f
-R 3d1a39312c93e6a3ea4ffae612a54ebd
+P c0924f637e53e5eaa59ff59c30a801d1d8739ba5
+R 295f50c9285a77048788e611ef23d76f
 U johnfound
-Z f5143dc7388af4487ef1f691ecf48d2a
+Z 16d090dccfe4940ca8ca2ff637fe4cb5

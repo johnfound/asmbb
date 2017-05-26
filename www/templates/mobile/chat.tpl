@@ -199,7 +199,7 @@
         var usr = msgset.users[i];
         var p = document.createElement('p');
 
-        p.classList.value = ( usr.originalname == usr.user ? "user" : "fake_user");
+        p.classList.add( usr.originalname == usr.user ? "user" : "fake_user");
         p.onclick = function() { InsertNick(this) };
         p.appendChild( document.createTextNode( usr.user ));
 
