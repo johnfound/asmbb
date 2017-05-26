@@ -4,97 +4,54 @@
   display: none !important;
 }
 
+* {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
 body {
   display: flex;
   flex-direction: column;
   position: absolute;
   left: 0px; right: 0px; top: 0px; bottom: 0px;
   margin: 0px;
+  background: @clDarkBG !important;
 }
 
-#header {
+#back {
   display: block;
-  flex-shrink: 0;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  width: 48px; height: 48px;
+  border-radius: 24px;
   background-color: @clColor1;
-  color: black;
   background-image: url("_images/yellow_back.png");
-
-  font-size: 36px;
-  font-weight: bold;
-  padding-left: 4px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-decoration: none;
 }
 
 div {
   display: flex;
-
-  label {
-    position: absolute;
-    left: 0px;
-    right: 0px;
-    top: 0px;
-    bottom: 32px;
-    background: rgba(0, 0, 0, 0);
-  }
 }
-
-* {
-  transition: 0.25s ease-in-out;
-}
-
-
-#chat {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  flex-grow: 1;
-  overflow: hidden;
-}
-
-
-#drawer, #chatboard {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-
-  height: 64px;
-
-  overflow: hidden;
-}
-
-
-#drawer {
-  flex-grow: 0;
-  flex-shrink: 0;
-
-  label {
-    display: block;
-  }
-}
-
 
 #chatboard {
-  flex-grow: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  flex-grow: 10;
   flex-shrink: 1;
-
-  label {
-    display: none;
-  }
+  overflow: hidden;
 }
-
 
 #syslog {
   display: block;
-  flex-grow: 1;
   padding: 4px;
 
-  background-color: @clDarkBG;
-  color: @clDarkFG;
+  background-color: @clEditorBG;
+  color: @clEditorFG;
 
   overflow-x: hidden;
   overflow-y: auto;
+  max-height: 5.5em;
 
   p {
     margin: 4px 0px;
@@ -105,6 +62,9 @@ div {
     &:after {
       content: ", ";
     }
+    &:last-of-type:after {
+      content: "";
+    }
   }
 
   p.user {
@@ -114,15 +74,10 @@ div {
   p.fake_user {
     color: @clFakeUser;
   }
-
-  p.gray_user {
-    color: @clDisabledFG;
-  }
 }
 
 #chatlog {
   display: block;
-  flex-grow: 1;
   padding: 4px;
   background: @clDarkBG;
   color: @clDarkFG;
@@ -154,7 +109,6 @@ div {
     color: #c0c0ff;
   }
 
-
   img {
     vertical-align: middle;
   }
@@ -162,49 +116,12 @@ div {
 }
 
 
-
-#toggle_page  {
-  display:none;
-
-  &:checked {
-
-    & ~ #drawer {
-      flex-grow:1;
-      flex-shrink:1;
-      #syslog p {
-        display: block;
-        &:after {
-          content: "";
-        }
-      }
-      label {
-        display: none;
-      }
-    }
-
-    & ~ #chatboard {
-      flex-grow:0;
-      flex-shrink:0;
-      label {
-        display: block;
-      }
-    }
-  }
-}
-
-
 input.edit {
+  display:block;
   height: 32px;
   padding: 4px;
   border: none;
-  background-color: @clDarkBG;
-  color: @clDarkFG;
-  display:block;
-  flex-grow: 0;
-  flex-shrink: 0;
-}
-
-input.edit:focus {
   background-color: @clEditorBG;
   color: @clEditorFG;
 }
+
