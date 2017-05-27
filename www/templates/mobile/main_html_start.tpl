@@ -8,7 +8,7 @@
   <title>[special:title]</title>
   <meta name="description" content="[special:description]">
   <meta name="keywords" content="[special:keywords]">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scallable=no">
 
   [special:allstyles]
   <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
@@ -25,7 +25,7 @@
   <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
   <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
   <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
-  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="manifest" href="/images/favicons/manifest.json?v=3">
   <link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg">
   <link rel="shortcut icon" href="/images/favicons/favicon.ico">
   <meta name="msapplication-TileColor" content="#ffffff">
