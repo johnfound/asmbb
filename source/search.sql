@@ -1,4 +1,4 @@
-select distinct
+select
 
   U.nick as UserName,
   U.id as UserID,
@@ -21,7 +21,7 @@ left join
   Threads T on T.id = P.threadID
 
 left join
-  ThreadTags TT on TT.ThreadID = T.id
+  ThreadTags TT on TT.ThreadID = T.id and TT.Tag = ?5
 
 left join
   Users U on P.userID = U.id

@@ -1,6 +1,7 @@
 <div class="post">
   <div class="post_thread">
-    Thread: <a href="../[Slug]/">[Caption]</a> Post: <a href="../[rowid]/!by_id">#[rowid]</a> <div class="changed">[PostTime]</div>
+    Thread: <a href="../[case:[special:thread]|[Slug]/|]">[Caption]</a>
+    Post: <a href="../[rowid]/!by_id">#[rowid]</a> <div class="changed">[PostTime]</div>
   </div>
   <div class="post_sum">
     <div class="avatar">
