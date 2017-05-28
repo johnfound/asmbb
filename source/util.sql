@@ -13,3 +13,16 @@ CREATE VIRTUAL TABLE PostFTS using fts5( Content, content=Posts, content_rowid=i
 insert into PostFTS(rowid, Content) select id, Content from Posts;
 
 
+
+create View PostsView as select P.id, P.Content, P.ThreadID, (select group_concat(Tag, ' ') from ThreadTags TT where TT.ThreadID = P.ThreadID ) as Tags from Posts P;
+drop table PostFTS;
+CREATE VIRTUAL TABLE PostFTS using fts5( Content, ThreadID, Tags, content=PostsView, content_rowid=id, tokenize='porter unicode61 remove_diacritics 1');
+insert into PostFTS(rowid, Content, ThreadID, Tags) select id, Content, ThreadID, Tags from PostsView;
+
+
+drop table PostFTS;
+CREATE VIRTUAL TABLE PostFTS using fts5( Content, ThreadID, UserID, PostTime, ReadCount, Tags, content=Posts, content_rowid=id, tokenize='porter unicode61 remove_diacritics 1');
+
+insert into PostFTS(rowid, Content, ThreadID, UserID, PostTime, ReadCount, Tags)
+select P.id, P.Content, P.ThreadID, P.UserID, P.PostTime, P.ReadCount, (select group_concat(Tag, ' ') from ThreadTags TT where TT.ThreadID = P.ThreadID ) as Tags from Posts P;
+

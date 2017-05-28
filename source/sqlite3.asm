@@ -1,7 +1,4 @@
-iglobal
-  sqlCheckEmpty db 'select count(*) from sqlite_master',0
-endg
-
+sqlCheckEmpty text 'select count() from sqlite_master'
 
 
 ;-------------------------------------------------------------------
@@ -18,25 +15,24 @@ endg
 ;-------------------------------------------------------------------
 proc OpenOrCreate, .ptrFileName, .ptrDatabase, .ptrInitScript
    .hSQL dd ?
-.ptrNext dd ?
 begin
         push    edi esi ebx
 
         mov     esi, [.ptrDatabase]
-        cinvoke sqliteOpen, [.ptrFileName], esi
+        cinvoke sqliteOpen_v2, [.ptrFileName], esi, SQLITE_OPEN_READWRITE or SQLITE_OPEN_CREATE or SQLITE_OPEN_FULLMUTEX, 0
         test    eax, eax
         jz      .openok
 
 .error:
         stc
-        pop     esi
+        pop     ebx esi edi
         return
 
 .openok:
         xor     ebx, ebx
         lea     eax, [.hSQL]
-        lea     ecx, [.ptrNext]
-        cinvoke sqlitePrepare_v2, [esi], sqlCheckEmpty, -1, eax, ecx
+        cinvoke sqlitePrepare_v2, [esi], sqlCheckEmpty, sqlCheckEmpty.length, eax, 0
+
         cinvoke sqliteStep, [.hSQL]
         cinvoke sqliteColumnInt, [.hSQL], 0
         push    eax

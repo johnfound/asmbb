@@ -1,5 +1,5 @@
-C Fixing\ssmall\sbugs\sin\sthe\ssearch\sengine.\sStill\snot\sideal,\sbut\sbetter.
-D 2017-05-28T12:43:49.387
+C Some\ssmall\soptimizations\shere\sand\sthere;\sRemoved\sthe\sdeprecated\sfunctions\sfrom\ssqlite\simport\sfile;\ssqlite\slibrary\supdated\sto\sv3.19,\scompiled\swith\s-O2\s(strange\swith\s-O3\sit\scrashes.\sthis\sneed\sto\sbe\scleared.);
+D 2017-05-28T19:54:24.335
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
 F install/asmbb.tar.gz ba6f4644950fd2ff12e0c1a3ee9d0b966a3f4579
@@ -13,7 +13,7 @@ F install/unpack/unpack.sh 5aa009f713fc2694261c1f2ff55f85f63c419a9d x
 F source/Documents/FastCGI\sSpecification.html e2fc06a5abf1b3505c665e108ce3ad28b636095a
 F source/Documents/futex.pdf 3297d3e1739a7b294fa0c96ba6d59bae7170c6b9
 F source/Documents/rfc7578.txt 5dff43151910fe753f8649b08d650137f07a96ff
-F source/Linux/sqlite3.inc 5b934c86d64a8a6cfde2f91cfdc9fa05d0a2b694
+F source/Linux/sqlite3.inc 49dc036ae22c327790d0314c81263d77d041990b
 F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
@@ -41,12 +41,12 @@ F source/postdebug.asm 13ab4ebf2fc7b35d7fa36853b533236860b641f7
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/render.asm 0f12fa614c936bf4fedc7d126255e7ee2c2078dd
 F source/search.asm 364bae021bc85456b93265e7ff90953a2ea18ff2
-F source/search.sql 1203f077d839fb270a5615bbba71699607962a1f
+F source/search.sql 34cf6eea11403e7ac709cd1588bd84c57257135f
 F source/search_cnt.sql afb4a4cdabbb356b23f18be8d0498d1fbd53001d
 F source/settings.asm 77a81b4236cfc4aa7575934135d9628e679f8fcd
 F source/showthread.asm 6f9a31228099b010d6b59c335cafd1aae57ccd2b
 F source/showthread.sql c575ee2fcbe60d8b878d78d44c477aeb4aece163
-F source/sqlite3.asm f605d645a6cd5a75fbfc52a86ce38c0b5ab0430a
+F source/sqlite3.asm 8e27aa526542e4c8bac6b9e741b6e0698220933f
 F source/sqlite_console.asm b5a76b2f91a21a45e7518e57c77767829376224d
 F source/statistics.asm 8c9bed6acb9f9ec9557e205a1ae744fb806cbc9e
 F source/statistics.sql adf6bec52c32dba0b780cd7422e2de395ca19f7e
@@ -58,7 +58,7 @@ F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
 F source/userinfo.asm 83d7850724c632b13322245888f5dfc968ddf67e
 F source/users_online.asm 9e31fc9b4b53ef390106aa22a3724cc0122d6f22
 F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
-F source/util.sql 5d290f2c2a69ee5e0a341e7d13a4e774ae46edbe
+F source/util.sql 3ca632de8753d0ec4b088d19ff389d11fb1406e9
 F source/version.asm 520a49ea9babaa7b55666b88903c0c64a98fdce4
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
@@ -137,7 +137,7 @@ F www/images/sources/screw0.xcf 50d79cf2cc504c7f0d1499c28147a621b7aaa234
 F www/images/sources/search.svg 50eb2717ab41f19d5a617f6189290fca02470b6b
 F www/images/sources/yellow_back.png d7aed4145104dc3224a3fb46f03c14cf6d386167
 F www/ld-musl-i386.so 4d44786b8676115c7df45c45ceb051c11ce14ffd x
-F www/libsqlite3.so d486208742dfb9c86dc6b2bb69ccb668063f7837 x
+F www/libsqlite3.so ac7fdbab1a796a6f38bd63d7d1cd5d980c672a33 x
 F www/lighttpd.conf 5ad94fe2311e771f83df6226c0d398e9e3d0fddb
 F www/robots.txt 1f19cb38e5bc7508fde66876fab2dfdd453f96c6
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
@@ -367,7 +367,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 4e590946b352471a1ed3ed9bdc66343aa051b1bc
 F www/templates/mobile/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/mobile/users_online.less 236f3c44e5a2c6136cea704ffc3843ee58f607ad
-P d0edecbf17590e843eacdca9be671dd6b60518b3
-R 8c21b752d92c241f0c80fed007e63b32
+P 7e09128a4882267359d4d4d8fda6f7e73549f4f5
+R 00b05b353c36f390146396732b5df473
 U johnfound
-Z 75ea4202b80ce9950505ce95fce4546d
+Z ed48f2a2b90e242a3357408772750f4c
