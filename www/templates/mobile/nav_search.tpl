@@ -2,7 +2,7 @@
 [css:search.css]
 
 <div class="ui">
-  <a class="ui" style="color: white" href="..">Back</a>
+  <a class="ui" style="color: white" href=".">Back</a>
   <span class="spacer"></span>
   [case:[special:isadmin]| |
     <a class="ui" href="/!settings">Settings</a>

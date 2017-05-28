@@ -41,7 +41,7 @@
     </div>
   </div>
 
-  <form class="tags" id="search_form" action="[case:[special:dir]|/|[case:[special:search]||../]]!search/" method="get" >
+  <form class="tags" id="search_form" action="!search" method="get" >
     <input class="search_line" type="search" name="s" placeholder="search" value="[special:search]">
     <input class="icon_btn search_icon"  type="submit" value="">
   </form>

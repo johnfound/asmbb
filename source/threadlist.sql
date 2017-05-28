@@ -1,4 +1,4 @@
-select distinct
+select
 
   id,
   Slug,
@@ -8,14 +8,16 @@ select distinct
   (select count() from posts P where P.threadID = T.id) as PostCount,
   (select count() from posts P2, UnreadPosts U where P2.id = U.PostID and P2.threadID = T.id and U.userID = ?3 ) as Unread,
   (select PostID from posts P3, UnreadPosts U2 where P3.id = U2.PostID and P3.threadID = T.id and U2.userID = ?3 limit 1) as FirstUnread,
-  (select ReadCount from posts P4 where P4.threadID = T.id limit 1) as ReadCount
+  (select ReadCount from posts P4 where P4.threadID = T.id order by P4.id limit 1) as ReadCount
 
 from
-  Threads T left join ThreadTags TT on TT.ThreadID = T.id
+  Threads T left join ThreadTags TT on T.id = TT.ThreadID and TT.Tag = ?4
 
-where ?4 is null or TT.Tag = ?4
+where
+
+  ?4 is null or TT.Tag = ?4
 
 order by Pinned desc, LastChanged desc
 
 limit  ?1
-offset ?2
+offset ?2;

@@ -3,7 +3,7 @@ iglobal
   sqlSelectThreads StripText "threadlist.sql", SQL
 endg
 
-sqlThreadsCount  text "select count(1) from Threads t where ?1 is null or ?1 in (select tag from threadtags tt where tt.threadid = t.id)"
+sqlThreadsCount  text "select count() from Threads left join threadtags on id = threadid and tag = ?1 where ?1 is null or ?1 = tag;"
 
 
 proc ListThreads, .pSpecial
