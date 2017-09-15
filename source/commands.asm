@@ -87,6 +87,8 @@ begin
         mov     [.special.params], eax
 
         stdcall StrDupMem, cDefaultSkin
+        lea     eax, [.special]
+        stdcall GetDefaultSkin, eax
         mov     [.special.userSkin], eax
 
         stdcall DecodePostData, [.pPost2], [.special.params]
@@ -873,7 +875,6 @@ endp
 sqlGetSession    text "select userID, nick, status, last_seen, Skin from sessions left join users on id = userID where sid = ?"
 sqlGetUserExists text "select 1 from users limit 1"
 SKIN_CHECK_FILE  text "main_html_start.tpl"
-cDefaultSkin     text "templates/_default/"
 
 ; returns:
 ;   EAX: string with the logged user name

@@ -1,0 +1,25 @@
+@clColor1: #ffcc40;
+@clFakeUser: #ff80FF;
+@clBodyBG: #d0d0d0;
+@clBodyFG: black;
+@clDarkBG: #404040;
+@clDarkFG: white;
+
+@clPostBG: white;
+@clPostFG: black;
+
+@clFormBG: #808080;
+@clFormFG: white;
+@clDisabledBG: #e0e0e0;
+@clDisabledFG: #404040;
+
+@clEditorBG: white;
+@clEditorFG: black;
+
+@clButtonBG: #e05050;
+@clButtonFG: white;
+
+@clButtonActiveBG: #ff656c;
+@clButtonActiveFG: white;
+
+@clSpacer: #808080;

@@ -1,0 +1,127 @@
+@import "skin_variables.lsi";
+
+/* Thread view styles */
+
+div.thread {
+  margin: auto;
+}
+
+h1.thread_caption {
+  font-size: 20px;
+  margin: 16px 0px 0px 0px;
+  clear:both;
+
+  a {
+    margin-left: 4px;
+    display: inline-block;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 18px;
+    height: 18px;
+    background-image: url("_images/edit_gray.svg");
+  }
+}
+
+div.post {
+  margin-top: 8px;
+}
+
+div.user_info {
+  float: left;
+  padding: 8px;
+  margin: 8px;
+  max-width: 200px;
+
+  background-color: @clDarkBG;
+  background-repeat: no-repeat;
+  background-position: 8px 8px;
+  color: @clDarkFG;
+}
+
+.unread0 {
+  background-image: url("_images/onepost_gray.svg");
+}
+
+.unread1 {
+  background-image: url("_images/onepost.svg");
+}
+
+a.user_name {
+  display: block;
+  padding-top: 4px;
+  text-indent: 40px;
+  color: @clColor1;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+img.avatar {
+  margin: 16px auto 0px auto;
+  width: 64px;
+  display: block;
+  background-color: @clColor1;
+}
+
+div.user_pcnt {
+  margin-top: 8px;
+  font-size: 80%;
+}
+
+div.post_info {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  padding: 4px;
+  background-color: @clColor1;
+  font-size: 12px;
+}
+
+div.last_edit {
+  margin-right: auto;
+}
+
+div.edit_tools {
+  a {
+    margin-right: 8px;
+
+    display: inline-block;
+    vertical-align: middle;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 18px;
+    height: 18px;
+  }
+
+  .icon_quote {
+    background-image: url("_images/quote.svg");
+  }
+
+  .icon_edit {
+    background-image: url("_images/edit_gray.svg");
+  }
+
+  .icon_del {
+    background-image: url("_images/del_gray.svg");
+  }
+}
+
+
+div.post_text {
+  padding: 8px 8px 0px 8px;
+  background-color: @clPostBG;
+  color: @clPostFG;
+}
+
+// In order to not allow the floating user info escaped from short posts.
+
+div.post_text::after {
+  content: " ";
+  display: block;
+  height: 1px;
+  clear: both;
+  margin-top: 7px;
+}

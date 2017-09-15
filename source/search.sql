@@ -1,8 +1,8 @@
-select distinct
+select
 
   U.nick as UserName,
   U.id as UserID,
-  U.avatar as avatar,
+  U.av_time as AVer,
   T.slug,
   strftime('%d.%m.%Y %H:%M:%S', P.postTime, 'unixepoch') as PostTime,
   P.ReadCount,
@@ -21,7 +21,7 @@ left join
   Threads T on T.id = P.threadID
 
 left join
-  ThreadTags TT on TT.ThreadID = T.id
+  ThreadTags TT on TT.ThreadID = T.id and TT.Tag = ?5
 
 left join
   Users U on P.userID = U.id

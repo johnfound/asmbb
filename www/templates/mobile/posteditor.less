@@ -1,0 +1,61 @@
+@import "skin_variables.lsi";
+
+#editform {
+  overflow: auto;
+  margin-top: 8px;
+  padding: 16px;
+  background-color: @clFormBG;
+
+  p {
+    color: @clFormFG;
+    font-weight: bold;
+    margin: 0px 0px 4px 0px;
+  }
+}
+
+textarea.editor {
+  display: inline-block;
+  width: 100%;
+  height: 20em;
+  padding: 4px;
+  margin-bottom: 8px;
+  margin-top: -1px;
+  border-style: none;
+  outline-style: none;
+  overflow: auto;
+  resize: vertical;
+
+  font-family: "Liberation Mono", "Courier New", monospaced;
+  background-color: @clEditorBG;
+}
+
+div.panel {
+  display: inline-block;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 8px;
+
+  input {
+    border-style: none;
+    padding: 4px;
+
+    background-color: @clButtonBG;
+    color: @clButtonFG;
+  }
+
+  input:active, input:focus, input:hover {
+    background-color: @clButtonActiveBG;
+  }
+}
+
+
+h1.fakeedit {
+  border-style: none;
+  padding: 4px;
+  margin: 8px 0px 8px 0px;
+
+  background-color: @clDisabledBG;
+  color: @clDisabledFG;
+  font-weight: bold;
+  font-size: inherit;
+}

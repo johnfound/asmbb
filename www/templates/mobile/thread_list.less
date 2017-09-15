@@ -1,0 +1,88 @@
+@import "skin_variables.lsi";
+
+/* Threads list styles */
+
+div.threads_list {
+  margin: auto;
+  clear: both;
+}
+
+
+.thread_summary {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 8px;
+
+  background-color: @clDarkBG;
+  color: @clDarkFG;
+  padding: 8px;
+
+  a {
+    color: @clColor1;
+  }
+
+  a.unread {
+    vertical-align: top;
+    margin-right: 8px;
+
+    display: inline-block;
+    vertical-align: middle;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+  }
+
+  .unread0 {
+    background-image: url("_images/posts_gray.svg");
+  }
+
+  .unread1 {
+    background-image: url("_images/posts.svg");
+  }
+}
+
+.pinned {
+  display: block;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  width: 16px;
+  height: 16px;
+  margin: 0px !important;
+  border: 0px;
+}
+
+.pin0 {
+  background-image: url("_images/pinned0.png");
+}
+
+.pin1 {
+  background-image: url("_images/pinned.png");
+}
+
+
+a.thread_link {
+  font-size: 16px;
+  font-weight: bold;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: calc(~"100% - 48px");
+}
+
+span.changed {
+  display: inline-block;
+  height: 16px;
+  padding-left: 24px;
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  background-image: url("_images/edit.svg");
+}
+
+span.small {
+  font-size: 80%;
+  font-weight: normal;
+}

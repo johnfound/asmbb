@@ -1,0 +1,58 @@
+@import "skin_variables.lsi";
+
+/* Main user interface toolbar */
+
+div.ui {
+  margin: 8px -4px 0px -4px;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.spacer {
+  display: block;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+a.ui {
+  display: block;
+  padding: 4px 8px;
+  margin: 4px;
+  background-color: @clButtonBG;
+  color: @clButtonFG;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+a.ui:hover, a.ui:active {
+  background-color: @clButtonActiveBG !important;
+  color: @clButtonActiveFG !important;
+}
+
+
+/* Pages links styles */
+
+div.page_row {
+  margin-bottom: 8px;
+  margin-top: 8px;
+  text-align: left;
+}
+
+a.page_link {
+  background-color: @clColor1;
+  padding: 4px;
+  text-align: center;
+  display:inline-block;
+  min-width: 32px;
+}
+
+span.current_page {
+  background-color: @clButtonBG;
+  padding: 4px;
+  text-align: center;
+  display:inline-block;
+  min-width: 32px;
+  color: @clButtonFG;
+}

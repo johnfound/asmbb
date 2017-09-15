@@ -10,7 +10,9 @@ create table Params (
 
 insert into Params values ('user_perm', 349);  -- permLogin + permPost + permThreadStart + permEditOwn + permDelOwn + permChat
 insert into Params values ('log_events', 0);
-insert into Params values ('chat_enabled", 1);
+insert into Params values ('chat_enabled', 1);
+insert into Params values ('default_skin', 'Wasp');
+insert into Params values ('default_mobile_skin', 'mobile');
 
 
 create table Guests (
@@ -86,6 +88,14 @@ create index idxThreadsPinnedLastChanged on Threads (Pinned desc, LastChanged de
 create index idxThreadsSlug on Threads (Slug);
 
 
+create table Private (
+  ThreadID integer references Threads(id) on delete cascade,
+  UserID   integer references Users(id) on delete cascade
+);
+
+create unique index idxPrivateUnique on Private ( ThreadID, UserID );
+
+
 create table Posts (
   id          integer primary key autoincrement,
   threadID    integer references Threads(id) on delete cascade,
@@ -101,6 +111,7 @@ create table Posts (
 create index idxPosts_UserID   on Posts (userID);
 create index idxPosts_ThreadID on Posts (threadID);
 create index idxPostsThreadUser on posts(threadid, userid);
+/* create index idxPostsRead on Posts(threadid, ReadCount); */
 
 
 create table Tags (
@@ -117,8 +128,8 @@ create table ThreadTags (
   Tag      text references Tags(Tag) on delete cascade on update cascade
 );
 
-
 create unique index idxThreadTagsUnique on ThreadTags ( ThreadID, Tag );
+create index idxThreadsTagsTags on ThreadTags (Tag);
 
 
 create table UnreadPosts (
@@ -130,6 +141,7 @@ create table UnreadPosts (
 
 create unique index idxUnreadPosts on UnreadPosts(UserID, PostID);
 create index idxUnreadPostsPostID on UnreadPosts(PostID);
+
 
 create table Attachements (
   id       integer primary key autoincrement,

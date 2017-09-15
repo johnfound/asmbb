@@ -1,0 +1,234 @@
+@import "skin_variables.lsi";
+
+body {
+  font-size: 16px;
+  font-family: Verdana, sans-serif;
+  background-color: @clBodyBG;
+  color: @clBodyFG;
+
+  * {
+    box-sizing: border-box;
+    padding: 0px;
+  }
+
+}
+
+
+a {
+  color: black;
+}
+
+
+input {
+  font-size: inherit;
+  font-family: inherit;
+}
+
+
+/* header styles */
+
+div.header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: @clColor1;
+  background-image: url("_images/yellow_back.png");
+  overflow: auto;
+
+  h1 {
+    font-size: 36px;
+    margin: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  a {
+    display:block;
+    margin: 8px;
+  }
+}
+
+
+
+/* Search form styles */
+
+form#search_form {
+  position: relative;
+  margin: 8px auto;
+}
+
+.search_line {
+  height: 32px;
+  width: 100%;
+  margin: 0px auto;
+  padding: 4px 36px 4px 8px;
+  border: none;
+  background-color: @clDarkBG;
+  color: white;
+  display:block;
+}
+
+
+.search_line:focus {
+  background-color: white;
+  color: black;
+}
+
+
+.icon_btn  {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  border-style: none;
+  vertical-align: top;
+  background-color: #f06060;
+  color: white;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+}
+
+.icon_btn:hover  {
+  background-color: #ff7b81;
+}
+
+.search_icon {
+  background-image: url("_images/search.svg");
+  background-position: center;
+  background-size: 24px 24px;
+  background-repeat: no-repeat;
+}
+
+/* Footer styles */
+
+div.footer {
+  background-color: @clDarkBG;
+  color: white;
+  font-size: 90%;
+  margin: auto;
+  margin-top: 8px;
+  padding: 8px;
+  line-height: 1em;
+  p {
+    margin: 4px 0px 0px 0px;
+  }
+  a {
+    font-weight: bold;
+    color: @clColor1;
+  }
+}
+
+div.attribution {
+  margin: auto;
+  margin-top: 8px;
+  padding: 4px 0px;
+}
+
+
+/* tag list styles */
+
+div.tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 4px;
+
+  background-color: @clDarkBG;
+  font-size: 28px;
+  font-weight: normal;
+
+  overflow: auto;
+  margin: 8px 0px;
+}
+
+a.taglink {
+  padding: 4px;
+  color: white;
+  display:inline-block;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+
+a.current_tag {
+  background-color: @clColor1;
+  color: black;
+}
+
+.tagicon {
+  display: inline-block;
+  padding: 4px;
+  width: 32px;
+  height: 32px;
+  vertical-align: top;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-right: 4px;
+}
+
+.current {
+  background-image: url("_images/posts.svg");
+}
+
+.not_current {
+  background-image: url("_images/posts_gray.svg");
+}
+
+
+/* login/logout info on the pages */
+
+div.login_interface {
+  margin-right: 16px;
+  text-align: right;
+
+  a {
+    text-align: right;
+    display: inline;
+    line-height: 1.5em;
+  }
+}
+
+
+/* messages screen */
+
+div.message_block {
+  font-size: 20px;
+  background: @clPostBG;
+  color: @clPostFG;
+  margin: 8px 0px;
+  text-align: center;
+  padding: 20px;
+  clear: both;
+}
+
+div.message_block h1 {
+    text-align: center;
+    font-size: 21px;
+    font-variant: small-caps;
+    margin: 0px;
+}
+
+div.message_block a {
+  display: inline-block;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  outline: none;
+}
+
+div.message_block a:hover {
+  color: #f06060;
+}
+
+
+div.message {
+  white-space: pre-wrap;
+  padding: 64px;
+  margin: 0px auto;
+  text-align: left;
+  color: black;
+  display: inline-block;
+}

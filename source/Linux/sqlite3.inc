@@ -15,7 +15,6 @@
 
 import_proto './libsqlite3.so',  \
     sqliteAggregateContext, <.context, .nbytes>,  'sqlite3_aggregate_context',  \
-    sqliteAggregateCount_OLD, <VOID>,  'sqlite3_aggregate_count',  \
     sqliteAutoExtension, <.ptrCallback>,  'sqlite3_auto_extension',  \
     sqliteBackupFinish, <.ptrBackup>,  'sqlite3_backup_finish',  \
     sqliteBackupInit, <.ptrDestDB, .ptrDestName, .ptrSourceDB, .ptrSourceName>,  'sqlite3_backup_init',  \
@@ -96,7 +95,6 @@ import_proto './libsqlite3.so',  \
     sqliteErrMsg16, <.ptrDB>,  'sqlite3_errmsg16',  \
     sqliteErrStr, <.err_code>, 'sqlite3_errstr',    \
     sqliteExec, <.ptrDB, .ptrSQL, .procCallback, .lparam, .ptrVarErrMsg>,  'sqlite3_exec',  \
-    sqliteExpired, <VOID>,  'sqlite3_expired',  \
     sqliteExtendedErrCode, <.ptrDB>,  'sqlite3_extended_errcode',  \
     sqliteExtendedResultCodes, <.ptrDB, .flagEnable>,  'sqlite3_extended_result_codes',  \
     sqliteFileControl, <.ptrDB, .ptrDBName, .wparam, .lparam>,  'sqlite3_file_control',  \
@@ -106,7 +104,6 @@ import_proto './libsqlite3.so',  \
     sqliteGetAutocommit, <.ptrDB>,  'sqlite3_get_autocommit',  \
     sqliteGetAuxdata, <.context, .N>,  'sqlite3_get_auxdata',  \
     sqliteGetTable, <.ptrDB, .ptrSQL, .ptrVarResult, .ptrVarRows, .ptrVarColumns, .ptrVarErrorMsg>,  'sqlite3_get_table',  \
-    sqliteGlobalRecover_OLD, <VOID>,  'sqlite3_global_recover',  \
     sqliteInitialize, <VOID>,  'sqlite3_initialize',  \
     sqliteInterrupt, <.ptrDB>,  'sqlite3_interrupt',  \
     sqliteLastInsertRowID, <.ptrDB>,  'sqlite3_last_insert_rowid',  \
@@ -116,7 +113,6 @@ import_proto './libsqlite3.so',  \
     sqliteLoadExtension, <.ptrDB, .nameDLL, .entryProc, .ptrVarErrMsg>,  'sqlite3_load_extension',  \
     sqliteLog, <.iErrCode, .ptrFormat, ...>,  'sqlite3_log',  \
     sqliteMAlloc, <.size>,  'sqlite3_malloc',  \
-    sqliteMemoryAlarm_OLD, <VOID>,  'sqlite3_memory_alarm',  \
     sqliteMemoryHighWater, <.flagReset>,  'sqlite3_memory_highwater',  \
     sqliteMemoryUsed, <VOID>,  'sqlite3_memory_used',  \
     sqliteMprintf, <.ptrString, ...>,  'sqlite3_mprintf',  \
@@ -177,11 +173,9 @@ import_proto './libsqlite3.so',  \
     sqliteTableColumnMetadata, <.ptrDB, .ptrDBName, .ptrTableName, .ptrColumnName, .ptrVarDataType, .ptrVarCollSeq, .ptrVarNotNull,  \
         .ptrVarPrimaryKey, .ptrVarAutoInc>,  'sqlite3_table_column_metadata',  \
     sqliteTestControl, <.opCode, ...>,  'sqlite3_test_control',  \
-    sqliteThreadCleanup, <VOID>,  'sqlite3_thread_cleanup',  \
     sqliteThreadsafe, <VOID>,  'sqlite3_threadsafe',  \
     sqliteTotalChanges, <.ptrDB>,  'sqlite3_total_changes',  \
     sqliteTrace, <.ptrDB, .procTrace, .lparam>,  'sqlite3_trace',  \
-    sqliteTransferBindings, <VOID>,  'sqlite3_transfer_bindings',  \
     sqliteUpdateHook, <.ptrDB, .procUpdateHook, .lparam>,  'sqlite3_update_hook',  \
     sqliteUserData, <.context>,  'sqlite3_user_data',  \
     sqliteValueBlob, <.ptrValue>,  'sqlite3_value_blob',  \
