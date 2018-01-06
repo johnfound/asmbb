@@ -39,6 +39,11 @@ edit the file .htaccess (Apache) or lighttpd.conf (lighttpd) -
 Change the "_FULL_PATH_TO_DOCUMENT_ROOT_HERE_" placeholder to the real
 path to your document root (it depends on the web server settings).
 
+IMPORTANT: Ensure that the uploaded files have the proper permissions for the 
+www-data user (the web server user). The www-data user will need writing 
+permissions in the DOCUMENT_ROOT directory. The executable files must have 
+755 permissions.
+
 IMPORTANT FOR Lighttpd: The provided in the package file "lighttpd.cond is just an 
 example. Lighttpd keeps its config files in: "/etc/lighttpd/lighttpd.conf" and all 
 files in "/etc/lighttpd/conf-enabled/" directory. You will need to merge the example 
