@@ -6,10 +6,16 @@ mkdir asmbb
 
 pushd .
 
+echo "Compile Wasp theme styles..."
 cd ../www/templates/Wasp/
 ./compile_styles.sh
 
+echo "Compile Light theme styles..."
 cd ../Light/
+./compile_styles.sh
+
+echo "Compile mobile theme styles..."
+cd ../mobile/
 ./compile_styles.sh
 
 popd
@@ -21,7 +27,7 @@ cp ../www/*.so asmbb/
 # copy images
 rsync -ar ../www/images/* asmbb/images/ --exclude-from=exclude.txt
 
-# templates and styles for Light theme
+# templates and styles
 rsync -ar ../www/templates/* asmbb/templates/ --exclude-from=exclude.txt
 
 # example config files for apache and lighttpd

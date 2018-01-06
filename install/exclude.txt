@@ -1,3 +1,4 @@
 *.less
 *.sh
 sources
+*.gz
