@@ -766,3 +766,72 @@ begin
         jmp     .loop
 
 endp
+
+
+
+
+
+
+
+
+cCRLF2 text 13, 10, 13, 10
+
+
+proc EchoRealTime, .hSocket, .requestID, .pSpecialParams
+.bytes dd ?
+begin
+        pushad
+
+        DebugMsg "Started echo long life thread!"
+
+        mov     esi, [.pSpecialParams]
+
+        cmp     [fChatTerminate], 0
+        jne     .finish_socket
+
+        stdcall FCGI_output, [.hSocket], [.requestID], cContentTypeEvent, cContentTypeEvent.length, FALSE
+
+        stdcall StrDupMem, <txt 'event: message', 13, 10, 'data: '>        ; echo message
+        mov     edi, eax
+
+        mov     ebx, cContentTypeEvent.length
+
+.event_loop_msg:
+
+        stdcall StrPtr, edi
+        stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], FALSE
+        jc      .finish
+
+        stdcall NumToStr, ebx, ntsDec or ntsUnsigned or ntsFixedWidth + 6
+        push    eax
+
+        stdcall StrPtr, eax
+        stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], FALSE
+        stdcall StrDel ; from the stack
+        jc      .finish
+
+        stdcall FCGI_output, [.hSocket], [.requestID], cCRLF2, cCRLF2.length, FALSE
+        jc      .finish
+
+        cmp     [fChatTerminate], 0
+        jne     .finish_socket
+
+        add     ebx, 32 ; one event lenght
+
+        stdcall Sleep, 100
+        jmp     .event_loop_msg
+
+
+.finish_socket:
+
+        stdcall FCGI_output, [.hSocket], [.requestID], 0, 0, TRUE
+
+.finish:
+
+        stdcall StrDel, edi
+
+        DebugMsg "Finished echo long life thread!"
+
+        popad
+        return
+endp

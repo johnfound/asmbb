@@ -475,6 +475,9 @@ begin
         stdcall StrCompNoCase, eax, txt "!chat_events"
         jc      .exec_command_chat
 
+        stdcall StrCompNoCase, eax, txt "!echo_events"
+        jc      .exec_command_echo
+
 .chat_ok:
 
 if defined options.DebugWeb & options.DebugWeb
@@ -641,6 +644,13 @@ end if
 
         lea     eax, [.special]
         stdcall ChatRealTime, [.hSocket], [.requestID], eax
+        jmp     .final_clean
+
+
+.exec_command_echo:
+
+        lea     eax, [.special]
+        stdcall EchoRealTime, [.hSocket], [.requestID], eax
         jmp     .final_clean
 
 ;..................................................................................

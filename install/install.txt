@@ -39,6 +39,11 @@ edit the file .htaccess (Apache) or lighttpd.conf (lighttpd) -
 Change the "_FULL_PATH_TO_DOCUMENT_ROOT_HERE_" placeholder to the real
 path to your document root (it depends on the web server settings).
 
+IMPORTANT FOR Lighttpd: The provided in the package file "lighttpd.cond is just an 
+example. Lighttpd keeps its config files in: "/etc/lighttpd/lighttpd.conf" and all 
+files in "/etc/lighttpd/conf-enabled/" directory. You will need to merge the example 
+config in the existing files in one or another consistent way and then restart lighttpd.
+
 If using another web server, prepare the configuration by yourself.
 
 Upload all files (and direcrories) of the package to the document_root directory 
@@ -50,10 +55,12 @@ uploaded together with the files. Notice, that FTP can't upload symlinks.
 The simplest way is to upload the tarball to the server and unpack there 
 by using cpanel tools, ssh or any other way.
 
+Read the chapter "Easy Installation on Apache by FTP" below, about how to make 
+the proper upload by FTP.
+
 Test the forum by loading the web site in your favourite browser.
 
 As simple as that. 
-
 
 
 ## Easy Installation on Apache by FTP

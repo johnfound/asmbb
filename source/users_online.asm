@@ -385,6 +385,8 @@ endp
 
 proc IsBot, .hClient
 begin
+        stdcall StrMatchPatternNoCase, txt "*+http*", [.hClient]
+        jc      .yes
         stdcall StrMatchPatternNoCase, txt "*bot*", [.hClient]
         jc      .yes
         stdcall StrMatchPatternNoCase, txt "*crawl*", [.hClient]

@@ -1,15 +1,15 @@
-C Merged\swith\sthe\sMobileSkin\sbranch.
-D 2017-09-15T17:51:51.681
+C Fixed\ssmall\sbugs\sin\sthe\sconfig\sfiles.\sAdded\secho\sservice\sin\sorder\sto\sdiagnose\sproblems\swith\sthe\schat\son\sHTTP2.0;\sAdded\sone\smore\sbot\sdetection\spattern.\sSome\spreparations\sfor\sv1.6\srelease.
+D 2018-01-06T12:28:55.370
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
-F install/.htaccess 6a83853feb4c7f3a76e99abc144a946f629a4f96
+F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz ba6f4644950fd2ff12e0c1a3ee9d0b966a3f4579
 F install/create_release.sh 4f46b27fbe0dfc6bf9eb698257627c1d345a28c9 x
 F install/exclude.txt 7a13d3b234403011a6197353261b9b0fdbcc106f
-F install/install.txt df8fbddf447399f674ea1a76788d007750038a4e
+F install/install.txt c179e590ef771f782e4314fa5502b5396b1c85b4
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
 F install/unpack.tar.gz 70d99b48498d2883f77ac2587684db97c254d6df
 F install/unpack/.htaccess efa046601aad51a87da0946b4eecadcc0d234c15
-F install/unpack/unpack.sh 5aa009f713fc2694261c1f2ff55f85f63c419a9d x
+F install/unpack/unpack.sh 4443f580fe76faffa7015e6e4b73b22f6290f4a0 x
 F source/Documents/FastCGI\sSpecification.html e2fc06a5abf1b3505c665e108ce3ad28b636095a
 F source/Documents/futex.pdf 3297d3e1739a7b294fa0c96ba6d59bae7170c6b9
 F source/Documents/rfc7578.txt 5dff43151910fe753f8649b08d650137f07a96ff
@@ -18,9 +18,9 @@ F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm f1afcd3aa9484e32cf9a6400df7193e1a7e5ce68
-F source/chat.asm 68372b8dd27886b41c751fb9e2185a2eb5aaf356
+F source/chat.asm 11fde01e7287dbe162c028bc805db2824b25c5a2
 F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
-F source/commands.asm 217ead95292a8b61c5270af2ba6265682f35e5b4
+F source/commands.asm 0eba875794d7cfb51dce53766ab7207a1eb9be3d
 F source/create.sql 6d70453fbfd67f0ad1c452155ab729e36c88940e
 F source/delete.asm 64d173cf0ee0df77a8843408b427bdb02b384bd9
 F source/edit.asm 7f9dcd521d3536126be0d81430b2e9f454a09f5a
@@ -56,7 +56,7 @@ F source/threadlist.asm acd026d6bc944828c2a58ad779fe647a50db3143
 F source/threadlist.sql b552e86fa3a86cf9de51348b08c4d1bda226f5c2
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
 F source/userinfo.asm 83d7850724c632b13322245888f5dfc968ddf67e
-F source/users_online.asm 9e31fc9b4b53ef390106aa22a3724cc0122d6f22
+F source/users_online.asm 19da8fb0923d52a6f4f2f18417800ad6c26da82e
 F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/util.sql 3ca632de8753d0ec4b088d19ff389d11fb1406e9
 F source/version.asm 520a49ea9babaa7b55666b88903c0c64a98fdce4
@@ -177,7 +177,7 @@ F www/templates/Light/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/Light/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
 F www/templates/Light/chat.less c77a7f67bddfc6b5e2b153b0630c65303d63b446
 F www/templates/Light/chat.tpl 9f7a1616043e5a0fdb619e9e348fd5c7c20b32ee
-F www/templates/Light/common.less 86ca02e3921e85a3c14b0c31006be0768a458444
+F www/templates/Light/common.less 9e034d7ce21f5c9e19d069fb8a67c8b354c7cce9
 F www/templates/Light/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Light/del_confirm.tpl 557fcfa25e30e6f57d7850b9d56c11ed4a918d63
 F www/templates/Light/delete.less 726105b6ac913c53aa1530da71bacaf57f6c264d
@@ -261,7 +261,7 @@ F www/templates/Wasp/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/Wasp/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
 F www/templates/Wasp/chat.less 75b2e1320a88d5f93a311ea942de32bf27120e9f
 F www/templates/Wasp/chat.tpl 548988d2ae571ee54a2fe49661202938eb869e75
-F www/templates/Wasp/common.less 573392d46e82e88a2ee6adc469f91ae229359461
+F www/templates/Wasp/common.less c10b1ba857cf0263f06fcd3d3d92c1e192b1097d
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 557fcfa25e30e6f57d7850b9d56c11ed4a918d63
 F www/templates/Wasp/delete.less 726105b6ac913c53aa1530da71bacaf57f6c264d
@@ -367,7 +367,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 4e590946b352471a1ed3ed9bdc66343aa051b1bc
 F www/templates/mobile/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/mobile/users_online.less 236f3c44e5a2c6136cea704ffc3843ee58f607ad
-P 4ad5747f3c2d8f3c1e48cd8798834b3b7d45cec9 4f89fdb30b70a25b0ca16ec66d3302234d375d0e
-R 9722fc931e0ca0b667234952be18b76b
+P d3301b38592b6a904073bf6a164dc5374e1603c6
+R ab50cdaa2853c40c51dd2bf0ca52df20
 U johnfound
-Z af1f3a85f206626798801216564bb167
+Z 66ef4f73c1492efca985f89e56b21dbc
