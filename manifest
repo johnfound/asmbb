@@ -1,5 +1,5 @@
-C Official\srelease\sv1.6;
-D 2018-01-06T12:55:55.425
+C Fixed\swrong\sversion\snumber.
+D 2018-01-06T13:00:57.348
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 6faeb2c7988559dab12ae3455ac5f008c5b51eb7
@@ -59,7 +59,7 @@ F source/userinfo.asm 83d7850724c632b13322245888f5dfc968ddf67e
 F source/users_online.asm 19da8fb0923d52a6f4f2f18417800ad6c26da82e
 F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/util.sql 3ca632de8753d0ec4b088d19ff389d11fb1406e9
-F source/version.asm 520a49ea9babaa7b55666b88903c0c64a98fdce4
+F source/version.asm 9fa19aa59184779da16426583f7f32a3998583ac
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
 F www/images/chat_menu.svg d8485817c3e745dcb8b981bb80d264f18365e377
@@ -367,8 +367,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 4e590946b352471a1ed3ed9bdc66343aa051b1bc
 F www/templates/mobile/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/mobile/users_online.less 236f3c44e5a2c6136cea704ffc3843ee58f607ad
-P ccf5952d17732781a503b146deeb829a10e0a6a9
-R 64bc988b32c897d92d6129884be2a00d
-T +sym-v1.6 *
+P 3db2c9476d023b9adfac1a39c315bbb5352d6cd5
+R 5198bdbbc25329d0189d67abbb80d3fc
 U johnfound
-Z 444ea4f4f9d602feba325751940d38cb
+Z f97c24ace6728eea44b03a8144c9ea05
