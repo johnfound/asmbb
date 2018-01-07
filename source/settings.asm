@@ -5,11 +5,8 @@ sqlParameters   text "select ?1 as host, ?2 as smtp_addr, ?3 as smtp_port, ",   
                             "?6 as log_events, ?7 as message, ?8 as error, ",                                   \
                             "?9 as page_length, ",                                                              \
                             "?10 as user_perm0, ?11 as user_perm2, ?12 as user_perm3, ?13 as user_perm4, ",     \
-                            "?14 as user_perm5, ?15 as user_perm6, ?16 as user_perm7, ?17 as user_perm8, ?18 as user_perm31"
-
-sqlUpdateParams text "insert or replace into Params values (?, ?)"
-
-
+                            "?14 as user_perm5, ?15 as user_perm6, ?16 as user_perm7, ?17 as user_perm8, ",     \
+                            "?18 as user_perm31, ?21 as chat_enabled, ?22 as chat_anon"
 
 proc BoardSettings, .pSpecial
 
@@ -210,6 +207,25 @@ begin
         cinvoke sqliteBindText, [.stmt], 18, "checked", -1, SQLITE_STATIC
 
 @@:
+
+        stdcall GetParam, txt "chat_enabled", gpInteger
+        jc      .chat_enabled_ok
+        test    eax, eax
+        jz      .chat_enabled_ok
+
+        cinvoke sqliteBindText, [.stmt], 21, "checked", -1, SQLITE_STATIC
+
+.chat_enabled_ok:
+
+        stdcall GetParam, txt "chat_anon", gpInteger
+        jc      .chat_anon_ok
+        test    eax, eax
+        jz      .chat_anon_ok
+
+        cinvoke sqliteBindText, [.stmt], 22, "checked", -1, SQLITE_STATIC
+
+.chat_anon_ok:
+
         cinvoke sqliteStep, [.stmt]
 
         stdcall StrNew
@@ -238,154 +254,112 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateParams, sqlUpdateParams.length, eax, 0
-
 ; save host
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "host", 0
-        test    eax, eax
-        jz      .error_post_request
-
-        push    eax
-        stdcall StrPtr, eax
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_TRANSIENT
-        cinvoke sqliteBindText, [.stmt], 1, txt "host", -1, SQLITE_STATIC
-        stdcall StrDel ; from the stack.
-
-        call    .exec_write
+        stdcall SetParamStr, txt "host", eax
         jc      .error_write
 
-; save smtp_addr
+ ;.save_smtp_addr:
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "smtp_addr", 0
-        test    eax, eax
-        jz      .error_post_request
-
-        push    eax
-        stdcall StrPtr, eax
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_TRANSIENT
-        cinvoke sqliteBindText, [.stmt], 1, txt "smtp_addr", -1, SQLITE_STATIC
-        stdcall StrDel ; from the stack.
-
-        call    .exec_write
+        stdcall SetParamStr, txt "smtp_addr", eax
         jc      .error_write
 
-; save smtp_port
+;.save_smtp_port:
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "smtp_port", 0
+        stdcall SetParamInt, txt "smtp_port", eax
+        jnc     .save_smtp_user
+
         test    eax, eax
-        jz      .error_post_request
+        jz      .error_invalid_number
+        jmp     .error_write
 
-        push    eax
-        stdcall StrToNumEx, eax
-        stdcall StrDel ; from the stack.
-        jc      .error_invalid_number
 
-        cinvoke sqliteBindInt,  [.stmt], 2, eax
-        cinvoke sqliteBindText, [.stmt], 1, txt "smtp_port", -1, SQLITE_STATIC
-
-        call    .exec_write
-        jc      .error_write
-
-; save smtp_user
+.save_smtp_user:
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "smtp_user", 0
-        test    eax, eax
-        jz      .error_post_request
-
-        push    eax
-        stdcall StrPtr, eax
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_TRANSIENT
-        cinvoke sqliteBindText, [.stmt], 1, txt "smtp_user", -1, SQLITE_STATIC
-        stdcall StrDel ; from the stack.
-
-        call    .exec_write
+        stdcall SetParamStr, txt "smtp_user", eax
         jc      .error_write
 
-
-; save forum_title
+;.save_forum_title:
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "forum_title", 0
-        test    eax, eax
-        jz      .error_post_request
-
-        push    eax
-        stdcall StrPtr, eax
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_TRANSIENT
-        cinvoke sqliteBindText, [.stmt], 1, txt "forum_title", -1, SQLITE_STATIC
-        stdcall StrDel ; from the stack.
-
-        call    .exec_write
+        stdcall SetParamStr, txt "forum_title", eax
         jc      .error_write
 
-; save description
+;.save_description:
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "description", 0
-        test    eax, eax
-        jz      .error_post_request
-
-        push    eax
-        stdcall StrPtr, eax
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_TRANSIENT
-        cinvoke sqliteBindText, [.stmt], 1, txt "description", -1, SQLITE_STATIC
-        stdcall StrDel ; from the stack.
-
-        call    .exec_write
+        stdcall SetParamStr, txt "description", eax
         jc      .error_write
 
-; save keywords
+;.save_keywords:
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "keywords", 0
-        test    eax, eax
-        jz      .error_post_request
-
-        push    eax
-        stdcall StrPtr, eax
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_TRANSIENT
-        cinvoke sqliteBindText, [.stmt], 1, txt "keywords", -1, SQLITE_STATIC
-        stdcall StrDel ; from the stack.
-
-        call    .exec_write
+        stdcall SetParamStr, txt "keywords", eax
         jc      .error_write
 
-; save bool log_events
+;.save_log_events:
 
         xor     ebx, ebx
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "log_events", 0
         test    eax, eax
-        jz      .bind_log
+        jz      .save_log
 
         inc     ebx
         stdcall StrDel, eax
 
-.bind_log:
-        cinvoke sqliteBindInt,  [.stmt], 2, ebx
-        cinvoke sqliteBindText, [.stmt], 1, txt "log_events", -1, SQLITE_STATIC
+.save_log:
+        stdcall SetParamInt, txt "log_events", ebx
+        jc      .error_write
 
-        call    .exec_write
+
+; save chat enabled
+
+        xor     ebx, ebx
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "chat_enabled", 0
+        test    eax, eax
+        jz      .save_chat_enabled
+
+        inc     ebx
+        stdcall StrDel, eax
+
+.save_chat_enabled:
+        stdcall SetParamInt, txt "chat_enabled", ebx
+        jc      .error_write
+
+; save chat anon
+
+        xor     ebx, ebx
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "chat_anon", 0
+        test    eax, eax
+        jz      .save_chat_anon
+
+        inc     ebx
+        stdcall StrDel, eax
+
+.save_chat_anon:
+
+        stdcall SetParamInt, txt "chat_anon", ebx
         jc      .error_write
 
 ; save page_length
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "page_length", 0
+        stdcall SetParamInt, txt "page_length", eax
+        jnc     .save_perm
+
         test    eax, eax
-        jz      .bind_perm
-
-        stdcall StrToNumEx, eax
-        test    eax, eax
-        jz      .bind_perm
-        js      .bind_perm
-
-        cinvoke sqliteBindInt,  [.stmt], 2, eax
-        cinvoke sqliteBindText, [.stmt], 1, txt "page_length", -1, SQLITE_STATIC
-
-        call    .exec_write
-        jc      .error_write
+        jz      .error_invalid_page_len
+        jmp     .error_write
 
 
-.bind_perm:
+.save_perm:
         xor     ebx, ebx
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_perm0", 0
@@ -451,28 +425,21 @@ begin
 
         or      ebx, eax
 
-        cinvoke sqliteBindInt,  [.stmt], 2, ebx
-        cinvoke sqliteBindText, [.stmt], 1, txt "user_perm", -1, SQLITE_STATIC
-
-        call    .exec_write
+        stdcall SetParamInt, txt "user_perm", ebx
         jc      .error_write
 
-
 ; everything is OK
-
-        cinvoke sqliteFinalize, [.stmt]
-
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCommit, sqlCommit.length, eax, 0
         cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_DONE
-        jne     .error_commit
-
+        mov     ebx, eax
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall StrDupMem, "The settings has been saved"
+        cmp     ebx, SQLITE_DONE
+        jne     .error_commit
 
+        stdcall StrDupMem, "The settings has been saved"
 
 .end_save:
         mov     ebx, eax
@@ -503,27 +470,31 @@ begin
         jmp     .exit
 
 
-
-.error_post_request:
-
-        stdcall StrDupMem, "Error: Strange, there is missing value in the POST request. Hack attempt? "
-        jmp     .error_write
-
 .error_invalid_number:
 
-        stdcall StrDupMem, "Error: Invalid number as an SMTP port."
+        stdcall StrDupMem, "Error: Invalid number as SMTP port."
+        jmp     .error_write
+
+
+.error_invalid_page_len:
+
+        stdcall StrDupMem, "Error: Invalid number as page length."
         jmp     .error_write
 
 
 .error_transaction:
 .error_commit:
 
-        call    .error_get_msg
+        cinvoke sqliteErrMsg, [hMainDatabase]
+        push    eax
+
+        stdcall StrDupMem, 'The save failed with the following message: "'
+        stdcall StrCat, eax ; second from the stack
+        stdcall StrCharCat, eax, '"'
+
 
 .error_write:
         push    eax
-
-        cinvoke sqliteFinalize, [.stmt]
 
         cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
 
@@ -532,19 +503,47 @@ begin
         pop     eax
         jmp     .end_save
 
+endp
 
 
-.exec_write:
+sqlUpdateParams text "insert or replace into Params values (?, ?)"
+sqlDeleteParams text "delete from Params where id = ?"
 
+proc SetParamStr, .ParamName, .hParamValue
+.stmt dd ?
+begin
+        pushad
+
+        mov     ebx, [.hParamValue]
+        test    ebx, ebx
+        jnz     .update_it
+
+.del_param:
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlDeleteParams, sqlDeleteParams.length, eax, 0
+        jmp     .bind_name
+
+.update_it:
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateParams, sqlUpdateParams.length, eax, 0
+
+        stdcall StrPtr, [.hParamValue]
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_TRANSIENT
+        stdcall StrDel, [.hParamValue]
+
+.bind_name:
+        cinvoke sqliteBindText, [.stmt], 1, [.ParamName], -1, SQLITE_STATIC
         cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_DONE
+        mov     ebx, eax
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     ebx, SQLITE_DONE
         jne     .error_get_msg
 
-        cinvoke sqliteReset, [.stmt]
-        cinvoke sqliteClearBindings, [.stmt]
-
         clc
-        retn
+        popad
+        return
 
 .error_get_msg:
 
@@ -555,10 +554,41 @@ begin
         stdcall StrCat, eax ; second from the stack
         stdcall StrCharCat, eax, '"'
 
+.finish_error:
+        mov     [esp+4*regEAX], eax
         stc
-        retn
+        popad
+        return
 endp
 
+
+
+
+
+proc SetParamInt, .ParamName, .hParamValue
+.stmt dd ?
+begin
+        pushad
+
+        mov     ebx, [.hParamValue]
+        test    ebx, $c0000000
+        jz      .number
+
+        stdcall StrToNumEx, ebx
+        stdcall StrDel, ebx
+        jc      .error_invalid_number
+        mov     ebx, eax
+
+.number:
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateParams, sqlUpdateParams.length, eax, 0
+        cinvoke sqliteBindInt,  [.stmt], 2, ebx
+        jmp     SetParamStr.bind_name
+
+.error_invalid_number:
+        xor     eax, eax
+        jmp     SetParamStr.finish_error
+endp
 
 
 
@@ -752,3 +782,7 @@ begin
         jmp     .finish
 
 endp
+
+
+
+

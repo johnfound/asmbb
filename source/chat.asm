@@ -527,6 +527,12 @@ endp
 
 proc ChatPermissions    ; esi is pointer to TSpecialParams
 begin
+        stdcall GetParam, "chat_enabled", gpInteger
+        jc      .not_ok
+
+        test    eax, eax
+        jz      .not_ok
+
         stdcall GetParam, "chat_anon", gpInteger
         jc      .check_permissions
 
@@ -535,9 +541,10 @@ begin
 
 .check_permissions:
 
-        test    [esi+TSpecialParams.userStatus], permChat
+        test    [esi+TSpecialParams.userStatus], permChat or permAdmin
         jnz     .permissions_ok
 
+.not_ok:
         stc
         return
 

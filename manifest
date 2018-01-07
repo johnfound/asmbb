@@ -1,5 +1,5 @@
-C Well,\sat\sthe\send\sofficial\srelease\sv1.6\s:)
-D 2018-01-06T13:19:40.719
+C Chat\ssettings\sadded\sto\sthe\sforum\ssettings\sform.\sBetter\serror\schecking\son\sthe\sform\ssave.\sFixed\sa\ssmall\sbug\sin\sthe\schat\spermissions.
+D 2018-01-07T10:40:38.258
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 30219d485f84205577a0cba583a4b8923f57458b
@@ -18,7 +18,7 @@ F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm f1afcd3aa9484e32cf9a6400df7193e1a7e5ce68
-F source/chat.asm 11fde01e7287dbe162c028bc805db2824b25c5a2
+F source/chat.asm 84e6bbfe33129fb4bbe481874b1dd7f74664882f
 F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
 F source/commands.asm 0eba875794d7cfb51dce53766ab7207a1eb9be3d
 F source/create.sql 6d70453fbfd67f0ad1c452155ab729e36c88940e
@@ -43,7 +43,7 @@ F source/render.asm 0f12fa614c936bf4fedc7d126255e7ee2c2078dd
 F source/search.asm 364bae021bc85456b93265e7ff90953a2ea18ff2
 F source/search.sql 34cf6eea11403e7ac709cd1588bd84c57257135f
 F source/search_cnt.sql afb4a4cdabbb356b23f18be8d0498d1fbd53001d
-F source/settings.asm 77a81b4236cfc4aa7575934135d9628e679f8fcd
+F source/settings.asm 337924d6ff5d3bc672ccd901241c7918cf2acfe4
 F source/showthread.asm 6f9a31228099b010d6b59c335cafd1aae57ccd2b
 F source/showthread.sql c575ee2fcbe60d8b878d78d44c477aeb4aece163
 F source/sqlite3.asm 8e27aa526542e4c8bac6b9e741b6e0698220933f
@@ -192,7 +192,7 @@ F www/templates/Light/form_new_post.tpl 7536a5fab7c7786441862491267b022c1146895f
 F www/templates/Light/form_new_thread.tpl 9c1da9ea5b40fe7e0f881f88f31c5b04fed2f38f
 F www/templates/Light/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/Light/form_register.tpl 17e04b8fc2296c31bbf97c701fe48e46da816699
-F www/templates/Light/form_settings.tpl 29ec58479fa00aa8f4eab772248e9ea12cf2a035
+F www/templates/Light/form_settings.tpl 400d4f8753e9b68628edd5d4e948215cb38ed8c5
 F www/templates/Light/form_setup.tpl 58a7c7ebaa5d793b255c2eca2d7f76fa97ffecdb
 F www/templates/Light/form_sqlite_console.tpl bedbf751806827982becff7feb4dcb86309b2355
 F www/templates/Light/login.less c30ad6510b4ba9119fe931ebb5c92a7e9182de0a
@@ -276,7 +276,7 @@ F www/templates/Wasp/form_new_post.tpl 7536a5fab7c7786441862491267b022c1146895f
 F www/templates/Wasp/form_new_thread.tpl 9c1da9ea5b40fe7e0f881f88f31c5b04fed2f38f
 F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/Wasp/form_register.tpl 17e04b8fc2296c31bbf97c701fe48e46da816699
-F www/templates/Wasp/form_settings.tpl 29ec58479fa00aa8f4eab772248e9ea12cf2a035
+F www/templates/Wasp/form_settings.tpl 400d4f8753e9b68628edd5d4e948215cb38ed8c5
 F www/templates/Wasp/form_setup.tpl 58a7c7ebaa5d793b255c2eca2d7f76fa97ffecdb
 F www/templates/Wasp/form_sqlite_console.tpl bedbf751806827982becff7feb4dcb86309b2355
 F www/templates/Wasp/login.less 81a52aaca31e749d5891d87c813a7af10511347e
@@ -339,7 +339,7 @@ F www/templates/mobile/form_new_post.tpl 4cd2a10ceaa2651f87477c7bfbf19c903c801b5
 F www/templates/mobile/form_new_thread.tpl 9c1da9ea5b40fe7e0f881f88f31c5b04fed2f38f
 F www/templates/mobile/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/mobile/form_register.tpl 17e04b8fc2296c31bbf97c701fe48e46da816699
-F www/templates/mobile/form_settings.tpl 09fe318f3542617d0b134c65e5de24891b93ac46
+F www/templates/mobile/form_settings.tpl a828430003b1a1fe4806b2abbb325bbb5b2c9aa2
 F www/templates/mobile/form_setup.tpl 58a7c7ebaa5d793b255c2eca2d7f76fa97ffecdb
 F www/templates/mobile/form_sqlite_console.tpl d30bcafb73e52ca1fb5fbde69a37f3a8445e597f
 F www/templates/mobile/login.less 751b02e109f8018b08832e0c4580af4495f51520
@@ -367,8 +367,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 4e590946b352471a1ed3ed9bdc66343aa051b1bc
 F www/templates/mobile/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/mobile/users_online.less 236f3c44e5a2c6136cea704ffc3843ee58f607ad
-P cb948766633e4ae9bc3d05456f66c57f31dc84f1
-R 975b755a1a685f7a9372fa1ff8ae3d4d
-T +sym-v1.6 *
+P 4616153898d33db156ddf6ca74bc2fa3cbc2c70b
+R 9e991cddfcec3ba617ee7ca38405cf91
 U johnfound
-Z 9891229072d455f3e94b3410867a4f90
+Z 1e50353c70ec2b6e438d49f99b532667

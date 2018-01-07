@@ -13,8 +13,9 @@
   <label>SMTP account:</label><input type="text" value="[smtp_user]" name="smtp_user" class="settings" size="30" maxlength="256"><br>
   <label>Page length:</label><input type="text" value="[page_length]" name="page_length" class="settings" size="30" maxlength="256"><br>
   <label for="log_events">Log events:</label><label class="checkbox"><input type="checkbox" [log_events] name="log_events" id="log_events" class="checkbox"><span>&nbsp;</span></label><br>
-  <label>Default user permissions:</label><table style="display:inline-block; vertical-align: top; border-collapse: collapse; border-spacing: 0px;"><tr>
-  <td>
+
+  <label>Default user permissions:</label><table style="display:inline-block; vertical-align: top; border-collapse: collapse; border-spacing: 0px;">
+  <tr><td>
   <label class="checkbox"><input type="checkbox" [user_perm0] name="user_perm0" value="1" class="checkbox"><span>&nbsp;</span> Login</label><br>
   <label class="checkbox"><input type="checkbox" [user_perm2] name="user_perm2" value="4" class="checkbox"><span>&nbsp;</span> Post</label><br>
   <label class="checkbox"><input type="checkbox" [user_perm3] name="user_perm3" value="8" class="checkbox"><span>&nbsp;</span> Start threads</label><br>
@@ -26,6 +27,10 @@
   <label class="checkbox" style="color: maroon"><input type="checkbox" [user_perm7] name="user_perm7" value="128" class="checkbox"><span>&nbsp;</span> Delete all posts</label><br>
   <label class="checkbox" style="color: red"><input type="checkbox" [user_perm31] name="user_perm31"  value="$80000000" class="checkbox"><span>&nbsp;</span> Administrator</label><br>
   </td></tr></table>
+
+  <label for="chat_enabled">Enable chat:</label><label class="checkbox"><input type="checkbox" [chat_enabled] name="chat_enabled" id="chat_enabled" class="checkbox"><span>&nbsp;</span></label><br>
+  <label for="chat_anon">Anonymous chat:</label><label class="checkbox"><input type="checkbox" [chat_anon] name="chat_anon" id="chat_anon" class="checkbox"><span>&nbsp;</span></label><br>
+
   <input type="submit" name="save" class="button" value="Save">
 </form>
 </div>
