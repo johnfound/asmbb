@@ -36,8 +36,8 @@ cEditingPageTitle       itext   EN: "Editing page: ",           \
                                 RU: "Редактирование: ",         \
                                 BG: "Редактиране на: "
 
-cEditingThreadTitle     itext   EN: "Editing thread: ",           \
-                                RU: "Редактирование темы: ",         \
+cEditingThreadTitle     itext   EN: "Editing thread: ",         \
+                                RU: "Редактирование темы: ",    \
                                 BG: "Редактиране на тема: "
 
 cSQLiteConsoleTitle     itext   EN: "WARNING! SQLite console. You can destroy your database here!",     \

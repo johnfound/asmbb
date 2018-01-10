@@ -45,10 +45,21 @@ form.settings {
     text-align: left;
   }
 
+  table {
+    display:inline-block;
+    border-collapse: collapse;
+    border-spacing: 0px;
+    vertical-align: top;
+
+    td {
+      vertical-align: top;
+    }
+  }
+
 }
 
 
-input.settings {
+input.settings, select.settings {
   display: inline-block;
   height: 38px;
   margin: 0px 8px 8px 0px;
@@ -60,6 +71,11 @@ input.settings {
   background-color: @clEditorBG;
   color: @clEditorFG;
 }
+
+select.settings {
+  width: 100px;
+}
+
 
 label.checkbox {
   display: inline-block;

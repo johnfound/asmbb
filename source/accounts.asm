@@ -429,14 +429,31 @@ begin
         cmp     ebx, SQLITE_DONE
         jne     .error_exists
 
+        stdcall GetParam, "email_confirm", gpInteger
+        jc      .send_emails
+
+        test    eax, eax
+        jz      .no_confirm
+
 ; now send the activation email for all registered user, where the email was not sent.
 
+.send_emails:
         stdcall ProcessActivationEmails
         jc      .error_technical_problem
 
 ; the user has been created and now is waiting for email activation.
 
         stdcall StrMakeRedirect, 0, "/!message/user_created/"
+        jmp     .finish
+
+.no_confirm:
+
+        stdcall StrDupMem, "/!activate/"
+        stdcall StrCat, eax, [.secret]
+        push    eax
+
+        stdcall StrMakeRedirect, 0, eax
+        stdcall StrDel ; from the stack
         jmp     .finish
 
 
@@ -902,6 +919,23 @@ begin
         jne     .error_update
 
         cinvoke sqliteFinalize, [.stmt]
+
+
+        stdcall GetParam, "email_confirm", gpInteger
+        jc      .send_emails
+
+        test    eax, eax
+        jnz     .send_emails
+
+        stdcall StrDupMem, "/!activate/"
+        stdcall StrCat, eax, [.secret]
+        push    eax
+
+        stdcall StrMakeRedirect, 0, eax
+        stdcall StrDel ; from the stack
+        jmp     .finish
+
+.send_emails:
 
         stdcall ProcessActivationEmails
         jc      .error_technical_problem

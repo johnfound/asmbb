@@ -1,12 +1,12 @@
 
 
-sqlParameters   text "select ?1 as host, ?2 as smtp_addr, ?3 as smtp_port, ",                                   \
-                            "?4 as smtp_user, ?5 as forum_title, ?19 as Description, ?20 as Keywords, ",        \
-                            "?6 as log_events, ?7 as message, ?8 as error, ",                                   \
-                            "?9 as page_length, ",                                                              \
-                            "?10 as user_perm0, ?11 as user_perm2, ?12 as user_perm3, ?13 as user_perm4, ",     \
-                            "?14 as user_perm5, ?15 as user_perm6, ?16 as user_perm7, ?17 as user_perm8, ",     \
-                            "?18 as user_perm31, ?21 as chat_enabled, ?22 as chat_anon"
+sqlParameters   text "select ?1 as host, ?2 as smtp_addr, ?3 as smtp_port, ",                                    \
+                            "?4 as smtp_user, ?5 as forum_title, ?19 as Description, ?20 as Keywords, ",         \
+                            "?7 as message, ?8 as error, ?9 as page_length, ",                                   \
+                            "?10 as user_perm0, ?11 as user_perm2, ?12 as user_perm3, ?13 as user_perm4, ",      \
+                            "?14 as user_perm5, ?15 as user_perm6, ?16 as user_perm7, ?17 as user_perm8, ",      \
+                            "?18 as user_perm31, ?21 as chat_enabled, ?22 as chat_anon, ?23 as email_confirm, ", \
+                            "?24 as default_skin, $25 as default_mobile_skin"
 
 proc BoardSettings, .pSpecial
 
@@ -122,15 +122,6 @@ begin
 
 .keywords_ok:
 
-        stdcall GetParam, txt "log_events", gpInteger
-        jc      .log_events_ok
-        test    eax, eax
-        jz      .log_events_ok
-
-        cinvoke sqliteBindText, [.stmt], 6, "checked", -1, SQLITE_STATIC
-
-.log_events_ok:
-
         cmp     [.message], 0
         je      .message_ok
 
@@ -226,6 +217,35 @@ begin
 
 .chat_anon_ok:
 
+        stdcall GetParam, txt "email_confirm", gpInteger
+        jc      .email_confirm_ok
+        test    eax, eax
+        jz      .email_confirm_ok
+
+        cinvoke sqliteBindText, [.stmt], 23, "checked", -1, SQLITE_STATIC
+
+.email_confirm_ok:
+
+        stdcall GetParam, txt "default_skin", gpString
+        jc      .skin_ok
+
+        push    eax
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 24, eax, [eax+string.len], SQLITE_TRANSIENT
+        stdcall StrDel ; from the stack
+
+.skin_ok:
+
+        stdcall GetParam, txt "default_mobile_skin", gpString
+        jc      .mob_skin_ok
+
+        push    eax
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 25, eax, [eax+string.len], SQLITE_TRANSIENT
+        stdcall StrDel ; from the stack
+
+.mob_skin_ok:
+
         cinvoke sqliteStep, [.stmt]
 
         stdcall StrNew
@@ -283,6 +303,16 @@ begin
         stdcall SetParamStr, txt "smtp_user", eax
         jc      .error_write
 
+;.save_default_skin:
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "default_skin", 0
+        stdcall SetParamStr, txt "default_skin", eax
+        jc      .error_write
+
+;.save_default_mobile_skin:
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "default_mobile_skin", 0
+        stdcall SetParamStr, txt "default_mobile_skin", eax
+        jc      .error_write
+
 ;.save_forum_title:
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "forum_title", 0
@@ -301,11 +331,11 @@ begin
         stdcall SetParamStr, txt "keywords", eax
         jc      .error_write
 
-;.save_log_events:
+;.save_emile_confirm:
 
         xor     ebx, ebx
 
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "log_events", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "email_confirm", 0
         test    eax, eax
         jz      .save_log
 
@@ -313,9 +343,8 @@ begin
         stdcall StrDel, eax
 
 .save_log:
-        stdcall SetParamInt, txt "log_events", ebx
+        stdcall SetParamInt, txt "email_confirm", ebx
         jc      .error_write
-
 
 ; save chat enabled
 

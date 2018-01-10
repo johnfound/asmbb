@@ -11,9 +11,12 @@
   <label>Host:</label><input type="text" value="[host]" name="host" class="settings" size="30" maxlength="320">
   <label>SMTP server/port:</label><input type="text" value="[smtp_addr]" name="smtp_addr" class="settings" size="20" maxlength="256"><input type="text" value="[smtp_port]" name="smtp_port" class="settings" size="5" maxlength="5">
   <label>SMTP account:</label><input type="text" value="[smtp_user]" name="smtp_user" class="settings" size="30" maxlength="256">
+  <label class="checkbox"><input type="checkbox" [email_confirm] name="email_confirm" id="email_confirm" class="checkbox"><span>&nbsp;</span> Confirm by email</label><br><br>
   <label>Page length:</label><input type="text" value="[page_length]" name="page_length" class="settings" size="30" maxlength="256">
-  <label class="checkbox"><input type="checkbox" [log_events] name="log_events" id="log_events" class="checkbox"><span>&nbsp;</span> Log events</label>
-  <br><label>Default user permissions:</label>
+  <label>Default skin:</label><select class="settings" name="default_skin" size:"20">[special:skins=[default_skin]]</select>
+  <label>Default mobile skin:</label><select class="settings" name="default_mobile_skin">[special:skins=[default_mobile_skin]]</select><br><br>
+
+  <label>Default user permissions:</label>
   <label class="checkbox"><input type="checkbox" [user_perm0] name="user_perm0" value="1" class="checkbox"><span>&nbsp;</span> Login</label>
   <label class="checkbox"><input type="checkbox" [user_perm2] name="user_perm2" value="4" class="checkbox"><span>&nbsp;</span> Post</label>
   <label class="checkbox"><input type="checkbox" [user_perm3] name="user_perm3" value="8" class="checkbox"><span>&nbsp;</span> Start threads</label>

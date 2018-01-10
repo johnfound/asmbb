@@ -319,8 +319,9 @@ begin
         stdcall StrCompNoCase, edi, "search"
         jc      .get_search
 
-        stdcall StrCompNoCase, edi, "skins"
-        jc      .get_skins
+        stdcall GetQueryItem, edi, "skins=", 0
+        test    eax, eax
+        jnz     .get_skins
 
         stdcall GetQueryItem, edi, "posters=", 0
         test    eax, eax
@@ -468,13 +469,10 @@ locals
 endl
         push    ebx edi
 
-        mov     eax, [.sql_stmt]
-        test    eax, eax
-        jz      .cskin_ok
+        push    eax
+        stdcall __DoProcessTemplate2, eax, [.sql_stmt], [.pSpecial], FALSE
+        stdcall StrDel ; from the stack
 
-        cinvoke sqliteColumnText, eax, SKIN_FIELD_INDEX
-
-.cskin_ok:
         mov     [.current], eax
 
         stdcall StrNew
@@ -529,6 +527,8 @@ endl
         stdcall FreeMem, edi
 
 .finish_skins:
+
+        stdcall StrDel, [.current]
 
         mov     eax, ebx
         pop     edi ebx

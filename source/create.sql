@@ -13,7 +13,7 @@ insert into Params values ('log_events', 0);
 insert into Params values ('chat_enabled', 1);
 insert into Params values ('default_skin', 'Wasp');
 insert into Params values ('default_mobile_skin', 'mobile');
-
+insert into Params values ('email_confirm', 1);
 
 create table Guests (
   addr     integer primary key not null,

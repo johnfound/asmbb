@@ -1346,7 +1346,7 @@ begin
         je      .get_string
 
         cinvoke sqliteColumnInt, [.stmt], 0
-        jmp     .finish
+        jmp     .result
 
 .get_string:
         cinvoke sqliteColumnText, [.stmt], 0

@@ -1,5 +1,5 @@
-C Chat\ssettings\sadded\sto\sthe\sforum\ssettings\sform.\sBetter\serror\schecking\son\sthe\sform\ssave.\sFixed\sa\ssmall\sbug\sin\sthe\schat\spermissions.
-D 2018-01-07T10:40:38.258
+C Email\sconfirmation\sof\sthe\snew\saccounts\sand\semail\schanges\soptional\s(/!settings)\n\n[special:skins]\schanged\sto\saccept\sthe\scurrent\sselected\sskin:\s[special:skins=]\n\nFrom\sthe\ssettings\sform\sremoved\s"log\sevents"\soption\sand\sadded\sthe\sdefault\sskin,\sdefault\smobile\sskin\sand\semail\sconfirmation\soptions.\n\nBetter\sdesign\sof\sthe\ssettings\sform.\n\nThe\scurrent\semail\sdisplayed\sin\sthe\semail\schange\sform\son\sthe\suser\sprofile.\s\n\nPreparations\sfor\sthe\sv1.7;
+D 2018-01-10T14:46:41.547
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 30219d485f84205577a0cba583a4b8923f57458b
@@ -17,11 +17,11 @@ F source/Linux/sqlite3.inc 49dc036ae22c327790d0314c81263d77d041990b
 F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
-F source/accounts.asm f1afcd3aa9484e32cf9a6400df7193e1a7e5ce68
+F source/accounts.asm c0eef2568c47a45d3881684bda20cef0dca8c723
 F source/chat.asm 84e6bbfe33129fb4bbe481874b1dd7f74664882f
 F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
-F source/commands.asm 0eba875794d7cfb51dce53766ab7207a1eb9be3d
-F source/create.sql 6d70453fbfd67f0ad1c452155ab729e36c88940e
+F source/commands.asm 796fc744b3c7622faedfb19aa4dac6aa01a675d4
+F source/create.sql 5a68aeee8046e1190ed009e39703855fa5273008
 F source/delete.asm 64d173cf0ee0df77a8843408b427bdb02b384bd9
 F source/edit.asm 7f9dcd521d3536126be0d81430b2e9f454a09f5a
 F source/engine.asm 758ac58f1c27e6a5b1dde76bfb7d393081b72424
@@ -39,27 +39,27 @@ F source/post.asm 85a041cddd7b2b37092dc420733cfbfbe99ea1b5
 F source/post_data.asm 42ff743822eb1aacb01730e4b7511cc5967900e4
 F source/postdebug.asm 13ab4ebf2fc7b35d7fa36853b533236860b641f7
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
-F source/render.asm 0f12fa614c936bf4fedc7d126255e7ee2c2078dd
+F source/render.asm 3e262ec9c5989904346c8622689efac0b1079efd
 F source/search.asm 364bae021bc85456b93265e7ff90953a2ea18ff2
 F source/search.sql 34cf6eea11403e7ac709cd1588bd84c57257135f
 F source/search_cnt.sql afb4a4cdabbb356b23f18be8d0498d1fbd53001d
-F source/settings.asm 337924d6ff5d3bc672ccd901241c7918cf2acfe4
+F source/settings.asm e800f900174722afceb684cfbbd3179c32f75602
 F source/showthread.asm 6f9a31228099b010d6b59c335cafd1aae57ccd2b
 F source/showthread.sql c575ee2fcbe60d8b878d78d44c477aeb4aece163
 F source/sqlite3.asm 8e27aa526542e4c8bac6b9e741b6e0698220933f
 F source/sqlite_console.asm b5a76b2f91a21a45e7518e57c77767829376224d
 F source/statistics.asm 8c9bed6acb9f9ec9557e205a1ae744fb806cbc9e
 F source/statistics.sql adf6bec52c32dba0b780cd7422e2de395ca19f7e
-F source/text_constants.asm ae4e292e75d782ed0dd57614eaf1fcc51aed5fcf
+F source/text_constants.asm f785aa1c9c8e22e1a9f0fc9180e8f384d91b26ac
 F source/thread_attr.sql 1d9509e1413bcf1a32b90137884be4cc168d8d17
 F source/threadlist.asm acd026d6bc944828c2a58ad779fe647a50db3143
 F source/threadlist.sql b552e86fa3a86cf9de51348b08c4d1bda226f5c2
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
-F source/userinfo.asm 83d7850724c632b13322245888f5dfc968ddf67e
+F source/userinfo.asm 9f02ca2b7eff6eb12ce9a0197057e9bdbb0f01a1
 F source/users_online.asm 19da8fb0923d52a6f4f2f18417800ad6c26da82e
 F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/util.sql 3ca632de8753d0ec4b088d19ff389d11fb1406e9
-F source/version.asm 9fa19aa59184779da16426583f7f32a3998583ac
+F source/version.asm 989e0c6d6c1b15c539128dff45986ebaeda14125
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
 F www/images/chat_menu.svg d8485817c3e745dcb8b981bb80d264f18365e377
@@ -186,13 +186,13 @@ F www/templates/Light/error_html_end.tpl f390b47728814ecd8e608dd410cb2f4b0b95302
 F www/templates/Light/error_html_start.tpl cca8ffd4fc43b97aa0aa5d22a984166061129af7
 F www/templates/Light/form_edit.tpl d5cb9b82c9d024bfb3bd938e65558165b8ad4d1a
 F www/templates/Light/form_edit_thread.tpl 493028b82db528bbedb5af9d51a95c7635a741ee
-F www/templates/Light/form_editinfo.tpl f1c742cc26cc7839c74b52fb00939a2cd98b9d4a
+F www/templates/Light/form_editinfo.tpl 6c55cb0f5d8f2d8857f651c6178a0bce95ab0bc5
 F www/templates/Light/form_login.tpl effcc0fe1708dce7d6196204e1fa9d3ff01d38f5
 F www/templates/Light/form_new_post.tpl 7536a5fab7c7786441862491267b022c1146895f
 F www/templates/Light/form_new_thread.tpl 9c1da9ea5b40fe7e0f881f88f31c5b04fed2f38f
 F www/templates/Light/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/Light/form_register.tpl 17e04b8fc2296c31bbf97c701fe48e46da816699
-F www/templates/Light/form_settings.tpl 400d4f8753e9b68628edd5d4e948215cb38ed8c5
+F www/templates/Light/form_settings.tpl 8182e43261b799fd13284fcd7e44e8d521dd7ebd
 F www/templates/Light/form_setup.tpl 58a7c7ebaa5d793b255c2eca2d7f76fa97ffecdb
 F www/templates/Light/form_sqlite_console.tpl bedbf751806827982becff7feb4dcb86309b2355
 F www/templates/Light/login.less c30ad6510b4ba9119fe931ebb5c92a7e9182de0a
@@ -211,7 +211,7 @@ F www/templates/Light/posts.less 3153190b358658566ffb1037f760013fefb21ae0
 F www/templates/Light/preview.tpl fb40e8c69c78b02cadf18dc82ed90131aff0a839
 F www/templates/Light/search.less 46e4a26edcf4fbd1a07837ae3eb29a36eac44604
 F www/templates/Light/search_result.tpl d13272c6953e4dcb56e51c71028b2a9b0cb12794
-F www/templates/Light/settings.less 2d398287d93223e7dd5eb5e1f6189e04e62bb8dd
+F www/templates/Light/settings.less 2e1ece218b21b3849eabd04473be36cb7a8d2384
 F www/templates/Light/skin_variables.lsi 6a12e775376afa37772da7c912296bf14188b741
 F www/templates/Light/sqlite.less da835b0d49f8e5dce7b33a88e515229ccd9540a6
 F www/templates/Light/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
@@ -270,13 +270,13 @@ F www/templates/Wasp/error_html_end.tpl f390b47728814ecd8e608dd410cb2f4b0b953020
 F www/templates/Wasp/error_html_start.tpl 17156a58fb54b7b0d52445a4f0472049469352f1
 F www/templates/Wasp/form_edit.tpl d5cb9b82c9d024bfb3bd938e65558165b8ad4d1a
 F www/templates/Wasp/form_edit_thread.tpl 493028b82db528bbedb5af9d51a95c7635a741ee
-F www/templates/Wasp/form_editinfo.tpl f1c742cc26cc7839c74b52fb00939a2cd98b9d4a
+F www/templates/Wasp/form_editinfo.tpl f20227369b7af0d46c03445d843e1a542010d7db
 F www/templates/Wasp/form_login.tpl effcc0fe1708dce7d6196204e1fa9d3ff01d38f5
 F www/templates/Wasp/form_new_post.tpl 7536a5fab7c7786441862491267b022c1146895f
 F www/templates/Wasp/form_new_thread.tpl 9c1da9ea5b40fe7e0f881f88f31c5b04fed2f38f
 F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/Wasp/form_register.tpl 17e04b8fc2296c31bbf97c701fe48e46da816699
-F www/templates/Wasp/form_settings.tpl 400d4f8753e9b68628edd5d4e948215cb38ed8c5
+F www/templates/Wasp/form_settings.tpl 8182e43261b799fd13284fcd7e44e8d521dd7ebd
 F www/templates/Wasp/form_setup.tpl 58a7c7ebaa5d793b255c2eca2d7f76fa97ffecdb
 F www/templates/Wasp/form_sqlite_console.tpl bedbf751806827982becff7feb4dcb86309b2355
 F www/templates/Wasp/login.less 81a52aaca31e749d5891d87c813a7af10511347e
@@ -295,7 +295,7 @@ F www/templates/Wasp/posts.less 21c689672b4ba708d75bcf7c09258ed59936feb0
 F www/templates/Wasp/preview.tpl fb40e8c69c78b02cadf18dc82ed90131aff0a839
 F www/templates/Wasp/search.less ea2671d36ce737c7ebe7617a98fc7f1cc4330a1f
 F www/templates/Wasp/search_result.tpl d13272c6953e4dcb56e51c71028b2a9b0cb12794
-F www/templates/Wasp/settings.less 674c5684a9d75aba6eb030b583779e37eda787f3
+F www/templates/Wasp/settings.less 691a57308e134fd3901c8760acf8b3047c060f1d
 F www/templates/Wasp/skin_variables.lsi 295507b08e189abbf37e0b2cfc8ce717341678f9
 F www/templates/Wasp/sqlite.less 5f303147b93203c15372486bd17f825dc2ae63a2
 F www/templates/Wasp/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
@@ -333,13 +333,13 @@ F www/templates/mobile/error_html_end.tpl 6b30d9c2bd22da157a2f5eb6e176c4bbe65d36
 F www/templates/mobile/error_html_start.tpl 8b3207b2b7ab58de589040f28edbb25d14b0ab66
 F www/templates/mobile/form_edit.tpl 220344b6ce534c80076cffc47d84735c32f0260b
 F www/templates/mobile/form_edit_thread.tpl 493028b82db528bbedb5af9d51a95c7635a741ee
-F www/templates/mobile/form_editinfo.tpl 8bc162547a5695f6a57a10c0986edb3058bd437f
+F www/templates/mobile/form_editinfo.tpl ed7ff34dd9fccf4e9bd11788c6ce01ae42f81077
 F www/templates/mobile/form_login.tpl effcc0fe1708dce7d6196204e1fa9d3ff01d38f5
 F www/templates/mobile/form_new_post.tpl 4cd2a10ceaa2651f87477c7bfbf19c903c801b55
 F www/templates/mobile/form_new_thread.tpl 9c1da9ea5b40fe7e0f881f88f31c5b04fed2f38f
 F www/templates/mobile/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/mobile/form_register.tpl 17e04b8fc2296c31bbf97c701fe48e46da816699
-F www/templates/mobile/form_settings.tpl a828430003b1a1fe4806b2abbb325bbb5b2c9aa2
+F www/templates/mobile/form_settings.tpl 5d293458d475cdf74c67eb2b21bca359ba9dbcef
 F www/templates/mobile/form_setup.tpl 58a7c7ebaa5d793b255c2eca2d7f76fa97ffecdb
 F www/templates/mobile/form_sqlite_console.tpl d30bcafb73e52ca1fb5fbde69a37f3a8445e597f
 F www/templates/mobile/login.less 751b02e109f8018b08832e0c4580af4495f51520
@@ -357,7 +357,7 @@ F www/templates/mobile/posts.less f06a4dcc17352de5145fe3f6adccee59097be347
 F www/templates/mobile/preview.tpl 025aabf5392bdb351d8d0b9d10adc74024c8ea45
 F www/templates/mobile/search.less b1247c46882ba9ed6f5853a2579038ea3e2c130b
 F www/templates/mobile/search_result.tpl 439d5d06fc9b2de76abc3f912b9dbd0ef9516801
-F www/templates/mobile/settings.less ff8cc0950f24d27cc508f85395210d79b4cb5ce8
+F www/templates/mobile/settings.less 313b02d9d094ffb8864be67698ae026d54d6cb1f
 F www/templates/mobile/skin_variables.lsi 35aee7d089aa0755bb31ec2513eee7062567d343
 F www/templates/mobile/sqlite.less 1069c2dddb4062f13ec1d7d5e4bccb5771ba7c09
 F www/templates/mobile/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
@@ -367,7 +367,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 4e590946b352471a1ed3ed9bdc66343aa051b1bc
 F www/templates/mobile/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/mobile/users_online.less 236f3c44e5a2c6136cea704ffc3843ee58f607ad
-P 4616153898d33db156ddf6ca74bc2fa3cbc2c70b
-R 9e991cddfcec3ba617ee7ca38405cf91
+P 8e2764820f126474e096cf6f51b33e4994873714
+R 030d4d685516d3e32846da619909b33a
 U johnfound
-Z 1e50353c70ec2b6e438d49f99b532667
+Z 8ee80b7f4f75b202a2cc4e43d8d832d4
