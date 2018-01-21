@@ -191,7 +191,7 @@ begin
         stdcall SocketBind, [STDIN], eax
         jc      .finish
 
-        stdcall SocketListen, [STDIN], 1
+        stdcall SocketListen, [STDIN], 1024
         jnc     .loop
 
 

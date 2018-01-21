@@ -1,5 +1,5 @@
-C Official\sbinary\srelease\sv1.7
-D 2018-01-10T16:09:42.080
+C Fixed\sa\sbug\sin\sthe\sunix\ssocket\slistening.\sNew\sheuristic\sin\sthe\sbot\sdetection.\sFixed\sindexes\sin\sthe\susers\sonline\stable.
+D 2018-01-21T16:30:13.228
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz cdcbfdc44ca613bf7b9c66999f40b3ece088fb69
@@ -21,14 +21,14 @@ F source/accounts.asm c0eef2568c47a45d3881684bda20cef0dca8c723
 F source/chat.asm 84e6bbfe33129fb4bbe481874b1dd7f74664882f
 F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
 F source/commands.asm 796fc744b3c7622faedfb19aa4dac6aa01a675d4
-F source/create.sql 5a68aeee8046e1190ed009e39703855fa5273008
+F source/create.sql 01464c5f8bcc65f076f2d986b451ebb316d5f68b
 F source/delete.asm 64d173cf0ee0df77a8843408b427bdb02b384bd9
 F source/edit.asm 7f9dcd521d3536126be0d81430b2e9f454a09f5a
 F source/engine.asm 758ac58f1c27e6a5b1dde76bfb7d393081b72424
 F source/engine.fpr 72be8cd1af56104cdf351329296717058e4626e8
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
-F source/fcgi.asm 68f9999f2963208696d28d118d42681332edf910
+F source/fcgi.asm 565b88eb54a0625b7ce66c60096bbad9ac9dd093
 F source/http.asm a037e7286c061f805c4854fa6938b444b99a990c
 F source/images_png.asm cb69d9eafb85f6e61c526a3dcff4c7f2c3f4ebd6
 F source/keywords.txt 8e374a274b6a178e582656652edb52e65fbebfb2
@@ -56,7 +56,7 @@ F source/threadlist.asm acd026d6bc944828c2a58ad779fe647a50db3143
 F source/threadlist.sql b552e86fa3a86cf9de51348b08c4d1bda226f5c2
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
 F source/userinfo.asm 9f02ca2b7eff6eb12ce9a0197057e9bdbb0f01a1
-F source/users_online.asm 19da8fb0923d52a6f4f2f18417800ad6c26da82e
+F source/users_online.asm a371eb48606e3c779c5c94260f439d94e0a76319
 F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/util.sql 3ca632de8753d0ec4b088d19ff389d11fb1406e9
 F source/version.asm 989e0c6d6c1b15c539128dff45986ebaeda14125
@@ -169,7 +169,7 @@ F www/templates/Light/activity12.tpl 89d4944ead68405f9371433a4281fb712b8d926b
 F www/templates/Light/activity13.tpl 42bb013fa5dd6cabcffd18a683ab02680ac7f7c5
 F www/templates/Light/activity2.tpl 56e2d424b3fa2d47dfb3e39c84dc979e02783ef4
 F www/templates/Light/activity3.tpl 151d90f8a6ac52cfd53a32d38786496bb7c12d11
-F www/templates/Light/activity4.tpl c7716e192f34f996d9f9f167c99d71ba8711e954
+F www/templates/Light/activity4.tpl 111edc995eea21dcf02231b2314bb6b4a1372eeb
 F www/templates/Light/activity5.tpl 648b55344763f0ae54fad0d8a03eebe5efe80f67
 F www/templates/Light/activity6.tpl 79b6319799e162869c14998a0ce7bb40ba0d040c
 F www/templates/Light/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
@@ -367,7 +367,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 4e590946b352471a1ed3ed9bdc66343aa051b1bc
 F www/templates/mobile/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/mobile/users_online.less 236f3c44e5a2c6136cea704ffc3843ee58f607ad
-P f3da53d0f278fd222be7cef6d824dfc7092478ee
-R 40a8238cbc896c591fbd52ddd921daad
+P 03ffdd1f822a1816f9e18108ef5b45a61e2519e1
+R 1a8f4370aa31cfb6e70af3dffc9fb1b4
 U johnfound
-Z ed610feaef2076a3148e3f76848b06ee
+Z a77cf71e9e8701cc797f1e02feacd95a

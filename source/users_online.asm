@@ -385,13 +385,16 @@ endp
 
 proc IsBot, .hClient
 begin
-        stdcall StrMatchPatternNoCase, txt "*+http*", [.hClient]
+        stdcall StrMatchPatternNoCase, txt "*http*", [.hClient]
         jc      .yes
         stdcall StrMatchPatternNoCase, txt "*bot*", [.hClient]
         jc      .yes
         stdcall StrMatchPatternNoCase, txt "*crawl*", [.hClient]
         jc      .yes
         stdcall StrMatchPatternNoCase, txt "*spider*", [.hClient]
+        jc      .yes
+        stdcall StrLen, [.hClient]
+        cmp     eax, 55                 ; CF=1 if below.
 .yes:
         return
 endp

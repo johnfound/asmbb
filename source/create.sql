@@ -55,12 +55,7 @@ CREATE TABLE UserLog (
   foreign key (userID) references Users(id) on delete cascade on update cascade
 );
 
-
-create index idxUserLogTime on UserLog(time);
-create index idxUserLogUserIP on UserLog(UserID, remoteIP);
-create index idxUserLogUserID on UserLog(UserID);
-create index idxUserLigClient on UserLog(Client);
-
+create index idxUserLogTime on UserLog(time);  -- Any other index on UserLog ruins the performance. See users_online.sql for the query.
 
 create table WaitingActivation(
   id integer primary key,
