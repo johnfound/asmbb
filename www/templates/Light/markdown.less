@@ -30,27 +30,17 @@ div.post_text p.uli {
 
 /* source code inline and blocks */
 
-div.code {
+code.block {
+  display: block;
   text-align: left;
   font-family: @FontMonospace;
-  font-size: 1em;
-  font-weight: 700;
-  border-left-style: solid;
-  border-left-width: 4px;
-  border-left-color: @clColor1FG;
-  padding-left: 0.5em;
-  margin-bottom: 0.5em;
-}
+  padding: 0.5em;
+  margin: 0.5em 0px;
+  overflow: auto;
 
-pre {
-  font-family: @FontMonospace;
-  font-size: 1em;
-  margin: 0px;
-  padding: 1em 0em 1em 0em;
+  white-space: pre;
 
-  word-break: break-all;
-  white-space: pre-wrap;       /* css-3 */
-  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  border-left: 4px solid @clColor1FG;
 }
 
 
@@ -58,16 +48,6 @@ code {
   font-family: @FontMonospace;
   font-weight: bold;
 }
-
-pre>code {
-  display: block;
-  white-space: pre;
-  font-family: @FontMonospace;
-  font-size: 1em;
-  font-style: normal;
-  overflow: auto;
-}
-
 
 
 /* Style of the text included image. */

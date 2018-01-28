@@ -43,6 +43,27 @@ begin
         cinvoke sqliteColumnInt, [.stmt2], 0
         mov     [.threadID], eax
 
+; make the title
+
+        mov     ebx, [esi+TSpecialParams.page_title]
+
+        stdcall StrCharCat, ebx, ' "'
+        cinvoke sqliteColumnText, [.stmt2], 1
+
+        stdcall StrCat, ebx, eax
+        stdcall StrCharCat, ebx, '"'
+
+        cmp     [esi+TSpecialParams.page_num], 0
+        je      .page_ok
+
+        stdcall StrCat, ebx, ", page: "
+        stdcall NumToStr, [esi+TSpecialParams.page_num], ntsDec or ntsUnsigned
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+
+.page_ok:
+        mov     [esi+TSpecialParams.page_title], ebx
+
         stdcall StrCat, edi, '<div class="thread">'
 
         stdcall StrCatTemplate, edi, "nav_thread.tpl", [.stmt2], esi

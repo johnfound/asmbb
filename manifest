@@ -1,13 +1,13 @@
-C The\srecent\sbinary\spackage.\sNo\snew\sofficial\sversion\sbecause\sneeds\smore\sfeatures.
-D 2018-01-28T19:53:47.820
+C Fixed\sstupid\soversight\s-\smissing\sbrowser/page\stitle\swhen\sreading\ssome\stheme.\sAlso\sfixed\sthe\scode\sstyles\sin\sthe\sLight\stheme.
+D 2018-01-28T22:04:04.951
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
-F install/asmbb.tar.gz e61c1d284e1c6c696dc3492888931af174006e7f
+F install/asmbb.tar.gz c20105a1838d373a2918e527e28440dafc77acc1
 F install/create_release.sh 7286d4d2777e9d15ee323d2a1db7b4a225715418 x
 F install/exclude.txt d68845d3aee98fc8ace64460f9d26ab3f2adc06d
 F install/install.txt 46093ff6d21640a09fa5f0b9b943de868fa7f1ac
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
-F install/unpack.tar.gz d67756c0148a80bfb1348c56aacb0ea002af4a17
+F install/unpack.tar.gz acf0a12a28986c608050bf14600696fb4cf06654
 F install/unpack/.htaccess efa046601aad51a87da0946b4eecadcc0d234c15
 F install/unpack/unpack.sh 4443f580fe76faffa7015e6e4b73b22f6290f4a0 x
 F source/Documents/FastCGI\sSpecification.html e2fc06a5abf1b3505c665e108ce3ad28b636095a
@@ -44,7 +44,7 @@ F source/search.asm c536663adc782a7321b6677d07bfc26eb45d186e
 F source/search.sql 34cf6eea11403e7ac709cd1588bd84c57257135f
 F source/search_cnt.sql afb4a4cdabbb356b23f18be8d0498d1fbd53001d
 F source/settings.asm 2b73e84de0c24c8a56e3090224c4baf3b92f64fe
-F source/showthread.asm 373e186f9845049e2e91961dbaa98726acbd102b
+F source/showthread.asm f36b3439e4ae2e9a424780738c11c234c3fd2d4f
 F source/showthread.sql c575ee2fcbe60d8b878d78d44c477aeb4aece163
 F source/sqlite3.asm 8e27aa526542e4c8bac6b9e741b6e0698220933f
 F source/sqlite_console.asm 1d0ca0d6369d369ffff1f511213c55d5993c7916
@@ -198,7 +198,7 @@ F www/templates/Light/form_sqlite_console.tpl bedbf751806827982becff7feb4dcb8630
 F www/templates/Light/login.less b67183a08a6b92886e4880d8efc73dff036f7168
 F www/templates/Light/main_html_end.tpl 721ac095265156f7be3549413c34ab18d434541a
 F www/templates/Light/main_html_start.tpl bbbbb97d9764a3455e743e447a1e62c7b2c8600a
-F www/templates/Light/markdown.less e6c7267863b52d8d10767dacbaa04a74b76dff64
+F www/templates/Light/markdown.less 449342663af407326a2d949e1f67bb94d856eb46
 F www/templates/Light/minimag_suffix.tpl 847d280354a3b3a9d59f16e89e32ba660b8e4eca
 F www/templates/Light/nav_list.tpl 51190784c1e056e238d398219990a6a8fee7b46d
 F www/templates/Light/nav_search.tpl 29578675e09216600fec8315144f95362a119816
@@ -282,7 +282,7 @@ F www/templates/Wasp/form_sqlite_console.tpl bedbf751806827982becff7feb4dcb86309
 F www/templates/Wasp/login.less 8fe7be185613e2be53f4bae6cde68b96a1c90100
 F www/templates/Wasp/main_html_end.tpl 721ac095265156f7be3549413c34ab18d434541a
 F www/templates/Wasp/main_html_start.tpl 77bf2fe54fe6cd73804229d5f1db71eb0fde2568
-F www/templates/Wasp/markdown.less 1adac3c4d7fbd3eb60bc40e1091259117207201b
+F www/templates/Wasp/markdown.less 5150e6f96b7ba24d860648571cbfc11992fe0a9f
 F www/templates/Wasp/minimag_suffix.tpl 847d280354a3b3a9d59f16e89e32ba660b8e4eca
 F www/templates/Wasp/nav_list.tpl 51190784c1e056e238d398219990a6a8fee7b46d
 F www/templates/Wasp/nav_search.tpl 29578675e09216600fec8315144f95362a119816
@@ -367,7 +367,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 4e590946b352471a1ed3ed9bdc66343aa051b1bc
 F www/templates/mobile/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/mobile/users_online.less 65fa975a964a73a7c63b0d0417d522cfb8b66a27
-P 29d271eab323a61b9c52f0a580178f2357ca5fc6
-R 25d7d5623895009d8315e9faeedaa461
+P 9946dedc315d2c9b2597886826a2486fe1acb674
+R 99a3a5784b7a5a5dd872499175218f9f
 U johnfound
-Z f17d1756a8d1e09532086bbdc2740ec6
+Z f0460be05d7b8a70396ec9b317e20242
