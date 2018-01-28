@@ -128,7 +128,7 @@ begin
 
         stdcall StrCat, edi, '<div class="thread">'
 
-        stdcall StrCatTemplate, edi, "nav_search", 0, esi
+        stdcall StrCatTemplate, edi, "nav_search.tpl", 0, esi
 
         cmp     [.pages], 0
         je      .search_ok
@@ -156,7 +156,7 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .finalize
 
-        stdcall StrCatTemplate, edi, "search_result", [.stmt], esi
+        stdcall StrCatTemplate, edi, "search_result.tpl", [.stmt], esi
 
         jmp     .search_loop
 
@@ -167,7 +167,7 @@ begin
         stdcall StrCat, edi, [.pages]
         stdcall StrDel, [.pages]
 
-        stdcall StrCatTemplate, edi, "nav_search", 0, esi
+        stdcall StrCatTemplate, edi, "nav_search.tpl", 0, esi
 
 .search_ok:
         stdcall StrCat, edi, '</div>'

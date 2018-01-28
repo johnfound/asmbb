@@ -41,7 +41,7 @@ begin
         stdcall LogUserActivity, esi, uaLoggingIn, 0
 
         stdcall StrCat, [esi+TSpecialParams.page_title], cLoginDialogTitle
-        stdcall StrCatTemplate, edi, "form_login", 0, esi
+        stdcall StrCatTemplate, edi, "form_login.tpl", 0, esi
 
         mov     [esp+4*regEAX], edi
         clc
@@ -310,7 +310,7 @@ begin
         stdcall LogUserActivity, esi, uaRegistering, 0
 
         stdcall StrNew
-        stdcall StrCatTemplate, eax, "form_register", 0, esi
+        stdcall StrCatTemplate, eax, "form_register.tpl", 0, esi
 
         mov     [esp+4*regEAX], eax
         clc

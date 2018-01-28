@@ -345,7 +345,7 @@ begin
         stdcall StrNew
         mov     edi, eax
 
-        stdcall StrCatTemplate, edi, txt "chat", 0, [.pSpecial]
+        stdcall StrCatTemplate, edi, txt "chat.tpl", 0, [.pSpecial]
 
         clc
         mov     [esp+4*regEAX], edi

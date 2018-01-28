@@ -239,7 +239,8 @@ begin
 
 
         lea     eax, [.timeRet]
-        stdcall GetFileIfNewer, [.filename], [.timelo], [.timehi], eax
+        lea     ecx, [.special]
+        stdcall GetFileIfNewer, [.filename], [.timelo], [.timehi], eax, [.mime], ecx
         jc      .error404_no_list_free
 
         DebugMsg "File exists."
@@ -269,8 +270,17 @@ begin
         stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], FALSE
         jc      .error500
 
+        cmp     [.mime], mimeCSS
+        jne     .send_binary
+
+        stdcall StrPtr, esi
+        stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], TRUE
+        stdcall StrDel, esi
+        jmp     .final_clean
+
+.send_binary:
         stdcall FCGI_output, [.hSocket], [.requestID], esi, ecx, TRUE
-        jc      .error500
+        jc      .error500  ; ?????????
 
         stdcall FreeMem, esi
 
@@ -331,12 +341,12 @@ begin
         stdcall StrCat, edi, <"Content-type: text/html; charset=utf-8", 13, 10, 13, 10>
 
         lea     edx, [.special]
-        stdcall StrCatTemplate, edi, "main_html_start", 0, edx
+        stdcall StrCatTemplate, edi, "main_html_start.tpl", 0, edx
 
         stdcall StrCat, edi, eax
         stdcall StrDel, eax
 
-        stdcall StrCatTemplate, edi, "main_html_end", 0, edx
+        stdcall StrCatTemplate, edi, "main_html_end.tpl", 0, edx
 
 
 .send_simple_result:    ; it is a result containing only a string data in EDI
@@ -1083,12 +1093,12 @@ begin
         stdcall StrCharCat, [.hString], $0a0d
         stdcall StrCat, [.hString], <"Content-type: text/html", 13, 10, 13, 10>
 
-        stdcall StrCatTemplate, [.hString], "error_html_start", 0, [.special]
+        stdcall StrCatTemplate, [.hString], "error_html_start.tpl", 0, [.special]
         stdcall StrCat, [.hString], txt "<h1>"
         stdcall StrCat, [.hString], [.code]
         stdcall StrCat, [.hString], txt "</h1>"
 
-        stdcall StrCatTemplate, [.hString], "error_html_end", 0, [.special]
+        stdcall StrCatTemplate, [.hString], "error_html_end.tpl", 0, [.special]
         return
 endp
 
@@ -1263,14 +1273,14 @@ begin
         stdcall StrNew
         mov     [.subj], eax
 
-        stdcall StrCatTemplate, eax, "activation_email_subject", [.stmt], 0
+        stdcall StrCatTemplate, eax, "activation_email_subject.tpl", [.stmt], 0
         jc      .finish
 
 
         stdcall StrNew
         mov     [.body], eax
 
-        stdcall StrCatTemplate, eax, "activation_email_text", [.stmt], 0
+        stdcall StrCatTemplate, eax, "activation_email_text.tpl", [.stmt], 0
         jc      .finish
 
 
@@ -1627,7 +1637,7 @@ endp
 
 
 
-proc GetFileIfNewer, .filename, .time_lo, .time_hi, .ptrRetModified
+proc GetFileIfNewer, .filename, .time_lo, .time_hi, .ptrRetModified, .mime, .pSpecial
 
 .file_info TFileInfo
 
@@ -1666,13 +1676,22 @@ begin
         stdcall FileRead, ebx, esi, ecx
 
         cmp     eax, ecx
-        je      .read_ok
+        je      .read_file_ok
 
 ; read is not ok - return CF = 1
         stdcall FreeMem, esi
         stc
         jmp     .finish_close
 
+
+.read_file_ok:
+        cmp     [.mime], mimeCSS
+        jne     .read_ok
+
+        stdcall __DoProcessTemplate2, esi, 0, [.pSpecial], FALSE
+        stdcall FreeMem, esi
+        mov     esi, eax
+        jmp     .read_ok
 
 .finish_older:
 

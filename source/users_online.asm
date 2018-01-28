@@ -427,6 +427,7 @@ begin
 
         cinvoke sqliteColumnText, [.sqlStatement], 1
         stdcall StrCat, ebx, eax
+        stdcall StrCat, ebx, txt ".tpl"
 
         cinvoke sqliteColumnText, [.sqlStatement], 2
         cinvoke sqliteBindText, [.stmt], 1, eax, -1, SQLITE_TRANSIENT

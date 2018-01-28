@@ -3,8 +3,8 @@ LIMIT_POST_CAPTION = 512
 LIMIT_TAG_DESCRIPTION = 1024
 
 
-cNewPostForm   text "form_new_post"
-cNewThreadForm text "form_new_thread"
+cNewPostForm   text "form_new_post.tpl"
+cNewThreadForm text "form_new_thread.tpl"
 
 sqlSelectConst text "select ? as slug, ? as caption, ? as source, ? as ticket, ? as tags"
 
@@ -265,7 +265,7 @@ begin
         cmp     [.fPreview], 0
         je      .preview_ok
 
-        stdcall StrCatTemplate, edi, "preview", [.stmt], esi
+        stdcall StrCatTemplate, edi, "preview.tpl", [.stmt], esi
 
 .preview_ok:
 

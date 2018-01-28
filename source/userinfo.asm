@@ -61,7 +61,7 @@ begin
 
         stdcall StrCat, edi, '<div class="user_profile">'
 
-        stdcall StrCatTemplate, edi, "userinfo", [.stmt], esi
+        stdcall StrCatTemplate, edi, "userinfo.tpl", [.stmt], esi
 
         test    [esi+TSpecialParams.userStatus], permAdmin
         jnz     .put_edit_form
@@ -73,7 +73,7 @@ begin
 
 .put_edit_form:
 
-        stdcall StrCatTemplate, edi, "form_editinfo", [.stmt], esi
+        stdcall StrCatTemplate, edi, "form_editinfo.tpl", [.stmt], esi
 
 .edit_form_ok:
 
@@ -231,7 +231,7 @@ begin
         push    eax
 
         lea     ecx, [.timeRetLo]
-        stdcall GetFileIfNewer, eax, [.timeRetLo], [.timeRetHi], ecx
+        stdcall GetFileIfNewer, eax, [.timeRetLo], [.timeRetHi], ecx, mimePNG, 0
         stdcall StrDel ; from the stack
         jc      .error_read
 

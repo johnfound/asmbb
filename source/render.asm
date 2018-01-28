@@ -41,14 +41,13 @@ begin
         jz      .fallback
 
         stdcall StrDup, [edi+TSpecialParams.userSkin]
-        stdcall StrCat, eax, [.strTemplateID]
-        stdcall StrCharCat, eax, ".tpl"
-        retn
+        jmp     .add_template
 
 .fallback:
         stdcall GetDefaultSkin, edi
+
+.add_template:
         stdcall StrCat, eax, [.strTemplateID]
-        stdcall StrCharCat, eax, ".tpl"
         retn
 endp
 
@@ -407,7 +406,33 @@ end if
         stdcall StrNew
         mov     ebx, eax
 
+        stdcall GetParam, 'embeded_css', gpInteger
+        jc      .external_css
+
+        test    eax, eax
+        jz      .external_css
+
+;.embeded_css:
+        stdcall StrCat, ebx, '<style>'
+
 .loop_styles:
+        cmp     ecx, [edx+TArray.count]
+        jae     .end_styles2
+
+        stdcall StrCatTemplate, ebx, [edx+TArray.array+4*ecx], NULL, esi
+
+.next_css:
+        inc     ecx
+        jmp     .loop_styles
+
+.end_styles2:
+
+        stdcall StrCat, ebx, '</style>'
+        jmp     .end_styles
+
+
+.external_css:
+
         cmp     ecx, [edx+TArray.count]
         jae     .end_styles
 
@@ -417,7 +442,7 @@ end if
         stdcall StrCat, ebx, <txt '" type="text/css">', 13, 10>
 
         inc     ecx
-        jmp     .loop_styles
+        jmp     .external_css
 
 .end_styles:
         mov     eax, ebx
@@ -1369,7 +1394,7 @@ proc FormatPostText, .hText, .pSpecial
 .result TMarkdownResults
 
 begin
-        stdcall StrCatTemplate, [.hText], "minimag_suffix", 0, 0
+        stdcall StrCatTemplate, [.hText], "minimag_suffix.tpl", 0, 0
         lea     eax, [.result]
         stdcall TranslateMarkdown2, [.hText], FixMiniMagLink, 0, eax, 0
 

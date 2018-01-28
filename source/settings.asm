@@ -251,7 +251,7 @@ begin
         stdcall StrNew
         mov     [esp+4*regEAX], eax
 
-        stdcall StrCatTemplate, eax, "form_settings", [.stmt], esi
+        stdcall StrCatTemplate, eax, "form_settings.tpl", [.stmt], esi
 
         cinvoke sqliteFinalize, [.stmt]
 
@@ -680,7 +680,7 @@ begin
         stdcall StrNew
         mov     [esp+4*regEAX], eax
 
-        stdcall StrCatTemplate, eax, "form_setup", [.stmt], esi
+        stdcall StrCatTemplate, eax, "form_setup.tpl", [.stmt], esi
         cinvoke sqliteFinalize, [.stmt]
         stdcall StrDel, [.message]
 

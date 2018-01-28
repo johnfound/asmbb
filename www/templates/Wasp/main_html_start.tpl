@@ -1,3 +1,4 @@
+[css:common.css]
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,8 +7,6 @@
   <meta name="description" content="[special:description]">
   <meta name="keywords" content="[special:keywords]">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="stylesheet" href="/[special:skin]common.css" type="text/css">
   [special:allstyles]
   <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">

@@ -45,7 +45,7 @@ begin
 
         stdcall StrCat, edi, '<div class="thread">'
 
-        stdcall StrCatTemplate, edi, "nav_thread", [.stmt2], esi
+        stdcall StrCatTemplate, edi, "nav_thread.tpl", [.stmt2], esi
 
 ; pages links
 
@@ -97,7 +97,7 @@ begin
 
         inc     [.cnt]
 
-        stdcall StrCatTemplate, edi, "post_view", [.stmt], esi
+        stdcall StrCatTemplate, edi, "post_view.tpl", [.stmt], esi
 
         cinvoke sqliteColumnInt, [.stmt], 0
         stdcall PostIncrementReadCount, eax
@@ -117,7 +117,7 @@ begin
         jbe     .back_navigation_ok
 
         stdcall StrCat, edi, [.list]
-        stdcall StrCatTemplate, edi, "nav_thread", [.stmt2], esi
+        stdcall StrCatTemplate, edi, "nav_thread.tpl", [.stmt2], esi
 
 .back_navigation_ok:
 

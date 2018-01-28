@@ -129,9 +129,9 @@ begin
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
 
-        stdcall StrCatTemplate, edi, "form_edit", [.stmt], esi
+        stdcall StrCatTemplate, edi, "form_edit.tpl", [.stmt], esi
 
-        stdcall StrCatTemplate, edi, "preview", [.stmt], esi
+        stdcall StrCatTemplate, edi, "preview.tpl", [.stmt], esi
 
         cinvoke sqliteFinalize, [.stmt]
 
@@ -394,7 +394,7 @@ begin
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
 
-        stdcall StrCatTemplate, edi, "form_edit_thread", [.stmt], esi
+        stdcall StrCatTemplate, edi, "form_edit_thread.tpl", [.stmt], esi
         cinvoke sqliteFinalize, [.stmt]
 
         clc

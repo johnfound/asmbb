@@ -52,7 +52,7 @@ begin
 
 ; navigation tool bar
 
-        stdcall StrCatTemplate, edi, "nav_list", 0, esi
+        stdcall StrCatTemplate, edi, "nav_list.tpl", 0, esi
 
 
 ; links to the pages.
@@ -106,7 +106,7 @@ begin
 
         inc     ebx                     ; post count
 
-        stdcall StrCatTemplate, edi, "thread_info", [.stmt], esi
+        stdcall StrCatTemplate, edi, "thread_info.tpl", [.stmt], esi
 
         jmp     .loop
 
@@ -116,7 +116,7 @@ begin
         jbe     .back_navigation_ok
 
         stdcall StrCat, edi, [.list]
-        stdcall StrCatTemplate, edi, "nav_list", 0, esi
+        stdcall StrCatTemplate, edi, "nav_list.tpl", 0, esi
 
 .back_navigation_ok:
         stdcall StrCat, edi, <txt "</div>", 13, 10>   ; div.threads_list

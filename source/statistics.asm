@@ -19,7 +19,7 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .end_loop
 
-        stdcall StrCatTemplate, edi, "statistics", [.stmt], [.pSpecialData]
+        stdcall StrCatTemplate, edi, "statistics.tpl", [.stmt], [.pSpecialData]
 
 .end_loop:
         cinvoke sqliteFinalize, [.stmt]
