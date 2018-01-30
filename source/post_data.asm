@@ -59,10 +59,27 @@ begin
         stdcall ValueByName, [.pCGIParams], 'CONTENT_TYPE'
         jc      .bad_request
 
-        stdcall StrMatchPatternNoCase, 'application/x-www-form-urlencoded*', eax
+        mov     ebx, eax
+
+if defined options.DebugMode & options.DebugMode
+        pushad
+        OutputValue "Content-Type string handle:", ebx, 16, 8
+        stdcall StrPtr, ebx
+
+        OutputValue "Content-type pointer: ", eax, 16, 8
+        OutputValue "Content-type length:", [eax+string.len], 10, -1
+        Output eax
+        DebugMsg
+        popad
+end if
+
+        test    ebx, ebx
+        jz      .bad_request
+
+        stdcall StrMatchPatternNoCase, 'application/x-www-form-urlencoded*', ebx
         jc      .url_encoded_post
 
-        stdcall GetQueryItem, eax, 'multipart/form-data; boundary=', 0
+        stdcall GetQueryItem, ebx, 'multipart/form-data; boundary=', 0
         test    eax, eax
         jz      .bad_request
 

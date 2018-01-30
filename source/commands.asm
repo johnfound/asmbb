@@ -226,16 +226,16 @@ begin
 
 .get_file:
 
-        if defined options.DebugMode & options.DebugMode
-
-           Message "File request: "
-
-           stdcall StrPtr, [.filename]
-           Output  eax
-
-           DebugMsg
-
-        end if
+;        if defined options.DebugMode & options.DebugMode
+;
+;           Message "File request: "
+;
+;           stdcall StrPtr, [.filename]
+;           Output  eax
+;
+;           DebugMsg
+;
+;        end if
 
 
         lea     eax, [.timeRet]
@@ -243,12 +243,12 @@ begin
         stdcall GetFileIfNewer, [.filename], [.timelo], [.timehi], eax, [.mime], ecx
         jc      .error404_no_list_free
 
-        DebugMsg "File exists."
+;        DebugMsg "File exists."
 
         test    eax, eax
         jz      .send_304_not_modified
 
-        DebugMsg "File is to be returned."
+;        DebugMsg "File is to be returned."
 
         mov     esi, eax
 

@@ -1,5 +1,5 @@
-C Fixed\sstupid\soversight\s-\smissing\sbrowser/page\stitle\swhen\sreading\ssome\stheme.\sAlso\sfixed\sthe\scode\sstyles\sin\sthe\sLight\stheme.
-D 2018-01-28T22:04:04.951
+C An\sattempt\sto\sfix\sa\sbug,\scausing\scrash\son\ssome\sinvalud\sfuzzing\sPOST\srequests.\sSeparated\sOnException\sand\sOnForcedTerminate\shandlers.\nSome\sdebug\smessages\scommented\sout.
+D 2018-01-30T19:29:21.992
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c20105a1838d373a2918e527e28440dafc77acc1
@@ -20,15 +20,15 @@ F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm 772274895c362c40f1cdc403f48b93d5e8a907d7
 F source/chat.asm f7c45a3638d67d911f0d2e3f87f1f73a395c352c
 F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
-F source/commands.asm 87550d46bacc8b1002d8e92032277e789b83decb
+F source/commands.asm d7d0ce512d7469f4d6651da3773f1106bfd788de
 F source/create.sql 01464c5f8bcc65f076f2d986b451ebb316d5f68b
 F source/delete.asm e65e0448de73cfad8fa24a9ba4e5eac3b288629b
 F source/edit.asm 35b9e05e39675a2ca9b4dac612d3fd4b0cb875d2
-F source/engine.asm a3c633f5a1323a72f1177c82760e4ee2ca3a52ce
+F source/engine.asm b3d5bad068076b58ea3691a94968927ec93c4e3c
 F source/engine.fpr 72be8cd1af56104cdf351329296717058e4626e8
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
-F source/fcgi.asm 565b88eb54a0625b7ce66c60096bbad9ac9dd093
+F source/fcgi.asm d6f2d84e1a33ce7edb6c5521bd50b7a69ba62361
 F source/http.asm a037e7286c061f805c4854fa6938b444b99a990c
 F source/images_png.asm cb69d9eafb85f6e61c526a3dcff4c7f2c3f4ebd6
 F source/keywords.txt 8e374a274b6a178e582656652edb52e65fbebfb2
@@ -36,7 +36,7 @@ F source/messages.asm 1cc42852665f2b44a574e37c0fde6624b4dab784
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
 F source/post.asm f6111932d588687ed635406d3c097f4770fbfc1f
-F source/post_data.asm 42ff743822eb1aacb01730e4b7511cc5967900e4
+F source/post_data.asm 3ca626cfd4fe38680bfe5a61115edfc7f14bd70d
 F source/postdebug.asm 13ab4ebf2fc7b35d7fa36853b533236860b641f7
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/render.asm 4346459f9a9b88d081e80c6a6cac1f7a8478af3a
@@ -367,7 +367,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 4e590946b352471a1ed3ed9bdc66343aa051b1bc
 F www/templates/mobile/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/mobile/users_online.less 65fa975a964a73a7c63b0d0417d522cfb8b66a27
-P 9946dedc315d2c9b2597886826a2486fe1acb674
-R 99a3a5784b7a5a5dd872499175218f9f
+P b57b206bcafd4b7a857955c3a9b2d0172bdda1e7
+R 831598177f63d19bbad47818c11f2467
 U johnfound
-Z f0460be05d7b8a70396ec9b317e20242
+Z 93c47c4bc35d6a2ea97b7a1ad1631aa4

@@ -21,7 +21,7 @@ LINUX_INTERPRETER equ './ld-musl-i386.so'
 options.ShowSkipped = 0
 options.ShowSizes = 0
 
-options.DebugMode = 0
+options.DebugMode = 1
 options.AlignCode = 0
 options.ShowImported = 0
 
@@ -101,7 +101,7 @@ start:
           mov   [sqliteFinalize], ecx
         end if
 
-        stdcall SetSegmentationFaultHandler, OnForcedTerminate
+        stdcall SetSegmentationFaultHandler, OnException
 
         stdcall SetForcedTerminateHandler, OnForcedTerminate
 
@@ -135,10 +135,12 @@ start:
 
         stdcall Listen
 
-
 ; close the database
 
+        xor     eax, eax
+
 .terminate:
+        push    eax
 
         cmp     [fLogEvents], 0
         je      .log_script_end_ok
@@ -171,7 +173,7 @@ start:
 
 .finish:
         FinalizeAll
-        stdcall TerminateAll, 0
+        stdcall TerminateAll ; from the stack
 
 
 
@@ -186,16 +188,39 @@ begin
         stdcall Sleep, 100
 
         cmp     [fOwnSocket], 0
-        je      start.terminate
+        je      .end_error
 
         stdcall SocketClose, [STDIN]
         stdcall FileDelete, pathMySocket
 
+.end_error:
+        xor     eax, eax
         jmp     start.terminate         ; the stack is not important here!
 endp
 
 
 
+proc OnException as procForcedTerminateHandler
+begin
+
+        DebugMsg "OnException"
+
+        lock inc [fChatTerminate]
+        stdcall SignalNewMessage        ; should close the connections!
+
+        stdcall Sleep, 100
+
+        cmp     [fOwnSocket], 0
+        je      .end_error
+
+        stdcall SocketClose, [STDIN]
+        stdcall FileDelete, pathMySocket
+
+.end_error:
+        xor     eax, eax
+        dec     eax
+        jmp     start.terminate         ; the stack is not important here!
+endp
 
 
 

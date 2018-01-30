@@ -245,7 +245,7 @@ begin
         cmp     [fLogEvents], 0
         je      .finish
 
-        DebugMsg "Event will be logged!"
+;        DebugMsg "Event will be logged!"
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLogEvent, sqlLogEvent.length, eax, 0
@@ -597,13 +597,13 @@ begin
         test    [.requestFlags], FCGI_KEEP_CONN
         jz      .finish
 
-        DebugMsg "Keep connection"
+;        DebugMsg "Keep connection"
 
         jmp     .main_loop
 
 
 .finish:
-        DebugMsg "Don't keep connection"
+;        DebugMsg "Don't keep connection"
 
         stdcall FreeMem, esi
         call    .FreeAllocations
