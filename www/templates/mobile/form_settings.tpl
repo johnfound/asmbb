@@ -5,6 +5,7 @@
 <form class="settings" method="post" action="/!settings">
   <h1>Forum engine settings</h1>
   <label>Forum title:</label><input type="text" value="[forum_title]" name="forum_title" class="settings" maxlength="512">
+  <label>Forum header:</label><input type="text" value="[forum_header]" name="forum_header" class="settings" size="30" maxlength="512"><br>
   <label>Description:</label><input type="text" value="[description]" name="description" class="settings" maxlength="256">
   <label>Keywords:</label><input type="text" value="[keywords]" name="keywords" class="settings" maxlength="256">
   <br>

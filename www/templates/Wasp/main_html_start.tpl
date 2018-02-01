@@ -33,8 +33,8 @@
 
 <body>
   <div class="header">
-    <h1>AsmBB demo</h1>
-    <div class="login_interface">
+    <h1>[special:header]</h1>
+    <div>
       [case:[special:userid]|<a href="/!login/">Login</a><br><a href="/!register/">Register</a>|
       <a href="/!logout">Logout ( [special:username] )</a><br><a href="/!userinfo/[special:username]">User profile</a>]
     </div>

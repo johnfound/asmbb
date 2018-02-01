@@ -6,8 +6,9 @@ div.new_editor {
   max-width: 1280px;
   clear: both;
   margin: 8px auto;
+
   p{
-    color: white;
+    color: @clColor1FG;
     font-weight: bold;
     margin: 0px 0px 4px 0px;
   }
@@ -45,8 +46,10 @@ textarea.editor {
   overflow: auto;
   resize: vertical;
 
-  font-family: "Liberation Mono", "Courier New", monospaced;
+  font-family: @FontMonospace;
   background-color: @clEditorBG;
+  color: @clEditorFG;
+  border: @borderEdit;
 }
 
 div.panel {
@@ -65,6 +68,7 @@ div.panel {
 
   input:active, input:focus, input:hover {
     background-color: @clButtonActiveBG;
+    color: @clButtonActiveFG;
   }
 }
 

@@ -1,1 +1,0 @@
-Reading thread list for [case:[Param]|the root of the forum| <a class="taglink" style="font-weight: bold;" href="/[Param]/">[Param]</a> tag].

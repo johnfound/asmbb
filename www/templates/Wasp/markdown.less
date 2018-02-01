@@ -44,7 +44,7 @@ code.block {
 }
 
 code {
-  font-family: 'Source Code Pro', monospace;
+  font-family: @FontMonospace;
   font-weight: bold;
 }
 
@@ -91,44 +91,41 @@ img.txt2 {
 
 /* article tables */
 table.txt {
-   border-right-width: 2px;
-   border-bottom-width: 2px;
-   border-style: solid;
-   border-color: #404040;
-   margin: 0.2em;
-   background-color: white;
-   border-collapse: collapse;
+  border-right-width: 2px;
+  border-bottom-width: 2px;
+  border-style: solid;
+  border-color: @clSeparator;
+  margin: 0.2em;
+  background-color: white;
+  border-collapse: collapse;
+
+  td {
+    font-size: 1em;
+    border-left-width: 2px;
+    border-top-width: 2px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-style: solid;
+    border-color: @clSeparator;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
+    margin: 0px;
+  }
 }
-
-
-/* style of the article table cell */
-table.txt td {
-   font-size: 1em;
-   border-left-width: 2px;
-   border-top-width: 2px;
-   border-right-width: 0px;
-   border-bottom-width: 0px;
-   border-style: solid;
-   border-color: #404040;
-   padding-left: 0.2em;
-   padding-right: 0.2em;
-   padding-top: 0.1em;
-   padding-bottom: 0.1em;
-   margin: 0px;
-}
-
 
 
 /* block quotes */
 
 div.bq {
-  border: 2px solid #808080;
+  border: @borderQuote;
 
   box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.2);
   padding: 0em 0.7em 0.1em 1em;
   margin:  1em;
 
-  background-color: #f8f8f8;
+  background-color: @clArticleBG;
   clear: both;
 }
 
@@ -138,11 +135,11 @@ h1.bq
   margin-top: -1.2em;
   padding: 0.2em 0.3em 0.2em 0.3em;
 
-  border: 2px solid #808080;
+  border: @borderQuote;
 
   box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.2);
-  background: white;
-  color: #808080;
+  background: @clArticleBG;
+  color: @clQuoteTitle;
 
   font-size: 1em;
   font-weight: normal;
@@ -152,8 +149,4 @@ h1.bq
 
   max-width: 150px;
   overflow: hidden;
-}
-
-div.right div.bq, div.right h1.bq {
-  background-color: #303030;
 }

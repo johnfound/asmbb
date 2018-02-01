@@ -2,7 +2,7 @@
 
 body {
   font-size: 16px;
-  font-family: Verdana, sans-serif;
+  font-family: @FontMain;
   background-color: @clBodyBG;
   color: @clBodyFG;
 
@@ -33,18 +33,27 @@ div.header {
   width: 95%;
   max-width: 1280px;
   margin: 0px auto 0px auto;
-  background-color: @clColor1;
-  background-image: url("/[special:skin]_images/yellow_back.png");
-  background-position: -180px 0%;
-  background-size: cover;
+  background: @HeaderBackground;
   overflow: auto;
-}
+  padding: @paddingHeader;
 
-div.header h1 {
-  font-size: 36px;
-  margin: 8px auto 8px 16px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  h1 {
+    font-size: 36px;
+    margin: 0px auto 0px 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: @clHeader;
+  }
+
+  div {
+    text-align: right;
+    a {
+      font-weight: bold;
+      text-align: right;
+      display: inline;
+      line-height: 1.5em;
+    }
+  }
 }
 
 
@@ -64,14 +73,16 @@ form#search_form {
   padding: 4px 36px 4px 8px;
   border: none;
   background-color: @clDarkBG;
-  color: white;
+  border: @borderEdit;
+  color: @clDarkFG;
   display:block;
 }
 
 
 .search_line:focus {
-  background-color: white;
-  color: black;
+  background-color: @clEditorBG;
+  color: @clEditorFG;
+  border: @borderEdit;
 }
 
 
@@ -81,15 +92,16 @@ form#search_form {
   top: 4px;
   border-style: none;
   vertical-align: top;
-  background-color: #f06060;
-  color: white;
+  background-color: @clButtonBG;
+  color: @clButtonFG;
   width: 24px;
   height: 24px;
   text-align: center;
 }
 
 .icon_btn:hover  {
-  background-color: #ff7b81;
+  background-color: @clButtonActiveBG;
+  color: @clButtonActiveFG;
 }
 
 .search_icon {
@@ -97,26 +109,28 @@ form#search_form {
   background-position: center;
   background-size: 24px 24px;
   background-repeat: no-repeat;
+  border-radius: @borderNavRad;
 }
 
 /* Footer styles */
 
 div.footer {
   background-color: @clDarkBG;
-  color: white;
+  color: @clDarkFG;
   font-size: 90%;
   width: 95%;
   max-width: 1280px;
   margin: auto;
   margin-top: 8px;
-  padding: 8px;
   line-height: 1em;
+  padding: @paddingFooter;
+
   p {
     margin: 4px 0px 0px 0px;
   }
   a {
     font-weight: bold;
-    color: @clColor1;
+    color: @clColor1FG;
   }
 }
 
@@ -135,30 +149,40 @@ div.tags {
   width: 95%;
   max-width: 1280px;
   margin: 8px auto;
-  padding: 4px;
+  padding: @paddingTags;
 
   background-color: @clDarkBG;
   font-size: 28px;
   font-weight: normal;
-  word-wrap: break-all;
+  word-wrap: break-word;
 
   line-height: 80%;
+  border-bottom: @borderEdit;
 }
 
 a.taglink {
-  padding: 4px;
-  color: white;
+  padding: @paddingOneTag;
+  margin: @marginOneTag;
+  color: @clDarkFG;
   display:inline-block;
-  max-width: 150px;
+  max-width: 20%;
+  min-width: 16px;
   overflow: hidden;
   text-overflow: ellipsis;
   vertical-align: middle;
+  border-radius: @borderRadTags;
+  border: @borderTags;
+  text-decoration: none;
+  text-align: center;
 }
 
 
 a.current_tag {
-  background-color: @clColor1;
-  color: black;
+  background-color: @clCurrentTagBG;
+  color: @clCurrentTagFG;
+  border: @borderTags;
+  border-radius: @borderRadTags;
+  text-decoration: none;
 }
 
 .tagicon {
@@ -180,21 +204,6 @@ a.current_tag {
 .not_current {
   background-image: url("/[special:skin]_images/posts_gray.svg");
 }
-
-
-/* login/logout info on the pages */
-
-div.login_interface {
-  margin-right: 16px;
-  text-align: right;
-
-  a {
-    text-align: right;
-    display: inline;
-    line-height: 1.5em;
-  }
-}
-
 
 /* messages screen */
 

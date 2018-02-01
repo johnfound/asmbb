@@ -42,31 +42,28 @@ input.username, input.email, input.password {
     font-size: 16px;
     padding: 0 20px 0 50px;
     outline: none;
-    border: none;
+    border: @borderEdit;
 
-    background-color: @clEditorBG;
+    background: @bgEditor;
     color: @clEditorFG;
-    background-position: 12px -10px;
-    background-repeat: no-repeat;
-    background-size: 24px 120px;
 }
 
 
 
 input.username {
-    background-image: url('/[special:skin]_images/user.png');
+    background-image: url('/[special:skin]_images/user.png') !important;
 }
 
 input.email {
-    background-image: url('/[special:skin]_images/email.png');
+    background-image: url('/[special:skin]_images/email.png') !important;
 }
 
 input.password {
-    background-image: url('/[special:skin]_images/pass.png');
+    background-image: url('/[special:skin]_images/pass.png') !important;
 }
 
 input.username:focus, input.email:focus, input.password:focus {
-    background-position: 12px -70px;
+    background: @bgEditorFocus;
 }
 
 input.submit {
@@ -87,4 +84,5 @@ input.submit {
 
 input.submit:hover {
     background: @clButtonActiveBG;
+    color: @clButtonActiveFG;
 }

@@ -30,6 +30,7 @@ struct TSpecialParams
 ; forum global variables.
 
   .page_title      dd ?
+  .page_header     dd ?
   .description     dd ?
   .keywords        dd ?
   .page_length     dd ?
@@ -105,6 +106,14 @@ begin
 
 .title_ok:
         mov     [.special.page_title], eax
+
+        stdcall GetParam, "forum_header", gpString
+        jnc     .header_ok
+
+        stdcall StrDupMem, "AsmBB demo"
+
+.header_ok:
+        mov     [.special.page_header], eax
 
         stdcall GetParam, "desription", gpString
         jnc     .description_ok
@@ -196,6 +205,8 @@ begin
         jmp     .get_file_if_newer
 
 .check_file_type:
+        lea     eax, [.special]
+        stdcall GetLoggedUser, eax
 
         stdcall StrExtractExt, [.filename]
         jc      .analize_uri
@@ -371,6 +382,7 @@ begin
         stdcall StrDel, [.special.dir]
         stdcall StrDel, [.special.thread]
         stdcall StrDel, [.special.page_title]
+        stdcall StrDel, [.special.page_header]
         stdcall StrDel, [.special.description]
         stdcall StrDel, [.special.keywords]
         stdcall ListFree, [.special.pStyles], StrDel
@@ -396,9 +408,6 @@ begin
 
         stdcall StrSplitList, [.uri], '/', FALSE        ; split the URI in order to analize it better.
         mov     esi, eax
-
-        lea     eax, [.special]
-        stdcall GetLoggedUser, eax
 
         mov     ecx, CreateAdminAccount
         cmp     [.special.setupmode], 0

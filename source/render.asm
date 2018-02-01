@@ -255,6 +255,9 @@ begin
         stdcall StrCompNoCase, edi, "title"
         jc      .get_title
 
+        stdcall StrCompNoCase, edi, "header"
+        jc      .get_header
+
         stdcall StrCompNoCase, edi, "allstyles"
         jc      .get_all_styles
 
@@ -387,6 +390,12 @@ end if
         mov     eax, [esi+TSpecialParams.page_title]
         jmp     .return_encoded
 
+
+.get_header:
+
+        mov     eax, [esi+TSpecialParams.page_header]
+        jmp     .return_encoded
+
 .get_description:
 
         mov     eax, [esi+TSpecialParams.description]
@@ -439,6 +448,8 @@ end if
         stdcall StrCat, ebx, '<link rel="stylesheet" href="/'
         stdcall StrCat, ebx, [esi+TSpecialParams.userSkin]
         stdcall StrCat, ebx, [edx+TArray.array+4*ecx]
+        stdcall StrCat, ebx, '?skin='
+        stdcall StrCat, ebx, [esi+TSpecialParams.userSkin]
         stdcall StrCat, ebx, <txt '" type="text/css">', 13, 10>
 
         inc     ecx

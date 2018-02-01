@@ -21,6 +21,7 @@ div.chat {
   padding: 8px;
   flex-grow: 8;
   flex-shrink: 8;
+  border: @borderEdit;
 
   p {
     margin: 4px 0px;
@@ -33,7 +34,7 @@ div.chat {
   }
 
   span.user {
-    color: @clColor1;
+    color: @clColor1FG;
     font-size: 100%;
     font-weight: bold;
     font-size: 100%;
@@ -65,6 +66,7 @@ div.chat {
   flex-grow: 1;
   flex-shrink: 0;
   max-width: 30%;
+  border: @borderEdit;
 
   p {
     margin: 4px 0px;
@@ -75,7 +77,7 @@ div.chat {
   }
 
   p.user {
-    color: @clColor1;
+    color: @clColor1FG;
   }
 
   p.fake_user {
@@ -106,7 +108,7 @@ div.flex {
 
   input {
     height: 32px;
-    border: none;
+    border: @borderEdit;
     background-color: @clDarkBG;
     color: @clDarkFG;
     display:block;

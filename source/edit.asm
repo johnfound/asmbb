@@ -1,8 +1,9 @@
 
 
 
-sqlReadPost    text "select P.id, T.caption, P.content as source, ?2 as Ticket from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
-sqlEditedPost  text "select P.id, T.caption, ?3 as source, ?2 as Ticket from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
+sqlReadPost    text "select P.id, T.caption, P.content as source, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
+sqlEditedPost  text "select P.id, T.caption, ?3 as source, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
+
 sqlSavePost    text "update Posts set content = ?1, rendered = ?2, postTime = strftime('%s','now') where id = ?3"
 sqlGetPostUser text "select userID, threadID from Posts where id = ?"
 
@@ -109,6 +110,7 @@ begin
         cinvoke sqlitePrepare_v2, [hMainDatabase], ecx, -1, eax, 0
 
         cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.page_num]
+        cinvoke sqliteBindInt, [.stmt], 4, [.userID]
 
         stdcall StrPtr, [.ticket]
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC

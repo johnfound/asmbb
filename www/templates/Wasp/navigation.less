@@ -14,6 +14,7 @@ a.ui, a.uir {
   background-color: @clButtonBG !important;
   color: @clButtonFG !important;
   text-decoration: none !important;
+  border-radius: @borderNavRad;
 }
 
 a.ui {
@@ -24,12 +25,12 @@ a.ui {
 a.uir {
   float: right !important;
   margin: 0px 0px 0px 8px !important;
-
 }
 
 a.ui:hover, a.ui:active, a.uir:hover, a.uir:active {
   background-color: @clButtonActiveBG !important;
   color: @clButtonActiveFG !important;
+  border-radius: @borderNavRad;
 }
 
 
@@ -51,9 +52,10 @@ a.page_link {
 
 span.current_page {
   background-color: @clButtonBG;
-  padding: 4px;
+  color: @clButtonFG;
+  padding: @paddingNav;
   text-align: center;
   display:inline-block;
   min-width: 32px;
-  color: @clButtonFG;
+  border-radius: @borderNavRad;
 }

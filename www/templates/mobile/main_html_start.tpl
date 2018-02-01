@@ -34,7 +34,7 @@
 
 <body>
   <div class="header">
-    <h1>AsmBB&nbsp;demo</h1>
+    <h1>[special:header]</h1>
     <span class="spacer"></span>
     [case:[special:userid]|
       <a href="/!login/">Login</a>

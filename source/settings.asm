@@ -6,7 +6,7 @@ sqlParameters   text "select ?1 as host, ?2 as smtp_addr, ?3 as smtp_port, ",   
                             "?10 as user_perm0, ?11 as user_perm2, ?12 as user_perm3, ?13 as user_perm4, ",      \
                             "?14 as user_perm5, ?15 as user_perm6, ?16 as user_perm7, ?17 as user_perm8, ",      \
                             "?18 as user_perm31, ?21 as chat_enabled, ?22 as chat_anon, ?23 as email_confirm, ", \
-                            "?24 as default_skin, $25 as default_mobile_skin"
+                            "?24 as default_skin, $25 as default_mobile_skin, $26 as forum_header, $27 as embeded_css"
 
 proc BoardSettings, .pSpecial
 
@@ -101,6 +101,16 @@ begin
         stdcall StrDel ; from the stack
 
 .title_ok:
+
+        stdcall GetParam, txt "forum_header", gpString
+        jc      .header_ok
+
+        push    eax
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 26, eax, [eax+string.len], SQLITE_TRANSIENT
+        stdcall StrDel ; from the stack
+
+.header_ok:
 
         stdcall GetParam, txt "description", gpString
         jc      .description_ok
@@ -226,6 +236,15 @@ begin
 
 .email_confirm_ok:
 
+        stdcall GetParam, txt "embeded_css", gpInteger
+        jc      .embeded_css_ok
+        test    eax, eax
+        jz      .embeded_css_ok
+
+        cinvoke sqliteBindText, [.stmt], 27, "checked", -1, SQLITE_STATIC
+
+.embeded_css_ok:
+
         stdcall GetParam, txt "default_skin", gpString
         jc      .skin_ok
 
@@ -319,6 +338,12 @@ begin
         stdcall SetParamStr, txt "forum_title", eax
         jc      .error_write
 
+;.save_forum_header:
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "forum_header", 0
+        stdcall SetParamStr, txt "forum_header", eax
+        jc      .error_write
+
 ;.save_description:
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "description", 0
@@ -337,13 +362,30 @@ begin
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "email_confirm", 0
         test    eax, eax
-        jz      .save_log
+        jz      .save_email_confirm
 
         inc     ebx
         stdcall StrDel, eax
 
-.save_log:
+.save_email_confirm:
+
         stdcall SetParamInt, txt "email_confirm", ebx
+        jc      .error_write
+
+; save_embeded_css
+
+        xor     ebx, ebx
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "embeded_css", 0
+        test    eax, eax
+        jz      .embeded_ok
+
+        inc     ebx
+        stdcall StrDel, eax
+
+.embeded_ok:
+
+        stdcall SetParamInt, txt "embeded_css", ebx
         jc      .error_write
 
 ; save chat enabled

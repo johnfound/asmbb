@@ -36,4 +36,3 @@
   <input type="submit" name="changeemail" class="submit" value="Change email">
 </form>
 ]
-

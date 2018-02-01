@@ -83,7 +83,7 @@ uglobal
 endg
 
 
-;rb 373
+rb 373
 
 
 start:
