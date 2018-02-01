@@ -1,0 +1,1 @@
+../Wasp/chat.tpl

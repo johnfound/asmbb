@@ -1,0 +1,59 @@
+@clColor1: white;
+@clColor1FG: #105289;
+
+@clHeader: #1e98ff;
+@paddingHeader: 0px 0px 8px 0px;
+@paddingFooter: 8px 0px 0px 0px;
+
+@clCurrentTagBG: #105289;
+@clCurrentTagFG: white;
+
+@paddingTags: 8px 0px;
+@paddingOneTag: 2px 4px;
+@marginOneTag: 0px 4px 0px 0px;
+@borderRadTags: 8px 0px 0px 8px;
+@borderTags: 1px solid @clCurrentTagBG;
+
+@clThreadLink: #105289;
+
+@clFakeUser: #ff80FF;
+@clBodyBG: white;
+@clBodyFG: black;
+@clDarkBG: white;
+@clDarkFG: black;
+
+@borderEdit: 2px solid @clSeparator;
+
+@clArticleBG: white;
+@clArticleFG: black;
+
+@clFormBG: #d0d0d0;
+@clFormFG: white;
+@clDisabledBG: #e0e0e0;
+@clDisabledFG: #404040;
+
+@clEditorBG: white;
+@clEditorFG: black;
+@bgEditor: @clEditorBG 12px -14px ~"/" 24px 120px no-repeat;
+@bgEditorFocus: @clEditorBG 12px -74px ~"/" 24px 120px no-repeat;
+
+@clButtonBG: #105289;
+@clButtonFG: white;
+
+@clButtonActiveBG: #1e98ff;
+@clButtonActiveFG: white;
+@borderButtonActive: 2px solid @clSeparator;
+@borderNavRad: 4px;
+@paddingNav: 1px 4px;
+
+@clSeparator: #a0a0a0;
+@borderQuote: 2px solid @clSeparator;
+@clQuoteTitle: #105289;
+
+@clPostInfoBG: #d0d0d0;
+@clPostInfoFG: black;
+
+@FontMain: "Droid Sans",sans-serif,Arial;
+@FontMonospace: Consolas,"Courier New",Courier,monospace;
+
+@HeaderBackground: none;

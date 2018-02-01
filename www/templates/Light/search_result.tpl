@@ -1,0 +1,1 @@
+../Wasp/search_result.tpl

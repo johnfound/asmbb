@@ -1,5 +1,5 @@
-C Broken\scommit\sas\sa\sworkaround\sfor\sfossil\sbug!\sDon't\scheckout\sit.\sThe\swhole\sLight\stheme\sis\smissing.
-D 2018-02-01T17:46:49.847
+C Massive\srework\sof\sthe\sskins.\sHuge\samount\sof\sthe\stemplates\sand\s.less\sfiles\ssyncronized\sand\sreplaced\swith\ssymlinks.\nMost\sof\sthe\sstyles\sdifferences\sare\sseparated\sin\s"skin_variables.lsi"\sfiles.\sFixed\sbug\srelated\sto\sthe\scaching\sof\nthe\s.css\sfiles\son\sskin\schanges\sand\swhen\sexternal\s.css\sfiles\sare\sspecified.
+D 2018-02-01T18:08:26.414
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c20105a1838d373a2918e527e28440dafc77acc1
@@ -141,16 +141,127 @@ F www/libsqlite3.so 7ec554841266559cb0e08b27b2afd8aab1869044 x
 F www/lighttpd.conf 5ad94fe2311e771f83df6226c0d398e9e3d0fddb
 F www/robots.txt 1f19cb38e5bc7508fde66876fab2dfdd453f96c6
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
+F www/templates/Light/_images/anon.png 9184b9fe4cf4632fd4dc7baf7db2eeccd8c57334 l
+F www/templates/Light/_images/ban.svg 45504bdc41619c0b2a0f1f160b2aa5d495dc3520 l
+F www/templates/Light/_images/chatemoticons/angry.gif 20500d3b94175c345946ad8bb149068d1d5c2b1a
+F www/templates/Light/_images/chatemoticons/cry.gif b821d5e08564af307ac3c71f945dddfa8ea6452c
+F www/templates/Light/_images/chatemoticons/lol.gif 0e9fe36570a78b40ed0baf0a08b0f0ca6e5e9605
+F www/templates/Light/_images/chatemoticons/rofl.gif 907a534a661a9a090665496f07b5361501c7ba91
+F www/templates/Light/_images/chatemoticons/sad.gif 29a61168f0546302de3fe9d1ddd963d62cf85d93
+F www/templates/Light/_images/chatemoticons/smile.gif e15f0be2a0607a061f46d297f80b982d95ec4ce5
+F www/templates/Light/_images/chatemoticons/tongue.gif f37a376e83402b21c9770767728282b08e7e495e
+F www/templates/Light/_images/chatemoticons/wink.gif fea56f9c71694b38842aa0f6295d26cc330fcca7
+F www/templates/Light/_images/del.svg c5df3b6d3843942db429c4cbca9ef0432e33560e
+F www/templates/Light/_images/del_white.svg f70c553839427bf1cfd269ff02e243dfa907b0d4 l
+F www/templates/Light/_images/edit.svg d16c1aac143d288243264a4d5f8584afbb3017b4
+F www/templates/Light/_images/edit_white.svg c2176f5d842145e5d5ac8b6ebd4200276a9c10dc l
+F www/templates/Light/_images/email.png 862b920cedf15e168dc75c9996534f98e307b051 l
+F www/templates/Light/_images/emoticons/angry.gif 20500d3b94175c345946ad8bb149068d1d5c2b1a
+F www/templates/Light/_images/emoticons/cry.gif b821d5e08564af307ac3c71f945dddfa8ea6452c
+F www/templates/Light/_images/emoticons/lol.gif 0e9fe36570a78b40ed0baf0a08b0f0ca6e5e9605
+F www/templates/Light/_images/emoticons/rofl.gif 907a534a661a9a090665496f07b5361501c7ba91
+F www/templates/Light/_images/emoticons/sad.gif 29a61168f0546302de3fe9d1ddd963d62cf85d93
+F www/templates/Light/_images/emoticons/smile.gif e15f0be2a0607a061f46d297f80b982d95ec4ce5
+F www/templates/Light/_images/emoticons/tongue.gif f37a376e83402b21c9770767728282b08e7e495e
+F www/templates/Light/_images/emoticons/wink.gif fea56f9c71694b38842aa0f6295d26cc330fcca7
+F www/templates/Light/_images/onepost.svg bf684853fa78609f059865531ae15ca50fa2530f
+F www/templates/Light/_images/onepost_gray.svg 344f6b7179738f81ad978cba035efd031e58cd11
+F www/templates/Light/_images/pass.png 4129159ab88dedfdc40cb928d6f9e1bc60a5063c l
+F www/templates/Light/_images/pinned.png 063598acf0ab40ef7cf62139951ee14d8aac491c
+F www/templates/Light/_images/pinned0.png 1879eea7fd74e2b4d044f98457c526f5b7ea49c1
+F www/templates/Light/_images/posts.svg 42d9f7a14b12484cba0ec1d7aafca4b3e3827850
+F www/templates/Light/_images/posts_gray.svg 82e26ebf314d405a05867602b977156fbb5d2db0
+F www/templates/Light/_images/quote.svg 1ff3ddcd3bdf8040593d8ddde492143ecf51bde8
+F www/templates/Light/_images/save_white.svg f4429885729658e01774773471cd1d8cf6ed6e14 l
+F www/templates/Light/_images/search.svg a91d7dc34ff0083f549ffe5ba3a8896b33b4efbf l
+F www/templates/Light/_images/user.png dcd4375b5e5365ac29d50ba3ee980d8e2827eba6 l
+F www/templates/Light/activation_email_subject.tpl e0bd685144e72197dd0034b068e82d7604f926d2 l
+F www/templates/Light/activation_email_text.tpl 50d1d6b7fe42736e334ab6870d7cc72e9085889d l
+F www/templates/Light/activity0.tpl 66800be0587fffe32c9acf83029cb8fc7ac74332 l
+F www/templates/Light/activity1.tpl 6fa6f00fea84fee0253d4707881c9a5338feb90f l
+F www/templates/Light/activity10.tpl bc1c313b326ae3ea9f440b0f607cfd0f8ce482d6 l
+F www/templates/Light/activity11.tpl 3a1ef0a6e3383b59f0e17e7bff76186ed93336b5 l
+F www/templates/Light/activity12.tpl 490dd079393fc2a2180dd0cc5f7f9581fee448dd l
+F www/templates/Light/activity13.tpl e5c3c56a5acdf56383fd3e5710c342444a30b61c l
+F www/templates/Light/activity2.tpl 0c02bfb196ad6955c2e9bdfc53e313d15d32a6f6 l
+F www/templates/Light/activity3.tpl d076539803d955db90cc721ad51644f7c7d4bb70 l
+F www/templates/Light/activity4.tpl 6a7b65a1f69740098b92dfee5e56d9420a3d0980 l
+F www/templates/Light/activity5.tpl a0f664d4ee44680703ed8dc5cf30c1046b21dea0 l
+F www/templates/Light/activity6.tpl b5c8a9fbc2efa2eac931ea024f5d78047618cfc5 l
+F www/templates/Light/activity7.tpl 606eb1ee82da0767dd85e3d2ac63a07e9874a5fb l
+F www/templates/Light/activity8.tpl 36d833a0164bb74532e88161cff3d7c8d05cef52 l
+F www/templates/Light/activity9.tpl 60fe5018f101f822fa00434bff49db7a3f7da947 l
+F www/templates/Light/chat.less 61095657b21ca78023c0d3d499e909789f961d2c l
+F www/templates/Light/chat.tpl fcdc00ae077c1a36f1d81851ac613dd98013b349 l
+F www/templates/Light/common.less 762e4e8198de87fbcb131462b3476432725a2c65 l
+F www/templates/Light/del_confirm.tpl cdcb838e2e3a339de5408643fd2c2f3c447ab916 l
+F www/templates/Light/delete.less 3a74460f12ec494d6ac273a831839c1242abdc60 l
+F www/templates/Light/error.less 83cd53cf80eb467b611ebe7865c41c96694c293f l
+F www/templates/Light/error_html_end.tpl 62173b764a79089fff2cfe7be9428adcd13046da l
+F www/templates/Light/error_html_start.tpl 0e59043bca2eece87606b5085e216f22a529eb77 l
+F www/templates/Light/form_edit.tpl fb1a6c7ce48500320f430d48ad0671fecaadece3 l
+F www/templates/Light/form_edit_thread.tpl 9ba48416deb4498a8dcad61198289fb396592980 l
+F www/templates/Light/form_editinfo.tpl 91a3644fb4b1021bffa2356f7291f6e457eebe1e l
+F www/templates/Light/form_login.tpl 1ca5a25baff036f4b5a655b72d25c18c987a8ed7 l
+F www/templates/Light/form_new_post.tpl 8d49d3712dae533e8a15a522baadd32c230b6f9f l
+F www/templates/Light/form_new_thread.tpl 95aeb8e36c8aff51b101dca130c101071c917b6c l
+F www/templates/Light/form_post_debug.tpl 0a3e574bb2595001a5c1cebbd66c59aefd6aaab7 l
+F www/templates/Light/form_register.tpl 6e44ae46c9d0df170d76cb91b145bc2f3d60b7ea l
+F www/templates/Light/form_settings.tpl a4635e33d4fa270b3b69c39572f4bfc94ea8ccc2 l
+F www/templates/Light/form_setup.tpl 7e32c9ff828a1cd2698285f3519632978add1b00 l
+F www/templates/Light/form_sqlite_console.tpl b90d0e298e5cc10782bafbe2e403cceb365a2fe4 l
+F www/templates/Light/login.less 4af417eb9ae51e7d5691cba96a93ef5a9fd79dd2 l
+F www/templates/Light/main_html_end.tpl d8b3ec3c2cdc952fcab6638d4147ee7e9cd2ba96 l
+F www/templates/Light/main_html_start.tpl b93c0043a09f7ef6614707de05a8b45f8af6b33f l
+F www/templates/Light/markdown.less c195a0ea006eb8eef894fdc648aa196559c080d6 l
+F www/templates/Light/minimag_suffix.tpl f3a1414972a13590a7c984b53b6fd2ddd3a47f3a l
+F www/templates/Light/nav_list.tpl 580abd0547137f604a05a525aefb34e520f6b7ab l
+F www/templates/Light/nav_search.tpl 29858e2ca8b4ac6a1f2660c6f3039c5683386976 l
+F www/templates/Light/nav_thread.tpl 851b655a70770fd41465661c6a03531d9008b212 l
+F www/templates/Light/navigation.less a4b813498e8918e0757b6e8731417a1a7b16e968 l
+F www/templates/Light/post_view.tpl 4e4b1a73db2462b1954e92ec092c71c438b63e85 l
+F www/templates/Light/posteditor.less cfcb05a403a36c2c2317dca6633258f48d40d506
+F www/templates/Light/postnew.less 3df1b56984c0e0268104a69862782120a40f06be l
+F www/templates/Light/posts.less 6c54bcada5b3fe4d4baf87704328e57d91b9fd3f l
+F www/templates/Light/preview.tpl 6bd29d06a6720e51db6d4d73b7572f9fcc1ff32f l
+F www/templates/Light/search.less 673002a86d7aedc24bb456eb9aaf0842cc437fcf l
+F www/templates/Light/search_result.tpl a51b831f28a3d1ee546b097caa4f78ddd023ca70 l
+F www/templates/Light/settings.less ceddd6b5948701659f883fd99ed0b9a31067df6e l
+F www/templates/Light/skin_variables.lsi 9a55f3f0bba76d52a6adc53e48211a6225fe6366
+F www/templates/Light/sqlite.less d6c705801f27dd30658b51803f0638ded21bb45c l
+F www/templates/Light/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
+F www/templates/Light/thread_info.tpl 566893019011ccda164d44e8f120b97a73433393
+F www/templates/Light/thread_list.less 184486fa587f7ecb81f4bd4dd04f0cff00390bc7
+F www/templates/Light/threadnew.less c2af3d158e2e03851692576dce99f5287e50b0c6 l
+F www/templates/Light/userinfo.less 7ed31b5cc710b5821802771232bbc02db392ebf9 l
+F www/templates/Light/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
+F www/templates/Light/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d2 l
 F www/templates/Wasp/_images/anon.png f1150ae9c16cb5dd89c7f9f6c502bb6128783519
 F www/templates/Wasp/_images/ban.svg 546185941f28a293e8f23727192c8c40258da120
 F www/templates/Wasp/_images/chatemoticons 92b583a5a5e7d203c807f62b3733d6e731355681 l
-F www/templates/Wasp/_images/del.svg 5e3d0ba999e37de7dfdc43292d1c14e4513573ac w www/templates/Wasp/_images/del_gray.svg
+F www/templates/Wasp/_images/chatemoticons/angry.gif d43a06f17649f6c9da6c85ff3dbbf0e4853f0520
+F www/templates/Wasp/_images/chatemoticons/cry.gif 44fbe228ae5fda20c3e83a7b8175fe7981afaf57
+F www/templates/Wasp/_images/chatemoticons/lol.gif 305f1546cdceaee6d5118c7cf739874c86c4200e
+F www/templates/Wasp/_images/chatemoticons/rofl.gif c9624e02cd3a3e89c227ab6c3ac17ea0d9edf283
+F www/templates/Wasp/_images/chatemoticons/sad.gif a4ca623ef9f7ccdbf7680c4201f590bc1a2f8896
+F www/templates/Wasp/_images/chatemoticons/smile.gif b9a29d9c77e9e2f9a37da58d9c23df69d6f8517a
+F www/templates/Wasp/_images/chatemoticons/tongue.gif 1f0e43256d9b04e3c714a07a9d8dc6628199b4d9
+F www/templates/Wasp/_images/chatemoticons/wink.gif 2e56ed1aa4446e248c7666030924d7090afcbd66
+F www/templates/Wasp/_images/del.svg 5e3d0ba999e37de7dfdc43292d1c14e4513573ac
 F www/templates/Wasp/_images/del_white.svg 94d8d830628cf60965d5e4c6b35458aadeeafbe1
-F www/templates/Wasp/_images/edit.svg a1b01c72f16833c8bad8eb058ff298cb3d5fb320 w www/templates/Wasp/_images/edit_gray.svg
+F www/templates/Wasp/_images/edit.svg a1b01c72f16833c8bad8eb058ff298cb3d5fb320
 F www/templates/Wasp/_images/edit_white.svg 32de0d55e734823a33792baa4e6be2291dbcf55d
-F www/templates/Wasp/_images/edited.svg 2f003198c4acd6bb294e25be53f1299713cffdb8 w www/templates/Wasp/_images/edit.svg
+F www/templates/Wasp/_images/edited.svg 2f003198c4acd6bb294e25be53f1299713cffdb8
 F www/templates/Wasp/_images/email.png 24f356bd043c4d2c9ab64314a341690d6e71bf94
 F www/templates/Wasp/_images/emoticons 6f2fb8dfd71252d2cdbe7b9b1d330c5859872e31 l
+F www/templates/Wasp/_images/emoticons/angry.gif 20500d3b94175c345946ad8bb149068d1d5c2b1a
+F www/templates/Wasp/_images/emoticons/cry.gif b821d5e08564af307ac3c71f945dddfa8ea6452c
+F www/templates/Wasp/_images/emoticons/lol.gif 0e9fe36570a78b40ed0baf0a08b0f0ca6e5e9605
+F www/templates/Wasp/_images/emoticons/rofl.gif 907a534a661a9a090665496f07b5361501c7ba91
+F www/templates/Wasp/_images/emoticons/sad.gif 29a61168f0546302de3fe9d1ddd963d62cf85d93
+F www/templates/Wasp/_images/emoticons/smile.gif e15f0be2a0607a061f46d297f80b982d95ec4ce5
+F www/templates/Wasp/_images/emoticons/tongue.gif f37a376e83402b21c9770767728282b08e7e495e
+F www/templates/Wasp/_images/emoticons/wink.gif fea56f9c71694b38842aa0f6295d26cc330fcca7
 F www/templates/Wasp/_images/onepost.svg 41b518db5955c7192d1272566a64bb0ae2da17f1
 F www/templates/Wasp/_images/onepost_gray.svg e24f6a889dd6389c2a0a045b06e7761616cba763
 F www/templates/Wasp/_images/pass.png 53421227820c5bd598095a41606845d13e23155f
@@ -159,7 +270,7 @@ F www/templates/Wasp/_images/pinned0.png 066a3c6e31fb2da342f34602eff8b35cb18f3fc
 F www/templates/Wasp/_images/posts.svg c08363ff513355b7dacdbe877c6bcf2db7149e29
 F www/templates/Wasp/_images/posts_gray.svg 809ee9b2688df16ae2f4fec535612e22f7bf6d9c
 F www/templates/Wasp/_images/quote.svg a57dfe55abff5e0685326195e49180c32bf2565c
-F www/templates/Wasp/_images/save_white.svg af0ea2e281c54c48c36dd963f446272ce0f9036e w www/templates/Wasp/_images/save.svg
+F www/templates/Wasp/_images/save_white.svg af0ea2e281c54c48c36dd963f446272ce0f9036e
 F www/templates/Wasp/_images/search.svg 90e00602639894b0b6e388b7841a27002f6ba2e4
 F www/templates/Wasp/_images/user.png bf7f849ee8f09b959965aa984f2a5ce7f972ce07
 F www/templates/Wasp/_images/yellow_back.png 5e6ab56d8245a36b59995f22c411989be636e99b
@@ -185,7 +296,7 @@ F www/templates/Wasp/common.less e50b1f4114ff1059b867007916ef2120650161d8
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 557fcfa25e30e6f57d7850b9d56c11ed4a918d63
 F www/templates/Wasp/delete.less 726105b6ac913c53aa1530da71bacaf57f6c264d
-F www/templates/Wasp/error.less 5d9de944fe6322d58164da7ce96baf6103af896d w www/templates/Wasp/error.css
+F www/templates/Wasp/error.less 5d9de944fe6322d58164da7ce96baf6103af896d
 F www/templates/Wasp/error_html_end.tpl f390b47728814ecd8e608dd410cb2f4b0b953020
 F www/templates/Wasp/error_html_start.tpl d28cf58719b5f371c3eeef18d74e148333ca9bc2
 F www/templates/Wasp/form_edit.tpl d5cb9b82c9d024bfb3bd938e65558165b8ad4d1a
@@ -287,7 +398,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 4e590946b352471a1ed3ed9bdc66343aa051b1bc
 F www/templates/mobile/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/mobile/users_online.less 65fa975a964a73a7c63b0d0417d522cfb8b66a27
-P 1b41234a12eb736117a6eb5487edb7107bf4e050
-R c9bc750701ccb1049c514572160d5f35
+P a881870e8c6a6918ced15f1920442ad65ecbb361
+R a03e3b33a10042a80ed969af0249edb1
 U johnfound
-Z d7839afc1b665edba57e62673193c526
+Z ab9993c1ec3367ac800aab070f18b373

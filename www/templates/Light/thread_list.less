@@ -1,0 +1,118 @@
+@import "skin_variables.lsi";
+
+/* Threads list styles */
+
+div.threads_list {
+  width: 95%;
+  max-width: 1280px;
+  margin: auto;
+  clear: both;
+}
+
+span.small {
+  display: block;
+  font-size: 80%;
+  font-weight: normal;
+  br { display: none; }
+  b { margin-right: 8px; }
+}
+
+.thread_summary {
+  display: flex;
+  margin-bottom: 8px;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 2px solid @clSeparator;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  div {
+    margin-right: 16px;
+    flex-shrink: 0;
+  }
+
+  a.unread {
+    display: block;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+  }
+
+  .unread0 {
+    background-image: url("/[special:skin]_images/posts_gray.svg");
+  }
+
+  .unread1 {
+    background-image: url("/[special:skin]_images/posts.svg");
+  }
+}
+
+.pinned {
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin: 0px auto;
+  background-repeat: no-repeat;
+}
+
+.pin0 {
+  background-image: url("/[special:skin]_images/pinned0.png");
+}
+
+.pin1 {
+  background-image: url("/[special:skin]_images/pinned.png");
+}
+
+
+div.col_unread {
+  width: 32px;
+}
+
+div.col_center {
+  text-align: center;
+  flex-shrink: 1;
+}
+
+div.unread_cnt {
+  font-size: 80%;
+  margin: 0px;
+  flex-shrink: 1;
+}
+
+div.thread_link {
+  flex-grow: 1;
+  width: 100px;
+}
+
+a.thread_link {
+  font-size: 16px;
+  font-weight: bold;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: @clThreadLink;
+}
+
+div.thread_tags {
+  width: 200px;
+  flex-shrink: 1;
+  color: transparent;
+  font-size: 80%;
+
+  a {
+    display: inline-block;
+    background-color: @clButtonBG;
+    color: @clButtonFG;
+    text-decoration: none;
+    padding: 2px 4px;
+    margin-bottom: 2px;
+    border-radius: 8px 0px 0px 8px;
+  }
+
+  a:hover {
+    background-color: @clButtonActiveBG;
+  }
+}
+
