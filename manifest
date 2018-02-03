@@ -1,5 +1,5 @@
-C Massive\srework\sof\sthe\sskins.\sHuge\samount\sof\sthe\stemplates\sand\s.less\sfiles\ssyncronized\sand\sreplaced\swith\ssymlinks.\nMost\sof\sthe\sstyles\sdifferences\sare\sseparated\sin\s"skin_variables.lsi"\sfiles.\sFixed\sbug\srelated\sto\sthe\scaching\sof\nthe\s.css\sfiles\son\sskin\schanges\sand\swhen\sexternal\s.css\sfiles\sare\sspecified.
-D 2018-02-01T18:08:26.414
+C Implemented\stemplate\scommand\s[url:STRING]\sin\sorder\sto\sfix\sthe\scase\swhen\sURL\sis\screated\sfrom\sthe\sdatabase\sfield\sin\sthe\stemplate.\sFor\sexample\ssee\sstatistics.tpl:[LastUser]
+D 2018-02-03T08:23:54.174
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c20105a1838d373a2918e527e28440dafc77acc1
@@ -24,7 +24,7 @@ F source/commands.asm be1648e1e0d09d21937595a14ffcf1536c2735e3
 F source/create.sql 01464c5f8bcc65f076f2d986b451ebb316d5f68b
 F source/delete.asm e65e0448de73cfad8fa24a9ba4e5eac3b288629b
 F source/edit.asm 192f2d335a36a92a72f9f043795c2ba0689f1c2f
-F source/engine.asm 9b3f16a26438e75e46360475770f848bb9c5365a
+F source/engine.asm e107f34bcea0aa0f56b9b125c375b3bbf94f4629
 F source/engine.fpr 72be8cd1af56104cdf351329296717058e4626e8
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -39,7 +39,7 @@ F source/post.asm f6111932d588687ed635406d3c097f4770fbfc1f
 F source/post_data.asm 3ca626cfd4fe38680bfe5a61115edfc7f14bd70d
 F source/postdebug.asm 13ab4ebf2fc7b35d7fa36853b533236860b641f7
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
-F source/render.asm f6e6442ec80663c7be3ddd12278a434673e2b71e
+F source/render.asm d482939720deb91023d9ac445d65d89411c3a273
 F source/search.asm c536663adc782a7321b6677d07bfc26eb45d186e
 F source/search.sql 34cf6eea11403e7ac709cd1588bd84c57257135f
 F source/search_cnt.sql afb4a4cdabbb356b23f18be8d0498d1fbd53001d
@@ -329,7 +329,7 @@ F www/templates/Wasp/search_result.tpl d13272c6953e4dcb56e51c71028b2a9b0cb12794
 F www/templates/Wasp/settings.less b72fc9a2a9c38396e08f9efee668b52f31bb3ab4
 F www/templates/Wasp/skin_variables.lsi 32aa4fa454df739cccf62e88cfc39470df00fb03
 F www/templates/Wasp/sqlite.less 156b89f83b6c7a7510bc1f225c6f25f4e6efbf1b
-F www/templates/Wasp/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
+F www/templates/Wasp/statistics.tpl c28b06d9ee052060d95fa6d41f881bec9fa12788
 F www/templates/Wasp/thread_info.tpl 60b348350fe698422839bfa128592d73e77e356e
 F www/templates/Wasp/thread_list.less dc6e14a2b89b345fe25ecd6d5b8d489892e81960
 F www/templates/Wasp/threadnew.less d844afdd84390db9ea9df4f1075eb75b93fd7c1c
@@ -398,7 +398,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 4e590946b352471a1ed3ed9bdc66343aa051b1bc
 F www/templates/mobile/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/mobile/users_online.less 65fa975a964a73a7c63b0d0417d522cfb8b66a27
-P a881870e8c6a6918ced15f1920442ad65ecbb361
-R a03e3b33a10042a80ed969af0249edb1
+P ae1ddba68eb03f53007d66c9986dc84e1141aeb8
+R 5d8d6516d099995df0d2e321027b6aaf
 U johnfound
-Z ab9993c1ec3367ac800aab070f18b373
+Z ccf30bf91defe113414826234ce5baa9

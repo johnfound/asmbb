@@ -155,6 +155,9 @@ begin
         stdcall StrMatchPatternNoCase, "html:*", edi
         jc      .process_html
 
+        stdcall StrMatchPatternNoCase, "url:*", edi
+        jc      .process_url
+
         stdcall StrMatchPatternNoCase, "css:*", edi
         jc      .process_css
 
@@ -1222,6 +1225,20 @@ end if
         stdcall __DoProcessTemplate2, edi, [.sql_stmt], esi, FALSE
         jmp     .return_value
 
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.process_url:
+
+        stdcall StrSplit, edi, 4
+        stdcall StrDel, edi
+        stdcall StrClipSpacesL, eax
+        mov     edi, eax
+
+        stdcall __DoProcessTemplate2, edi, [.sql_stmt], esi, FALSE
+        push    eax
+        stdcall StrURLEncode, eax
+        stdcall StrDel ; from the stack
+        jmp     .return_value
 
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .process_css:
