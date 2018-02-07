@@ -60,49 +60,49 @@ div.header {
 /* Search form styles */
 
 form#search_form {
-  position: relative;
   width: 95%;
   max-width: 1280px;
   margin: 8px auto;
+  display: flex;
 }
 
 .search_line {
   height: 32px;
-  width: 100%;
-  margin: 0px auto;
+  margin: 0px 8px 0px 0px;
   padding: 4px 36px 4px 8px;
-  border: none;
   background-color: @clDarkBG;
   border: @borderEdit;
   color: @clDarkFG;
   display:block;
+  flex-grow: 1;
 }
 
 
-.search_line:focus {
+/*.search_line:focus {
   background-color: @clEditorBG;
   color: @clEditorFG;
   border: @borderEdit;
-}
+} */
 
-
-.icon_btn  {
-  position: absolute;
-  right: 4px;
-  top: 4px;
-  border-style: none;
+.button {
+  border: @borderEdit;
+  display: inline-block;
   vertical-align: top;
   background-color: @clButtonBG;
-  color: @clButtonFG;
-  width: 24px;
-  height: 24px;
-  text-align: center;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 32px;
+  height: 32px;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 
-.icon_btn:hover  {
+.button:hover {
   background-color: @clButtonActiveBG;
-  color: @clButtonActiveFG;
+  border: @borderButtonActive;
 }
+
 
 .search_icon {
   background-image: url("/[special:skin]_images/search.svg");

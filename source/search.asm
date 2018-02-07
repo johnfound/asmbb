@@ -1,19 +1,58 @@
 
 
+;sqlSearchCnt    StripText "search_cnt.sql", SQL
+;sqlSearchPrefix  StripText "search.sql", SQL
+
+sqlSearchPrefix text    "select ",                                                                                              \
+                        "  PostFTS.rowid, ",                                                                                    \
+                        "  PostFTS.user as UserName, ",                                                                          \
+                        "  P.userID, ",                                                                                         \
+                        "  U.av_time as AVer, ",                                                                                \
+                        "  PostFTS.slug, ",                                                                                     \
+                        "  strftime('%d.%m.%Y %H:%M:%S', P.postTime, 'unixepoch') as PostTime, ",                               \
+                        "  P.ReadCount, ",                                                                                      \
+                        "  snippet(PostFTS, PostFTS.Content, '*', '*', '...', 16) as Content, ",                                  \
+                        "  PostFTS.Caption, ",                                                                                  \
+                        "  (select count() from UnreadPosts UP where UP.UserID = ?4 and UP.PostID = PostFTS.rowid) as Unread ", \
+                        "from ",                                                                                                \
+                        "  PostFTS ",                                                                                           \
+                        "  left join Posts P on P.id = PostFTS.rowid ",                                                         \
+                        "  left join Users U on U.id = P.userID "
 
 
-sqlSearchCnt    StripText "search_cnt.sql", SQL
-sqlSearch       StripText "search.sql", SQL
+sqlSearchCntPrefix text "select count() from PostFTS "
+
+sqlSearchWhere text    " where PostFTS match  ?1 "
+sqlOrderBy     text    " order by "
+sqlSearchLimit text    " limit ?2 "
+sqlSearchOffs  text    " offset ?3 "
+
 
 proc ShowSearchResults2, .hStart, .pSpecial
 .pages      dd ?
 .stmt       dd ?
+.query_str  dd ?        ; don't free it at the end.
 .query      dd ?
+.order      dd ?
 .start      dd ?
+
+.sql_search dd ?
+.sql_cnt    dd ?
+
+.hLinkArg     dd ?
+
+.sqlSearchCnt dd ?
+.sqlSearch    dd ?
+
 begin
         pushad
 
-        mov     [.query], 0
+        stdcall StrNew
+        mov     [.query], eax
+
+        stdcall StrNew
+        mov     [.order], eax
+
         mov     esi, [.pSpecial]
 
         mov     eax, [.hStart]
@@ -28,40 +67,139 @@ begin
         stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
         jc      .missing_query
 
-        stdcall GetQueryItem, eax, txt "s=", 0
+        mov     [.query_str], eax
+
+        stdcall GetQueryItem, [.query_str], txt "s=", 0
         test    eax, eax
-        jz      .missing_query
+        jz      .txt_ok
 
-        mov     [.query], eax
+        push    eax
+        stdcall StrLen, eax
+        test    eax, eax
+        jz      .free_txt
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cSearchResultsTitle
-        stdcall StrCat, [esi+TSpecialParams.page_title], [.query]
+        mov     eax, [esp]
+        stdcall StrCat, [.query], txt '( content: '
+        stdcall StrCat, [.query], eax
+        stdcall StrCat, [.query], ' OR caption: '
+        stdcall StrCat, [.query], eax
+        stdcall StrCat, [.query], txt ')'
 
+        stdcall StrCat, [.order], txt " order by rank"
+
+.free_txt:
+        stdcall StrDel ; from the stack
+
+.txt_ok:
+        stdcall GetQueryItem, [.query_str], txt "u=", 0
+        test    eax, eax
+        jz      .user_ok
+
+        push    eax
+        stdcall StrLen, eax
+        test    eax, eax
+        jz      .user_free
+
+        mov     eax, [esp]
+        stdcall StrCatNotEmpty, [.query], txt " AND "
+        stdcall StrCat, [.query], txt 'user: '
+        stdcall StrCat, [.query], eax
+
+.user_free:
+        stdcall StrDel ; from the stack
+
+.user_ok:
+        cmp     [esi+TSpecialParams.thread], 0
+        je      .slug_ok
+
+        stdcall StrCatNotEmpty, [.query], txt " AND "
+        stdcall StrCat, [.query], txt 'slug: "'
+        stdcall StrCat, [.query], [esi+TSpecialParams.thread]
+        stdcall StrCat, [.query], txt '"'
+
+.slug_ok:
+        cmp     [esi+TSpecialParams.dir], 0
+        je      .tags_ok
+
+        stdcall StrCatNotEmpty, [.query], txt " AND "
+        stdcall StrCat, [.query], txt 'tags: "'
+        stdcall StrCat, [.query], [esi+TSpecialParams.dir]
+        stdcall StrCat, [.query], txt '"'
+
+.tags_ok:
+
+        stdcall StrLen, [.order]
+        test    eax, eax
+        jnz     .order_ok
+
+        stdcall StrCat, [.order], txt " order by P.postTime desc"
+
+.order_ok:
+
+;        stdcall FileWriteString, [STDERR], [.order]
+;        stdcall FileWriteString, [STDERR], cCRLF2
+
+; Create SQL queries depending on the search options.
+
+        stdcall StrDupMem, sqlSearchCntPrefix
+        mov     ebx, eax
+
+        stdcall StrDupMem, sqlSearchPrefix
+        mov     edi, eax
+
+        stdcall StrLen, [.query]
+        test    eax, eax
+        jz      .where_ok
+
+        stdcall StrCat, ebx, sqlSearchWhere
+        stdcall StrCat, edi, sqlSearchWhere
+
+.where_ok:
+        stdcall StrCat, edi, [.order]
+        stdcall StrCat, edi, sqlSearchLimit
+
+        cmp     [.start], 0
+        je      .offs_ok
+
+        stdcall StrCat, edi, sqlSearchOffs
+
+.offs_ok:
+
+        mov     [.sql_cnt], ebx
+        mov     [.sql_search], edi
+
+;        stdcall FileWriteString, [STDERR], [.sql_cnt]
+;        stdcall FileWriteString, [STDERR], cCRLF2
+;
+;        stdcall FileWriteString, [STDERR], [.sql_search]
+;        stdcall FileWriteString, [STDERR], cCRLF2
 
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ; counts the number of the search results in order to make the page links.
 
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSearchCnt, sqlSearchCnt.length, eax, 0
+        lea     ecx, [.stmt]
+        stdcall StrPtr, [.sql_cnt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], eax, [eax+string.len], ecx, 0
 
         stdcall StrPtr, [.query]
+        cmp     [eax+string.len], 0
+        je      .match_ok
+
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
-        call    .bind_limits
+.match_ok:
 
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteColumnInt, [.stmt], 0
         mov     edi, eax
         cinvoke sqliteFinalize, [.stmt]
 
-;        OutputValue "Results count:", edi, 10, -1
-
         mov     [.pages], edi
         test    edi, edi
         jz      .pages_ok
 
-        stdcall StrDupMem, txt "?s="
-        stdcall StrCat, eax, [.query]
+        stdcall StrDupMem, txt "?"
+        stdcall StrCat, eax, [.query_str]
         push    eax
 
         stdcall CreatePagesLinks2, [.start], edi, eax, [esi+TSpecialParams.page_length]
@@ -73,55 +211,8 @@ begin
 ; end of the page generation: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-; The following block make the search pages to not be generated. Only "prev" and "next" buttons are
-; placed to the search result page.
-; This way, no need to know the total number of the search results.
-;
-;        stdcall StrDupMem, '<div class="page_row">'
-;        mov     edx, eax
-;
-;        mov     eax, [.start]
-;        sub     eax, PAGE_LENGTH
-;        js      .prev_ok
-;
-;        stdcall StrCat, edx, '<a class="page_link" href="'
-;
-;        test    eax, eax
-;        jnz     .add_num
-;
-;        stdcall StrCat, edx, txt "."
-;        jmp     .num_ok
-;
-;.add_num:
-;        stdcall NumToStr, eax, ntsDec or ntsUnsigned
-;
-;        stdcall StrCat, edx, eax
-;        stdcall StrDel, eax
-;
-;.num_ok:
-;        stdcall StrCat, edx, txt "?s="
-;        stdcall StrCat, edx, [.query]
-;
-;        stdcall StrCat, edx, '">Prev</a>'
-;
-;.prev_ok:
-;        stdcall StrCat, edx, '<a class="page_link" href="'
-;
-;        mov     eax, [.start]
-;        add     eax, PAGE_LENGTH
-;        stdcall NumToStr, eax, ntsDec or ntsUnsigned
-;
-;        stdcall StrCat, edx, eax
-;        stdcall StrDel, eax
-;
-;        stdcall StrCat, edx, txt "?s="
-;        stdcall StrCat, edx, [.query]
-;
-;        stdcall StrCat, edx, '">Next</a></div>'
-;        mov     [.pages], edx
-;
-;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+;        stdcall FileWriteString, [STDERR], [.query]
+;        stdcall FileWriteString, [STDERR], cCRLF2
 
         stdcall StrNew
         mov     edi, eax
@@ -131,25 +222,28 @@ begin
         stdcall StrCatTemplate, edi, "nav_search.tpl", 0, esi
 
         cmp     [.pages], 0
-        je      .search_ok
+        je      .search_ok      ; this means the total results count is 0, not the pages.
 
         stdcall StrCat, edi, [.pages]
 
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSearch, sqlSearch.length, eax, 0
+        lea     ecx, [.stmt]
+        stdcall StrPtr, [.sql_search]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], eax, [eax+string.len], ecx, 0
 
         stdcall StrPtr, [.query]
+        cmp     [eax+string.len], 0
+        je      .match_ok2
+
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+.match_ok2:
 
         cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.page_length]
 
         mov     eax, [.start]
         imul    eax, [esi+TSpecialParams.page_length]
         cinvoke sqliteBindInt, [.stmt], 3, eax
-
-        call    .bind_limits
-
-        cinvoke sqliteBindInt, [.stmt], 6, [esi+TSpecialParams.userID]
+        cinvoke sqliteBindInt, [.stmt], 4, [esi+TSpecialParams.userID]
 
 .search_loop:
         cinvoke sqliteStep, [.stmt]
@@ -175,6 +269,10 @@ begin
         clc
 
 .finish:
+        stdcall StrDel, [.order]
+        stdcall StrDel, [.query]
+        stdcall StrDel, [.sql_cnt]
+        stdcall StrDel, [.sql_search]
         mov     [esp+4*regEAX], edi
         popad
         return
@@ -186,27 +284,24 @@ begin
         mov     edi, eax
         stc
         jmp     .finish
+endp
 
 
 
-.bind_limits:
+proc StrCatNotEmpty, .hDest, .hSuffix
+begin
+        pushad
 
-        cmp     [esi+TSpecialParams.thread], 0
-        je      .thread_ok
+        stdcall StrLen, [.hDest]
 
-        stdcall StrPtr, [esi+TSpecialParams.thread]
-        cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
+        OutputValue "StrCatNotEmpty length: ", eax, 10, -1
 
-.thread_ok:
+        test    eax, eax
+        jz      @f
 
-        cmp     [esi+TSpecialParams.dir], 0
-        je      .dir_ok
+        stdcall StrCat, [.hDest], [.hSuffix]
 
-        stdcall StrPtr, [esi+TSpecialParams.dir]
-        cinvoke sqliteBindText, [.stmt], 5, eax, [eax+string.len], SQLITE_STATIC
-
-.dir_ok:
-        retn
-
-
+@@:
+        popad
+        return
 endp

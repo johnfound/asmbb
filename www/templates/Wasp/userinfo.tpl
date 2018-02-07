@@ -21,6 +21,6 @@
       <li>Can [case:[candelown]|<b>not</b>|] <b>delete</b> its own posts.</li>
       <li>Can [case:[candelall]|<b>not</b>|] <b>delete</b> others posts.</li>
       <br>
-      <li>Has written <b>[totalposts]</b> post[case:[totalposts]|s||s] on the forum.</li>
+      <li>Has written <a href="/!search/?u=[username]" ><b>[totalposts]</b> post[case:[totalposts]|s||s]</a> on the forum.</li>
     </ul>
   </div>

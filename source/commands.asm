@@ -27,6 +27,8 @@ struct TSpecialParams
   .thread          dd ?                 ; /thread_slug/
   .page_num        dd ?                 ; /1234 - can be the number of the page, or the ID of a post.
 
+  .cmd_type        dd ?         ; 0 - no command, 1 - root cmd, 2 - top command
+
 ; forum global variables.
 
   .page_title      dd ?
@@ -424,6 +426,8 @@ begin
         pop     eax
         jne     .is_it_tag
 
+        mov     [.special.cmd_type], 1
+
         mov     ecx, UserAvatar
         stdcall StrCompNoCase, eax, txt "!avatar"
         jc      .exec_command2
@@ -508,6 +512,8 @@ end if
 
 .is_it_tag:
 
+        mov     [.special.cmd_type], 0
+
 ;        DebugMsg "Is it a tag?"
 
         stdcall InTags, eax
@@ -563,6 +569,7 @@ end if
         pop     eax
         jne     .bad_command
 
+        mov     [.special.cmd_type], 2
 
         mov     ecx, MarkThreadRead
         stdcall StrCompNoCase, eax, txt "!markread"
