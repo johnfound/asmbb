@@ -362,7 +362,7 @@ CREATE TRIGGER PostsAU AFTER UPDATE ON Posts BEGIN
     slug = (select slug from Threads where id = new.threadid),
     user = (select nick from users where id = new.userid),
     tags = (select group_concat(TT.Tag, ", ") from ThreadTags TT where TT.threadID = new.threadid)
-  where id = old.id;
+  where rowid = old.id;
 END;
 
 
