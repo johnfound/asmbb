@@ -5,13 +5,13 @@
 
 sqlSearchPrefix text    "select ",                                                                                              \
                         "  PostFTS.rowid, ",                                                                                    \
-                        "  PostFTS.user as UserName, ",                                                                          \
+                        "  PostFTS.user as UserName, ",                                                                         \
                         "  P.userID, ",                                                                                         \
                         "  U.av_time as AVer, ",                                                                                \
                         "  PostFTS.slug, ",                                                                                     \
                         "  strftime('%d.%m.%Y %H:%M:%S', P.postTime, 'unixepoch') as PostTime, ",                               \
                         "  P.ReadCount, ",                                                                                      \
-                        "  snippet(PostFTS, PostFTS.Content, '*', '*', '...', 16) as Content, ",                                  \
+                        "  snippet(PostFTS, 0, '*', '*', '...', 16) as Content, ",                                              \
                         "  PostFTS.Caption, ",                                                                                  \
                         "  (select count() from UnreadPosts UP where UP.UserID = ?4 and UP.PostID = PostFTS.rowid) as Unread ", \
                         "from ",                                                                                                \
@@ -23,9 +23,7 @@ sqlSearchPrefix text    "select ",                                              
 sqlSearchCntPrefix text "select count() from PostFTS "
 
 sqlSearchWhere text    " where PostFTS match  ?1 "
-sqlOrderBy     text    " order by "
-sqlSearchLimit text    " limit ?2 "
-sqlSearchOffs  text    " offset ?3 "
+sqlSearchLimit text    " limit ?2 offset ?3 "
 
 
 proc ShowSearchResults2, .hStart, .pSpecial
@@ -109,6 +107,10 @@ begin
         stdcall StrDel ; from the stack
 
 .user_ok:
+        stdcall StrLen, [.query]
+        test    eax, eax
+        jz      .missing_query
+
         cmp     [esi+TSpecialParams.thread], 0
         je      .slug_ok
 
@@ -155,15 +157,8 @@ begin
         stdcall StrCat, edi, sqlSearchWhere
 
 .where_ok:
-        stdcall StrCat, edi, [.order]
+;        stdcall StrCat, edi, [.order]                  ??? make the search too slow :(
         stdcall StrCat, edi, sqlSearchLimit
-
-        cmp     [.start], 0
-        je      .offs_ok
-
-        stdcall StrCat, edi, sqlSearchOffs
-
-.offs_ok:
 
         mov     [.sql_cnt], ebx
         mov     [.sql_search], edi
