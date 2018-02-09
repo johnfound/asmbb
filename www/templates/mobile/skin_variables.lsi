@@ -1,1 +1,59 @@
-../Wasp/skin_variables.lsi
+@clColor1: #ffcc40;
+@clColor1FG: #ffcc40;
+
+@clHeader: black;
+@paddingHeader: 8px 16px 8px 16px;
+@paddingFooter: 8px;
+
+@clCurrentTagBG: #ffcc40;
+@clCurrentTagFG: black;
+
+@paddingTags: 4px;
+@paddingOneTag: 4px;
+@marginOneTag: 0px;
+@borderRadTags: 0px;
+@borderTags: none;
+
+@clThreadLink: black;
+
+@clFakeUser: #ff80FF;
+@clBodyBG: #d0d0d0;
+@clBodyFG: black;
+@clDarkBG: #404040;
+@clDarkFG: white;
+
+@borderEdit: none;
+
+@clArticleBG: white;
+@clArticleFG: black;
+
+@clFormBG: #808080;
+@clFormFG: white;
+@clDisabledBG: #e0e0e0;
+@clDisabledFG: #404040;
+
+@clEditorBG: white;
+@clEditorFG: black;
+@bgEditor: @clEditorBG 12px -10px ~"/" 24px 120px no-repeat;
+@bgEditorFocus: @clEditorBG 12px -70px ~"/" 24px 120px no-repeat;
+
+@clButtonBG: #e05050;
+@clButtonFG: white;
+
+@clButtonActiveBG: #ff656c;
+@clButtonActiveFG: white;
+@borderButtonActive: none;
+@borderNavRad: 0px;
+@paddingNav: 4px;
+
+@clSeparator: #404040;
+@borderQuote: 2px solid @clSeparator;
+@clQuoteTitle: #808080;
+
+@clPostInfoBG: #ffcc40;
+@clPostInfoFG: black;
+
+@FontMain: "Verdana", sans-serif;
+@FontMonospace: "Liberation Mono", "Courier New", monospaced;
+
+@HeaderBackground: @clColor1 url("/[special:skin]_images/yellow_back.png") -180px 0%/cover;
