@@ -317,10 +317,10 @@ Maybe some day...
 ','For administrators only!','<a href="/">Home</a>');
 
 
-insert into Messages VALUES ('missing_query','Looking for something.
-Undefined but so attractive.
-The void.
-','What you are looking for?',NULL);
+insert into Messages VALUES ('missing_query','Looking for something,
+Unknown but so desired.
+Do meditate first.
+','What are you looking for?',NULL);
 
 
 create table Log (

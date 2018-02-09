@@ -1,5 +1,5 @@
-C Attempt\sto\soptimize\sthe\ssearch\squeries.\s\sNot\svery\ssuccessful.
-D 2018-02-08T12:14:55.260
+C Small\sfix\son\sthe\sFTS\squery\sbuild.
+D 2018-02-09T09:20:00.913
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c20105a1838d373a2918e527e28440dafc77acc1
@@ -21,7 +21,7 @@ F source/accounts.asm 772274895c362c40f1cdc403f48b93d5e8a907d7
 F source/chat.asm f7c45a3638d67d911f0d2e3f87f1f73a395c352c
 F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
 F source/commands.asm cda7cf26e475542d61f124b6bf9f6cc52425417c
-F source/create.sql 27ac40b99e9871400623ebd9d40699f9bfbfb46e
+F source/create.sql f310909df9484d4173adee0946c54f05ac15ef25
 F source/delete.asm e65e0448de73cfad8fa24a9ba4e5eac3b288629b
 F source/edit.asm 192f2d335a36a92a72f9f043795c2ba0689f1c2f
 F source/engine.asm e107f34bcea0aa0f56b9b125c375b3bbf94f4629
@@ -40,7 +40,7 @@ F source/post_data.asm 3ca626cfd4fe38680bfe5a61115edfc7f14bd70d
 F source/postdebug.asm 13ab4ebf2fc7b35d7fa36853b533236860b641f7
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/render.asm cd6d07bae8a48699c19449cf88751b5610f71ee6
-F source/search.asm e00abc0366b0097df05b55919a2908e555b810c3
+F source/search.asm a67cff2a3f88f82440a50fd96aceca0471f45238
 F source/search.sql 34cf6eea11403e7ac709cd1588bd84c57257135f
 F source/search_cnt.sql 762c07c3e8a9186e966a6377517edc18ab50ef96
 F source/settings.asm 41415bb08d29ac9850d1640b2244f9dd9b817889
@@ -398,7 +398,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 4e590946b352471a1ed3ed9bdc66343aa051b1bc
 F www/templates/mobile/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/mobile/users_online.less 65fa975a964a73a7c63b0d0417d522cfb8b66a27
-P ccb55eb7687cbf0787e8ba9caa5455cc897f19d1
-R 467b29f950842fa69bae3f325ee68ff2
+P 5345b30de14f3c8dd6caff0d825083e9c7a542c5
+R 1e4c3a8f2ec0fbef8e3a51c793dc3edb
 U johnfound
-Z 45ba84f112a0869e2aaa71708c0ac9e9
+Z a858d08449032c2cbe7a184facd53fe4
