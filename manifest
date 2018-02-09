@@ -1,5 +1,5 @@
 C step
-D 2018-02-09T10:15:59.081
+D 2018-02-09T10:16:16.733
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c20105a1838d373a2918e527e28440dafc77acc1
@@ -389,6 +389,7 @@ F www/templates/mobile/preview.tpl 025aabf5392bdb351d8d0b9d10adc74024c8ea45
 F www/templates/mobile/search.less ce4f4dbc93aa9a1153b0eb84f8c251d4b2474806
 F www/templates/mobile/search_result.tpl 439d5d06fc9b2de76abc3f912b9dbd0ef9516801
 F www/templates/mobile/settings.less 94483a7c905415dd4655b0a43fe41906b5f1002c
+F www/templates/mobile/skin_variables.lsi dd835d6b148a2dcfc5af602687e5cb9937ac2219 l
 F www/templates/mobile/sqlite.less 0119ee05712e4332d1bcacb6d55658fb48c76fc5
 F www/templates/mobile/statistics.tpl 383e322808ceebf9f1786ac8f5e6d9d8d1368e25
 F www/templates/mobile/thread_info.tpl 196c8da01b91b3d803d7cb4415fb0b5a87dabb91
@@ -397,7 +398,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 4e590946b352471a1ed3ed9bdc66343aa051b1bc
 F www/templates/mobile/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/mobile/users_online.less 65fa975a964a73a7c63b0d0417d522cfb8b66a27
-P 618fec4355ed9a03a2fbdbc941237f2b76621cec
-R 8f4503ff77c708be7499d114222f57f9
+P 19167270a3a6b8d4a46953161a257ab9e3d53a79
+R d08236b936c9d0c4d6c9b587853a4a71
 U johnfound
-Z 785f4cba8b67d545414473db36aac930
+Z f59da3ee65c82dc1c96a01f850b5d413
