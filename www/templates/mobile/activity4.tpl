@@ -1,1 +1,1 @@
-Reading thread list for [case:[Param]|the root of the forum| <a class="taglink" style="background-color: #404040; font-weight: bold;" href="/[Param]/">[Param]</a> tag].
+../Wasp/activity4.tpl

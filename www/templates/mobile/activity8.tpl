@@ -1,1 +1,1 @@
-Deleting the post <a href="/[Param]/!by_id">#[Param]</a>.
+../Wasp/activity8.tpl

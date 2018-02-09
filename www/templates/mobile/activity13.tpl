@@ -1,1 +1,1 @@
-<a href="/!chat">Chatting.</a>
+../Wasp/activity13.tpl

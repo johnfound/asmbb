@@ -1,1 +1,1 @@
-Editing the post <a href="/[Param]/!by_id">#[Param]</a>.
+../Wasp/activity7.tpl

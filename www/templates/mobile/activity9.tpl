@@ -1,1 +1,1 @@
-Viewing the profile of <a href="/!userinfo/[Param]">[Param]</a>.
+../Wasp/activity9.tpl

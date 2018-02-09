@@ -1,1 +1,1 @@
-The user is doing admin things.
+../Wasp/activity10.tpl
