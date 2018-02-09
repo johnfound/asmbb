@@ -1,5 +1,5 @@
-C replacing\sduplicating\sfiles\swith\ssymlinks.
-D 2018-02-09T09:23:54.275
+C activity.
+D 2018-02-09T09:24:24.458
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c20105a1838d373a2918e527e28440dafc77acc1
@@ -339,6 +339,20 @@ F www/templates/Wasp/users_online.less 94d2985f3dfbb96bf202e914699864d6d7855c4b
 F www/templates/mobile/_images 70c26c9bd422a7e59f2dca80d02ec99f39b390fb l
 F www/templates/mobile/activation_email_subject.tpl 950d3451cce1b1b55eec7c9ac9c0bb415abaa34e
 F www/templates/mobile/activation_email_text.tpl 3d43a474040f226863f8b2bfa7bad91841711b96
+F www/templates/mobile/activity0.tpl 66800be0587fffe32c9acf83029cb8fc7ac74332 l
+F www/templates/mobile/activity1.tpl 6fa6f00fea84fee0253d4707881c9a5338feb90f l
+F www/templates/mobile/activity10.tpl bc1c313b326ae3ea9f440b0f607cfd0f8ce482d6 l
+F www/templates/mobile/activity11.tpl 3a1ef0a6e3383b59f0e17e7bff76186ed93336b5 l
+F www/templates/mobile/activity12.tpl 490dd079393fc2a2180dd0cc5f7f9581fee448dd l
+F www/templates/mobile/activity13.tpl e5c3c56a5acdf56383fd3e5710c342444a30b61c l
+F www/templates/mobile/activity2.tpl 0c02bfb196ad6955c2e9bdfc53e313d15d32a6f6 l
+F www/templates/mobile/activity3.tpl d076539803d955db90cc721ad51644f7c7d4bb70 l
+F www/templates/mobile/activity4.tpl 6a7b65a1f69740098b92dfee5e56d9420a3d0980 l
+F www/templates/mobile/activity5.tpl a0f664d4ee44680703ed8dc5cf30c1046b21dea0 l
+F www/templates/mobile/activity6.tpl b5c8a9fbc2efa2eac931ea024f5d78047618cfc5 l
+F www/templates/mobile/activity7.tpl 606eb1ee82da0767dd85e3d2ac63a07e9874a5fb l
+F www/templates/mobile/activity8.tpl 36d833a0164bb74532e88161cff3d7c8d05cef52 l
+F www/templates/mobile/activity9.tpl 60fe5018f101f822fa00434bff49db7a3f7da947 l
 F www/templates/mobile/chat.less 3d1e51123252aebd8dee0d807da3f93db7e0ee34
 F www/templates/mobile/chat.tpl 29bf259afef7be47c81b0f450e1899b183dd99b8
 F www/templates/mobile/common.less 9470473514a0754e2d9da0e26254bc7af9b367f6
@@ -384,10 +398,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 4e590946b352471a1ed3ed9bdc66343aa051b1bc
 F www/templates/mobile/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/mobile/users_online.less 65fa975a964a73a7c63b0d0417d522cfb8b66a27
-P 68b0c82f80428c0dcecb64ad3b3681623e0af2c9
-R 0f5e879d0971f1ac2475a5aae0574702
-T *branch * mobile_with_symlinks
-T *sym-mobile_with_symlinks *
-T -sym-AdvSearch *
+P 0286f050c21da753f2530f71f931521367314a01
+R 6c188cffa890cf95e4e5e91f34d25360
 U johnfound
-Z 94eb9fa3a3d671fdf83a9bbf91e46be6
+Z f05f149139565066e1fdf0bc3e249b93
