@@ -1,5 +1,5 @@
 C step
-D 2018-02-09T17:11:48.378
+D 2018-02-09T17:16:33.219
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c20105a1838d373a2918e527e28440dafc77acc1
@@ -355,14 +355,18 @@ F www/templates/mobile/activity8.tpl 36d833a0164bb74532e88161cff3d7c8d05cef52 l
 F www/templates/mobile/activity9.tpl 60fe5018f101f822fa00434bff49db7a3f7da947 l
 F www/templates/mobile/chat.less 3d1e51123252aebd8dee0d807da3f93db7e0ee34
 F www/templates/mobile/chat.tpl 29bf259afef7be47c81b0f450e1899b183dd99b8
+F www/templates/mobile/common.less 762e4e8198de87fbcb131462b3476432725a2c65 l
 F www/templates/mobile/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/mobile/del_confirm.tpl f7475fdde0d37c6bcd90435f5f075512ff6d5e34
+F www/templates/mobile/delete.less 3a74460f12ec494d6ac273a831839c1242abdc60 l
 F www/templates/mobile/error.less b09d5dd96551ddd5560370ee1a094c2c1db17a37
 F www/templates/mobile/error_html_end.tpl 6b30d9c2bd22da157a2f5eb6e176c4bbe65d3697
 F www/templates/mobile/error_html_start.tpl 8b3207b2b7ab58de589040f28edbb25d14b0ab66
 F www/templates/mobile/form_edit.tpl 220344b6ce534c80076cffc47d84735c32f0260b
 F www/templates/mobile/form_edit_thread.tpl 9ba48416deb4498a8dcad61198289fb396592980 l
+F www/templates/mobile/form_editinfo.tpl 91a3644fb4b1021bffa2356f7291f6e457eebe1e l
 F www/templates/mobile/form_login.tpl 1ca5a25baff036f4b5a655b72d25c18c987a8ed7 l
+F www/templates/mobile/form_new_post.tpl 8d49d3712dae533e8a15a522baadd32c230b6f9f l
 F www/templates/mobile/form_new_thread.tpl 95aeb8e36c8aff51b101dca130c101071c917b6c l
 F www/templates/mobile/form_post_debug.tpl 0a3e574bb2595001a5c1cebbd66c59aefd6aaab7 l
 F www/templates/mobile/form_register.tpl 6e44ae46c9d0df170d76cb91b145bc2f3d60b7ea l
@@ -380,6 +384,7 @@ F www/templates/mobile/nav_thread.tpl a18ab94a34514a5456c7523659417af630c59f0a
 F www/templates/mobile/navigation.less 73ca9292dc3f38672878c6507aca8053052b3322
 F www/templates/mobile/post_view.tpl 3501e1aebdb37ca0c0c7798804489fb587d33a46
 F www/templates/mobile/posteditor.less 207c1795312cc607ffbf3e855655aed28dff75a0
+F www/templates/mobile/postnew.less 3df1b56984c0e0268104a69862782120a40f06be l
 F www/templates/mobile/posts.less 59ec3c16902ff587464b82efdbf60e59e1f8bae0
 F www/templates/mobile/preview.tpl 026ef2e5a823b1be1b20d45d6ff33d2f5f0135ab
 F www/templates/mobile/search.less ce4f4dbc93aa9a1153b0eb84f8c251d4b2474806
@@ -387,12 +392,14 @@ F www/templates/mobile/search_result.tpl 439d5d06fc9b2de76abc3f912b9dbd0ef951680
 F www/templates/mobile/settings.less 94483a7c905415dd4655b0a43fe41906b5f1002c
 F www/templates/mobile/skin_variables.lsi 3f07dc89d22534100749c66dfde4d240153a55d4
 F www/templates/mobile/sqlite.less 0119ee05712e4332d1bcacb6d55658fb48c76fc5
+F www/templates/mobile/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
 F www/templates/mobile/thread_info.tpl 196c8da01b91b3d803d7cb4415fb0b5a87dabb91
 F www/templates/mobile/thread_list.less bceb065b080ca49a875690e6bf9581fffeb53160
 F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
+F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less a83e549bba7d5f700903ec7c8c6a03c62ed3b9b5
-P db64ea4eaa02ace524aa07eeed0fac90c09ac6fb
-R 65ac6ee9ab8e7175b7f569a595d43064
+P 36334da660088753269c5d35e7556bd6c9512cec
+R c310d563c336537bc39903e40da6f7ed
 U johnfound
-Z de03e646daf42014383040afa4cf1a05
+Z d6f27deae37080190162e1cdae2674f4
