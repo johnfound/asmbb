@@ -1,5 +1,5 @@
-C Small\sfix\son\sthe\sFTS\squery\sbuild.
-D 2018-02-09T09:20:00.913
+C replacing\sduplicating\sfiles\swith\ssymlinks.
+D 2018-02-09T09:23:54.275
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c20105a1838d373a2918e527e28440dafc77acc1
@@ -339,20 +339,6 @@ F www/templates/Wasp/users_online.less 94d2985f3dfbb96bf202e914699864d6d7855c4b
 F www/templates/mobile/_images 70c26c9bd422a7e59f2dca80d02ec99f39b390fb l
 F www/templates/mobile/activation_email_subject.tpl 950d3451cce1b1b55eec7c9ac9c0bb415abaa34e
 F www/templates/mobile/activation_email_text.tpl 3d43a474040f226863f8b2bfa7bad91841711b96
-F www/templates/mobile/activity0.tpl 604635d7badaffb337aa5419b32e8bb70b3f658a
-F www/templates/mobile/activity1.tpl 08c17b90d0740eaf1350f8cf039f9de9778bc7a1
-F www/templates/mobile/activity10.tpl 2ff361dad8ba2fc41916f34ade27f5b1bdd9f905
-F www/templates/mobile/activity11.tpl adfc421bd8d000c52a7b03eddde3e72193f61d69
-F www/templates/mobile/activity12.tpl 89d4944ead68405f9371433a4281fb712b8d926b
-F www/templates/mobile/activity13.tpl 42bb013fa5dd6cabcffd18a683ab02680ac7f7c5
-F www/templates/mobile/activity2.tpl 56e2d424b3fa2d47dfb3e39c84dc979e02783ef4
-F www/templates/mobile/activity3.tpl 151d90f8a6ac52cfd53a32d38786496bb7c12d11
-F www/templates/mobile/activity4.tpl c7716e192f34f996d9f9f167c99d71ba8711e954
-F www/templates/mobile/activity5.tpl 648b55344763f0ae54fad0d8a03eebe5efe80f67
-F www/templates/mobile/activity6.tpl 79b6319799e162869c14998a0ce7bb40ba0d040c
-F www/templates/mobile/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
-F www/templates/mobile/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
-F www/templates/mobile/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
 F www/templates/mobile/chat.less 3d1e51123252aebd8dee0d807da3f93db7e0ee34
 F www/templates/mobile/chat.tpl 29bf259afef7be47c81b0f450e1899b183dd99b8
 F www/templates/mobile/common.less 9470473514a0754e2d9da0e26254bc7af9b367f6
@@ -398,7 +384,10 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 4e590946b352471a1ed3ed9bdc66343aa051b1bc
 F www/templates/mobile/userinfo.tpl f699471f5bed177adaff6c121af5bc760e4db140
 F www/templates/mobile/users_online.less 65fa975a964a73a7c63b0d0417d522cfb8b66a27
-P 5345b30de14f3c8dd6caff0d825083e9c7a542c5
-R 1e4c3a8f2ec0fbef8e3a51c793dc3edb
+P 68b0c82f80428c0dcecb64ad3b3681623e0af2c9
+R 0f5e879d0971f1ac2475a5aae0574702
+T *branch * mobile_with_symlinks
+T *sym-mobile_with_symlinks *
+T -sym-AdvSearch *
 U johnfound
-Z a858d08449032c2cbe7a184facd53fe4
+Z 94eb9fa3a3d671fdf83a9bbf91e46be6

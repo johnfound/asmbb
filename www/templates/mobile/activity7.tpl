@@ -1,1 +1,0 @@
-Editing the post <a href="/[Param]/!by_id">#[Param]</a>.

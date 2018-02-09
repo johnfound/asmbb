@@ -1,1 +1,0 @@
-The user is logging out.
