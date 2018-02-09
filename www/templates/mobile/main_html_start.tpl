@@ -1,5 +1,4 @@
 [css:common.css]
-[css:navigation.css]
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +22,7 @@
   <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
   <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
   <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
-  <link rel="manifest" href="/images/favicons/manifest.json?v=3">
+  <link rel="manifest" href="/images/favicons/manifest.json">
   <link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg">
   <link rel="shortcut icon" href="/images/favicons/favicon.ico">
   <meta name="msapplication-TileColor" content="#ffffff">
@@ -35,19 +34,16 @@
 <body>
   <div class="header">
     <h1>[special:header]</h1>
-    <span class="spacer"></span>
-    [case:[special:userid]|
-      <a href="/!login/">Login</a>
-      <a href="/!register/">Register</a>
-    |
-      <a href="/!logout">Logout ( [special:username] )</a>
-      <a href="/!userinfo/[special:username]">User profile</a>
-    ]
+    <div>
+      [case:[special:userid]|<a href="/!login/">Login</a><br><a href="/!register/">Register</a>|
+      <a href="/!logout">Logout ( [special:username] )</a><br><a href="/!userinfo/[special:username]">User profile</a>]
+    </div>
   </div>
 
-  <form class="tags" id="search_form" action="[case:[special:search]||../]!search/" method="get" >
-    <input class="search_line" type="search" name="s" placeholder="search" value="[special:search]">
-    <input class="icon_btn search_icon"  type="submit" value="">
+  <form class="tags" id="search_form" action="[case:[special:cmdtype]||/|../]!search/" method="get" >
+    <input class="search_line" type="search" name="s" placeholder="text search" value="[special:search]">
+    <input class="search_line" type="search" name="u" placeholder="user search" value="[special:usearch]">
+    <input class="button search_icon"  type="submit" value="">
   </form>
 
   <div class="tags"><a class="tagicon [case:[special:dir]|current|not_current]" title="Show all threads" href="/"></a>[special:alltags]</div>

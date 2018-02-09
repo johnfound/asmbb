@@ -1,3 +1,9 @@
+@globWidth: 100%;
+@globMaxWidth: none;
+@globMargin: 8px auto 8px auto;
+
+@msgBoxWidth: 100%;
+
 @clColor1: #ffcc40;
 @clColor1FG: #ffcc40;
 

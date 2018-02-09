@@ -3,27 +3,48 @@
 /* User profile page */
 
 div.user_profile {
-  position: relative;
-  width: 95%;
-  max-width: 1280px;
-  margin: 0px auto 0px auto;
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
   background-color: @clDarkBG;
   color: @clDarkFG;
   overflow: auto;
-  padding: 16px;
+  display: grid;
+  grid: 'area1 .' 'area1 .' 'area2 .' 'area2 .' 'area2 .';
+
+  div {
+    margin: 8px;
+  }
+
+  form {
+    margin: 8px;
+    padding: 16px;
+    background-color: @clFormBG;
+    color: @clFormFG;
+  
+    h1 {
+      text-align: left;
+      margin: 0px 0px 8px 0px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    label {
+      text-align: left;
+      margin: 0px 0px 8px 0px;
+      font-size: 18px;
+      font-weight: bold;
+      display: block;
+    }
+  }
 }
 
 div.user_desc {
-  float: left;
-  display: block;
-  width: 33%;
-  max-height: 50%;
   background-color: @clArticleBG;
   color: @clArticleFG;
   padding: 16px;
   overflow: auto;
-  margin: 0px 0px 8px 0px;
-  vertical-align: top;
+  grid-area: area1;
 
   h1 {
     text-align: center;
@@ -47,47 +68,6 @@ img.profile_avatar {
   height: 128px;
   background-color: @clColor1;
 }
-
-
-form.user_edit_info {
-  float: right;
-  display: block;
-  width: 60%;
-  width: calc(67% - 16px);
-  padding: 16px;
-  background-color: @clFormBG;
-  color: @clFormFG;
-  margin-bottom: 8px;
-}
-
-form.user_edit_pass {
-  float: left;
-  display: block;
-  width: 33%;
-  padding: 16px;
-  background-color: #d0d0d0;
-  margin-bottom: 8px;
-  clear: left;
-
-  h1 {
-    text-align: left;
-    margin: 0px 0px 8px 0px;
-    color: black;
-    font-size: 18px;
-    font-weight: bold;
-  }
-
-  label {
-    text-align: left;
-    margin: 0px 0px 8px 0px;
-    color: black;
-    font-size: 18px;
-    font-weight: bold;
-    display: block;
-  }
-}
-
-
 
 textarea.user_desc {
   width: 100%;
@@ -134,14 +114,10 @@ input.browse {
 
 
 div.user_stat {
-  float: right;
-  display: block;
-  width: 60%;
-  width: calc(67% - 16px);
   padding: 16px;
   background-color: @clArticleBG;
   color: @clArticleFG;
-  margin-bottom: 8px;
+  grid-area: area2;
 
   h1 {
     text-align: left;

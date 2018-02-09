@@ -5,13 +5,13 @@
 </form>
 
 <form class="user_edit_info" method="post" enctype="multipart/form-data" action="/!avatar_upload/[username]">
-  <label>Avatar:<span class="small">(.png only; Maximal size: 10KB; Size: 128x128px)</span></label>
+  <h1>Avatar:<span class="small">(.png only; Maximal size: 10KB; Size: 128x128px)</span></h1>
   <input type="file" class="browse" name="avatar">
   <input type="submit" name="submit" class="submit" value="Upload">
 </form>
 
 <form class="user_edit_info" method="post" action="/!setskin/[username]">
-  <label>Forum skin:</label>
+  <h1>Forum skin:</h1>
   <select class="skin" name="skin">
     <option value="0">(Default)</option>
     [special:skins=[skin]]
@@ -36,4 +36,3 @@
   <input type="submit" name="changeemail" class="submit" value="Change email">
 </form>
 ]
-

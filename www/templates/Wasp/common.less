@@ -28,12 +28,15 @@ input {
 /* header styles */
 
 div.header {
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
+
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  width: 95%;
-  max-width: 1280px;
-  margin: 0px auto 0px auto;
   background: @HeaderBackground;
+
   overflow: auto;
   padding: @paddingHeader;
 
@@ -57,12 +60,13 @@ div.header {
 }
 
 
+
 /* Search form styles */
 
 form#search_form {
-  width: 95%;
-  max-width: 1280px;
-  margin: 8px auto;
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
   display: flex;
 }
 
@@ -70,8 +74,8 @@ form#search_form {
   height: 32px;
   margin: 0px 8px 0px 0px;
   padding: 4px 36px 4px 8px;
-  background-color: @clDarkBG;
   border: @borderEdit;
+  background-color: @clDarkBG;
   color: @clDarkFG;
   display:block;
   flex-grow: 1;
@@ -118,10 +122,9 @@ div.footer {
   background-color: @clDarkBG;
   color: @clDarkFG;
   font-size: 90%;
-  width: 95%;
-  max-width: 1280px;
-  margin: auto;
-  margin-top: 8px;
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: 8px auto 0px auto;
   line-height: 1em;
   padding: @paddingFooter;
 
@@ -135,10 +138,9 @@ div.footer {
 }
 
 div.attribution {
-  width: 95%;
-  max-width: 1280px;
-  margin: auto;
-  margin-top: 8px;
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
   padding: 4px 0px;
 }
 
@@ -146,15 +148,18 @@ div.attribution {
 /* tag list styles */
 
 div.tags {
-  width: 95%;
-  max-width: 1280px;
-  margin: 8px auto;
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
   padding: @paddingTags;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 
   background-color: @clDarkBG;
   font-size: 28px;
   font-weight: normal;
-  word-wrap: break-word;
 
   line-height: 80%;
   border-bottom: @borderEdit;
@@ -209,13 +214,13 @@ a.current_tag {
 
 div.message_block {
   font-size: 20px;
-  width: 640px;
-  background: white;
+  width: @msgBoxWidth;
+  background: @clArticleBG;
+  color: @clArticleFG;
   margin: 8px auto;
   text-align: center;
   padding: 20px;
   clear: both;
-  color: #000;
 }
 
 div.message_block h1 {
@@ -245,4 +250,9 @@ div.message {
   text-align: left;
   color: black;
   display: inline-block;
+}
+
+.small {
+  font-size: 80%;
+  font-weight: normal;
 }
