@@ -3,12 +3,14 @@
 /* Thread view styles */
 
 div.thread {
-  margin: auto;
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
 }
 
 h1.thread_caption {
   font-size: 20px;
-  margin: 16px 0px 0px 0px;
+  margin: 32px 0px 0px 0px;
   clear:both;
 
   a {
@@ -19,7 +21,7 @@ h1.thread_caption {
     background-repeat: no-repeat;
     width: 18px;
     height: 18px;
-    background-image: url("/[special:skin]_images/edit_gray.svg");
+    background-image: url("/[special:skin]_images/edit.svg");
   }
 }
 
@@ -51,7 +53,7 @@ a.user_name {
   display: block;
   padding-top: 4px;
   text-indent: 40px;
-  color: @clColor1;
+  color: @clColor1FG;
   font-weight: bold;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -101,19 +103,19 @@ div.edit_tools {
   }
 
   .icon_edit {
-    background-image: url("/[special:skin]_images/edit_gray.svg");
+    background-image: url("/[special:skin]_images/edit.svg");
   }
 
   .icon_del {
-    background-image: url("/[special:skin]_images/del_gray.svg");
+    background-image: url("/[special:skin]_images/del.svg");
   }
 }
 
 
 div.post_text {
   padding: 8px 8px 0px 8px;
-  background-color: @clPostBG;
-  color: @clPostFG;
+  background-color: @clArticleBG;
+  color: @clArticleFG;
 }
 
 // In order to not allow the floating user info escaped from short posts.

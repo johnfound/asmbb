@@ -39,6 +39,7 @@ code.block {
   overflow: auto;
 
   white-space: pre;
+  clear: both;
 
   border-left: 4px solid @clButtonBG;
 }
@@ -127,7 +128,6 @@ div.bq {
   margin:  1em;
 
   background-color: @clArticleBG;
-  overflow: auto;
   clear: both;
 }
 
@@ -143,10 +143,3 @@ h1.bq
 
   overflow: hidden;
 }
-
-h1.bq::after {
-  content: " wrote:";
-  font-size: 80%;
-  font-weight: normal;
-}
-
