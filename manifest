@@ -1,5 +1,5 @@
-C Added\sthe\sproper\ssymlinks\sin\sthe\sLight\sskin.
-D 2018-02-10T12:38:41.918
+C The\sadvanced\ssearch\sfeature\smerged.\sIt\sis\snot\sfinished\syet,\sbut\sis\sworking\senough.
+D 2018-02-10T12:41:43.874
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c20105a1838d373a2918e527e28440dafc77acc1
@@ -388,7 +388,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less a83e549bba7d5f700903ec7c8c6a03c62ed3b9b5
-P c83bf86afdb347885ca8746ad07a8b5e5e8eac63 e7d30dc1214119e0ee4954923051b212ceb0c755
+P 574898632f51938c87dc607b79fb923a602721ec aa512491ab3d5ab0eec98cbe93e711ebffc3ec17
 R fd4b200e8972da68084dcb9d6560dd33
 U johnfound
-Z 8665ec5a496996eee3ec73bb39d8a2bc
+Z 73e09f9a02460f020f239714a60e0bcc
