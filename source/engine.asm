@@ -28,6 +28,8 @@ options.ShowImported = 0
 options.DebugWeb = 0
 options.DebugSQLite = 0
 
+options.DebugWebSSE = 0         ; debug server sent events - creates a command "!echo_events" for debugging SSE.
+
 ;HeapManager  equ ASM
 ;LinuxThreads equ native
 
@@ -83,7 +85,7 @@ uglobal
 endg
 
 
-rb 373
+;rb 373
 
 
 start:

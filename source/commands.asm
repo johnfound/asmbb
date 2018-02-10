@@ -498,8 +498,12 @@ begin
         stdcall StrCompNoCase, eax, txt "!chat_events"
         jc      .exec_command_chat
 
+if defined options.DebugWebSSE & options.DebugWebSSE
+
         stdcall StrCompNoCase, eax, txt "!echo_events"
         jc      .exec_command_echo
+
+end if
 
 .chat_ok:
 
@@ -673,12 +677,15 @@ end if
         jmp     .final_clean
 
 
+if defined options.DebugWebSSE & options.DebugWebSSE
+
 .exec_command_echo:
 
         lea     eax, [.special]
         stdcall EchoRealTime, [.hSocket], [.requestID], eax
         jmp     .final_clean
 
+end if
 ;..................................................................................
 
 
