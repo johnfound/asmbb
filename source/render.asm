@@ -249,6 +249,9 @@ begin
         stdcall StrCompNoCase, edi, "version"
         jc      .get_version
 
+        stdcall StrCompNoCase, edi, "cmdtype"
+        jc      .get_cmdtype
+
         stdcall StrCompNoCase, edi, "stats"
         jc      .get_stats
 
@@ -324,6 +327,9 @@ begin
         stdcall StrCompNoCase, edi, "search"
         jc      .get_search
 
+        stdcall StrCompNoCase, edi, "usearch"
+        jc      .get_usearch
+
         stdcall GetQueryItem, edi, "skins=", 0
         test    eax, eax
         jnz     .get_skins
@@ -382,14 +388,17 @@ end if
 
 ;..................................................................
 .get_version:
+        stdcall StrDupMem, cVersion
+        jmp     .return_value
 
-        mov     eax, cVersion
+;..................................................................
+.get_cmdtype:
+        stdcall NumToStr, [esi+TSpecialParams.cmd_type], ntsDec or ntsUnsigned
         jmp     .return_value
 
 ;..................................................................
 
 .get_title:
-
         mov     eax, [esi+TSpecialParams.page_title]
         jmp     .return_encoded
 
@@ -745,6 +754,22 @@ endl
 
         jmp     .return_value
 
+
+.get_usearch:
+
+        xor     eax, eax
+        stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
+        jc      .return_value
+
+        stdcall GetQueryItem, eax, txt "u=", 0
+        test    eax, eax
+        jz      .return_value
+
+        push    eax
+        stdcall StrEncodeHTML, eax
+        stdcall StrDel ; from the stack
+
+        jmp     .return_value
 
 ;..................................................................
 

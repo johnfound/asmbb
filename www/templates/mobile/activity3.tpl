@@ -1,1 +1,1 @@
-Registering account.
+../Wasp/activity3.tpl

@@ -1,1 +1,1 @@
-Logging in.
+../Wasp/activity1.tpl

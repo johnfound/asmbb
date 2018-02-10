@@ -317,6 +317,10 @@ Maybe some day...
 ','For administrators only!','<a href="/">Home</a>');
 
 
+insert into Messages VALUES ('missing_query','Looking for something,
+Unknown but so desired.
+Do meditate first.
+','What are you looking for?',NULL);
 
 
 create table Log (
@@ -335,22 +339,34 @@ create table ProcessID (
 
 
 
-CREATE VIRTUAL TABLE PostFTS using fts5( Content, content=Posts, content_rowid=id, tokenize='porter unicode61 remove_diacritics 1');
-
+CREATE VIRTUAL TABLE PostFTS using fts5(Content, Caption, slug, User, Tags, prefix="1 2 3", tokenize='porter unicode61 remove_diacritics 1');
 
 CREATE TRIGGER PostsAI AFTER INSERT ON Posts BEGIN
-  insert into PostFTS(rowid, Content) VALUES (new.id, new.Content);
+  insert into PostFTS(rowid, Content, Caption, slug, user, tags) VALUES (
+    new.id,
+    new.Content,
+    (select Caption from Threads where id=new.threadid),
+    (select slug from Threads where id = new.threadid),
+    (select nick from users where id = new.userid),
+    (select group_concat(TT.Tag, ", ") from ThreadTags TT where TT.threadID = new.threadid)
+  );
   update Users set PostCount = PostCount + 1 where Users.id = new.UserID;
 END;
 
 CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
-  insert into PostFTS(PostFTS, rowid, Content) VALUES('delete', old.id, old.Content);
+  delete from PostFTS where rowid = old.id;
   update Users set PostCount = PostCount - 1 where Users.id = old.UserID;
 END;
 
 CREATE TRIGGER PostsAU AFTER UPDATE ON Posts BEGIN
-  INSERT INTO PostFTS(PostFTS, rowid, Content) VALUES('delete', old.id, old.Content);
-  INSERT INTO PostFTS(rowid, Content) VALUES (new.id, new.Content);
+  update PostFTS set
+    rowid = new.id,
+    Content = new.Content,
+    Caption = (select Caption from Threads where id=new.threadid),
+    slug = (select slug from Threads where id = new.threadid),
+    user = (select nick from users where id = new.userid),
+    tags = (select group_concat(TT.Tag, ", ") from ThreadTags TT where TT.threadID = new.threadid)
+  where rowid = old.id;
 END;
 
 

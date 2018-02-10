@@ -33,18 +33,19 @@ div.post_text p.uli {
 code.block {
   display: block;
   text-align: left;
-  font-family: 'Source Code Pro', monospace;
+  font-family: @FontMonospace;
   padding: 0.5em;
   margin: 0.5em 0px;
   overflow: auto;
 
   white-space: pre;
+  clear: both;
 
   border-left: 4px solid @clButtonBG;
 }
 
 code {
-  font-family: 'Source Code Pro', monospace;
+  font-family: @FontMonospace;
   font-weight: bold;
   word-break: break-all;
 }
@@ -92,44 +93,41 @@ img.txt2 {
 
 /* article tables */
 table.txt {
-   border-right-width: 2px;
-   border-bottom-width: 2px;
-   border-style: solid;
-   border-color: #404040;
-   margin: 0.2em;
-   background-color: white;
-   border-collapse: collapse;
+  border-right-width: 2px;
+  border-bottom-width: 2px;
+  border-style: solid;
+  border-color: @clSeparator;
+  margin: 0.2em;
+  background-color: white;
+  border-collapse: collapse;
+
+  td {
+    font-size: 1em;
+    border-left-width: 2px;
+    border-top-width: 2px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-style: solid;
+    border-color: @clSeparator;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
+    margin: 0px;
+  }
 }
-
-
-/* style of the article table cell */
-table.txt td {
-   font-size: 1em;
-   border-left-width: 2px;
-   border-top-width: 2px;
-   border-right-width: 0px;
-   border-bottom-width: 0px;
-   border-style: solid;
-   border-color: #404040;
-   padding-left: 0.2em;
-   padding-right: 0.2em;
-   padding-top: 0.1em;
-   padding-bottom: 0.1em;
-   margin: 0px;
-}
-
 
 
 /* block quotes */
 
 div.bq {
-  border: 2px solid #808080;
+  border: @borderQuote;
 
   box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.2);
-  padding: 8px;
+  padding: 0em 0.7em 0.1em 1em;
+  margin:  1em;
 
-  background-color: #f8f8f8;
-  overflow: auto;
+  background-color: @clArticleBG;
   clear: both;
 }
 
@@ -145,10 +143,3 @@ h1.bq
 
   overflow: hidden;
 }
-
-h1.bq::after {
-  content: " wrote:";
-  font-size: 80%;
-  font-weight: normal;
-}
-

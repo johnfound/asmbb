@@ -1,1 +1,1 @@
-The user is logging out.
+../Wasp/activity2.tpl

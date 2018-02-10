@@ -13,4 +13,4 @@ left join
   ThreadTags TT on TT.ThreadID = T.id and TT.Tag = ?5
 
 where
-  PostFTS match ?1 and ( ?4 is null or T.slug = ?4) and (?5 is null or TT.tag = ?5)
+  (?1 is NULL or PostFTS match ?1) and ( ?4 is null or T.slug = ?4) and (?5 is null or TT.tag = ?5) and (?6 is null or P.userID = ?6)

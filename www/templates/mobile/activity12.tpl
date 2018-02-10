@@ -1,1 +1,1 @@
-Editing the title and tags of <a href="/[Param]/">[sql:select Caption from Threads where Slug = ?|[Param]]</a> thread.
+../Wasp/activity12.tpl

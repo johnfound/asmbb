@@ -3,9 +3,9 @@
 /* Thread view styles */
 
 div.thread {
-  width: 95%;
-  max-width: 1280px;
-  margin: auto;
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
 }
 
 h1.thread_caption {
@@ -120,6 +120,7 @@ div.edit_tools {
 div.post_text {
   padding: 0px;
   background-color: @clArticleBG;
+  color: @clArticleFG;
   width: 190px;
   flex-grow: 1;
 

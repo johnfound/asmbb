@@ -7,7 +7,7 @@
     <a class="ui" href="[case:[special:page]||../]../">Thread list</a>
     <a class="ui" href="[case:[special:page]|./|!by_id]">Thread</a>
   </div>
-  <form id="editform" action="!post" method="post">
+  <form id="editform" action="!post#preview" method="post">
     <p>Thread title:</p>
     <h1 class="fakeedit">[caption]</h1>
     <p>Post content:</p>

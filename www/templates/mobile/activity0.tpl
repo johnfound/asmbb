@@ -1,1 +1,1 @@
-Unknown activity.
+../Wasp/activity0.tpl

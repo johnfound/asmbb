@@ -6,7 +6,7 @@
   <title>[special:title]</title>
   <meta name="description" content="[special:description]">
   <meta name="keywords" content="[special:keywords]">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scallable=no">
   [special:allstyles]
   <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
@@ -40,9 +40,10 @@
     </div>
   </div>
 
-  <form class="tags" id="search_form" action="[case:[special:search]||../]!search/" method="get" >
-    <input class="search_line" type="search" name="s" placeholder="search" value="[special:search]">
-    <input class="icon_btn search_icon"  type="submit" value="">
+  <form class="tags" id="search_form" action="[case:[special:cmdtype]||/|../]!search/" method="get" >
+    <input class="search_line" type="search" name="s" placeholder="text search" value="[special:search]">
+    <input class="search_line" type="search" name="u" placeholder="user search" value="[special:usearch]">
+    <input class="button search_icon"  type="submit" value="">
   </form>
 
   <div class="tags"><a class="tagicon [case:[special:dir]|current|not_current]" title="Show all threads" href="/"></a>[special:alltags]</div>

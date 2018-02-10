@@ -2,7 +2,7 @@
 
 #editform {
   overflow: auto;
-  margin-top: 8px;
+  margin: 8px 0px 0px 0px;
   padding: 16px;
   background-color: @clFormBG;
 
@@ -11,6 +11,17 @@
     font-weight: bold;
     margin: 0px 0px 4px 0px;
   }
+}
+
+h1.fakeedit {
+  border-style: none;
+  padding: 4px;
+  margin: 8px 0px 8px 0px;
+
+  background-color: @clDisabledBG;
+  color: @clDisabledFG;
+  font-weight: bold;
+  font-size: inherit;
 }
 
 textarea.editor {
@@ -46,16 +57,4 @@ div.panel {
   input:active, input:focus, input:hover {
     background-color: @clButtonActiveBG;
   }
-}
-
-
-h1.fakeedit {
-  border-style: none;
-  padding: 4px;
-  margin: 8px 0px 8px 0px;
-
-  background-color: @clDisabledBG;
-  color: @clDisabledFG;
-  font-weight: bold;
-  font-size: inherit;
 }
