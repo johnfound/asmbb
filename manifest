@@ -1,5 +1,5 @@
-C Now\sit\sshould\swork.
-D 2018-02-10T12:14:40.833
+C Added\ssome\sbuild\sscripts.
+D 2018-02-10T12:33:34.948
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c20105a1838d373a2918e527e28440dafc77acc1
@@ -180,6 +180,7 @@ F www/templates/Light/activity9.tpl 60fe5018f101f822fa00434bff49db7a3f7da947 l
 F www/templates/Light/chat.less 61095657b21ca78023c0d3d499e909789f961d2c l
 F www/templates/Light/chat.tpl fcdc00ae077c1a36f1d81851ac613dd98013b349 l
 F www/templates/Light/common.less 762e4e8198de87fbcb131462b3476432725a2c65 l
+F www/templates/Light/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Light/del_confirm.tpl cdcb838e2e3a339de5408643fd2c2f3c447ab916 l
 F www/templates/Light/delete.less 3a74460f12ec494d6ac273a831839c1242abdc60 l
 F www/templates/Light/error.less 83cd53cf80eb467b611ebe7865c41c96694c293f l
@@ -322,6 +323,8 @@ F www/templates/Wasp/threadnew.less d844afdd84390db9ea9df4f1075eb75b93fd7c1c
 F www/templates/Wasp/userinfo.less cbca0e9dd4ecca74f820083dcfab65d347138d1d
 F www/templates/Wasp/userinfo.tpl 31a67fb1e469465986f6760c6a3dcb35636a2f39
 F www/templates/Wasp/users_online.less a48995a530b5b47a8b01beae809dfd4b2f70059a
+F www/templates/build_styles.sh b8522fb67875909a5558a0d389655dff710b22a6 x
+F www/templates/create_tar.sh ff82a0ca4260a3d1712233ceb3af4f98b810e112 x
 F www/templates/mobile/_images 70c26c9bd422a7e59f2dca80d02ec99f39b390fb l
 F www/templates/mobile/activation_email_subject.tpl e0bd685144e72197dd0034b068e82d7604f926d2 l
 F www/templates/mobile/activation_email_text.tpl 50d1d6b7fe42736e334ab6870d7cc72e9085889d l
@@ -385,7 +388,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less a83e549bba7d5f700903ec7c8c6a03c62ed3b9b5
-P 0a8e1beaeb666fc595f7dece8a7e922da622cce6
-R 0006d756f680460025b0a01f16df49f3
+P 3fca6368f1fcab9611af9bd1e058771425f49904
+R fd4b200e8972da68084dcb9d6560dd33
 U johnfound
-Z 62d00df1390cf4112d52b5b91ece6591
+Z c84a43a9d2760c563d8eea89cb1b51d2
