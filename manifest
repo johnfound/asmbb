@@ -1,13 +1,13 @@
-C The\sadvanced\ssearch\sfeature\smerged.\sIt\sis\snot\sfinished\syet,\sbut\sis\sworking\senough.
-D 2018-02-10T12:41:43.874
+C Binary\spack\supdated.
+D 2018-02-10T12:52:56.297
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
-F install/asmbb.tar.gz c20105a1838d373a2918e527e28440dafc77acc1
+F install/asmbb.tar.gz d229fc2cf882580579aa5ace8a9dcfe78d0e7a6d
 F install/create_release.sh 7286d4d2777e9d15ee323d2a1db7b4a225715418 x
 F install/exclude.txt d68845d3aee98fc8ace64460f9d26ab3f2adc06d
 F install/install.txt 46093ff6d21640a09fa5f0b9b943de868fa7f1ac
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
-F install/unpack.tar.gz acf0a12a28986c608050bf14600696fb4cf06654
+F install/unpack.tar.gz e8f533bf60dcac946644a0d3fcaa8422d3e9d37d
 F install/unpack/.htaccess efa046601aad51a87da0946b4eecadcc0d234c15
 F install/unpack/unpack.sh 4443f580fe76faffa7015e6e4b73b22f6290f4a0 x
 F source/Documents/FastCGI\sSpecification.html e2fc06a5abf1b3505c665e108ce3ad28b636095a
@@ -388,7 +388,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less a83e549bba7d5f700903ec7c8c6a03c62ed3b9b5
-P 574898632f51938c87dc607b79fb923a602721ec aa512491ab3d5ab0eec98cbe93e711ebffc3ec17
-R fd4b200e8972da68084dcb9d6560dd33
+P 5035db4e07af303149729498ef90c4d7e3c40f70
+R fc1d902a613cd07555f30dc7aca0e8fd
 U johnfound
-Z 73e09f9a02460f020f239714a60e0bcc
+Z 2d4787fe61993cfbfb173c59fb1ef6d3
