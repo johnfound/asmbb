@@ -1,5 +1,5 @@
 C step
-D 2018-02-09T17:16:33.219
+D 2018-02-10T11:03:49.556
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c20105a1838d373a2918e527e28440dafc77acc1
@@ -143,27 +143,11 @@ F www/robots.txt 1f19cb38e5bc7508fde66876fab2dfdd453f96c6
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/Light/_images/anon.png 9184b9fe4cf4632fd4dc7baf7db2eeccd8c57334 l
 F www/templates/Light/_images/ban.svg 45504bdc41619c0b2a0f1f160b2aa5d495dc3520 l
-F www/templates/Light/_images/chatemoticons/angry.gif 20500d3b94175c345946ad8bb149068d1d5c2b1a
-F www/templates/Light/_images/chatemoticons/cry.gif b821d5e08564af307ac3c71f945dddfa8ea6452c
-F www/templates/Light/_images/chatemoticons/lol.gif 0e9fe36570a78b40ed0baf0a08b0f0ca6e5e9605
-F www/templates/Light/_images/chatemoticons/rofl.gif 907a534a661a9a090665496f07b5361501c7ba91
-F www/templates/Light/_images/chatemoticons/sad.gif 29a61168f0546302de3fe9d1ddd963d62cf85d93
-F www/templates/Light/_images/chatemoticons/smile.gif e15f0be2a0607a061f46d297f80b982d95ec4ce5
-F www/templates/Light/_images/chatemoticons/tongue.gif f37a376e83402b21c9770767728282b08e7e495e
-F www/templates/Light/_images/chatemoticons/wink.gif fea56f9c71694b38842aa0f6295d26cc330fcca7
 F www/templates/Light/_images/del.svg c5df3b6d3843942db429c4cbca9ef0432e33560e
 F www/templates/Light/_images/del_white.svg f70c553839427bf1cfd269ff02e243dfa907b0d4 l
 F www/templates/Light/_images/edit.svg d16c1aac143d288243264a4d5f8584afbb3017b4
 F www/templates/Light/_images/edit_white.svg c2176f5d842145e5d5ac8b6ebd4200276a9c10dc l
 F www/templates/Light/_images/email.png 862b920cedf15e168dc75c9996534f98e307b051 l
-F www/templates/Light/_images/emoticons/angry.gif 20500d3b94175c345946ad8bb149068d1d5c2b1a
-F www/templates/Light/_images/emoticons/cry.gif b821d5e08564af307ac3c71f945dddfa8ea6452c
-F www/templates/Light/_images/emoticons/lol.gif 0e9fe36570a78b40ed0baf0a08b0f0ca6e5e9605
-F www/templates/Light/_images/emoticons/rofl.gif 907a534a661a9a090665496f07b5361501c7ba91
-F www/templates/Light/_images/emoticons/sad.gif 29a61168f0546302de3fe9d1ddd963d62cf85d93
-F www/templates/Light/_images/emoticons/smile.gif e15f0be2a0607a061f46d297f80b982d95ec4ce5
-F www/templates/Light/_images/emoticons/tongue.gif f37a376e83402b21c9770767728282b08e7e495e
-F www/templates/Light/_images/emoticons/wink.gif fea56f9c71694b38842aa0f6295d26cc330fcca7
 F www/templates/Light/_images/onepost.svg bf684853fa78609f059865531ae15ca50fa2530f
 F www/templates/Light/_images/onepost_gray.svg 344f6b7179738f81ad978cba035efd031e58cd11
 F www/templates/Light/_images/pass.png 4129159ab88dedfdc40cb928d6f9e1bc60a5063c l
@@ -399,7 +383,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less a83e549bba7d5f700903ec7c8c6a03c62ed3b9b5
-P 36334da660088753269c5d35e7556bd6c9512cec
-R c310d563c336537bc39903e40da6f7ed
+P 360d40382e54dec3f3e95f747ad058191edddfea
+R 3ab3bd539ed8ab20c8837a8eeff99961
 U johnfound
-Z d6f27deae37080190162e1cdae2674f4
+Z 732c08f95f3eb142d5e9676b111b6036
