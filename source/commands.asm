@@ -1471,24 +1471,6 @@ endp
 
 
 
-sqlIncReadCount text "update Posts set ReadCount = ReadCount + 1 where id = ?"
-
-
-proc PostIncrementReadCount, .postID
-.stmt dd ?
-begin
-        pushad
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlIncReadCount, sqlIncReadCount.length, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteFinalize, [.stmt]
-
-        popad
-        return
-endp
-
 
 
 sqlSetUnread text "insert or replace into UnreadPosts (UserID, PostID, `Time`) select U.id, ?, strftime('%s','now') from users U where (strftime('%s','now') - U.LastSeen < 2592000)"
@@ -1505,27 +1487,6 @@ begin
         cinvoke sqliteStep, [.stmt]
         mov     [esp+4*regEAX], eax
 
-        cinvoke sqliteFinalize, [.stmt]
-
-        popad
-        return
-endp
-
-
-
-
-sqlSetRead text "delete from UnreadPosts where UserID = ? and PostID = ?"
-
-proc SetPostRead, .userID, .postID
-.stmt dd ?
-begin
-        pushad
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetRead, -1, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, [.userID]
-        cinvoke sqliteBindInt, [.stmt], 2, [.postID]
-        cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 
         popad

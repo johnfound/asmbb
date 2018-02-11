@@ -106,7 +106,6 @@ create table Posts (
 create index idxPosts_UserID   on Posts (userID);
 create index idxPosts_ThreadID on Posts (threadID);
 create index idxPostsThreadUser on posts(threadid, userid);
-/* create index idxPostsRead on Posts(threadid, ReadCount); */
 
 
 create table Tags (

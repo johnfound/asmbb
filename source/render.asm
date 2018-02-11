@@ -5,6 +5,13 @@ proc StrCatTemplate, .hString, .strTemplateID, .sql_statement, .p_special
 begin
         pushad
 
+if defined options.Benchmark & options.Benchmark
+
+        stdcall GetFineTimestamp
+        push    eax
+
+end if
+
         mov     edi, [.p_special]
 
         call    .filename
@@ -32,6 +39,23 @@ begin
         stdcall FreeMem, esi
 
 .finish:
+
+if defined options.Benchmark & options.Benchmark
+        stdcall FileWriteString, [STDERR], 'Template <'
+        stdcall FileWriteString, [STDERR], [.strTemplateID]
+        stdcall FileWriteString, [STDERR], '> rendering time[us]: '
+
+        pop     ecx
+        stdcall GetFineTimestamp
+        sub     eax, ecx
+
+        stdcall NumToStr, eax, ntsDec or ntsUnsigned
+        push    eax
+        stdcall FileWriteString, [STDERR], eax
+        stdcall StrDel ; from the stack
+        stdcall FileWriteString, [STDERR], <txt 13, 10>
+end if
+
         popad
         return
 

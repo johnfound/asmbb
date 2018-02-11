@@ -3,6 +3,8 @@ sqlSelectPosts StripText "showthread.sql", SQL
 
 sqlGetPostCount  text "select count(1) from Posts where ThreadID = ?"
 sqlGetThreadInfo text "select T.id, T.caption, T.slug, (select userID from Posts P where P.threadID=T.id order by P.id limit 1) as UserID from Threads T where T.slug = ?1 limit 1"
+sqlIncReadCount  text "update Posts set ReadCount = ReadCount + 1 where id in ("
+sqlSetPostsRead  text "delete from UnreadPosts where UserID = ?1 and PostID in ("
 
 
 proc ShowThread, .pSpecial
@@ -15,9 +17,7 @@ proc ShowThread, .pSpecial
 .list dd ?
 .cnt  dd ?
 
-;if defined options.DebugMode & options.DebugMode
-;  .start dd ?
-;end if
+.rendered dd ?
 
 begin
         pushad
@@ -25,6 +25,9 @@ begin
         stdcall StrNew
         mov     edi, eax
         mov     esi, [.pSpecial]
+
+        stdcall StrNew
+        mov     [.rendered], eax
 
         stdcall LogUserActivity, esi, uaReadingThread, 0
 
@@ -87,13 +90,6 @@ begin
 
         stdcall StrCat, edi, [.list]
 
-
-;if defined options.DebugMode & options.DebugMode
-;        stdcall GetFineTimestamp
-;        mov     [.start], eax
-;end if
-
-
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectPosts, sqlSelectPosts.length, eax, 0
 
@@ -107,7 +103,7 @@ begin
         stdcall StrPtr, [esi+TSpecialParams.thread]
         cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
 
-        cinvoke sqliteBindInt, [.stmt], 5, [esi+TSpecialParams.userID]
+        cinvoke sqliteBindInt, [.stmt], 5, [esi+TSpecialParams.userID]  ; the current user.
 
         mov     [.cnt], 0
 
@@ -121,18 +117,72 @@ begin
         stdcall StrCatTemplate, edi, "post_view.tpl", [.stmt], esi
 
         cinvoke sqliteColumnInt, [.stmt], 0
-        stdcall PostIncrementReadCount, eax
 
-        mov     ebx, [esi+TSpecialParams.userID]
-        test    ebx, ebx
-        jz      .loop
-
-        stdcall SetPostRead, ebx, eax
+        stdcall StrCatNotEmpty, [.rendered], txt ","
+        stdcall NumToStr, eax, ntsDec or ntsUnsigned
+        stdcall StrCat, [.rendered], eax
+        stdcall StrDel, eax
 
         jmp     .loop
 
 
 .finish:
+        cinvoke sqliteFinalize, [.stmt]
+
+
+if defined options.Benchmark & options.Benchmark
+        stdcall GetFineTimestamp
+        push    eax
+end if
+
+        mov     ebx, [esi+TSpecialParams.userID]
+        test    ebx, ebx
+        jz      .posts_read_ok
+
+        stdcall StrDupMem, sqlSetPostsRead
+        stdcall StrCat, eax, [.rendered]
+        stdcall StrCat, eax, txt ")"
+
+        push    eax
+
+        lea     ecx, [.stmt]
+        stdcall StrPtr, eax
+        cinvoke sqlitePrepare_v2, [hMainDatabase], eax, [eax+string.len], ecx, 0
+        stdcall StrDel ; from the stack
+
+        cinvoke sqliteBindInt, [.stmt], 1, ebx
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+.posts_read_ok:
+
+        stdcall StrDupMem, sqlIncReadCount
+        xchg    eax, [.rendered]
+
+        stdcall StrCat, [.rendered], eax
+        stdcall StrDel, eax
+        stdcall StrCat, [.rendered], txt ")"
+
+        lea     ecx, [.stmt]
+        stdcall StrPtr, [.rendered]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], eax, [eax+string.len], ecx, 0
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+        stdcall StrDel, [.rendered]
+
+if defined options.Benchmark & options.Benchmark
+        stdcall FileWriteString, [STDERR], "Posts increment count and set unread [us]: "
+
+        pop     ecx
+        stdcall GetFineTimestamp
+        sub     eax, ecx
+
+        stdcall NumToStr, eax, ntsDec or ntsUnsigned
+        push    eax
+        stdcall FileWriteString, [STDERR], eax
+        stdcall StrDel ; from the stack
+        stdcall FileWriteString, [STDERR], <txt 13, 10>
+end if
 
         cmp     [.cnt], 5
         jbe     .back_navigation_ok
@@ -145,8 +195,6 @@ begin
         stdcall StrDel, [.list]
 
         stdcall StrCat, edi, "</div>"   ; div.thread
-
-        cinvoke sqliteFinalize, [.stmt]
 
 .exit:
 
