@@ -43,7 +43,7 @@
   <form class="tags" id="search_form" action="[case:[special:cmdtype]||/|../]!search/" method="get" >
     <input class="search_line" type="search" name="s" placeholder="text search" value="[special:search]">
     <input class="search_line" type="search" name="u" placeholder="user search" value="[special:usearch]">
-    <input class="button search_icon"  type="submit" value="">
+    <input class="search_btn"  type="submit" value="">
   </form>
 
   <div class="tags"><a class="tagicon [case:[special:dir]|current|not_current]" title="Show all threads" href="/"></a>[special:alltags]</div>

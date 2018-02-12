@@ -82,38 +82,29 @@ form#search_form {
 }
 
 
-/*.search_line:focus {
-  background-color: @clEditorBG;
-  color: @clEditorFG;
-  border: @borderEdit;
-} */
+.search_btn {
+  display: block;
 
-.button {
   border: @borderEdit;
-  display: inline-block;
+  border-radius: @borderNavRad;
+
   vertical-align: top;
+
   background-color: @clButtonBG;
+  background-image: url("/[special:skin]_images/search.svg");
   background-position: center;
-  background-size: contain;
+  background-size: 24px 24px;
   background-repeat: no-repeat;
+
   width: 32px;
   height: 32px;
   flex-grow: 0;
   flex-shrink: 0;
 }
 
-.button:hover {
+.search_btn:hover {
   background-color: @clButtonActiveBG;
   border: @borderButtonActive;
-}
-
-
-.search_icon {
-  background-image: url("/[special:skin]_images/search.svg");
-  background-position: center;
-  background-size: 24px 24px;
-  background-repeat: no-repeat;
-  border-radius: @borderNavRad;
 }
 
 /* Footer styles */

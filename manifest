@@ -1,5 +1,5 @@
-C Some\sspeed\soptimizations\son\sthread\srendering.\sSmall\sfix\sto\sthe\sWasp\sskin\sCSS.
-D 2018-02-11T16:12:02.020
+C Fixed\ssmall\sbug\sin\sthe\sskins.
+D 2018-02-12T07:56:06.103
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz d229fc2cf882580579aa5ace8a9dcfe78d0e7a6d
@@ -279,7 +279,7 @@ F www/templates/Wasp/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/Wasp/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
 F www/templates/Wasp/chat.less 2b021a5eb86fcae6a45180cc77b245fa3eb52714
 F www/templates/Wasp/chat.tpl 548988d2ae571ee54a2fe49661202938eb869e75
-F www/templates/Wasp/common.less 78fa76e0d16954fe6f2a82882db34020eb4fd6a6
+F www/templates/Wasp/common.less 8ad8c6438f89eb87eb5c900d91075b28d9787035
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 48aedc37b1e5ffee6da295bc24074bdfca0cac39
 F www/templates/Wasp/delete.less c56f23b173ff53afb3ed3ac5a81a19c378b7e784
@@ -299,7 +299,7 @@ F www/templates/Wasp/form_setup.tpl 58a7c7ebaa5d793b255c2eca2d7f76fa97ffecdb
 F www/templates/Wasp/form_sqlite_console.tpl bedbf751806827982becff7feb4dcb86309b2355
 F www/templates/Wasp/login.less b098fb74d28ec338c9b257073b60ecbd722cb025
 F www/templates/Wasp/main_html_end.tpl 721ac095265156f7be3549413c34ab18d434541a
-F www/templates/Wasp/main_html_start.tpl 945af9c745c99029db6202af981de51f5b5cc516
+F www/templates/Wasp/main_html_start.tpl 384d65a5c813c522b2414cb68e6c1eb3083f1bc6
 F www/templates/Wasp/markdown.less 9cb58847baf6ae269b7b05d95f586e4c9728e05c
 F www/templates/Wasp/minimag_suffix.tpl 847d280354a3b3a9d59f16e89e32ba660b8e4eca
 F www/templates/Wasp/nav_list.tpl 51190784c1e056e238d398219990a6a8fee7b46d
@@ -388,7 +388,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less a83e549bba7d5f700903ec7c8c6a03c62ed3b9b5
-P da1287d43484c0ecafa29c9585576fbe1a62f5fe
-R 2feb11e2a22f01883cb5a073e9ae5337
+P aa393c8ec1b8984fa2874d3c6d681e90702ef5a5
+R 0ef9612044c4fad73429873a61d6d291
 U johnfound
-Z 3943676873f492a58fa41f114d3c29e4
+Z 0d5290b52c0e00ff336577ed4fdcf96a
