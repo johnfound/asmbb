@@ -1,5 +1,5 @@
-C Fixed\ssmall\sbug\sin\sthe\sskins.
-D 2018-02-12T07:56:06.103
+C Fixed\stemplate\sbug.
+D 2018-02-14T23:44:59.548
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz d229fc2cf882580579aa5ace8a9dcfe78d0e7a6d
@@ -272,8 +272,8 @@ F www/templates/Wasp/activity13.tpl 42bb013fa5dd6cabcffd18a683ab02680ac7f7c5
 F www/templates/Wasp/activity2.tpl 56e2d424b3fa2d47dfb3e39c84dc979e02783ef4
 F www/templates/Wasp/activity3.tpl 151d90f8a6ac52cfd53a32d38786496bb7c12d11
 F www/templates/Wasp/activity4.tpl eee15696527fd153d221b2437bf586c339f707bc
-F www/templates/Wasp/activity5.tpl 648b55344763f0ae54fad0d8a03eebe5efe80f67
-F www/templates/Wasp/activity6.tpl 79b6319799e162869c14998a0ce7bb40ba0d040c
+F www/templates/Wasp/activity5.tpl fee6ba5112822d9f9553abcb7cbab63232cee8bb
+F www/templates/Wasp/activity6.tpl 588b1dde51b134d63d350f7d99c73f787c6dcbeb
 F www/templates/Wasp/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
 F www/templates/Wasp/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/Wasp/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
@@ -388,7 +388,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less a83e549bba7d5f700903ec7c8c6a03c62ed3b9b5
-P aa393c8ec1b8984fa2874d3c6d681e90702ef5a5
-R 0ef9612044c4fad73429873a61d6d291
+P a60be3eb9af30f0e617cae5f0d0f545b794a77b0
+R 5b3a7762b1814e654d42d241273c545c
 U johnfound
-Z 0d5290b52c0e00ff336577ed4fdcf96a
+Z 18cf4879e4009f4e436d8682b46afa30
