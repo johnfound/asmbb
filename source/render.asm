@@ -2,15 +2,11 @@
 
 
 proc StrCatTemplate, .hString, .strTemplateID, .sql_statement, .p_special
+  BenchVar .temp
 begin
         pushad
 
-if defined options.Benchmark & options.Benchmark
-
-        stdcall GetFineTimestamp
-        push    eax
-
-end if
+        BenchmarkStart .temp
 
         mov     edi, [.p_special]
 
@@ -32,6 +28,8 @@ end if
         mov     esi, eax
         and     dword [eax+ecx], 0
 
+;        Benchmark 'Template <', [.strTemplateID], '> file load time[us]: '
+
         stdcall __DoProcessTemplate2, esi, [.sql_statement], [.p_special], TRUE
 
         stdcall StrCat, [.hString], eax
@@ -40,21 +38,8 @@ end if
 
 .finish:
 
-if defined options.Benchmark & options.Benchmark
-        stdcall FileWriteString, [STDERR], 'Template <'
-        stdcall FileWriteString, [STDERR], [.strTemplateID]
-        stdcall FileWriteString, [STDERR], '> rendering time[us]: '
-
-        pop     ecx
-        stdcall GetFineTimestamp
-        sub     eax, ecx
-
-        stdcall NumToStr, eax, ntsDec or ntsUnsigned
-        push    eax
-        stdcall FileWriteString, [STDERR], eax
-        stdcall StrDel ; from the stack
-        stdcall FileWriteString, [STDERR], <txt 13, 10>
-end if
+        Benchmark 'Template <', [.strTemplateID], '> rendering time[us]: '
+        BenchmarkEnd
 
         popad
         return
@@ -82,8 +67,11 @@ endp
 
 proc __DoProcessTemplate2, .hTemplate, .sql_stmt, .pSpecial, .fHTML
   .stmt dd ?
+;  BenchVar .temp
 begin
         pushad
+
+;        BenchmarkStart .temp
 
         stdcall StrNew
         mov     edi, eax
@@ -144,6 +132,10 @@ begin
 
 
 .end_of_template:
+
+;        Benchmark "Template parsing: "
+;        BenchmarkEnd
+
         mov     [esp+4*regEAX], edi
         popad
         return

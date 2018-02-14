@@ -1,5 +1,5 @@
-C Fixed\stemplate\sbug.
-D 2018-02-14T23:44:59.548
+C Started\swork\son\sa\snew\stemplates\srendering\sengine\sbased\son\snew,\smore\sassembly-style\salgorithm.
+D 2018-02-14T23:47:44.518
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz d229fc2cf882580579aa5ace8a9dcfe78d0e7a6d
@@ -20,12 +20,12 @@ F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm 772274895c362c40f1cdc403f48b93d5e8a907d7
 F source/chat.asm f7c45a3638d67d911f0d2e3f87f1f73a395c352c
 F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
-F source/commands.asm 7140fc60a255aaea8e6ffc817b55127646928f39
+F source/commands.asm 57e3f89b6086c82dbc9de447a1737d716cbec89c
 F source/create.sql 8b0e85ea77c9ef292672274de42662d776833c73
 F source/delete.asm e65e0448de73cfad8fa24a9ba4e5eac3b288629b
 F source/edit.asm 192f2d335a36a92a72f9f043795c2ba0689f1c2f
-F source/engine.asm e8c82449a505e5aab738af0e68f4bf51e0be9a76
-F source/engine.fpr 070ad33e17a5a624bc49cf129814a79ce8375169
+F source/engine.asm dec82ac53fd1b61226ecfbb40e23345f23161453
+F source/engine.fpr 626273acbd34aeedd5922b7796a6c37f0cda01da
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm d6f2d84e1a33ce7edb6c5521bd50b7a69ba62361
@@ -39,17 +39,21 @@ F source/post.asm f6111932d588687ed635406d3c097f4770fbfc1f
 F source/post_data.asm 3ca626cfd4fe38680bfe5a61115edfc7f14bd70d
 F source/postdebug.asm 13ab4ebf2fc7b35d7fa36853b533236860b641f7
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
-F source/render.asm 87f3969ad380a9fa055b15bb0a75a26012c58568
+F source/render.asm a250c5e8fbaf495222405d58e1622bc7328dbdd6
+F source/render2.asm cd6f27614ff24975f583b0f7433552d7a7b468e5
 F source/search.asm a67cff2a3f88f82440a50fd96aceca0471f45238
 F source/search.sql 34cf6eea11403e7ac709cd1588bd84c57257135f
 F source/search_cnt.sql 762c07c3e8a9186e966a6377517edc18ab50ef96
 F source/settings.asm 41415bb08d29ac9850d1640b2244f9dd9b817889
-F source/showthread.asm 64e0e5d2513dd7ee4b49fe083f6a3f043b1abd0e
+F source/showthread.asm 1af1b2b7a7cd6988fd850bb340e5ceeda2c423bd
 F source/showthread.sql b12e0a7f61cc0319abad6cba91f1bff6bc278659
 F source/sqlite3.asm 8e27aa526542e4c8bac6b9e741b6e0698220933f
 F source/sqlite_console.asm 1d0ca0d6369d369ffff1f511213c55d5993c7916
 F source/statistics.asm bb8123e3e0b2a3e836cb5169c91d3d658a7b44ef
 F source/statistics.sql adf6bec52c32dba0b780cd7422e2de395ca19f7e
+F source/tests/Test1.tpl cc3a981281e16b44a39eabc8f2fb6af864230cc0
+F source/tests/test_templates.asm 4218215b32daed2bd8fad315dc594355cee53cab
+F source/tests/test_templates.fpr af470bc3aa129179bf55d9213dcf9a484383381b
 F source/text_constants.asm f785aa1c9c8e22e1a9f0fc9180e8f384d91b26ac
 F source/thread_attr.sql 1d9509e1413bcf1a32b90137884be4cc168d8d17
 F source/threadlist.asm a3713bc6cd6d217f54c97a55f0be543721e3fd86
@@ -388,7 +392,10 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less a83e549bba7d5f700903ec7c8c6a03c62ed3b9b5
-P a60be3eb9af30f0e617cae5f0d0f545b794a77b0
-R 5b3a7762b1814e654d42d241273c545c
+P 96265a063f180612778fd4afb1265531f0301bca
+R e940c744b631a475ba74569514032cce
+T *branch * render2
+T *sym-render2 *
+T -sym-trunk *
 U johnfound
-Z 18cf4879e4009f4e436d8682b46afa30
+Z d120096f02754871ea4593be8f89001f

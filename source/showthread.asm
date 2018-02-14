@@ -19,6 +19,8 @@ proc ShowThread, .pSpecial
 
 .rendered dd ?
 
+ BenchVar .temp
+
 begin
         pushad
 
@@ -129,11 +131,10 @@ begin
 .finish:
         cinvoke sqliteFinalize, [.stmt]
 
+        BenchmarkStart .temp
 
-if defined options.Benchmark & options.Benchmark
-        stdcall GetFineTimestamp
-        push    eax
-end if
+;        jmp     .skip_writes           ; not write the posts read count and clearing the unread posts.
+                                        ; this is acceptable on very high loads for boosting performance.
 
         mov     ebx, [esi+TSpecialParams.userID]
         test    ebx, ebx
@@ -168,21 +169,12 @@ end if
         cinvoke sqlitePrepare_v2, [hMainDatabase], eax, [eax+string.len], ecx, 0
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
+
+;.skip_writes:
         stdcall StrDel, [.rendered]
 
-if defined options.Benchmark & options.Benchmark
-        stdcall FileWriteString, [STDERR], "Posts increment count and set unread [us]: "
-
-        pop     ecx
-        stdcall GetFineTimestamp
-        sub     eax, ecx
-
-        stdcall NumToStr, eax, ntsDec or ntsUnsigned
-        push    eax
-        stdcall FileWriteString, [STDERR], eax
-        stdcall StrDel ; from the stack
-        stdcall FileWriteString, [STDERR], <txt 13, 10>
-end if
+        Benchmark  "Posts increment count and set unread [us]: "
+        BenchmarkEnd
 
         cmp     [.cnt], 5
         jbe     .back_navigation_ok

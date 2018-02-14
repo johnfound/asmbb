@@ -89,7 +89,6 @@ begin
         mov     eax, [.pParams2]
         mov     [.special.params], eax
 
-        stdcall StrDupMem, cDefaultSkin
         lea     eax, [.special]
         stdcall GetDefaultSkin, eax
         mov     [.special.userSkin], eax

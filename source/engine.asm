@@ -37,6 +37,8 @@ options.Benchmark = 0
 
 include "%lib%/freshlib.asm"
 
+include "benchmark.asm"
+
 uses sqlite3:"%TargetOS%/sqlite3.inc"
 
 include "text_constants.asm"
