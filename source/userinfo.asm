@@ -227,7 +227,7 @@ begin
 .default_avatar:
 
         stdcall StrDup, [esi+TSpecialParams.userSkin]
-        stdcall StrCat, eax, "_images/anon.png"
+        stdcall StrCat, eax, "/_images/anon.png"
         push    eax
 
         lea     ecx, [.timeRetLo]

@@ -29,7 +29,7 @@ options.DebugWeb = 0
 options.DebugSQLite = 0
 
 options.DebugWebSSE = 0         ; debug server sent events - creates a command "!echo_events" for debugging SSE.
-options.Benchmark = 0
+options.Benchmark = 1
 
 ;HeapManager  equ ASM
 ;LinuxThreads equ native

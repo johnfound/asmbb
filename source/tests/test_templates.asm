@@ -44,7 +44,7 @@ iglobal
   sqlGetThreadInfo text "select T.id, T.caption, T.slug, (select userID from Posts P where P.threadID=T.id order by P.id limit 1) as UserID from Threads T where T.slug = ?1 limit 1"
 endg
 
-  cDatabaseFilename text "./test.sqlite"
+  cDatabaseFilename text "../../www/board.sqlite"
 
   cVersion text "VERSION: This is a test project for Render2!"
 
@@ -64,6 +64,7 @@ start:
         cinvoke sqliteExec, [hMainDatabase], "PRAGMA threads = 2", 0, 0, 0
         cinvoke sqliteExec, [hMainDatabase], "PRAGMA secure_delete = FALSE", 0, 0, 0
 
+        stdcall Warmup
 
 ; prepare the Special structure:
 
@@ -107,7 +108,8 @@ start:
         mov     [Special.userStatus], 349
         mov     [Special.userLang], 0
 
-        stdcall StrDupMem, "../../www/templates/Wasp/"
+;        stdcall GetCurrentDir
+        stdcall StrDupMem, "../../www/templates/Wasp"
         mov     [Special.userSkin], eax
 
         stdcall TextCreate, sizeof.TText
@@ -167,13 +169,15 @@ begin
         stdcall GetFineTimestamp
         mov     [.start_time], eax
 
+        stdcall TextCat, esi, txt '<div class="thread">'
+        mov     esi, edx
+
         stdcall RenderTemplate, esi, "../../www/templates/Wasp/nav_thread.tpl", [.stmt2], Special
         mov     esi, eax
 
         stdcall GetFineTimestamp
         sub     eax, [.start_time]
         OutputValue "Rendering time nav_thread [us]: ", eax, 10, -1
-
 
         lea     eax, [.stmt]
         cinvoke _sqlitePrepare_v2, [hMainDatabase], sqlTest, sqlTest.length, eax, 0
@@ -182,7 +186,6 @@ begin
         cinvoke sqliteBindInt, [.stmt], 3, 0
         cinvoke sqliteBindText, [.stmt], 4, 'learning-the-asmbb-source-64', -1, SQLITE_STATIC
         cinvoke sqliteBindInt, [.stmt], 5, 2
-
 
 .loop:
         cinvoke sqliteStep, [.stmt]
@@ -210,6 +213,9 @@ begin
         stdcall RenderTemplate, esi, "../../www/templates/Wasp/nav_thread.tpl", [.stmt2], Special
         mov     esi, eax
 
+        stdcall TextCat, esi, txt '</div>'
+        mov     esi, edx
+
         stdcall GetFineTimestamp
         sub     eax, [.start_time]
         OutputValue "Rendering time nav_thread [us]: ", eax, 10, -1
@@ -218,13 +224,15 @@ begin
         stdcall GetFineTimestamp
         mov     [.start_time], eax
 
+        stdcall RenderTemplate, esi, "./Test1.tpl", 0, Special
+        mov     esi, eax
+
         stdcall RenderTemplate, edi, "../../www/templates/Wasp/main_html_start.tpl", 0, Special
         mov     edi, eax
 
         stdcall GetFineTimestamp
         sub     eax, [.start_time]
         OutputValue "Rendering time main_html_start [us]: ", eax, 10, -1
-
 
         stdcall GetFineTimestamp
         mov     [.start_time], eax
@@ -245,6 +253,75 @@ begin
 endp
 
 
+sqlWarmPosts text "select * from Posts"
+sqlWarmUsers text "select * from Users"
+sqlWarmThreads text "select * from Threads"
+
+; This procedure simulates long running process by warming up the SQLite database before benchmarking.
+
+proc Warmup
+.stmt dd ?
+begin
+        pushad
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlStatistics, sqlStatistics.length, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetMaxTagUsed, sqlGetMaxTagUsed.length, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetAllTags, sqlGetAllTags.length, eax, 0
+
+.loop:
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        je      .loop
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlWarmPosts, sqlWarmPosts.length, eax, 0
+
+.loop2:
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        je      .loop2
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlWarmUsers, sqlWarmUsers.length, eax, 0
+
+.loop3:
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        je      .loop3
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlWarmThreads, sqlWarmThreads.length, eax, 0
+
+.loop4:
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        je      .loop4
+
+        cinvoke sqliteFinalize, [.stmt]
+
+
+        popad
+        return
+endp
+
+
+
+
 
 ; chat enabled!
 
@@ -253,3 +330,127 @@ begin
         clc
         return
 endp
+
+
+
+
+proc UsersOnline
+begin
+        stdcall StrDupMem, "0 users and 0 guests"
+        return
+endp
+
+
+
+proc  GetQueryParam, .pSpecial, .hPrefix
+begin
+        xor     eax, eax
+        return
+endp
+
+proc GetBackLink, .pSpecial
+begin
+        stdcall StrDupMem, txt "../"
+        return
+endp
+
+
+
+
+iglobal
+  sqlStatistics StripText "../statistics.sql", SQL
+endg
+
+proc Statistics, .pSpecial
+.stmt dd ?
+begin
+        pushad
+
+        stdcall TextCreate, sizeof.TText
+        mov     edi, eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlStatistics, sqlStatistics.length, eax, 0
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .end_loop
+
+        stdcall RenderTemplate, edi, "../../www/templates/Wasp/statistics.tpl", [.stmt], [.pSpecial]
+        mov     edi, eax
+
+.end_loop:
+        cinvoke sqliteFinalize, [.stmt]
+        mov     [esp+4*regEAX], edi
+        popad
+        return
+endp
+
+
+
+proc GetAllSkins, .hCurrent
+begin
+        pushad
+
+        stdcall TextCreate, sizeof.TText
+        mov     edx, eax
+
+        stdcall StrDupMem, "../../www/templates/"
+        push    eax
+
+        stdcall DirectoryRead, eax
+
+        stdcall StrDel ; from the stack.
+        jc      .finish_skins
+
+        mov     edi, eax
+        mov     ecx, [edi+TArray.count]
+
+.dir_loop:
+        dec     ecx
+        js      .end_of_dir
+
+        cmp     [edi+TArray.array+8*ecx+TDirItem.Type], ftDirectory
+        jne     .next_file
+
+        stdcall StrPtr, [edi+TArray.array+8*ecx+TDirItem.hFilename]
+        jc      .next_file
+
+        cmp     byte [eax], '_'
+        je      .next_file
+
+        cmp     byte [eax], '.'
+        je      .next_file
+
+        stdcall TextCat, edx, txt '<option value="'
+        stdcall TextCat, edx, [edi+TArray.array+8*ecx+TDirItem.hFilename]
+        stdcall TextCat, edx, txt '" '
+
+        stdcall StrCompCase, [edi+TArray.array+8*ecx+TDirItem.hFilename], [.hCurrent]
+        jnc     .selected_ok
+
+        stdcall TextCat, edx, txt ' selected="selected"'
+
+.selected_ok:
+        stdcall TextCat, edx, txt '>'
+        stdcall TextCat, edx, [edi+TArray.array+8*ecx+TDirItem.hFilename]
+        stdcall TextCat, edx, <txt '</option>', 13, 10>
+
+.next_file:
+        stdcall StrDel, [edi+TArray.array+8*ecx+TDirItem.hFilename]
+        jmp     .dir_loop
+
+.end_of_dir:
+
+        stdcall FreeMem, edi
+
+.finish_skins:
+
+        stdcall StrDel, [.hCurrent]
+        mov     [esp+4*regEAX], edx
+        popad
+        return
+endp
+
+
+

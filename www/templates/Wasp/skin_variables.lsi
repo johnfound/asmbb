@@ -1,5 +1,5 @@
-@globWidth: 95%; 
-@globMaxWidth: 1280px; 
+@globWidth: 95%;
+@globMaxWidth: 1280px;
 @globMargin: 8px auto 8px auto;
 
 @msgBoxWidth: 640px;
@@ -62,4 +62,4 @@
 @FontMain: "Verdana", sans-serif;
 @FontMonospace: "Liberation Mono", "Courier New", monospaced;
 
-@HeaderBackground: @clColor1 url("/[special:skin]_images/yellow_back.png") -180px 0%/cover;
+@HeaderBackground: @clColor1 url("[special:skin]/_images/yellow_back.png") -180px 0%/cover;

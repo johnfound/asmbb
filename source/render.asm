@@ -46,17 +46,23 @@ begin
 
 
 .filename:
+        stdcall GetCurrentDir
+        mov     edx, eax
         test    edi, edi
         jz      .fallback
 
-        stdcall StrDup, [edi+TSpecialParams.userSkin]
+        stdcall StrCat, edx, [edi+TSpecialParams.userSkin]
         jmp     .add_template
 
 .fallback:
         stdcall GetDefaultSkin, edi
+        stdcall StrCat, edx, eax
+        stdcall StrDel, eax
 
 .add_template:
-        stdcall StrCat, eax, [.strTemplateID]
+        stdcall StrCat, edx, txt '/'
+        stdcall StrCat, edx, [.strTemplateID]
+        mov     eax, edx
         retn
 endp
 
@@ -473,8 +479,9 @@ end if
         cmp     ecx, [edx+TArray.count]
         jae     .end_styles
 
-        stdcall StrCat, ebx, '<link rel="stylesheet" href="/'
+        stdcall StrCat, ebx, '<link rel="stylesheet" href="'
         stdcall StrCat, ebx, [esi+TSpecialParams.userSkin]
+        stdcall StrCat, ebx, txt '/'
         stdcall StrCat, ebx, [edx+TArray.array+4*ecx]
         stdcall StrCat, ebx, '?skin='
         stdcall StrCat, ebx, [esi+TSpecialParams.userSkin]
@@ -2097,7 +2104,7 @@ begin
         pushad
 
         mov     esi, [.pSpecial]
-        stdcall StrDupMem, "templates/"
+        stdcall StrDupMem, "/templates/"
         mov     ebx, eax
 
         test    esi, esi
@@ -2124,7 +2131,6 @@ begin
 
 .found:
         stdcall StrCat, ebx, eax
-        stdcall StrCat, ebx, txt "/"
         stdcall StrDel, eax
 
         mov     [esp+4*regEAX], ebx

@@ -111,7 +111,6 @@ if used RenderTemplate
               'url:',     RenderTemplate.cmd_url,       \
               'css:',     RenderTemplate.cmd_css,       \
               'case:',    RenderTemplate.cmd_case,      \
-              'and:',     RenderTemplate.cmd_and,       \
               'sql:',     RenderTemplate.cmd_sql
 
 
@@ -148,7 +147,6 @@ if used RenderTemplate
               "skins=",      RenderTemplate.sp_skins,                 \
               "posters=",    RenderTemplate.sp_posters,               \
               "threadtags=", RenderTemplate.sp_threadtags
-
 end if
 
 useridHash phash tpl_func, "userid"
@@ -303,17 +301,52 @@ begin
 
         jmp     .hash
 
-
 .check_fields:
-
-;        DebugMsg "Check database fields."
 
         cmp     [.sqlite_statement], 0
         je      .loop
 
-        mov     eax, [.tblFields.pName + sizeof.TFieldSlot * ebx]
-        test    eax, eax
+.get_field_name:
+        mov     esi, [.tblFields.pName + sizeof.TFieldSlot * ebx]
+        test    esi, esi
         jz      .loop
+
+        push    edi
+
+        inc     edi
+        cmp     edi, [edx+TText.GapBegin]
+        jb      @f
+        add     edi, [edx+TText.GapEnd]
+        sub     edi, [edx+TText.GapBegin]
+@@:
+        add     edi, edx
+
+.cmp_loop:
+        mov     al, [esi]
+        mov     ah, [edi]
+
+        test    al, al
+        jz      .field_match
+
+        and     eax, $4040
+        shr     al, 1
+        shr     ah, 1
+        or      al, [esi]
+        or      ah, [edi]
+
+        inc     esi
+        inc     edi
+
+        cmp     al, ah
+        je      .cmp_loop
+
+        pop     edi
+        inc     bl
+        jmp     .get_field_name
+
+
+.field_match:
+        pop     edi
 
         push    ecx edx
         cinvoke sqliteColumnText, [.sqlite_statement], [.tblFields.Index + sizeof.TFieldSlot * ebx]
@@ -364,6 +397,17 @@ begin
 
         jmp     eax
 
+
+; ...................................................................
+
+.cmd_minimag:
+; here esi points to ":" of the "minimag:" command. edi points to the start "[" and ecx points to the end "]"
+
+
+
+
+        jmp     .loop
+
 ; ...................................................................
 
 .cmd_html:
@@ -403,22 +447,77 @@ begin
         pop     edx
         jmp     .loop
 
-.cmd_minimag:
 
 .cmd_url:
+; here esi points to ":" of the "[url:" command. edi points to the start "[" and ecx points to the end "]"
+        mov       eax, ecx
+        sub       eax, esi
+        shl       eax, 2        ; 4*length
+        stdcall  TextSetGapSize, edx, eax
+        stdcall  TextMoveGap, edx, edi
+        add      [edx+TText.GapEnd], 5
+        sub      ecx, 6
 
-.cmd_and:
+        mov     esi, [edx+TText.GapEnd]
+        xor     eax, eax
+
+.url_loop:
+        mov     al, [edx+esi]
+        cmp     al, $80
+        jae     .store_url
+        cmp     al, "]"
+        je      .end_url
+
+        movzx   ebx, al
+        shr     ebx, 5
+        and     eax, $1f
+        bt      dword [URLCharTable+4*ebx], eax
+        mov     al, [edx+esi]
+        jnc     .store_url
+
+; encode:
+        mov     byte [edx+edi], '%'
+        mov     ah, al
+        inc     edi
+        inc     ecx
+
+        shr     al, 4
+        cmp     al, $0a
+        sbb     al, $69
+        das
+
+        mov     [edx+edi], al
+        inc     edi
+        inc     ecx
+
+        mov     al, ah
+        and     al, $0f
+        cmp     al, $0a
+        sbb     al, $69
+        das
+
+.store_url:
+        mov     [edx+edi], al
+        inc     esi
+        inc     edi
+        jmp     .url_loop
+
+.end_url:
+        inc     esi
+        mov     [edx+TText.GapBegin], edi
+        mov     [edx+TText.GapEnd], esi
+        dec     ecx
+        jmp     .loop
+
 
 .cmd_sql:
         jmp     .loop
 
 
+
+
 .cmd_case:
 ; here esi points to ":" of the "special:" command. edi points to the start "[" and ecx points to the end "]"
-
-;        stdcall TextMoveGap, edx, -1
-;        lea     ebx, [edx+esi]
-;        int3
 
         xor     ebx, ebx
 
@@ -433,6 +532,9 @@ begin
 @@:
         mov     al, [edx+eax]
 
+        cmp     al, ' '
+        jbe     .get_case_int
+
         cmp     al, "0"
         jb      .end_case_int
         cmp     al, "9"
@@ -445,7 +547,17 @@ begin
         jmp     .get_case_int
 
 .end_case_int:
+        cmp     al, '|'
+        je      .int_ok
 
+        mov     ebx, [.sepcnt]
+        mov     ebx, [.separators+4*ebx]
+        sub     ebx, edi
+        sub     ebx, 6          ; the length of the value string.
+
+        OutputValue "Case non-int value: ", ebx, 10, -1
+
+.int_ok:
         mov     eax, [.sepcnt]
         dec     eax
         mov     esi, ecx
@@ -486,6 +598,7 @@ begin
         inc     [edx+TText.GapEnd]
         dec     ecx
 
+;        stdcall TextMoveGap, edx, -1
         jmp     .loop
 
 ; ...................................................................
@@ -543,6 +656,8 @@ begin
         mov     eax, [ebx+TSpecialParams.userName]
 
 .special_string:
+        stdcall TextMoveGap, edx, edi
+
         test    eax, eax
         jz      .string_ok
 
@@ -582,11 +697,13 @@ begin
         mov     eax, [ebx+TSpecialParams.dir]
         jmp     .special_string
 
+.sp_skin:
+        mov     eax, [ebx+TSpecialParams.userSkin]
+        jmp     .special_string
+
 .sp_version:
         mov     eax, cVersion
         jmp     .special_string
-
-
 
 ; ...................................................................
 
@@ -599,6 +716,7 @@ begin
         stdcall NumToStr, eax, ntsDec
 
 .special_string_free:
+        stdcall TextMoveGap, edx, edi
 
         test    eax, eax
         jz      .string_free_ok
@@ -658,6 +776,25 @@ begin
 .point_ok:
         stdcall StrCharInsert, ebx, ".", eax
         mov     eax, ebx
+        jmp     .special_string_free
+
+; ...................................................................
+
+.sp_visitors:
+
+        stdcall UsersOnline
+        jmp     .special_string_free
+
+.sp_referer:
+        stdcall GetBackLink, [.pSpecial]
+        jmp     .special_string_free
+
+.sp_search:
+        stdcall GetQueryParam, [.pSpecial], txt "s="
+        jmp     .special_string_free
+
+.sp_usearch:
+        stdcall GetQueryParam, [.pSpecial], txt "u="
         jmp     .special_string_free
 
 ; ...................................................................
@@ -745,72 +882,98 @@ endl
 
         mov     esi, ebx
 
-        mov     edx, [esi+TSpecialParams.pStyles]
+        mov     ebx, [esi+TSpecialParams.pStyles]
         xor     ecx, ecx
 
-        stdcall StrNew
-        mov     ebx, eax
+        stdcall TextCreate, sizeof.TText
+        mov     edx, eax
 
-        jmp     .external_css
-
-;        stdcall GetParam, 'embeded_css', gpInteger
+        stdcall GetParam, 'embeded_css', gpInteger
         jc      .external_css
 
         test    eax, eax
         jz      .external_css
 
 ;.embeded_css:
-        stdcall StrCat, ebx, '<style>'
+
+        stdcall TextCat, edx, txt '<style>'
 
 .loop_styles:
-        cmp     ecx, [edx+TArray.count]
+        cmp     ecx, [ebx+TArray.count]
         jae     .end_styles2
 
-;        stdcall StrCatTemplate, ebx, [edx+TArray.array+4*ecx], NULL, esi
+        stdcall StrDup, [esi+TSpecialParams.userSkin]
+        stdcall StrCat, eax, txt '/'
+        stdcall StrCat, eax, [ebx+TArray.array+4*ecx]
+        push    eax
 
-.next_css:
+        stdcall RenderTemplate, edx, eax, 0, esi
+        stdcall StrDel ; from the stack
+        mov     edx, eax
+
         inc     ecx
         jmp     .loop_styles
 
 .end_styles2:
 
-        stdcall StrCat, ebx, '</style>'
-        jmp     .end_styles
+        stdcall TextCat, edx, '</style>'
+
+.end_styles:
+        mov     eax, edx
+
+        pop     edi esi edx ecx ebx
+
+.special_ttext:
+        push    eax
+        stdcall TextAddText, edx, edi, eax
+        stdcall TextFree ; from the stack
+
+        sub     esi, edi
+        inc     esi
+
+        add     [edx+TText.GapEnd], esi
+        sub     ecx, esi
+        add     ecx, eax
+        jmp     .loop
+
 
 .external_css:
-
-        cmp     ecx, [edx+TArray.count]
+        cmp     ecx, [ebx+TArray.count]
         jae     .end_styles
 
-        stdcall StrCat, ebx, '<link rel="stylesheet" href="'
-        stdcall StrCat, ebx, [esi+TSpecialParams.userSkin]
-        stdcall StrCat, ebx, [edx+TArray.array+4*ecx]
-        stdcall StrCat, ebx, '?skin='
-        stdcall StrCat, ebx, [esi+TSpecialParams.userSkin]
-        stdcall StrCat, ebx, <txt '" type="text/css">', 13, 10>
+        stdcall TextCat, edx, '<link rel="stylesheet" href="'
+        stdcall TextCat, edx, [esi+TSpecialParams.userSkin]
+        stdcall TextCat, edx, txt '/'
+        stdcall TextCat, edx, [ebx+TArray.array+4*ecx]
+        stdcall TextCat, edx, txt '?skin='
+        stdcall TextCat, edx, [esi+TSpecialParams.userSkin]
+        stdcall TextCat, edx, <txt '" type="text/css">', 13, 10>
 
         inc     ecx
         jmp     .external_css
 
 
-.end_styles:
-
-        mov     eax, ebx
-        pop     edi esi edx ecx ebx
-        jmp     .special_string_free
-
-
-
-
-.sp_visitors:
-.sp_stats:
-.sp_skin:
-.sp_referer:
 .sp_alltags:
-.sp_search:
-.sp_usearch:
+        stdcall GetAllTags, [.pSpecial]
+        jmp     .special_ttext
+
+
+.sp_stats:
+        stdcall Statistics, [.pSpecial]
+        jmp     .special_ttext
+
 .sp_skins:
+; here esi points to the "=" char, ecx at the end "]" and edi at the start "["
+        stdcall TextMoveGap, edx, ecx
+        call    .clip_and_copy
+        mov     esi, ecx
+        stdcall GetAllSkins, eax
+        jmp     .special_ttext
+
+; NOT FINISHED HERE
+
 .sp_posters:
+
 .sp_threadtags:
 
         jmp     .loop
@@ -818,9 +981,10 @@ endl
 
 .finish:
         cmp     dword [esp], -1
-        jne     @f
+        jne     .exit
         add     esp, 4
-@@:
+        jmp     .finish
+.exit:
         mov     [esp+4*regEAX], edx
         popad
         return
@@ -869,10 +1033,16 @@ endl
 
         inc     dl
         test    ebx, ebx
-        jnz     .empty_slot
+        jnz     .collision
 
         inc     ecx
         jmp     .col_loop
+
+.collision:
+        OutputLn  ebx
+        OutputValue "Collision on field #", eax, 10, -1
+        jmp         .empty_slot
+
 
 .end_cols:
 
@@ -911,6 +1081,7 @@ endl
         sub     ecx, esi
         jz      .end_copy
         stdcall StrCopyPart, eax, edx, esi, ecx
+
 .end_copy:
         pop     ecx
         retn
@@ -948,4 +1119,156 @@ begin
         stdcall AddArrayItems, edx, 1
         mov     [eax], ebx
         jmp     .finish
+endp
+
+
+
+
+
+sqlGetMaxTagUsed text "select max(cnt) from (select count(*) as cnt from ThreadTags group by tag)"
+sqlGetAllTags    text "select TT.tag, count(TT.tag) as cnt, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag group by TT.tag order by TT.tag"
+
+proc GetAllTags, .pSpecial
+  .max   dd ?
+  .cnt   dd ?
+  .stmt  dd ?
+begin
+        pushad
+
+        mov     esi, [.pSpecial]
+
+        stdcall TextCreate, sizeof.TText
+        mov     ebx, eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetMaxTagUsed, sqlGetMaxTagUsed.length, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .end_tags
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        test    eax, eax
+        jz      .end_tags
+
+        mov     [.max], eax
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetAllTags, sqlGetAllTags.length, eax, 0
+
+.tag_loop:
+        cinvoke sqliteStep, [.stmt]
+
+        cmp     eax, SQLITE_ROW
+        jne     .end_tags
+
+        cinvoke sqliteColumnInt, [.stmt], 1     ; the count used
+        mov     [.cnt], eax
+        mov     ecx, 100
+        mul     ecx
+        div     [.max]
+        test    eax, eax
+        jz      .tag_loop
+
+        cmp     eax, ecx
+        cmova   eax, ecx
+
+        movzx   eax, [.scale+eax-1]
+        test    eax, eax
+        jz      .tag_loop
+
+        push    eax
+
+        stdcall TextCat, ebx, txt  '<a class="taglink'
+        mov     ebx, edx
+
+        cmp     [esi+TSpecialParams.dir], 0
+        je      .current_ok
+
+        cinvoke sqliteColumnText, [.stmt], 0
+        stdcall StrCompNoCase, eax, [esi+TSpecialParams.dir]
+        jnc     .current_ok
+
+        stdcall TextCat, ebx, txt ' current_tag'
+        mov     ebx, edx
+
+.current_ok:
+
+        stdcall TextCat, ebx, txt '" style="font-size:'
+
+        pop     eax
+        stdcall NumToStr, eax, ntsDec or ntsUnsigned
+
+        stdcall TextCat, edx, eax
+        stdcall StrDel, eax
+        stdcall TextCat, edx, txt '%;" title="'
+        mov     ebx, edx
+
+        cinvoke sqliteColumnText, [.stmt], 0
+        stdcall StrEncodeHTML, eax
+        mov     edi, eax
+
+        stdcall TextCat, ebx, txt "["   ;"«"
+        stdcall TextCat, edx, edi
+        stdcall TextCat, edx, txt "]: " ;"»: "
+        mov     ebx, edx
+
+        cinvoke sqliteColumnText, [.stmt], 2
+        test    eax, eax
+        jz      .title_ok
+
+        stdcall StrEncodeHTML, eax
+        stdcall TextCat, ebx, eax
+        stdcall TextCat, edx, txt "; "
+        mov     ebx, edx
+        stdcall StrDel, eax
+
+.title_ok:
+
+        stdcall NumToStr, [.cnt], ntsDec or ntsUnsigned
+        stdcall TextCat, ebx, eax
+        stdcall StrDel, eax
+
+        stdcall TextCat, edx, txt ' thread'
+        cmp     [.cnt], 1
+        je      .plural_ok
+
+        stdcall TextCat, edx, txt 's'
+
+.plural_ok:
+        stdcall TextCat, edx, txt '." href="/'
+        stdcall TextCat, edx, edi
+        stdcall TextCat, edx, txt '/">'
+        stdcall TextCat, edx, edi
+        stdcall TextCat, edx, txt '</a>'
+        mov     ebx, edx
+
+        stdcall StrDel, edi
+        jmp     .tag_loop
+
+
+.end_tags:
+        cinvoke sqliteFinalize, [.stmt]
+        mov     [esp+4*regEAX], ebx
+        popad
+        return
+
+.scale   db 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 32, 33, 35, 37, 38
+         db 40, 41, 43, 44, 46, 47, 48, 50, 51, 52, 53, 55, 56, 57, 58, 59, 60, 62, 63, 64
+         db 65, 66, 67, 68, 69, 70, 70, 71, 72, 73, 74, 75, 76, 76, 77, 78, 79, 79, 80, 81
+         db 82, 82, 83, 83, 84, 85, 85, 86, 87, 87, 88, 88, 89, 89, 90, 90, 91, 91, 92, 92
+         db 93, 93, 94, 94, 95, 95, 95, 96, 96, 97, 97, 97, 98, 98, 98, 99, 99, 99, 100,100
+
+endp
+
+
+
+
+proc TextCat, .pText, .hString
+begin
+        push    eax
+        stdcall TextAddString, [.pText], -1, [.hString]
+        pop     eax
+        return
 endp
