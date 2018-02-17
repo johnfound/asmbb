@@ -34,6 +34,8 @@ uses sqlite3:"../%TargetOS%/sqlite3.inc"
 uglobal
   hMainDatabase dd ?
 
+  ThreadID dd ?
+
   Special TSpecialParams
 endg
 
@@ -47,6 +49,10 @@ endg
   cDatabaseFilename text "../../www/board.sqlite"
 
   cVersion text "VERSION: This is a test project for Render2!"
+
+;  cTestThread text "learning-the-asmbb-source-64"
+  cTestThread text "script-alert-xss-script-77"
+
 
 start:
         InitializeAll
@@ -75,7 +81,7 @@ start:
         mov     [Special.post_array], 0
         mov     [Special.dir], 0
 
-        stdcall StrDupMem, "learning-the-asmbb-source-64"
+        stdcall StrDupMem, cTestThread
         mov     [Special.thread], eax
 
         mov     [Special.page_num], 0
@@ -105,7 +111,7 @@ start:
         stdcall StrDupMem, "johnfound"
         mov     [Special.userName], eax
 
-        mov     [Special.userStatus], 349
+        mov     [Special.userStatus], -1; 349
         mov     [Special.userLang], 0
 
 ;        stdcall GetCurrentDir
@@ -166,6 +172,9 @@ begin
         cinvoke sqliteBindText, [.stmt2], 1, eax, [eax+string.len], SQLITE_STATIC
         cinvoke sqliteStep, [.stmt2]
 
+        cinvoke sqliteColumnInt, [.stmt2], 0
+        mov     [ThreadID], eax
+
         stdcall GetFineTimestamp
         mov     [.start_time], eax
 
@@ -181,10 +190,12 @@ begin
 
         lea     eax, [.stmt]
         cinvoke _sqlitePrepare_v2, [hMainDatabase], sqlTest, sqlTest.length, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, 64
+        cinvoke sqliteBindInt, [.stmt], 1, [ThreadID]
         cinvoke sqliteBindInt, [.stmt], 2, 20
         cinvoke sqliteBindInt, [.stmt], 3, 0
-        cinvoke sqliteBindText, [.stmt], 4, 'learning-the-asmbb-source-64', -1, SQLITE_STATIC
+
+        stdcall StrPtr, [Special.thread]
+        cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
         cinvoke sqliteBindInt, [.stmt], 5, 2
 
 .loop:
@@ -224,7 +235,7 @@ begin
         stdcall GetFineTimestamp
         mov     [.start_time], eax
 
-        stdcall RenderTemplate, esi, "./Test1.tpl", 0, Special
+        stdcall RenderTemplate, esi, "./Test1.tpl", [.stmt2], Special
         mov     esi, eax
 
         stdcall RenderTemplate, edi, "../../www/templates/Wasp/main_html_start.tpl", 0, Special
@@ -344,7 +355,7 @@ endp
 
 proc  GetQueryParam, .pSpecial, .hPrefix
 begin
-        xor     eax, eax
+        stdcall StrDupMem, "<script>alert('xss');</script>"
         return
 endp
 
@@ -454,3 +465,176 @@ endp
 
 
 
+
+
+sqlGetThreadPosters  text "select U.nick from Posts P left join Users U on U.id = P.userID where P.threadID = ?1 order by P.id limit 20;"
+
+proc GetPosters, .threadID
+  .list  dd ?
+  .fMore dd ?
+  .stmt  dd ?
+begin
+        pushad
+
+        mov     ecx, eax
+
+        stdcall StrNew
+        mov     ebx, eax
+
+        stdcall CreateArray, 4
+        mov     [.list], eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadPosters, sqlGetThreadPosters.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
+
+        and     [.fMore], 0
+
+.thread_posters_loop:
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .end_thread_posters
+
+        cinvoke sqliteColumnText, [.stmt], 0
+
+        mov     edx, [.list]
+        cmp     [edx+TArray.count], 5
+        je      .end_thread_posters_more
+
+        stdcall ListAddDistinct, [.list], eax
+        mov     [.list], edx
+
+        jmp     .thread_posters_loop
+
+.end_thread_posters_more:
+
+        inc     [.fMore]
+
+.end_thread_posters:
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        mov     edx, [.list]
+        xor     ecx, ecx
+
+.add_posters_loop:
+        cmp     ecx, [edx+TArray.count]
+        jae     .end_add_posters
+
+        cmp     ecx, 0
+        jne     .not_first
+
+        stdcall StrCat, ebx, 'started by: <b>'
+        jmp     .add_user
+
+.not_first:
+        cmp     ecx, 1
+        jne     .not_second
+
+        stdcall StrCat, ebx, '<br>joined: '
+        jmp     .add_user
+
+.not_second:
+
+        stdcall StrCat, ebx, txt ", "
+
+.add_user:
+        stdcall StrCat, ebx, '<a href="/!userinfo/'
+        stdcall StrURLEncode, [edx+TArray.array+4*ecx]
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+        stdcall StrCat, ebx, txt '">'
+        stdcall StrCat, ebx, [edx+TArray.array+4*ecx]
+        stdcall StrCat, ebx, txt '</a>'
+
+        test    ecx, ecx
+        jnz     @f
+        stdcall StrCat, ebx, txt '</b>'
+@@:
+        inc     ecx
+        jmp     .add_posters_loop
+
+
+.end_add_posters:
+
+        cmp     [.fMore], 0
+        je      @f
+        stdcall StrCat, ebx, " and more..."
+@@:
+
+        stdcall ListFree, [.list], StrDel
+
+.finish_thread_posters:
+
+        mov     [esp+4*regEAX], ebx
+        popad
+        return
+endp
+
+
+
+sqlGetThreadTags    text "select TT.tag, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag where TT.threadID=? order by TT.tag"
+
+proc GetThreadTags, .threadID
+.stmt dd ?
+begin
+        pushad
+
+        stdcall StrNew
+        mov     ebx, eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadTags, sqlGetAllTags.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
+
+.thread_tag_loop:
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .end_thread_tags
+
+        cmp     [.threadID], 0
+        jne     .comma_ok
+
+        stdcall StrCat, ebx, txt ', '
+
+.comma_ok:
+        mov     [.threadID], 0
+        stdcall StrCat, ebx, txt '<a class="ttlink" '
+
+        cinvoke sqliteColumnText, [.stmt], 1
+        test    eax, eax
+        jz      .link_title_ok
+
+        stdcall StrEncodeHTML, eax
+
+        stdcall StrCat, ebx, txt 'title="'
+        stdcall StrCat, ebx, eax
+        stdcall StrCat, ebx, txt '" '
+        stdcall StrDel, eax
+
+.link_title_ok:
+
+        stdcall StrCat, ebx, 'href="/'
+
+        cinvoke sqliteColumnText, [.stmt], 0
+        stdcall StrEncodeHTML, eax
+
+        stdcall StrCat, ebx, eax
+        stdcall StrCat, ebx, txt '/">'
+        stdcall StrCat, ebx, eax
+        stdcall StrCat, ebx, txt '</a>'
+        stdcall StrDel, eax
+
+        jmp     .thread_tag_loop
+
+.end_thread_tags:
+
+        cinvoke sqliteFinalize, [.stmt]
+
+.end_thread_tags2:
+        mov     [esp+4*regEAX], ebx
+        popad
+        return
+endp

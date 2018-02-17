@@ -1,5 +1,5 @@
-C Fixed\s[special:skin]\suse\sin\sthe\stemplates.\sWork\son\srender2\slibrary.
-D 2018-02-16T12:23:51.621
+C Work\son\srender2\simplementation.\sXSS\stest\scases.
+D 2018-02-17T16:26:17.913
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz d229fc2cf882580579aa5ace8a9dcfe78d0e7a6d
@@ -40,7 +40,7 @@ F source/post_data.asm 3ca626cfd4fe38680bfe5a61115edfc7f14bd70d
 F source/postdebug.asm 13ab4ebf2fc7b35d7fa36853b533236860b641f7
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/render.asm c91c1380416c49ca273d23d1eb15baabc8d53310
-F source/render2.asm e434c90e63bd8e71d0ccd52bcc016a6fad99c120
+F source/render2.asm c941949307d4b40bbd14670ac91cb83bd6a25144
 F source/search.asm a67cff2a3f88f82440a50fd96aceca0471f45238
 F source/search.sql 34cf6eea11403e7ac709cd1588bd84c57257135f
 F source/search_cnt.sql 762c07c3e8a9186e966a6377517edc18ab50ef96
@@ -51,8 +51,8 @@ F source/sqlite3.asm 8e27aa526542e4c8bac6b9e741b6e0698220933f
 F source/sqlite_console.asm 1d0ca0d6369d369ffff1f511213c55d5993c7916
 F source/statistics.asm bb8123e3e0b2a3e836cb5169c91d3d658a7b44ef
 F source/statistics.sql adf6bec52c32dba0b780cd7422e2de395ca19f7e
-F source/tests/Test1.tpl cc31cecc9e6369e0b620d7067779c98d654efb42
-F source/tests/test_templates.asm c314c832802551feed667171d1ab44760f81cce9
+F source/tests/Test1.tpl 9d5cfc49079844037f2ab4de6fa9a4659f16cdf7
+F source/tests/test_templates.asm d4cf099a33b33ce40cbd1a7103055d216e5f8516
 F source/tests/test_templates.fpr 0b6d692c0d55f91a6e310f622a6fe2c49c06ddf9
 F source/text_constants.asm f785aa1c9c8e22e1a9f0fc9180e8f384d91b26ac
 F source/thread_attr.sql 1d9509e1413bcf1a32b90137884be4cc168d8d17
@@ -392,7 +392,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less 8c87475cafc1ed04b43203ca9f187964060304a2
-P f0a9ece5f59de5839ffdf65a7eff152a75416403
-R 77405ad8ccb8197417baf92f06fcdbc1
+P b0e8272d3310aa622d467a79bb890d7eb51e4ba1
+R 78acd618cd04f51a6639c276cb280896
 U johnfound
-Z 3ee9764c9062239b0061e774d0af3a00
+Z 357163fba892e9d06a99f57a6487a561

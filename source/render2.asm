@@ -99,52 +99,48 @@ local ..keynm, ..len, ..hash, ..char
 }
 
 
-
-
-
-
 if used RenderTemplate
         PList tableCommands, tpl_func,                  \
               'special:', RenderTemplate.cmd_special,   \
-              'minimag:', RenderTemplate.cmd_minimag,   \
-              'html:',    RenderTemplate.cmd_html,      \
-              'url:',     RenderTemplate.cmd_url,       \
-              'css:',     RenderTemplate.cmd_css,       \
-              'case:',    RenderTemplate.cmd_case,      \
-              'sql:',     RenderTemplate.cmd_sql
+              'minimag:', RenderTemplate.cmd_minimag,   \   ; HTML, no encoding.
+              'html:',    RenderTemplate.cmd_html,      \   ; HTML, disables the encoding.
+              'url:',     RenderTemplate.cmd_url,       \   ; Needs encoding!
+              'css:',     RenderTemplate.cmd_css,       \   ; No output, no encoding.
+              'case:',    RenderTemplate.cmd_case,      \   ; No encoding.
+              'sql:',     RenderTemplate.cmd_sql            ; Needs encoding!
 
 
         PList tableSpecial, tpl_func,                                 \
-              "visitors",    RenderTemplate.sp_visitors,              \
-              "version",     RenderTemplate.sp_version,               \
-              "cmdtype",     RenderTemplate.sp_cmdtype,               \
-              "stats",       RenderTemplate.sp_stats,                 \
-              "timestamp",   RenderTemplate.sp_timestamp,             \
-              "title",       RenderTemplate.sp_title,                 \
-              "header",      RenderTemplate.sp_header,                \
-              "allstyles",   RenderTemplate.sp_allstyles,             \
-              "description", RenderTemplate.sp_description,           \
-              "keywords",    RenderTemplate.sp_keywords,              \
-              "username",    RenderTemplate.sp_username,              \
-              "userid",      RenderTemplate.sp_userid,                \
-              "skin",        RenderTemplate.sp_skin,                  \
-              "page",        RenderTemplate.sp_page,                  \
-              "dir",         RenderTemplate.sp_dir,                   \
-              "thread",      RenderTemplate.sp_thread,                \
-              "permissions", RenderTemplate.sp_permissions,           \
-              "isadmin",     RenderTemplate.sp_isadmin,               \
-              "canlogin",    RenderTemplate.sp_canlogin,              \
-              "canpost",     RenderTemplate.sp_canpost,               \
-              "canstart",    RenderTemplate.sp_canstart,              \
-              "canedit",     RenderTemplate.sp_canedit,               \
-              "candel",      RenderTemplate.sp_candelete,             \
-              "canchat",     RenderTemplate.sp_canchat,               \
-              "referer",     RenderTemplate.sp_referer,               \
-              "alltags",     RenderTemplate.sp_alltags,               \
-              "setupmode",   RenderTemplate.sp_setupmode,             \
-              "search",      RenderTemplate.sp_search,                \
-              "usearch",     RenderTemplate.sp_usearch,               \
-              "skins=",      RenderTemplate.sp_skins,                 \
+              "visitors",    RenderTemplate.sp_visitors,              \ ; HTML no encoding
+              "version",     RenderTemplate.sp_version,               \ ; no encoding
+              "cmdtype",     RenderTemplate.sp_cmdtype,               \ ; 0/1/2 no encoding
+              "stats",       RenderTemplate.sp_stats,                 \ ; HTML no encoding
+              "timestamp",   RenderTemplate.sp_timestamp,             \ ; NUMBER no encoding
+              "title",       RenderTemplate.sp_title,                 \ ; Controlled source, no encoding
+              "header",      RenderTemplate.sp_header,                \ ; Controlled source, no encoding
+              "allstyles",   RenderTemplate.sp_allstyles,             \ ; CSS, from controlled source, no encoding.
+              "description", RenderTemplate.sp_description,           \ ; Controlled source, no encoding
+              "keywords",    RenderTemplate.sp_keywords,              \ ; Controlled source, no encoding
+              "username",    RenderTemplate.sp_username,              \ ; Needs encoding!
+              "userid",      RenderTemplate.sp_userid,                \ ; NUMBER, no encoding.
+              "skin",        RenderTemplate.sp_skin,                  \ ; Controlled source, no encoding???
+              "page",        RenderTemplate.sp_page,                  \ ; Number, no encoding.
+              "dir",         RenderTemplate.sp_dir,                   \ ; Needs encoding!
+              "thread",      RenderTemplate.sp_thread,                \ ; Needs encoding!
+              "permissions", RenderTemplate.sp_permissions,           \ ; NUMBER, no encoding
+              "isadmin",     RenderTemplate.sp_isadmin,               \ ; 1/0 no encoding
+              "canlogin",    RenderTemplate.sp_canlogin,              \ ; 1/0 no encoding
+              "canpost",     RenderTemplate.sp_canpost,               \ ; 1/0 no encoding
+              "canstart",    RenderTemplate.sp_canstart,              \ ; 1/0 no encoding
+              "canedit",     RenderTemplate.sp_canedit,               \ ; 1/0 no encoding
+              "candel",      RenderTemplate.sp_candelete,             \ ; 1/0 no encoding
+              "canchat",     RenderTemplate.sp_canchat,               \ ; 1/0 no encoding
+              "referer",     RenderTemplate.sp_referer,               \ ; 1/0 no encoding
+              "alltags",     RenderTemplate.sp_alltags,               \ ; HTML no encoding
+              "setupmode",   RenderTemplate.sp_setupmode,             \ ; no encoding
+              "search",      RenderTemplate.sp_search,                \ ; Needs encoding!
+              "usearch",     RenderTemplate.sp_usearch,               \ ; Needs encoding!
+              "skins=",      RenderTemplate.sp_skins,                 \ ; HTML no encoding
               "posters=",    RenderTemplate.sp_posters,               \
               "threadtags=", RenderTemplate.sp_threadtags
 end if
@@ -161,8 +157,9 @@ ends
 
 
 proc RenderTemplate, .pText, .hTemplate, .sqlite_statement, .pSpecial
-.result dd ?
 .fEncode dd ?
+
+.stmt dd ?
 
 .separators rd 256
 .sepindex   rd 16
@@ -188,6 +185,8 @@ begin
         call    .build_hash_table       ; creates a hash table for the SQL statement field names.
 
 .hash_ok:
+        mov     [.fEncode], 1
+
         mov     edx, [.pText]
         stdcall TextMoveGap, edx, -1
 
@@ -236,6 +235,14 @@ begin
 ;.start_param:
 ; here something have to be done abour HTML encoding of the generated text!
 
+        cmp     dword [edx+eax+1], 'html'
+        jne     .not_html
+        cmp     byte [edx+eax+5], ':'
+        jne     .not_html
+
+        mov     [.fEncode], 0         ; special processing for html: command.
+
+.not_html:
         mov     eax, [.sepcnt]
         mov     esi, [.seplvl]
         mov     [.sepindex + 4*esi], eax
@@ -358,10 +365,12 @@ begin
         pop     edx ecx
         push    eax             ; the length in bytes of the column text.
 
+        cmp     [.fEncode], 0
+        je      @f
+        shl     eax, 3          ; if encoded, we need more space.
+@@:
         stdcall TextSetGapSize, edx, eax
         stdcall TextMoveGap, edx, edi           ; the start of the field name.
-
-;        int3
 
         lea     eax, [ecx+1]
         sub     eax, edi
@@ -371,12 +380,74 @@ begin
         pop     eax     ; field text length
         pop     esi     ; pointer to the field text
 
+        add     edi, edx
+
+        cmp     [.fEncode], 0
+        je      .copy_not_encoded
+
+        push    ecx
+        xor     ebx, ebx
+        mov     ecx, eax
+        jecxz   .end_encode
+
+.encode_loop:
+        lodsb
+
+        cmp     al, '<'
+        je      .char_less_then
+        cmp     al, '>'
+        je      .char_greater_then
+        cmp     al, '"'
+        je      .char_quote
+        cmp     al, '&'
+        je      .char_amp
+
+        stosb
+        inc     ebx
+
+.next_encode:
+        loop    .encode_loop
+
+.end_encode:
+        pop     ecx
+        add     ecx, ebx
+        add     [edx+TText.GapBegin], ebx
+        jmp     .loop
+
+
+.char_less_then:
+        mov     dword [edi], '&lt;'
+        add     edi, 4
+        add     ebx, 4
+        jmp     .next_encode
+
+.char_greater_then:
+        mov     dword [edi], '&gt;'
+        add     edi, 4
+        add     ebx, 4
+        jmp     .next_encode
+
+
+.char_quote:
+        mov     dword [edi], '&quo'
+        mov     word [edi+4],'t;'
+        add     edi, 6
+        add     ebx, 6
+        jmp     .next_encode
+
+.char_amp:
+        mov     dword [edi], '&amp'
+        mov     byte [edi+4], ';'
+        add     edi, 5
+        add     ebx, 5
+        jmp     .next_encode
+
+
+.copy_not_encoded:
+        add     [edx+TText.GapBegin], eax
         add     ecx, eax
         push    ecx
 
-        add     [edx+TText.GapBegin], eax
-
-        add     edi, edx
         mov     ecx, eax
         shr     eax, 2
         and     ecx, 3
@@ -403,9 +474,20 @@ begin
 .cmd_minimag:
 ; here esi points to ":" of the "minimag:" command. edi points to the start "[" and ecx points to the end "]"
 
+        stdcall TextMoveGap, edx, ecx
 
+        inc     [edx+TText.GapEnd]
+        mov     [edx+TText.GapBegin], edi
+        mov     dword [edx+ecx], 0
+        lea     ecx, [edi-1]
 
+        lea     esi, [edx + esi + 1]
+        stdcall FormatPostText, esi
+        push    eax
+        stdcall TextAddString, edx, edi, eax
+        stdcall StrDel ; from the stack
 
+        add     ecx, eax
         jmp     .loop
 
 ; ...................................................................
@@ -419,6 +501,7 @@ begin
         stdcall TextMoveGap, edx, edi
         add     [edx+TText.GapEnd], 6
 
+        mov     [.fEncode], 1
         sub     ecx, 7
         jmp     .loop
 
@@ -511,9 +594,74 @@ begin
 
 
 .cmd_sql:
+; here esi points to ":" of the "[sql:" command. edi points to the start "[" and ecx points to the end "]"
+        pushad
+
+        stdcall TextMoveGap, edx, ecx
+
+        mov     ebx, [.sepcnt]
+        mov     ecx, [.separators + 4*ebx]
+        test    ecx, ecx
+        cmovs   ecx, [esp+4*regECX]
+        inc     esi
+
+        sub     ecx, esi
+        jle     .end_sql
+
+        lea     esi, [edx+esi]
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2,[hMainDatabase], esi, ecx, eax, 0
+        cmp     eax, SQLITE_OK
+        jne     .end_sql
+
+        xor     edi, edi
+        mov     [esp+4*regESI], edi
+
+.bind_loop:
+        inc     ebx
+        inc     edi
+        mov     ecx, [.separators + 4*ebx - 4]
+        mov     eax, [.separators + 4*ebx]
+        test    eax, eax
+        cmovs   eax, [esp+4*regECX]
+
+        inc     ecx
+        jz      .end_bind
+
+        sub     eax, ecx
+        jle     .bind_loop
+
+        add     ecx, [esp+4*regEDX]
+        cinvoke sqliteBindText, [.stmt], edi, ecx, eax, SQLITE_STATIC
+        cmp     eax, SQLITE_OK
+        je      .bind_loop
+
+.end_bind:
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .finalize_sql
+
+        cinvoke sqliteColumnText, [.stmt], 0
+        stdcall StrEncodeHTML, eax
+        mov     [esp+4*regESI], eax
+
+.finalize_sql:
+        cinvoke sqliteFinalize, [.stmt]
+
+.end_sql:
+        popad
+
+        mov     [edx+TText.GapBegin], edi
+        inc     [edx+TText.GapEnd]
+        lea     ecx, [edi-1]
+
+        test    esi, esi
+        jz      .loop
+
+        stdcall TextAddString, edx, edi, esi
+        stdcall StrDel, esi
+        add     ecx, eax
         jmp     .loop
-
-
 
 
 .cmd_case:
@@ -870,7 +1018,7 @@ endl
 
 
 
-.cBoolean dd .cStringFALSE, .cStringTRUE
+.cBoolean     dd .cStringFALSE, .cStringTRUE
 .cStringFALSE db "0", 0, 0, 0
 .cStringTRUE  db "1", 0, 0, 0
 
@@ -970,13 +1118,18 @@ endl
         stdcall GetAllSkins, eax
         jmp     .special_ttext
 
-; NOT FINISHED HERE
 
 .sp_posters:
+; here esi points to the "=" char, ecx at the end "]" and edi at the start "["
+        call    .get_number
+        stdcall GetPosters, ebx
+        jmp     .special_string_free
 
 .sp_threadtags:
-
-        jmp     .loop
+; here esi points to the "=" char, ecx at the end "]" and edi at the start "["
+        call    .get_number
+        stdcall GetThreadTags, ebx
+        jmp     .special_string_free
 
 
 .finish:
@@ -1047,6 +1200,36 @@ endl
 .end_cols:
 
         popad
+        retn
+
+
+.get_number:
+        xor     ebx, ebx
+        xor     eax, eax
+
+.num_loop:
+        inc     esi
+        cmp     esi, ecx
+        je      .end_num
+
+        mov     eax, esi
+        cmp     esi, [edx+TText.GapBegin]
+        jb      @f
+        add     eax, [edx+TText.GapEnd]
+        sub     eax, [edx+TText.GapBegin]
+@@:
+
+        movzx   eax, byte [edx+eax]
+        cmp     al, ' '
+        jbe     .num_loop
+
+        shl     ebx, 1
+        and     al, $0f
+        lea     ebx, [5*ebx]
+        add     ebx, eax
+        jmp     .num_loop
+
+.end_num:
         retn
 
 
@@ -1270,5 +1453,100 @@ begin
         push    eax
         stdcall TextAddString, [.pText], -1, [.hString]
         pop     eax
+        return
+endp
+
+
+
+proc FormatPostText, .ptrMinimag
+
+.result TMarkdownResults
+
+begin
+;        stdcall StrCatTemplate, [.hText], "../www/templates/Wasp/minimag_suffix.tpl", 0, 0
+;        lea     eax, [.result]
+;        stdcall TranslateMarkdown2, [.hText], FixMiniMagLink, 0, eax, 0
+;
+;        stdcall StrDel, [.hText]
+;        stdcall StrDel, [.result.hIndex]
+;        stdcall StrDel, [.result.hKeywords]
+;        stdcall StrDel, [.result.hDescription]
+;
+;        mov     eax, [.result.hContent]
+        return
+endp
+
+
+
+proc FixMiniMagLink, .ptrLink, .ptrBuffer, .lParam
+begin
+        pushad
+
+        mov     edi, [.ptrBuffer]
+        mov     esi, [.ptrLink]
+
+        cmp     byte [esi], '#'
+        je      .finish         ; it is internal link
+
+.start_loop:
+        lodsb
+        cmp     al, $0d
+        je      .not_absolute
+        cmp     al, $0a
+        je      .not_absolute
+        cmp     al, ']'
+        je      .not_absolute
+        test    al,al
+        jz      .not_absolute
+
+        cmp     al, 'A'
+        jb      .found
+        cmp     al, 'Z'
+        jbe     .start_loop
+
+        cmp     al, 'a'
+        jb      .found
+        cmp     al, 'z'
+        jb      .start_loop
+
+.found:
+        cmp     al, ':'
+        jne     .not_absolute
+
+        mov     ecx, [.ptrLink]
+        sub     ecx, esi
+
+        cmp     ecx, -11
+        jne     .not_js
+
+        cmp     dword [esi+ecx], "java"
+        jne     .not_js
+
+        cmp     dword [esi+ecx+4], "scri"
+        jne     .not_js
+
+        cmp     word [esi+ecx+8], "pt"
+        jne     .not_js
+
+.add_https:
+        mov     dword [edi], "http"
+        mov     dword [edi+4], "s://"
+        lea     edi, [edi+8]
+        jmp     .protocol_ok
+
+.not_js:
+        cmp     dword [esi+ecx], "http"         ; ECX < 0 here!!!
+        jne     .add_https
+
+.not_absolute:
+.protocol_ok:
+        mov     esi, [.ptrLink]
+
+; it is absolute URL, exit
+.finish:
+        mov     [esp+4*regEAX], edi     ; return where to copy the remaining of the address. Destination!
+        mov     [esp+4*regEDX], esi     ; return from where to copy the remaining of the address. Source!
+
+        popad
         return
 endp
