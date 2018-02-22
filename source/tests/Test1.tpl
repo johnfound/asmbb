@@ -15,8 +15,19 @@
   <h2>[sql: select Caption from Threads where slug = ?|asmbb-how-to-download-compile-and-install.49][sql:select ?1+?3|2|5|2][case:2|0|1|2|3]</h2>
   [sql: select Caption from Threads where id=77]
 
-  [special:threadtags=[id]]
+  <p>[special:threadtags=[id]]</p>
+  <p>[special:posters=[id]]</p>
+<div style="width: 100%" class="post_text"><article>
+  [minimag:
 
+## Minimag header
+
+This is minimag paragraph.
+
+Another paragraph with [?:-)] emoticon.
+
+]
+</article></div>
 </div>
 
 

@@ -26,9 +26,6 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .finish_ok_fin
 
-        stdcall StrNew
-        mov     ebx, eax
-
         test    [esi+TSpecialParams.userStatus], permDelAll
         jnz     .perm_ok
 
@@ -43,9 +40,10 @@ begin
 .perm_ok:
 
         stdcall LogUserActivity, esi, uaDeletingPost, 0
-
         stdcall StrCat, [esi+TSpecialParams.page_title], cPostDeleteTitle
-        stdcall StrCatTemplate, ebx, "del_confirm.tpl", [.stmt], [.pSpecial]
+
+        stdcall RenderTemplate, 0, "del_confirm.tpl", [.stmt], [.pSpecial]
+        mov     edi, eax
 
 .finish_ok_fin:
 
@@ -56,14 +54,14 @@ begin
         clc
 
 .finish:
-        mov     [esp+4*regEAX], ebx
+        mov     [esp+4*regEAX], edi
         popad
         return
 
 
 .perm_not_ok:
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect, ebx, "/!message/error_cant_delete"
+        stdcall TextMakeRedirect, 0, "/!message/error_cant_delete"
         stc
         jmp     .finish
 
@@ -80,29 +78,27 @@ proc DeletePost, .pSpecial
 
 .threadID dd ?
 .post_cnt dd ?
-.slug     dd ?
 
 begin
         pushad
 
-        xor     ebx, ebx
-        mov     [.threadID], ebx
-        mov     [.post_cnt], ebx
-        mov     [.slug], ebx
+        xor     edi, edi
+        mov     [.threadID], edi
+        mov     [.post_cnt], edi
 
         mov     esi, [.pSpecial]
 
-        cmp     [esi+TSpecialParams.page_num], ebx
+        cmp     [esi+TSpecialParams.page_num], edi
         je      .err404
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBegin, sqlBegin.length, eax, 0
         cinvoke sqliteStep, [.stmt]
-        mov     edi, eax
+        mov     ebx, eax
         cinvoke sqliteFinalize, [.stmt]
-        cmp     edi, SQLITE_DONE
+        cmp     ebx, SQLITE_DONE
+        clc
         jne     .finish
-
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlDelConfirmInfo, sqlDelConfirmInfo.length, eax, 0
@@ -110,10 +106,6 @@ begin
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
         jne     .write_failure
-
-
-        stdcall StrNew
-        mov     ebx, eax
 
         test    [esi+TSpecialParams.userStatus], permDelAll
         jnz     .perm_ok
@@ -133,10 +125,6 @@ begin
 
         cinvoke sqliteColumnInt, [.stmt], 5
         mov     [.post_cnt], eax                                ; post_cnt
-
-        cinvoke sqliteColumnText, [.stmt], 6
-        stdcall StrDupMem, eax
-        mov     [.slug], eax                                    ; thread slug
 
         cinvoke sqliteFinalize, [.stmt]
 
@@ -176,25 +164,22 @@ begin
 
 
 .finish_redirect_list:
-
-        stdcall StrMakeRedirect, ebx, txt "../../"
+        stdcall TextMakeRedirect, 0, txt "../../"
         jmp     .finish
 
 
 .finish_redirect_thread:
-
-        stdcall StrMakeRedirect, ebx, txt "../"
-        stdcall StrDel, eax
+        stdcall TextMakeRedirect, 0, txt "../"
         jmp     .finish
 
 
 .perm_not_ok:
-        stdcall StrMakeRedirect, ebx, "/!message/error_cant_delete"
+        stdcall TextMakeRedirect, 0, "/!message/error_cant_delete"
         jmp     .do_rollback
 
 
 .write_failure:
-        stdcall StrMakeRedirect, ebx, "/!message/error_cant_write"
+        stdcall TextMakeRedirect, 0, "/!message/error_cant_write"
 
 
 .do_rollback:
@@ -205,8 +190,7 @@ begin
         stc
 
 .exit:
-        stdcall StrDel, [.slug]
-        mov     [esp+4*regEAX], ebx
+        mov     [esp+4*regEAX], edi
         popad
         return
 

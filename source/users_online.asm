@@ -242,24 +242,21 @@ begin
         mov     esi, [.pSpecialData]
 
         stdcall StrCat, [esi+TSpecialParams.page_title], cUsersOnlineTitle
-
-        stdcall StrNew
-        mov     edi, eax
-
         stdcall LogUserActivity, esi, uaTrackingUsers, 0
-
         stdcall ListAddDistinct, [esi+TSpecialParams.pStyles], "users_online.css"
         mov     [esi+TSpecialParams.pStyles], edx
 
-        stdcall StrCat, edi, '<div class="users_online"><table class="users_table"><tr><th>User</th><th>Time</th><th>Activity</th>'
+        stdcall TextCreate, sizeof.TText
+        stdcall TextCat, eax, txt '<div class="users_online"><table class="users_table"><tr><th>User</th><th>Time</th><th>Activity</th>'
 
         test    [esi+TSpecialParams.userStatus], permAdmin
         jz      .admin_ok
 
-        stdcall StrCat, edi, '<th>IP address</th><th>User agent</ht>'
+        stdcall TextCat, edx, txt '<th>IP address</th><th>User agent</ht>'
 
 .admin_ok:
-        stdcall StrCat, edi, '</tr>'
+        stdcall TextCat, edx, txt '</tr>'
+        mov     edi, edx
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetUsersActivity, sqlGetUsersActivity.length, eax, 0
@@ -271,11 +268,11 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .finalize
 
-        stdcall StrCat, edi, txt '<tr>'
-
+        stdcall TextCat, edi, txt '<tr>'
 
 ; user name
-        stdcall StrCat, edi, txt '<td>'
+        stdcall TextCat, edx, txt '<td>'
+        mov     edi, edx
 
         cinvoke sqliteColumnText, [.stmt], 0
         test    eax, eax
@@ -288,11 +285,13 @@ begin
         stdcall IsBot, eax
         jc      .bot
 
-        stdcall StrCat, edi, txt "Guest"
+        stdcall TextCat, edi, txt "Guest"
+        mov     edi, edx
         jmp     .user_ok
 
 .bot:
-        stdcall StrCat, edi, txt "Robot"
+        stdcall TextCat, edi, txt "Robot"
+        mov     edi, edx
 
 .user_ok:
 
@@ -304,69 +303,79 @@ begin
         xor     dl, ah
 
         stdcall NumToStr, edx, ntsHex or ntsFixedWidth or 2
-        stdcall StrCat, edi, eax
-        stdcall StrDel, eax
 
+        stdcall TextCat, edi, eax
+        stdcall StrDel, eax
         jmp     .end_user
 
 .make_user:
-        stdcall StrCat, edi, '<a href="/!userinfo/'
-        stdcall StrCat, edi, eax
-        stdcall StrCharCat, edi, '">'
-        stdcall StrCat, edi, eax
-        stdcall StrCat, edi, txt '</a>'
+        stdcall TextCat, edi, '<a href="/!userinfo/'
+        stdcall TextCat, edx, eax
+        stdcall TextCat, edx, txt '">'
+        stdcall TextCat, edx, eax
+        stdcall TextCat, edx, txt '</a>'
 
 .end_user:
-        stdcall StrCat, edi, txt '</td>'
+        stdcall TextCat, edx, txt '</td>'
 
 
 ; date
 
-        stdcall StrCat, edi, txt '<td>'
+        stdcall TextCat, edx, txt '<td>'
+        mov     edi, edx
+
         cinvoke sqliteColumnText, [.stmt], 3
-        stdcall StrCat, edi, eax
-        stdcall StrCat, edi, txt '</td>'
+
+        stdcall TextCat, edi, eax
+        stdcall TextCat, edx, txt '</td>'
 
 ; activity
 
-        stdcall StrCat, edi, txt '<td>'
+        stdcall TextCat, edx, txt '<td>'
 
         stdcall GetActivityArgs, [.stmt]
-        stdcall StrCatTemplate, edi, eax, ebx, esi
+        push    eax
 
-        stdcall StrDel, eax
+        stdcall RenderTemplate, edx, eax, ebx, esi
+        mov     edi, eax
+
+        stdcall StrDel ; from the stack
         cinvoke sqliteFinalize, ebx
 
-        stdcall StrCat, edi, txt '</td>'
+        stdcall TextCat, edi, txt '</td>'
+        mov     edi, edx
 
 ; if admin, put some details:
 
         test    [esi+TSpecialParams.userStatus], permAdmin
         jz      .admin_ok2
 
-        stdcall StrCat, edi, txt '<td>'
+        stdcall TextCat, edi, txt '<td>'
+        mov     edi, edx
 
         cinvoke sqliteColumnInt, [.stmt], 4
-        stdcall IP2Str, eax
-        stdcall StrCat, edi, eax
 
-        stdcall StrCat, edi, ' <a class="ban_link" href="/!ban_ip/'
-        stdcall StrCat, edi, eax
+        stdcall IP2Str, eax
+        stdcall TextCat, edi, eax
+        stdcall TextCat, edx, txt ' <a class="ban_link" href="/!ban_ip/'
+        stdcall TextCat, edx, eax
         stdcall StrDel, eax
-        stdcall StrCat, edi, txt '"></a></td><td>'
+        stdcall TextCat, edx, txt '"></a></td><td>'
+        mov     edi, edx
 
         cinvoke sqliteColumnText, [.stmt], 5
         test    eax, eax
         jz      @f
-        stdcall StrCat, edi, eax
+        stdcall TextCat, edi, eax
+        mov     edi, edx
 @@:
-        stdcall StrCat, edi, txt '</td>'
+        stdcall TextCat, edi, txt '</td>'
+        mov     edi, edx
 
 .admin_ok2:
 ; end of the row
-
-        stdcall StrCat, edi, txt '</tr>'
-
+        stdcall TextCat, edi, txt '</tr>'
+        mov     edi, edx
         jmp     .loop
 
 .finalize:
@@ -374,9 +383,8 @@ begin
         cinvoke sqliteFinalize, [.stmt]
 
 .finish:
-        stdcall StrCat, edi, txt '</table></div>'
-
-        mov     [esp+4*regEAX], edi
+        stdcall TextCat, edi, txt '</table></div>'
+        mov     [esp+4*regEAX], edx
         clc
         popad
         return
@@ -392,6 +400,8 @@ begin
         stdcall StrMatchPatternNoCase, txt "*crawl*", [.hClient]
         jc      .yes
         stdcall StrMatchPatternNoCase, txt "*spider*", [.hClient]
+        jc      .yes
+        stdcall StrMatchPatternNoCase, txt "*favicon*", [.hClient]
         jc      .yes
         stdcall StrLen, [.hClient]
         cmp     eax, 55                 ; CF=1 if below.

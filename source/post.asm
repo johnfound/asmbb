@@ -6,7 +6,7 @@ LIMIT_TAG_DESCRIPTION = 1024
 cNewPostForm   text "form_new_post.tpl"
 cNewThreadForm text "form_new_thread.tpl"
 
-sqlSelectConst text "select ? as slug, ? as caption, ? as source, ? as ticket, ? as tags"
+sqlSelectConst text "select ?1 as slug, ?2 as caption, ?3 as source, ?4 as ticket, ?5 as tags"
 
 sqlGetQuote   text "select U.nick, P.content from Posts P left join Users U on U.id = P.userID where P.id = ?"
 
@@ -51,7 +51,7 @@ begin
 
         mov     esi, [.pSpecial]
 
-        stdcall StrNew
+        stdcall TextCreate, sizeof.TText
         mov     edi, eax
 
 ; check the permissions.
@@ -260,12 +260,14 @@ begin
 
 .make_form:
 
-        stdcall StrCatTemplate, edi, ecx, [.stmt], esi
+        stdcall RenderTemplate, edi, ecx, [.stmt], esi
+        mov     edi, eax
 
         cmp     [.fPreview], 0
         je      .preview_ok
 
-        stdcall StrCatTemplate, edi, "preview.tpl", [.stmt], esi
+        stdcall RenderTemplate, edi, "preview.tpl", [.stmt], esi
+        mov     edi, eax
 
 .preview_ok:
 
@@ -393,8 +395,7 @@ begin
 
 ; render the source
 
-        stdcall StrDup, [.source]
-        stdcall FormatPostText, eax, esi
+        stdcall FormatPostText2, [.source], esi
         mov     [.rendered], eax
 
 
@@ -454,7 +455,9 @@ begin
         cinvoke sqliteFinalize, [.stmt]
 
         mov     eax, [.pSpecial]
-        stdcall StrCatRedirectToPost, edi, esi, eax
+        stdcall StrRedirectToPost, esi, eax
+        stdcall TextMakeRedirect, edi, eax
+        stdcall StrDel, eax
 
 .finish_clear:
         mov     eax, [.pSpecial]
@@ -482,7 +485,7 @@ begin
         call    .do_rollback
 
         mov     eax, [.pSpecial]
-        stdcall StrMakeRedirect, edi, "/!message/error_cant_write/"
+        stdcall TextMakeRedirect, edi, "/!message/error_cant_write/"
         jmp     .finish_clear
 
 
@@ -491,7 +494,7 @@ begin
         call    .do_rollback
 
         mov     eax, [.pSpecial]
-        stdcall StrMakeRedirect, edi, "/!message/error_invalid_caption/"
+        stdcall TextMakeRedirect, edi, "/!message/error_invalid_caption/"
         jmp     .finish_clear
 
 
@@ -501,35 +504,35 @@ begin
 
         call    .do_rollback
 
-        stdcall StrMakeRedirect, edi, "/!message/error_invalid_content"
+        stdcall TextMakeRedirect, edi, "/!message/error_invalid_content"
         jmp     .finish_clear
 
 
 .do_rollback:
 
         cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
-
         retn
 
 
 .error_wrong_permissions:
 
-        stdcall StrMakeRedirect, edi, "/!message/error_cant_post"
+        stdcall TextMakeRedirect, edi, "/!message/error_cant_post"
         jmp     .finish_clear
 
 
 
 .error_thread_not_exists:
 
-        stdcall StrMakeRedirect, edi, "/!message/error_thread_not_exists"
+        stdcall TextMakeRedirect, edi, "/!message/error_thread_not_exists"
         jmp     .finish_clear
 
 
 .error_bad_ticket:
-        stdcall StrDel, edi
-
-        stdcall StrMakeRedirect, 0, "/!message/error_bad_ticket"
-        mov     edi, eax
+        xor     eax, eax
+        mov     [edi+TText.GapBegin], eax
+        mov     eax, [edi+TText.Length]
+        mov     [edi+TText.GapEnd], eax
+        stdcall TextMakeRedirect, edi, "/!message/error_bad_ticket"
         jmp     .finish_clear
 
 endp

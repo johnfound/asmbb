@@ -3,7 +3,7 @@ sqlSelectPosts StripText "showthread.sql", SQL
 
 sqlGetPostCount  text "select count(1) from Posts where ThreadID = ?"
 sqlGetThreadInfo text "select T.id, T.caption, T.slug, (select userID from Posts P where P.threadID=T.id order by P.id limit 1) as UserID from Threads T where T.slug = ?1 limit 1"
-sqlIncReadCount  text "update Posts set ReadCount = ReadCount + 1 where id in ("
+sqlIncReadCount  text "update PostCNT set Count = Count + 1 where postid in ("
 sqlSetPostsRead  text "delete from UnreadPosts where UserID = ?1 and PostID in ("
 
 
@@ -24,8 +24,9 @@ proc ShowThread, .pSpecial
 begin
         pushad
 
-        stdcall StrNew
+        stdcall TextCreate, sizeof.TText
         mov     edi, eax
+
         mov     esi, [.pSpecial]
 
         stdcall StrNew
@@ -69,9 +70,9 @@ begin
 .page_ok:
         mov     [esi+TSpecialParams.page_title], ebx
 
-        stdcall StrCat, edi, '<div class="thread">'
-
-        stdcall StrCatTemplate, edi, "nav_thread.tpl", [.stmt2], esi
+        stdcall TextCat, edi, txt '<div class="thread">'
+        stdcall RenderTemplate, edx, "nav_thread.tpl", [.stmt2], esi
+        mov     edi, eax
 
 ; pages links
 
@@ -90,7 +91,8 @@ begin
         stdcall CreatePagesLinks2, [esi+TSpecialParams.page_num], [.cnt], 0, [esi+TSpecialParams.page_length]
         mov     [.list], eax
 
-        stdcall StrCat, edi, [.list]
+        stdcall TextCat, edi, [.list]
+        mov     edi, edx
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectPosts, sqlSelectPosts.length, eax, 0
@@ -116,7 +118,8 @@ begin
 
         inc     [.cnt]
 
-        stdcall StrCatTemplate, edi, "post_view.tpl", [.stmt], esi
+        stdcall RenderTemplate, edi, "post_view.tpl", [.stmt], esi
+        mov     edi, eax
 
         cinvoke sqliteColumnInt, [.stmt], 0
 
@@ -155,6 +158,8 @@ begin
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 
+        Benchmark  "Posts set unread [us]: "
+
 .posts_read_ok:
 
         stdcall StrDupMem, sqlIncReadCount
@@ -179,19 +184,18 @@ begin
         cmp     [.cnt], 5
         jbe     .back_navigation_ok
 
-        stdcall StrCat, edi, [.list]
-        stdcall StrCatTemplate, edi, "nav_thread.tpl", [.stmt2], esi
+        stdcall TextCat, edi, [.list]
+        stdcall RenderTemplate, edx, "nav_thread.tpl", [.stmt2], esi
+        mov     edi, eax
 
 .back_navigation_ok:
 
         stdcall StrDel, [.list]
-
-        stdcall StrCat, edi, "</div>"   ; div.thread
+        stdcall TextCat, edi, txt "</div>"   ; div.thread
+        mov     edi, edx
 
 .exit:
-
         cinvoke sqliteFinalize, [.stmt2]
-
         cinvoke sqliteExec, [hMainDatabase], sqlCommit, 0, 0, 0
 
         clc
@@ -200,7 +204,7 @@ begin
         return
 
 .error:
-        stdcall StrDel, edi
+        stdcall TextFree, edi
         xor     edi, edi
         jmp     .exit
 
@@ -216,18 +220,18 @@ proc PostByID, .pSpecial
 begin
         pushad
 
+        xor     edi, edi
         mov     esi, [.pSpecial]
+        cmp     [esi+TSpecialParams.page_num], edi
+        je      .finish
 
-        cmp     [esi+TSpecialParams.page_num], 0
-        je      .err404
-
-        stdcall StrNew
-        stdcall StrCatRedirectToPost, eax, [esi+TSpecialParams.page_num], esi
-
+        stdcall StrRedirectToPost, [esi+TSpecialParams.page_num], esi
+        stdcall TextMakeRedirect, 0, eax
+        stdcall StrDel, eax
         stc
 
 .finish:
-        mov     [esp+4*regEAX], eax
+        mov     [esp+4*regEAX], edi
         popad
         return
 
@@ -245,7 +249,7 @@ sqlGetThreadID text "select P.ThreadID, T.Slug from Posts P left join Threads T 
 
 sqlGetThePostIndex text "select count() from Posts p where threadID = ?1 and id < ?2 order by id"
 
-proc StrCatRedirectToPost, .hString, .postID, .pSpecial
+proc StrRedirectToPost, .postID, .pSpecial
 .stmt dd ?
 
 .page dd ?
@@ -258,7 +262,8 @@ begin
 
         mov     esi, [.pSpecial]
 
-        stdcall StrCat, [.hString], <"Status: 302 Found", 13, 10, "Location: /">
+        stdcall StrDupMem, txt "/"
+        mov     edi, eax
 
 ; get the thread ID and slug
 
@@ -307,32 +312,34 @@ begin
         cmp     [esi+TSpecialParams.dir], 0
         je      .dir_ok
 
-        stdcall StrCat, [.hString], [esi+TSpecialParams.dir]
-        stdcall StrCharCat, [.hString], "/"
+        stdcall StrCat, edi, [esi+TSpecialParams.dir]
+        stdcall StrCat, edi, txt "/"
 
 .dir_ok:
-        stdcall StrCat, [.hString], [.slug]
-        stdcall StrCharCat, [.hString], "/"
+        stdcall StrCat, edi, [.slug]
+        stdcall StrCat, edi, txt "/"
 
         cmp     [.page], 0
         je      .page_ok
 
         stdcall NumToStr, [.page], ntsDec or ntsUnsigned
-        stdcall StrCat, [.hString], eax
+        stdcall StrCat, edi, eax
         stdcall StrDel, eax
 
 .page_ok:
-        stdcall StrCharCat, [.hString], "#"
+        stdcall StrCat, edi, txt "#"
 
         stdcall NumToStr, [.postID], ntsDec or ntsUnsigned
-        stdcall StrCat, [.hString], eax
+        stdcall StrCat, edi, eax
         stdcall StrDel, eax
 
 .finish:
-
-        stdcall StrCharCat, [.hString], $0a0d0a0d
         stdcall StrDel, [.slug]
 
+        stdcall FileWriteString, [STDERR], edi
+        stdcall FileWriteString, [STDERR], <txt 13, 10>
+
+        mov     [esp+4*regEAX], edi
         popad
         return
 

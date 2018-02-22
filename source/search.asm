@@ -26,7 +26,7 @@ sqlSearchWhere text    " where PostFTS match  ?1 "
 sqlSearchLimit text    " limit ?2 offset ?3 "
 
 
-proc ShowSearchResults2, .hStart, .pSpecial
+proc ShowSearchResults2, .pSpecial
 .pages      dd ?
 .stmt       dd ?
 .query_str  dd ?        ; don't free it at the end.
@@ -53,11 +53,12 @@ begin
 
         mov     esi, [.pSpecial]
 
-        mov     eax, [.hStart]
-        test    eax, eax
-        jz      .start_ok
+        xor     eax, eax
+        mov     edx, [esi+TSpecialParams.cmd_list]
+        cmp     [edx+TArray.count], eax
+        je      .start_ok
 
-        stdcall StrToNumEx, eax
+        stdcall StrToNumEx, [edx+TArray.array]
 
 .start_ok:
         mov     [.start],eax
@@ -216,17 +217,16 @@ begin
 ;        stdcall FileWriteString, [STDERR], [.query]
 ;        stdcall FileWriteString, [STDERR], cCRLF2
 
-        stdcall StrNew
+        stdcall TextCreate, sizeof.TText
+        stdcall TextCat, eax, txt '<div class="thread">'
+        stdcall RenderTemplate, edx, "nav_search.tpl", 0, esi
         mov     edi, eax
-
-        stdcall StrCat, edi, '<div class="thread">'
-
-        stdcall StrCatTemplate, edi, "nav_search.tpl", 0, esi
 
         cmp     [.pages], 0
         je      .search_ok      ; this means the total results count is 0, not the pages.
 
-        stdcall StrCat, edi, [.pages]
+        stdcall TextCat, edi, [.pages]
+        mov     edi, edx
 
         lea     ecx, [.stmt]
         stdcall StrPtr, [.sql_search]
@@ -252,21 +252,25 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .finalize
 
-        stdcall StrCatTemplate, edi, "search_result.tpl", [.stmt], esi
-
+        stdcall RenderTemplate, edi, "search_result.tpl", [.stmt], esi
+        mov     edi, eax
         jmp     .search_loop
 
 .finalize:
 
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall StrCat, edi, [.pages]
+        stdcall TextCat, edi, [.pages]
+        mov     edi, edx
+
         stdcall StrDel, [.pages]
 
-        stdcall StrCatTemplate, edi, "nav_search.tpl", 0, esi
+        stdcall RenderTemplate, edi, "nav_search.tpl", 0, esi
+        mov     edi, eax
 
 .search_ok:
-        stdcall StrCat, edi, '</div>'
+        stdcall TextCat, edi, txt '</div>'
+        mov     edi, edx
 
         clc
 
@@ -282,8 +286,7 @@ begin
 
 .missing_query:
 
-        stdcall StrMakeRedirect, 0, "/!message/missing_query/"
-        mov     edi, eax
+        stdcall TextMakeRedirect, 0, "/!message/missing_query/"
         stc
         jmp     .finish
 endp
@@ -295,9 +298,6 @@ begin
         pushad
 
         stdcall StrLen, [.hDest]
-
-        OutputValue "StrCatNotEmpty length: ", eax, 10, -1
-
         test    eax, eax
         jz      @f
 

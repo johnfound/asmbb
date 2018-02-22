@@ -97,7 +97,7 @@ create table Posts (
   userID      integer references Users(id) on delete cascade,
 
   postTime    integer,  -- based on postTime the posts are sorted in the thread.
-  ReadCount   integer,
+  ReadCount   integer,  -- not used anymore, because updating Posts is very slow because of the triggers!
   Content     text,
   Rendered    text
 );
@@ -106,6 +106,14 @@ create table Posts (
 create index idxPosts_UserID   on Posts (userID);
 create index idxPosts_ThreadID on Posts (threadID);
 create index idxPostsThreadUser on posts(threadid, userid);
+
+
+create table PostCnt (
+  postID integer references Posts(id) on delete cascade on update cascade,
+  count  integer
+);
+
+create index idxPostCount on PostCnt(postid);
 
 
 create table Tags (
@@ -349,11 +357,13 @@ CREATE TRIGGER PostsAI AFTER INSERT ON Posts BEGIN
     (select nick from users where id = new.userid),
     (select group_concat(TT.Tag, ", ") from ThreadTags TT where TT.threadID = new.threadid)
   );
+  insert into PostCNT(postid,count) VALUES (new.id, 0);
   update Users set PostCount = PostCount + 1 where Users.id = new.UserID;
 END;
 
 CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
   delete from PostFTS where rowid = old.id;
+  delete from PostCNT where postid = old.id;
   update Users set PostCount = PostCount - 1 where Users.id = old.UserID;
 END;
 
@@ -401,3 +411,5 @@ create table ChatUsers (
 );
 
 COMMIT;
+
+ANALYZE;

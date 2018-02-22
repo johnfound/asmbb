@@ -29,7 +29,7 @@ options.DebugWeb = 0
 options.DebugSQLite = 0
 
 options.DebugWebSSE = 0         ; debug server sent events - creates a command "!echo_events" for debugging SSE.
-options.Benchmark = 1
+options.Benchmark = 0
 
 ;HeapManager  equ ASM
 ;LinuxThreads equ native
@@ -46,8 +46,8 @@ include "text_constants.asm"
 include "sqlite3.asm"   ; sqlite utility functions.
 include "http.asm"
 include "timeproc.asm"  ; date/time utility procedures.
+include "render2.asm"
 include "commands.asm"
-include "render.asm"
 include "fcgi.asm"
 include "post_data.asm"
 include "threadlist.asm"

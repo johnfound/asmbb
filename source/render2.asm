@@ -37,7 +37,9 @@ common
   local ..error
   ..error = 0
 
-  disp 3, 'Hash table "', `table, '"', 9
+  if defined options.ShowSizes & options.ShowSizes
+    disp 3, 'Hash table "', `table, '"', 9
+  end if
 
   table dd 256 dup(0,0)
 
@@ -47,30 +49,36 @@ local ..keynm, ..len, ..hash, ..char, ..prev
   ..len = $ - ..keynm
          db 0
 
-  ..hash = 0
-  repeat ..len
-    load ..char byte from ..keynm + % - 1
-    if ..char and $40
-      ..char = ..char or $20
+  if proc
+    ..hash = 0
+    repeat ..len
+      load ..char byte from ..keynm + % - 1
+      if ..char and $40
+        ..char = ..char or $20
+      end if
+      ..hash = ..hash xor ..char
+      load ..hash byte from Pfunc + ..hash
+    end repeat
+
+    if defined options.ShowSizes & options.ShowSizes
+      disp 3,'Keyword hash : ', <..hash, 10>, ' on "', key, '"', 10
     end if
-    ..hash = ..hash xor ..char
-    load ..hash byte from Pfunc + ..hash
-  end repeat
 
-  disp 3,'Keyword hash : ', <..hash, 10>, ' on "', key, '"', 10
+    load ..prev dword from table + ..hash * 8
 
-  load ..prev dword from table + ..hash * 8
-
-  if ..prev = 0
-    store dword ..keynm at table + ..hash * 8
-    store dword proc at table + ..hash * 8 + 4
-  else
-    disp 2,'Hash collision: ', <..hash, 10>, ' on "', key, '"', 10
-    ..error = 1
+    if ..prev = 0
+      store dword ..keynm at table + ..hash * 8
+      store dword proc at table + ..hash * 8 + 4
+    else
+      disp 2,'Hash collision: ', <..hash, 10>, ' on "', key, '"', 10
+      ..error = 1
+    end if
   end if
 
 common
-  disp 6, '---', 13
+  if defined options.ShowSizes & options.ShowSizes
+    disp 6, '---', 13
+  end if
   assert ~..error
 }
 
@@ -100,7 +108,7 @@ local ..keynm, ..len, ..hash, ..char
 
 
 if used RenderTemplate
-        PList tableCommands, tpl_func,                  \
+        PList tableRenderCmd, tpl_func,                  \
               'special:', RenderTemplate.cmd_special,   \
               'minimag:', RenderTemplate.cmd_minimag,   \   ; HTML, no encoding.
               'html:',    RenderTemplate.cmd_html,      \   ; HTML, disables the encoding.
@@ -142,19 +150,19 @@ if used RenderTemplate
               "usearch",     RenderTemplate.sp_usearch,               \ ; Needs encoding!
               "skins=",      RenderTemplate.sp_skins,                 \ ; HTML no encoding
               "posters=",    RenderTemplate.sp_posters,               \
-              "threadtags=", RenderTemplate.sp_threadtags
+              "threadtags=", RenderTemplate.sp_threadtags,            \
+              "environment", RenderTemplate.sp_environment              ; optional, depends on options.DebugWeb
 end if
 
 useridHash phash tpl_func, "userid"
 
-
-;call RenderTemplate
-
 struct TFieldSlot
-  .pName  dd ?
-  .Index  dd ?
+  .pName dd ?
+  .Index dd ?
 ends
 
+
+; returns the rendered template in EAX
 
 proc RenderTemplate, .pText, .hTemplate, .sqlite_statement, .pSpecial
 .fEncode dd ?
@@ -168,8 +176,14 @@ proc RenderTemplate, .pText, .hTemplate, .sqlite_statement, .pSpecial
 
 .tblFields TFieldSlot
            rb 255 * sizeof.TFieldSlot       ; a hash table of the statement field names.
+
+  BenchVar .temp
+  BenchVar .temp2
+
 begin
         pushad
+
+        BenchmarkStart .temp
 
         xor     eax, eax
         mov     [.sepcnt], eax
@@ -188,9 +202,47 @@ begin
         mov     [.fEncode], 1
 
         mov     edx, [.pText]
+        test    edx, edx
+        jnz     .text_ok
+
+        stdcall TextCreate, sizeof.TText
+        mov     edx, eax
+
+.text_ok:
+        xor     ecx, ecx
+        cmp     [.hTemplate], ecx
+        je      .start_render           ; the template is already loaded in the structure.
+
         stdcall TextMoveGap, edx, -1
 
-        stdcall FileOpenAccess, [.hTemplate], faReadOnly
+; create the full filename.
+
+        stdcall GetCurrentDir
+        mov     ebx, eax
+        mov     eax, [.pSpecial]
+        test    eax, eax
+        jz      .fallback
+
+        stdcall StrCat, ebx, [eax+TSpecialParams.userSkin]
+        jmp     .add_template
+
+.fallback:
+        stdcall GetParam, txt "default_skin", gpString
+        jnc     @f
+        stdcall StrDupMem, cDefaultSkin
+@@:
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+
+.add_template:
+        stdcall StrCat, ebx, txt '/'
+        stdcall StrCat, ebx, [.hTemplate]
+
+        stdcall StrPtr, ebx
+        OutputLn eax
+
+        stdcall FileOpenAccess, ebx, faReadOnly
+        stdcall StrDel, ebx
         mov     ebx, eax
 
         stdcall FileSize, ebx
@@ -206,6 +258,7 @@ begin
 
         stdcall FileClose, ebx
 
+.start_render:
         or      eax, -1
         push    eax
 
@@ -235,11 +288,19 @@ begin
 ;.start_param:
 ; here something have to be done abour HTML encoding of the generated text!
 
+        cmp     dword [edx+eax+1], 'mini'
+        jne     .check_html
+
+        cmp     dword [edx+eax+5], 'mag:'
+        je      .disable_encoding
+
+.check_html:
         cmp     dword [edx+eax+1], 'html'
         jne     .not_html
         cmp     byte [edx+eax+5], ':'
         jne     .not_html
 
+.disable_encoding:
         mov     [.fEncode], 0         ; special processing for html: command.
 
 .not_html:
@@ -353,6 +414,7 @@ begin
 
 
 .field_match:
+
         pop     edi
 
         push    ecx edx
@@ -409,6 +471,7 @@ begin
         loop    .encode_loop
 
 .end_encode:
+
         pop     ecx
         add     ecx, ebx
         add     [edx+TText.GapBegin], ebx
@@ -462,7 +525,7 @@ begin
 
 
 .command:
-        mov     eax, [tableCommands + sizeof.TPHashItem * ebx + TPHashItem.procCommand]
+        mov     eax, [tableRenderCmd + sizeof.TPHashItem * ebx + TPHashItem.procCommand]
         test    eax, eax
         jz      .loop
 
@@ -475,19 +538,59 @@ begin
 ; here esi points to ":" of the "minimag:" command. edi points to the start "[" and ecx points to the end "]"
 
         stdcall TextMoveGap, edx, ecx
+        stdcall TextSetGapSize, edx, 4
+        mov     dword [edx+ecx], 0
 
         inc     [edx+TText.GapEnd]
-        mov     [edx+TText.GapBegin], edi
-        mov     dword [edx+ecx], 0
         lea     ecx, [edi-1]
 
-        lea     esi, [edx + esi + 1]
+        push    ecx
+
+        mov     ebx, [.pSpecial]
+        stdcall GetCurrentDir
+        stdcall StrCat, eax, [ebx+TSpecialParams.userSkin]
+        stdcall StrCat, eax, "/minimag_suffix.tpl"
+        push    eax
+
+        stdcall FileOpenAccess, eax, faReadOnly
+        stdcall StrDel ; from the stack.
+        jc      .suffix_ok
+        mov     ebx, eax
+
+        stdcall FileSize, ebx
+        jc      .suffix_close
+
+        mov     ecx, eax
+        add     eax, 4
+
+        stdcall TextSetGapSize, edx, eax
+        jc      .suffix_close
+
+        mov     esi, [edx+TText.GapBegin]
+        add     esi, edx
+
+        stdcall FileRead, ebx, esi, ecx
+        add     esi, eax
+        mov     dword [esi], 0
+
+.suffix_close:
+
+        stdcall FileClose, ebx
+
+.suffix_ok:
+        pop     ecx
+
+        lea     esi, [edx + edi + 9]    ; the start of the minimag source.
         stdcall FormatPostText, esi
         push    eax
+
+        mov     [edx+TText.GapBegin], edi
         stdcall TextAddString, edx, edi, eax
         stdcall StrDel ; from the stack
 
         add     ecx, eax
+
+        mov     [.fEncode], 1
         jmp     .loop
 
 ; ...................................................................
@@ -501,8 +604,9 @@ begin
         stdcall TextMoveGap, edx, edi
         add     [edx+TText.GapEnd], 6
 
-        mov     [.fEncode], 1
         sub     ecx, 7
+
+        mov     [.fEncode], 1
         jmp     .loop
 
 
@@ -703,8 +807,6 @@ begin
         sub     ebx, edi
         sub     ebx, 6          ; the length of the value string.
 
-        OutputValue "Case non-int value: ", ebx, 10, -1
-
 .int_ok:
         mov     eax, [.sepcnt]
         dec     eax
@@ -754,6 +856,9 @@ begin
 
 .cmd_special:
 
+
+        BenchmarkStart .temp2
+
 ;        DebugMsg "Special"
 
         xor     ebx, ebx
@@ -789,12 +894,33 @@ begin
 
         mov     eax, [tableSpecial + sizeof.TPHashItem * ebx + TPHashItem.procCommand]
         test    eax, eax
-        jz      .loop
-
-;        OutputLn [tableSpecial + sizeof.TPHashItem * ebx + TPHashItem.pKeyname]
+        jz      .unknown_special
 
         mov     ebx, [.pSpecial]
         jmp     eax
+
+.unknown_special:
+        lea     eax, [ecx+1]
+        stdcall TextMoveGap, edx, eax
+        mov     [edx+TText.GapBegin], edi
+        lea     ecx, [edi-1]
+        jmp     .loop
+
+; ...................................................................
+; here edi points to the start "[" and ecx = esi points to the end "]"
+
+; NOT FINISHED! Needs separate procedure GetEnvironment. An example code is accessible in the old render: render.asm
+
+if defined options.DebugWeb & options.DebugWeb
+.sp_environment:
+        lea     eax, [ecx+1]
+        stdcall TextMoveGap, edx, eax
+        mov     [edx+TText.GapBegin], edi
+        lea     ecx, [edi-1]
+        jmp     .loop
+else
+  .sp_environment = 0
+end if
 
 ; ...................................................................
 ; here edi points to the start "[" and ecx = esi points to the end "]"
@@ -819,6 +945,7 @@ begin
         sub     ecx, esi
         add     ecx, eax
 
+        Benchmark "Special strng[us]: "
         jmp     .loop
 
 .sp_title:
@@ -880,6 +1007,8 @@ begin
         add     [edx+TText.GapEnd], esi
         sub     ecx, esi
         add     ecx, eax
+
+        Benchmark "Special strng with free[us]: "
         jmp     .loop
 
 .sp_cmdtype:
@@ -1050,13 +1179,7 @@ endl
         cmp     ecx, [ebx+TArray.count]
         jae     .end_styles2
 
-        stdcall StrDup, [esi+TSpecialParams.userSkin]
-        stdcall StrCat, eax, txt '/'
-        stdcall StrCat, eax, [ebx+TArray.array+4*ecx]
-        push    eax
-
-        stdcall RenderTemplate, edx, eax, 0, esi
-        stdcall StrDel ; from the stack
+        stdcall RenderTemplate, edx, [ebx+TArray.array+4*ecx], 0, esi
         mov     edx, eax
 
         inc     ecx
@@ -1082,6 +1205,8 @@ endl
         add     [edx+TText.GapEnd], esi
         sub     ecx, esi
         add     ecx, eax
+
+        Benchmark "Special TText [us]: "
         jmp     .loop
 
 
@@ -1137,7 +1262,12 @@ endl
         jne     .exit
         add     esp, 4
         jmp     .finish
+
 .exit:
+        BenchmarkEnd
+        Benchmark 'Template <', [.hTemplate], '> rendering time[us]: '
+        BenchmarkEnd
+
         mov     [esp+4*regEAX], edx
         popad
         return
@@ -1451,7 +1581,7 @@ endp
 proc TextCat, .pText, .hString
 begin
         push    eax
-        stdcall TextAddString, [.pText], -1, [.hString]
+        stdcall TextAddStr2, [.pText], -1, [.hString], 256
         pop     eax
         return
 endp
@@ -1463,16 +1593,44 @@ proc FormatPostText, .ptrMinimag
 .result TMarkdownResults
 
 begin
-;        stdcall StrCatTemplate, [.hText], "../www/templates/Wasp/minimag_suffix.tpl", 0, 0
-;        lea     eax, [.result]
-;        stdcall TranslateMarkdown2, [.hText], FixMiniMagLink, 0, eax, 0
-;
-;        stdcall StrDel, [.hText]
-;        stdcall StrDel, [.result.hIndex]
-;        stdcall StrDel, [.result.hKeywords]
-;        stdcall StrDel, [.result.hDescription]
-;
-;        mov     eax, [.result.hContent]
+        lea     eax, [.result]
+        stdcall TranslateMarkdown2, [.ptrMinimag], FixMiniMagLink, 0, eax, 0
+
+        stdcall StrDel, [.result.hIndex]
+        stdcall StrDel, [.result.hKeywords]
+        stdcall StrDel, [.result.hDescription]
+
+        mov     eax, [.result.hContent]
+        return
+endp
+
+
+proc FormatPostText2, .hMinimag, .pSpecial
+begin
+        pushad
+        mov     edi, [.pSpecial]
+
+        stdcall StrDup, [.hMinimag]
+        mov     ebx, eax
+
+        stdcall GetCurrentDir
+        stdcall StrCat, eax, [edi+TSpecialParams.userSkin]
+        stdcall StrCat, eax, "/minimag_suffix.tpl"
+        push    eax
+        stdcall LoadBinaryFile, eax
+        stdcall StrDel ; from the stack
+        jc      .suffix_ok
+
+        push    eax
+        stdcall StrCat, ebx, eax
+        stdcall FreeMem ; from the stack
+
+.suffix_ok:
+        stdcall FormatPostText, ebx
+        mov     [esp+4*regEAX], eax
+
+        stdcall StrDel, ebx
+        popad
         return
 endp
 
@@ -1548,5 +1706,748 @@ begin
         mov     [esp+4*regEDX], esi     ; return from where to copy the remaining of the address. Source!
 
         popad
+        return
+endp
+
+
+
+
+
+
+
+sqlGetThreadPosters  text "select (select nick from users where id = P.userid) from Posts P where P.threadID = ?1 order by P.id limit 20;"
+
+proc GetPosters, .threadID
+  .list  dd ?
+  .fMore dd ?
+  .stmt  dd ?
+begin
+        pushad
+
+        mov     ecx, eax
+
+        stdcall StrNew
+        mov     ebx, eax
+
+        stdcall CreateArray, 4
+        mov     [.list], eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadPosters, sqlGetThreadPosters.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
+
+        and     [.fMore], 0
+
+.thread_posters_loop:
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .end_thread_posters
+
+        cinvoke sqliteColumnText, [.stmt], 0
+        stdcall StrEncodeHTML, eax
+
+        mov     edx, [.list]
+        cmp     [edx+TArray.count], 5
+        je      .end_thread_posters_more
+
+        stdcall ListAddDistinct, edx, eax
+        mov     [.list], edx
+
+        jmp     .thread_posters_loop
+
+.end_thread_posters_more:
+
+        inc     [.fMore]
+
+.end_thread_posters:
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        mov     edx, [.list]
+        xor     ecx, ecx
+
+.add_posters_loop:
+        cmp     ecx, [edx+TArray.count]
+        jae     .end_add_posters
+
+        cmp     ecx, 0
+        jne     .not_first
+
+        stdcall StrCat, ebx, 'started by: <b>'
+        jmp     .add_user
+
+.not_first:
+        cmp     ecx, 1
+        jne     .not_second
+
+        stdcall StrCat, ebx, '<br>joined: '
+        jmp     .add_user
+
+.not_second:
+
+        stdcall StrCat, ebx, txt ", "
+
+.add_user:
+        stdcall StrCat, ebx, '<a href="/!userinfo/'
+        stdcall StrURLEncode, [edx+TArray.array+4*ecx]
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+        stdcall StrCat, ebx, txt '">'
+        stdcall StrCat, ebx, [edx+TArray.array+4*ecx]
+        stdcall StrCat, ebx, txt '</a>'
+
+        test    ecx, ecx
+        jnz     @f
+        stdcall StrCat, ebx, txt '</b>'
+@@:
+        inc     ecx
+        jmp     .add_posters_loop
+
+
+.end_add_posters:
+
+        cmp     [.fMore], 0
+        je      @f
+        stdcall StrCat, ebx, " and more..."
+@@:
+
+        stdcall ListFree, [.list], StrDel
+
+.finish_thread_posters:
+
+        mov     [esp+4*regEAX], ebx
+        popad
+        return
+endp
+
+
+
+
+;sqlStatistics StripText "statistics.sql", SQL
+;
+;proc Statistics, .pSpecial
+;.stmt dd ?
+;begin
+;        pushad
+;
+;        stdcall TextCreate, sizeof.TText
+;        mov     edi, eax
+;
+;        lea     eax, [.stmt]
+;        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlStatistics, sqlStatistics.length, eax, 0
+;
+;        cinvoke sqliteStep, [.stmt]
+;        cmp     eax, SQLITE_ROW
+;        jne     .end_loop
+;
+;        stdcall RenderTemplate, edi, "../../www/templates/Wasp/statistics.tpl", [.stmt], [.pSpecial]
+;        mov     edi, eax
+;
+;.end_loop:
+;        cinvoke sqliteFinalize, [.stmt]
+;        mov     [esp+4*regEAX], edi
+;        popad
+;        return
+;endp
+;
+;
+
+
+
+
+proc GetAllSkins, .hCurrent
+begin
+        pushad
+
+        stdcall TextCreate, sizeof.TText
+        mov     edx, eax
+
+        stdcall StrDupMem, "../../www/templates/"
+        push    eax
+
+        stdcall DirectoryRead, eax
+
+        stdcall StrDel ; from the stack.
+        jc      .finish_skins
+
+        mov     edi, eax
+        mov     ecx, [edi+TArray.count]
+
+.dir_loop:
+        dec     ecx
+        js      .end_of_dir
+
+        cmp     [edi+TArray.array+8*ecx+TDirItem.Type], ftDirectory
+        jne     .next_file
+
+        stdcall StrPtr, [edi+TArray.array+8*ecx+TDirItem.hFilename]
+        jc      .next_file
+
+        cmp     byte [eax], '_'
+        je      .next_file
+
+        cmp     byte [eax], '.'
+        je      .next_file
+
+        stdcall TextCat, edx, txt '<option value="'
+        stdcall TextCat, edx, [edi+TArray.array+8*ecx+TDirItem.hFilename]
+        stdcall TextCat, edx, txt '" '
+
+        stdcall StrCompCase, [edi+TArray.array+8*ecx+TDirItem.hFilename], [.hCurrent]
+        jnc     .selected_ok
+
+        stdcall TextCat, edx, txt ' selected="selected"'
+
+.selected_ok:
+        stdcall TextCat, edx, txt '>'
+        stdcall TextCat, edx, [edi+TArray.array+8*ecx+TDirItem.hFilename]
+        stdcall TextCat, edx, <txt '</option>', 13, 10>
+
+.next_file:
+        stdcall StrDel, [edi+TArray.array+8*ecx+TDirItem.hFilename]
+        jmp     .dir_loop
+
+.end_of_dir:
+
+        stdcall FreeMem, edi
+
+.finish_skins:
+
+        stdcall StrDel, [.hCurrent]
+        mov     [esp+4*regEAX], edx
+        popad
+        return
+endp
+
+
+
+sqlGetThreadTags    text "select TT.tag, (select T.description from Tags T where T.tag = TT.tag) from ThreadTags TT where TT.threadID=?1"
+;sqlGetThreadTags    text "select TT.tag, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag where TT.threadID=? order by TT.tag"
+
+proc GetThreadTags, .threadID
+.stmt dd ?
+begin
+        pushad
+
+        stdcall StrNew
+        mov     ebx, eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadTags, sqlGetAllTags.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
+
+.thread_tag_loop:
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .end_thread_tags
+
+        cmp     [.threadID], 0
+        jne     .comma_ok
+
+        stdcall StrCat, ebx, txt ', '
+
+.comma_ok:
+        mov     [.threadID], 0
+        stdcall StrCat, ebx, txt '<a class="ttlink" '
+
+        cinvoke sqliteColumnText, [.stmt], 1
+        test    eax, eax
+        jz      .link_title_ok
+
+        stdcall StrEncodeHTML, eax
+
+        stdcall StrCat, ebx, txt 'title="'
+        stdcall StrCat, ebx, eax
+        stdcall StrCat, ebx, txt '" '
+        stdcall StrDel, eax
+
+.link_title_ok:
+
+        stdcall StrCat, ebx, 'href="/'
+
+        cinvoke sqliteColumnText, [.stmt], 0
+        stdcall StrEncodeHTML, eax
+
+        stdcall StrCat, ebx, eax
+        stdcall StrCat, ebx, txt '/">'
+        stdcall StrCat, ebx, eax
+        stdcall StrCat, ebx, txt '</a>'
+        stdcall StrDel, eax
+
+        jmp     .thread_tag_loop
+
+.end_thread_tags:
+
+        cinvoke sqliteFinalize, [.stmt]
+
+.end_thread_tags2:
+        mov     [esp+4*regEAX], ebx
+        popad
+        return
+endp
+
+
+
+
+
+
+
+proc StrSlugify, .hString
+begin
+        stdcall Utf8ToAnsi, [.hString], KOI8R
+        push    eax
+        stdcall StrCyrillicFix, eax
+        stdcall StrDel ; from the stack
+
+        stdcall StrMaskBytes, eax, $0, $7f
+        stdcall StrLCase2, eax
+
+        stdcall StrConvertWhiteSpace, eax, " "
+        stdcall StrConvertPunctuation, eax
+
+        stdcall StrCleanDupSpaces, eax
+        stdcall StrClipSpacesR, eax
+        stdcall StrClipSpacesL, eax
+
+        stdcall StrConvertWhiteSpace, eax, "-"          ; according to google rules.
+
+        return
+endp
+
+
+
+proc StrTagify, .hString
+begin
+        pushad
+
+        mov     ebx, [.hString]
+
+        stdcall StrConvertWhiteSpace, ebx, " "
+        stdcall StrConvertPunctuation, ebx
+
+        stdcall StrCleanDupSpaces, ebx
+        stdcall StrClipSpacesR, ebx
+        stdcall StrClipSpacesL, ebx
+
+        stdcall StrByteUtf8, ebx, 16
+
+        stdcall StrTrim, ebx, eax
+
+        stdcall StrClipSpacesR, ebx
+        stdcall StrClipSpacesL, ebx
+
+        stdcall StrConvertWhiteSpace, ebx, "."        ; google don't like underscores.
+
+        popad
+        return
+endp
+
+
+
+proc StrConvertWhiteSpace, .hString, .toChar
+begin
+        pushad
+
+        stdcall StrLen, [.hString]
+        mov     ecx, eax
+        jecxz   .finish
+
+        stdcall StrPtr, [.hString]
+        mov     esi, eax
+
+        mov     edx, [.toChar]
+
+.loop:
+        mov     al, [esi]
+        cmp     al, " "
+        ja      .next
+
+        mov     [esi], dl
+
+.next:
+        inc     esi
+        loop    .loop
+
+.finish:
+        popad
+        return
+endp
+
+
+proc StrConvertPunctuation, .hString
+begin
+        pushad
+
+        stdcall StrLen, [.hString]
+        mov     ecx, eax
+        jecxz   .finish
+
+        stdcall StrPtr, [.hString]
+        mov     esi, eax
+
+.loop:
+        mov     al, [esi]
+        cmp     al, $80         ; unicode
+        jae     .next
+        cmp     al, '_'
+        je      .next
+        cmp     al, '-'
+        je      .next
+
+        or      al, $20
+        cmp     al, "a"
+        jb      .not_letter
+        cmp     al, "z"
+        jbe     .next
+
+.not_letter:
+        cmp     al, "0"
+        jb      .convert
+        cmp     al, "9"
+        jbe     .next
+
+.convert:
+        mov     byte [esi], " "
+
+.next:
+        inc     esi
+        loop    .loop
+
+.finish:
+        popad
+        return
+endp
+
+
+
+proc StrMaskBytes, .hString, .orMask, .andMask
+begin
+        pushad
+
+        stdcall StrLen, [.hString]
+        mov     ecx, eax
+        jecxz   .finish
+
+        stdcall StrPtr, [.hString]
+        mov     esi, eax
+
+        mov     dl, byte [.orMask]
+        mov     dh, byte [.andMask]
+
+.loop:
+        mov     al, [esi]
+        or      al, dl
+        and     al, dh
+        mov     [esi], al
+        inc     esi
+        loop    .loop
+
+.finish:
+        popad
+        return
+endp
+
+
+
+
+proc StrCyrillicFix, .hString
+begin
+        pushad
+
+        stdcall StrNew
+        mov     edi, eax
+
+        stdcall StrPtr, [.hString]
+        mov     esi, eax
+
+.loop:
+        movzx   eax, byte [esi]
+        inc     esi
+
+        test    al, al
+        jz      .finish
+
+        mov     ebx, eax
+
+        cmp     bl, $e0
+        jb      .less
+
+        sub     bl, $20
+
+.less:
+        cmp     bl, $c0
+        jb      .cat
+
+        sub     bl, $db
+        and     bl, $1f
+        cmp     bl, 5
+        ja      .cat
+
+        mov     eax, [.table+4*ebx]
+
+.cat:
+        stdcall StrCharCat, edi, eax
+        jmp     .loop
+
+
+.finish:
+        mov     [esp+4*regEAX], edi
+        popad
+        return
+
+.table  dd      "sh"    ; sh
+        dd      "e"
+        dd      "sht"
+        dd      "ch"
+        dd      "a"
+        dd      "yu"
+
+endp
+
+
+
+; returns the redirect TText in EDI
+
+proc TextMakeRedirect, .pText, .hWhere
+begin
+        push    eax edx
+
+        mov     edx, [.pText]
+        test    edx, edx
+        jnz     @f
+
+        stdcall TextCreate, sizeof.TText
+        mov     edx, eax
+
+@@:
+        stdcall TextAddStr2,  edx, 0, <"Status: 302 Found", 13, 10>, 256
+        stdcall TextMoveGap, edx, -1
+
+        mov     eax, [edx+TText.GapBegin]
+
+        sub     eax, 2
+        cmp     word [edx+eax], $0a0d
+        je      @f
+
+        stdcall TextCat, edx, <txt 13, 10>
+
+@@:
+        stdcall TextCat, edx, "Location: "
+        stdcall TextCat, edx, [.hWhere]
+        stdcall TextCat, edx, <txt 13, 10, 13, 10>
+
+        mov     edi, edx
+        pop     edx eax
+        return
+endp
+
+
+
+
+
+
+proc GetBackLink, .pSpecial
+begin
+        pushad
+
+        mov     esi, [.pSpecial]
+
+
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_REFERER"
+        jc      .root
+
+        mov     ebx, eax
+
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_HOST"
+        jc      .root
+
+        push    eax
+
+        stdcall StrLen, eax
+        mov     ecx, eax
+
+        stdcall StrPos, ebx     ; pattern from the stack
+        test    eax, eax
+        jz      .root
+
+        add     ecx, eax
+
+        stdcall StrMatchPatternNoCase, "/!message/*", ecx
+        jc      .root
+
+        stdcall StrMatchPatternNoCase, "/!sqlite*", ecx
+        jc      .root
+
+        stdcall StrMatchPatternNoCase, "*/!post*", ecx
+        jc      .root
+
+        stdcall StrMatchPatternNoCase, "/!register*", ecx
+        jc      .root
+
+        stdcall StrMatchPatternNoCase, "*/!edit/*", ecx
+        cmp     eax, ecx
+        je      .root
+
+        stdcall StrDupMem, ecx
+        clc
+        jmp     .finish
+
+.root:
+        stdcall StrNew
+        stdcall StrCharCat, eax, "/"
+        stc
+
+.finish:
+        pushf
+        push    eax
+        stdcall StrEncodeHTML, eax
+        stdcall StrDel ; from the stack
+        popf
+
+        mov     [esp+4*regEAX], eax
+        popad
+        return
+endp
+
+
+
+
+sqlSelectAllPosts text "select id, content from Posts where rendered is null limit 1000"
+sqlUpdateHTML     text "update Posts set Rendered = ?1 where id = ?2"
+
+proc RenderAll, .pSpecial
+.stmt dd ?
+.stmt2 dd ?
+begin
+        pushad
+
+        mov     esi, [.pSpecial]
+
+        test    [esi+TSpecialParams.userStatus], permAdmin
+        jz      .for_admins_only
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectAllPosts, -1, eax, 0
+
+        lea     eax, [.stmt2]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateHTML, -1, eax, 0
+
+.loop:
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .finish
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        mov     ebx, eax
+
+        cinvoke sqliteColumnText, [.stmt], 1
+
+        stdcall FormatPostText2, eax, esi
+        mov     edi, eax
+
+        cinvoke sqliteBindInt, [.stmt2], 2, ebx
+
+        stdcall StrPtr, edi
+        cinvoke sqliteBindText, [.stmt2], 1, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt2]
+        cinvoke sqliteReset, [.stmt2]
+
+        stdcall StrDel, edi
+
+        jmp     .loop
+
+.finish:
+        cinvoke sqliteFinalize, [.stmt2]
+        cinvoke sqliteFinalize, [.stmt]
+
+.finish2:
+        stdcall GetBackLink, esi
+        push    eax
+
+        stdcall TextMakeRedirect, 0, eax
+        stdcall StrDel ; from the stack
+
+.exit:
+        mov     [esp+4*regEAX], edi
+        stc
+        popad
+        return
+
+.for_admins_only:
+
+        stdcall TextMakeRedirect, 0, "/!message/only_for_admins"
+        stc
+        jmp     .exit
+endp
+
+
+
+cDefaultSkin       text "Wasp"
+cDefaultMobileSkin text "mobile"
+
+proc GetDefaultSkin, .pSpecial
+begin
+        pushad
+
+        mov     esi, [.pSpecial]
+        stdcall StrDupMem, "/templates/"
+        mov     ebx, eax
+
+        test    esi, esi
+        jz      .desktop
+
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_USER_AGENT"
+        jc      .desktop
+
+        stdcall StrMatchPattern, txt "*Mobi*", eax
+        jc      .mobile
+
+.desktop:
+        stdcall GetParam, txt "default_skin", gpString
+        jnc     .found
+
+        stdcall StrDupMem, cDefaultSkin
+        jmp     .found
+
+.mobile:
+        stdcall GetParam, txt "default_mobile_skin", gpString
+        jnc     .found
+
+        stdcall StrDupMem, cDefaultMobileSkin
+
+.found:
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+
+        mov     [esp+4*regEAX], ebx
+        popad
+        return
+endp
+
+
+
+proc GetQueryParam, .pSpecial, .param
+begin
+        push    esi
+        mov     esi, [.pSpecial]
+
+        xor     eax, eax
+        stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
+        jc      .finish
+
+        stdcall GetQueryItem, eax, [.param], 0
+        test    eax, eax
+        jz      .finish
+
+        push    eax
+        stdcall StrEncodeHTML, eax
+        stdcall StrDel ; from the stack
+        clc
+
+.finish:
+        pop     esi
         return
 endp

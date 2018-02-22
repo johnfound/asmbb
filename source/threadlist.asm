@@ -16,12 +16,10 @@ begin
 
         mov     esi, [.pSpecial]
 
-        stdcall StrNew
+        stdcall TextCreate, sizeof.TText
         mov     edi, eax
 
-
         stdcall LogUserActivity, esi, uaThreadList, 0
-
 
 ; make the title
 
@@ -47,13 +45,9 @@ begin
 .page_ok:
         mov     [esi+TSpecialParams.page_title], ebx
 
-
-        stdcall StrCat, edi, <txt '<div class="threads_list">', 13, 10>
-
-; navigation tool bar
-
-        stdcall StrCatTemplate, edi, "nav_list.tpl", 0, esi
-
+        stdcall TextCat, edi, <txt '<div class="threads_list">', 13, 10>
+        stdcall RenderTemplate, edx, "nav_list.tpl", 0, esi   ; navigation tool bar
+        mov     edi, eax
 
 ; links to the pages.
         lea     eax, [.stmt]
@@ -74,7 +68,8 @@ begin
         stdcall CreatePagesLinks2, [esi+TSpecialParams.page_num], ebx, 0, [esi+TSpecialParams.page_length]
         mov     [.list], eax
 
-        stdcall StrCat, edi, eax
+        stdcall TextCat, edi, eax
+        mov     edi, edx
 
 ; now append the list itself.
 
@@ -106,20 +101,21 @@ begin
 
         inc     ebx                     ; post count
 
-        stdcall StrCatTemplate, edi, "thread_info.tpl", [.stmt], esi
-
+        stdcall RenderTemplate, edi, "thread_info.tpl", [.stmt], esi
+        mov     edi, eax
         jmp     .loop
-
 
 .finish:
         cmp     ebx, 5
         jbe     .back_navigation_ok
 
-        stdcall StrCat, edi, [.list]
-        stdcall StrCatTemplate, edi, "nav_list.tpl", 0, esi
+        stdcall TextCat, edi, [.list]
+        stdcall RenderTemplate, edx, "nav_list.tpl", 0, esi
+        mov     edi, eax
 
 .back_navigation_ok:
-        stdcall StrCat, edi, <txt "</div>", 13, 10>   ; div.threads_list
+        stdcall TextCat, edi, <txt "</div>", 13, 10>   ; div.threads_list
+        mov     edi, edx
 
         stdcall StrDel, [.list]
         cinvoke sqliteFinalize, [.stmt]
@@ -152,13 +148,14 @@ proc PinThread, .pSpecial
 begin
         pushad
 
+        xor     edi, edi
         mov     esi, [.pSpecial]
 
         test    [esi+TSpecialParams.userStatus], permAdmin
         jz      .for_admins_only
 
-        cmp     [esi+TSpecialParams.thread], 0
-        je      .err404
+        cmp     [esi+TSpecialParams.thread], edi
+        je      .exit                        ; CF = 0 if the jump is taken.     edi = 0 and CF=0 will generate error 404.
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlPinToggle, sqlPinToggle.length, eax, 0
@@ -171,26 +168,20 @@ begin
         stdcall GetBackLink, esi
         push    eax
 
-        stdcall StrMakeRedirect, 0, eax
+        stdcall TextMakeRedirect, 0, eax
         stdcall StrDel ; from the stack.
 
 .finish:
         stc
 
 .exit:
-        mov     [esp+4*regEAX], eax
+        mov     [esp+4*regEAX], edi
         popad
         return
 
 .for_admins_only:
-        stdcall StrMakeRedirect, 0, "/!message/only_for_admins"
+        stdcall TextMakeRedirect, 0, "/!message/only_for_admins"
         jmp     .finish
-
-.err404:
-        xor     eax, eax
-        clc
-        jmp     .exit
-
 endp
 
 

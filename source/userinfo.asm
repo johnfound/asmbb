@@ -27,18 +27,24 @@ sqlGetFullUserInfo text "select ",                                              
 sqlUpdateUserDesc   text "update users set user_desc = ? where nick = ?"
 
 
-proc ShowUserInfo, .UserName, .pSpecial
+proc ShowUserInfo, .pSpecial
 .stmt dd ?
 begin
         pushad
 
+        mov     esi, [.pSpecial]
+
         xor     edi, edi
-        cmp     [.UserName], edi
+        mov     edx, [esi+TSpecialParams.cmd_list]
+        cmp     [edx+TArray.count], edi
         je      .exit
 
-        stdcall StrNew
+        mov     ebx, [edx+TArray.array]
+        test    ebx, ebx
+        jz      .exit
+
+        stdcall TextCreate, sizeof.TText
         mov     edi, eax
-        mov     esi, [.pSpecial]
 
         cmp     [esi+TSpecialParams.post_array], 0
         jne     .save_user_info
@@ -46,22 +52,22 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetFullUserInfo, sqlGetFullUserInfo.length, eax, 0
 
-        stdcall StrPtr, [.UserName]
+        stdcall StrPtr, ebx
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
         jne     .missing_user
 
-        stdcall LogUserActivity, esi, uaUserProfile, [.UserName]
+        stdcall LogUserActivity, esi, uaUserProfile, ebx
 
         stdcall StrCat, [esi+TSpecialParams.page_title], cUserProfileTitle
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
 
 
-        stdcall StrCat, edi, '<div class="user_profile">'
-
-        stdcall StrCatTemplate, edi, "userinfo.tpl", [.stmt], esi
+        stdcall TextCat, edi, txt '<div class="user_profile">'
+        stdcall RenderTemplate, edx, "userinfo.tpl", [.stmt], esi
+        mov     edi, eax
 
         test    [esi+TSpecialParams.userStatus], permAdmin
         jnz     .put_edit_form
@@ -73,11 +79,13 @@ begin
 
 .put_edit_form:
 
-        stdcall StrCatTemplate, edi, "form_editinfo.tpl", [.stmt], esi
+        stdcall RenderTemplate, edi, "form_editinfo.tpl", [.stmt], esi
+        mov     edi, eax
 
 .edit_form_ok:
 
-        stdcall StrCat, edi, '</div>'
+        stdcall TextCat, edi, txt '</div>'
+        mov     edi, edx
         clc
 
 .finish:
@@ -94,6 +102,7 @@ begin
 
 .missing_user:
         stdcall AppendError, edi, "404 Not Found", [.pSpecial]
+        mov     edi, edx
         stc
         jmp     .finish
 
@@ -109,7 +118,7 @@ endl
         test    [esi+TSpecialParams.userStatus], permAdmin
         jnz     .permissions_ok
 
-        stdcall StrCompCase, [.UserName], [esi+TSpecialParams.userName]
+        stdcall StrCompCase, ebx, [esi+TSpecialParams.userName]
         jnc     .permissions_fail
 
 .permissions_ok:
@@ -128,7 +137,7 @@ endl
         stdcall StrPtr, [.user_desc]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
-        stdcall StrPtr, [.UserName]
+        stdcall StrPtr, ebx
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
@@ -136,10 +145,10 @@ endl
 .update_end:
 
         stdcall StrDupMem, "/!userinfo/"
-        stdcall StrCat, eax, [.UserName]
+        stdcall StrCat, eax, ebx
         push    eax
 
-        stdcall StrMakeRedirect, edi, eax
+        stdcall TextMakeRedirect, edi, eax
         stdcall StrDel ; from the stack
 
         stdcall StrDel, [.user_desc]
@@ -150,6 +159,7 @@ endl
 .permissions_fail:
 
         stdcall AppendError, edi, "403 Forbidden", [.pSpecial]
+        mov     edi, edx
         stc
         jmp     .finish
 
@@ -162,7 +172,7 @@ endp
 
 sqlGetUserAvatar    text "select avatar, av_time from Users where nick = ? and avatar is not null"
 
-proc UserAvatar, .UserName, .pSpecial
+proc UserAvatar, .pSpecial
 .stmt      dd ?
 
 .date      TDateTime
@@ -173,17 +183,19 @@ proc UserAvatar, .UserName, .pSpecial
 begin
         pushad
 
+        mov     esi, [.pSpecial]
+
         xor     edi, edi
         mov     [.stmt], edi
         mov     [.timeRetLo], edi
         mov     [.timeRetHi], edi
 
-        cmp     [.UserName], edi
-        je      .exit
+        mov     edx, [esi+TSpecialParams.cmd_list]
+        mov     ebx, [edx+TArray.count]
+        test    ebx, ebx
+        jz      .exit
 
-        stdcall StrNew
-        mov     edi, eax
-        mov     esi, [.pSpecial]
+        mov     ebx, [edx+TArray.array]
 
         stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_IF_MODIFIED_SINCE"
         jc      .time_ok
@@ -202,7 +214,7 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetUserAvatar, sqlGetUserAvatar.length, eax, 0
 
-        stdcall StrPtr, [.UserName]
+        stdcall StrPtr, ebx
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
@@ -219,14 +231,17 @@ begin
 
 .not_changed:
 
-        stdcall StrCat, edi, <"Status: 304 Not Modified", 13, 10, 13, 10>
+        stdcall TextCreate, sizeof.TText
+        stdcall TextCat, eax, <"Status: 304 Not Modified", 13, 10, 13, 10>
+        mov     edi, edx
         stc
         jmp     .finish
 
 
 .default_avatar:
 
-        stdcall StrDup, [esi+TSpecialParams.userSkin]
+        stdcall GetCurrentDir
+        stdcall StrCat, eax, [esi+TSpecialParams.userSkin]
         stdcall StrCat, eax, "/_images/anon.png"
         push    eax
 
@@ -238,12 +253,9 @@ begin
         test    eax, eax
         jz      .not_changed
 
-        mov     esi, eax
-        mov     ebx, ecx
+        mov     edi, eax
+        call    .add_headers
 
-        call    .compose_answer
-
-        stdcall FreeMem, esi
         stc
         jmp     .finish
 
@@ -252,7 +264,6 @@ begin
 
         DebugMsg "Error reading default avatar."
 
-        stdcall StrDel, edi
         xor     edi, edi
         clc
         jmp     .finish
@@ -267,9 +278,26 @@ begin
         cinvoke sqliteColumnBlob, [.stmt], 0
         mov     esi, eax
 
-.return_avatar:
+        stdcall TextCreate, sizeof.TText
+        mov     edi, eax
 
-        call    .compose_answer
+        call    .add_headers
+        stdcall TextMoveGap, edi, -1
+        stdcall TextSetGapSize, edi, ebx
+
+        mov     edi, [edx+TText.GapBegin]
+        add     [edx+TText.GapBegin], ebx
+        add     edi, edx
+
+        mov     ecx, ebx
+        and     ecx, 3
+        rep movsb
+
+        mov     ecx, ebx
+        shr     ecx, 2
+        rep movsd
+
+        mov     edi, edx
         stc
 
 .finish:
@@ -283,17 +311,14 @@ begin
         return
 
 
-.compose_answer:
-        stdcall StrCat, edi, <"Cache-control: max-age=1000000">
-
+.add_headers:
+        stdcall TextAddStr2, edi, 0, <"Cache-control: max-age=1000000", 13, 10, "Last-modified: ">, 100
         stdcall FormatHTTPTime, [.timeRetLo], [.timeRetHi]
-        stdcall StrCat, edi, <13, 10, "Last-modified: ">
-        stdcall StrCat, edi, eax
-        stdcall StrDel, eax
-
-        stdcall StrCat, edi, <13, 10, "Content-type: image/png", 13, 10, 13, 10>
-
-        stdcall StrCatMem, edi, esi, ebx
+        push    eax
+        stdcall TextAddStr2, edx, [edx+TText.GapBegin], eax, 100
+        stdcall StrDel ; from the stack
+        stdcall TextAddStr2, edx, [edx+TText.GapBegin], <txt 13, 10, "Content-type: image/png", 13, 10, 13, 10>, 100
+        mov     edi, edx
         retn
 
 endp
@@ -305,10 +330,10 @@ endp
 sqlUpdateUserAvatar text "update Users set avatar = ?, av_time = strftime('%s','now') where nick = ?"
 
 
-proc UpdateUserAvatar, .UserName, .pSpecial
+proc UpdateUserAvatar, .pSpecial
 .stmt      dd ?
 .img_ptr   dd ?    ; pointer to TByteStream
-
+.username  dd ?
 begin
         pushad
 
@@ -317,19 +342,25 @@ begin
         mov     [.img_ptr], edi
         mov     esi, [.pSpecial]
 
-        cmp     [.UserName], edi
+        mov     edx, [esi+TSpecialParams.cmd_list]
+        cmp     [edx+TArray.count], edi
         je      .exit
+        mov     ebx, [edx+TArray.array]
+        test    ebx, ebx
+        jz      .exit
+
+        mov     [.username], ebx
 
         cmp     [esi+TSpecialParams.post_array], edi
         je      .exit
 
-        stdcall StrNew
+        stdcall TextCreate, sizeof.TText
         mov     edi, eax
 
         test    [esi+TSpecialParams.userStatus], permAdmin
         jnz     .permissions_ok
 
-        stdcall StrCompCase, [.UserName], [esi+TSpecialParams.userName]
+        stdcall StrCompCase, [.username], [esi+TSpecialParams.userName]
         jnc     .permissions_fail
 
 .permissions_ok:
@@ -383,17 +414,17 @@ begin
         lea     ecx, [eax+TByteStream.data]
         cinvoke sqliteBindBlob, [.stmt], 1, ecx, [eax+TByteStream.size], SQLITE_STATIC
 
-        stdcall StrPtr, [.UserName]
+        stdcall StrPtr, [.username]
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
         cinvoke sqliteStep, [.stmt]
 
 
 .update_end:
         stdcall StrDupMem, "/!userinfo/"
-        stdcall StrCat, eax, [.UserName]
+        stdcall StrCat, eax, [.username]
         push    eax
 
-        stdcall StrMakeRedirect, edi, eax
+        stdcall TextMakeRedirect, edi, eax
         stdcall StrDel ; from the stack
 
         stdcall FreeMem, [.img_ptr]
@@ -403,9 +434,7 @@ begin
 .permissions_fail:
 
         stdcall AppendError, edi, "403 Forbidden", [.pSpecial]
-
-        jmp     .finish
-
+        mov     edi, edx
 
 .finish:
         cinvoke sqliteFinalize, [.stmt]
@@ -427,28 +456,32 @@ endp
 sqlUpdateUserSkin text "update Users set skin = ? where nick = ?"
 
 
-proc UpdateUserSkin, .UserName, .pSpecial
+proc UpdateUserSkin, .pSpecial
   .stmt      dd ?
   .skin_name dd ?
+  .username  dd ?
 begin
         pushad
 
         xor     edi, edi
         mov     esi, [.pSpecial]
 
-        cmp     [.UserName], edi
+        mov     edx, [esi+TSpecialParams.cmd_list]
+        cmp     [edx+TArray.count], edi
         je      .exit
+        mov     ebx, [edx+TArray.array]
+        test    ebx, ebx                        ; after text, CF=0!
+        jz      .exit
+
+        mov     [.username], ebx
 
         cmp     [esi+TSpecialParams.post_array], edi
         je      .exit
 
-        stdcall StrNew
-        mov     edi, eax
-
         test    [esi+TSpecialParams.userStatus], permAdmin
         jnz     .permissions_ok
 
-        stdcall StrCompCase, [.UserName], [esi+TSpecialParams.userName]
+        stdcall StrCompCase, [.username], [esi+TSpecialParams.userName]
         jnc     .permissions_fail
 
 .permissions_ok:
@@ -477,7 +510,7 @@ begin
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
 .bind_user:
-        stdcall StrPtr, [.UserName]
+        stdcall StrPtr, [.username]
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
@@ -487,17 +520,17 @@ begin
         cinvoke sqliteFinalize, [.stmt]
 
         stdcall StrDupMem, "/!userinfo/"
-        stdcall StrCat, eax, [.UserName]
+        stdcall StrCat, eax, [.username]
         push    eax
 
-        stdcall StrMakeRedirect, edi, eax
+        stdcall TextMakeRedirect, 0, eax
         stdcall StrDel ; from the stack
-
         jmp     .finish
 
 .permissions_fail:
-
-        stdcall AppendError, edi, "403 Forbidden", [.pSpecial]
+        stdcall TextCreate, sizeof.TText
+        stdcall AppendError, eax, "403 Forbidden", [.pSpecial]
+        mov     edi, edx
 
 .finish:
         stc

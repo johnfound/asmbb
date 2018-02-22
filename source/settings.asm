@@ -267,10 +267,8 @@ begin
 
         cinvoke sqliteStep, [.stmt]
 
-        stdcall StrNew
+        stdcall RenderTemplate, 0, "form_settings.tpl", [.stmt], esi
         mov     [esp+4*regEAX], eax
-
-        stdcall StrCatTemplate, eax, "form_settings.tpl", [.stmt], esi
 
         cinvoke sqliteFinalize, [.stmt]
 
@@ -525,11 +523,11 @@ begin
         je      .errok
         stdcall StrCat, eax, "&err=1"
 .errok:
-        stdcall StrMakeRedirect, 0, eax
+        stdcall TextMakeRedirect, 0, eax
         stdcall StrDel ; from the stack
 
 .exit:
-        mov     [esp+4*regEAX], eax
+        mov     [esp+4*regEAX], edi
         stc
         popad
         return
@@ -537,7 +535,7 @@ begin
 
 .for_admins_only:
 
-        stdcall StrMakeRedirect, 0, "/!message/only_for_admins"
+        stdcall TextMakeRedirect, 0, "/!message/only_for_admins"
         jmp     .exit
 
 
@@ -719,10 +717,9 @@ begin
         cinvoke sqliteBindInt, [.stmt], 2, [.error]
         cinvoke sqliteStep, [.stmt]
 
-        stdcall StrNew
+        stdcall RenderTemplate, 0, "form_setup.tpl", [.stmt], esi
         mov     [esp+4*regEAX], eax
 
-        stdcall StrCatTemplate, eax, "form_setup.tpl", [.stmt], esi
         cinvoke sqliteFinalize, [.stmt]
         stdcall StrDel, [.message]
 
@@ -803,11 +800,10 @@ begin
         jne     .error_no_data
 
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect, 0, "/!login"
-
+        stdcall TextMakeRedirect, 0, "/!login"
 
 .finish:
-        mov     [esp+4*regEAX], eax
+        mov     [esp+4*regEAX], edi
         stdcall StrDel, [.message]
 
         stc
@@ -836,7 +832,6 @@ begin
         stdcall StrDel, eax
         jmp     .error_del_edi
 
-
 .error_del_eax:
 
         stdcall StrDel, eax
@@ -849,7 +844,7 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall StrMakeRedirect, 0, [.message]
+        stdcall TextMakeRedirect, 0, [.message]
         jmp     .finish
 
 endp

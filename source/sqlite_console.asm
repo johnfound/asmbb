@@ -11,7 +11,7 @@ proc SQLiteConsole, .pSpecial
 begin
         pushad
 
-        stdcall StrNew
+        stdcall TextCreate, sizeof.TText
         mov     edi, eax
 
         mov     esi, [.pSpecial]
@@ -44,7 +44,8 @@ begin
 
 .make_the_form:
 
-        stdcall StrCatTemplate, edi, "form_sqlite_console.tpl", [.stmt], [.pSpecial]
+        stdcall RenderTemplate, edi, "form_sqlite_console.tpl", [.stmt], [.pSpecial]
+        mov     edi, eax
 
         cinvoke sqliteFinalize, [.stmt]
 
@@ -53,7 +54,8 @@ begin
 
 ; here execute the source.
 
-        stdcall StrCat, edi, '<div class="sql_exec">'
+        stdcall TextCat, edi, '<div class="sql_exec">'
+        mov     edi, edx
 
         stdcall StrClipSpacesR, [.source]
         stdcall StrClipSpacesL, [.source]
@@ -85,10 +87,11 @@ begin
         stdcall StrEncodeHTML, eax
         stdcall StrDel ; from the stack
 
-        stdcall StrCat, edi, "<h5>Statement executed:</h5><pre>"
-        stdcall StrCat, edi, eax
+        stdcall TextCat, edi, "<h5>Statement executed:</h5><pre>"
+        stdcall TextCat, edx, eax
         stdcall StrDel, eax
-        stdcall StrCat, edi, "</pre>"
+        stdcall TextCat, edx, "</pre>"
+        mov     edi, edx
 
 ; first step
         cinvoke sqliteStep, [.stmt]
@@ -107,13 +110,13 @@ begin
 
         cinvoke sqliteErrMsg, [hMainDatabase]
 
-        stdcall StrCat, edi, '<p class="result_msg">'
-        stdcall StrCat, edi, eax
-        stdcall StrCat, edi, txt '</p>'
+        stdcall TextCat, edi, '<p class="result_msg">'
+        stdcall TextCat, edx, eax
+        stdcall TextCat, edx, txt '</p>'
+        mov     edi, edx
 
         cinvoke sqliteDBMutex, [hMainDatabase]
         cinvoke sqliteMutexLeave, eax
-
 
 .finalize:
         cinvoke sqliteFinalize, [.stmt]
@@ -124,10 +127,11 @@ begin
         stdcall NumToStr, eax, ntsDec or ntsUnsigned
         push    eax eax
 
-        stdcall StrCat, edi, "<p>Execution time: "
-        stdcall StrCat, edi ; from the stack
+        stdcall TextCat, edi, "<p>Execution time: "
+        stdcall TextCat, edx ; from the stack
         stdcall StrDel ; from the stack
-        stdcall StrCat, edi, txt "us</p>"
+        stdcall TextCat, edx, txt "us</p>"
+        mov     edi, edx
 
         xchg    esi, [.next]
         cmp     esi, [.next]
@@ -135,7 +139,8 @@ begin
 
 .finish_exec:
 
-        stdcall StrCat, edi, '</div>'
+        stdcall TextCat, edi, '</div>'
+        mov     edi, edx
 
 .finish:
         stdcall StrDel, [.source]
@@ -149,7 +154,7 @@ begin
 
 .for_admins_only:
 
-        stdcall StrMakeRedirect, edi, "/!message/only_for_admins"
+        stdcall TextMakeRedirect, edi, "/!message/only_for_admins"
         stc
         jmp     .exit
 
@@ -163,7 +168,8 @@ endl
 
 ; first the table
 
-        stdcall StrCat, edi, '<table class="sql_rows"><tr>'
+        stdcall TextCat, edi, '<table class="sql_rows"><tr>'
+        mov     edi, edx
 
         cinvoke sqliteColumnCount, [.stmt]
         mov     [.count], eax
@@ -178,21 +184,24 @@ endl
 
         stdcall StrEncodeHTML, eax
 
-        stdcall StrCat, edi, txt "<th>"
-        stdcall StrCat, edi, eax
+        stdcall TextCat, edi, txt "<th>"
+        stdcall TextCat, edx, eax
         stdcall StrDel, eax
-        stdcall StrCat, edi, txt "</th>"
+        stdcall TextCat, edx, txt "</th>"
+        mov     edi, edx
 
         inc     ebx
         jmp     .col_loop
 
 .end_columns:
 
-        stdcall StrCat, edi, txt "</tr>"
+        stdcall TextCat, edi, txt "</tr>"
+        mov     edi, edx
 
 .row_loop:
 
-        stdcall StrCat, edi, txt "<tr>"
+        stdcall TextCat, edi, txt "<tr>"
+        mov     edi, edx
 
         xor     ebx, ebx
 
@@ -208,24 +217,26 @@ endl
 
 .txt_ok:
         stdcall StrEncodeHTML, eax
-        stdcall StrCat, edi, txt "<td>"
-        stdcall StrCat, edi, eax
+        stdcall TextCat, edi, txt "<td>"
+        stdcall TextCat, edx, eax
         stdcall StrDel, eax
-        stdcall StrCat, edi, txt "</td>"
+        stdcall TextCat, edx, txt "</td>"
+        mov     edi, edx
 
         inc     ebx
         jmp     .val_loop
 
 .end_vals:
-        stdcall StrCat, edi, txt "</tr>"
+        stdcall TextCat, edi, txt "</tr>"
+        mov     edi, edx
 
         cinvoke sqliteStep, [.stmt]
 
         cmp     eax, SQLITE_ROW
         je      .row_loop
 
-        stdcall StrCat, edi, "</table>"
-
+        stdcall TextCat, edi, "</table>"
+        mov     edi, edx
         jmp     .done
 
 .cNULL db "NULL", 0

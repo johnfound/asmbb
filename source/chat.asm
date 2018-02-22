@@ -13,7 +13,7 @@ cKeepAlive        text ': ', 13, 10, 13, 10
 cTrue   text "true"
 cFalse  text "false"
 
-proc ChatRealTime, .hSocket, .requestID, .pSpecialParams
+proc ChatRealTime, .pSpecialParams
 .stmt    dd ?
 .futex   dd ?
 .session dd ?
@@ -55,10 +55,10 @@ begin
 
         push    eax
         stdcall StrPtr, eax
-        stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], FALSE
+        stdcall FCGI_output, [esi+TSpecialParams.hSocket], [esi+TSpecialParams.requestID], eax, [eax+string.len], FALSE
         stdcall StrDel ; from the stack
 
-        stdcall FCGI_output, [.hSocket], [.requestID], cContentTypeEvent, cContentTypeEvent.length, FALSE
+        stdcall FCGI_output, [esi+TSpecialParams.hSocket], [esi+TSpecialParams.requestID], cContentTypeEvent, cContentTypeEvent.length, FALSE
         jc      .finish
 
         stdcall EnterChat, esi, [.session]
@@ -157,7 +157,7 @@ begin
         stdcall StrDel, eax
         stdcall StrCat, edi, <txt 13, 10, 13, 10>
         stdcall StrPtr, edi
-        stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], FALSE
+        stdcall FCGI_output, [esi+TSpecialParams.hSocket], [esi+TSpecialParams.requestID], eax, [eax+string.len], FALSE
         jc      .finish
 
 .messages_ok:
@@ -259,7 +259,7 @@ begin
         jc      .users_ok
 
         stdcall StrPtr, [.prev_users]
-        stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], FALSE
+        stdcall FCGI_output, [esi+TSpecialParams.hSocket], [esi+TSpecialParams.requestID], eax, [eax+string.len], FALSE
         jc      .finish
 
 .users_ok:
@@ -279,7 +279,7 @@ begin
         cmp     [.total], 0
         jne     .keep_alive_ok
 
-        stdcall FCGI_output, [.hSocket], [.requestID], cKeepAlive, cKeepAlive.length, FALSE
+        stdcall FCGI_output, [esi+TSpecialParams.hSocket], [esi+TSpecialParams.requestID], cKeepAlive, cKeepAlive.length, FALSE
         jc      .finish
 
 .keep_alive_ok:
@@ -290,7 +290,7 @@ begin
 
 .finish_socket:
 
-        stdcall FCGI_output, [.hSocket], [.requestID], 0, 0, TRUE
+        stdcall FCGI_output, [esi+TSpecialParams.hSocket], [esi+TSpecialParams.requestID], 0, 0, TRUE
 
 .finish:
 
@@ -300,23 +300,22 @@ begin
 
         DebugMsg "Finished chat long life thread!"
 
+.exit:
         popad
+        xor     eax, eax
+        stc                     ; must end this way in order to indicate that all communications are finished.
         return
 
 .error_no_permissions:
 
         DebugMsg "Finished chat long life thread with ERROR 403!"
 
-        stdcall StrNew
-        push    eax
+        stdcall TextCreate, sizeof.TText
         stdcall AppendError, eax, "403 Forbidden", esi
+        stdcall FCGI_outputText, [esi+TSpecialParams.hSocket], [esi+TSpecialParams.requestID], edx, TRUE
+        stdcall TextFree, edx
+        jmp     .exit
 
-        stdcall StrPtr, eax
-        stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], TRUE
-        stdcall StrDel ; from the stack
-
-        popad
-        return
 endp
 
 
@@ -342,21 +341,16 @@ begin
         stdcall StrCat, [esi+TSpecialParams.page_title], cChatTitle
         stdcall LogUserActivity, esi, uaChatting, 0
 
-        stdcall StrNew
-        mov     edi, eax
-
-        stdcall StrCatTemplate, edi, txt "chat.tpl", 0, [.pSpecial]
+        stdcall RenderTemplate, 0, txt "chat.tpl", 0, [.pSpecial]
 
         clc
-        mov     [esp+4*regEAX], edi
+        mov     [esp+4*regEAX], eax
         popad
         return
 
 .error_no_permissions:
-
-        stdcall StrNew
-        mov     edi, eax
-        stdcall AppendError, edi, "403 Forbidden", esi
+        stdcall TextCreate, sizeof.TText
+        stdcall AppendError, eax, "403 Forbidden", esi
         jmp     .finish_replace
 
 
@@ -372,21 +366,26 @@ begin
         test    eax, eax
         jz      .finish
 
+        mov     ecx, .post_message
         stdcall StrCompCase, eax, txt "message"
-        jc      .post_message
+        jc      .do_it
 
+        mov     ecx, .rename_user
         stdcall StrCompCase, eax, txt "rename"
-        jc      .rename_user
+        jc      .do_it
 
+        mov     ecx, .change_status
         stdcall StrCompCase, eax, txt "status"
-        jc      .change_status
+        jc      .do_it
 
+        mov     ecx, .finish
+
+.do_it:
         stdcall StrDel, eax
-        jmp     .finish
+        jmp     ecx
 
 
 .post_message:
-        stdcall StrDel, eax
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "chat_message", 0
         mov     ebx, eax
         test    eax, eax
@@ -429,19 +428,18 @@ begin
         stdcall StrDel, ebx
 
 .finish:
-        stdcall StrDel, edi
-        stdcall StrDupMem, <"Content-type: text/plain", 13, 10, 13, 10, "OK", 13, 10>
-        mov     edi, eax
+        stdcall StrDel, edi     ; the chatsid string.
+        stdcall TextCreate, sizeof.TText
+        stdcall TextCat, eax, <"Content-type: text/plain", 13, 10, 13, 10, "OK", 13, 10>
 
 .finish_replace:
         stc
-        mov     [esp+4*regEAX], edi
+        mov     [esp+4*regEAX], edx
         popad
         return
 
 
 .rename_user:
-        stdcall StrDel, eax
         stdcall GetPostString, [esi+TSpecialParams.post_array], "username", txt "  "
 
         mov     edx, eax
@@ -454,7 +452,6 @@ begin
 
 
 .change_status:
-        stdcall StrDel, eax
         stdcall GetPostString, [esi+TSpecialParams.post_array], "status", 0
         test    eax, eax
         jz      .finish
@@ -783,8 +780,9 @@ endp
 
 cCRLF2 text 13, 10, 13, 10
 
+if defined options.DebugWebSSE & options.DebugWebSSE
 
-proc EchoRealTime, .hSocket, .requestID, .pSpecialParams
+proc EchoRealTime, .pSpecialParams
 .bytes dd ?
 begin
         pushad
@@ -796,7 +794,7 @@ begin
         cmp     [fChatTerminate], 0
         jne     .finish_socket
 
-        stdcall FCGI_output, [.hSocket], [.requestID], cContentTypeEvent, cContentTypeEvent.length, FALSE
+        stdcall FCGI_output, [esi+TSpecialParams.hSocket], [esi+TSpecialParams.requestID], cContentTypeEvent, cContentTypeEvent.length, FALSE
 
         stdcall StrDupMem, <txt 'event: message', 13, 10, 'data: '>        ; echo message
         mov     edi, eax
@@ -806,18 +804,18 @@ begin
 .event_loop_msg:
 
         stdcall StrPtr, edi
-        stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], FALSE
+        stdcall FCGI_output, [esi+TSpecialParams.hSocket], [esi+TSpecialParams.requestID], eax, [eax+string.len], FALSE
         jc      .finish
 
         stdcall NumToStr, ebx, ntsDec or ntsUnsigned or ntsFixedWidth + 6
         push    eax
 
         stdcall StrPtr, eax
-        stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], FALSE
+        stdcall FCGI_output, [esi+TSpecialParams.hSocket], [esi+TSpecialParams.requestID], eax, [eax+string.len], FALSE
         stdcall StrDel ; from the stack
         jc      .finish
 
-        stdcall FCGI_output, [.hSocket], [.requestID], cCRLF2, cCRLF2.length, FALSE
+        stdcall FCGI_output, [esi+TSpecialParams.hSocket], [esi+TSpecialParams.requestID], cCRLF2, cCRLF2.length, FALSE
         jc      .finish
 
         cmp     [fChatTerminate], 0
@@ -831,7 +829,7 @@ begin
 
 .finish_socket:
 
-        stdcall FCGI_output, [.hSocket], [.requestID], 0, 0, TRUE
+        stdcall FCGI_output, [esi+TSpecialParams.hSocket], [esi+TSpecialParams.requestID], 0, 0, TRUE
 
 .finish:
 
@@ -840,5 +838,11 @@ begin
         DebugMsg "Finished echo long life thread!"
 
         popad
+        xor     eax, eax
+        stc
         return
 endp
+
+else
+  EchoRealTime = 0
+end if
