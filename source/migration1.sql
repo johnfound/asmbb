@@ -38,4 +38,22 @@ END;
 
 insert into PostCnt(postid, count) select id, ReadCount from Posts;
 
+-- Fix the WaitingActivation table to less restrictive settings.
+
+drop table WaitingActivation;
+
+create table WaitingActivation(
+  id integer primary key,
+  nick text unique,
+  passHash text unique,
+  salt  text unique,
+  email text unique,
+  ip_from text,
+  time_reg   integer,
+  time_email integer,
+  a_secret text unique
+);
+
+create index idxUserLogIP on userlog(remoteIP);
+
 COMMIT;

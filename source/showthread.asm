@@ -335,10 +335,6 @@ begin
 
 .finish:
         stdcall StrDel, [.slug]
-
-        stdcall FileWriteString, [STDERR], edi
-        stdcall FileWriteString, [STDERR], <txt 13, 10>
-
         mov     [esp+4*regEAX], edi
         popad
         return

@@ -129,7 +129,7 @@ begin
         cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.remoteIP]
         cinvoke sqliteBindInt, [.stmt], 3, ebx
 
-        xor     edx, edx
+        mov     edx, [.param]
         xor     ecx, ecx        ; param type. 0 = string
 
         cmp     ebx, uaThreadList
@@ -147,14 +147,6 @@ begin
         jmp     .param_ok
 
 .no_thread:
-
-        cmp     ebx, uaUserProfile
-        jne     .no_profile
-
-        mov     edx, [.param]
-        jmp     .param_ok
-
-.no_profile:
 
         cmp     ebx, uaWritingPost
         jne     .no_writing
@@ -202,7 +194,6 @@ begin
         jz      .bind_ok
 
         stdcall StrPtr, edx
-
         cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
 
 .bind_ok:

@@ -23,10 +23,14 @@ options.DebugMode = 1
 sqlitePrepare_v2 equ _sqlitePrepare_v2
 sqliteFinalize equ _sqliteFinalize
 
+include "../benchmark.asm"
+
 include "%lib%/freshlib.asm"
 include "../sqlite3.asm"
 include "../render2.asm"
 include "../commands.asm"
+include "../fcgi.asm"
+include "../http.asm"
 
 uses sqlite3:"../%TargetOS%/sqlite3.inc"
 
@@ -56,6 +60,23 @@ endg
 
 start:
         InitializeAll
+
+
+.rloop:
+        stdcall GetRandomString, 32
+        jnc     .ok
+
+        stdcall FileWriteString, [STDERR], <txt "Error random string.", 13, 10>
+        stdcall Sleep, 1000
+        jmp     .rloop
+
+.ok:
+        push    eax
+        stdcall FileWriteString, [STDERR], eax
+        stdcall FileWriteString, [STDERR], <txt 13, 10>
+        stdcall StrDel ; from the stack
+        jmp     .rloop
+
 
         cinvoke sqliteConfig, SQLITE_CONFIG_SERIALIZED
         cinvoke sqliteInitialize
@@ -274,10 +295,10 @@ proc Warmup
 begin
         pushad
 
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlStatistics, sqlStatistics.length, eax, 0
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteFinalize, [.stmt]
+;        lea     eax, [.stmt]
+;        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlStatistics, sqlStatistics.length, eax, 0
+;        cinvoke sqliteStep, [.stmt]
+;        cinvoke sqliteFinalize, [.stmt]
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetMaxTagUsed, sqlGetMaxTagUsed.length, eax, 0
@@ -331,9 +352,11 @@ endp
 
 
 
+proc Statistics
+begin
+        return
+endp
 
-
-; chat enabled!
 
 proc ChatPermissions
 begin
@@ -342,38 +365,11 @@ begin
 endp
 
 
-
-
 proc UsersOnline
 begin
-        stdcall StrDupMem, "0 users and 0 guests"
+
         return
 endp
-
-
-
-proc  GetQueryParam, .pSpecial, .hPrefix
-begin
-        stdcall StrDupMem, "<script>alert('xss');</script>"
-        return
-endp
-
-proc GetBackLink, .pSpecial
-begin
-        stdcall StrDupMem, txt "../"
-        return
-endp
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -57,6 +57,8 @@ struct TSpecialParams
 ends
 
 
+if used tablePreCommands
+
 PList tablePreCommands, tpl_func,                  \
       "!avatar",          UserAvatar,              \
       "!login",           UserLogin,               \
@@ -78,6 +80,9 @@ PList tablePreCommands, tpl_func,                  \
       "!echo_events",     EchoRealTime,            \    ; optional, depending on the options.DebugWebSSE
       "!postdebug",       PostDebug                     ; optional, depending on the options.DebugWeb
 
+end if
+
+if used tablePostCommands
 
 PList tablePostCommands, tpl_func,                 \
       "!markread",        MarkThreadRead,          \
@@ -89,7 +94,7 @@ PList tablePostCommands, tpl_func,                 \
       "!pinit",           PinThread,               \
       "!by_id",           PostByID,                \
       "!search",          ShowSearchResults2
-
+end if
 
 
 proc ServeOneRequest, .hSocket, .requestID, .pParams2, .pPost2, .start_time
@@ -871,9 +876,10 @@ begin
 
 ; check skin existence.
 
-        stdcall StrDup, edx
-        stdcall StrCat, eax, SKIN_CHECK_FILE
+        stdcall GetCurrentDir
         push    eax
+        stdcall StrCat, eax, edx
+        stdcall StrCat, eax, SKIN_CHECK_FILE
 
         stdcall FileExists, eax
         stdcall StrDel ; from the stack
@@ -1175,6 +1181,8 @@ begin
         stdcall SendEmail, [.smtp_addr], [.smtp_port], [.host], [.from], [.to], [.subj], [.body], 0
         stdcall LogEvent, "EmailSent", logText, eax, 0
         stdcall StrDel, eax
+
+        clc
 
 .finish:
         pushf

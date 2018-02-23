@@ -227,6 +227,7 @@ begin
         jmp     .add_template
 
 .fallback:
+        stdcall StrCat, ebx, "/templates/"
         stdcall GetParam, txt "default_skin", gpString
         jnc     @f
         stdcall StrDupMem, cDefaultSkin
@@ -1863,7 +1864,8 @@ begin
         stdcall TextCreate, sizeof.TText
         mov     edx, eax
 
-        stdcall StrDupMem, "../../www/templates/"
+        stdcall GetCurrentDir
+        stdcall StrCat, eax, "/templates/"
         push    eax
 
         stdcall DirectoryRead, eax
