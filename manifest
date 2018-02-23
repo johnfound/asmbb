@@ -1,13 +1,13 @@
-C Added\ssome\sforgotten\sfiles.
-D 2018-02-23T11:50:33.955
+C Binary\srelease\sv2.0\sbeta.
+D 2018-02-23T11:52:36.580
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
-F install/asmbb.tar.gz d229fc2cf882580579aa5ace8a9dcfe78d0e7a6d
+F install/asmbb.tar.gz fa213756daaa5d736bb30ff4bed9e472caa2c5d4
 F install/create_release.sh 7286d4d2777e9d15ee323d2a1db7b4a225715418 x
 F install/exclude.txt d68845d3aee98fc8ace64460f9d26ab3f2adc06d
 F install/install.txt 46093ff6d21640a09fa5f0b9b943de868fa7f1ac
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
-F install/unpack.tar.gz e8f533bf60dcac946644a0d3fcaa8422d3e9d37d
+F install/unpack.tar.gz 240d1fd3c5e508c4b42c845729b2354606301b3e
 F install/unpack/.htaccess efa046601aad51a87da0946b4eecadcc0d234c15
 F install/unpack/unpack.sh 4443f580fe76faffa7015e6e4b73b22f6290f4a0 x
 F source/Documents/FastCGI\sSpecification.html e2fc06a5abf1b3505c665e108ce3ad28b636095a
@@ -396,7 +396,7 @@ F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less 8c87475cafc1ed04b43203ca9f187964060304a2
 F www/templates/untar.sh 4135b65b574e88d3cb286df89d40f96d6d54f0e9 x
-P 7870997e7ad15905c9d6c6b73f039905c79912ea
-R 6327c093811b1b5f6788761f53722f9c
+P 06697439820fa8cd8224efc600ba8b4e350cedd5
+R efd37b2d241ba98a8bc4911569c670ab
 U johnfound
-Z c3a116467017900ccbd4ecdc26be2e07
+Z e75a163699f492e20581914f537fb996
