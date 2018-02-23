@@ -1,5 +1,5 @@
-C Version\schanged\sto\s"v2.0\sbeta".
-D 2018-02-23T11:34:14.752
+C Added\ssome\sforgotten\sfiles.
+D 2018-02-23T11:50:33.955
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz d229fc2cf882580579aa5ace8a9dcfe78d0e7a6d
@@ -18,6 +18,7 @@ F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm fa2de3af20c7c17806c48f1c640c63234db35bc8
+F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/chat.asm 0470f88c8b79aed0f76ec523b567dbe4c55b2b2a
 F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
 F source/commands.asm 566ce9ae933f09f9e42216ac457314d56687a9eb
@@ -36,6 +37,7 @@ F source/messages.asm f1f350f40073680e2ed26e007312987ef9eb327f
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
 F source/migration1.sql bc221ddbcd0d92c8d0ab1a64377cc4520c439d90
+F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
 F source/post.asm 8ff444f960784e4a543dd1484930b25b3b9ec1b5
 F source/post_data.asm 3ca626cfd4fe38680bfe5a61115edfc7f14bd70d
 F source/postdebug.asm bda4e22fe38390a011c9d0ed890756caf4d3207e
@@ -393,7 +395,8 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less 8c87475cafc1ed04b43203ca9f187964060304a2
-P b55dae79634f43d25e8bca519e7b7b2a11627aba
-R 007b79c420e4e2cba958187943eb84e3
+F www/templates/untar.sh 4135b65b574e88d3cb286df89d40f96d6d54f0e9 x
+P 7870997e7ad15905c9d6c6b73f039905c79912ea
+R 6327c093811b1b5f6788761f53722f9c
 U johnfound
-Z dc70710ae57780f44f8245bb74edde61
+Z c3a116467017900ccbd4ecdc26be2e07
