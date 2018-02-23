@@ -2,7 +2,7 @@
 iglobal
 
   if used cVersion
-    cVersion  db   '<b>AsmBB v1.7</b> (check-in: <a href="http://asm32.info/fossil/repo/asmbb/info/'
+    cVersion  db   '<b>AsmBB v2.0 beta</b> (check-in: <a href="http://asm32.info/fossil/repo/asmbb/info/'
               file "../manifest.uuid":0,16
               db   '">'
               file "../manifest.uuid":0,16

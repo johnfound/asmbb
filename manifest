@@ -1,5 +1,5 @@
-C Fixed\sCSRF\svulnerability\sreported\sby\stinfoilsecurity\sscanner.\sA\sbug\sin\sGetRandomString\sin\sFreshLib\shas\sbeen\sfixed\s(not\sin\sthis\scheckin).\sFixed\sseveral\sminor\sbugs,\srelated\sto\sthe\scode\srefactoring.\sThe\smigration\sscript\shas\sbeen\screated:\s"source/migration1.sql".\sPreparations\sfor\sthe\sv2.0\srelease.
-D 2018-02-23T11:32:05.720
+C Version\schanged\sto\s"v2.0\sbeta".
+D 2018-02-23T11:34:14.752
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz d229fc2cf882580579aa5ace8a9dcfe78d0e7a6d
@@ -24,7 +24,7 @@ F source/commands.asm 566ce9ae933f09f9e42216ac457314d56687a9eb
 F source/create.sql a779743a38b1b0f06b2cff970c4be5986e984c76
 F source/delete.asm 5da5ce1322762c17d2c71e5b9b6d00145f6df680
 F source/edit.asm 9a232ddae506f7f87a534eb8e8cf632c69f9d8b8
-F source/engine.asm 734856b4c8d618a4cd0f530db3024bded6354ff9
+F source/engine.asm d73f5f4fd82899239d479616a8be3ec0fa484538
 F source/engine.fpr 86fdba975ec2bc5272bb6cb30f940fff7fdf6d8c
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -64,7 +64,7 @@ F source/userinfo.asm 448a69ad8c7f56510f525dcac228e0e41f8c426c
 F source/users_online.asm ed3d813e24733137c000fcb6177cd663453fcff0
 F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/util.sql 3ca632de8753d0ec4b088d19ff389d11fb1406e9
-F source/version.asm 989e0c6d6c1b15c539128dff45986ebaeda14125
+F source/version.asm 016d21ae294444b964f029a23d6c5445eead7e73
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
 F www/images/chat_menu.svg d8485817c3e745dcb8b981bb80d264f18365e377
@@ -393,7 +393,7 @@ F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
 F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less 8c87475cafc1ed04b43203ca9f187964060304a2
-P e50ed7321983c4ad0116325395e572f6761c5336
-R 6f127518b0620c26d136060df0893b5b
+P b55dae79634f43d25e8bca519e7b7b2a11627aba
+R 007b79c420e4e2cba958187943eb84e3
 U johnfound
-Z 5b47aefd13cae70a5abadf1f40415c67
+Z dc70710ae57780f44f8245bb74edde61
