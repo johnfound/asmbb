@@ -3,9 +3,15 @@
 [css:markdown.css]
 
 <div class="confirm">
-  <h1 class="msg warning">Delete [case:[cnt_thread]| |post and thread|post]?</h1><br>
-  Do you <b>really</b> want to delete the post written by <b>"[UserName]"</b>?
-  <div class="post_preview">[minimag:[content]]</div>
-  [case:[cnt_thread]| |Notice that this is the <b>last post</b> in the thread and the <b>thread will be deleted</b> as well!|Notice, that deletion can break the thread!]
-  <div class="ui"><a class="uir" href="!by_id">No</a> <a class="uir" href="!del">Yes</a></div>
+  <form id="editform" method="post">
+    <h1 class="msg warning">Delete [case:[cnt_thread]| |post and thread|post]?</h1>
+    <p>Do you <b>really</b> want to delete the post written by <b>"[UserName]"</b>?</p>
+    <div class="post_preview">[minimag:[content]]</div>
+    <p>[case:[cnt_thread]| |Notice that this is the <b>last post</b> in the thread and the <b>thread will be deleted</b> as well!|Notice, that deletion can break the thread!]</p>
+    <div class="panel">
+      <input type="submit" value="Delete" >
+      <a class="button" href="!by_id">Cancel</a>
+      <input type="hidden" name="ticket" value="[Ticket]" >
+    </div>
+  </form>
 </div>

@@ -1,6 +1,6 @@
 <div class="thread_summary">
   <div class="thread_info">
-    [case:[special:isadmin]|[case:[Pinned]||<span class="pinned pin1"></span>]|<a class="pinned pin[Pinned]" href="[Slug]/!pinit"></a>]
+    [case:[Pinned]||<span class="pinned pin1"></span>]
     <div>
       <a class="unread unread[case:[Unread]|0|1]" title="Mark thread as read." href="[case:[special:userid]|#|[Slug]/!markread]"></a>
       [PostCount] [case:[PostCount]|posts|post|posts]

@@ -59,3 +59,29 @@ span.current_page {
   min-width: 32px;
   border-radius: @borderNavRad;
 }
+
+/* Buttons in forms */
+
+div.panel {
+  display: inline-block;
+  width: 100%;
+  text-align: left;
+  margin: 8px 0px 8px 0px;
+
+  input, a {
+    border: none;
+    border-radius: @borderNavRad;
+    padding: @paddingNav;
+    text-decoration: none;
+
+    background-color: @clButtonBG;
+    color: @clButtonFG;
+  }
+
+  input:active, input:focus, input:hover, a:active, a:hover, a:focus {
+    border: @borderButtonActive;
+    background-color: @clButtonActiveBG;
+    color: @clButtonActiveFG;
+  }
+}
+

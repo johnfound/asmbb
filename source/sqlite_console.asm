@@ -1,15 +1,22 @@
 
 
-sqlSource  text 'select ? as source'
+sqlSource  text 'select ?1 as source, ?2 as ticket'
 
 proc SQLiteConsole, .pSpecial
 .stmt dd ?
 .source dd ?
+.ticket dd ?
+
 .next   dd ?
 
 .start dd ?
+
 begin
         pushad
+
+        xor     eax, eax
+        mov     [.ticket], eax
+        mov     [.source], eax
 
         stdcall TextCreate, sizeof.TText
         mov     edi, eax
@@ -24,8 +31,12 @@ begin
         stdcall GetPostString, [esi+TSpecialParams.post_array], "source", 0
         mov     [.source], eax
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cSQLiteConsoleTitle
+        stdcall SetUniqueTicket, [esi+TSpecialParams.session]
+        jc      .for_admins_only
 
+        mov     [.ticket], eax
+
+        stdcall StrCat, [esi+TSpecialParams.page_title], cSQLiteConsoleTitle
 
 ; first output the form
 
@@ -33,12 +44,16 @@ begin
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSource, -1, eax, 0
 
         cmp     [.source], 0
-        je      .bind_ok
+        je      .source_ok
 
         stdcall StrPtr, [.source]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
-.bind_ok:
+.source_ok:
+
+        stdcall StrPtr, [.ticket]
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
         cinvoke sqliteStep, [.stmt]
 
 
@@ -53,6 +68,18 @@ begin
         je      .finish
 
 ; here execute the source.
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], "ticket", 0
+        test    eax, eax
+        jz      .finish
+
+        mov     ebx, eax
+        stdcall CheckTicket, ebx, [esi+TSpecialParams.session]
+        pushf
+        stdcall ClearTicket3, ebx
+        stdcall StrDel, ebx
+        popf
+        jc      .finish
 
         stdcall TextCat, edi, '<div class="sql_exec">'
         mov     edi, edx
@@ -143,10 +170,11 @@ begin
         mov     edi, edx
 
 .finish:
-        stdcall StrDel, [.source]
         clc
 
 .exit:
+        stdcall StrDel, [.ticket]
+        stdcall StrDel, [.source]
         mov     [esp+4*regEAX], edi
         popad
         return

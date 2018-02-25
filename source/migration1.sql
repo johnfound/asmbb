@@ -56,4 +56,36 @@ create table WaitingActivation(
 
 create index idxUserLogIP on userlog(remoteIP);
 
+
+-- new sessions/ticket table
+
+drop index idxSessions_UserID;
+drop index idxSessions_Sid;
+
+create table Sessions2 (
+  id        integer primary key autoincrement,
+  userID    integer references Users(id) on delete cascade on update cascade,
+  fromIP    text,
+  sid       text,
+  last_seen integer,
+  unique (userID, fromIP)
+);
+
+insert into Sessions2(userID, fromIP, sid, last_seen) select userID, fromIP, sid, last_seen from Sessions;
+
+drop table Sessions;
+
+alter table Sessions2 rename to Sessions;
+
+create index idxSessions_UserID on Sessions(UserID);
+create index idxSessions_Sid on Sessions(sid);
+
+create table Tickets (
+  ssn     integer references Sessions(id) on delete cascade on update cascade,
+  time    integer,
+  ticket  text unique
+);
+
+create index idxTickets_time on Tickets(time);
+
 COMMIT;

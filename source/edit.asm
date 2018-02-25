@@ -239,7 +239,7 @@ begin
 
 .finish_clear:
 
-        stdcall ClearTicket, [esi+TSpecialParams.session]
+        stdcall ClearTicket3, [.ticket]
         stc
 
 .finish:
@@ -291,7 +291,8 @@ iglobal
   sqlGetAllThreadAttr StripText "thread_attr.sql", SQL
 endg
 
-sqlSavePostTitle    text      "update threads set slug = ?1, Caption = ?2, LastChanged = strftime('%s','now') where id = ?3"
+sqlSavePostTitle text "update threads set slug = ?1, Caption = ?2, LastChanged = strftime('%s','now') where id = ?3"
+sqlUpdatePinned  text "update threads set pinned = ?1 where id = ?2"
 
 proc EditThreadAttr, .pSpecial
 .stmt dd ?
@@ -300,6 +301,7 @@ proc EditThreadAttr, .pSpecial
 .caption  dd ?
 .slug     dd ?
 .tags     dd ?
+.pinned   dd ?
 
 .threadID dd ?
 .userID   dd ?
@@ -314,6 +316,7 @@ begin
         mov     [.caption], eax
         mov     [.slug], eax
         mov     [.tags], eax
+        mov     [.pinned], eax
 
 ; default integer values
         mov     [.threadID], eax
@@ -457,6 +460,19 @@ begin
 
 .tags_ok:
 
+; Get the pinned
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "pinned", 0
+        test    eax, eax
+        jz      .pinned_ok
+
+        stdcall StrDel, eax
+        xor     eax, eax
+        inc     eax
+
+.pinned_ok:
+        mov     [.pinned], eax
+
 ; Now we have all the data prepared, so start the thread update in a transaction.
 
         lea     eax, [.stmt]
@@ -488,6 +504,24 @@ begin
 
         stdcall SaveThreadTags, [.tags], [.threadID]
 
+; save the pinned flag. Only for admins!
+
+        test    [esi+TSpecialParams.userStatus], permAdmin
+        jz      .pinned_updated
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdatePinned, sqlUpdatePinned.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 2, [.threadID]
+        cinvoke sqliteBindInt, [.stmt], 1, [.pinned]
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     ebx, SQLITE_DONE
+        jne     .error_write
+
+.pinned_updated:
+
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCommit, -1, eax, 0
         cinvoke sqliteStep, [.stmt]
@@ -499,7 +533,7 @@ begin
 
 .end_save:
 
-        stdcall ClearTicket, [esi+TSpecialParams.session]
+        stdcall ClearTicket3, [.ticket]
 
         stdcall StrDupMem, txt "../"
         push    eax
@@ -512,11 +546,9 @@ begin
         stc
         jmp     .finish
 
-
-
 .finish_clear:
 
-        stdcall ClearTicket, [esi+TSpecialParams.session]
+        stdcall ClearTicket3, [.ticket]
         stc
         jmp     .finish
 
@@ -536,7 +568,6 @@ begin
         cinvoke sqliteFinalize, [.stmt]
         stdcall TextMakeRedirect, edi, "/!message/error_cant_post/"
         jmp     .finish_clear
-
 
 .error_missing_thread:
         cinvoke sqliteFinalize, [.stmt]

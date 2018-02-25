@@ -98,27 +98,20 @@ input.title {
   color: @clEditorFG;
 }
 
-div.panel {
+
+.button {
   display: inline-block;
-  width: 100%;
-  text-align: left;
-  margin-bottom: 8px;
-
-  input {
-    border-style: none;
-    outline-style: none;
-    padding: 4px;
-
-    background-color: @clButtonBG;
-    color: @clButtonFG;
-  }
-
-  input:active, input:focus, input:hover {
-    background-color: @clButtonActiveBG;
-    color: @clButtonActiveFG;
-  }
+  height: 32px;
+  width: 32px;
+  background-color: @clButtonBG;
+  color: @clButtonFG;
+  vertical-align: top;
 }
 
+.button:hover {
+  background-color: @clButtonActiveBG;
+  color: @clButtonActiveFG;
+}
 
 .btn_edit {
   background-image: url("[special:skin]/_images/edit_white.svg");

@@ -8,7 +8,7 @@
     <a class="ui" href="/!settings">Settings</a>
     <a class="ui" target="_blank" href="/!sqlite">SQL console</a>
   </div>
-  <form id="editform" action="/!sqlite/" method="post">
+  <form id="editform" action="/!sqlite/#sql_result" method="post">
     <p>Script name:</p>
     <div class="toolbar">
       <input class="title" type="edit" value="" placeholder="Script name" name="name">
@@ -19,8 +19,10 @@
     <p>SQL statement:</p>
     <textarea class="sql_editor" name="source" id="source"  placeholder="SQL">[source]</textarea>
     <div class="panel">
+      <a id="sql_result">
       <input type="submit" value="Exec" >
       <input type="reset" value="Revert" >
+      <input type="hidden" name="ticket" value="[Ticket]" >
     </div>
   </form>
 </div>

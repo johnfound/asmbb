@@ -158,18 +158,27 @@ create table Attachements (
 
 
 create table Sessions (
-  userID    integer references Users(id) on delete cascade,
+  id        integer primary key autoincrement,
+  userID    integer references Users(id) on delete cascade on update cascade,
   fromIP    text,
   fromPort  integer,
   sid       text,
   last_seen integer,
-  ticket    text,
   unique (userID, fromIP)
 );
 
 
 create index idxSessions_UserID on Sessions(UserID);
 create index idxSessions_Sid on Sessions(sid);
+
+
+create table Tickets (
+  ssn     integer references Sessions(id) on delete cascade on update cascade,
+  time    integer,
+  ticket  text unique
+);
+
+create index idxTickets_time on Tickets(time);
 
 
 create table Messages (

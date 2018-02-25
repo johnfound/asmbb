@@ -6,7 +6,7 @@
     <a class="ui" href="/">Thread list</a>
     <a class="uir" target="_blank" href="/!sqlite">SQL console</a><a class="uir" href="/!settings">Settings</a>
   </div>
-  <form id="editform" action="/!sqlite/" method="post">
+  <form id="editform" action="/!sqlite/#sql_result" method="post">
     <p>Script name:</p>
     <input class="title" style="width: 80%; height: 32px;" size="40" type="edit" value="" placeholder="Script name" name="name">
     <a class="button btn_edit" href="/"></a>
@@ -17,6 +17,8 @@
     <div class="panel">
       <input type="submit" value="Exec" >
       <input type="reset" value="Revert" >
+      <input type="hidden" name="ticket" value="[Ticket]" >
     </div>
+    <a id="sql_result"></a>
   </form>
 </div>

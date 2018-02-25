@@ -14,7 +14,7 @@
       <div class="edit_tools">
         [case:[special:canpost]| |<a class="icon_quote" href="[id]/!post"></a>]
         [case:[special:canedit]| |<a class="icon_edit"  href="[id]/!edit"></a>]
-        [case:[special:candel] | |<a class="icon_del"   href="[id]/!confirm"></a>]
+        [case:[special:candel] | |<a class="icon_del"   href="[id]/!del"></a>]
       </div>
     </div>
     <article>

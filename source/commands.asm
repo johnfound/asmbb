@@ -79,7 +79,6 @@ PList tablePreCommands, tpl_func,                  \
       "!chat_events",     ChatRealTime,            \
       "!echo_events",     EchoRealTime,            \    ; optional, depending on the options.DebugWebSSE
       "!postdebug",       PostDebug                     ; optional, depending on the options.DebugWeb
-
 end if
 
 if used tablePostCommands
@@ -89,9 +88,7 @@ PList tablePostCommands, tpl_func,                 \
       "!post",            PostUserMessage,         \
       "!edit",            EditUserMessage,         \
       "!edit_thread",     EditThreadAttr,          \
-      "!confirm",         DeleteConfirmation,      \
       "!del",             DeletePost,              \
-      "!pinit",           PinThread,               \
       "!by_id",           PostByID,                \
       "!search",          ShowSearchResults2
 end if
@@ -770,14 +767,9 @@ endp
 
 
 
-sqlGetSession    text "select userID, nick, status, last_seen, Skin from sessions left join users on id = userID where sid = ?"
+sqlGetSession    text "select S.userID, U.nick, U.status, S.last_seen, U.Skin from sessions S left join users U on U.id = S.userID where S.sid = ?"
 sqlGetUserExists text "select 1 from users limit 1"
 SKIN_CHECK_FILE  text "/main_html_start.tpl"
-
-; returns:
-;   EAX: string with the logged user name
-;   ECX: string with the session ID
-;   EDX: logged user ID
 
 proc GetLoggedUser, .pSpecial
 .stmt dd ?
@@ -1351,10 +1343,9 @@ endp
 
 
 
-sqlSetTicket text "update Sessions set Ticket = ? where sid = ?"
+sqlInsertTicket text "insert into Tickets (ssn, time, ticket) values ((select id from sessions where sid=?1), strftime('%s','now'), ?2)"
 
-
-proc SetUniqueTicket, .sid
+proc SetUniqueTicket, .session
 .stmt dd ?
 begin
         pushad
@@ -1362,19 +1353,13 @@ begin
         mov     ebx, eax
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetTicket, sqlSetTicket.length, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertTicket, sqlInsertTicket.length, eax, 0
 
-        stdcall StrLen, ebx
-        mov     ecx, eax
+        stdcall StrPtr, [.session]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
         stdcall StrPtr, ebx
-
-        cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
-
-        stdcall StrLen, [.sid]
-        mov     ecx, eax
-        stdcall StrPtr, [.sid]
-
-        cinvoke sqliteBindText, [.stmt], 2, eax, ecx, SQLITE_STATIC
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
         mov     edi, eax
@@ -1396,28 +1381,31 @@ endp
 
 
 
+sqlClearTicket1 text "delete from Tickets where ticket = ?1"
+sqlClearTicket2 text "delete from Tickets where time < strftime('%s','now')-14400"
 
-proc ClearTicket, .sid
+proc ClearTicket3, .ticket
 .stmt dd ?
 begin
         pushad
 
-        cmp     [.sid], 0
-        je      .finish
+        cmp     [.ticket], 0
+        je      .cleanup_old
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetTicket, sqlSetTicket.length, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlClearTicket1, sqlClearTicket1.length, eax, 0
 
-        stdcall StrLen, [.sid]
-        mov     ecx, eax
-        stdcall StrPtr, [.sid]
-
-        cinvoke sqliteBindText, [.stmt], 2, eax, ecx, SQLITE_STATIC
-
+        stdcall StrPtr, [.ticket]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 
-.finish:
+.cleanup_old:
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlClearTicket2, sqlClearTicket2.length, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
         popad
         return
 endp
@@ -1425,9 +1413,12 @@ endp
 
 
 
-sqlCheckTicket text "select 1 from sessions where ticket = ? and sid = ?"
+sqlCheckTicket text "select 1 from Tickets where ssn = (select id from sessions where sid=?1) and ticket = ?2"
 
-proc CheckTicket, .ticket, .sid
+; returns CF=1 if the check failed.
+;         CF=0 if the check pass.
+
+proc CheckTicket, .ticket, .session
 .stmt dd ?
 begin
         pushad
@@ -1435,23 +1426,18 @@ begin
         cmp     [.ticket], 0
         je      .error
 
-        cmp     [.sid], 0
+        cmp     [.session], 0
         je      .error
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckTicket, sqlCheckTicket.length, eax, 0
 
-        stdcall StrLen, [.ticket]
-        mov     ecx, eax
+        stdcall StrPtr, [.session]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
         stdcall StrPtr, [.ticket]
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 
-        cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
-
-        stdcall StrLen, [.sid]
-        mov     ecx, eax
-        stdcall StrPtr, [.sid]
-
-        cinvoke sqliteBindText, [.stmt], 2, eax, ecx, SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
         mov     ebx, eax
@@ -1471,8 +1457,6 @@ begin
         return
 
 endp
-
-
 
 
 

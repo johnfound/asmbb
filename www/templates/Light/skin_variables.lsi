@@ -1,5 +1,5 @@
-@globWidth: 95%; 
-@globMaxWidth: 1280px; 
+@globWidth: 95%;
+@globMaxWidth: 1280px;
 @globMargin: 8px auto 8px auto;
 
 @msgBoxWidth: 640px;
@@ -34,7 +34,7 @@
 @clArticleFG: black;
 
 @clFormBG: #d0d0d0;
-@clFormFG: white;
+@clFormFG: @clColor1FG;
 @clDisabledBG: #e0e0e0;
 @clDisabledFG: #404040;
 
@@ -63,3 +63,12 @@
 @FontMonospace: Consolas,"Courier New",Courier,monospace;
 
 @HeaderBackground: none;
+
+@clMsgInfoBG: green;
+@clMsgInfoFG: white;
+
+@clMsgErrorBG: red;
+@clMsgErrorFG: white;
+
+@clMsgWarningBG: yellow;
+@clMsgWarningFG: red;

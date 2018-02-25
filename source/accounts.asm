@@ -2,13 +2,13 @@
 
 
 sqlGetUserInfo   text "select id, salt, passHash, status from Users where lower(nick) = lower(?)"
-sqlInsertSession text "insert into sessions (userID, sid, FromIP, last_seen) values ( ?, ?, ?, strftime('%s','now') )"
-sqlUpdateSession text "update Sessions set userID = ?, FromIP = ?3, last_seen = strftime('%s','now') where sid = ?2"
+sqlInsertSession text "insert into sessions (userID, sid, FromIP, last_seen) values ( ?1, ?2, ?3, strftime('%s','now') )"
+sqlUpdateSession text "update Sessions set userID = ?1, FromIP = ?3, last_seen = strftime('%s','now') where sid = ?2"
 sqlCheckSession  text "select sid from sessions where userID = ? and fromIP = ?"
 sqlCleanSessions text "delete from sessions where last_seen < (strftime('%s','now') - 2592000)"
 
 sqlLoginTicket text "select ?1 as ticket"
-sqlCheckLoginTicket text "select 1 from userlog where remoteIP=?1 and Client = ?2 and Param = ?3 and Activity = ?4 and userID is NULL"
+sqlCheckLoginTicket text "select 1 from userlog where remoteIP=?1 and Client = ?2 and Param = ?3 and Activity = ?4"
 sqlClearLoginTicket text "update userlog set Param = NULL where remoteIP=?1 and Activity = 1 or Activity = 3"
 
 
@@ -809,6 +809,21 @@ begin
 
         mov     esi, [.pSpecial]
         mov     ebx, [esi+TSpecialParams.post_array]
+        test    ebx, ebx
+        jz      .bad_parameter
+
+        stdcall GetPostString, ebx, "ticket", 0
+        test    eax, eax
+        jz      .bad_parameter
+
+        mov     edi, eax
+        stdcall CheckTicket, edi, [esi+TSpecialParams.session]
+        pushf
+        stdcall ClearTicket3, edi
+        stdcall StrDel, edi
+        popf
+        jc      .bad_parameter
+
 
         stdcall GetPostString, ebx, "oldpass", 0
         test    eax, eax
@@ -975,6 +990,20 @@ begin
 
         mov     esi, [.pSpecial]
         mov     ebx, [esi+TSpecialParams.post_array]
+        test    ebx, ebx
+        jz      .bad_parameter
+
+        stdcall GetPostString, ebx, "ticket", 0
+        test    eax, eax
+        jz      .bad_parameter
+
+        mov     edi, eax
+        stdcall CheckTicket, edi, [esi+TSpecialParams.session]
+        pushf
+        stdcall ClearTicket3, edi
+        stdcall StrDel, edi
+        popf
+        jc      .bad_parameter
 
         stdcall GetPostString, ebx, txt "password", 0
         test    eax, eax

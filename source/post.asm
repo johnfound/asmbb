@@ -461,7 +461,7 @@ begin
 
 .finish_clear:
         mov     eax, [.pSpecial]
-        stdcall ClearTicket, [eax+TSpecialParams.session]
+        stdcall ClearTicket3, [.ticket]
         stc
 
 .finish:

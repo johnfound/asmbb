@@ -1,12 +1,14 @@
 <form class="user_edit_info" method="post" action="/!userinfo/[username]">
   <label>User description:<span class="small"> (Formatted text)</span></label>
   <textarea class="user_desc" name="user_desc">[user_desc]</textarea>
+  <input type="hidden" name="ticket" value="[Ticket]">
   <input type="submit" name="save" class="submit" value="Save">
 </form>
 
 <form class="user_edit_info" method="post" enctype="multipart/form-data" action="/!avatar_upload/[username]">
   <h1>Avatar:<span class="small">(.png only; Maximal size: 10KB; Size: 128x128px)</span></h1>
   <input type="file" class="browse" name="avatar">
+  <input type="hidden" name="ticket" value="[Ticket]">
   <input type="submit" name="submit" class="submit" value="Upload">
 </form>
 
@@ -16,6 +18,7 @@
     <option value="0">(Default)</option>
     [special:skins=[skin]]
   </select>
+  <input type="hidden" name="ticket" value="[Ticket]">
   <input type="submit" name="save" class="submit" value="Save">
 </form>
 
@@ -26,6 +29,7 @@
   <input type="password" value="" placeholder="Present password" name="oldpass" class="password" maxlength="1024">
   <input type="password" value="" placeholder="New password" name="newpass" class="password" maxlength="1024">
   <input type="password" value="" placeholder="New password again" name="newpass2" class="password" maxlength="1024">
+  <input type="hidden" name="ticket" value="[Ticket]">
   <input type="submit" name="changepass" class="submit" value="Change password">
 </form>
 
@@ -33,6 +37,7 @@
   <h1>Change e-mail:</h1>
   <input type="password" value="" placeholder="Password" name="password" class="password" maxlength="1024">
   <input type="text" value="[email]" placeholder="New e-mail" name="email" class="email" maxlength="320">
+  <input type="hidden" name="ticket" value="[Ticket]">
   <input type="submit" name="changeemail" class="submit" value="Change email">
 </form>
 ]

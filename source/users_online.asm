@@ -357,7 +357,9 @@ begin
         cinvoke sqliteColumnText, [.stmt], 5
         test    eax, eax
         jz      @f
+        stdcall StrEncodeHTML, eax
         stdcall TextCat, edi, eax
+        stdcall StrDel, eax
         mov     edi, edx
 @@:
         stdcall TextCat, edi, txt '</td>'
