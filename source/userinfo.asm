@@ -47,7 +47,7 @@ begin
         test    ebx, ebx
         jz      .exit
 
-        cmp     [esi+TSpecialParams.post_array], 0
+        cmp     [esi+TSpecialParams.post_array], edi
         jne     .save_user_info
 
         cmp     [esi+TSpecialParams.session], edi
@@ -56,9 +56,13 @@ begin
         cmp     [esi+TSpecialParams.userName], edi
         je      .ticket_ok
 
+        test    [esi+TSpecialParams.userStatus], permAdmin
+        jnz     .set_ticket
+
         stdcall StrCompCase, ebx, [esi+TSpecialParams.userName]
         jnc     .ticket_ok
 
+.set_ticket:
         stdcall SetUniqueTicket, [esi+TSpecialParams.session]
         mov     [.ticket], eax
 
@@ -187,8 +191,8 @@ endl
         jmp     .finish
 
 .permissions_fail:
-
-        stdcall AppendError, edi, "403 Forbidden", [.pSpecial]
+        stdcall TextCreate, sizeof.TText
+        stdcall AppendError, eax, "403 Forbidden", [.pSpecial]
         mov     edi, edx
         stc
         jmp     .finish

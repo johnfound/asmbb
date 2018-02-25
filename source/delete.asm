@@ -34,6 +34,9 @@ begin
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlDelConfirmInfo, sqlDelConfirmInfo.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.page_num]
 
+        cmp     [esi+TSpecialParams.session], edi
+        je      .perm_not_ok
+
         stdcall SetUniqueTicket, [esi+TSpecialParams.session]
         jc      .perm_not_ok
 

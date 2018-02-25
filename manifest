@@ -1,5 +1,5 @@
-C Fixed\ssome\smajor\ssecurity\sproblems.\sFixed\ssome\sCSS\sbugs.
-D 2018-02-25T19:45:51.035
+C Minor\sbugs\sfixed.
+D 2018-02-25T21:08:04.353
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz fa213756daaa5d736bb30ff4bed9e472caa2c5d4
@@ -23,7 +23,7 @@ F source/chat.asm 0470f88c8b79aed0f76ec523b567dbe4c55b2b2a
 F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
 F source/commands.asm fcfe197fbe55f8a7d4a1186652a1ba5f92d6ba7f
 F source/create.sql 9a8506a841d6d75efba5bc6b9f36d3f0cfe6bb0c
-F source/delete.asm ee0c8efc452c4420e547d00a07cc9374507683c9
+F source/delete.asm 5a916c3647c52baa753951d93fbbfaa3175627d4
 F source/edit.asm 21e9d5c511ca23bb7190b3b74bc1457f4fd3a399
 F source/engine.asm d73f5f4fd82899239d479616a8be3ec0fa484538
 F source/engine.fpr 86fdba975ec2bc5272bb6cb30f940fff7fdf6d8c
@@ -62,7 +62,7 @@ F source/thread_attr.sql 1c2f2de8139886350affc8868feb8de2fd7ba564
 F source/threadlist.asm de5ce3d37af289c76135c94c83d2305c4dfef38a
 F source/threadlist.sql 5ff1c1b661fcca07c1a0c529a3d94080d3bc0261
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
-F source/userinfo.asm 45794fa550b032cf1d4a3c604ab82f2bd21fef52
+F source/userinfo.asm 6d823ea7e85701a77bb03fccf5bcc97838b10372
 F source/users_online.asm 753c52b3013c765331cbe641d925f1b61fd7cd37
 F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/util.sql 3ca632de8753d0ec4b088d19ff389d11fb1406e9
@@ -396,7 +396,7 @@ F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less 8c87475cafc1ed04b43203ca9f187964060304a2
 F www/templates/untar.sh 4135b65b574e88d3cb286df89d40f96d6d54f0e9 x
-P 1bc8243cee4fc6cfce76ab296fec9bbe6c1a6838
-R d2d31c629f4feb2734f69ee493e34899
+P 15dfbf708b74c0f79ae505c9a3f20cfa834e81b9
+R 320c1f47c61aba16a13c093f7c674193
 U johnfound
-Z fd72dbc070382fee9616a913680b027e
+Z c569e3746e86c222ceeee137e778e526
