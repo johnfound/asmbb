@@ -56,7 +56,9 @@ begin
         stdcall StrCharCat, ebx, ' "'
         cinvoke sqliteColumnText, [.stmt2], 1
 
+        stdcall StrEncodeHTML, eax
         stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
         stdcall StrCharCat, ebx, '"'
 
         cmp     [esi+TSpecialParams.page_num], 0

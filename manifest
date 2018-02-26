@@ -1,5 +1,5 @@
-C Minor\sbugs\sfixed.
-D 2018-02-25T21:08:04.353
+C Fixed\sXSS\svulnerability\sfound\sby\stinfoil\sbot.
+D 2018-02-26T06:58:43.139
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz fa213756daaa5d736bb30ff4bed9e472caa2c5d4
@@ -48,7 +48,7 @@ F source/search.asm 15f6469bf4117fa6c22ded98a5613d07e2a8697a
 F source/search.sql 34cf6eea11403e7ac709cd1588bd84c57257135f
 F source/search_cnt.sql 762c07c3e8a9186e966a6377517edc18ab50ef96
 F source/settings.asm 7f8d5305a38c05e16986ba30de1619dfd630b5e4
-F source/showthread.asm 3d19dcb96bb0e4aa34c962b612df783db5c4148a
+F source/showthread.asm e824b8ba4c2b47e402c7e7ee25f35262914646e4
 F source/showthread.sql f414f014ab4b43038369556e4b056f3294ee8464
 F source/sqlite3.asm 8e27aa526542e4c8bac6b9e741b6e0698220933f
 F source/sqlite_console.asm 4036ff078724d5f52ac9dacaf9cee9ec394f9e94
@@ -295,7 +295,7 @@ F www/templates/Wasp/error_html_end.tpl f390b47728814ecd8e608dd410cb2f4b0b953020
 F www/templates/Wasp/error_html_start.tpl d28cf58719b5f371c3eeef18d74e148333ca9bc2
 F www/templates/Wasp/form_edit.tpl d5cb9b82c9d024bfb3bd938e65558165b8ad4d1a
 F www/templates/Wasp/form_edit_thread.tpl 08f22310d72adb71c00092b342d5fb698c4f648e
-F www/templates/Wasp/form_editinfo.tpl ed9f019005b19f8d1ffeab0fa809b2c84af3e8cb
+F www/templates/Wasp/form_editinfo.tpl 2668a6016f76f55d3bd5597e4344fdc2caee9198
 F www/templates/Wasp/form_login.tpl 03e90d209d602b67a03451e6772bbcb67558921a
 F www/templates/Wasp/form_new_post.tpl bb8c726275b5fa8fb757b7f20d1d81b381315ca0
 F www/templates/Wasp/form_new_thread.tpl a504b1316f7d1818ac9e34db606ad90dee699e3e
@@ -396,7 +396,7 @@ F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less 8c87475cafc1ed04b43203ca9f187964060304a2
 F www/templates/untar.sh 4135b65b574e88d3cb286df89d40f96d6d54f0e9 x
-P 15dfbf708b74c0f79ae505c9a3f20cfa834e81b9
-R 320c1f47c61aba16a13c093f7c674193
+P 10bc6118b46b2a8d885ee667ebea5022ea921356
+R 9dabdd13f99a75906dda85d8c3039da6
 U johnfound
-Z c569e3746e86c222ceeee137e778e526
+Z 95e791fc53cc36dd58324371ff47b715

@@ -26,16 +26,16 @@
 [case:[sql: select ? = ?|[userid]|[special:userid]]| |
 <form class="user_edit_pass" method="post" action="/!changepassword">
   <h1>Change password:</h1>
-  <input type="password" value="" placeholder="Present password" name="oldpass" class="password" maxlength="1024">
-  <input type="password" value="" placeholder="New password" name="newpass" class="password" maxlength="1024">
-  <input type="password" value="" placeholder="New password again" name="newpass2" class="password" maxlength="1024">
+  <input type="password" value="" placeholder="Present password" name="oldpass" class="password" maxlength="1024" autocomplete="off">
+  <input type="password" value="" placeholder="New password" name="newpass" class="password" maxlength="1024" autocomplete="off">
+  <input type="password" value="" placeholder="New password again" name="newpass2" class="password" maxlength="1024" autocomplete="off">
   <input type="hidden" name="ticket" value="[Ticket]">
   <input type="submit" name="changepass" class="submit" value="Change password">
 </form>
 
 <form class="user_edit_pass" method="post" action="/!changemail">
   <h1>Change e-mail:</h1>
-  <input type="password" value="" placeholder="Password" name="password" class="password" maxlength="1024">
+  <input type="password" value="" placeholder="Password" name="password" class="password" maxlength="1024" autocomplete="off">
   <input type="text" value="[email]" placeholder="New e-mail" name="email" class="email" maxlength="320">
   <input type="hidden" name="ticket" value="[Ticket]">
   <input type="submit" name="changeemail" class="submit" value="Change email">
