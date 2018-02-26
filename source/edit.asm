@@ -147,9 +147,10 @@ begin
         cmp     [.source], 0
         je      .end_save
 
-        stdcall StrLen, [.source]
-        cmp     eax, 0
-        je      .end_save
+; Empty post - is it normal?
+;        stdcall StrLen, [.source]
+;        cmp     eax, 0
+;        je      .end_save
 
         stdcall CheckTicket, [.ticket], [esi+TSpecialParams.session]
         jc      .error_bad_ticket
@@ -199,11 +200,10 @@ begin
 
 
         cinvoke sqliteStep, [.stmt]
-        mov     ebx, eax
-        cinvoke sqliteFinalize, [.stmt]
-
-        cmp     ebx, SQLITE_DONE
+        cmp     eax, SQLITE_DONE
         jne     .error_write            ; strange write fault.
+
+        cinvoke sqliteFinalize, [.stmt]
 
 ; update the last changed time of the thread.
 
@@ -211,26 +211,22 @@ begin
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateThreads, -1, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
         cinvoke sqliteStep, [.stmt]
-        mov     ebx, eax
-        cinvoke sqliteFinalize, [.stmt]
-
-        cmp     ebx, SQLITE_DONE
+        cmp     eax, SQLITE_DONE
         jne     .error_write
-
 
         stdcall RegisterUnreadPost, [esi+TSpecialParams.page_num]
         cmp     eax, SQLITE_DONE
         jne     .error_write
 
+        cinvoke sqliteFinalize, [.stmt]
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCommit, -1, eax, 0
         cinvoke sqliteStep, [.stmt]
-        mov     ebx, eax
-        cinvoke sqliteFinalize, [.stmt]
-
-        cmp     ebx, SQLITE_DONE
+        cmp     eax, SQLITE_DONE
         jne     .error_write
+
+        cinvoke sqliteFinalize, [.stmt]
 
 .end_save:
         stdcall StrRedirectToPost, [esi+TSpecialParams.page_num], esi
@@ -279,7 +275,7 @@ begin
 
 
 .error_write:
-
+        cinvoke sqliteFinalize, [.stmt]
         cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
         stdcall TextMakeRedirect, edi, "/!message/error_cant_write/"
         jmp     .finish_clear

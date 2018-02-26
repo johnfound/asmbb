@@ -1,5 +1,5 @@
-C Implemented\sdebugging\ssystem\sfor\sthe\sSQLite\sstatements\sand\sStrLib\sallocations\sthat\sgives\sweb\sreports\son\s/!debuginfo\spage.\n\nFixed\sSQLite\sstatement\sand\sStrLib\sstring\sleaks.
-D 2018-02-26T14:54:21.645
+C Fixed\snot\sfinalized\ssqlite\sstatements.
+D 2018-02-26T22:01:24.315
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz fa213756daaa5d736bb30ff4bed9e472caa2c5d4
@@ -24,7 +24,7 @@ F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
 F source/commands.asm 4f833c5eedb458f0c942ddf7b04d2a7cb1cfa548
 F source/create.sql 9a8506a841d6d75efba5bc6b9f36d3f0cfe6bb0c
 F source/delete.asm 5a916c3647c52baa753951d93fbbfaa3175627d4
-F source/edit.asm 21e9d5c511ca23bb7190b3b74bc1457f4fd3a399
+F source/edit.asm 9a5707f408bee04e0693788cced4220c386f28c1
 F source/engine.asm 65a4f3f81b9019294e3a428b537e7eb5e86942dd
 F source/engine.fpr 86fdba975ec2bc5272bb6cb30f940fff7fdf6d8c
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
@@ -62,7 +62,7 @@ F source/thread_attr.sql 1c2f2de8139886350affc8868feb8de2fd7ba564
 F source/threadlist.asm de5ce3d37af289c76135c94c83d2305c4dfef38a
 F source/threadlist.sql 5ff1c1b661fcca07c1a0c529a3d94080d3bc0261
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
-F source/userinfo.asm 8b56bf3affdbe839b4d5473d9fea7064a7099852
+F source/userinfo.asm cb003fd61bd60b2d723f0d43a84a796f8c875557
 F source/users_online.asm 753c52b3013c765331cbe641d925f1b61fd7cd37
 F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/util.sql 3ca632de8753d0ec4b088d19ff389d11fb1406e9
@@ -145,7 +145,7 @@ F www/images/sources/search.svg 50eb2717ab41f19d5a617f6189290fca02470b6b
 F www/images/sources/yellow_back.png d7aed4145104dc3224a3fb46f03c14cf6d386167
 F www/ld-musl-i386.so d787058cb540c591edd2bc5fc1ddad9fac72f61f x
 F www/libsqlite3.so 7ec554841266559cb0e08b27b2afd8aab1869044 x
-F www/lighttpd.conf 5ad94fe2311e771f83df6226c0d398e9e3d0fddb
+F www/lighttpd.conf d3f7c8fb33f78b942e93a0bcbdcdbc7288a9555f
 F www/robots.txt bed60589d6ab1cc0470f3ba582444612d1c4109a
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/Light/_images/anon.png 9184b9fe4cf4632fd4dc7baf7db2eeccd8c57334 l
@@ -396,7 +396,7 @@ F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less 8c87475cafc1ed04b43203ca9f187964060304a2
 F www/templates/untar.sh 4135b65b574e88d3cb286df89d40f96d6d54f0e9 x
-P cf06b5af58318f6bc63dda45a1e5c98af1d7c35a
-R 91066e33525b2eaf63793d58347277d6
+P 8f9556009ad4b4a6bd17d791db913136db0ff40c
+R 39f44516e6dd7f9758d042a0f8e1fde4
 U johnfound
-Z deaf5330cf88f750f7baa924f2b053d7
+Z eed370e2a9892b6327fea13a3734ddb7

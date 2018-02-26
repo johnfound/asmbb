@@ -125,6 +125,7 @@ begin
         return
 
 .missing_user:
+        cinvoke sqliteFinalize, [.stmt]
         stdcall AppendError, edi, "404 Not Found", [.pSpecial]
         mov     edi, edx
         stc
