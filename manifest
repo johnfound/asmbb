@@ -1,5 +1,5 @@
-C Fixed\sXSS\svulnerability\sfound\sby\stinfoil\sbot.
-D 2018-02-26T06:58:43.139
+C Implemented\sdebugging\ssystem\sfor\sthe\sSQLite\sstatements\sand\sStrLib\sallocations\sthat\sgives\sweb\sreports\son\s/!debuginfo\spage.\n\nFixed\sSQLite\sstatement\sand\sStrLib\sstring\sleaks.
+D 2018-02-26T14:54:21.645
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz fa213756daaa5d736bb30ff4bed9e472caa2c5d4
@@ -21,11 +21,11 @@ F source/accounts.asm a2e04f9390d6a03fb846740412d6d43d502d7334
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/chat.asm 0470f88c8b79aed0f76ec523b567dbe4c55b2b2a
 F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
-F source/commands.asm fcfe197fbe55f8a7d4a1186652a1ba5f92d6ba7f
+F source/commands.asm 4f833c5eedb458f0c942ddf7b04d2a7cb1cfa548
 F source/create.sql 9a8506a841d6d75efba5bc6b9f36d3f0cfe6bb0c
 F source/delete.asm 5a916c3647c52baa753951d93fbbfaa3175627d4
 F source/edit.asm 21e9d5c511ca23bb7190b3b74bc1457f4fd3a399
-F source/engine.asm d73f5f4fd82899239d479616a8be3ec0fa484538
+F source/engine.asm 65a4f3f81b9019294e3a428b537e7eb5e86942dd
 F source/engine.fpr 86fdba975ec2bc5272bb6cb30f940fff7fdf6d8c
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -43,7 +43,7 @@ F source/post_data.asm 3ca626cfd4fe38680bfe5a61115edfc7f14bd70d
 F source/postdebug.asm bda4e22fe38390a011c9d0ed890756caf4d3207e
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/render.asm c91c1380416c49ca273d23d1eb15baabc8d53310
-F source/render2.asm 4f32bc267b90b962d661823b9865a5f7fbcfbb3e
+F source/render2.asm c7df82cb52b7558b6ae16d1a1206a0ec4bd07240
 F source/search.asm 15f6469bf4117fa6c22ded98a5613d07e2a8697a
 F source/search.sql 34cf6eea11403e7ac709cd1588bd84c57257135f
 F source/search_cnt.sql 762c07c3e8a9186e966a6377517edc18ab50ef96
@@ -62,7 +62,7 @@ F source/thread_attr.sql 1c2f2de8139886350affc8868feb8de2fd7ba564
 F source/threadlist.asm de5ce3d37af289c76135c94c83d2305c4dfef38a
 F source/threadlist.sql 5ff1c1b661fcca07c1a0c529a3d94080d3bc0261
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
-F source/userinfo.asm 6d823ea7e85701a77bb03fccf5bcc97838b10372
+F source/userinfo.asm 8b56bf3affdbe839b4d5473d9fea7064a7099852
 F source/users_online.asm 753c52b3013c765331cbe641d925f1b61fd7cd37
 F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/util.sql 3ca632de8753d0ec4b088d19ff389d11fb1406e9
@@ -286,7 +286,7 @@ F www/templates/Wasp/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/Wasp/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
 F www/templates/Wasp/chat.less 20d6e342d387f8ae42230dc902f5dccf559e2d8f
 F www/templates/Wasp/chat.tpl 5ae801e0d00118b2d770fb1407615133d8c818e4
-F www/templates/Wasp/common.less d9267e00507443dc39d7c72d61f4be51b681d254
+F www/templates/Wasp/common.less 2ed65c1426f7a45b20b742fc9f5a2efe21044af4
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 17d02b6b8ab0b59548446258f0f2efdf507d6af2
 F www/templates/Wasp/delete.less f77246e7f9fd0680ddb1ef2351b2b4ec5cef54f2
@@ -396,7 +396,7 @@ F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less 8c87475cafc1ed04b43203ca9f187964060304a2
 F www/templates/untar.sh 4135b65b574e88d3cb286df89d40f96d6d54f0e9 x
-P 10bc6118b46b2a8d885ee667ebea5022ea921356
-R 9dabdd13f99a75906dda85d8c3039da6
+P cf06b5af58318f6bc63dda45a1e5c98af1d7c35a
+R 91066e33525b2eaf63793d58347277d6
 U johnfound
-Z 95e791fc53cc36dd58324371ff47b715
+Z deaf5330cf88f750f7baa924f2b053d7

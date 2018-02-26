@@ -78,7 +78,8 @@ PList tablePreCommands, tpl_func,                  \
       "!chat",            ChatPage,                \
       "!chat_events",     ChatRealTime,            \
       "!echo_events",     EchoRealTime,            \    ; optional, depending on the options.DebugWebSSE
-      "!postdebug",       PostDebug                     ; optional, depending on the options.DebugWeb
+      "!postdebug",       PostDebug,               \    ; optional, depending on the options.DebugWeb
+      "!debuginfo",       DebugInfo                     ; optional, depending on the options.DebugSQLite
 end if
 
 if used tablePostCommands

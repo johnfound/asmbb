@@ -992,6 +992,7 @@ end if
         stdcall NumToStr, eax, ntsDec
 
 .special_string_free:
+
         stdcall TextMoveGap, edx, edi
 
         test    eax, eax
@@ -1746,12 +1747,12 @@ begin
         jne     .end_thread_posters
 
         cinvoke sqliteColumnText, [.stmt], 0
-        stdcall StrEncodeHTML, eax
 
         mov     edx, [.list]
         cmp     [edx+TArray.count], 5
         je      .end_thread_posters_more
 
+        stdcall StrEncodeHTML, eax
         stdcall ListAddDistinct, edx, eax
         mov     [.list], edx
 

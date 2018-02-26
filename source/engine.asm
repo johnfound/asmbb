@@ -26,7 +26,7 @@ options.AlignCode = 0
 options.ShowImported = 0
 
 options.DebugWeb = 0
-options.DebugSQLite = 0
+options.DebugSQLite = 1
 
 options.DebugWebSSE = 0         ; debug server sent events - creates a command "!echo_events" for debugging SSE.
 options.Benchmark = 0
@@ -104,6 +104,8 @@ start:
           mov   ecx, [_sqliteFinalize]
           mov   [sqlitePrepare_v2], eax
           mov   [sqliteFinalize], ecx
+        else
+          stdcall  InitSQLStmtDebugger
         end if
 
         stdcall SetSegmentationFaultHandler, OnException
@@ -229,6 +231,12 @@ endp
 
 
 
+struct TStmtList
+  .stmt    dd ?
+  .call    dd ?
+  .dup     dd ?
+  .res     dd ?
+ends
 
 
 ; debug replacement for sqlitePrepare_v2 and sqliteFinalize !!!
@@ -236,9 +244,41 @@ endp
 if defined options.DebugSQLite & options.DebugSQLite
   sqlitePrepare_v2 dd my_sqlitePrepare_v2
   sqliteFinalize   dd my_sqliteFinalize
+
+  uglobal
+    mxSQLite TMutex
+    ptrSQList dd ?
+  endg
+
+
+proc InitSQLStmtDebugger
+begin
+        stdcall MutexCreate, 0, mxSQLite
+        stdcall MutexRelease, mxSQLite
+
+        stdcall CreateArray, sizeof.TStmtList
+        mov     [ptrSQList], eax
+        return
+endp
+
+
+
+proc DebugInfo, .pSpecial
+begin
+        stdcall TextCreate, sizeof.TText
+        stdcall ListSQLiteStatus, eax, [.pSpecial]
+        clc
+        return
+endp
+
+
 else
+
   sqlitePrepare_v2 dd 0
   sqliteFinalize   dd 0
+
+  DebugInfo = 0
+
 end if
 
 
@@ -248,21 +288,25 @@ begin
 
         pushad
 
-        stdcall FileWriteString, [STDERR], "SQL statement prepared:   $"
+        stdcall WaitForMutex, mxSQLite, 1000
+        jc      .finish
 
-        mov     eax, [.ptrVarStmt]
-        stdcall NumToStr, [eax], ntsHex or ntsUnsigned or ntsFixedWidth + 8
-        push    eax
-        stdcall FileWriteString, [STDERR], eax
-        stdcall StrDel ; from the stack;
+        stdcall AddArrayItems, [ptrSQList], 1
+        mov     [ptrSQList], edx
 
-        stdcall FileWriteString, [STDERR], txt " call from $"
-        stdcall NumToStr, [ebp+4], ntsHex or ntsUnsigned or ntsFixedWidth + 8
-        push    eax
-        stdcall FileWriteString, [STDERR], eax
-        stdcall StrDel ; from the stack;
-        stdcall FileWriteString, [STDERR], <txt 13, 10>
+        mov     esi, [ebp+4]
+        mov     edi, [.ptrVarStmt]
+        mov     edi, [edi]
 
+        mov     [eax+TStmtList.call], esi
+        mov     [eax+TStmtList.stmt], edi
+        mov     [eax+TStmtList.dup], 0
+
+        OutputValue "Added $", edi, 16, 8
+
+        stdcall MutexRelease, mxSQLite
+
+.finish:
         popad
 
         cret
@@ -273,24 +317,134 @@ proc my_sqliteFinalize, .stmt
 begin
         pushad
 
-        stdcall FileWriteString, [STDERR], "SQL statement finalizing: $"
+        stdcall WaitForMutex, mxSQLite, 1000
+        jc      .finish
 
-        stdcall NumToStr, [.stmt], ntsHex or ntsUnsigned or ntsFixedWidth + 8
-        push    eax
-        stdcall FileWriteString, [STDERR], eax
-        stdcall StrDel ; from the stack;
+        mov     esi, [ptrSQList]
+        mov     ecx, [esi+TArray.count]
 
-        stdcall FileWriteString, [STDERR], txt " call from $"
-        stdcall NumToStr, [ebp+4], ntsHex or ntsUnsigned or ntsFixedWidth + 8
-        push    eax
-        stdcall FileWriteString, [STDERR], eax
-        stdcall StrDel ; from the stack;
+        mov     eax, ecx
+        shl     eax, 4
 
-        stdcall FileWriteString, [STDERR], <txt 13, 10, 13, 10>
+        lea     esi, [esi+TArray.array + eax]
+        mov     ebx, [.stmt]
 
+.loop:
+        sub     esi, sizeof.TStmtList
+        dec     ecx
+        js      .release
+
+        cmp     [esi+TStmtList.stmt], ebx
+        jne     .loop
+
+        stdcall DeleteArrayItems, [ptrSQList], ecx, 1
+        mov     [ptrSQList], edx
+
+        OutputValue "Removed $", ebx, 16, 8
+
+.release:
+        stdcall MutexRelease, mxSQLite
+
+.finish:
         popad
-
         cinvoke _sqliteFinalize, [.stmt]
-
         cret
+endp
+
+
+
+
+proc ListSQLiteStatus, .pText, .pSpecial
+begin
+        pushad
+
+        mov     esi, [.pSpecial]
+        stdcall ListAddDistinct, [esi+TSpecialParams.pStyles], txt "users_online.css"
+        mov     [esi+TSpecialParams.pStyles], edx
+
+        mov     edx, [.pText]
+        stdcall TextCat, edx, txt '<div class="users_online"><article><h1>Not finalized SQLite statements</h1><table class="users_table"><tr><th>Statement</th><th>Called from</th></tr>'
+
+        stdcall WaitForMutex, mxSQLite, 1000
+        jc      .finish_sqlite
+
+        mov     esi, [ptrSQList]
+        mov     ecx, [esi+TArray.count]
+        xor     ebx, ebx
+        test    ecx, ecx
+        jnz     .loop
+
+        stdcall TextCat, edx, txt '<tr><td colspan="2">None</td></tr>'
+        jmp     .end_sqlite
+
+.loop:
+        stdcall TextCat, edx, txt "<tr><td>"
+
+        stdcall NumToStr, [esi+TArray.array + ebx + TStmtList.stmt], ntsHex or ntsUnsigned or ntsFixedWidth + 8
+        stdcall TextCat, edx, eax
+        stdcall StrDel, eax
+
+        stdcall TextCat, edx, txt "</td><td>"
+
+        stdcall NumToStr, [esi+TArray.array + ebx + TStmtList.call], ntsHex or ntsUnsigned or ntsFixedWidth + 8
+        stdcall TextCat, edx, eax
+        stdcall StrDel, eax
+
+        stdcall TextCat, edx, txt "</td><tr>"
+
+        add     ebx, sizeof.TStmtList
+        loop    .loop
+
+.end_sqlite:
+        stdcall MutexRelease, mxSQLite
+
+.finish_sqlite:
+        stdcall TextCat, edx, txt "</table></article><article><h1>StrLib statistics</h1>"
+
+; StrLib statistics
+
+        stdcall WaitForMutex, StrMutex, 1000
+        jc      .end_strlib
+
+        mov     esi, [ptrStrTable]
+        mov     ecx, [esi+TArray.count]
+        xor     ebx, ebx
+
+        stdcall TextCat, edx, txt "<p>Strings array size: "
+        stdcall NumToStr, ecx, ntsDec or ntsUnsigned
+        stdcall TextCat, edx, eax
+        stdcall StrDel, eax
+        stdcall TextCat, edx, txt "</p>"
+
+.count:
+        dec     ecx
+        js      .end_count
+
+        cmp     dword [esi+TArray.array + 4*ecx], 0
+        je      .count
+
+        inc     ebx
+        jmp     .count
+
+.end_count:
+        stdcall TextCat, edx, txt "<p>Allocated strings: "
+        stdcall NumToStr, ebx, ntsDec or ntsUnsigned
+        stdcall TextCat, edx, eax
+        stdcall StrDel, eax
+        stdcall TextCat, edx, txt "</p>"
+
+        stdcall TextCat, edx, txt "<p>Next slot to search: "
+        stdcall NumToStr, [esi+TArray.lparam], ntsDec or ntsUnsigned
+        stdcall TextCat, edx, eax
+        stdcall StrDel, eax
+        stdcall TextCat, edx, txt "</p>"
+
+        stdcall MutexRelease, StrMutex
+
+.end_strlib:
+        stdcall TextCat, edx, "</article></div>"
+
+        mov     [esp+4*regEAX], edx
+        popad
+        return
 endp

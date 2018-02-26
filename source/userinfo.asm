@@ -25,7 +25,7 @@ sqlGetFullUserInfo text "select ",                                              
                         "from users u ",                                                                \
                         "where nick = ?1"
 
-sqlUpdateUserDesc   text "update users set user_desc = ? where nick = ?"
+sqlUpdateUserDesc   text "update users set user_desc = ?1 where nick = ?2"
 
 
 proc ShowUserInfo, .pSpecial
@@ -163,7 +163,7 @@ endl
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_desc", 0
         mov     [.user_desc], eax
         test    eax, eax
-        jz      .update_end
+        jz      .text_ok
 
         stdcall StrByteUtf8, [.user_desc], MAX_USER_DESC
         stdcall StrTrim, [.user_desc], eax
@@ -171,13 +171,12 @@ endl
         stdcall StrPtr, [.user_desc]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
+.text_ok:
         stdcall StrPtr, ebx
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
-
-.update_end:
 
         stdcall StrDupMem, "/!userinfo/"
         stdcall StrCat, eax, ebx
@@ -417,18 +416,21 @@ begin
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateUserAvatar, sqlUpdateUserAvatar.length, eax, 0
 
         stdcall ValueByName, [esi+TSpecialParams.post_array], txt "avatar"
-        jc      .update_end
+        jc      .pic_ok
 
         test    eax, eax
-        jz      .update_end
+        jz      .pic_ok
 
         cmp     eax, $c0000000
-        jae     .update_end              ; because of some reason, the avatar is posted as a string.
+        jae     .pic_ok                   ; because of some reason, the avatar is posted as a string.
 
         cmp     [eax+TArray.count], 1
-        jne     .update_end              ; multiple images has been posted.
+        jne     .pic_ok                   ; multiple images has been posted.
 
         lea     ebx, [eax+TArray.array]
+
+        cmp     [ebx+TPostFileItem.size], 0
+        jle     .pic_ok
 
         stdcall StrCompCase, [ebx+TPostFileItem.mime], "image/png"
         jnc     .update_end
@@ -441,7 +443,6 @@ begin
 @@:
         cmp     [ebx+TPostFileItem.size], eax
         ja      .update_end
-
 
         stdcall GetParam, "avatar_width", gpInteger
         jnc     @f
@@ -462,37 +463,32 @@ begin
         lea     ecx, [eax+TByteStream.data]
         cinvoke sqliteBindBlob, [.stmt], 1, ecx, [eax+TByteStream.size], SQLITE_STATIC
 
+.pic_ok:
         stdcall StrPtr, [.username]
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
         cinvoke sqliteStep, [.stmt]
 
-
 .update_end:
         stdcall StrDupMem, "/!userinfo/"
         stdcall StrCat, eax, [.username]
-        push    eax
 
         stdcall TextMakeRedirect, edi, eax
-        stdcall StrDel ; from the stack
+        stdcall StrDel, eax
 
         stdcall FreeMem, [.img_ptr]
-        jmp     .finish
-
-
-.permissions_fail:
-
-        stdcall AppendError, edi, "403 Forbidden", [.pSpecial]
-        mov     edi, edx
-
-.finish:
         cinvoke sqliteFinalize, [.stmt]
-        stc
 
 .exit:
         mov     [esp+4*regEAX], edi
+        stc
         popad
         return
 
+
+.permissions_fail:
+        stdcall AppendError, edi, "403 Forbidden", [.pSpecial]
+        mov     edi, edx
+        jmp     .exit
 
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
