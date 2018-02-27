@@ -1,0 +1,1 @@
+../Wasp/del_confirm.tpl
