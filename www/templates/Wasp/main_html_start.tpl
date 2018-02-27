@@ -46,5 +46,4 @@
     <input class="search_btn"  type="submit" value="">
   </form>
 
-  <div class="tags"><a class="tagicon [case:[special:dir]|current|not_current]" title="Show all threads" href="/"></a>
-  [special:alltags]</div>
+  <div class="tags"><a class="tagicon [case:[special:dir]|current|not_current]" title="Show all threads" href="/"></a>[special:alltags]</div>

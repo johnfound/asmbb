@@ -3,11 +3,10 @@
 /* sqlite console styles */
 
 div.console {
-  position: relative;
-  width: 95%;
-  max-width: 1280px;
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
   clear: both;
-  margin: 8px auto;
 
   p{
     color: @clDarkFG;
@@ -42,13 +41,14 @@ textarea.sql_editor {
 
 
 div.sql_exec {
-  width: 95%;
-  max-width: 1280px;
-  margin: auto;
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
 
-  background-color: white;
+  background-color: @clArticleBG;
   padding: 8px;
   font-size: 13px;
+  overflow: auto;
 }
 
 div.sql_exec p {

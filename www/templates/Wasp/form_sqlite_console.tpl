@@ -3,8 +3,10 @@
 
 <div class="console">
   <div class="ui">
-    <a class="ui" href="/">Thread list</a>
-    <a class="uir" target="_blank" href="/!sqlite">SQL console</a><a class="uir" href="/!settings">Settings</a>
+    <a class="ui left" href="/">Thread list</a>
+    <span class="spacer"></span>
+    <a class="ui right" href="/!settings">Settings</a>
+    <a class="ui right" target="_blank" href="/!sqlite">SQL console</a>
   </div>
   <form id="editform" action="/!sqlite/#sql_result" method="post">
     <p>Script name:</p>

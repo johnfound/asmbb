@@ -4,8 +4,8 @@
 
 <div class="editor" id="editor">
   <div class="ui">
-    <a class="ui" href="../">Thread list</a>
-    <a class="ui" href="!by_id">Back</a>
+    <a class="ui left" href="../">Thread list</a>
+    <a class="ui left" href="!by_id">Back</a>
   </div>
   <form id="editform" action="!edit" method="post">
     <p>Thread title:</p>

@@ -3,9 +3,9 @@
 /* Threads list styles */
 
 div.threads_list {
-  width: 95%;
-  max-width: 1280px;
-  margin: auto;
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
   clear: both;
 }
 
@@ -17,7 +17,7 @@ span.small {
 
 .thread_summary {
   display: flex;
-  margin-bottom: 8px;
+  margin: 8px 0px;
 }
 
 .thread_right {
@@ -105,10 +105,11 @@ div.thread_link {
 a.thread_link {
   font-size: 16px;
   font-weight: bold;
-  display: block;
+  display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
   color: @clThreadLink;
+  max-width: 100%;
 }
 
 div.thread_tags {
