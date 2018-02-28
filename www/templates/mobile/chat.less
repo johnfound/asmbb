@@ -16,7 +16,7 @@ body {
   height: 100%;
   width: 100%;
   margin: 0px;
-  background-color: @clDarkBG !important;
+  background-color: @clBodyBG;
 }
 
 #back {
@@ -27,7 +27,7 @@ body {
   width: 48px; height: 48px;
   border-radius: 24px;
   background-color: @clColor1;
-  background-image: url("/[special:skin]_images/yellow_back.png");
+  background-image: url("[special:skin]/_images/yellow_back.png");
 }
 
 div {
@@ -41,18 +41,21 @@ div {
   flex-grow: 10;
   flex-shrink: 1;
   overflow: hidden;
+  background-color: @clDarkBG;
 }
 
 #syslog {
   display: block;
   padding: 4px;
 
-  background-color: @clEditorBG;
-  color: @clEditorFG;
+  background-color: @clDarkBG;
+  color: @clDarkFG;
 
   overflow-x: hidden;
   overflow-y: auto;
   max-height: 5.5em;
+
+  margin-bottom: 4px;
 
   p {
     margin: 4px 0px;
@@ -81,7 +84,7 @@ div {
   display: block;
   flex-shrink: 1;
   padding: 4px;
-  background: @clDarkBG;
+  background-color: @clDarkBG;
   color: @clDarkFG;
   overflow-x: hidden;
   overflow-y: auto;
@@ -89,6 +92,7 @@ div {
   p {
     margin: 4px 0px;
     overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   span {
@@ -96,7 +100,7 @@ div {
   }
 
   span.user {
-    color: @clColor1;
+    color: @clColor1FG;
     font-size: 100%;
     font-weight: bold;
     font-size: 100%;
@@ -110,6 +114,7 @@ div {
   a {
     color: #c0c0ff;
   }
+
 
   img {
     vertical-align: middle;
@@ -125,5 +130,6 @@ input.edit {
   border: none;
   background-color: @clEditorBG;
   color: @clEditorFG;
+  margin-top: 4px;
 }
 

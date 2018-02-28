@@ -51,7 +51,7 @@
   <tr><td class="lbl"><label for="embeded_css">Embeded CSS:</label></td><td colspan="2"><label class="checkbox"><input type="checkbox" [embeded_css] name="embeded_css" id="embeded_css" class="checkbox"><span>&nbsp;</span></label></td></tr>
 
   </table></br></br>
-
+  <input type="hidden" name="ticket" value="[Ticket]" >
   <input type="submit" name="save" class="button" value="Save">
 </form>
 </div>

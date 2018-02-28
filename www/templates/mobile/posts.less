@@ -10,7 +10,7 @@ div.thread {
 
 h1.thread_caption {
   font-size: 20px;
-  margin: 32px 0px 0px 0px;
+  margin: 16px 0px 0px 0px;
   clear:both;
 
   a {
@@ -21,7 +21,7 @@ h1.thread_caption {
     background-repeat: no-repeat;
     width: 18px;
     height: 18px;
-    background-image: url("/[special:skin]_images/edit.svg");
+    background-image: url("[special:skin]/_images/edit.svg");
   }
 }
 
@@ -42,11 +42,11 @@ div.user_info {
 }
 
 .unread0 {
-  background-image: url("/[special:skin]_images/onepost_gray.svg");
+  background-image: url("[special:skin]/_images/onepost_gray.svg");
 }
 
 .unread1 {
-  background-image: url("/[special:skin]_images/onepost.svg");
+  background-image: url("[special:skin]/_images/onepost.svg");
 }
 
 a.user_name {
@@ -62,13 +62,16 @@ a.user_name {
 img.avatar {
   margin: 16px auto 0px auto;
   width: 64px;
+  height: 64px;
   display: block;
   background-color: @clColor1;
 }
 
 div.user_pcnt {
   margin-top: 8px;
+  text-align: left;
   font-size: 80%;
+  background-color: @clDarkBG;
 }
 
 div.post_info {
@@ -77,7 +80,8 @@ div.post_info {
   align-items: center;
 
   padding: 4px;
-  background-color: @clColor1;
+  background-color: @clPostInfoBG;
+  color: @clPostInfoFG;
   font-size: 12px;
 }
 
@@ -99,15 +103,15 @@ div.edit_tools {
   }
 
   .icon_quote {
-    background-image: url("/[special:skin]_images/quote.svg");
+    background-image: url("[special:skin]/_images/quote.svg");
   }
 
   .icon_edit {
-    background-image: url("/[special:skin]_images/edit.svg");
+    background-image: url("[special:skin]/_images/edit.svg");
   }
 
   .icon_del {
-    background-image: url("/[special:skin]_images/del.svg");
+    background-image: url("[special:skin]/_images/del.svg");
   }
 }
 

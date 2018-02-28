@@ -9,13 +9,7 @@ select
     where
       threadid=id
   ) as tags,
-  ( select
-      userid
-    from
-      posts
-    where
-      threadid = threads.id
-  ) as userid
+  Pinned
 from
   threads
 where

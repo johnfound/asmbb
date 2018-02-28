@@ -55,7 +55,9 @@ CREATE TABLE UserLog (
   foreign key (userID) references Users(id) on delete cascade on update cascade
 );
 
+create index idxUserLogIP on userlog(remoteIP);
 create index idxUserLogTime on UserLog(time);  -- Any other index on UserLog ruins the performance. See users_online.sql for the query.
+
 
 create table WaitingActivation(
   id integer primary key,
@@ -63,7 +65,7 @@ create table WaitingActivation(
   passHash text unique,
   salt  text unique,
   email text unique,
-  ip_from text unique,
+  ip_from text,
   time_reg   integer,
   time_email integer,
   a_secret text unique
@@ -97,7 +99,7 @@ create table Posts (
   userID      integer references Users(id) on delete cascade,
 
   postTime    integer,  -- based on postTime the posts are sorted in the thread.
-  ReadCount   integer,
+  ReadCount   integer,  -- not used anymore, because updating Posts is very slow because of the triggers!
   Content     text,
   Rendered    text
 );
@@ -106,6 +108,14 @@ create table Posts (
 create index idxPosts_UserID   on Posts (userID);
 create index idxPosts_ThreadID on Posts (threadID);
 create index idxPostsThreadUser on posts(threadid, userid);
+
+
+create table PostCnt (
+  postID integer references Posts(id) on delete cascade on update cascade,
+  count  integer
+);
+
+create index idxPostCount on PostCnt(postid);
 
 
 create table Tags (
@@ -148,18 +158,27 @@ create table Attachements (
 
 
 create table Sessions (
-  userID    integer references Users(id) on delete cascade,
+  id        integer primary key autoincrement,
+  userID    integer references Users(id) on delete cascade on update cascade,
   fromIP    text,
   fromPort  integer,
   sid       text,
   last_seen integer,
-  ticket    text,
   unique (userID, fromIP)
 );
 
 
 create index idxSessions_UserID on Sessions(UserID);
 create index idxSessions_Sid on Sessions(sid);
+
+
+create table Tickets (
+  ssn     integer references Sessions(id) on delete cascade on update cascade,
+  time    integer,
+  ticket  text unique
+);
+
+create index idxTickets_time on Tickets(time);
 
 
 create table Messages (
@@ -349,11 +368,13 @@ CREATE TRIGGER PostsAI AFTER INSERT ON Posts BEGIN
     (select nick from users where id = new.userid),
     (select group_concat(TT.Tag, ", ") from ThreadTags TT where TT.threadID = new.threadid)
   );
+  insert into PostCNT(postid,count) VALUES (new.id, 0);
   update Users set PostCount = PostCount + 1 where Users.id = new.UserID;
 END;
 
 CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
   delete from PostFTS where rowid = old.id;
+  delete from PostCNT where postid = old.id;
   update Users set PostCount = PostCount - 1 where Users.id = old.UserID;
 END;
 
@@ -401,3 +422,5 @@ create table ChatUsers (
 );
 
 COMMIT;
+
+ANALYZE;

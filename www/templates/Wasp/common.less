@@ -79,6 +79,8 @@ form#search_form {
   color: @clDarkFG;
   display:block;
   flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 0px;
 }
 
 
@@ -91,7 +93,7 @@ form#search_form {
   vertical-align: top;
 
   background-color: @clButtonBG;
-  background-image: url("/[special:skin]_images/search.svg");
+  background-image: url("[special:skin]/_images/search.svg");
   background-position: center;
   background-size: 24px 24px;
   background-repeat: no-repeat;
@@ -141,6 +143,8 @@ div.attribution {
 div.tags {
   width: @globWidth;
   max-width: @globMaxWidth;
+  max-height: 256px;
+  overflow: auto;
   margin: @globMargin;
   padding: @paddingTags;
 
@@ -194,11 +198,11 @@ a.current_tag {
 }
 
 .current {
-  background-image: url("/[special:skin]_images/posts.svg");
+  background-image: url("[special:skin]/_images/posts.svg");
 }
 
 .not_current {
-  background-image: url("/[special:skin]_images/posts_gray.svg");
+  background-image: url("[special:skin]/_images/posts_gray.svg");
 }
 
 /* messages screen */

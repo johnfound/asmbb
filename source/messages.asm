@@ -7,91 +7,90 @@ cGoRoot       text "/"
 cUnknownError text "unknown_error"
 
 
-proc ShowForumMessage, .key, .pSpecial
+proc ShowForumMessage, .pSpecial
 .stmt dd ?
 begin
         pushad
 
         mov     esi, [.pSpecial]
 
-        cmp     [.key], 0
-        jne     @f
-        mov     [.key], cUnknownError
-@@:
+        mov     edx, [esi+TSpecialParams.cmd_list]
+        mov     ebx, cUnknownError
+        cmp     [edx+TArray.count], 0
+        cmovne  ebx, [edx+TArray.array]
+
+        stdcall TextCreate, sizeof.TText
+        stdcall TextCat, eax, txt '<div class="message_block"><h1>'
+        mov     edi, edx
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetErrorText, -1, eax, 0
 
-        stdcall StrLen, [.key]
+        stdcall StrLen, ebx
         mov     ecx, eax
+        stdcall StrPtr, ebx
 
-        stdcall StrPtr, [.key]
         cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
         jne     .unknown_msg
 
-        stdcall StrDupMem, '<div class="message_block"><h1>'
-        mov     edi, eax
-
         cinvoke sqliteColumnText, [.stmt], 1
-        stdcall StrCat, edi, eax
-        stdcall StrCat, [esi+TSpecialParams.page_title], eax
 
-        stdcall StrCat, edi, '</h1><div class="message">'
+        stdcall StrCat, [esi+TSpecialParams.page_title], eax
+        stdcall TextCat, edi, eax
+        stdcall TextCat, edx, txt '</h1><div class="message">'
+        mov     edi, edx
 
         cinvoke sqliteColumnText, [.stmt], 0
-        stdcall StrCat, edi, eax
-
-        stdcall StrCat, edi, '</div><br>'
+        stdcall TextCat, edi, eax
+        stdcall TextCat, edx, txt '</div><br>'
+        mov     edi, edx
 
         cinvoke sqliteColumnType, [.stmt], 2
         cmp     eax, SQLITE_NULL
         je      .add_back_link
 
         cinvoke sqliteColumnText, [.stmt], 2
-        stdcall StrCat, edi, eax
+        stdcall TextCat, edi, eax
         jmp     .finalize
-
 
 ; now insert link to the previous page.
 
 .add_back_link:
-
-        stdcall StrCat, edi, '<a href="'
+        stdcall TextCat, edi, txt '<a href="'
 
         stdcall GetBackLink, esi
         pushf
-        stdcall StrCat, edi, eax
+        stdcall TextCat, edx, eax
         stdcall StrDel, eax
         popf
         jnc     .back
 
-        stdcall StrCat, edi, '">Home</a>'
+        stdcall TextCat, edx, txt '">Home</a>'
         jmp     .finalize
 
 .back:
-        stdcall StrCat, edi, '">Go back</a>'
+        stdcall TextCat, edx, txt '">Go back</a>'
 
 .finalize:
-        stdcall StrCat, edi, '</div>'
+        stdcall TextCat, edx, txt '</div>'
+        mov     [esp+4*regEAX], edx
 
         cinvoke sqliteFinalize, [.stmt]
 
-        mov     [esp+4*regEAX], edi
         clc
         popad
         return
 
 
 .unknown_msg:
-        stdcall StrDupMem, <'<div class="message_block"><h1>ERROR!</h1><div class="message">',     \
+        stdcall TextCat, edi, <'ERROR!</h1><div class="message">',     \
                             'Three things are certain:', 13, 10,                                   \
                             'Death, taxes and lost data.', 13, 10,                                 \
                             'Guess which has occurred.', 13, 10,                                   \
                             '</div><br>', 13, 10 >
-
-        mov     edi, eax
+        mov     edi, edx
         jmp     .add_back_link
 endp
 

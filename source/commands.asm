@@ -18,6 +18,9 @@ permAdmin       = $80000000
 struct TSpecialParams
   .start_time      dd ?
 
+  .hSocket         dd ?         ; the "low level" request data.
+  .requestID       dd ?         ;
+
 ; request parameters
 
   .params          dd ?
@@ -27,6 +30,7 @@ struct TSpecialParams
   .thread          dd ?                 ; /thread_slug/
   .page_num        dd ?                 ; /1234 - can be the number of the page, or the ID of a post.
 
+  .cmd_list        dd ?         ; pointer to an array with splitted URL for analizing.
   .cmd_type        dd ?         ; 0 - no command, 1 - root cmd, 2 - top command
 
 ; forum global variables.
@@ -46,13 +50,49 @@ struct TSpecialParams
   .userStatus      dd ?
 
   .userLang        dd ?         ; not used right now.
-  .userSkin        dd ?         ; not used right now.
+  .userSkin        dd ?
   .session         dd ?
   .remoteIP        dd ?
   .remotePort      dd ?
 ends
 
 
+if used tablePreCommands
+
+PList tablePreCommands, tpl_func,                  \
+      "!avatar",          UserAvatar,              \
+      "!login",           UserLogin,               \
+      "!logout",          UserLogout,              \
+      "!register",        RegisterNewUser,         \
+      "!changepassword",  ChangePassword,          \
+      "!changemail",      ChangeEmail,             \
+      "!sqlite",          SQLiteConsole,           \
+      "!settings",        BoardSettings,           \
+      "!message",         ShowForumMessage,        \
+      "!activate",        ActivateAccount,         \
+      "!userinfo",        ShowUserInfo,            \
+      "!avatar_upload",   UpdateUserAvatar,        \
+      "!setskin",         UpdateUserSkin,          \
+      "!render_all",      RenderAll,               \
+      "!users_online",    UserActivityTable,       \
+      "!chat",            ChatPage,                \
+      "!chat_events",     ChatRealTime,            \
+      "!echo_events",     EchoRealTime,            \    ; optional, depending on the options.DebugWebSSE
+      "!postdebug",       PostDebug,               \    ; optional, depending on the options.DebugWeb
+      "!debuginfo",       DebugInfo                     ; optional, depending on the options.DebugSQLite
+end if
+
+if used tablePostCommands
+
+PList tablePostCommands, tpl_func,                 \
+      "!markread",        MarkThreadRead,          \
+      "!post",            PostUserMessage,         \
+      "!edit",            EditUserMessage,         \
+      "!edit_thread",     EditThreadAttr,          \
+      "!del",             DeletePost,              \
+      "!by_id",           PostByID,                \
+      "!search",          ShowSearchResults2
+end if
 
 
 proc ServeOneRequest, .hSocket, .requestID, .pParams2, .pPost2, .start_time
@@ -86,10 +126,14 @@ begin
         mov     eax, [.start_time]
         mov     [.special.start_time], eax
 
+        mov     eax, [.hSocket]
+        mov     ecx, [.requestID]
+        mov     [.special.hSocket], eax
+        mov     [.special.requestID], ecx
+
         mov     eax, [.pParams2]
         mov     [.special.params], eax
 
-        stdcall StrDupMem, cDefaultSkin
         lea     eax, [.special]
         stdcall GetDefaultSkin, eax
         mov     [.special.userSkin], eax
@@ -144,8 +188,8 @@ begin
 .page_length_ok:
         mov     [.special.page_length], eax
 
-        stdcall StrNew
-        mov     edi, eax
+        stdcall TextCreate, sizeof.TText
+        mov     edx, eax
 
         stdcall ValueByName, [.special.params], "DOCUMENT_ROOT"
         jc      .error400
@@ -229,154 +273,133 @@ begin
         stdcall ValueByName, [.special.params], "HTTP_IF_MODIFIED_SINCE"
         jc      .get_file
 
-        lea     edx, [.date]
-        stdcall DecodeHTTPDate, eax, edx
+        lea     edi, [.date]
+        stdcall DecodeHTTPDate, eax, edi
         jc      .get_file
 
-        stdcall DateTimeToTime, edx
+        push    edx
+        stdcall DateTimeToTime, edi
         mov     [.timelo], eax
         mov     [.timehi], edx
+        pop     edx
 
 .get_file:
-
-;        if defined options.DebugMode & options.DebugMode
-;
-;           Message "File request: "
-;
-;           stdcall StrPtr, [.filename]
-;           Output  eax
-;
-;           DebugMsg
-;
-;        end if
-
 
         lea     eax, [.timeRet]
         lea     ecx, [.special]
         stdcall GetFileIfNewer, [.filename], [.timelo], [.timehi], eax, [.mime], ecx
         jc      .error404_no_list_free
 
-;        DebugMsg "File exists."
-
         test    eax, eax
         jz      .send_304_not_modified
-
-;        DebugMsg "File is to be returned."
 
         mov     esi, eax
 
 ; serve the file.
 
-        stdcall StrCat, edi, <"Cache-control: max-age=1000000", 13, 10>
+        stdcall TextCat, edx, <"Cache-control: max-age=1000000", 13, 10>
 
         stdcall FormatHTTPTime, [.timeRet], [.timeRet+4]
-        stdcall StrCat, edi, "Last-modified: "
-        stdcall StrCat, edi, eax
+        stdcall TextCat, edx, "Last-modified: "
+        stdcall TextCat, edx, eax
         stdcall StrDel, eax
 
-        stdcall StrCat, edi, <13, 10, "Content-type: ">
-        stdcall StrCat, edi, [.mime]
+        stdcall TextCat, edx, <13, 10, "Content-type: ">
+        stdcall TextCat, edx, [.mime]
+        stdcall TextCat, edx, <txt 13, 10, 13, 10>
 
-        stdcall StrCharCat, edi, $0a0d0a0d
+        stdcall FCGI_outputText, [.hSocket], [.requestID], edx, FALSE
+        jc      .free_file
 
-        stdcall StrPtr, edi
-        stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], FALSE
-        jc      .error500
+        stdcall FCGI_outputText, [.hSocket], [.requestID], esi, TRUE
 
-        cmp     [.mime], mimeCSS
-        jne     .send_binary
-
-        stdcall StrPtr, esi
-        stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], TRUE
-        stdcall StrDel, esi
+.free_file:
+        stdcall TextFree, esi
         jmp     .final_clean
 
-.send_binary:
-        stdcall FCGI_output, [.hSocket], [.requestID], esi, ecx, TRUE
-        jc      .error500  ; ?????????
-
-        stdcall FreeMem, esi
-
-        jmp     .final_clean
 
 .redirect_to_skin:
 
-        lea     edx, [eax+2]
+        lea     edi, [eax+2]
 
         lea     eax, [.special]
         stdcall GetLoggedUser, eax
 
-        stdcall StrDupMem, txt "/"
-        stdcall StrCat, eax, [.special.userSkin]
-        stdcall StrCat, eax, edx
-        stdcall StrMakeRedirect, edi, eax
+        stdcall StrDup, [.special.userSkin]
+        stdcall StrCat, eax, edi
+        stdcall TextMakeRedirect, edx, eax
         stdcall StrDel, eax
-        jmp     .send_simple_result2
+        jmp     .send_simple_result
 
 .send_304_not_modified:
-        stdcall StrCat, edi, <"Status: 304 Not Modified", 13, 10, 13, 10>
-        jmp     .send_simple_result2
+        stdcall TextCat, edx, <"Status: 304 Not Modified", 13, 10, 13, 10>
+        jmp     .send_simple_result
 
-.error500:
-        lea     eax, [.special]
-        stdcall AppendError, edi, "500 Unexpected server error", eax
-        jmp     .send_simple_result2
+
+;.error500:
+;        lea     eax, [.special]
+;        stdcall AppendError, edx, "500 Unexpected server error", eax
+;        jmp     .send_simple_result
+
 
 .error400:
         lea     eax, [.special]
-        stdcall AppendError, edi, "400 Bad Request", eax
-        jmp     .send_simple_result2                            ; without freeing the list in ESI!
+        stdcall AppendError, edx, "400 Bad Request", eax
+        jmp     .send_simple_result
 
 
 .error404_no_list_free:
         lea     eax, [.special]
-        stdcall AppendError, edi, "404 Not Found", eax
-        jmp     .send_simple_result2
+        stdcall AppendError, edx, "404 Not Found", eax
+        jmp     .send_simple_result
 
 
 
 .error403:
         lea     eax, [.special]
-        stdcall AppendError, edi, "403 Forbidden", eax
+        stdcall AppendError, edx, "403 Forbidden", eax
         jmp     .send_simple_result
 
 
 
 .error404:
         lea     eax, [.special]
-        stdcall AppendError, edi, "404 Not Found", eax
+        stdcall AppendError, edx, "404 Not Found", eax
         jmp     .send_simple_result
-
 
 
 .output_forum_html:     ; Status: 200 OK
 
-        stdcall StrCat, edi, <"Content-type: text/html; charset=utf-8", 13, 10, 13, 10>
+        OutputValue "TText address to concatenate: ", eax, 16, 8
 
-        lea     edx, [.special]
-        stdcall StrCatTemplate, edi, "main_html_start.tpl", 0, edx
+        push    eax eax ; store for use.
 
-        stdcall StrCat, edi, eax
-        stdcall StrDel, eax
+        stdcall TextCat, edx, <"Content-type: text/html; charset=utf-8", 13, 10, 13, 10>
 
-        stdcall StrCatTemplate, edi, "main_html_end.tpl", 0, edx
+        lea     edi, [.special]
+        stdcall RenderTemplate, edx, "main_html_start.tpl", 0, edi
+        mov     edx, eax
+
+        stdcall TextAddText, edx, -1 ; source from the stack
+        stdcall TextFree ; from the stack
+
+        stdcall RenderTemplate, edx, "main_html_end.tpl", 0, edi
+        mov     edx, eax
 
 
-.send_simple_result:    ; it is a result containing only a string data in EDI
+.send_simple_result:
 
-        stdcall ListFree, esi, StrDel
-
-.send_simple_result2:
-
-        stdcall StrPtr, edi
-        stdcall FCGI_output, [.hSocket], [.requestID], eax, [eax+string.len], TRUE
+        stdcall FCGI_outputText, [.hSocket], [.requestID], edx, TRUE
 
 .final_clean:
 
-        stdcall StrDel, edi
+        stdcall TextFree, edx
         stdcall StrDel, [.root]
         stdcall StrDel, [.uri]
         stdcall StrDel, [.filename]
+
+        stdcall ListFree, [.special.cmd_list], StrDel
+        stdcall ListFree, [.special.pStyles], StrDel
 
         stdcall StrDel, [.special.userName]
         stdcall StrDel, [.special.userSkin]
@@ -387,7 +410,6 @@ begin
         stdcall StrDel, [.special.page_header]
         stdcall StrDel, [.special.description]
         stdcall StrDel, [.special.keywords]
-        stdcall ListFree, [.special.pStyles], StrDel
 
         stdcall FreePostDataArray, [.special.post_array]
 
@@ -397,8 +419,8 @@ begin
 
 .send_simple_replace:     ; replaces the EDI string with new one and sends it as a simple result
 
-        stdcall StrDel, edi
-        mov     edi, eax
+        stdcall TextFree, edx
+        mov     edx, eax
         jmp     .send_simple_result
 
 
@@ -409,7 +431,7 @@ begin
 ;        DebugMsg "Analyze URL"
 
         stdcall StrSplitList, [.uri], '/', FALSE        ; split the URI in order to analize it better.
-        mov     esi, eax
+        mov     [.special.cmd_list], eax
 
         mov     ecx, CreateAdminAccount
         cmp     [.special.setupmode], 0
@@ -428,102 +450,18 @@ begin
 
         mov     [.special.cmd_type], 1
 
-        mov     ecx, UserAvatar
-        stdcall StrCompNoCase, eax, txt "!avatar"
-        jc      .exec_command2
+        stdcall SearchInHashTable, eax, tablePreCommands
+        jnc     .is_it_command2
 
-        mov     ecx, UserLogin
-        stdcall StrCompNoCase, eax, txt "!login"
-        jc      .exec_command
-
-        mov     ecx, UserLogout
-        stdcall StrCompNoCase, eax, txt "!logout"
-        jc      .exec_command
-
-        mov     ecx, RegisterNewUser
-        stdcall StrCompNoCase, eax, txt "!register"
-        jc      .exec_command
-
-        mov     ecx, ChangePassword
-        stdcall StrCompNoCase, eax, txt "!changepassword"
-        jc      .exec_command
-
-        mov     ecx, ChangeEmail
-        stdcall StrCompNoCase, eax, txt "!changemail"
-        jc      .exec_command
-
-        mov     ecx, SQLiteConsole
-        stdcall StrCompNoCase, eax, txt "!sqlite"         ; sqlite console. only for admins.
-        jc      .exec_command
-
-        mov     ecx, BoardSettings
-        stdcall StrCompNoCase, eax, txt "!settings"
-        jc      .exec_command
-
-        mov     ecx, ShowForumMessage
-        stdcall StrCompNoCase, eax, txt "!message"
-        jc      .exec_command2
-
-        mov     ecx, ActivateAccount
-        stdcall StrCompNoCase, eax, txt "!activate"
-        jc      .exec_command2
-
-        mov     ecx, ShowUserInfo
-        stdcall StrCompNoCase, eax, txt "!userinfo"
-        jc      .exec_command2
-
-        mov     ecx, UpdateUserAvatar
-        stdcall StrCompNoCase, eax, txt "!avatar_upload"
-        jc      .exec_command2
-
-        mov     ecx, UpdateUserSkin
-        stdcall StrCompNoCase, eax, txt "!setskin"
-        jc      .exec_command2
-
-        mov     ecx, RenderAll
-        stdcall StrCompNoCase, eax, txt "!render_all"
-        jc      .exec_command
-
-        mov     ecx, UserActivityTable
-        stdcall StrCompNoCase, eax, txt "!users_online"
-        jc      .exec_command
-
-        stdcall ChatDisabled
-        jc      .chat_ok
-
-        mov     ecx, ChatPage
-        stdcall StrCompNoCase, eax, txt "!chat"
-        jc      .exec_command
-
-        stdcall StrCompNoCase, eax, txt "!chat_events"
-        jc      .exec_command_chat
-
-if defined options.DebugWebSSE & options.DebugWebSSE
-
-        stdcall StrCompNoCase, eax, txt "!echo_events"
-        jc      .exec_command_echo
-
-end if
-
-.chat_ok:
-
-if defined options.DebugWeb & options.DebugWeb
-        mov     ecx, PostDebug
-        stdcall StrCompNoCase, eax, txt "!postdebug"
-        jc      .exec_command
-end if
-
+        stdcall StrDel, eax
+        jmp     .exec_command
 
 .is_it_tag:
 
         mov     [.special.cmd_type], 0
 
-;        DebugMsg "Is it a tag?"
-
         stdcall InTags, eax
         jnc     .is_it_thread
-
-;        DebugMsg "Tag detected"
 
         mov     [.special.dir], eax
         call    .pop_array_item
@@ -532,12 +470,8 @@ end if
 
 .is_it_thread:
 
-;        DebugMsg "Is it a thread?"
-
         stdcall InThreads, eax
         jnc     .is_it_number
-
-;        DebugMsg "Thread detected"
 
         mov     [.special.thread], eax
         call    .pop_array_item
@@ -545,14 +479,10 @@ end if
 
 .is_it_number:
 
-;        DebugMsg "Is it a number?"
-
         stdcall InNumbers, eax
-        jnc     .is_it_command
+        jc      .is_it_command
 
-;        DebugMsg "Number detected"
-
-        mov     [.special.page_num], edx
+        mov     [.special.page_num], ecx
         stdcall StrDel, eax
 
         call    .pop_array_item
@@ -565,59 +495,23 @@ end if
 
 .is_it_command:
 
-;        DebugMsg "Is it a command?"
-
         push    eax
         stdcall StrPtr, eax
         cmp     byte [eax], '!'
         pop     eax
         jne     .bad_command
 
+.is_it_command2:
         mov     [.special.cmd_type], 2
 
-        mov     ecx, MarkThreadRead
-        stdcall StrCompNoCase, eax, txt "!markread"
-        jc      .exec_command
-
-        mov     ecx, PostUserMessage
-        stdcall StrCompNoCase, eax, txt "!post"
-        jc      .exec_command
-
-        mov     ecx, EditUserMessage
-        stdcall StrCompNoCase, eax, txt "!edit"
-        jc      .exec_command
-
-        mov     ecx, EditThreadAttr
-        stdcall StrCompNoCase, eax, txt "!edit_thread"
-        jc      .exec_command
-
-        mov     ecx, DeleteConfirmation
-        stdcall StrCompNoCase, eax, txt "!confirm"
-        jc      .exec_command
-
-        mov     ecx, DeletePost
-        stdcall StrCompNoCase, eax, txt "!del"
-        jc      .exec_command
-
-        mov     ecx, PinThread
-        stdcall StrCompNoCase, eax, txt "!pinit"
-        jc      .exec_command
-
-        mov     ecx, PostByID
-        stdcall StrCompNoCase, eax, txt "!by_id"
-        jc      .exec_command
-
-        mov     ecx, ShowSearchResults2
-        stdcall StrCompNoCase, eax, txt "!search"
-        jc      .exec_command2
-
-
-.bad_command:
-;        DebugMsg "Command not detected."
-
+        stdcall SearchInHashTable, eax, tablePostCommands
         stdcall StrDel, eax
+        jc      .exec_command
         jmp     .error404
 
+.bad_command:
+        stdcall StrDel, eax
+        jmp     .error404
 
 ;..................................................................................
 ;
@@ -644,64 +538,23 @@ end if
         jmp     .output_forum_html
 
 
-
 ;..................................................................................
-;
-; Executes command procedure with 2 arguments: 1:hString and 2:ptr to TSpecialParams
-
-.exec_command2:
-
-        xor     edx, edx
-        cmp     [esi+TArray.count], edx
-        je      .arg_ok
-
-        mov     edx, [esi+TArray.array]
-
-.arg_ok:
-        lea     eax, [.special]
-        stdcall ecx, edx, eax
-        jc      .send_simple_replace
-
-        test    eax, eax
-        jz      .error404
-
-        jmp     .output_forum_html
-
-;..................................................................................
-; Special command that ends only when the server close the connection.
-
-.exec_command_chat:
-
-        lea     eax, [.special]
-        stdcall ChatRealTime, [.hSocket], [.requestID], eax
-        jmp     .final_clean
-
-
-if defined options.DebugWebSSE & options.DebugWebSSE
-
-.exec_command_echo:
-
-        lea     eax, [.special]
-        stdcall EchoRealTime, [.hSocket], [.requestID], eax
-        jmp     .final_clean
-
-end if
-;..................................................................................
-
-
-
+; On empty list, the ZF is set!
+; On non empty list, ZF is cleared and eax is the next command from the list.
 .pop_array_item:
-
+        push    edx
+        mov     edx, [.special.cmd_list]
         xor     eax, eax
-        cmp     [esi+TArray.count], eax
+        cmp     [edx+TArray.count], eax
         je      .end_pop
 
-        mov     eax, [esi+TArray.array]
-        stdcall DeleteArrayItems, esi, 0, 1
-        mov     esi, edx
+        mov     eax, [edx+TArray.array]
+        stdcall DeleteArrayItems, edx, 0, 1
+        mov     [.special.cmd_list], edx
         cmp     eax, edx        ; always not equal!
 
 .end_pop:
+        pop     edx
         retn
 
 
@@ -750,10 +603,10 @@ begin
         stdcall GetBackLink, esi
         push    eax
 
-        stdcall StrMakeRedirect, 0, eax
+        stdcall TextMakeRedirect, 0, eax
         stdcall StrDel ; from the stack
 
-        mov     [esp+4*regEAX], eax
+        mov     [esp+4*regEAX], edi
         stc
         popad
         return
@@ -915,14 +768,9 @@ endp
 
 
 
-sqlGetSession    text "select userID, nick, status, last_seen, Skin from sessions left join users on id = userID where sid = ?"
+sqlGetSession    text "select S.userID, U.nick, U.status, S.last_seen, U.Skin from sessions S left join users U on U.id = S.userID where S.sid = ?"
 sqlGetUserExists text "select 1 from users limit 1"
-SKIN_CHECK_FILE  text "main_html_start.tpl"
-
-; returns:
-;   EAX: string with the logged user name
-;   ECX: string with the session ID
-;   EDX: logged user ID
+SKIN_CHECK_FILE  text "/main_html_start.tpl"
 
 proc GetLoggedUser, .pSpecial
 .stmt dd ?
@@ -1015,16 +863,16 @@ begin
 
         push    eax
 
-        stdcall StrDupMem, "templates/"
+        stdcall StrDupMem, "/templates/"
         stdcall StrCat, eax ; from the stack
-        stdcall StrCat, eax, txt "/"
         mov     edx, eax
 
 ; check skin existence.
 
-        stdcall StrDup, edx
-        stdcall StrCat, eax, SKIN_CHECK_FILE
+        stdcall GetCurrentDir
         push    eax
+        stdcall StrCat, eax, edx
+        stdcall StrCat, eax, SKIN_CHECK_FILE
 
         stdcall FileExists, eax
         stdcall StrDel ; from the stack
@@ -1107,21 +955,27 @@ endp
 
 
 
+; Returns the result in EDX
 
-
-proc AppendError, .hString, .code, .special
+proc AppendError, .pText, .code, .special
 begin
-        stdcall StrCat, [.hString], "Status: "
-        stdcall StrCat, [.hString], [.code]
-        stdcall StrCharCat, [.hString], $0a0d
-        stdcall StrCat, [.hString], <"Content-type: text/html", 13, 10, 13, 10>
+        push    eax
+        mov     edx, [.pText]
+        stdcall TextCat, edx, "Status: "
+        stdcall TextCat, edx, [.code]
+        stdcall TextCat, edx, <txt 13, 10>
+        stdcall TextCat, edx, <"Content-type: text/html", 13, 10, 13, 10>
 
-        stdcall StrCatTemplate, [.hString], "error_html_start.tpl", 0, [.special]
-        stdcall StrCat, [.hString], txt "<h1>"
-        stdcall StrCat, [.hString], [.code]
-        stdcall StrCat, [.hString], txt "</h1>"
+        stdcall RenderTemplate, edx, "error_html_start.tpl", 0, [.special]
+        mov     edx, eax
 
-        stdcall StrCatTemplate, [.hString], "error_html_end.tpl", 0, [.special]
+        stdcall TextCat, edx, txt "<h1>"
+        stdcall TextCat, edx, [.code]
+        stdcall TextCat, edx, txt "</h1>"
+
+        stdcall RenderTemplate, edx, "error_html_end.tpl", 0, [.special]
+        mov     edx, eax
+        pop     eax
         return
 endp
 
@@ -1292,20 +1146,11 @@ begin
 
         mov     [.smtp_port], eax
 
-
-        stdcall StrNew
+        stdcall RenderTemplate, 0, "activation_email_subject.tpl", [.stmt], 0
         mov     [.subj], eax
 
-        stdcall StrCatTemplate, eax, "activation_email_subject.tpl", [.stmt], 0
-        jc      .finish
-
-
-        stdcall StrNew
+        stdcall RenderTemplate, 0, "activation_email_text.tpl", [.stmt], 0
         mov     [.body], eax
-
-        stdcall StrCatTemplate, eax, "activation_email_text.tpl", [.stmt], 0
-        jc      .finish
-
 
 ; now try to update the data of the record!
 
@@ -1323,10 +1168,14 @@ begin
         cmp     eax, SQLITE_DONE
         jne     .error_update
 
+        stdcall TextCompact, [.subj]
+        stdcall TextCompact, [.body]
 
         stdcall SendEmail, [.smtp_addr], [.smtp_port], [.host], [.from], [.to], [.subj], [.body], 0
         stdcall LogEvent, "EmailSent", logText, eax, 0
         stdcall StrDel, eax
+
+        clc
 
 .finish:
         pushf
@@ -1335,8 +1184,8 @@ begin
         stdcall StrDel, [.host]
         stdcall StrDel, [.from]
         stdcall StrDel, [.to]
-        stdcall StrDel, [.subj]
-        stdcall StrDel, [.body]
+        stdcall TextFree, [.subj]
+        stdcall TextFree, [.body]
 
         popf
         popad
@@ -1495,10 +1344,9 @@ endp
 
 
 
-sqlSetTicket text "update Sessions set Ticket = ? where sid = ?"
+sqlInsertTicket text "insert into Tickets (ssn, time, ticket) values ((select id from sessions where sid=?1), strftime('%s','now'), ?2)"
 
-
-proc SetUniqueTicket, .sid
+proc SetUniqueTicket, .session
 .stmt dd ?
 begin
         pushad
@@ -1506,19 +1354,13 @@ begin
         mov     ebx, eax
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetTicket, sqlSetTicket.length, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertTicket, sqlInsertTicket.length, eax, 0
 
-        stdcall StrLen, ebx
-        mov     ecx, eax
+        stdcall StrPtr, [.session]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
         stdcall StrPtr, ebx
-
-        cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
-
-        stdcall StrLen, [.sid]
-        mov     ecx, eax
-        stdcall StrPtr, [.sid]
-
-        cinvoke sqliteBindText, [.stmt], 2, eax, ecx, SQLITE_STATIC
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
         mov     edi, eax
@@ -1540,28 +1382,31 @@ endp
 
 
 
+sqlClearTicket1 text "delete from Tickets where ticket = ?1"
+sqlClearTicket2 text "delete from Tickets where time < strftime('%s','now')-14400"
 
-proc ClearTicket, .sid
+proc ClearTicket3, .ticket
 .stmt dd ?
 begin
         pushad
 
-        cmp     [.sid], 0
-        je      .finish
+        cmp     [.ticket], 0
+        je      .cleanup_old
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetTicket, sqlSetTicket.length, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlClearTicket1, sqlClearTicket1.length, eax, 0
 
-        stdcall StrLen, [.sid]
-        mov     ecx, eax
-        stdcall StrPtr, [.sid]
-
-        cinvoke sqliteBindText, [.stmt], 2, eax, ecx, SQLITE_STATIC
-
+        stdcall StrPtr, [.ticket]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 
-.finish:
+.cleanup_old:
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlClearTicket2, sqlClearTicket2.length, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
         popad
         return
 endp
@@ -1569,9 +1414,12 @@ endp
 
 
 
-sqlCheckTicket text "select 1 from sessions where ticket = ? and sid = ?"
+sqlCheckTicket text "select 1 from Tickets where ssn = (select id from sessions where sid=?1) and ticket = ?2"
 
-proc CheckTicket, .ticket, .sid
+; returns CF=1 if the check failed.
+;         CF=0 if the check pass.
+
+proc CheckTicket, .ticket, .session
 .stmt dd ?
 begin
         pushad
@@ -1579,23 +1427,18 @@ begin
         cmp     [.ticket], 0
         je      .error
 
-        cmp     [.sid], 0
+        cmp     [.session], 0
         je      .error
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckTicket, sqlCheckTicket.length, eax, 0
 
-        stdcall StrLen, [.ticket]
-        mov     ecx, eax
+        stdcall StrPtr, [.session]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
         stdcall StrPtr, [.ticket]
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 
-        cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
-
-        stdcall StrLen, [.sid]
-        mov     ecx, eax
-        stdcall StrPtr, [.sid]
-
-        cinvoke sqliteBindText, [.stmt], 2, eax, ecx, SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
         mov     ebx, eax
@@ -1615,8 +1458,6 @@ begin
         return
 
 endp
-
-
 
 
 
@@ -1648,43 +1489,40 @@ begin
         jb      .finish_older         ; returns EAX = 0 and CF=0 if the date is older.
 
         cmp     eax, [.time_lo]
-        jbe     .finish_older
+        ja      .read_it
+
+.finish_older:
+        xor     esi, esi
+        xor     ecx, ecx
+        jmp     .read_ok
 
 .read_it:
         stdcall FileSize, ebx
         mov     ecx, eax
 
-        stdcall GetMem, ecx
-        mov     esi, eax
+        stdcall TextCreate, sizeof.TText
+        mov     edx, eax
 
-        stdcall FileRead, ebx, esi, ecx
+        stdcall TextSetGapSize, edx, ecx
+        mov     [edx+TText.GapBegin], ecx
 
+        stdcall FileRead, ebx, edx, ecx
         cmp     eax, ecx
         je      .read_file_ok
 
 ; read is not ok - return CF = 1
-        stdcall FreeMem, esi
+        stdcall TextFree, edx
         stc
         jmp     .finish_close
-
 
 .read_file_ok:
         cmp     [.mime], mimeCSS
         jne     .read_ok
 
-        stdcall __DoProcessTemplate2, esi, 0, [.pSpecial], FALSE
-        stdcall FreeMem, esi
-        mov     esi, eax
-        jmp     .read_ok
-
-.finish_older:
-
-        xor     esi, esi
-        xor     ecx, ecx
+        stdcall RenderTemplate, edx, 0, 0, [.pSpecial]
 
 .read_ok:
-        mov     [esp+4*regEAX], esi
-        mov     [esp+4*regECX], ecx
+        mov     [esp+4*regEAX], edx
         clc
 
 .finish_close:
@@ -1771,15 +1609,66 @@ endp
 
 proc InNumbers, .hString
 begin
+        push    eax
+        stdcall StrToNumEx, [.hString]
+        cmovnc   ecx, eax
+        pop     eax
+        return
+endp
+
+
+proc SearchInHashTable, .hName, .pTable
+begin
         pushad
 
-        stdcall StrToNumEx, [.hString]
-        jc      .finish
+        stdcall StrPtr, [.hName]
+        mov     esi, eax
+        mov     edx, [eax+string.len]
+        xor     ebx, ebx
+        xor     ecx, ecx
 
-        mov     [esp+4*regEDX], eax
+.loop:
+        cmp     ecx, edx
+        je      .end_hash
 
-.finish:
-        cmc
+        mov     al, [esi+ecx]
+        mov     ah, al
+        and     ah, $40
+        shr     ah, 1
+        or      al, ah  ; case insensitive hash function.
+
+        xor     bl, al
+        mov     bl, [ tpl_func + ebx]
+
+        inc     ecx
+        jmp     .loop
+
+.end_hash:
+        mov     edx, [.pTable]
+        mov     eax, esi
+
+.get_key_name:
+        mov     edi, [edx + sizeof.TPHashItem*ebx + TPHashItem.pKeyname]
+        test    edi, edi
+        jz      .not_found
+
+        mov     esi, eax
+        mov     ecx, [esi+string.len]
+        repe cmpsb
+        je      .found
+
+        inc     bl
+        jmp     .get_key_name   ; collisions resolving.
+
+.found:
+        mov     ecx, [edx + sizeof.TPHashItem*ebx + TPHashItem.procCommand]
+        mov     [esp+4*regECX], ecx
+        stc
+        popad
+        return
+
+.not_found:
+        clc
         popad
         return
 endp

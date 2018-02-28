@@ -2,10 +2,14 @@
 
 
 sqlGetUserInfo   text "select id, salt, passHash, status from Users where lower(nick) = lower(?)"
-sqlInsertSession text "insert into sessions (userID, sid, FromIP, last_seen) values ( ?, ?, ?, strftime('%s','now') )"
-sqlUpdateSession text "update Sessions set userID = ?, FromIP = ?3, last_seen = strftime('%s','now') where sid = ?2"
+sqlInsertSession text "insert into sessions (userID, sid, FromIP, last_seen) values ( ?1, ?2, ?3, strftime('%s','now') )"
+sqlUpdateSession text "update Sessions set userID = ?1, FromIP = ?3, last_seen = strftime('%s','now') where sid = ?2"
 sqlCheckSession  text "select sid from sessions where userID = ? and fromIP = ?"
 sqlCleanSessions text "delete from sessions where last_seen < (strftime('%s','now') - 2592000)"
+
+sqlLoginTicket text "select ?1 as ticket"
+sqlCheckLoginTicket text "select 1 from userlog where remoteIP=?1 and Client = ?2 and Param = ?3 and Activity = ?4"
+sqlClearLoginTicket text "update userlog set Param = NULL where remoteIP=?1 and Activity = 1 or Activity = 3"
 
 
 proc UserLogin, .pSpecial
@@ -18,6 +22,8 @@ proc UserLogin, .pSpecial
 .session  dd ?
 .status   dd ?
 
+.ticket   dd ?
+
 begin
         pushad
 
@@ -25,11 +31,9 @@ begin
         mov     [.session], eax
         mov     [.user], eax
         mov     [.password], eax
+        mov     [.ticket], eax
 
-        stdcall StrNew
-        mov     edi, eax
-
-        cinvoke sqliteExec, [hMainDatabase], sqlCleanSessions, sqlCleanSessions.length, 0, 0
+        cinvoke sqliteExec, [hMainDatabase], sqlCleanSessions, sqlCleanSessions.length, eax, eax
 
 ; check the information
 
@@ -38,12 +42,26 @@ begin
         test    ebx, ebx
         jnz     .do_login_user
 
-        stdcall LogUserActivity, esi, uaLoggingIn, 0
-
         stdcall StrCat, [esi+TSpecialParams.page_title], cLoginDialogTitle
-        stdcall StrCatTemplate, edi, "form_login.tpl", 0, esi
 
-        mov     [esp+4*regEAX], edi
+        stdcall GetRandomString, 32
+        mov     ebx, eax
+
+        stdcall LogUserActivity, esi, uaLoggingIn, ebx
+
+        lea     ecx, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLoginTicket, sqlLoginTicket.length, ecx, 0
+
+        stdcall StrPtr, ebx
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len],  SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+
+        stdcall RenderTemplate, 0, "form_login.tpl", [.stmt], esi
+        mov     [esp+4*regEAX], eax
+
+        cinvoke sqliteFinalize, [.stmt]
+        stdcall StrDel, ebx
+
         clc
         popad
         return
@@ -71,10 +89,48 @@ begin
         test    eax, eax
         jz      .redirect_back_short
 
+        stdcall GetPostString, ebx, "ticket", 0
+        mov     [.ticket], eax
+
+        test    eax, eax
+        jz      .redirect_back_short
+
+        stdcall StrLen, eax
+        test    eax, eax
+        jz      .redirect_back_short
+
+; check the ticket
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckLoginTicket, sqlCheckLoginTicket.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.remoteIP]
+
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_USER_AGENT"
+        jc      .client_ok
+
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
+.client_ok:
+
+        stdcall StrPtr, [.ticket]
+        cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteBindInt, [.stmt], 4, uaLoggingIn
+
+        cinvoke sqliteStep, [.stmt]
+        push    eax
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        pop     eax
+        cmp     eax, SQLITE_ROW
+        jne     .redirect_back_short
+
 ; hash the password
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetUserInfo, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetUserInfo, sqlGetUserInfo.length, eax, 0
 
         stdcall StrPtr, [.user]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
@@ -122,7 +178,6 @@ begin
 
         test    [.status], permLogin
         jz      .redirect_back_bad_permissions
-
 
 ; Check for existing session
 
@@ -173,52 +228,64 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
+        stdcall TextCreate, sizeof.TText
+        mov     edi, eax
+
         pop     eax
         cmp     eax, SQLITE_DONE
-        jne     .finalize               ; it is some error in the database, so don't set the cookie!
+        jne     .cookie_ok               ; it is some error in the database, so don't set the cookie!
 
+; now, set session cookie.
 
-; now, set some cookies (It is session cookie only!)
+        stdcall TextCat, edi, "Set-Cookie: sid="
+        stdcall TextCat, edx, [.session]
+        stdcall TextCat, edx, <"; HttpOnly; Path=/", 13, 10>
+        mov     edi, edx
 
-        stdcall StrCat, edi, "Set-Cookie: sid="
-        stdcall StrCat, edi, [.session]
-        stdcall StrCat, edi, <"; HttpOnly; Path=/", 13, 10>
-
-
-.finalize:
+.cookie_ok:
         stdcall GetPostString, ebx, "backlink", 0
         test    eax, eax
         jnz     .go_back
 
-        stdcall StrMakeRedirect, edi, txt "/"
+        stdcall TextMakeRedirect, edi, txt "/"
         jmp     .finish
 
 .go_back:
-        stdcall StrMakeRedirect, edi, eax
+        stdcall TextMakeRedirect, edi, eax
         stdcall StrDel, eax
         jmp     .finish
 
 .redirect_back_short:
 
-        stdcall StrMakeRedirect, edi, "/!message/login_missing_data/"
+        stdcall TextMakeRedirect, 0, "/!message/login_missing_data/"
         jmp     .finish
 
 .redirect_back_bad_permissions:
 
-        stdcall StrMakeRedirect, edi, "/!message/login_bad_permissions/"
+        stdcall TextMakeRedirect, 0, "/!message/login_bad_permissions/"
         jmp     .finish
 
 
 .redirect_back_bad_password:
 
-        stdcall StrMakeRedirect, edi, "/!message/login_bad_password/"
+        stdcall TextMakeRedirect, 0, "/!message/login_bad_password/"
 
 .finish:
+        mov     [esp+4*regEAX], edi     ; the result
+
+; clean the possible tickets:
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlClearLoginTicket, sqlClearLoginTicket.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.remoteIP]
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
         stdcall StrDel, [.user]
         stdcall StrDel, [.password]
         stdcall StrDel, [.session]
+        stdcall StrDel, [.ticket]
 
-        mov     [esp+4*regEAX], edi
         stc
         popad
         return
@@ -235,11 +302,10 @@ proc UserLogout, .pspecial
 begin
         pushad
 
-        stdcall StrNew
+        stdcall TextCreate, sizeof.TText
         mov     edi, eax
 
         mov     esi, [.pspecial]
-
         stdcall LogUserActivity, esi, uaLoggingOut, 0
 
         cmp     [esi+TSpecialParams.session], 0
@@ -253,13 +319,14 @@ begin
 
 ; delete the cookie.
 
-        stdcall StrCat, edi, <"Set-Cookie: sid=; HttpOnly; Path=/; Max-Age=0", 13, 10>
+        stdcall TextCat, edi, <"Set-Cookie: sid=; HttpOnly; Path=/; Max-Age=0", 13, 10>
+        mov     edi, edx
 
 .finish:
         stdcall GetBackLink, esi
         push    eax
 
-        stdcall StrMakeRedirect, edi, eax
+        stdcall TextMakeRedirect, edi, eax
         stdcall StrDel ; from the stack
 
         mov     [esp+4*regEAX], edi
@@ -275,7 +342,7 @@ endp
 
 
 ;sqlCheckMinInterval text "select (strftime('%s','now') - time_reg) as delta from WaitingActivation where (ip_from = ?) and ( delta>30 ) order by time_reg desc limit 1"
-sqlRegisterUser    text "insert into WaitingActivation (nick, passHash, salt, email, ip_from, time_reg, time_email, a_secret) values (?, ?, ?, ?, ?, strftime('%s','now'), NULL, ?)"
+sqlRegisterUser    text "insert or replace into WaitingActivation (nick, passHash, salt, email, ip_from, time_reg, time_email, a_secret) values (?, ?, ?, ?, ?, strftime('%s','now'), NULL, ?)"
 sqlCheckUserExists text "select 1 from Users where lower(nick) = lower(?) or email = ? limit 1"
 
 proc RegisterNewUser, .pSpecial
@@ -287,6 +354,7 @@ proc RegisterNewUser, .pSpecial
 .password2 dd ?
 .email     dd ?
 .secret    dd ?
+.ticket    dd ?
 
 .email_text dd ?
 
@@ -299,6 +367,7 @@ begin
         mov     [.password2], eax
         mov     [.email], eax
         mov     [.secret], eax
+        mov     [.ticket], eax
 
 ; check the information
 
@@ -307,16 +376,27 @@ begin
         test    ebx, ebx
         jnz     .do_register_user
 
-        stdcall LogUserActivity, esi, uaRegistering, 0
+        stdcall GetRandomString, 32
+        mov     ebx, eax
 
-        stdcall StrNew
-        stdcall StrCatTemplate, eax, "form_register.tpl", 0, esi
+        stdcall LogUserActivity, esi, uaRegistering, ebx
 
+        lea     ecx, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLoginTicket, sqlLoginTicket.length, ecx, 0
+
+        stdcall StrPtr, ebx
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len],  SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+
+        stdcall RenderTemplate, 0, "form_register.tpl", [.stmt], esi
         mov     [esp+4*regEAX], eax
+
+        cinvoke sqliteFinalize, [.stmt]
+        stdcall StrDel, ebx
+
         clc
         popad
         return
-
 
 
 .do_register_user:
@@ -366,6 +446,45 @@ begin
 
         cmp     eax, 1024
         ja      .error_trick
+
+
+        stdcall GetPostString, ebx, "ticket", 0
+        mov     [.ticket], eax
+
+        test    eax, eax
+        jz      .error_trick
+
+        stdcall StrLen, eax
+        test    eax, eax
+        jz      .error_trick
+
+; check the ticket
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckLoginTicket, sqlCheckLoginTicket.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.remoteIP]
+
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_USER_AGENT"
+        jc      .client_ok
+
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
+.client_ok:
+
+        stdcall StrPtr, [.ticket]
+        cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteBindInt, [.stmt], 4, uaRegistering
+
+        cinvoke sqliteStep, [.stmt]
+        push    eax
+
+        cinvoke sqliteFinalize, [.stmt]
+        pop     eax
+
+        cmp     eax, SQLITE_ROW
+        jne     .error_trick
 
 ; hash the password
 
@@ -439,11 +558,10 @@ begin
 
 .send_emails:
         stdcall ProcessActivationEmails
-        jc      .error_technical_problem
 
 ; the user has been created and now is waiting for email activation.
 
-        stdcall StrMakeRedirect, 0, "/!message/user_created/"
+        stdcall TextMakeRedirect, 0, "/!message/user_created/"
         jmp     .finish
 
 .no_confirm:
@@ -452,64 +570,69 @@ begin
         stdcall StrCat, eax, [.secret]
         push    eax
 
-        stdcall StrMakeRedirect, 0, eax
+        stdcall TextMakeRedirect, 0, eax
         stdcall StrDel ; from the stack
         jmp     .finish
 
 
 .error_technical_problem:
 
-        stdcall StrMakeRedirect, 0, "/!message/register_technical/"
+        stdcall TextMakeRedirect, 0, "/!message/register_technical/"
         jmp     .finish
 
 
 .error_short_name:
 
-        stdcall StrMakeRedirect, 0, "/!message/register_short_name/"
+        stdcall TextMakeRedirect, 0, "/!message/register_short_name/"
         jmp     .finish
 
 .error_trick:
 
-        stdcall StrMakeRedirect, 0, "/!message/register_bot/"
-
+        stdcall TextMakeRedirect, 0, "/!message/register_bot/"
         jmp     .finish
 
 
 .error_bad_email:
-        stdcall StrMakeRedirect, 0, "/!message/register_bad_email/"
+        stdcall TextMakeRedirect, 0, "/!message/register_bad_email/"
         jmp     .finish
 
 
 .error_short_pass:
-        stdcall StrMakeRedirect, 0, "/!message/register_short_pass/"
+        stdcall TextMakeRedirect, 0, "/!message/register_short_pass/"
         jmp     .finish
 
 
 .error_different:
 
-        stdcall StrMakeRedirect, 0, "/!message/register_passwords_different/"
+        stdcall TextMakeRedirect, 0, "/!message/register_passwords_different/"
         jmp     .finish
 
 
 .error_exists:
 
-        stdcall StrMakeRedirect, 0, "/!message/register_user_exists/"
+        stdcall TextMakeRedirect, 0, "/!message/register_user_exists/"
 
 .finish:
+        mov     [esp+4*regEAX], edi
+
+; clean the possible tickets:
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlClearLoginTicket, sqlClearLoginTicket.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.remoteIP]
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
         stdcall StrDel, [.user]
         stdcall StrDel, [.password]
         stdcall StrDel, [.password2]
         stdcall StrDel, [.email]
         stdcall StrDel, [.secret]
+        stdcall StrDel, [.ticket]
 
-        mov     [esp+4*regEAX], eax
         stc
         popad
         return
 endp
-
-
-
 
 
 
@@ -523,15 +646,20 @@ sqlRollback   text  "rollback"
 sqlUpdateUserEmail text "update users set email = (select email from WaitingActivation where a_secret = ?1) where nick = (select nick from WaitingActivation where a_secret = ?1)"
 
 
-proc ActivateAccount, .hSecret, .pSpecial
+proc ActivateAccount, .pSpecial
 .stmt dd ?
 .type dd ?
 begin
         pushad
 
-        xor     eax, eax
-        cmp     [.hSecret], eax
-        je      .exit                   ; CF=0 if jump is taken
+        mov     esi, [.pSpecial]
+        xor     edi, edi
+
+        mov     edx, [esi+TSpecialParams.cmd_list]
+        cmp     [edx+TArray.count], edi
+        je      .exit
+
+        mov     ebx, [edx+TArray.array]
 
 ; begin transaction
 
@@ -548,7 +676,7 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckCount, sqlCheckCount.length, eax, 0
 
-        stdcall StrPtr, [.hSecret]
+        stdcall StrPtr, ebx
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
@@ -571,7 +699,7 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateUserEmail, sqlUpdateUserEmail.length, eax, 0
 
-        stdcall StrPtr, [.hSecret]
+        stdcall StrPtr, ebx
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_DONE
@@ -592,7 +720,7 @@ begin
 
         cinvoke sqliteBindInt, [.stmt], 1, eax
 
-        stdcall StrPtr, [.hSecret]
+        stdcall StrPtr, ebx
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
         cinvoke sqliteStep, [.stmt]
 
@@ -607,7 +735,7 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlDeleteWait, sqlDeleteWait.length, eax, 0
 
-        stdcall StrPtr, [.hSecret]
+        stdcall StrPtr, ebx
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_DONE
@@ -628,19 +756,19 @@ begin
         cmp     [.type], SQLITE_NULL
         jne     .msg_new_account
 
-        stdcall StrMakeRedirect, 0, "/!message/email_changed"
+        stdcall TextMakeRedirect, 0, "/!message/email_changed"
         jmp     .finish
 
 
 .msg_new_account:
-        stdcall StrMakeRedirect, 0, "/!message/congratulations"
+        stdcall TextMakeRedirect, 0, "/!message/congratulations"
 
 
 .finish:
         stc
 
 .exit:
-        mov     [esp+4*regEAX], eax
+        mov     [esp+4*regEAX], edi
         popad
         return
 
@@ -653,7 +781,7 @@ begin
 
         cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
 
-        stdcall StrMakeRedirect, 0, "/!message/bad_secret"
+        stdcall TextMakeRedirect, 0, "/!message/bad_secret"
         jmp     .finish
 
 endp
@@ -681,6 +809,21 @@ begin
 
         mov     esi, [.pSpecial]
         mov     ebx, [esi+TSpecialParams.post_array]
+        test    ebx, ebx
+        jz      .bad_parameter
+
+        stdcall GetPostString, ebx, "ticket", 0
+        test    eax, eax
+        jz      .bad_parameter
+
+        mov     edi, eax
+        stdcall CheckTicket, edi, [esi+TSpecialParams.session]
+        pushf
+        stdcall ClearTicket3, edi
+        stdcall StrDel, edi
+        popf
+        jc      .bad_parameter
+
 
         stdcall GetPostString, ebx, "oldpass", 0
         test    eax, eax
@@ -771,7 +914,7 @@ begin
         stdcall UserLogout, [.pSpecial]
         stdcall StrDel, eax
 
-        stdcall StrMakeRedirect, 0, "/!message/password_changed"
+        stdcall TextMakeRedirect, 0, "/!message/password_changed"
 
 .finish:
 
@@ -779,7 +922,7 @@ begin
         stdcall StrDel, [.newpass]
         stdcall StrDel, [.newpass2]
 
-        mov     [esp+4*regEAX], eax
+        mov     [esp+4*regEAX], edi
         stc
         popad
         return
@@ -788,37 +931,37 @@ begin
 .bad_user:
 
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect, 0, "/!message/register_bot"
+        stdcall TextMakeRedirect, 0, "/!message/register_bot"
         jmp     .finish
 
 
 .bad_password:
 
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect, 0, "/!message/change_password"
+        stdcall TextMakeRedirect, 0, "/!message/change_password"
         jmp     .finish
 
 
 .bad_parameter:
 
-        stdcall StrMakeRedirect, 0, "/!message/login_missing_data"
+        stdcall TextMakeRedirect, 0, "/!message/login_missing_data"
         jmp     .finish
 
 
 .error_different:
 
-        stdcall StrMakeRedirect, 0, "/!message/change_different"
+        stdcall TextMakeRedirect, 0, "/!message/change_different"
         jmp     .finish
 
 
 .error_update:
 
-        stdcall StrMakeRedirect, 0, "/!message/error_cant_write"
+        stdcall TextMakeRedirect, 0, "/!message/error_cant_write"
         jmp     .finish
 
 
 .error_short_pass:
-        stdcall StrMakeRedirect, 0, "/!message/register_short_pass/"
+        stdcall TextMakeRedirect, 0, "/!message/register_short_pass/"
         jmp     .finish
 
 endp
@@ -847,6 +990,20 @@ begin
 
         mov     esi, [.pSpecial]
         mov     ebx, [esi+TSpecialParams.post_array]
+        test    ebx, ebx
+        jz      .bad_parameter
+
+        stdcall GetPostString, ebx, "ticket", 0
+        test    eax, eax
+        jz      .bad_parameter
+
+        mov     edi, eax
+        stdcall CheckTicket, edi, [esi+TSpecialParams.session]
+        pushf
+        stdcall ClearTicket3, edi
+        stdcall StrDel, edi
+        popf
+        jc      .bad_parameter
 
         stdcall GetPostString, ebx, txt "password", 0
         test    eax, eax
@@ -931,16 +1088,14 @@ begin
         stdcall StrCat, eax, [.secret]
         push    eax
 
-        stdcall StrMakeRedirect, 0, eax
+        stdcall TextMakeRedirect, 0, eax
         stdcall StrDel ; from the stack
         jmp     .finish
 
 .send_emails:
 
         stdcall ProcessActivationEmails
-        jc      .error_technical_problem
-
-        stdcall StrMakeRedirect, 0, "/!message/email_activation_sent"
+        stdcall TextMakeRedirect, 0, "/!message/email_activation_sent"
 
 .finish:
 
@@ -949,7 +1104,7 @@ begin
         stdcall StrDel, [.email]
         stdcall StrDel, [.secret]
 
-        mov     [esp+4*regEAX], eax
+        mov     [esp+4*regEAX], edi
         stc
         popad
         return
@@ -958,37 +1113,37 @@ begin
 .bad_user:
 
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect, 0, "/!message/register_bot"
+        stdcall TextMakeRedirect, 0, "/!message/register_bot"
         jmp     .finish
 
 
 .bad_password:
 
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect, 0, "/!message/change_password"
+        stdcall TextMakeRedirect, 0, "/!message/change_password"
         jmp     .finish
 
 
 .bad_parameter:
 
-        stdcall StrMakeRedirect, 0, "/!message/login_missing_data"
+        stdcall TextMakeRedirect, 0, "/!message/login_missing_data"
         jmp     .finish
 
 
 .error_update:
 
-        stdcall StrMakeRedirect, 0, "/!message/error_cant_write"
+        stdcall TextMakeRedirect, 0, "/!message/error_cant_write"
         jmp     .finish
 
 
 .bad_email:
-        stdcall StrMakeRedirect, 0, "/!message/register_bad_email"
+        stdcall TextMakeRedirect, 0, "/!message/register_bad_email"
         jmp     .finish
 
 
 .error_technical_problem:
 
-        stdcall StrMakeRedirect, 0, "/!message/register_technical"
+        stdcall TextMakeRedirect, 0, "/!message/register_technical"
         jmp     .finish
 
 endp

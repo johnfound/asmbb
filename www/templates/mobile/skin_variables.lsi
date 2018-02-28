@@ -62,4 +62,13 @@
 @FontMain: "Verdana", sans-serif;
 @FontMonospace: "Liberation Mono", "Courier New", monospaced;
 
-@HeaderBackground: @clColor1 url("/[special:skin]_images/yellow_back.png") -180px 0%/cover;
+@HeaderBackground: @clColor1 url("[special:skin]/_images/yellow_back.png") -180px 0%/cover;
+
+@clMsgInfoBG: green;
+@clMsgInfoFG: white;
+
+@clMsgErrorBG: red;
+@clMsgErrorFG: white;
+
+@clMsgWarningBG: yellow;
+@clMsgWarningFG: red;

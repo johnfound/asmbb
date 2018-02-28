@@ -1,17 +1,24 @@
 
 
-sqlSource  text 'select ? as source'
+sqlSource  text 'select ?1 as source, ?2 as ticket'
 
 proc SQLiteConsole, .pSpecial
 .stmt dd ?
 .source dd ?
+.ticket dd ?
+
 .next   dd ?
 
 .start dd ?
+
 begin
         pushad
 
-        stdcall StrNew
+        xor     eax, eax
+        mov     [.ticket], eax
+        mov     [.source], eax
+
+        stdcall TextCreate, sizeof.TText
         mov     edi, eax
 
         mov     esi, [.pSpecial]
@@ -24,8 +31,12 @@ begin
         stdcall GetPostString, [esi+TSpecialParams.post_array], "source", 0
         mov     [.source], eax
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cSQLiteConsoleTitle
+        stdcall SetUniqueTicket, [esi+TSpecialParams.session]
+        jc      .for_admins_only
 
+        mov     [.ticket], eax
+
+        stdcall StrCat, [esi+TSpecialParams.page_title], cSQLiteConsoleTitle
 
 ; first output the form
 
@@ -33,18 +44,23 @@ begin
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSource, -1, eax, 0
 
         cmp     [.source], 0
-        je      .bind_ok
+        je      .source_ok
 
         stdcall StrPtr, [.source]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
-.bind_ok:
+.source_ok:
+
+        stdcall StrPtr, [.ticket]
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
         cinvoke sqliteStep, [.stmt]
 
 
 .make_the_form:
 
-        stdcall StrCatTemplate, edi, "form_sqlite_console.tpl", [.stmt], [.pSpecial]
+        stdcall RenderTemplate, edi, "form_sqlite_console.tpl", [.stmt], [.pSpecial]
+        mov     edi, eax
 
         cinvoke sqliteFinalize, [.stmt]
 
@@ -53,7 +69,20 @@ begin
 
 ; here execute the source.
 
-        stdcall StrCat, edi, '<div class="sql_exec">'
+        stdcall GetPostString, [esi+TSpecialParams.post_array], "ticket", 0
+        test    eax, eax
+        jz      .finish
+
+        mov     ebx, eax
+        stdcall CheckTicket, ebx, [esi+TSpecialParams.session]
+        pushf
+        stdcall ClearTicket3, ebx
+        stdcall StrDel, ebx
+        popf
+        jc      .finish
+
+        stdcall TextCat, edi, '<div class="sql_exec">'
+        mov     edi, edx
 
         stdcall StrClipSpacesR, [.source]
         stdcall StrClipSpacesL, [.source]
@@ -85,10 +114,11 @@ begin
         stdcall StrEncodeHTML, eax
         stdcall StrDel ; from the stack
 
-        stdcall StrCat, edi, "<h5>Statement executed:</h5><pre>"
-        stdcall StrCat, edi, eax
+        stdcall TextCat, edi, "<h5>Statement executed:</h5><pre>"
+        stdcall TextCat, edx, eax
         stdcall StrDel, eax
-        stdcall StrCat, edi, "</pre>"
+        stdcall TextCat, edx, "</pre>"
+        mov     edi, edx
 
 ; first step
         cinvoke sqliteStep, [.stmt]
@@ -107,13 +137,13 @@ begin
 
         cinvoke sqliteErrMsg, [hMainDatabase]
 
-        stdcall StrCat, edi, '<p class="result_msg">'
-        stdcall StrCat, edi, eax
-        stdcall StrCat, edi, txt '</p>'
+        stdcall TextCat, edi, '<p class="result_msg">'
+        stdcall TextCat, edx, eax
+        stdcall TextCat, edx, txt '</p>'
+        mov     edi, edx
 
         cinvoke sqliteDBMutex, [hMainDatabase]
         cinvoke sqliteMutexLeave, eax
-
 
 .finalize:
         cinvoke sqliteFinalize, [.stmt]
@@ -124,10 +154,11 @@ begin
         stdcall NumToStr, eax, ntsDec or ntsUnsigned
         push    eax eax
 
-        stdcall StrCat, edi, "<p>Execution time: "
-        stdcall StrCat, edi ; from the stack
+        stdcall TextCat, edi, "<p>Execution time: "
+        stdcall TextCat, edx ; from the stack
         stdcall StrDel ; from the stack
-        stdcall StrCat, edi, txt "us</p>"
+        stdcall TextCat, edx, txt "us</p>"
+        mov     edi, edx
 
         xchg    esi, [.next]
         cmp     esi, [.next]
@@ -135,13 +166,15 @@ begin
 
 .finish_exec:
 
-        stdcall StrCat, edi, '</div>'
+        stdcall TextCat, edi, '</div>'
+        mov     edi, edx
 
 .finish:
-        stdcall StrDel, [.source]
         clc
 
 .exit:
+        stdcall StrDel, [.ticket]
+        stdcall StrDel, [.source]
         mov     [esp+4*regEAX], edi
         popad
         return
@@ -149,7 +182,7 @@ begin
 
 .for_admins_only:
 
-        stdcall StrMakeRedirect, edi, "/!message/only_for_admins"
+        stdcall TextMakeRedirect, edi, "/!message/only_for_admins"
         stc
         jmp     .exit
 
@@ -163,7 +196,8 @@ endl
 
 ; first the table
 
-        stdcall StrCat, edi, '<table class="sql_rows"><tr>'
+        stdcall TextCat, edi, '<table class="sql_rows"><tr>'
+        mov     edi, edx
 
         cinvoke sqliteColumnCount, [.stmt]
         mov     [.count], eax
@@ -178,21 +212,24 @@ endl
 
         stdcall StrEncodeHTML, eax
 
-        stdcall StrCat, edi, txt "<th>"
-        stdcall StrCat, edi, eax
+        stdcall TextCat, edi, txt "<th>"
+        stdcall TextCat, edx, eax
         stdcall StrDel, eax
-        stdcall StrCat, edi, txt "</th>"
+        stdcall TextCat, edx, txt "</th>"
+        mov     edi, edx
 
         inc     ebx
         jmp     .col_loop
 
 .end_columns:
 
-        stdcall StrCat, edi, txt "</tr>"
+        stdcall TextCat, edi, txt "</tr>"
+        mov     edi, edx
 
 .row_loop:
 
-        stdcall StrCat, edi, txt "<tr>"
+        stdcall TextCat, edi, txt "<tr>"
+        mov     edi, edx
 
         xor     ebx, ebx
 
@@ -208,24 +245,26 @@ endl
 
 .txt_ok:
         stdcall StrEncodeHTML, eax
-        stdcall StrCat, edi, txt "<td>"
-        stdcall StrCat, edi, eax
+        stdcall TextCat, edi, txt "<td>"
+        stdcall TextCat, edx, eax
         stdcall StrDel, eax
-        stdcall StrCat, edi, txt "</td>"
+        stdcall TextCat, edx, txt "</td>"
+        mov     edi, edx
 
         inc     ebx
         jmp     .val_loop
 
 .end_vals:
-        stdcall StrCat, edi, txt "</tr>"
+        stdcall TextCat, edi, txt "</tr>"
+        mov     edi, edx
 
         cinvoke sqliteStep, [.stmt]
 
         cmp     eax, SQLITE_ROW
         je      .row_loop
 
-        stdcall StrCat, edi, "</table>"
-
+        stdcall TextCat, edi, "</table>"
+        mov     edi, edx
         jmp     .done
 
 .cNULL db "NULL", 0

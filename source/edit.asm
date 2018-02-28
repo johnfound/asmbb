@@ -29,7 +29,7 @@ begin
 
         mov     esi, [.pSpecial]
 
-        stdcall StrNew
+        stdcall TextCreate, sizeof.TText
         mov     edi, eax
 
         cmp     [esi+TSpecialParams.page_num], ebx
@@ -63,7 +63,6 @@ begin
 
         mov     eax, [.userID]
         cmp     eax, [esi+TSpecialParams.userID]
-
         jne     .error_wrong_permissions
 
 
@@ -131,9 +130,9 @@ begin
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
 
-        stdcall StrCatTemplate, edi, "form_edit.tpl", [.stmt], esi
-
-        stdcall StrCatTemplate, edi, "preview.tpl", [.stmt], esi
+        stdcall RenderTemplate, edi, "form_edit.tpl", [.stmt], esi
+        stdcall RenderTemplate, eax, "preview.tpl", [.stmt], esi
+        mov     edi, eax
 
         cinvoke sqliteFinalize, [.stmt]
 
@@ -148,9 +147,10 @@ begin
         cmp     [.source], 0
         je      .end_save
 
-        stdcall StrLen, [.source]
-        cmp     eax, 0
-        je      .end_save
+; Empty post - is it normal?
+;        stdcall StrLen, [.source]
+;        cmp     eax, 0
+;        je      .end_save
 
         stdcall CheckTicket, [.ticket], [esi+TSpecialParams.session]
         jc      .error_bad_ticket
@@ -175,8 +175,7 @@ begin
 
 ; render the source
 
-        stdcall StrDup, [.source]
-        stdcall FormatPostText, eax, esi
+        stdcall FormatPostText2, [.source], esi
         mov     [.rendered], eax
 
 ; bind the source
@@ -201,11 +200,10 @@ begin
 
 
         cinvoke sqliteStep, [.stmt]
-        mov     ebx, eax
-        cinvoke sqliteFinalize, [.stmt]
-
-        cmp     ebx, SQLITE_DONE
+        cmp     eax, SQLITE_DONE
         jne     .error_write            ; strange write fault.
+
+        cinvoke sqliteFinalize, [.stmt]
 
 ; update the last changed time of the thread.
 
@@ -213,35 +211,32 @@ begin
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateThreads, -1, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
         cinvoke sqliteStep, [.stmt]
-        mov     ebx, eax
-        cinvoke sqliteFinalize, [.stmt]
-
-        cmp     ebx, SQLITE_DONE
+        cmp     eax, SQLITE_DONE
         jne     .error_write
-
 
         stdcall RegisterUnreadPost, [esi+TSpecialParams.page_num]
         cmp     eax, SQLITE_DONE
         jne     .error_write
 
+        cinvoke sqliteFinalize, [.stmt]
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCommit, -1, eax, 0
         cinvoke sqliteStep, [.stmt]
-        mov     ebx, eax
-        cinvoke sqliteFinalize, [.stmt]
-
-        cmp     ebx, SQLITE_DONE
+        cmp     eax, SQLITE_DONE
         jne     .error_write
 
+        cinvoke sqliteFinalize, [.stmt]
+
 .end_save:
-        stdcall StrCatRedirectToPost, edi, [esi+TSpecialParams.page_num], esi
+        stdcall StrRedirectToPost, [esi+TSpecialParams.page_num], esi
+        stdcall TextMakeRedirect, edi, eax
+        stdcall StrDel, eax
 
 .finish_clear:
 
-        stdcall ClearTicket, [esi+TSpecialParams.session]
+        stdcall ClearTicket3, [.ticket]
         stc
-
 
 .finish:
         stdcall StrDel, [.source]
@@ -254,34 +249,35 @@ begin
 .error_post_id:
 
         stdcall AppendError, edi, "404 Not Found", esi
+        mov     edi, edx
         stc
         jmp     .finish
 
 
 .error_bad_ticket:
 
-        stdcall StrMakeRedirect, edi, "/!message/error_bad_ticket/"
+        stdcall TextMakeRedirect, edi, "/!message/error_bad_ticket/"
         jmp     .finish_clear
 
 
 .error_wrong_permissions:
 
-        stdcall StrMakeRedirect, edi, "/!message/error_cant_post/"
+        stdcall TextMakeRedirect, edi, "/!message/error_cant_post/"
         jmp     .finish_clear
 
 
 .error_missing_post:
 
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect, edi, "/!message/error_post_not_exists/"
+        stdcall TextMakeRedirect, edi, "/!message/error_post_not_exists/"
         stc
         jmp     .finish
 
 
 .error_write:
-
+        cinvoke sqliteFinalize, [.stmt]
         cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
-        stdcall StrMakeRedirect, edi, "/!message/error_cant_write/"
+        stdcall TextMakeRedirect, edi, "/!message/error_cant_write/"
         jmp     .finish_clear
 
 endp
@@ -291,7 +287,8 @@ iglobal
   sqlGetAllThreadAttr StripText "thread_attr.sql", SQL
 endg
 
-sqlSavePostTitle    text      "update threads set slug = ?1, Caption = ?2, LastChanged = strftime('%s','now') where id = ?3"
+sqlSavePostTitle text "update threads set slug = ?1, Caption = ?2, LastChanged = strftime('%s','now') where id = ?3"
+sqlUpdatePinned  text "update threads set pinned = ?1 where id = ?2"
 
 proc EditThreadAttr, .pSpecial
 .stmt dd ?
@@ -300,6 +297,7 @@ proc EditThreadAttr, .pSpecial
 .caption  dd ?
 .slug     dd ?
 .tags     dd ?
+.pinned   dd ?
 
 .threadID dd ?
 .userID   dd ?
@@ -314,6 +312,7 @@ begin
         mov     [.caption], eax
         mov     [.slug], eax
         mov     [.tags], eax
+        mov     [.pinned], eax
 
 ; default integer values
         mov     [.threadID], eax
@@ -322,7 +321,7 @@ begin
 
         mov     esi, [.pSpecial]
 
-        stdcall StrNew
+        stdcall TextCreate, sizeof.TText
         mov     edi, eax        ; the result string!
 
 ; read all properties of the thread.
@@ -396,7 +395,8 @@ begin
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
 
-        stdcall StrCatTemplate, edi, "form_edit_thread.tpl", [.stmt], esi
+        stdcall RenderTemplate, edi, "form_edit_thread.tpl", [.stmt], esi
+        mov     edi, eax
         cinvoke sqliteFinalize, [.stmt]
 
         clc
@@ -456,6 +456,19 @@ begin
 
 .tags_ok:
 
+; Get the pinned
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "pinned", 0
+        test    eax, eax
+        jz      .pinned_ok
+
+        stdcall StrDel, eax
+        xor     eax, eax
+        inc     eax
+
+.pinned_ok:
+        mov     [.pinned], eax
+
 ; Now we have all the data prepared, so start the thread update in a transaction.
 
         lea     eax, [.stmt]
@@ -487,6 +500,24 @@ begin
 
         stdcall SaveThreadTags, [.tags], [.threadID]
 
+; save the pinned flag. Only for admins!
+
+        test    [esi+TSpecialParams.userStatus], permAdmin
+        jz      .pinned_updated
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdatePinned, sqlUpdatePinned.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 2, [.threadID]
+        cinvoke sqliteBindInt, [.stmt], 1, [.pinned]
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     ebx, SQLITE_DONE
+        jne     .error_write
+
+.pinned_updated:
+
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCommit, -1, eax, 0
         cinvoke sqliteStep, [.stmt]
@@ -498,53 +529,50 @@ begin
 
 .end_save:
 
-        stdcall ClearTicket, [esi+TSpecialParams.session]
+        stdcall ClearTicket3, [.ticket]
 
         stdcall StrDupMem, txt "../"
         push    eax
         stdcall StrCat, eax, [.slug]
         stdcall StrCharCat, eax, "/"
 
-        stdcall StrMakeRedirect, edi, eax
+        stdcall TextMakeRedirect, edi, eax
         stdcall StrDel ; from the stack
 
         stc
         jmp     .finish
 
-
-
 .finish_clear:
 
-        stdcall ClearTicket, [esi+TSpecialParams.session]
+        stdcall ClearTicket3, [.ticket]
         stc
         jmp     .finish
 
 
 .error_invalid_caption:
 
-        stdcall StrMakeRedirect, edi, "/!message/error_invalid_caption/"
+        stdcall TextMakeRedirect, edi, "/!message/error_invalid_caption/"
         jmp     .finish_clear
 
 .error_write:
         cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
 
-        stdcall StrMakeRedirect, edi, "/!message/error_cant_write/"
+        stdcall TextMakeRedirect, edi, "/!message/error_cant_write/"
         jmp     .finish_clear
 
 .error_wrong_permissions:
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect, edi, "/!message/error_cant_post/"
+        stdcall TextMakeRedirect, edi, "/!message/error_cant_post/"
         jmp     .finish_clear
-
 
 .error_missing_thread:
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect, edi, "/!message/error_thread_not_exists/"
+        stdcall TextMakeRedirect, edi, "/!message/error_thread_not_exists/"
         jmp     .finish_clear
 
 .error_bad_ticket:
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect, edi, "/!message/error_bad_ticket/"
+        stdcall TextMakeRedirect, edi, "/!message/error_bad_ticket/"
         jmp     .finish_clear
 
 endp

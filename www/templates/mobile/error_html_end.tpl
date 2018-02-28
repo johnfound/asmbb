@@ -1,6 +1,5 @@
 <span class="notice">Click here</span>
-</div>
-</a>
+</a></div>
 [special:environment]
 </body>
 </html>

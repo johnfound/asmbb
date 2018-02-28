@@ -1,13 +1,13 @@
-C Fixed\stemplate\sbug.
-D 2018-02-14T23:44:59.548
+C Merged\swith\sthe\s"render2"\sbranch.\sPreparations\sfor\smajor\srelease.
+D 2018-02-28T17:33:16.807
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
-F install/asmbb.tar.gz d229fc2cf882580579aa5ace8a9dcfe78d0e7a6d
+F install/asmbb.tar.gz fa213756daaa5d736bb30ff4bed9e472caa2c5d4
 F install/create_release.sh 7286d4d2777e9d15ee323d2a1db7b4a225715418 x
 F install/exclude.txt d68845d3aee98fc8ace64460f9d26ab3f2adc06d
 F install/install.txt 46093ff6d21640a09fa5f0b9b943de868fa7f1ac
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
-F install/unpack.tar.gz e8f533bf60dcac946644a0d3fcaa8422d3e9d37d
+F install/unpack.tar.gz 240d1fd3c5e508c4b42c845729b2354606301b3e
 F install/unpack/.htaccess efa046601aad51a87da0946b4eecadcc0d234c15
 F install/unpack/unpack.sh 4443f580fe76faffa7015e6e4b73b22f6290f4a0 x
 F source/Documents/FastCGI\sSpecification.html e2fc06a5abf1b3505c665e108ce3ad28b636095a
@@ -17,49 +17,55 @@ F source/Linux/sqlite3.inc 49dc036ae22c327790d0314c81263d77d041990b
 F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
-F source/accounts.asm 772274895c362c40f1cdc403f48b93d5e8a907d7
-F source/chat.asm f7c45a3638d67d911f0d2e3f87f1f73a395c352c
+F source/accounts.asm a2e04f9390d6a03fb846740412d6d43d502d7334
+F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
+F source/chat.asm 0470f88c8b79aed0f76ec523b567dbe4c55b2b2a
 F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
-F source/commands.asm 7140fc60a255aaea8e6ffc817b55127646928f39
-F source/create.sql 8b0e85ea77c9ef292672274de42662d776833c73
-F source/delete.asm e65e0448de73cfad8fa24a9ba4e5eac3b288629b
-F source/edit.asm 192f2d335a36a92a72f9f043795c2ba0689f1c2f
-F source/engine.asm e8c82449a505e5aab738af0e68f4bf51e0be9a76
-F source/engine.fpr 070ad33e17a5a624bc49cf129814a79ce8375169
+F source/commands.asm 4f833c5eedb458f0c942ddf7b04d2a7cb1cfa548
+F source/create.sql 9a8506a841d6d75efba5bc6b9f36d3f0cfe6bb0c
+F source/delete.asm 5a916c3647c52baa753951d93fbbfaa3175627d4
+F source/edit.asm 9a5707f408bee04e0693788cced4220c386f28c1
+F source/engine.asm 2be4fedab59a52f9a89e3c8e92402a3b4bd8c11f
+F source/engine.fpr 6bcf2c9b0458f94ce75f4d33e4a9c1f299e42e17
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
-F source/fcgi.asm d6f2d84e1a33ce7edb6c5521bd50b7a69ba62361
+F source/fcgi.asm 4c4271690919f55b4eddd71c7c4b0b44596f1c81
 F source/http.asm a037e7286c061f805c4854fa6938b444b99a990c
 F source/images_png.asm cb69d9eafb85f6e61c526a3dcff4c7f2c3f4ebd6
 F source/keywords.txt 8e374a274b6a178e582656652edb52e65fbebfb2
-F source/messages.asm 1cc42852665f2b44a574e37c0fde6624b4dab784
+F source/messages.asm f1f350f40073680e2ed26e007312987ef9eb327f
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
-F source/post.asm f6111932d588687ed635406d3c097f4770fbfc1f
+F source/migration1.sql fe97ef3b5046a916f0215336a8a56ea4c8a3b98a
+F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
+F source/post.asm 84f721713c6a1ad1da06fb0d8d6f932d964a60b5
 F source/post_data.asm 3ca626cfd4fe38680bfe5a61115edfc7f14bd70d
-F source/postdebug.asm 13ab4ebf2fc7b35d7fa36853b533236860b641f7
+F source/postdebug.asm bda4e22fe38390a011c9d0ed890756caf4d3207e
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
-F source/render.asm 87f3969ad380a9fa055b15bb0a75a26012c58568
-F source/search.asm a67cff2a3f88f82440a50fd96aceca0471f45238
+F source/render2.asm c7df82cb52b7558b6ae16d1a1206a0ec4bd07240
+F source/search.asm 15f6469bf4117fa6c22ded98a5613d07e2a8697a
 F source/search.sql 34cf6eea11403e7ac709cd1588bd84c57257135f
 F source/search_cnt.sql 762c07c3e8a9186e966a6377517edc18ab50ef96
-F source/settings.asm 41415bb08d29ac9850d1640b2244f9dd9b817889
-F source/showthread.asm 64e0e5d2513dd7ee4b49fe083f6a3f043b1abd0e
-F source/showthread.sql b12e0a7f61cc0319abad6cba91f1bff6bc278659
+F source/settings.asm 7f8d5305a38c05e16986ba30de1619dfd630b5e4
+F source/showthread.asm e824b8ba4c2b47e402c7e7ee25f35262914646e4
+F source/showthread.sql f414f014ab4b43038369556e4b056f3294ee8464
 F source/sqlite3.asm 8e27aa526542e4c8bac6b9e741b6e0698220933f
-F source/sqlite_console.asm 1d0ca0d6369d369ffff1f511213c55d5993c7916
-F source/statistics.asm bb8123e3e0b2a3e836cb5169c91d3d658a7b44ef
+F source/sqlite_console.asm 4036ff078724d5f52ac9dacaf9cee9ec394f9e94
+F source/statistics.asm 8574bead31291bdaf459a032659cb41bc34883d3
 F source/statistics.sql adf6bec52c32dba0b780cd7422e2de395ca19f7e
+F source/tests/Test1.tpl 3787fb082cb7f6404ff4631fd6ca67ed14c7beac
+F source/tests/test_templates.asm 9fbe778c983448663d18c9cc2cc3cd9d0107e93b
+F source/tests/test_templates.fpr 0b6d692c0d55f91a6e310f622a6fe2c49c06ddf9
 F source/text_constants.asm f785aa1c9c8e22e1a9f0fc9180e8f384d91b26ac
-F source/thread_attr.sql 1d9509e1413bcf1a32b90137884be4cc168d8d17
-F source/threadlist.asm a3713bc6cd6d217f54c97a55f0be543721e3fd86
-F source/threadlist.sql b552e86fa3a86cf9de51348b08c4d1bda226f5c2
+F source/thread_attr.sql 1c2f2de8139886350affc8868feb8de2fd7ba564
+F source/threadlist.asm de5ce3d37af289c76135c94c83d2305c4dfef38a
+F source/threadlist.sql 5ff1c1b661fcca07c1a0c529a3d94080d3bc0261
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
-F source/userinfo.asm 1b99b239a92196286af28d35ff9c595364ba89f2
-F source/users_online.asm c7209a11d35b94d894537458be94496531a1e24f
+F source/userinfo.asm cb003fd61bd60b2d723f0d43a84a796f8c875557
+F source/users_online.asm 753c52b3013c765331cbe641d925f1b61fd7cd37
 F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/util.sql 3ca632de8753d0ec4b088d19ff389d11fb1406e9
-F source/version.asm 989e0c6d6c1b15c539128dff45986ebaeda14125
+F source/version.asm 016d21ae294444b964f029a23d6c5445eead7e73
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
 F www/images/chat_menu.svg d8485817c3e745dcb8b981bb80d264f18365e377
@@ -138,8 +144,8 @@ F www/images/sources/search.svg 50eb2717ab41f19d5a617f6189290fca02470b6b
 F www/images/sources/yellow_back.png d7aed4145104dc3224a3fb46f03c14cf6d386167
 F www/ld-musl-i386.so d787058cb540c591edd2bc5fc1ddad9fac72f61f x
 F www/libsqlite3.so 7ec554841266559cb0e08b27b2afd8aab1869044 x
-F www/lighttpd.conf 5ad94fe2311e771f83df6226c0d398e9e3d0fddb
-F www/robots.txt 1f19cb38e5bc7508fde66876fab2dfdd453f96c6
+F www/lighttpd.conf d3f7c8fb33f78b942e93a0bcbdcdbc7288a9555f
+F www/robots.txt bed60589d6ab1cc0470f3ba582444612d1c4109a
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/Light/_images/anon.png 9184b9fe4cf4632fd4dc7baf7db2eeccd8c57334 l
 F www/templates/Light/_images/ban.svg 45504bdc41619c0b2a0f1f160b2aa5d495dc3520 l
@@ -214,11 +220,11 @@ F www/templates/Light/preview.tpl 6bd29d06a6720e51db6d4d73b7572f9fcc1ff32f l
 F www/templates/Light/search.less 673002a86d7aedc24bb456eb9aaf0842cc437fcf l
 F www/templates/Light/search_result.tpl a51b831f28a3d1ee546b097caa4f78ddd023ca70 l
 F www/templates/Light/settings.less ceddd6b5948701659f883fd99ed0b9a31067df6e l
-F www/templates/Light/skin_variables.lsi 3c14e70032e609c097594072b422fb3f482f79df
+F www/templates/Light/skin_variables.lsi 1a134ce0f44a8fac1139c6cb7ec9ecd744a6c819
 F www/templates/Light/sqlite.less d6c705801f27dd30658b51803f0638ded21bb45c l
 F www/templates/Light/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
-F www/templates/Light/thread_info.tpl 566893019011ccda164d44e8f120b97a73433393
-F www/templates/Light/thread_list.less 184486fa587f7ecb81f4bd4dd04f0cff00390bc7
+F www/templates/Light/thread_info.tpl ec87c106f956801ae66b026ec2cccc7c6fc3267e
+F www/templates/Light/thread_list.less 4e51bb785a686a59ba9a1f19909e81b9908286a5
 F www/templates/Light/threadnew.less c2af3d158e2e03851692576dce99f5287e50b0c6 l
 F www/templates/Light/userinfo.less 7ed31b5cc710b5821802771232bbc02db392ebf9 l
 F www/templates/Light/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
@@ -277,52 +283,52 @@ F www/templates/Wasp/activity6.tpl 588b1dde51b134d63d350f7d99c73f787c6dcbeb
 F www/templates/Wasp/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
 F www/templates/Wasp/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/Wasp/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
-F www/templates/Wasp/chat.less 2b021a5eb86fcae6a45180cc77b245fa3eb52714
-F www/templates/Wasp/chat.tpl 548988d2ae571ee54a2fe49661202938eb869e75
-F www/templates/Wasp/common.less 8ad8c6438f89eb87eb5c900d91075b28d9787035
+F www/templates/Wasp/chat.less 20d6e342d387f8ae42230dc902f5dccf559e2d8f
+F www/templates/Wasp/chat.tpl 5ae801e0d00118b2d770fb1407615133d8c818e4
+F www/templates/Wasp/common.less de3268e96fde708d68fa905297cf048ac78daf43
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
-F www/templates/Wasp/del_confirm.tpl 48aedc37b1e5ffee6da295bc24074bdfca0cac39
-F www/templates/Wasp/delete.less c56f23b173ff53afb3ed3ac5a81a19c378b7e784
-F www/templates/Wasp/error.less 5d9de944fe6322d58164da7ce96baf6103af896d
-F www/templates/Wasp/error_html_end.tpl f390b47728814ecd8e608dd410cb2f4b0b953020
-F www/templates/Wasp/error_html_start.tpl d28cf58719b5f371c3eeef18d74e148333ca9bc2
-F www/templates/Wasp/form_edit.tpl d5cb9b82c9d024bfb3bd938e65558165b8ad4d1a
-F www/templates/Wasp/form_edit_thread.tpl 493028b82db528bbedb5af9d51a95c7635a741ee
-F www/templates/Wasp/form_editinfo.tpl 780437eb8e57b679a9f4d38d6aa4e955f456cdc8
-F www/templates/Wasp/form_login.tpl effcc0fe1708dce7d6196204e1fa9d3ff01d38f5
+F www/templates/Wasp/del_confirm.tpl 17d02b6b8ab0b59548446258f0f2efdf507d6af2
+F www/templates/Wasp/delete.less f77246e7f9fd0680ddb1ef2351b2b4ec5cef54f2
+F www/templates/Wasp/error.less 59635e996bc04cc794187b1979022cc2d064679b
+F www/templates/Wasp/error_html_end.tpl 3729362af2738a816684e06dd05bbfff10a39d02
+F www/templates/Wasp/error_html_start.tpl bb9719e341078e7b101f39c8ff92b54e403915c6
+F www/templates/Wasp/form_edit.tpl a46e8cb5a209f070f27266cb56e2a9092f7bd117
+F www/templates/Wasp/form_edit_thread.tpl 08f22310d72adb71c00092b342d5fb698c4f648e
+F www/templates/Wasp/form_editinfo.tpl 2668a6016f76f55d3bd5597e4344fdc2caee9198
+F www/templates/Wasp/form_login.tpl 03e90d209d602b67a03451e6772bbcb67558921a
 F www/templates/Wasp/form_new_post.tpl bb8c726275b5fa8fb757b7f20d1d81b381315ca0
-F www/templates/Wasp/form_new_thread.tpl 9c1da9ea5b40fe7e0f881f88f31c5b04fed2f38f
+F www/templates/Wasp/form_new_thread.tpl a504b1316f7d1818ac9e34db606ad90dee699e3e
 F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
-F www/templates/Wasp/form_register.tpl 17e04b8fc2296c31bbf97c701fe48e46da816699
-F www/templates/Wasp/form_settings.tpl 2e9960d873af90e626d575cde915648fd925b702
+F www/templates/Wasp/form_register.tpl e87dc166aebd146522ead6f39af6b03d97b5c196
+F www/templates/Wasp/form_settings.tpl 0f929091c4f86a4b03677c8d2e46360d069200d1
 F www/templates/Wasp/form_setup.tpl 58a7c7ebaa5d793b255c2eca2d7f76fa97ffecdb
-F www/templates/Wasp/form_sqlite_console.tpl bedbf751806827982becff7feb4dcb86309b2355
-F www/templates/Wasp/login.less b098fb74d28ec338c9b257073b60ecbd722cb025
+F www/templates/Wasp/form_sqlite_console.tpl 23bcc88d0e2419d022945bdd580b871102d9f516
+F www/templates/Wasp/login.less caa0c4ac9912f500691830f86f03309a42551f0d
 F www/templates/Wasp/main_html_end.tpl 721ac095265156f7be3549413c34ab18d434541a
 F www/templates/Wasp/main_html_start.tpl 384d65a5c813c522b2414cb68e6c1eb3083f1bc6
 F www/templates/Wasp/markdown.less 9cb58847baf6ae269b7b05d95f586e4c9728e05c
-F www/templates/Wasp/minimag_suffix.tpl 847d280354a3b3a9d59f16e89e32ba660b8e4eca
-F www/templates/Wasp/nav_list.tpl 51190784c1e056e238d398219990a6a8fee7b46d
-F www/templates/Wasp/nav_search.tpl 29578675e09216600fec8315144f95362a119816
-F www/templates/Wasp/nav_thread.tpl 153eedecaa33ba4ae4b02a903a0bf1bc803c962b
-F www/templates/Wasp/navigation.less 47dbb8a218179145946e6c61f6c2f224d78844c4
-F www/templates/Wasp/post_view.tpl cc3a981281e16b44a39eabc8f2fb6af864230cc0
+F www/templates/Wasp/minimag_suffix.tpl ea20e08377b7ccdd55a2d7792071bb2734622813
+F www/templates/Wasp/nav_list.tpl 914df512f84e17ade19aa30d67c04ee684789ba8
+F www/templates/Wasp/nav_search.tpl cbffb13dbdbeda263ea7d21f87e13a84e486863a
+F www/templates/Wasp/nav_thread.tpl f68bdc8db78330c15df4e911d0506373425be38a
+F www/templates/Wasp/navigation.less f1aeed845b21ba139f0318fb0baa7863e5f18030
+F www/templates/Wasp/post_view.tpl f20d6d9d46c198b4dfab18a0bc5e9a221e20199d
 F www/templates/Wasp/posteditor.less 745c407a35b60119125d0852fd4ceac84a663acd
-F www/templates/Wasp/postnew.less ed1d00704b829562097747ccbf22fd01c0a84e0c
-F www/templates/Wasp/posts.less cf4a22c840fa1d22e105a44b68ef9c1a0df162c9
-F www/templates/Wasp/preview.tpl abd69f1ce9c9c2a372f33e9a05983964cfc354d0
-F www/templates/Wasp/search.less 23f13d8083a3f17cb89b8789f54206285223159c
+F www/templates/Wasp/postnew.less e6fb32ca27408023a01767162d7eb6ec337dd23f
+F www/templates/Wasp/posts.less 86fab76e03e99160c28ecac36e07aa001994b6c7
+F www/templates/Wasp/preview.tpl f22e0d1c81d1bafad40078ec4060fe3cc987b72d
+F www/templates/Wasp/search.less 26d71c8302df47653ab962e35d9dc2c0f5adcbad
 F www/templates/Wasp/search_result.tpl d13272c6953e4dcb56e51c71028b2a9b0cb12794
-F www/templates/Wasp/settings.less b72fc9a2a9c38396e08f9efee668b52f31bb3ab4
-F www/templates/Wasp/skin_variables.lsi 6692e585b405d89b4ac111cf97ef02751e1d0f9f
-F www/templates/Wasp/sqlite.less 60aca6ffcdaac17c424b2ebdbca6995c0453375c
+F www/templates/Wasp/settings.less 0078ba6b14e6639afd2bfaf7ab29ae59703bd53e
+F www/templates/Wasp/skin_variables.lsi 14a97d699cabf0c763e484abd7addc60a903f09d
+F www/templates/Wasp/sqlite.less f49f986ce6b0a0dfa5bc906128aad37c3a233b0d
 F www/templates/Wasp/statistics.tpl c28b06d9ee052060d95fa6d41f881bec9fa12788
-F www/templates/Wasp/thread_info.tpl 60b348350fe698422839bfa128592d73e77e356e
-F www/templates/Wasp/thread_list.less dc6e14a2b89b345fe25ecd6d5b8d489892e81960
-F www/templates/Wasp/threadnew.less d844afdd84390db9ea9df4f1075eb75b93fd7c1c
+F www/templates/Wasp/thread_info.tpl 970de92a09a675bac54da9aa73eaecd7ddd1ebf6
+F www/templates/Wasp/thread_list.less e783e396cc0884ae31df46074cd3e9d10550c10e
+F www/templates/Wasp/threadnew.less 06c7cb06ff6fcaeae1ee25b9eb9cbeb4e8188dae
 F www/templates/Wasp/userinfo.less cbca0e9dd4ecca74f820083dcfab65d347138d1d
 F www/templates/Wasp/userinfo.tpl 31a67fb1e469465986f6760c6a3dcb35636a2f39
-F www/templates/Wasp/users_online.less a48995a530b5b47a8b01beae809dfd4b2f70059a
+F www/templates/Wasp/users_online.less f2319e03a6c6828d4a9ae579e83857e4fc0bb0bf
 F www/templates/build_styles.sh b8522fb67875909a5558a0d389655dff710b22a6 x
 F www/templates/create_tar.sh ff82a0ca4260a3d1712233ceb3af4f98b810e112 x
 F www/templates/mobile/_images 70c26c9bd422a7e59f2dca80d02ec99f39b390fb l
@@ -342,16 +348,16 @@ F www/templates/mobile/activity6.tpl b5c8a9fbc2efa2eac931ea024f5d78047618cfc5 l
 F www/templates/mobile/activity7.tpl 606eb1ee82da0767dd85e3d2ac63a07e9874a5fb l
 F www/templates/mobile/activity8.tpl 36d833a0164bb74532e88161cff3d7c8d05cef52 l
 F www/templates/mobile/activity9.tpl 60fe5018f101f822fa00434bff49db7a3f7da947 l
-F www/templates/mobile/chat.less 3d1e51123252aebd8dee0d807da3f93db7e0ee34
-F www/templates/mobile/chat.tpl 29bf259afef7be47c81b0f450e1899b183dd99b8
+F www/templates/mobile/chat.less a0a457a076065216c171491bfe752250e66d6d5f
+F www/templates/mobile/chat.tpl 0349ae20369ace3e0c5f95ce16122b190dfb0111
 F www/templates/mobile/common.less 762e4e8198de87fbcb131462b3476432725a2c65 l
 F www/templates/mobile/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
-F www/templates/mobile/del_confirm.tpl f7475fdde0d37c6bcd90435f5f075512ff6d5e34
+F www/templates/mobile/del_confirm.tpl cdcb838e2e3a339de5408643fd2c2f3c447ab916 l
 F www/templates/mobile/delete.less 3a74460f12ec494d6ac273a831839c1242abdc60 l
-F www/templates/mobile/error.less b09d5dd96551ddd5560370ee1a094c2c1db17a37
-F www/templates/mobile/error_html_end.tpl 6b30d9c2bd22da157a2f5eb6e176c4bbe65d3697
-F www/templates/mobile/error_html_start.tpl 8b3207b2b7ab58de589040f28edbb25d14b0ab66
-F www/templates/mobile/form_edit.tpl 220344b6ce534c80076cffc47d84735c32f0260b
+F www/templates/mobile/error.less 83cd53cf80eb467b611ebe7865c41c96694c293f l
+F www/templates/mobile/error_html_end.tpl 3729362af2738a816684e06dd05bbfff10a39d02
+F www/templates/mobile/error_html_start.tpl bb9719e341078e7b101f39c8ff92b54e403915c6
+F www/templates/mobile/form_edit.tpl 7fd4b8be3fd1b0bf82a4b87a74852ce9fe7e83d7
 F www/templates/mobile/form_edit_thread.tpl 9ba48416deb4498a8dcad61198289fb396592980 l
 F www/templates/mobile/form_editinfo.tpl 91a3644fb4b1021bffa2356f7291f6e457eebe1e l
 F www/templates/mobile/form_login.tpl 1ca5a25baff036f4b5a655b72d25c18c987a8ed7 l
@@ -359,36 +365,37 @@ F www/templates/mobile/form_new_post.tpl 8d49d3712dae533e8a15a522baadd32c230b6f9
 F www/templates/mobile/form_new_thread.tpl 95aeb8e36c8aff51b101dca130c101071c917b6c l
 F www/templates/mobile/form_post_debug.tpl 0a3e574bb2595001a5c1cebbd66c59aefd6aaab7 l
 F www/templates/mobile/form_register.tpl 6e44ae46c9d0df170d76cb91b145bc2f3d60b7ea l
-F www/templates/mobile/form_settings.tpl aabf63ff7b5f5bc50ca6f42d9feaa015c611c362
+F www/templates/mobile/form_settings.tpl a4635e33d4fa270b3b69c39572f4bfc94ea8ccc2 l
 F www/templates/mobile/form_setup.tpl 7e32c9ff828a1cd2698285f3519632978add1b00 l
-F www/templates/mobile/form_sqlite_console.tpl d30bcafb73e52ca1fb5fbde69a37f3a8445e597f
-F www/templates/mobile/login.less 25c905c2a258578795d68640f8ec24a4464305d6
+F www/templates/mobile/form_sqlite_console.tpl b90d0e298e5cc10782bafbe2e403cceb365a2fe4 l
+F www/templates/mobile/login.less 49d99249ed83383d17fc94fc8610517aa4c96846
 F www/templates/mobile/main_html_end.tpl d8b3ec3c2cdc952fcab6638d4147ee7e9cd2ba96 l
-F www/templates/mobile/main_html_start.tpl 945af9c745c99029db6202af981de51f5b5cc516
+F www/templates/mobile/main_html_start.tpl b93c0043a09f7ef6614707de05a8b45f8af6b33f l
 F www/templates/mobile/markdown.less 45c9d8e366e2cfcaba4c2cacb4421af6388b21c9
 F www/templates/mobile/minimag_suffix.tpl f3a1414972a13590a7c984b53b6fd2ddd3a47f3a l
-F www/templates/mobile/nav_list.tpl ec5731f9a14f960d15e5e57bd8249367d45be798
-F www/templates/mobile/nav_search.tpl 2cc37d9cadb134f34101b23f7b55d84a6031e68c
-F www/templates/mobile/nav_thread.tpl a18ab94a34514a5456c7523659417af630c59f0a
-F www/templates/mobile/navigation.less 73ca9292dc3f38672878c6507aca8053052b3322
-F www/templates/mobile/post_view.tpl 3501e1aebdb37ca0c0c7798804489fb587d33a46
-F www/templates/mobile/posteditor.less 207c1795312cc607ffbf3e855655aed28dff75a0
+F www/templates/mobile/nav_list.tpl 580abd0547137f604a05a525aefb34e520f6b7ab l
+F www/templates/mobile/nav_search.tpl 29858e2ca8b4ac6a1f2660c6f3039c5683386976 l
+F www/templates/mobile/nav_thread.tpl 851b655a70770fd41465661c6a03531d9008b212 l
+F www/templates/mobile/navigation.less a4b813498e8918e0757b6e8731417a1a7b16e968 l
+F www/templates/mobile/post_view.tpl 4e4b1a73db2462b1954e92ec092c71c438b63e85 l
+F www/templates/mobile/posteditor.less af013f51fda1a0a8710d4aa2be99f1a4481abcd1
 F www/templates/mobile/postnew.less 3df1b56984c0e0268104a69862782120a40f06be l
-F www/templates/mobile/posts.less 59ec3c16902ff587464b82efdbf60e59e1f8bae0
-F www/templates/mobile/preview.tpl 026ef2e5a823b1be1b20d45d6ff33d2f5f0135ab
-F www/templates/mobile/search.less ce4f4dbc93aa9a1153b0eb84f8c251d4b2474806
+F www/templates/mobile/posts.less 96108ce60e7f4d127269a5437765a62898fb94e7
+F www/templates/mobile/preview.tpl 6bd29d06a6720e51db6d4d73b7572f9fcc1ff32f l
+F www/templates/mobile/search.less 33b9d9d3e6a805df33f6b0e4ed846ab592fc014e
 F www/templates/mobile/search_result.tpl 439d5d06fc9b2de76abc3f912b9dbd0ef9516801
-F www/templates/mobile/settings.less 94483a7c905415dd4655b0a43fe41906b5f1002c
-F www/templates/mobile/skin_variables.lsi 3f07dc89d22534100749c66dfde4d240153a55d4
-F www/templates/mobile/sqlite.less 0119ee05712e4332d1bcacb6d55658fb48c76fc5
+F www/templates/mobile/settings.less 2c85d86a6ee551b453016b466d3209e456507ae6
+F www/templates/mobile/skin_variables.lsi bb47ec0b79a30608c8581391505fd2af04db87a1
+F www/templates/mobile/sqlite.less d6c705801f27dd30658b51803f0638ded21bb45c l
 F www/templates/mobile/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
-F www/templates/mobile/thread_info.tpl 196c8da01b91b3d803d7cb4415fb0b5a87dabb91
-F www/templates/mobile/thread_list.less bceb065b080ca49a875690e6bf9581fffeb53160
-F www/templates/mobile/threadnew.less ddf44f4fcf6e54ed47ee3eedb415c07dbf987f23
+F www/templates/mobile/thread_info.tpl ae0e028153a94cc044003abbe3cd4a063127de08
+F www/templates/mobile/thread_list.less 4e41c47077543c321ede5dce3592835ae40e1ea3
+F www/templates/mobile/threadnew.less c2af3d158e2e03851692576dce99f5287e50b0c6 l
 F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
-F www/templates/mobile/users_online.less a83e549bba7d5f700903ec7c8c6a03c62ed3b9b5
-P a60be3eb9af30f0e617cae5f0d0f545b794a77b0
-R 5b3a7762b1814e654d42d241273c545c
+F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d2 l
+F www/templates/untar.sh 4135b65b574e88d3cb286df89d40f96d6d54f0e9 x
+P 96265a063f180612778fd4afb1265531f0301bca d4047c69dc03e4698e8cfbf350b84607f77a41be
+R 62f007e2a5b430870229681a8359e15a
 U johnfound
-Z 18cf4879e4009f4e436d8682b46afa30
+Z 1aa6573b765cfe7705a86a7b88efdb0a

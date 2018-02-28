@@ -3,9 +3,9 @@
 /* Threads list styles */
 
 div.threads_list {
-  width: 95%;
-  max-width: 1280px;
-  margin: auto;
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
   clear: both;
 }
 
@@ -17,7 +17,7 @@ span.small {
 
 .thread_summary {
   display: flex;
-  margin-bottom: 8px;
+  margin: 8px 0px;
 }
 
 .thread_right {
@@ -49,11 +49,11 @@ div.thread_info {
   }
 
   .unread0 {
-    background-image: url("/[special:skin]_images/posts_gray.svg");
+    background-image: url("[special:skin]/_images/posts_gray.svg");
   }
 
   .unread1 {
-    background-image: url("/[special:skin]_images/posts.svg");
+    background-image: url("[special:skin]/_images/posts.svg");
   }
 }
 
@@ -69,11 +69,11 @@ div.thread_info {
 }
 
 .pin0 {
-  background-image: url("/[special:skin]_images/pinned0.png");
+  background-image: url("[special:skin]/_images/pinned0.png");
 }
 
 .pin1 {
-  background-image: url("/[special:skin]_images/pinned.png");
+  background-image: url("[special:skin]/_images/pinned.png");
 }
 
 
@@ -90,7 +90,7 @@ div.changed {
   font-size: 80%;
   background-size: 16px 16px;
   background-repeat: no-repeat;
-  background-image: url("/[special:skin]_images/edited.svg");
+  background-image: url("[special:skin]/_images/edited.svg");
   text-indent: 24px;
 }
 
@@ -105,10 +105,11 @@ div.thread_link {
 a.thread_link {
   font-size: 16px;
   font-weight: bold;
-  display: block;
+  display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
   color: @clThreadLink;
+  max-width: 100%;
 }
 
 div.thread_tags {

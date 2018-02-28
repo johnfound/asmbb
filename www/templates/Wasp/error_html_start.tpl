@@ -6,5 +6,5 @@
     <title>Error!</title>
     [special:allstyles]
   </head>
-  <body>
+  <body><div>
   <a href="[special:referer]">

@@ -3,11 +3,10 @@
 /* sqlite console styles */
 
 div.console {
-  position: relative;
-  width: 95%;
-  max-width: 1280px;
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
   clear: both;
-  margin: 8px auto;
 
   p{
     color: @clDarkFG;
@@ -42,13 +41,14 @@ textarea.sql_editor {
 
 
 div.sql_exec {
-  width: 95%;
-  max-width: 1280px;
-  margin: auto;
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
 
-  background-color: white;
+  background-color: @clArticleBG;
   padding: 8px;
   font-size: 13px;
+  overflow: auto;
 }
 
 div.sql_exec p {
@@ -98,36 +98,29 @@ input.title {
   color: @clEditorFG;
 }
 
-div.panel {
+
+.button {
   display: inline-block;
-  width: 100%;
-  text-align: left;
-  margin-bottom: 8px;
-
-  input {
-    border-style: none;
-    outline-style: none;
-    padding: 4px;
-
-    background-color: @clButtonBG;
-    color: @clButtonFG;
-  }
-
-  input:active, input:focus, input:hover {
-    background-color: @clButtonActiveBG;
-    color: @clButtonActiveFG;
-  }
+  height: 32px;
+  width: 32px;
+  background-color: @clButtonBG;
+  color: @clButtonFG;
+  vertical-align: top;
 }
 
+.button:hover {
+  background-color: @clButtonActiveBG;
+  color: @clButtonActiveFG;
+}
 
 .btn_edit {
-  background-image: url("/[special:skin]_images/edit_white.svg");
+  background-image: url("[special:skin]/_images/edit_white.svg");
 }
 
 .btn_save {
-  background-image: url("/[special:skin]_images/save_white.svg");
+  background-image: url("[special:skin]/_images/save_white.svg");
 }
 
 .btn_del {
-  background-image: url("/[special:skin]_images/del_white.svg");
+  background-image: url("[special:skin]/_images/del_white.svg");
 }

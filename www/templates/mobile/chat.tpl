@@ -41,7 +41,7 @@
         ':-П' : 'tongue.gif',
         ':П'  : 'tongue.gif'
       };
-      var url = "/[special:skin]_images/chatemoticons/";
+      var url = "[special:skin]/_images/chatemoticons/";
       var patterns = [];
       var metachars = /[[\]{}()*+?.\\|^$\-,&#\s]/g;
 

@@ -6,18 +6,21 @@ sqlParameters   text "select ?1 as host, ?2 as smtp_addr, ?3 as smtp_port, ",   
                             "?10 as user_perm0, ?11 as user_perm2, ?12 as user_perm3, ?13 as user_perm4, ",      \
                             "?14 as user_perm5, ?15 as user_perm6, ?16 as user_perm7, ?17 as user_perm8, ",      \
                             "?18 as user_perm31, ?21 as chat_enabled, ?22 as chat_anon, ?23 as email_confirm, ", \
-                            "?24 as default_skin, $25 as default_mobile_skin, $26 as forum_header, $27 as embeded_css"
+                            "?24 as default_skin, ?25 as default_mobile_skin, ?26 as forum_header, ",            \
+                            "?27 as embeded_css, ?28 as Ticket"
 
 proc BoardSettings, .pSpecial
 
 .stmt    dd ?
 .message dd ?
 .error   dd ?
+.ticket  dd ?
 
 begin
         pushad
 
         and     [.message], 0
+        and     [.ticket], 0
         and     [.error], 0
 
         mov     esi, [.pSpecial]
@@ -31,6 +34,11 @@ begin
         jne     .save_settings
 
         stdcall StrCat, [esi+TSpecialParams.page_title], cForumSettingsTitle
+
+        stdcall SetUniqueTicket, [esi+TSpecialParams.session]
+        jc      .for_admins_only
+
+        mov     [.ticket], eax
 
         stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
         mov     ebx, eax
@@ -52,6 +60,9 @@ begin
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlParameters, sqlParameters.length, eax, 0
+
+        stdcall StrPtr, [.ticket]
+        cinvoke sqliteBindText, [.stmt], 28, eax, [eax+string.len], SQLITE_STATIC
 
         stdcall GetParam, txt "host", gpString
         jc      .host_ok
@@ -267,14 +278,13 @@ begin
 
         cinvoke sqliteStep, [.stmt]
 
-        stdcall StrNew
+        stdcall RenderTemplate, 0, "form_settings.tpl", [.stmt], esi
         mov     [esp+4*regEAX], eax
-
-        stdcall StrCatTemplate, eax, "form_settings.tpl", [.stmt], esi
 
         cinvoke sqliteFinalize, [.stmt]
 
         stdcall StrDel, [.message]
+        stdcall StrDel, [.ticket]
 
         clc
         popad
@@ -284,6 +294,18 @@ begin
 ;.............................................................................................................
 
 .save_settings:
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "ticket", 0
+        test    eax, eax
+        jz      .for_admins_only
+
+        mov     ebx, eax
+        stdcall CheckTicket, ebx, [esi+TSpecialParams.session]
+        pushf
+        stdcall ClearTicket3, ebx
+        stdcall StrDel, ebx
+        popf
+        jc      .for_admins_only
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBegin, sqlBegin.length, eax, 0
@@ -525,11 +547,11 @@ begin
         je      .errok
         stdcall StrCat, eax, "&err=1"
 .errok:
-        stdcall StrMakeRedirect, 0, eax
+        stdcall TextMakeRedirect, 0, eax
         stdcall StrDel ; from the stack
 
 .exit:
-        mov     [esp+4*regEAX], eax
+        mov     [esp+4*regEAX], edi
         stc
         popad
         return
@@ -537,7 +559,7 @@ begin
 
 .for_admins_only:
 
-        stdcall StrMakeRedirect, 0, "/!message/only_for_admins"
+        stdcall TextMakeRedirect, 0, "/!message/only_for_admins"
         jmp     .exit
 
 
@@ -719,10 +741,9 @@ begin
         cinvoke sqliteBindInt, [.stmt], 2, [.error]
         cinvoke sqliteStep, [.stmt]
 
-        stdcall StrNew
+        stdcall RenderTemplate, 0, "form_setup.tpl", [.stmt], esi
         mov     [esp+4*regEAX], eax
 
-        stdcall StrCatTemplate, eax, "form_setup.tpl", [.stmt], esi
         cinvoke sqliteFinalize, [.stmt]
         stdcall StrDel, [.message]
 
@@ -803,11 +824,10 @@ begin
         jne     .error_no_data
 
         cinvoke sqliteFinalize, [.stmt]
-        stdcall StrMakeRedirect, 0, "/!login"
-
+        stdcall TextMakeRedirect, 0, "/!login"
 
 .finish:
-        mov     [esp+4*regEAX], eax
+        mov     [esp+4*regEAX], edi
         stdcall StrDel, [.message]
 
         stc
@@ -836,7 +856,6 @@ begin
         stdcall StrDel, eax
         jmp     .error_del_edi
 
-
 .error_del_eax:
 
         stdcall StrDel, eax
@@ -849,7 +868,7 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall StrMakeRedirect, 0, [.message]
+        stdcall TextMakeRedirect, 0, [.message]
         jmp     .finish
 
 endp

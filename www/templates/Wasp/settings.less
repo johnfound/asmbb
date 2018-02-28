@@ -3,16 +3,16 @@
 /* settings form styles */
 
 div.set_page {
-  width: 95%;
-  max-width: 1280px;
-  margin: 0px auto 0px auto;
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
   background-color: @clDarkBG;
   overflow: auto;
   padding: 16px;
 }
 
 form.settings {
-  width: 640px;
+  width: @msgBoxWidth;
   padding: 16px;
   background-color: @clFormBG;
   margin: 8px auto 8px auto;
@@ -38,7 +38,6 @@ form.settings {
     td {
       text-align: left;
       vertical-align: middle;
-//      border: 1px solid red;
       white-space: nowrap;
       padding: 2px;
     }
@@ -150,26 +149,27 @@ h1.msg {
   margin: 0px;
   padding: 8px;
   text-align: center;
-  color: white;
   display: block;
   opacity: 1.0;
 }
 
 .info {
-  background-color: green;
+  background-color: @clMsgInfoBG;
+  color: @clMsgInfoFG;
   transition: all 1s;
   -webkit-transition: all 1s;
 }
 
 .error {
-  background-color: red;
+  background-color: @clMsgErrorBG;
+  color: @clMsgErrorFG;
   transition: all 3s;
   -webkit-transition: all 3s;
 }
 
 .warning {
-  background-color: #404040;
-  color: yellow !important;
+  background-color: @clMsgWarningBG;
+  color: @clMsgWarningFG;
 }
 
 

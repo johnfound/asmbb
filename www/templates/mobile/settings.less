@@ -3,15 +3,18 @@
 /* settings form styles */
 
 div.set_page {
-  margin: 0px auto 0px auto;
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
   background-color: @clDarkBG;
   overflow: auto;
   padding: 16px;
 }
 
 form.settings {
-  padding: 8px;
-  background-color: @clBodyBG;
+  width: @msgBoxWidth;
+  padding: 16px;
+  background-color: @clFormBG;
   margin: 8px auto 8px auto;
 
   h1 {
@@ -26,48 +29,69 @@ form.settings {
     padding: 8px;
   }
 
-  label {
-    display: block;
-    text-align: left;
-    padding: 0px;
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 16px;
-  }
-
-  label.line {
-    width: auto;
-    display: block;
-    text-align: left;
-    margin-bottom: 16px;
-  }
-
   table {
+
     border-collapse: collapse;
     border-spacing: 0px;
-    vertical-align: middle;
+    width: 100%;
 
     td {
+      text-align: left;
       vertical-align: middle;
+      white-space: nowrap;
+      padding: 2px;
+    }
+
+    td.lbl {
+      text-align: right;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    td.lblc {
+      text-align: left;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    td.grp {
+      font-size: 16px;
+      font-weight: bold;
+      padding-top: 16px;
+      padding-bottom: 8px;
+    }
+
+    td.lblm {
+      color: maroon;
+    }
+
+    td.lblr {
+      color: red;
+    }
+
+    td.small {
+      width: 96px;
+    }
+
+    th {
+      margin: 0px;
+      padding: 0px;
     }
   }
-
 }
-
 
 input.settings, select.settings {
-    display: block;
-    width: 100%;
-    height: 38px;
-    margin: 0px 8px 8px 0px;
-    font-size: 16px;
-    padding: 0px 8px;
-    outline: none;
-    border: none;
+  height: 34px;
+  font-size: 16px;
+  padding: 0px 8px;
+  outline: none;
+  border: @borderEdit;
 
-    background-color: @clEditorBG;
-    color: @clEditorFG;
+  background-color: @clEditorBG;
+  color: @clEditorFG;
+  width: 100%;
 }
+
 
 label.checkbox {
   display: inline-block;
@@ -83,12 +107,12 @@ label.checkbox {
 
   span {
       width: 20px;
-      line-height: 12px;
+      line-height: 16px;
       display: inline-block;
       background-color: white;
       color: white;
       font-size: 16px;
-      border: 4px solid white;
+      border: 2px solid @clSeparator;
   }
 
   input:checked + span {
@@ -100,12 +124,11 @@ label.checkbox {
 
 
 input.button {
-    display: block;
     height: 38px;
     width: 100%;
-    background: #ff656c;
+    background-color: @clButtonBG;
+    color: @clButtonFG;
     border: none;
-    color: white;
     font-weight: bold;
     font-size: 16px;
     font-variant: small-caps;
@@ -113,11 +136,13 @@ input.button {
     cursor: pointer;
     text-align: center;
     padding: 0px;
-    margin-top: 32px;
+    display: block;
+    margin-bottom: 8px;
 }
 
 input.button:hover {
-    background: #ff7b81;
+    background: @clButtonActiveBG;
+    color: @clButtonActiveFG;
 }
 
 
@@ -125,29 +150,27 @@ h1.msg {
   margin: 0px;
   padding: 8px;
   text-align: center;
-  color: white;
   display: block;
   opacity: 1.0;
-  position: absolute;
-  left: 16px;
-  right: 16px;
 }
 
 .info {
-  background-color: green;
+  background-color: @clMsgInfoBG;
+  color: @clMsgInfoFG;
   transition: all 1s;
   -webkit-transition: all 1s;
 }
 
 .error {
-  background-color: red;
+  background-color: @clMsgErrorBG;
+  color: @clMsgErrorFG;
   transition: all 3s;
   -webkit-transition: all 3s;
 }
 
 .warning {
-  background-color: #404040;
-  color: yellow !important;
+  background-color: @clMsgWarningBG;
+  color: @clMsgWarningFG;
 }
 
 

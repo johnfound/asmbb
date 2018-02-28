@@ -41,11 +41,11 @@ span.small {
   }
 
   .unread0 {
-    background-image: url("/[special:skin]_images/posts_gray.svg");
+    background-image: url("[special:skin]/_images/posts_gray.svg");
   }
 
   .unread1 {
-    background-image: url("/[special:skin]_images/posts.svg");
+    background-image: url("[special:skin]/_images/posts.svg");
   }
 }
 
@@ -58,11 +58,11 @@ span.small {
 }
 
 .pin0 {
-  background-image: url("/[special:skin]_images/pinned0.png");
+  background-image: url("[special:skin]/_images/pinned0.png");
 }
 
 .pin1 {
-  background-image: url("/[special:skin]_images/pinned.png");
+  background-image: url("[special:skin]/_images/pinned.png");
 }
 
 
@@ -89,10 +89,11 @@ div.thread_link {
 a.thread_link {
   font-size: 16px;
   font-weight: bold;
-  display: block;
+  display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
   color: @clThreadLink;
+  max-width: 100%;
 }
 
 div.thread_tags {

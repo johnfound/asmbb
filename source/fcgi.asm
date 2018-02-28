@@ -751,6 +751,50 @@ endp
 
 
 
+proc FCGI_outputText, .hSocket, .RequestID, .pText, .final
+begin
+        pushad
+
+        xor     ecx, ecx
+        mov     edx, [.pText]
+        test    edx, edx
+        jz      .send_second
+
+        mov     ecx, [edx+TText.Length]
+        mov     ebx, [edx+TText.GapBegin]
+        sub     ecx, [edx+TText.GapEnd]
+
+        xor     eax, eax
+        test    ecx, ecx
+        cmovz   eax, [.final]
+
+        test    ebx, ebx
+        jz      .first_ok
+
+        stdcall FCGI_output, [.hSocket], [.RequestID], edx, ebx, eax
+        jc      .finish
+
+.first_ok:
+        test    ecx, ecx
+        jnz     .second
+
+        test    ebx, ebx
+        jnz     .finish
+
+.second:
+        add     edx, [edx+TText.GapEnd]
+
+.send_second:
+        stdcall FCGI_output, [.hSocket], [.RequestID], edx, ecx, [.final]
+
+.finish:
+        popad
+        return
+endp
+
+
+
+
 proc FCGI_send_end_request, .hSocket, .RequestID, .status
 
 .rec    FCGI_EndRequest

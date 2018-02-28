@@ -1,29 +1,34 @@
+@import "skin_variables.lsi";
+
 body {
   overflow: auto;
 }
 
 a {
-  display: block;
-  border: 4px solid red;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 16px solid red;
   background-color: white;
-  color: red;                 
-  width: 640px;
-  height: 480px;
-  padding-top: 200px;
-  position: absolute;
-  margin: auto;
-  position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
-  box-sizing: border-box;
-
-  text-align: center;
-  vertical-align: middle;
+  color: red;
   text-decoration: none;
+
+  width: @msgBoxWidth;
+  height: @msgBoxWidth*9/16;
+
+  box-sizing: border-box;
+}
+
+div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 0px; right: 0px; top: 0px; bottom: 0px;
 }
 
 span {
   color: black;
-}
-
-h1 {
+  display: block;
 }

@@ -3,8 +3,8 @@
 [css:posteditor.css]
 
 <div class="ui">
-  <a class="ui" href="../">The thread</a>
-  <a class="ui" href="!by_id">Back</a>
+  <a class="ui left" href="../">The thread</a>
+  <a class="ui left" href="!by_id">Back</a>
 </div>
 
 <form id="editform" action="!edit#preview" method="post">
