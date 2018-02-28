@@ -1,5 +1,5 @@
-C Merged\swith\sthe\s"render2"\sbranch.\sPreparations\sfor\smajor\srelease.
-D 2018-02-28T17:33:16.807
+C Source\scode\srelease\sv2.0
+D 2018-02-28T17:37:14.573
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz fa213756daaa5d736bb30ff4bed9e472caa2c5d4
@@ -26,7 +26,7 @@ F source/create.sql 9a8506a841d6d75efba5bc6b9f36d3f0cfe6bb0c
 F source/delete.asm 5a916c3647c52baa753951d93fbbfaa3175627d4
 F source/edit.asm 9a5707f408bee04e0693788cced4220c386f28c1
 F source/engine.asm 2be4fedab59a52f9a89e3c8e92402a3b4bd8c11f
-F source/engine.fpr 6bcf2c9b0458f94ce75f4d33e4a9c1f299e42e17
+F source/engine.fpr 3b6ceca2102abccbe746b42dd422cbfbb7ca8e1b
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 4c4271690919f55b4eddd71c7c4b0b44596f1c81
@@ -65,7 +65,7 @@ F source/userinfo.asm cb003fd61bd60b2d723f0d43a84a796f8c875557
 F source/users_online.asm 753c52b3013c765331cbe641d925f1b61fd7cd37
 F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/util.sql 3ca632de8753d0ec4b088d19ff389d11fb1406e9
-F source/version.asm 016d21ae294444b964f029a23d6c5445eead7e73
+F source/version.asm 8f305267cf0d9c3c68169594562b26a2fb811052
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
 F www/images/chat_menu.svg d8485817c3e745dcb8b981bb80d264f18365e377
@@ -395,7 +395,8 @@ F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d2 l
 F www/templates/untar.sh 4135b65b574e88d3cb286df89d40f96d6d54f0e9 x
-P 96265a063f180612778fd4afb1265531f0301bca d4047c69dc03e4698e8cfbf350b84607f77a41be
-R 62f007e2a5b430870229681a8359e15a
+P e8bb0a637a3adb938b5686cea05ae7bd21dbde17
+R 83c059281eaaf66bef4233b790ce34e6
+T +sym-v2.0 *
 U johnfound
-Z 1aa6573b765cfe7705a86a7b88efdb0a
+Z 8bd2d680b9b4f3b71c29173b8a53ee69
