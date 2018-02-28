@@ -26,7 +26,7 @@ options.AlignCode = 0
 options.ShowImported = 0
 
 options.DebugWeb = 0
-options.DebugSQLite = 1
+options.DebugSQLite = 0
 
 options.DebugWebSSE = 0         ; debug server sent events - creates a command "!echo_events" for debugging SSE.
 options.Benchmark = 0

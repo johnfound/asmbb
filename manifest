@@ -1,5 +1,5 @@
-C Sync\sbetween\sWasp\sand\smobile\sskins.\sReplacing\sduplicated\sfiles\swith\ssymlinks.\sStyles\sand\stemplates\sin\saccording\swith\sthe\slatest\schanges.
-D 2018-02-27T22:25:52.219
+C Removed\sthe\sv1\sof\sthe\stemplate\srender\sfrom\sthe\scheckout.
+D 2018-02-28T17:31:54.398
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz fa213756daaa5d736bb30ff4bed9e472caa2c5d4
@@ -25,7 +25,7 @@ F source/commands.asm 4f833c5eedb458f0c942ddf7b04d2a7cb1cfa548
 F source/create.sql 9a8506a841d6d75efba5bc6b9f36d3f0cfe6bb0c
 F source/delete.asm 5a916c3647c52baa753951d93fbbfaa3175627d4
 F source/edit.asm 9a5707f408bee04e0693788cced4220c386f28c1
-F source/engine.asm 65a4f3f81b9019294e3a428b537e7eb5e86942dd
+F source/engine.asm 2be4fedab59a52f9a89e3c8e92402a3b4bd8c11f
 F source/engine.fpr 6bcf2c9b0458f94ce75f4d33e4a9c1f299e42e17
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -42,7 +42,6 @@ F source/post.asm 84f721713c6a1ad1da06fb0d8d6f932d964a60b5
 F source/post_data.asm 3ca626cfd4fe38680bfe5a61115edfc7f14bd70d
 F source/postdebug.asm bda4e22fe38390a011c9d0ed890756caf4d3207e
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
-F source/render.asm c91c1380416c49ca273d23d1eb15baabc8d53310
 F source/render2.asm c7df82cb52b7558b6ae16d1a1206a0ec4bd07240
 F source/search.asm 15f6469bf4117fa6c22ded98a5613d07e2a8697a
 F source/search.sql 34cf6eea11403e7ac709cd1588bd84c57257135f
@@ -396,7 +395,7 @@ F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d2 l
 F www/templates/untar.sh 4135b65b574e88d3cb286df89d40f96d6d54f0e9 x
-P 556fd0056ac37825e29e99cd2d2fc127c831ddad
-R c0415a9e3e06a3a3524acc7716f74138
+P 2e2dc5788be40bb1605b2fcefcefe25f24fff058
+R 62f007e2a5b430870229681a8359e15a
 U johnfound
-Z 61fc7d99d6c6ea1479632939ff602e0b
+Z f2b594fee78478416d879f8da1c09961
