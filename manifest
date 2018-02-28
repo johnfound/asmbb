@@ -1,8 +1,8 @@
-C Source\scode\srelease\sv2.0
-D 2018-02-28T17:37:14.573
+C Binary\srelease\sv2.0
+D 2018-02-28T17:45:48.262
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
-F install/asmbb.tar.gz fa213756daaa5d736bb30ff4bed9e472caa2c5d4
+F install/asmbb.tar.gz 3bb8566e4074f08792a0ec093deb5bf58286249f
 F install/create_release.sh 7286d4d2777e9d15ee323d2a1db7b4a225715418 x
 F install/exclude.txt d68845d3aee98fc8ace64460f9d26ab3f2adc06d
 F install/install.txt 46093ff6d21640a09fa5f0b9b943de868fa7f1ac
@@ -395,8 +395,7 @@ F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d2 l
 F www/templates/untar.sh 4135b65b574e88d3cb286df89d40f96d6d54f0e9 x
-P e8bb0a637a3adb938b5686cea05ae7bd21dbde17
-R 83c059281eaaf66bef4233b790ce34e6
-T +sym-v2.0 *
+P 9de022e6fbddfcf56eb749b04afb6c14cfea3a12
+R 2ff996ec22f411dcc1f83b9a0af2218e
 U johnfound
-Z 8bd2d680b9b4f3b71c29173b8a53ee69
+Z 02101b69381b4c3acf2e2aa830dfe347
