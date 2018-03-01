@@ -1,5 +1,5 @@
-C Binary\srelease\sv2.0
-D 2018-02-28T17:45:48.262
+C Fixed\sminor\sbug\sin\sthread\sattributes\sediting.
+D 2018-03-01T08:34:36.167
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 3bb8566e4074f08792a0ec093deb5bf58286249f
@@ -57,7 +57,7 @@ F source/tests/Test1.tpl 3787fb082cb7f6404ff4631fd6ca67ed14c7beac
 F source/tests/test_templates.asm 9fbe778c983448663d18c9cc2cc3cd9d0107e93b
 F source/tests/test_templates.fpr 0b6d692c0d55f91a6e310f622a6fe2c49c06ddf9
 F source/text_constants.asm f785aa1c9c8e22e1a9f0fc9180e8f384d91b26ac
-F source/thread_attr.sql 1c2f2de8139886350affc8868feb8de2fd7ba564
+F source/thread_attr.sql 0ca7eb00c75ca369b74e04fc6aa386bab425798e
 F source/threadlist.asm de5ce3d37af289c76135c94c83d2305c4dfef38a
 F source/threadlist.sql 5ff1c1b661fcca07c1a0c529a3d94080d3bc0261
 F source/timeproc.asm e4bcfc4ae40450b94842da21a4f46b958b5ecd24
@@ -395,7 +395,7 @@ F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d2 l
 F www/templates/untar.sh 4135b65b574e88d3cb286df89d40f96d6d54f0e9 x
-P 9de022e6fbddfcf56eb749b04afb6c14cfea3a12
-R 2ff996ec22f411dcc1f83b9a0af2218e
+P d63e23c151d2bc0ae44497a8e27f1c3d7a5f5616
+R bfe39754e7508ef5324d4ced472fb93c
 U johnfound
-Z 02101b69381b4c3acf2e2aa830dfe347
+Z 0db66beb7c0d6ee1be2b00086449b2a7
