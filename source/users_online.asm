@@ -100,6 +100,7 @@ endp
  uaTrackingUsers = 11
  uaEditingThread = 12    ; ThreadID
  uaChatting      = 13
+ uaResetingPassword = 14
 
 
 

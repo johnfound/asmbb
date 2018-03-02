@@ -58,17 +58,16 @@ CREATE TABLE UserLog (
 create index idxUserLogIP on userlog(remoteIP);
 create index idxUserLogTime on UserLog(time);  -- Any other index on UserLog ruins the performance. See users_online.sql for the query.
 
-
-create table WaitingActivation(
-  id integer primary key,
+create table WaitingActivation (
+  a_secret text primary key,
+  operation integer not null,    -- 0 = Registering account; 1 = change email; 2 = reseting password.
   nick text unique,
   passHash text unique,
   salt  text unique,
   email text unique,
-  ip_from text,
+  ip_from    integer not null,
   time_reg   integer,
-  time_email integer,
-  a_secret text unique
+  time_email integer
 );
 
 

@@ -6,10 +6,18 @@ div.login {
   max-width: 1280px;
   clear: both;
   margin: 8px auto;
-  p{
-    color: white;
-    font-weight: bold;
-    margin: 0px 0px 4px 0px;
+
+  article {
+    background-color: @clArticleBG;
+    color: @clArticleFG;
+    padding: 16px;
+    margin: 8px 16px 8px 16px;
+
+    p {
+      color: black;
+      margin: 1em;
+    }
+
   }
 }
 
@@ -18,9 +26,10 @@ div.login {
 
 form.login-block, form.register-block {
     width: 320px;
+    flex-shrink: 0;
     padding: 16px;
     background: @clColor1;
-    margin: 8px auto 48px auto;
+    margin: 8px auto 8px auto;
 }
 
 form.login-block h1, form.register-block h1, form.settings h1 {
@@ -34,6 +43,12 @@ form.login-block h1, form.register-block h1, form.settings h1 {
     margin-bottom: 8px;
     padding: 8px;
 }
+
+input.username[readonly] {
+  background-color: @clReadOnlyBG !important;
+  color: @clReadOnlyFG;
+}
+
 
 input.username, input.email, input.password {
     width: 100%;
@@ -67,22 +82,67 @@ input.username:focus, input.email:focus, input.password:focus {
 }
 
 input.submit {
-    height: 38px;
-    width: 100%;
-    background: @clButtonBG;
-    color: @clButtonFG;
-    border: none;
-    font-weight: bold;
-    font-size: 16px;
-    font-variant: small-caps;
-    outline: none;
-    cursor: pointer;
-    text-align: center;
-    padding: 0px;
-    display: block;
-}
+  height: 38px;
+  width: 100%;
+  background: @clButtonBG;
+  color: @clButtonFG;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  font-variant: small-caps;
+  outline: none;
+  cursor: pointer;
+  text-align: center;
+  padding: 0px;
+  display: block;
+  margin: 8px 0px;
 
-input.submit:hover {
+  &:hover {
     background: @clButtonActiveBG;
     color: @clButtonActiveFG;
+  }
+
+  &:focus {
+    background: @clButtonActiveBG;
+    color: @clButtonActiveFG;
+    outline: 2px dotted @clSeparator;
+    outline-offset: -2px;
+  }
 }
+
+
+
+input[type=checkbox] {
+  position: absolute;
+  z-index: -1;
+
+  &:focus ~ label {
+    outline: 2px dotted @clSeparator;
+    outline-offset: -2px;
+  }
+
+  &:checked ~ label > span {
+    color: lime;
+    background-color: lime;
+  }
+
+  ~ label {
+    display: block;
+    background-color: @clEditorBG;
+    color: @clEditorFG;
+    padding: 8px 8px 8px 14px;
+
+    span {
+        width: 20px;
+        line-height: 16px;
+        display: inline-block;
+        background-color: white;
+        color: white;
+        font-size: 16px;
+        border: 2px solid @clSeparator;
+        margin-right: 12px;
+    }
+  }
+}
+
+

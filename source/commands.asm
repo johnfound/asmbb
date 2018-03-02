@@ -64,6 +64,7 @@ PList tablePreCommands, tpl_func,                  \
       "!login",           UserLogin,               \
       "!logout",          UserLogout,              \
       "!register",        RegisterNewUser,         \
+      "!resetpassword",   ResetPassword,           \
       "!changepassword",  ChangePassword,          \
       "!changemail",      ChangeEmail,             \
       "!sqlite",          SQLiteConsole,           \
@@ -107,7 +108,6 @@ proc ServeOneRequest, .hSocket, .requestID, .pParams2, .pPost2, .start_time
 .timehi   dd ?
 
 .timeRet  rd 2
-
 
 .special TSpecialParams
 
@@ -1063,7 +1063,7 @@ mimeGIF   text "image/gif"
 
 
 
-sqlSelectNotSent text "select id, nick, email, a_secret as secret, (select val from Params where id='host') as host, salt from WaitingActivation where time_email is NULL order by time_reg"
+sqlSelectNotSent text "select operation, nick, email, a_secret as secret, (select val from Params where id='host') as host, salt from WaitingActivation where time_email is NULL order by time_reg"
 sqlCleanWaiting  text "delete from WaitingActivation where time_reg < (strftime('%s','now') - 86400) and time_email is not NULL"
 
 proc ProcessActivationEmails
@@ -1092,7 +1092,7 @@ begin
 endp
 
 
-sqlUpdateEmailTime text "update WaitingActivation set time_email = strftime('%s','now') where id = ?"
+sqlUpdateEmailTime text "update WaitingActivation set time_email = strftime('%s','now') where a_secret = ?"
 
 proc SendActivationEmail, .stmt
 
@@ -1157,8 +1157,8 @@ begin
         lea     eax, [.stmt2]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateEmailTime, -1, eax, 0
 
-        cinvoke sqliteColumnInt, [.stmt], 0
-        cinvoke sqliteBindInt, [.stmt2], 1, eax
+        cinvoke sqliteColumnText, [.stmt], 3    ; secret
+        cinvoke sqliteBindText, [.stmt2], 1, eax, -1, SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt2]
         push    eax

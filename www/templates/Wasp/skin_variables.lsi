@@ -40,6 +40,9 @@
 
 @clEditorBG: white;
 @clEditorFG: black;
+@clReadOnlyBG: #e0e0e0;
+@clReadOnlyFG: black;
+
 @bgEditor: @clEditorBG 12px -10px ~"/" 24px 120px no-repeat;
 @bgEditorFocus: @clEditorBG 12px -70px ~"/" 24px 120px no-repeat;
 
