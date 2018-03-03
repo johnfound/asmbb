@@ -2298,8 +2298,7 @@ begin
         jmp     .finish
 
 .root:
-        stdcall StrNew
-        stdcall StrCharCat, eax, "/"
+        stdcall StrDupMem, txt "/"
         stc
 
 .finish:

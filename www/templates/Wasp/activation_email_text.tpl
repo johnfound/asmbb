@@ -17,10 +17,16 @@ This email has been sent to you as a confirmation for reset password request.
 
 If you didn't request password reset, simply ignore this email.
 
-In order to reset the password, visit the below link and follow the instructions:
+In order to reset the password, copy the below code in the password reset form:
 ]
 
-[case:[operation]|http://[host]/!activate/[secret]/|http://[host]/!activate/[secret]/|http://[host]/!resetpassword/[secret]/]
+[case:[operation]|
+http://[host]/!activate/[secret]/
+|
+http://[host]/!activate/[secret]/
+|
+[secret]
+]
 
 Best regards.
 

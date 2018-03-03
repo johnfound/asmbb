@@ -97,7 +97,7 @@ begin
         cmp     [esi+TSpecialParams.dir], 0
         je      .tags_ok
 
-        stdcall StrCharCat, [.tags], ', '
+        stdcall StrCat, [.tags], txt ', '
         stdcall StrCat, [.tags], [esi+TSpecialParams.dir]
 
 .tags_ok:
@@ -177,7 +177,7 @@ begin
         cinvoke sqliteColumnText, [.stmt], 0    ; the user nick name.
 
         stdcall StrCat, [.source], eax
-        stdcall StrCharCat, [.source], $0a0d
+        stdcall StrCat, [.source], <txt 13, 10>
 
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, [.source], eax
@@ -343,7 +343,7 @@ begin
 
         stdcall NumToStr, eax, ntsDec or ntsUnsigned
 
-        stdcall StrCharCat, [.slug], "."
+        stdcall StrCat, [.slug], txt "."
         stdcall StrCat, [.slug], eax
         stdcall StrDel, eax
 

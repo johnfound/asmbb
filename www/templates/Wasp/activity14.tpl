@@ -1,1 +1,1 @@
-In password reset procedure.
+Starting password reset procedure.

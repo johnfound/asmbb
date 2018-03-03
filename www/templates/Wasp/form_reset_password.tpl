@@ -5,10 +5,15 @@
   <div class="ui">
     <a class="ui" href="/">Threads</a>
   </div>
-  <form class="register-block" method="post">
+  <article>
+    <p>Check your mail box for confirmation e-mail. Copy the <b>secret code</b> from the e-mail to this form "Secret token" field. Fill in <b>all</b> remaining fields. Submit the form.</p>
+  </article>
+  <form class="register-block" method="post" action="/!resetpassword/3">
     <h1>Reset password</h1>
-    <input type="text" value="[nick]" name="username" class="username" maxlength="256" readonly>
-    <input type="password" value="" placeholder="Password" name="password" class="password" maxlength="1024" autocomplete="off" autofocus>
+    <input type="text" value="" placeholder="User name" name="username" class="username" maxlength="256" autofocus>
+    <input type="text" value="" placeholder="e-mail" name="email" class="email" maxlength="320">
+    <input type="text" value="" name="secret" placeholder="Secret token" class="password" maxlength="32">
+    <input type="password" value="" placeholder="Password" name="password" class="password" maxlength="1024" autocomplete="off">
     <input type="password" value="" placeholder="Password again" name="password2" class="password" maxlength="1024" autocomplete="off">
     <input type="hidden" value="[ticket]" name="ticket" id="ticket">
     <input type="submit" name="submit" class="submit" value="Submit">

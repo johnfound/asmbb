@@ -713,7 +713,7 @@ begin
         test    ecx, ecx
         jnz     .non_zero
 
-        stdcall StrCharCat, edi, "."
+        stdcall StrCat, edi, txt "."
         jmp     .href_ok
 
 .non_zero:

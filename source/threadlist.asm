@@ -32,7 +32,7 @@ begin
         stdcall StrCat, ebx, [esi+TSpecialParams.dir]
 
 .no_tag:
-        stdcall StrCharCat, ebx, "/"
+        stdcall StrCat, ebx, txt "/"
 
         cmp     [esi+TSpecialParams.page_num], 0
         je      .page_ok

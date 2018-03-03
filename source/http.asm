@@ -150,7 +150,7 @@ begin
 
         stdcall StrDupMem, "HELO "
         stdcall StrCat, eax, [.host]
-        stdcall StrCharCat, eax, $0a0d
+        stdcall StrCat, eax, <txt 13, 10>
 
         stdcall StrCat, edi, eax
         stdcall SocketSendStr, ebx, eax
@@ -165,9 +165,9 @@ begin
 
         stdcall StrDupMem, "MAIL FROM: "
         stdcall StrCat, eax, [.from]
-        stdcall StrCharCat, eax, "@"
+        stdcall StrCat, eax, txt "@"
         stdcall StrCat, eax, [.host]
-        stdcall StrCharCat, eax, $0a0d
+        stdcall StrCat, eax, <txt 13, 10>
 
         stdcall StrCat, edi, eax
         stdcall SocketSendStr, ebx, eax
@@ -182,7 +182,7 @@ begin
 
         stdcall StrDupMem, "RCPT TO: "
         stdcall StrCat, eax, [.to]
-        stdcall StrCharCat, eax, $0a0d
+        stdcall StrCat, eax, <txt 13, 10>
 
         stdcall StrCat, edi, eax
         stdcall SocketSendStr, ebx, eax
@@ -196,7 +196,7 @@ begin
         jne     .quit
 
 
-        stdcall StrDupMem, <"DATA", 13, 10>
+        stdcall StrDupMem, <txt "DATA", 13, 10>
 
         stdcall StrCat, edi, eax
         stdcall SocketSendStr, ebx, eax
@@ -213,29 +213,29 @@ begin
 
         stdcall StrDupMem, "From: "
         stdcall StrCat, eax, [.from]
-        stdcall StrCharCat, eax, "@"
+        stdcall StrCat, eax, txt "@"
         stdcall StrCat, eax, [.host]
-        stdcall StrCharCat, eax, $0a0d
+        stdcall StrCat, eax, <txt 13, 10>
 
 ; to email:
 
         stdcall StrCat, eax, txt "To: "
         stdcall StrCat, eax, [.to]
-        stdcall StrCharCat, eax, $0a0d
+        stdcall StrCat, eax, <txt 13, 10>
 
 ; timestamp:
         stdcall StrCat, eax, txt "Date: "
         stdcall StrCat, eax, [.time]
-        stdcall StrCharCat, eax, $0a0d
+        stdcall StrCat, eax, <txt 13, 10>
 
 ; subject
         stdcall StrCat, eax, txt "Subject: "
         stdcall StrCat, eax, [.subject]
-        stdcall StrCharCat, eax, $0a0d0a0d
+        stdcall StrCat, eax, <txt 13, 10, 13, 10>
 
 ; body
         stdcall StrCat, eax, [.body]
-        stdcall StrCharCat, eax, $0a0d
+        stdcall StrCat, eax, <txt 13, 10>
         stdcall StrCat, eax, <txt ".", 13, 10>
 
         stdcall StrCat, edi, eax
@@ -263,6 +263,7 @@ begin
         clc
 
 .finish:
+        stdcall StrDel, [.time]
         mov     [esp+4*regEAX], edi
         shr     [.exit], 1                      ; CF = 1 on error!
         popad
@@ -306,7 +307,7 @@ begin
         mov     ebx, eax
 
         stdcall StrCat, [.str], ebx
-        stdcall StrCharCat, [.str], $0a0d
+        stdcall StrCat, [.str], <txt 13, 10>
 
         stdcall StrToNum, ebx
         jc      .next_str
