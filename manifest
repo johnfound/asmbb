@@ -1,5 +1,5 @@
-C Some\scode\scleanup.\sThe\sreset\spassword\sprocedure\sreworked\sin\sa\slittle\sbit\smore\shard\sto\sabuse\svariant.\sFixed\sstring\sleak\sin\semail\ssending\scode.
-D 2018-03-03T20:16:09.894
+C Fixed\ssome\sbugs,\scaused\sby\sthe\srecent\schanges\sin\sthe\sdatabase\sstructure.
+D 2018-03-03T22:24:05.599
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 3bb8566e4074f08792a0ec093deb5bf58286249f
@@ -17,7 +17,7 @@ F source/Linux/sqlite3.inc 49dc036ae22c327790d0314c81263d77d041990b
 F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
-F source/accounts.asm 9043f49c213bcd2536021f41b4671152ed5b8ade
+F source/accounts.asm 7b54f6830468c1444b2ca99e044cd95144def708
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/chat.asm 0470f88c8b79aed0f76ec523b567dbe4c55b2b2a
 F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
@@ -413,7 +413,7 @@ F www/templates/mobile/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d2 l
 F www/templates/untar.sh 4135b65b574e88d3cb286df89d40f96d6d54f0e9 x
-P 8f97b64a0d0593ec9ec96194c6face424303a2b9
-R 220598035300c2c142fa8f775b5187c9
+P d4c2d44f9b4a21713029557d39f3f8abcd93e6d5
+R 515d4ed5eed7c615ff7ec907546607b3
 U johnfound
-Z 32ae1e98b18808d647550fa9c124faf1
+Z ad91cc430420b0027b97f750ef4dfe6f

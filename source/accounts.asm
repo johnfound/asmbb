@@ -23,7 +23,7 @@ sqlCleanSessions text "delete from sessions where last_seen < (strftime('%s','no
 
 sqlLoginTicket text "select ?1 as ticket"
 sqlCheckLoginTicket text "select 1 from userlog where remoteIP=?1 and Client = ?2 and Param = ?3 and Activity = ?4"
-sqlClearLoginTicket text "update userlog set Param = NULL where remoteIP=?1 and Activity in (1, 3, 14)"
+sqlClearLoginTicket text "update userlog set Param = NULL where remoteIP=?1 and Activity in (1, 3, 14, 15, 16, 17)"
 
 
 proc UserLogin, .pSpecial
@@ -472,7 +472,6 @@ begin
         cmp     eax, MAX_PASS_LENGTH
         ja      .error_trick
 
-
         stdcall GetPostString, ebx, "ticket", 0
         mov     [.ticket], eax
 
@@ -484,6 +483,8 @@ begin
         jz      .error_trick
 
 ; check the ticket
+
+        DebugMsg "Check the tcket."
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckLoginTicket, sqlCheckLoginTicket.length, eax, 0
@@ -512,6 +513,8 @@ begin
         jne     .error_trick
 
 ; hash the password
+
+        DebugMsg "The ticket is OK"
 
         stdcall HashPassword, [.password]
         jc      .error_technical_problem
@@ -546,7 +549,7 @@ begin
         je      .error_exists
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRegisterUser, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRegisterUser, sqlRegisterUser.length, eax, 0
 
         stdcall StrPtr, [.user]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
@@ -565,7 +568,7 @@ begin
         stdcall StrPtr, [.secret]
         cinvoke sqliteBindText, [.stmt], 6, eax, [eax+string.len], SQLITE_STATIC
 
-        stdcall sqliteBindInt, [.stmt], 7, uopCreateAccount
+        cinvoke sqliteBindInt, [.stmt], 7, uopCreateAccount
 
         cinvoke sqliteStep, [.stmt]
         mov     ebx, eax
@@ -664,9 +667,9 @@ endp
 
 
 sqlBegin      text  "begin transaction;"
-sqlActivate   text  "insert into Users ( nick, passHash, salt, status, email ) select nick, passHash, salt, ?, email from WaitingActivation where a_secret = ?"
-sqlDeleteWait text  "delete from WaitingActivation where a_secret = ?"
-sqlCheckCount text  "select operation from WaitingActivation where a_secret = ?"
+sqlActivate   text  "insert into Users ( nick, passHash, salt, status, email ) select nick, passHash, salt, ?1, email from WaitingActivation where a_secret = ?2"
+sqlDeleteWait text  "delete from WaitingActivation where a_secret = ?1"
+sqlCheckType  text  "select operation from WaitingActivation where a_secret = ?1"
 sqlCommit     text  "commit transaction"
 sqlRollback   text  "rollback"
 
@@ -701,7 +704,7 @@ begin
 ; check again whether all is successful.
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckCount, sqlCheckCount.length, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckType, sqlCheckType.length, eax, 0
 
         stdcall StrPtr, ebx
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
@@ -709,7 +712,7 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .rollback               ; there is no such record in the WaitingActivation table.
 
-        cinvoke sqliteColumnType, [.stmt], 0    ; the salt if exists
+        cinvoke sqliteColumnInt, [.stmt], 0    ; the operation
         mov     [.type], eax
 
         cinvoke sqliteFinalize, [.stmt]
@@ -779,8 +782,8 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
-        cmp     [.type], SQLITE_NULL
-        jne     .msg_new_account
+        cmp     [.type], uopCreateAccount
+        je      .msg_new_account
 
         stdcall TextMakeRedirect, 0, "/!message/email_changed"
         jmp     .finish
@@ -1564,17 +1567,20 @@ begin
         stdcall StrPtr, [.email]
         cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC        ; new email
 
+        cinvoke sqliteBindInt, [.stmt], 5, [esi+TSpecialParams.remoteIP]
+
         stdcall StrPtr, [.secret]
         cinvoke sqliteBindText, [.stmt], 6, eax, [eax+string.len], SQLITE_STATIC        ; the secret
 
-        stdcall sqliteBindInt, [.stmt], 7, uopChangeEmail
+        cinvoke sqliteBindInt, [.stmt], 7, uopChangeEmail
 
         cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_DONE
-        jne     .error_update
+        mov     ebx, eax
 
         cinvoke sqliteFinalize, [.stmt]
 
+        cmp     ebx, SQLITE_DONE
+        jne     .error_update
 
         stdcall GetParam, "email_confirm", gpInteger
         jc      .send_emails
