@@ -88,6 +88,8 @@
     var user_line;
     var chat_log;
     var sys_log;
+    var total_cnt = 0;
+    var title = document.title;
 
 // Entering the chat.
 
@@ -191,7 +193,21 @@
         };
       };
 
-      if (cnt && document.hidden) notify("New messages in the chat.");
+      if (cnt && document.hidden) {
+        notify("New messages in the chat.");
+        total_cnt = total_cnt + cnt;
+        document.title = '(' + total_cnt.toString() + ') ' + title;
+      };
+    };
+
+    document.onvisibilitychange = function() {
+      if ( ! document.hidden ) {
+        total_cnt = 0;
+        document.title = title;
+        UserStatusChange(1);
+      } else {
+        UserStatusChange(2);
+      };
     };
 
     function OnUserOnline (e) {
@@ -207,6 +223,8 @@
         } else {
           uclass = "fake_user";
         };
+
+        if (usr.status == 2) uclass += ' gray_user';
 
         html += '<p class="' + uclass + '" onclick="InsertNick(this)" title="' + usr.originalname + '">' + usr.user + '</p>';
 

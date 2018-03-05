@@ -14,9 +14,17 @@ div.users_list {
     width: 100%;
 
     th {
-      border: 3px solid @clSeparator;
+      border: 1px solid @clSeparator;
+      border-left: none;
+      border-right: none;
       padding: 8px;
       text-align: center;
+      a {
+        text-decoration: none;
+      }
+      a.sorted {
+        color: @clButtonBG;
+      }
     }
 
     td {

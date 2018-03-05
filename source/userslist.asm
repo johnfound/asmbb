@@ -1,10 +1,5 @@
 
-
-sqlGetUsersList  text "select nick, status, av_time, ",                                         \
-                      "strftime('%d.%m.%Y %H:%M:%S', Register, 'unixepoch') as Registered, ",   \
-                      "strftime('%d.%m.%Y %H:%M:%S', LastSeen, 'unixepoch') as LastSeen,   ",   \
-                      "Skin, PostCount from users order by PostCount desc limit ?2 offset ?3"
-
+sqlGetUsersList  StripText "userslist.sql", SQL
 sqlGetUsersCount text "select count() from users;"
 
 
@@ -62,23 +57,49 @@ begin
         mov     [.cnt], eax
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall CreatePagesLinks2, [esi+TSpecialParams.page_num], [.cnt], 0, [esi+TSpecialParams.page_length]
+        xor     ebx, ebx
+        stdcall GetQueryParam, esi, txt "sort="
+        jc      .suffix_ok
+
+        test    eax, eax
+        jz      .suffix_ok
+
+        push    eax eax
+        stdcall StrDupMem, "?sort="
+        mov     ebx, eax
+        stdcall StrCat, ebx ; from the stack
+        stdcall StrDel ; from the stack
+
+.suffix_ok:
+        stdcall CreatePagesLinks2, [esi+TSpecialParams.page_num], [.cnt], ebx, [esi+TSpecialParams.page_length]
         mov     [.list], eax
 
+        stdcall StrDel, ebx
+
         stdcall TextCat, edi, [.list]
-        stdcall TextCat, edx, txt '<table><tr><th>User</th><th>Avatar</th><th>Post count</th><th>Registered</th><th>Last seen</th></tr>'
-        mov     edi, edx
+        stdcall RenderTemplate, edx, 'userslist_hdr.tpl', 0, esi
+        mov     edi, eax
 
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetUsersList, sqlGetUsersList.length, eax, 0
+        stdcall TextCreate, sizeof.TText
+        mov     ebx, eax
 
-;        cinvoke sqliteBindText, [.stmt], 1, txt "PostCount desc", -1, SQLITE_STATIC
+        stdcall TextAddStr2, ebx, 0, sqlGetUsersList, sqlGetUsersList.length
+        stdcall RenderTemplate, edx, 0, 0, esi
+        stdcall TextCompact, eax
+        mov     ebx, edx
+
+        lea     ecx, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], ebx, eax, ecx, 0
+        stdcall TextFree, ebx
+
+        cmp     eax, SQLITE_OK
+        jne     .end_users
 
         mov     ebx, [esi+TSpecialParams.page_length]
-        cinvoke sqliteBindInt, [.stmt], 2, ebx
+        cinvoke sqliteBindInt, [.stmt], 1, ebx
 
         imul    ebx, [esi+TSpecialParams.page_num]
-        cinvoke sqliteBindInt, [.stmt], 3, ebx
+        cinvoke sqliteBindInt, [.stmt], 2, ebx
 
 .loop:
         cinvoke sqliteStep, [.stmt]

@@ -78,6 +78,8 @@
     var edit_line;
     var chat_log;
     var sys_log;
+    var total_cnt = 0;
+    var title = document.title;
 
     function KeyPress(e, proc) {
       if (e.keyCode == '13') {
@@ -166,6 +168,7 @@
 
       var msgset = JSON.parse(e.data);
       var ntf = "";
+      var cnt = 0;
 
       for (var i in msgset.msgs) {
         var msg = msgset.msgs[i];
@@ -180,13 +183,29 @@
 
           chat_log.appendChild(p);
           chat_log.scrollTop = chat_log.scrollHeight;
+          cnt++;
           if (ntf != "") { ntf += ", "};
           ntf += msg.user;
         };
       };
 
-      if ((ntf != "") && document.hidden) notify("New messages in the chat from: " + ntf);
+      if ((ntf != "") && document.hidden) {
+        notify("New messages in the chat from: " + ntf);
+        total_cnt = total_cnt + cnt;
+        document.title = '(' + total_cnt.toString() + ') ' + title;
+      };
     };
+
+    document.onvisibilitychange = function() {
+      if ( ! document.hidden ) {
+        total_cnt = 0;
+        document.title = title;
+        UserStatusChange(1);
+      } else {
+        UserStatusChange(2);
+      };
+    };
+
 
     function OnUserOnline (e) {
       var msgset = JSON.parse(e.data);
