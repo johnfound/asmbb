@@ -80,7 +80,8 @@ PList tablePreCommands, tpl_func,                  \
       "!chat_events",     ChatRealTime,            \
       "!echo_events",     EchoRealTime,            \    ; optional, depending on the options.DebugWebSSE
       "!postdebug",       PostDebug,               \    ; optional, depending on the options.DebugWeb
-      "!debuginfo",       DebugInfo                     ; optional, depending on the options.DebugSQLite
+      "!debuginfo",       DebugInfo,               \    ; optional, depending on the options.DebugSQLite
+      "!users",           UsersList
 end if
 
 if used tablePostCommands
@@ -1035,6 +1036,10 @@ begin
         stdcall StrCompNoCase, [.extension], txt ".js"
         jc      .mime_ok
 
+        mov     eax, mimeTTF
+        stdcall StrCompNoCase, [.extension], txt ".ttf"
+        jc      .mime_ok
+
         xor     eax, eax
         stc
         return
@@ -1057,7 +1062,7 @@ mimePNG   text "image/png"
 mimeJPEG  text "image/jpeg"
 mimeSVG   text "image/svg+xml; charset=utf-8"
 mimeGIF   text "image/gif"
-
+mimeTTF   text "font/ttf"
 
 
 

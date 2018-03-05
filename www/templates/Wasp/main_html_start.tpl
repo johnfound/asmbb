@@ -33,7 +33,7 @@
 
 <body>
   <div class="header">
-    <h1>[special:header]</h1>
+    [special:header]
     <div>
       [case:[special:userid]|<a href="/!login/">Login</a><br><a href="/!register/">Register</a>|
       <a href="/!logout">Logout ( [special:username] )</a><br><a href="/!userinfo/[special:username]">User profile</a>]

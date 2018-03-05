@@ -1,8 +1,8 @@
 [css:navigation.css]
-[css:search.css]
+[css:userslist.css]
 
 <div class="ui">
-  <a class="ui left" href="..">Back</a>
+  <a class="ui left" href="/">Threads</a>
   <span class="spacer"></span>
   [case:[special:isadmin]| |
     <a class="ui right" href="/!settings">Settings</a>

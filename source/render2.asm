@@ -239,12 +239,10 @@ begin
         stdcall StrCat, ebx, txt '/'
         stdcall StrCat, ebx, [.hTemplate]
 
-        stdcall StrPtr, ebx
-        OutputLn eax
-
         stdcall FileOpenAccess, ebx, faReadOnly
         stdcall StrDel, ebx
         mov     ebx, eax
+        jc      .exit
 
         stdcall FileSize, ebx
         push    eax

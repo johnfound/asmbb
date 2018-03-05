@@ -104,6 +104,7 @@ endp
  uaResetRequestSent  = 15       ; the POST with reset request.
  uaResetingForm      = 16       ; the reset password form.
  uaResetingPassword  = 17
+ uaReadingUserlist   = 18
 
 
 

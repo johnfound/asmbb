@@ -37,12 +37,17 @@ div.header {
   align-items: center;
   background: @HeaderBackground;
 
-  overflow: auto;
   padding: @paddingHeader;
+
+  img {
+    padding: 0px;
+    margin: 0px;
+    display: block;
+  }
 
   h1 {
     font-size: 36px;
-    margin: 0px auto 0px 0px;
+    margin: 0px;
     overflow: hidden;
     text-overflow: ellipsis;
     color: @clHeader;
@@ -50,6 +55,7 @@ div.header {
 
   div {
     text-align: right;
+    flex-grow: 1;
     a {
       font-weight: bold;
       text-align: right;
@@ -87,7 +93,7 @@ form#search_form {
 .search_btn {
   display: block;
 
-  border: @borderEdit;
+  border: @borderButton;
   border-radius: @borderNavRad;
 
   vertical-align: top;

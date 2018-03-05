@@ -7,7 +7,8 @@
 @clColor1: #ffcc40;
 @clColor1FG: #ffcc40;
 
-@clHeader: black;
+@clHeader: white;
+@clHeaderShadow: #d80027;
 @paddingHeader: 8px 16px 8px 16px;
 @paddingFooter: 8px;
 
@@ -48,6 +49,7 @@
 
 @clButtonActiveBG: #ff656c;
 @clButtonActiveFG: white;
+@borderButton: none;
 @borderButtonActive: none;
 @borderNavRad: 0px;
 @paddingNav: 4px;
@@ -59,7 +61,7 @@
 @clPostInfoBG: #ffcc40;
 @clPostInfoFG: black;
 
-@FontMain: "Verdana", sans-serif;
+@FontMain:      "Verdana", sans-serif;
 @FontMonospace: "Liberation Mono", "Courier New", monospaced;
 
 @HeaderBackground: @clColor1 url("[special:skin]/_images/yellow_back.png") -180px 0%/cover;
