@@ -80,6 +80,32 @@
     var sys_log;
     var total_cnt = 0;
     var title = document.title;
+    var do_notify = false;
+
+// Entering the chat.
+
+    document.body.onload = function () {
+      edit_line = document.getElementById("chat_message");
+      chat_log  = document.getElementById("chatlog");
+      sys_log   = document.getElementById("syslog");
+
+      source = new EventSource("/!chat_events");
+
+      source.onmessage = OnMessage;
+      source.onopen = OnConnect;
+      source.onerror = OnError;
+
+      source.addEventListener('message', OnMessage);
+      source.addEventListener('users_online', OnUserOnline);
+    };
+
+//  Leaving the chat.
+
+    window.onbeforeunload = function (e) {
+      source.close();
+      UserStatusChange(0);
+      return null;
+    };
 
     function KeyPress(e, proc) {
       if (e.keyCode == '13') {
@@ -170,6 +196,8 @@
       var ntf = "";
       var cnt = 0;
 
+      var all = document.createDocumentFragment();
+
       for (var i in msgset.msgs) {
         var msg = msgset.msgs[i];
 
@@ -177,20 +205,38 @@
 
           var p = document.createElement('p');
           p.id = "chat" + msg.id;
+
           p.appendChild( CreateTimeSpan(msg.time) );
           p.appendChild( CreateUserSpan(msg.user, msg.originalname) );
+
           p.innerHTML += ': ' + replaceEmoticons(linkify(msg.text));
 
-          chat_log.appendChild(p);
-          chat_log.scrollTop = chat_log.scrollHeight;
+          all.appendChild(p);
           cnt++;
           if (ntf != "") { ntf += ", "};
           ntf += msg.user;
         };
       };
 
-      if ((ntf != "") && document.hidden) {
-        notify("New messages in the chat from: " + ntf);
+      do_notify = (Math.abs((chat_log.scrollTop + chat_log.clientHeight) - chat_log.scrollHeight));
+
+      if ( (! total_cnt) && (do_notify || document.hidden) && cnt ) {
+        if ( chat_log.lastChild.tagName != 'HR' ) chat_log.appendChild(document.createElement('HR'));
+      };
+
+      chat_log.appendChild(all);
+
+      if (  ! do_notify ) {
+        chat_log.scrollTop = chat_log.scrollHeight - chat_log.clientHeight;
+        if (! document.hidden) {
+          total_cnt = 0;
+          document.title = title;
+        };
+      };
+
+      if (cnt && document.hidden) notify("New messages in the chat from: " + ntf);
+
+      if (cnt && (document.hidden || do_notify)) {
         total_cnt = total_cnt + cnt;
         document.title = '(' + total_cnt.toString() + ') ' + title;
       };
@@ -201,11 +247,11 @@
         total_cnt = 0;
         document.title = title;
         UserStatusChange(1);
+        chat_log.scrollTop = chat_log.scrollHeight - chat_log.clientHeight;
       } else {
         UserStatusChange(2);
       };
     };
-
 
     function OnUserOnline (e) {
       var msgset = JSON.parse(e.data);
@@ -229,6 +275,7 @@
           edit_line.placeholder = "Chat as: " + usr.user + " (!new_name, !! default)";
         };
       };
+      if (  ! do_notify ) chat_log.scrollTop = chat_log.scrollHeight - chat_log.clientHeight;
     };
 
     function OnConnect(e) {
@@ -236,33 +283,7 @@
     };
 
     function OnError(e) {
-      // display reconnection indicator.
-    };
-
-
-    //  Leaving the chat.
-
-    window.onbeforeunload = function (e) {
-      source.close();
-      UserStatusChange(0);
-      return null;
-    };
-
-    // Entering the chat.
-
-    document.body.onload = function () {
-      edit_line = document.getElementById("chat_message");
-      chat_log  = document.getElementById("chatlog");
-      sys_log   = document.getElementById("syslog");
-
-      source = new EventSource("/!chat_events");
-
-      source.onmessage = OnMessage;
-      source.onopen = OnConnect;
-      source.onerror = OnError;
-
-      source.addEventListener('message', OnMessage);
-      source.addEventListener('users_online', OnUserOnline);
+      UserStatusChange(2);
     };
 
   </script>
