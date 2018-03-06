@@ -1,5 +1,5 @@
-C Some\schanges\sin\sthe\schat\sJS\scode\s-\snew\sfeatures\sand\smuch\shigher\sperformance,\sespecially\son\slarge\schat\slogs.
-D 2018-03-06T12:57:56.097
+C Strange\sJS\sbugs...\sI\shate\sJS!
+D 2018-03-06T14:35:42.570
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 3bb8566e4074f08792a0ec093deb5bf58286249f
@@ -303,7 +303,7 @@ F www/templates/Wasp/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
 F www/templates/Wasp/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/Wasp/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
 F www/templates/Wasp/chat.less be309c19698e8b329c0a7328334b084926413b90
-F www/templates/Wasp/chat.tpl 8cee7211e425d01308052ca0af7289fadfee2fff
+F www/templates/Wasp/chat.tpl 031925874f5a2c14efc349d7ff465ecd39810cbe
 F www/templates/Wasp/common.less 8887de78d67b8d035225be314011390184f13a62
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 17d02b6b8ab0b59548446258f0f2efdf507d6af2
@@ -378,7 +378,7 @@ F www/templates/mobile/activity7.tpl 606eb1ee82da0767dd85e3d2ac63a07e9874a5fb l
 F www/templates/mobile/activity8.tpl 36d833a0164bb74532e88161cff3d7c8d05cef52 l
 F www/templates/mobile/activity9.tpl 60fe5018f101f822fa00434bff49db7a3f7da947 l
 F www/templates/mobile/chat.less 72ba960856d7a1c4a9bb3db48b6096d2da609c1a
-F www/templates/mobile/chat.tpl fd7968c593dbd51b8b2074b8b4892236e4d3109b
+F www/templates/mobile/chat.tpl 207ef213ceb3819c597d131fff6bb5ea25ff20df
 F www/templates/mobile/common.less 762e4e8198de87fbcb131462b3476432725a2c65 l
 F www/templates/mobile/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/mobile/del_confirm.tpl cdcb838e2e3a339de5408643fd2c2f3c447ab916 l
@@ -430,7 +430,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 4135b65b574e88d3cb286df89d40f96d6d54f0e9 x
-P 64ccfd70eb4aa6338ca693315e3d391ed7bbe57b
-R ca586eda3d09c081173af41521f005a1
+P 2020feea01f33ffc288fdc29a7f7c710356fdbb9
+R 1e6905c3a92986c47e2ecbb4009c3474
 U johnfound
-Z 5ec8e375252bbe206dfd046bf1ef5599
+Z 70466be538de75233c51bc63bb34c006

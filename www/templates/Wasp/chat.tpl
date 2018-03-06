@@ -153,18 +153,13 @@
     };
 
     function CreateUserSpan(user, original) {
-      var usr = document.createElement('span');
-      usr.classList.add('user');
-      usr.onclick = function() { InsertNick(this) };
-      usr.title = original;
-      usr.appendChild( document.createTextNode(user));
-
-      if (user != original) {
-        usr.classList.add('fake');
+      if (user == original) {
+        var c = "user";
+      } else {
+        var c = "user fake";
       };
-
-      return usr;
-    }
+      return '<span onclick="InsertNick(this)" class="' + c + '" title="' + original + '">' + user + '</span>: ';
+    };
 
     function CreateTimeSpan(time) {
       var date = new Date(time*1000);
@@ -172,14 +167,13 @@
       var minutes = "0" + date.getMinutes();
       var seconds = "0" + date.getSeconds();
 
-      var Time = document.createElement('span');
-      Time.appendChild( document.createTextNode ( '(' + hours.substr(-2) + ':' + minutes.substr(-2) + ':' + seconds.substr(-2) + ') ' ) );
-      return Time;
-    }
+      return '<span>(' + hours.substr(-2) + ':' + minutes.substr(-2) + ':' + seconds.substr(-2) + ')</span> ';
+    };
 
     function OnMessage(e) {
 
       var msgset = JSON.parse(e.data);
+      var ntf = "";
       var cnt = 0;
 
       var all = document.createDocumentFragment();
@@ -191,14 +185,12 @@
 
           var p = document.createElement('p');
           p.id = "chat" + msg.id;
-
-          p.appendChild( CreateTimeSpan(msg.time) );
-          p.appendChild( CreateUserSpan(msg.user, msg.originalname) );
-
-          p.innerHTML += ': ' + replaceEmoticons(linkify(msg.text));
-
+          p.innerHTML = CreateTimeSpan(msg.time) + CreateUserSpan(msg.user, msg.originalname) + replaceEmoticons(linkify(msg.text));
           all.appendChild(p);
           cnt++;
+
+          if (ntf != "") { ntf += ", "};
+          ntf += msg.user;
         };
       };
 
@@ -218,7 +210,7 @@
         };
       };
 
-      if (cnt && document.hidden) notify("New messages in the chat.");
+      if (cnt && document.hidden) notify("New messages in the chat from: " + ntf);
 
       if (cnt && (document.hidden || do_notify)) {
         total_cnt = total_cnt + cnt;
@@ -242,7 +234,7 @@
 
       while (sys_log.firstChild) {
         sys_log.removeChild(sys_log.lastChild);
-      }
+      };
 
       for (var i in msgset.users) {
         var usr = msgset.users[i];
