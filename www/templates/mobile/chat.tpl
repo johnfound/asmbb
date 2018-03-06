@@ -219,6 +219,7 @@
         var p = document.createElement('p');
 
         p.classList.add( usr.originalname == usr.user ? "user" : "fake_user");
+        if (usr.status == 2) p.classList.add("gray_user");
         p.onclick = function() { InsertNick(this) };
         p.appendChild( document.createTextNode( usr.user ));
 

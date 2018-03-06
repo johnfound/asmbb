@@ -9,7 +9,7 @@
 
 @clHeader: white;
 @clHeaderShadow: #d80027;
-@paddingHeader: 8px 16px 8px 16px;
+@paddingHeader: 0px 16px;
 @paddingFooter: 8px;
 
 @clCurrentTagBG: #ffcc40;

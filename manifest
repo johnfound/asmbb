@@ -1,5 +1,5 @@
-C Sorting\sfor\sthe\susers\slist.\sSome\sextra\sfeatures\sfor\sthe\schat\s-\stitle\sbar\snotifications,\susers\saway\sstatus\swhen\sswitching\sto\sanother\stab.
-D 2018-03-05T22:31:20.639
+C Fixed\ssmall\sbugs\sin\sthe\sskins.
+D 2018-03-06T00:28:05.324
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 3bb8566e4074f08792a0ec093deb5bf58286249f
@@ -302,7 +302,7 @@ F www/templates/Wasp/activity6.tpl 588b1dde51b134d63d350f7d99c73f787c6dcbeb
 F www/templates/Wasp/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
 F www/templates/Wasp/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/Wasp/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
-F www/templates/Wasp/chat.less 89925f5fd29467d5bc764759bab4da439574a117
+F www/templates/Wasp/chat.less 010e45705f1d626712ec2f1d5565134644ee7087
 F www/templates/Wasp/chat.tpl c42600e18f612e4d45c4fb827393bab840064a14
 F www/templates/Wasp/common.less 8887de78d67b8d035225be314011390184f13a62
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
@@ -334,7 +334,7 @@ F www/templates/Wasp/nav_search.tpl 4713a709b1a400d292db0a3f20b94183b6659df5
 F www/templates/Wasp/nav_thread.tpl e32a01610e6aee21ad95636a770b917ea69d44fb
 F www/templates/Wasp/nav_userslist.tpl 6ef44e0325d1b57df7789021ec146acddf90c72d
 F www/templates/Wasp/navigation.less 3bd1663882584ca0a555ab86694c6143d7fa613f
-F www/templates/Wasp/one_user.tpl 5577432eadc99ef515272bbade377ad72bb214fc
+F www/templates/Wasp/one_user.tpl d45cc1df21e07f89c9813e0312ea7c9ca0cc21c3
 F www/templates/Wasp/post_view.tpl f20d6d9d46c198b4dfab18a0bc5e9a221e20199d
 F www/templates/Wasp/posteditor.less 745c407a35b60119125d0852fd4ceac84a663acd
 F www/templates/Wasp/postnew.less e6fb32ca27408023a01767162d7eb6ec337dd23f
@@ -377,8 +377,8 @@ F www/templates/mobile/activity6.tpl b5c8a9fbc2efa2eac931ea024f5d78047618cfc5 l
 F www/templates/mobile/activity7.tpl 606eb1ee82da0767dd85e3d2ac63a07e9874a5fb l
 F www/templates/mobile/activity8.tpl 36d833a0164bb74532e88161cff3d7c8d05cef52 l
 F www/templates/mobile/activity9.tpl 60fe5018f101f822fa00434bff49db7a3f7da947 l
-F www/templates/mobile/chat.less a0a457a076065216c171491bfe752250e66d6d5f
-F www/templates/mobile/chat.tpl 532fae0d57353d3dd828f7fa8b50b8baf2148ca8
+F www/templates/mobile/chat.less 72ba960856d7a1c4a9bb3db48b6096d2da609c1a
+F www/templates/mobile/chat.tpl 1b420c95db094694a4b4f9a3528d437822c76bc6
 F www/templates/mobile/common.less 762e4e8198de87fbcb131462b3476432725a2c65 l
 F www/templates/mobile/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/mobile/del_confirm.tpl cdcb838e2e3a339de5408643fd2c2f3c447ab916 l
@@ -418,7 +418,7 @@ F www/templates/mobile/preview.tpl 6bd29d06a6720e51db6d4d73b7572f9fcc1ff32f l
 F www/templates/mobile/search.less 33b9d9d3e6a805df33f6b0e4ed846ab592fc014e
 F www/templates/mobile/search_result.tpl 439d5d06fc9b2de76abc3f912b9dbd0ef9516801
 F www/templates/mobile/settings.less 2c85d86a6ee551b453016b466d3209e456507ae6
-F www/templates/mobile/skin_variables.lsi 4bd445cec11779544df86914ff9b3e3120a31386
+F www/templates/mobile/skin_variables.lsi 4838f57154db53897257c918702f3c0e566cf0f8
 F www/templates/mobile/sqlite.less d6c705801f27dd30658b51803f0638ded21bb45c l
 F www/templates/mobile/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
 F www/templates/mobile/thread_info.tpl ae0e028153a94cc044003abbe3cd4a063127de08
@@ -430,7 +430,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 4135b65b574e88d3cb286df89d40f96d6d54f0e9 x
-P 7f97e5ad8ba489e9b2da98e511944df1d1c35738
-R e55478b266737f900d4e4c9a9fcc071e
+P 6e644d5bea92e8a5c70483073f66a77bb9980195
+R 5610db5a902469e4f5e25f9be36651bb
 U johnfound
-Z 3699727623cd0f77653d8220be0492ab
+Z c2050fa8c8c05dde929260900b21755c
