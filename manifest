@@ -1,5 +1,5 @@
-C Fixed\sstring\sleak.\sFixed\sbug\sin\sthe\schat\sJS.\sDraggable\spost\seditor\sfloating\swindow.\sRelated\sskin\scss\schanges.
-D 2018-03-08T07:11:28.974
+C Added\sforgotten\sfile.\sIt\sis\sutility\sscript,\snot\sa\spart\sof\sthe\sengine\scode.
+D 2018-03-08T07:13:11.102
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 3bb8566e4074f08792a0ec093deb5bf58286249f
@@ -42,6 +42,7 @@ F source/post.asm 8ca98efa4054fd68bac90429778f8ca05945d859
 F source/post_data.asm 3ca626cfd4fe38680bfe5a61115edfc7f14bd70d
 F source/postdebug.asm bda4e22fe38390a011c9d0ed890756caf4d3207e
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
+F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/render2.asm 2f52088ab3245dbe8623994f9c7bedca2b84bac5
 F source/search.asm 15f6469bf4117fa6c22ded98a5613d07e2a8697a
 F source/search.sql 34cf6eea11403e7ac709cd1588bd84c57257135f
@@ -430,7 +431,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 4135b65b574e88d3cb286df89d40f96d6d54f0e9 x
-P fb0ccb9fffc756c1229c43c589e45829be4790a9
-R 6a2468a14f241b30feb06489ac29a03d
+P 0a58c1b88f3b0819d72abc25b10f1614aa344633
+R 109a7133b403e5af912708f7d2d4a3f3
 U johnfound
-Z de7cfd10534377761b6cf9b5e55c9313
+Z c3bab28937ccb8d233c7323e9d64942a
