@@ -1,5 +1,5 @@
-C Implemented\slight\smobile\stheme\s"MoLight"\sas\sa\spair\sfor\s"Light".\sIncreased\sthe\slimit\sof\sthe\schat\sbacklog,\sloaded\son\sentering.
-D 2018-03-08T17:55:23.958
+C Added\sMoLight\sto\sthe\stemplates/create_tar.sh\sscript.
+D 2018-03-08T17:56:27.059
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 3bb8566e4074f08792a0ec093deb5bf58286249f
@@ -429,7 +429,7 @@ F www/templates/Wasp/users_online.less f2319e03a6c6828d4a9ae579e83857e4fc0bb0bf
 F www/templates/Wasp/userslist.less 9dae27c4e52c68f3351549034bdd7f9754bce069
 F www/templates/Wasp/userslist_hdr.tpl aa1d0bbe31f3624bc75cdec179d471ac496fd990
 F www/templates/build_styles.sh 79bd825b56536d3f01b674e9a15f412989e9ee5e x
-F www/templates/create_tar.sh ff82a0ca4260a3d1712233ceb3af4f98b810e112 x
+F www/templates/create_tar.sh a99337fba10c58f44de425b75207c54d0b17c132 x
 F www/templates/mobile/_images 70c26c9bd422a7e59f2dca80d02ec99f39b390fb l
 F www/templates/mobile/activation_email_subject.tpl e0bd685144e72197dd0034b068e82d7604f926d2 l
 F www/templates/mobile/activation_email_text.tpl 50d1d6b7fe42736e334ab6870d7cc72e9085889d l
@@ -504,7 +504,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 4135b65b574e88d3cb286df89d40f96d6d54f0e9 x
-P 5c48337d107461de60b4aca91459f07e9b62e1cb
-R 77f96ec5b6ef6dacf5e5eb1ec3a47101
+P 7c390eeb49ba60ca73b881184ea3d5d0e9ba8b71
+R 17065257b93a1a1eea206cce7441388a
 U johnfound
-Z db00f5f7d021b6e3e3b04ee862aaf73b
+Z 3d99d49a5a632a1ad570a2373fb4053c

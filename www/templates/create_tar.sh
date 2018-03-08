@@ -1,3 +1,3 @@
 #!/bin/bash
 
-tar -czf ./templates.tar.gz ./Light/ ./mobile/ ./Wasp/
+tar -czf ./templates.tar.gz ./Light/ ./mobile/ ./Wasp/ ./MoLight/
