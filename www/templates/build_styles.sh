@@ -8,3 +8,6 @@ cd ../Wasp
 
 cd ../mobile
 ./compile_styles.sh
+
+cd ../MoLight
+./compile_styles.sh

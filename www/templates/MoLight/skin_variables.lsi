@@ -1,0 +1,76 @@
+@globWidth: 100%;
+@globMaxWidth: none;
+@globMargin: 8px auto 8px auto;
+
+@msgBoxWidth: 100%;
+
+@clColor1: white;
+@clColor1FG: #105289;
+
+@clHeader: white;
+@clHeaderShadow: #d80027;
+@paddingHeader: 0px;
+@paddingFooter: 8px 0px 0px 0px;
+
+@clCurrentTagBG: #105289;
+@clCurrentTagFG: white;
+
+@paddingTags: 8px 0px;
+@paddingOneTag: 2px 4px;
+@marginOneTag: 2px 4px 2px 0px;
+@borderRadTags: 8px 0px 0px 8px;
+@borderTags: 1px solid @clCurrentTagBG;
+
+@clThreadLink: #105289;
+
+@clFakeUser: #ff80FF;
+@clBodyBG: white;
+@clBodyFG: black;
+@clDarkBG: white;
+@clDarkFG: black;
+
+@borderEdit: 2px solid @clSeparator;
+
+@clArticleBG: white;
+@clArticleFG: black;
+
+@clFormBG: #d0d0d0;
+@clFormFG: @clColor1FG;
+@clDisabledBG: #e0e0e0;
+@clDisabledFG: #404040;
+
+@clEditorBG: white;
+@clEditorFG: black;
+@bgEditor: @clEditorBG 12px -10px ~"/" 24px 120px no-repeat;
+@bgEditorFocus: @clEditorBG 12px -70px ~"/" 24px 120px no-repeat;
+
+@clButtonBG: #105289;
+@clButtonFG: white;
+
+@clButtonActiveBG: #1e98ff;
+@clButtonActiveFG: white;
+@borderButton: none;
+@borderButtonActive: none;
+@borderNavRad: 4px;
+@paddingNav: 1px 4px;
+
+@clSeparator: #a0a0a0;
+@borderQuote: 2px solid @clSeparator;
+@clQuoteTitle: #105289;
+
+@clPostInfoBG: #d0d0d0;
+@clPostInfoFG: black;
+
+@FontMain:      "Verdana", sans-serif;
+@FontMonospace: "Liberation Mono", "Courier New", monospaced;
+
+@HeaderBackground: none;
+
+@clMsgInfoBG: green;
+@clMsgInfoFG: white;
+
+@clMsgErrorBG: red;
+@clMsgErrorFG: white;
+
+@clMsgWarningBG: yellow;
+@clMsgWarningFG: red;

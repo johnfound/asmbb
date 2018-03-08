@@ -1,5 +1,5 @@
-C Added\sforgotten\sfile.\sIt\sis\sutility\sscript,\snot\sa\spart\sof\sthe\sengine\scode.
-D 2018-03-08T07:13:11.102
+C Implemented\slight\smobile\stheme\s"MoLight"\sas\sa\spair\sfor\s"Light".\sIncreased\sthe\slimit\sof\sthe\schat\sbacklog,\sloaded\son\sentering.
+D 2018-03-08T17:55:23.958
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 3bb8566e4074f08792a0ec093deb5bf58286249f
@@ -19,14 +19,14 @@ F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm 68bbfe93e1ef897978ef4dc79c654020abb34e69
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
-F source/chat.asm 5e4724e0f7d0f0925fab8a9feb36e40d54448dd8
+F source/chat.asm 8f9fcea1f9ccb3974470d2d861ea7c1d707f08d1
 F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
 F source/commands.asm 0295ed9fcc8f68f28c60438840704333caa89ccc
 F source/create.sql 24a7edc74cc0855e578cf5f5cfe8f450cedae2d8
 F source/delete.asm 5a916c3647c52baa753951d93fbbfaa3175627d4
 F source/edit.asm c7dcdfef76ba1f76ff2e86abf2c79a3f14460843
 F source/engine.asm 83b084a8d269a086fbf41f91338f3e467653693d
-F source/engine.fpr e9dd29093e667f278a4da451d1ca5be4d556e9e9
+F source/engine.fpr 35d170632898cabf19550c92df42fdf0e31168f9
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 4c4271690919f55b4eddd71c7c4b0b44596f1c81
@@ -150,7 +150,7 @@ F www/images/sources/yellow_back.png d7aed4145104dc3224a3fb46f03c14cf6d386167
 F www/images/title.svg cfda872f2467a82c172f6e309ae7a385fdaabff5
 F www/ld-musl-i386.so d787058cb540c591edd2bc5fc1ddad9fac72f61f x
 F www/libsqlite3.so 7ec554841266559cb0e08b27b2afd8aab1869044 x
-F www/lighttpd.conf d3f7c8fb33f78b942e93a0bcbdcdbc7288a9555f
+F www/lighttpd.conf 697f2a90588d5579f514022dc56f3c6d71fadbc2
 F www/robots.txt bed60589d6ab1cc0470f3ba582444612d1c4109a
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/Light/_images/anon.png 9184b9fe4cf4632fd4dc7baf7db2eeccd8c57334 l
@@ -245,6 +245,79 @@ F www/templates/Light/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/Light/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d2 l
 F www/templates/Light/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/Light/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
+F www/templates/MoLight/_images e92d275a07bab3b4dca92c861daa356fccd8b538 l
+F www/templates/MoLight/activation_email_subject.tpl e0bd685144e72197dd0034b068e82d7604f926d2 l
+F www/templates/MoLight/activation_email_text.tpl 50d1d6b7fe42736e334ab6870d7cc72e9085889d l
+F www/templates/MoLight/activity0.tpl 66800be0587fffe32c9acf83029cb8fc7ac74332 l
+F www/templates/MoLight/activity1.tpl 6fa6f00fea84fee0253d4707881c9a5338feb90f l
+F www/templates/MoLight/activity10.tpl bc1c313b326ae3ea9f440b0f607cfd0f8ce482d6 l
+F www/templates/MoLight/activity11.tpl 3a1ef0a6e3383b59f0e17e7bff76186ed93336b5 l
+F www/templates/MoLight/activity12.tpl 490dd079393fc2a2180dd0cc5f7f9581fee448dd l
+F www/templates/MoLight/activity13.tpl e5c3c56a5acdf56383fd3e5710c342444a30b61c l
+F www/templates/MoLight/activity14.tpl 8012d3a8f8147ef4ea446c49fe994f4e0f0e0b38 l
+F www/templates/MoLight/activity15.tpl 955d52b0160283783778a2e3af17125bc2c9ee8e l
+F www/templates/MoLight/activity16.tpl c3bb31fa19e15df415b7e7d6f942dad1e80c70c7 l
+F www/templates/MoLight/activity17.tpl 1229faf8484fa7878c0ff385af534d94b012cf9a l
+F www/templates/MoLight/activity2.tpl 0c02bfb196ad6955c2e9bdfc53e313d15d32a6f6 l
+F www/templates/MoLight/activity3.tpl d076539803d955db90cc721ad51644f7c7d4bb70 l
+F www/templates/MoLight/activity4.tpl 6a7b65a1f69740098b92dfee5e56d9420a3d0980 l
+F www/templates/MoLight/activity5.tpl a0f664d4ee44680703ed8dc5cf30c1046b21dea0 l
+F www/templates/MoLight/activity6.tpl b5c8a9fbc2efa2eac931ea024f5d78047618cfc5 l
+F www/templates/MoLight/activity7.tpl 606eb1ee82da0767dd85e3d2ac63a07e9874a5fb l
+F www/templates/MoLight/activity8.tpl 36d833a0164bb74532e88161cff3d7c8d05cef52 l
+F www/templates/MoLight/activity9.tpl 60fe5018f101f822fa00434bff49db7a3f7da947 l
+F www/templates/MoLight/chat.less 6c9cecdbfd45314577fd6a64ad4ac4765decb851
+F www/templates/MoLight/chat.tpl e2a56477c83f8e29b8357d8d43e26b514564a8ed
+F www/templates/MoLight/common.less 762e4e8198de87fbcb131462b3476432725a2c65 l
+F www/templates/MoLight/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
+F www/templates/MoLight/del_confirm.tpl cdcb838e2e3a339de5408643fd2c2f3c447ab916 l
+F www/templates/MoLight/delete.less 3a74460f12ec494d6ac273a831839c1242abdc60 l
+F www/templates/MoLight/error.less 83cd53cf80eb467b611ebe7865c41c96694c293f l
+F www/templates/MoLight/error_html_end.tpl 3729362af2738a816684e06dd05bbfff10a39d02
+F www/templates/MoLight/error_html_start.tpl bb9719e341078e7b101f39c8ff92b54e403915c6
+F www/templates/MoLight/form_edit.tpl 7fd4b8be3fd1b0bf82a4b87a74852ce9fe7e83d7
+F www/templates/MoLight/form_edit_thread.tpl 9ba48416deb4498a8dcad61198289fb396592980 l
+F www/templates/MoLight/form_editinfo.tpl 91a3644fb4b1021bffa2356f7291f6e457eebe1e l
+F www/templates/MoLight/form_login.tpl 1ca5a25baff036f4b5a655b72d25c18c987a8ed7 l
+F www/templates/MoLight/form_new_post.tpl 8d49d3712dae533e8a15a522baadd32c230b6f9f l
+F www/templates/MoLight/form_new_thread.tpl 95aeb8e36c8aff51b101dca130c101071c917b6c l
+F www/templates/MoLight/form_post_debug.tpl 0a3e574bb2595001a5c1cebbd66c59aefd6aaab7 l
+F www/templates/MoLight/form_register.tpl 6e44ae46c9d0df170d76cb91b145bc2f3d60b7ea l
+F www/templates/MoLight/form_reset_password.tpl 90a83e1c6756ae652670b3470bbe6aac02972276 l
+F www/templates/MoLight/form_reset_request.tpl 74a4b6da9f76d26f8ca433a6113ab9e87dee3c4a l
+F www/templates/MoLight/form_settings.tpl a4635e33d4fa270b3b69c39572f4bfc94ea8ccc2 l
+F www/templates/MoLight/form_setup.tpl 7e32c9ff828a1cd2698285f3519632978add1b00 l
+F www/templates/MoLight/form_sqlite_console.tpl b90d0e298e5cc10782bafbe2e403cceb365a2fe4 l
+F www/templates/MoLight/login.less 49d99249ed83383d17fc94fc8610517aa4c96846
+F www/templates/MoLight/main_html_end.tpl d8b3ec3c2cdc952fcab6638d4147ee7e9cd2ba96 l
+F www/templates/MoLight/main_html_start.tpl b93c0043a09f7ef6614707de05a8b45f8af6b33f l
+F www/templates/MoLight/markdown.less 45c9d8e366e2cfcaba4c2cacb4421af6388b21c9
+F www/templates/MoLight/minimag_suffix.tpl f3a1414972a13590a7c984b53b6fd2ddd3a47f3a l
+F www/templates/MoLight/nav_list.tpl 580abd0547137f604a05a525aefb34e520f6b7ab l
+F www/templates/MoLight/nav_search.tpl 29858e2ca8b4ac6a1f2660c6f3039c5683386976 l
+F www/templates/MoLight/nav_thread.tpl 851b655a70770fd41465661c6a03531d9008b212 l
+F www/templates/MoLight/nav_userslist.tpl f44893d9191cdabb718fca881a15419579728ecd l
+F www/templates/MoLight/navigation.less a4b813498e8918e0757b6e8731417a1a7b16e968 l
+F www/templates/MoLight/one_user.tpl f1e1aacad832e82f4b446f755387efe7f6d815b1 l
+F www/templates/MoLight/post_view.tpl 4e4b1a73db2462b1954e92ec092c71c438b63e85 l
+F www/templates/MoLight/posteditor.less af013f51fda1a0a8710d4aa2be99f1a4481abcd1
+F www/templates/MoLight/postnew.less 3df1b56984c0e0268104a69862782120a40f06be l
+F www/templates/MoLight/posts.less 96108ce60e7f4d127269a5437765a62898fb94e7
+F www/templates/MoLight/preview.tpl 6bd29d06a6720e51db6d4d73b7572f9fcc1ff32f l
+F www/templates/MoLight/search.less 33b9d9d3e6a805df33f6b0e4ed846ab592fc014e
+F www/templates/MoLight/search_result.tpl 439d5d06fc9b2de76abc3f912b9dbd0ef9516801
+F www/templates/MoLight/settings.less 2c85d86a6ee551b453016b466d3209e456507ae6
+F www/templates/MoLight/skin_variables.lsi 9d5e2d373c59f075dc9708fe244c7e33d725d63f
+F www/templates/MoLight/sqlite.less d6c705801f27dd30658b51803f0638ded21bb45c l
+F www/templates/MoLight/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
+F www/templates/MoLight/thread_info.tpl ae0e028153a94cc044003abbe3cd4a063127de08
+F www/templates/MoLight/thread_list.less 3638fc640ba08a0e430b565cf9ab637f6fcba855
+F www/templates/MoLight/threadnew.less c2af3d158e2e03851692576dce99f5287e50b0c6 l
+F www/templates/MoLight/userinfo.less 79d3588748d43f5cea66fa2f586a57f2b8fd22f3
+F www/templates/MoLight/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
+F www/templates/MoLight/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d2 l
+F www/templates/MoLight/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
+F www/templates/MoLight/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/Wasp/_images/anon.png f1150ae9c16cb5dd89c7f9f6c502bb6128783519
 F www/templates/Wasp/_images/ban.svg 546185941f28a293e8f23727192c8c40258da120
 F www/templates/Wasp/_images/chatemoticons 92b583a5a5e7d203c807f62b3733d6e731355681 l
@@ -305,7 +378,7 @@ F www/templates/Wasp/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/Wasp/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
 F www/templates/Wasp/chat.less be309c19698e8b329c0a7328334b084926413b90
 F www/templates/Wasp/chat.tpl 7973b6e383aeaeaac614cba68ec0156ba1566812
-F www/templates/Wasp/common.less 8887de78d67b8d035225be314011390184f13a62
+F www/templates/Wasp/common.less b686a7e3b1acbf0c6be87a7d99edc9b7d7ecdff4
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 17d02b6b8ab0b59548446258f0f2efdf507d6af2
 F www/templates/Wasp/delete.less f77246e7f9fd0680ddb1ef2351b2b4ec5cef54f2
@@ -355,7 +428,7 @@ F www/templates/Wasp/userinfo.tpl 31a67fb1e469465986f6760c6a3dcb35636a2f39
 F www/templates/Wasp/users_online.less f2319e03a6c6828d4a9ae579e83857e4fc0bb0bf
 F www/templates/Wasp/userslist.less 9dae27c4e52c68f3351549034bdd7f9754bce069
 F www/templates/Wasp/userslist_hdr.tpl aa1d0bbe31f3624bc75cdec179d471ac496fd990
-F www/templates/build_styles.sh b8522fb67875909a5558a0d389655dff710b22a6 x
+F www/templates/build_styles.sh 79bd825b56536d3f01b674e9a15f412989e9ee5e x
 F www/templates/create_tar.sh ff82a0ca4260a3d1712233ceb3af4f98b810e112 x
 F www/templates/mobile/_images 70c26c9bd422a7e59f2dca80d02ec99f39b390fb l
 F www/templates/mobile/activation_email_subject.tpl e0bd685144e72197dd0034b068e82d7604f926d2 l
@@ -431,7 +504,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 4135b65b574e88d3cb286df89d40f96d6d54f0e9 x
-P 0a58c1b88f3b0819d72abc25b10f1614aa344633
-R 109a7133b403e5af912708f7d2d4a3f3
+P 5c48337d107461de60b4aca91459f07e9b62e1cb
+R 77f96ec5b6ef6dacf5e5eb1ec3a47101
 U johnfound
-Z c3bab28937ccb8d233c7323e9d64942a
+Z db00f5f7d021b6e3e3b04ee862aaf73b

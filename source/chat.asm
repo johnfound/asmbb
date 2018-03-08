@@ -1,7 +1,7 @@
 CHAT_MAX_USER_NAME = 20
 CHAT_MAX_MESSAGE = 1000
 
-sqlSelectChat           text "select id, time, user, original, message from chatlog where id in (select id from chatlog where id > ?1 order by id desc limit 100) and time > strftime('%s', 'now') - 86400;"
+sqlSelectChat           text "select id, time, user, original, message from chatlog where id in (select id from chatlog where id > ?1 order by id desc limit 1000) and time > strftime('%s', 'now') - 86400;"
 sqlSelectUsers          text "select time, session, username, original, status, force from ChatUsers where status<>0 order by original;"
 
 sqlUpdateChatSession    text "update ChatUsers set time = strftime('%s', 'now'), force = NULL where session = ?1;"

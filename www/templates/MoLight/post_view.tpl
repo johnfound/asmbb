@@ -1,0 +1,1 @@
+../Wasp/post_view.tpl
