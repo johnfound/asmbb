@@ -194,10 +194,11 @@
         };
       };
 
-      do_notify = (Math.abs((chat_log.scrollTop + chat_log.clientHeight) - chat_log.scrollHeight));
+      do_notify = ( Math.abs((chat_log.scrollTop + chat_log.clientHeight) - chat_log.scrollHeight) > 128 );
 
       if ( (! total_cnt) && (do_notify || document.hidden) && cnt ) {
-        if ( chat_log.lastChild.tagName != 'HR' ) chat_log.appendChild(document.createElement('HR'));
+        var last = chat_log.lastChild;
+        if ( last && (last.tagName != 'HR') ) chat_log.appendChild(document.createElement('HR'));
       };
 
       chat_log.appendChild(all);

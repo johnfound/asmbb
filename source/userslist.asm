@@ -121,6 +121,8 @@ begin
         stdcall TextCat, eax, txt "</div>"
 
         mov     [esp+4*regEAX], edx
+
+        stdcall StrDel, [.list]
         clc
         popad
         return
