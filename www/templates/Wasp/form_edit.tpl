@@ -3,7 +3,7 @@
 [css:posteditor.css]
 
 <div class="editor" id="editor">
-  <div class="ui">
+  <div class="ui" id="draghere">
     <a class="ui left" href="../">Thread list</a>
     <a class="ui left" href="!by_id">Back</a>
   </div>
@@ -19,3 +19,36 @@
     </div>
   </form>
 </div>
+
+
+<script>
+dragElement(document.getElementById("editor"),document.getElementById("draghere") );
+
+function dragElement(elmnt, hdr) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  hdr.onmousedown = dragMouseDown;
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+  }
+
+  function closeDragElement() {
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+</script>

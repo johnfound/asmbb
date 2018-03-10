@@ -35,13 +35,13 @@ begin
         mov     eax, [.date_time.day]
 
         stdcall StrCharCat, ebx, [HTTPdays+4*eax]
-        stdcall StrCharCat, ebx, ' '
+        stdcall StrCat, ebx, txt ' '
 
 ; date
         stdcall NumToStr, [.date_time.date], ntsUnsigned or ntsFixedWidth or ntsDec + 2
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax
-        stdcall StrCharCat, ebx, ' '
+        stdcall StrCat, ebx, txt ' '
 
         mov     eax, [.date_time.month]
         stdcall StrCharCat, ebx, [HTTPmonths+4*eax-4]
@@ -49,17 +49,17 @@ begin
         stdcall NumToStr, [.date_time.year], ntsSigned or ntsFixedWidth or ntsDec + 4
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax
-        stdcall StrCharCat, ebx, ' '
+        stdcall StrCat, ebx, txt ' '
 
 ; time
         stdcall NumToStr, [.date_time.hour], ntsUnsigned or ntsFixedWidth or ntsDec + 2
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax
-        stdcall StrCharCat, ebx, ':'
+        stdcall StrCat, ebx, txt ':'
         stdcall NumToStr, [.date_time.minute], ntsUnsigned or ntsFixedWidth or ntsDec + 2
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax
-        stdcall StrCharCat, ebx, ':'
+        stdcall StrCat, ebx, txt ':'
         stdcall NumToStr, [.date_time.second], ntsUnsigned or ntsFixedWidth or ntsDec + 2
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax

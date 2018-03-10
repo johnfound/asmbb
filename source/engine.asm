@@ -26,7 +26,7 @@ options.AlignCode = 0
 options.ShowImported = 0
 
 options.DebugWeb = 0
-options.DebugSQLite = 0
+options.DebugSQLite = 1
 
 options.DebugWebSSE = 0         ; debug server sent events - creates a command "!echo_events" for debugging SSE.
 options.Benchmark = 0
@@ -59,6 +59,7 @@ include "delete.asm"
 include "userinfo.asm"
 include "accounts.asm"
 include "users_online.asm"
+include "userslist.asm"
 include "statistics.asm"
 include "settings.asm"
 include "sqlite_console.asm"
@@ -88,7 +89,7 @@ uglobal
 endg
 
 
-;rb 373
+rb 373
 
 
 start:
@@ -265,9 +266,25 @@ endp
 
 proc DebugInfo, .pSpecial
 begin
+        push    edx
+
+        mov     edx, [.pSpecial]
+        test    [edx+TSpecialParams.userStatus], permAdmin
+        jz      .error_for_admins_only
+
         stdcall TextCreate, sizeof.TText
-        stdcall ListSQLiteStatus, eax, [.pSpecial]
+        stdcall ListSQLiteStatus, eax, edx
         clc
+        pop     edx
+        return
+
+
+.error_for_admins_only:
+        push    edi
+        stdcall TextMakeRedirect, 0, "/!message/only_for_admins"
+        mov     eax, edi
+        pop     edi edx
+        stc
         return
 endp
 
@@ -437,7 +454,39 @@ begin
         stdcall NumToStr, [esi+TArray.lparam], ntsDec or ntsUnsigned
         stdcall TextCat, edx, eax
         stdcall StrDel, eax
-        stdcall TextCat, edx, txt "</p>"
+        stdcall TextCat, edx, txt '</p><p>All allocated strings:</p><table class="users_table"><tr><th>Handle</th><th>Content</th></tr>'
+
+        xor     ecx, ecx
+        dec     ecx
+
+.loop2:
+        inc     ecx
+        cmp     ecx, [esi+TArray.count]
+        jae     .end_strings
+
+        cmp     [esi+TArray.array+4*ecx], 0
+        je      .loop2
+
+        stdcall TextCat, edx, txt "<tr><td>$"
+
+        lea     ebx, [ecx+$c0000000]
+
+        stdcall NumToStr, ebx, ntsHex or ntsUnsigned or ntsFixedWidth + 8
+        stdcall TextCat, edx, eax
+        stdcall StrDel, eax
+
+        stdcall TextCat, edx, txt "</td><td>"
+
+        stdcall StrEncodeHTML, ebx
+        stdcall TextCat, edx, eax
+        stdcall StrDel, eax
+
+        stdcall TextCat, edx, txt "</td><tr>"
+        jmp     .loop2
+
+.end_strings:
+        stdcall TextCat, edx, txt "</table>"
+
 
         stdcall MutexRelease, StrMutex
 

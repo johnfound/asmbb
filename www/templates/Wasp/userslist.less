@@ -1,0 +1,59 @@
+@import "skin_variables.lsi";
+
+div.users_list {
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
+
+  table {
+    margin: 8px 0px;
+    border-collapse: collapse;
+    border-spacing: 0px;
+    background-color: @clArticleBG;
+    color: @clArticleFG;
+    width: 100%;
+
+    th {
+      border: 1px solid @clSeparator;
+      border-left: none;
+      border-right: none;
+      padding: 8px;
+      text-align: center;
+      a {
+        text-decoration: none;
+      }
+      a.sorted {
+        color: @clButtonBG;
+      }
+    }
+
+    td {
+      border: 1px solid @clSeparator;
+      padding: 8px 32px;
+      text-align: right;
+      border-left: none;
+      border-right: none;
+    }
+
+    td.nick {
+      text-align: left;
+    }
+
+    td.avatar {
+      text-align: center;
+      padding: 0px;
+
+      img {
+        width: 64px;
+        height: 64px;
+        background-color: @clColor1;
+        display: block;
+        margin: 4px auto;
+      }
+    }
+
+  }
+
+
+}
+

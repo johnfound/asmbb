@@ -22,6 +22,19 @@ create table Guests (
 );
 
 create index idxGuests_time on Guests(LastSeen);
+create index idxGuestsDesc on Guests(addr desc);
+
+create table GuestRequests (
+  addr integer references Guests(addr) on delete cascade,
+  time integer,
+  method text,
+  request text,
+  referer text,
+  client text
+);
+
+create index idxGuestRequests on GuestRequests(addr);
+
 
 create table Users (
   id        integer primary key autoincrement,
@@ -58,17 +71,16 @@ CREATE TABLE UserLog (
 create index idxUserLogIP on userlog(remoteIP);
 create index idxUserLogTime on UserLog(time);  -- Any other index on UserLog ruins the performance. See users_online.sql for the query.
 
-
-create table WaitingActivation(
-  id integer primary key,
+create table WaitingActivation (
+  a_secret text primary key,
+  operation integer not null,    -- 0 = Registering account; 1 = change email; 2 = reseting password.
   nick text unique,
   passHash text unique,
   salt  text unique,
   email text unique,
-  ip_from text,
+  ip_from    integer not null,
   time_reg   integer,
-  time_email integer,
-  a_secret text unique
+  time_email integer
 );
 
 

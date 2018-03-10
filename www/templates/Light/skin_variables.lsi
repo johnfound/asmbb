@@ -7,8 +7,9 @@
 @clColor1: white;
 @clColor1FG: #105289;
 
-@clHeader: #1e98ff;
-@paddingHeader: 0px 0px 8px 0px;
+@clHeader: white;
+@clHeaderShadow: #d80027;
+@paddingHeader: 0px;
 @paddingFooter: 8px 0px 0px 0px;
 
 @clCurrentTagBG: #105289;
@@ -48,7 +49,8 @@
 
 @clButtonActiveBG: #1e98ff;
 @clButtonActiveFG: white;
-@borderButtonActive: 2px solid @clSeparator;
+@borderButton: none;
+@borderButtonActive: none;
 @borderNavRad: 4px;
 @paddingNav: 1px 4px;
 
@@ -59,8 +61,8 @@
 @clPostInfoBG: #d0d0d0;
 @clPostInfoFG: black;
 
-@FontMain: "Droid Sans",sans-serif,Arial;
-@FontMonospace: Consolas,"Courier New",Courier,monospace;
+@FontMain:      "Verdana", sans-serif;
+@FontMonospace: "Liberation Mono", "Courier New", monospaced;
 
 @HeaderBackground: none;
 

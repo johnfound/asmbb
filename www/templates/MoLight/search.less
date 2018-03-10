@@ -1,0 +1,83 @@
+@import "skin_variables.lsi";
+
+div.post {
+  margin-top: 8px;
+  background-color: @clPostBG;
+}
+
+div.avatar {
+  float: left;
+  padding: 8px;
+  margin: 8px;
+  background-color: @clDarkBG;
+}
+
+
+.user_name {
+  clear: both;
+  margin: 0px 8px;
+  padding-bottom: 8px;
+  color: @clPostFG;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 80%;
+
+  a {
+    font-weight: bold;
+  }
+
+}
+
+img.smallavatar {
+  width: 64px;
+  height: 64px;
+  display: block;
+  background-color: @clColor1;
+}
+
+div.post_thread {
+  padding: 8px;
+  background-color: @clColor1;
+  font-size: 12px;
+
+  a {
+    font-size: 16px;
+    font-weight: bold;
+    flex-grow: 1;
+  }
+
+  * {
+    margin: 0px 8px;
+  }
+
+}
+
+
+div.post_sum {
+  pre {
+    font-family: 'Source Code Pro', monospace;
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+
+
+a.block_link {
+  display: block;
+  margin: 8px;
+  float: right;
+}
+
+
+div.changed {
+  font-size: 80%;
+  display: inline-block;
+  padding-top: 4px;
+  vertical-align: center;
+
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  background-image: url("[special:skin]/_images/edit_gray.svg");
+  text-indent: 24px;
+}

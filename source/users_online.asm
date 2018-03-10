@@ -100,6 +100,11 @@ endp
  uaTrackingUsers = 11
  uaEditingThread = 12    ; ThreadID
  uaChatting      = 13
+ uaResetingRequest   = 14       ; the page with reset request.
+ uaResetRequestSent  = 15       ; the POST with reset request.
+ uaResetingForm      = 16       ; the reset password form.
+ uaResetingPassword  = 17
+ uaReadingUserlist   = 18
 
 
 

@@ -7,8 +7,8 @@
   [case:[special:canpost]| |<a class="ui left" href="!post">Answer</a>]
   <span class="spacer"></span>
   [case:[special:isadmin]| |
-    <a class="ui right" href="/!sqlite">SQL console</a>
     <a class="ui right" href="/!settings[special:urltag]">Settings</a>
+    <a class="ui right" href="/!sqlite">SQL console</a>
   ]
 </div>
 <h1 class="thread_caption">[caption]

@@ -8,6 +8,7 @@ div.ui {
   overflow: hidden;
   display: flex;
   flex-wrap: wrap;
+  flex-shrink: 0;
 }
 
 a.ui {
@@ -49,12 +50,11 @@ div.page_row {
   margin-top: 8px;
   display: flex;
   flex-wrap: wrap;
-  align-items: start;
 }
 
 a.page_link {
   background-color: @clColor1;
-  padding: 4px;
+  padding: @paddingNav;
   text-align: center;
   display:inline-block;
   min-width: 32px;

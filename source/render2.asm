@@ -147,6 +147,7 @@ if used RenderTemplate
               "alltags",     RenderTemplate.sp_alltags,               \ ; HTML no encoding
               "setupmode",   RenderTemplate.sp_setupmode,             \ ; no encoding
               "search",      RenderTemplate.sp_search,                \ ; Needs encoding!
+              "order",       RenderTemplate.sp_sort,                  \ ; Needs encoding!
               "usearch",     RenderTemplate.sp_usearch,               \ ; Needs encoding!
               "skins=",      RenderTemplate.sp_skins,                 \ ; HTML no encoding
               "posters=",    RenderTemplate.sp_posters,               \
@@ -239,12 +240,10 @@ begin
         stdcall StrCat, ebx, txt '/'
         stdcall StrCat, ebx, [.hTemplate]
 
-        stdcall StrPtr, ebx
-        OutputLn eax
-
         stdcall FileOpenAccess, ebx, faReadOnly
         stdcall StrDel, ebx
         mov     ebx, eax
+        jc      .exit
 
         stdcall FileSize, ebx
         push    eax
@@ -1070,6 +1069,10 @@ end if
 
 .sp_search:
         stdcall GetQueryParam, [.pSpecial], txt "s="
+        jmp     .special_string_free
+
+.sp_sort:
+        stdcall GetQueryParam, [.pSpecial], txt "sort="
         jmp     .special_string_free
 
 .sp_usearch:
@@ -2298,8 +2301,7 @@ begin
         jmp     .finish
 
 .root:
-        stdcall StrNew
-        stdcall StrCharCat, eax, "/"
+        stdcall StrDupMem, txt "/"
         stc
 
 .finish:

@@ -1,10 +1,10 @@
 CHAT_MAX_USER_NAME = 20
 CHAT_MAX_MESSAGE = 1000
 
-sqlSelectChat           text "select id, time, user, original, message from chatlog where id in (select id from chatlog where id > ?1 order by id desc limit 100) and time > strftime('%s', 'now') - 86400;"
+sqlSelectChat           text "select id, time, user, original, message from chatlog where id in (select id from chatlog where id > ?1 order by id desc limit 1000) and time > strftime('%s', 'now') - 86400;"
 sqlSelectUsers          text "select time, session, username, original, status, force from ChatUsers where status<>0 order by original;"
 
-sqlUpdateChatSession    text "update ChatUsers set time = strftime('%s', 'now'), status = 1, force = NULL where session = ?1;"
+sqlUpdateChatSession    text "update ChatUsers set time = strftime('%s', 'now'), force = NULL where session = ?1;"
 sqlDeleteClosedSessions text "update ChatUsers set status = 0 where time < strftime('%s', 'now') - 10; delete from ChatUsers where time < strftime('%s', 'now') - 86400;"           ; 10 seconds timeout of the chat session.
 
 cContentTypeEvent text 'Content-Type: text/event-stream', 13, 10, "X-Accel-Buffering: no", 13, 10, 13, 10, "retry: 1000", 13, 10, 13, 10  ;"X-Accel-Buffering: no", 13, 10, "Transfer-Encoding: chunked", 13, 10, 13, 10

@@ -53,13 +53,13 @@ begin
 
         mov     ebx, [esi+TSpecialParams.page_title]
 
-        stdcall StrCharCat, ebx, ' "'
+        stdcall StrCat, ebx, txt ' "'
         cinvoke sqliteColumnText, [.stmt2], 1
 
         stdcall StrEncodeHTML, eax
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax
-        stdcall StrCharCat, ebx, '"'
+        stdcall StrCat, ebx, txt '"'
 
         cmp     [esi+TSpecialParams.page_num], 0
         je      .page_ok

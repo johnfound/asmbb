@@ -583,7 +583,7 @@ begin
 
         stdcall StrDupMem, 'The save failed with the following message: "'
         stdcall StrCat, eax ; second from the stack
-        stdcall StrCharCat, eax, '"'
+        stdcall StrCat, eax, txt '"'
 
 
 .error_write:
@@ -645,7 +645,7 @@ begin
 
         stdcall StrDupMem, 'The save failed with the following message: "'
         stdcall StrCat, eax ; second from the stack
-        stdcall StrCharCat, eax, '"'
+        stdcall StrCat, eax, txt '"'
 
 .finish_error:
         mov     [esp+4*regEAX], eax

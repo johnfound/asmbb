@@ -437,7 +437,7 @@ begin
         jz      .error_invalid_caption
 
         stdcall NumToStr, [.threadID], ntsDec or ntsUnsigned
-        stdcall StrCharCat, [.slug], "."
+        stdcall StrCat, [.slug], txt "."
         stdcall StrCat, [.slug], eax
         stdcall StrDel, eax
 
@@ -451,7 +451,7 @@ begin
         cmp     [esi+TSpecialParams.dir], 0
         je      .tags_ok
 
-        stdcall StrCharCat, [.tags], ','
+        stdcall StrCat, [.tags], txt ','
         stdcall StrCat, [.tags], [esi+TSpecialParams.dir]
 
 .tags_ok:
@@ -534,7 +534,7 @@ begin
         stdcall StrDupMem, txt "../"
         push    eax
         stdcall StrCat, eax, [.slug]
-        stdcall StrCharCat, eax, "/"
+        stdcall StrCat, eax, txt "/"
 
         stdcall TextMakeRedirect, edi, eax
         stdcall StrDel ; from the stack

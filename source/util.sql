@@ -5,6 +5,20 @@
 select datetime(LastSeen, 'unixepoch') as Date, (addr >> 24 & 255)||'.'||(addr >> 16 & 255)||'.'||(addr >> 8 & 255)||'.'||(addr & 255) as IP, Client
 from Guests where LastSeen > strftime('%s', 'now') - 300 order by LastSeen;
 
+select
+  (g.addr >> 24 & 255)||'.'||(g.addr >> 16 & 255)||'.'||(g.addr >> 8 & 255)||'.'||(g.addr & 255) as IP,
+  datetime(g.LastSeen, 'unixepoch') as Time,
+  gr.method,
+  gr.request,
+  gr.client,
+  gr.referer
+from
+  guests g
+left join
+  guestrequests gr on g.addr = gr.addr
+where
+  g.rowid in (select rowid from guests order by rowid desc limit 200) and
+  IP <> '149.62.201.127';  -- this is the current my IP.
 
 /* Rebuilds the full text search table */
 

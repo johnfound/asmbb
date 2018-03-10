@@ -5,15 +5,6 @@
 
 // some extras and utilities
 
-    //show online user in mobille
-    function ShowOnline() {
-      if (document.getElementById("syslog").classList.contains('show_div')) {
-        document.getElementById("syslog").classList.remove('show_div');
-      } else {
-        document.getElementById("syslog").classList.add('show_div');
-      }
-    }
-
     function linkify(inputText) {
         var replacedText, replacePattern1;
         //URLs starting with http://, https://, or ftp://
@@ -88,6 +79,9 @@
     var user_line;
     var chat_log;
     var sys_log;
+    var total_cnt = 0;
+    var title = document.title;
+    var do_notify = false;
 
 // Entering the chat.
 
@@ -158,65 +152,108 @@
       };
     };
 
-    function MakeUserStr(user, original) {
+    function CreateUserSpan(user, original) {
       if (user == original) {
         var c = "user";
       } else {
         var c = "user fake";
       };
-      return '<span onclick="InsertNick(this)" class="' + c + '" title="' + original + '">' + user + '</span>';
-    }
+      return '<span onclick="InsertNick(this)" class="' + c + '" title="' + original + '">' + user + '</span>: ';
+    };
 
+    function CreateTimeSpan(time) {
+      var date = new Date(time*1000);
+      var hours = "0" + date.getHours();
+      var minutes = "0" + date.getMinutes();
+      var seconds = "0" + date.getSeconds();
+
+      return '<span>(' + hours.substr(-2) + ':' + minutes.substr(-2) + ':' + seconds.substr(-2) + ')</span> ';
+    };
 
     function OnMessage(e) {
 
       var msgset = JSON.parse(e.data);
+      var ntf = "";
       var cnt = 0;
+
+      var all = document.createDocumentFragment();
 
       for (var i in msgset.msgs) {
         var msg = msgset.msgs[i];
 
         if ( ! document.getElementById("chat" + msg.id) ) {
-          var date = new Date(msg.time*1000);
-          var hours = "0" + date.getHours();
-          var minutes = "0" + date.getMinutes();
-          var seconds = "0" + date.getSeconds();
-          var Time = hours.substr(-2) + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 
-          var para = '<p id="chat' + msg.id + '"><span>(' + Time + ')</span> ' + MakeUserStr(msg.user, msg.originalname) + ': ' + replaceEmoticons(linkify(msg.text)) + '</p>';
-
-          chat_log.innerHTML += para;
-          chat_log.scrollTop = chat_log.scrollHeight;
+          var p = document.createElement('p');
+          p.id = "chat" + msg.id;
+          p.innerHTML = CreateTimeSpan(msg.time) + CreateUserSpan(msg.user, msg.originalname) + replaceEmoticons(linkify(msg.text));
+          all.appendChild(p);
           cnt++;
+
+          if (ntf != "") { ntf += ", "};
+          ntf += msg.user;
         };
       };
 
-      if (cnt && document.hidden) notify("New messages in the chat.");
+      do_notify = ( Math.abs((chat_log.scrollTop + chat_log.clientHeight) - chat_log.scrollHeight) > 128 );
+
+      if ( (! total_cnt) && (do_notify || document.hidden) && cnt ) {
+        var last = chat_log.lastChild;
+        if ( last && (last.tagName != 'HR') ) chat_log.appendChild(document.createElement('HR'));
+      };
+
+      chat_log.appendChild(all);
+
+      if (  ! do_notify ) {
+        chat_log.scrollTop = chat_log.scrollHeight - chat_log.clientHeight;
+        if (! document.hidden) {
+          total_cnt = 0;
+          document.title = title;
+        };
+      };
+
+      if (cnt && document.hidden) notify("New messages in the chat from: " + ntf);
+
+      if (cnt && (document.hidden || do_notify)) {
+        total_cnt = total_cnt + cnt;
+        document.title = '(' + total_cnt.toString() + ') ' + title;
+      };
+    };
+
+    document.onvisibilitychange = function() {
+      if ( ! document.hidden ) {
+        total_cnt = 0;
+        document.title = title;
+        UserStatusChange(1);
+        chat_log.scrollTop = chat_log.scrollHeight - chat_log.clientHeight;
+      } else {
+        UserStatusChange(2);
+      };
     };
 
     function OnUserOnline (e) {
       var msgset = JSON.parse(e.data);
-      var html = "";
+
+      while (sys_log.firstChild) {
+        sys_log.removeChild(sys_log.lastChild);
+      };
 
       for (var i in msgset.users) {
         var usr = msgset.users[i];
-        var uclass;
+        var p = document.createElement('p');
 
-        if (usr.originalname == usr.user) {
-          uclass = "user";
-        } else {
-          uclass = "fake_user";
-        };
+        p.classList.add( usr.originalname == usr.user ? "user" : "fake_user");
+        if (usr.status == 2) p.classList.add("gray_user");
+        p.onclick = function() { InsertNick(this) };
+        p.appendChild( document.createTextNode( usr.user ));
 
-        html += '<p class="' + uclass + '" onclick="InsertNick(this)" title="' + usr.originalname + '">' + usr.user + '</p>';
+        sys_log.appendChild(p);
 
         if (usr.flagSelf) {
           user_line.innerHTML = usr.user;
           user_line.value = user_line.textContent;
         };
       };
-
-      sys_log.innerHTML = html;
+      if (  ! do_notify ) chat_log.scrollTop = chat_log.scrollHeight - chat_log.clientHeight;
     };
 
     function OnConnect(e) {
@@ -243,3 +280,4 @@
       <a class="icon_btn" id="chat_submit" alt="?" onclick="SendMessage()"></a>
     </div>
   </div>
+

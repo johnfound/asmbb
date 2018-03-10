@@ -1,4 +1,18 @@
+MIN_PASSWORD_RESET_LIMIT = 3600         ; 1h
+DEFAULT_PASSWORD_RESET_LIMIT = 86400    ; 24h
 
+
+MIN_PASS_LENGTH = 6
+MAX_PASS_LENGTH = 1024
+
+PERSISTENT_MAX_AGE equ "31536000"       ; 1 year persistent cookie.
+
+
+
+uopCreateAccount = 0
+uopChangeEmail   = 1
+uopResetPassword = 2
+; uopDeleteAccount ?
 
 
 sqlGetUserInfo   text "select id, salt, passHash, status from Users where lower(nick) = lower(?)"
@@ -9,7 +23,7 @@ sqlCleanSessions text "delete from sessions where last_seen < (strftime('%s','no
 
 sqlLoginTicket text "select ?1 as ticket"
 sqlCheckLoginTicket text "select 1 from userlog where remoteIP=?1 and Client = ?2 and Param = ?3 and Activity = ?4"
-sqlClearLoginTicket text "update userlog set Param = NULL where remoteIP=?1 and Activity = 1 or Activity = 3"
+sqlClearLoginTicket text "update userlog set Param = NULL where remoteIP=?1 and Activity in (1, 3, 14, 15, 16, 17)"
 
 
 proc UserLogin, .pSpecial
@@ -239,7 +253,18 @@ begin
 
         stdcall TextCat, edi, "Set-Cookie: sid="
         stdcall TextCat, edx, [.session]
-        stdcall TextCat, edx, <"; HttpOnly; Path=/", 13, 10>
+        stdcall TextCat, edx, "; HttpOnly; Path=/; "
+
+        stdcall GetPostString, ebx, "persistent", 0
+        test    eax, eax
+        jz      .max_age_ok
+
+        stdcall StrDel, eax
+        stdcall TextCat, edx, <" Max-Age=", PERSISTENT_MAX_AGE, ";">
+
+.max_age_ok:
+
+        stdcall TextCat, edx, <txt 13, 10>
         mov     edi, edx
 
 .cookie_ok:
@@ -342,7 +367,7 @@ endp
 
 
 ;sqlCheckMinInterval text "select (strftime('%s','now') - time_reg) as delta from WaitingActivation where (ip_from = ?) and ( delta>30 ) order by time_reg desc limit 1"
-sqlRegisterUser    text "insert or replace into WaitingActivation (nick, passHash, salt, email, ip_from, time_reg, time_email, a_secret) values (?, ?, ?, ?, ?, strftime('%s','now'), NULL, ?)"
+sqlRegisterUser    text "insert or replace into WaitingActivation (nick, passHash, salt, email, ip_from, time_reg, time_email, a_secret, operation) values (?1, ?2, ?3, ?4, ?5, strftime('%s','now'), NULL, ?6, ?7)"
 sqlCheckUserExists text "select 1 from Users where lower(nick) = lower(?) or email = ? limit 1"
 
 proc RegisterNewUser, .pSpecial
@@ -441,12 +466,11 @@ begin
 
         stdcall StrLen, [.password]
 
-        cmp     eax, 5
-        jbe     .error_short_pass
+        cmp     eax, MIN_PASS_LENGTH
+        jb      .error_short_pass
 
-        cmp     eax, 1024
+        cmp     eax, MAX_PASS_LENGTH
         ja      .error_trick
-
 
         stdcall GetPostString, ebx, "ticket", 0
         mov     [.ticket], eax
@@ -459,6 +483,8 @@ begin
         jz      .error_trick
 
 ; check the ticket
+
+        DebugMsg "Check the tcket."
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckLoginTicket, sqlCheckLoginTicket.length, eax, 0
@@ -487,6 +513,8 @@ begin
         jne     .error_trick
 
 ; hash the password
+
+        DebugMsg "The ticket is OK"
 
         stdcall HashPassword, [.password]
         jc      .error_technical_problem
@@ -521,7 +549,7 @@ begin
         je      .error_exists
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRegisterUser, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRegisterUser, sqlRegisterUser.length, eax, 0
 
         stdcall StrPtr, [.user]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
@@ -539,6 +567,8 @@ begin
 
         stdcall StrPtr, [.secret]
         cinvoke sqliteBindText, [.stmt], 6, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteBindInt, [.stmt], 7, uopCreateAccount
 
         cinvoke sqliteStep, [.stmt]
         mov     ebx, eax
@@ -637,9 +667,9 @@ endp
 
 
 sqlBegin      text  "begin transaction;"
-sqlActivate   text  "insert into Users ( nick, passHash, salt, status, email ) select nick, passHash, salt, ?, email from WaitingActivation where a_secret = ?"
-sqlDeleteWait text  "delete from WaitingActivation where a_secret = ?"
-sqlCheckCount text  "select count(1), salt from WaitingActivation where a_secret = ?"
+sqlActivate   text  "insert into Users ( nick, passHash, salt, status, email, Register ) select nick, passHash, salt, ?1, email, time_reg from WaitingActivation where a_secret = ?2"
+sqlDeleteWait text  "delete from WaitingActivation where a_secret = ?1"
+sqlCheckType  text  "select operation from WaitingActivation where a_secret = ?1"
 sqlCommit     text  "commit transaction"
 sqlRollback   text  "rollback"
 
@@ -674,25 +704,24 @@ begin
 ; check again whether all is successful.
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckCount, sqlCheckCount.length, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckType, sqlCheckType.length, eax, 0
 
         stdcall StrPtr, ebx
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
-        jne     .rollback
+        jne     .rollback               ; there is no such record in the WaitingActivation table.
 
-        cinvoke sqliteColumnInt, [.stmt], 0
-        cmp     eax, 1
-        jne     .rollback
-
-        cinvoke sqliteColumnType, [.stmt], 1    ; the salt if exists
+        cinvoke sqliteColumnInt, [.stmt], 0    ; the operation
         mov     [.type], eax
 
         cinvoke sqliteFinalize, [.stmt]
 
-        cmp     [.type], SQLITE_NULL
-        jne     .insert_new_user
+        cmp     [.type], uopCreateAccount
+        je      .insert_new_user
+
+        cmp     [.type], uopChangeEmail
+        jne     .rollback
 
 ; update user email
 
@@ -753,8 +782,8 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
-        cmp     [.type], SQLITE_NULL
-        jne     .msg_new_account
+        cmp     [.type], uopCreateAccount
+        je      .msg_new_account
 
         stdcall TextMakeRedirect, 0, "/!message/email_changed"
         jmp     .finish
@@ -785,6 +814,476 @@ begin
         jmp     .finish
 
 endp
+
+
+
+
+
+proc ResetPassword, .pSpecial
+
+.stmt      dd ?
+
+.username  dd ?
+.email     dd ?
+.password  dd ?
+.password2 dd ?
+.hash      dd ?
+.salt      dd ?
+.ticket    dd ?
+.secret    dd ?
+
+begin
+        pushad
+
+        xor     eax, eax
+        mov     [.username], eax
+        mov     [.email], eax
+        mov     [.password], eax
+        mov     [.password2], eax
+        mov     [.hash], eax
+        mov     [.salt], eax
+        mov     [.ticket], eax
+        mov     [.secret], eax
+
+        mov     esi, [.pSpecial]
+
+        mov     edx, [esi+TSpecialParams.cmd_list]
+        cmp     [edx+TArray.count], 0
+        je      .show_request_form          ; the first step.
+
+        mov     ebx, [edx+TArray.array] ; the step number.
+
+        stdcall StrLen, ebx
+        cmp     eax, 1
+        jne     .error_trick
+
+        stdcall StrPtr, ebx
+        mov     al, [eax]
+
+        cmp     al, '1'         ; the 1st post request.
+        je      .write_reset_request
+
+        cmp     al, '2'
+        je      .show_reset_form
+
+        cmp     al, '3'
+        je      .do_reset_password
+
+        jmp     .error_trick
+
+
+;---------------------------------------------------------------
+; Step 0 - display the reset request form.
+
+.show_request_form:
+
+        cmp     [esi+TSpecialParams.post_array], 0
+        jne     .error_trick
+
+        stdcall GetRandomString, 32
+        mov     [.ticket], eax
+
+        stdcall LogUserActivity, esi, uaResetingRequest, [.ticket]
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLoginTicket, sqlLoginTicket.length, eax, 0
+
+        stdcall StrPtr, [.ticket]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+
+        stdcall RenderTemplate, 0, 'form_reset_request.tpl', [.stmt], esi
+        mov     [esp+4*regEAX], eax
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        clc
+
+.finish:
+        stdcall StrDel, [.username]
+        stdcall StrDel, [.email]
+        stdcall StrDel, [.password]
+        stdcall StrDel, [.password2]
+        stdcall StrDel, [.hash]
+        stdcall StrDel, [.salt]
+        stdcall StrDel, [.ticket]
+        stdcall StrDel, [.secret]
+
+        popad
+        return
+
+;---------------------------------------------------------------
+; Step 1 - the request has been posted here.
+
+sqlCheckTime    text "select 1 from UserLog where remoteIP = ?1 and Activity = 15 and time > strftime('%s','now') - ?2"
+sqlGetUserEmail text "select email from Users where nick = ?1"
+sqlResetRequest text "insert into WaitingActivation (nick, email, ip_from, time_reg, a_secret, operation) values (?1, ?2, ?3, strftime('%s','now'), ?4, ?5)"
+
+
+.write_reset_request:
+
+        cmp     [esi+TSpecialParams.post_array], 0
+        je      .error_trick
+
+; check the visitor last reset request.
+
+        mov     eax, DEFAULT_PASSWORD_RESET_LIMIT
+        mov     ecx, MIN_PASSWORD_RESET_LIMIT
+
+        stdcall GetParam, "reset_password_limit", gpInteger     ; in seconds between two reset attempts.
+        mov     ebx, eax
+        cmp     ebx, ecx
+        cmovb   ebx, ecx
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckTime, sqlCheckTime.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.remoteIP]
+        cinvoke sqliteBindInt, [.stmt], 2, ebx
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx,eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     ebx, SQLITE_ROW
+        je      .error_bad_user
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], "username", 0
+        test    eax, eax
+        jz      .error_bad_user
+
+        mov     [.username], eax
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], "email", 0
+        test    eax, eax
+        jz      .error_bad_user
+
+        mov     [.email], eax
+
+; check the email from the database.
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetUserEmail, sqlGetUserEmail.length, eax, 0
+
+        stdcall StrPtr, [.username]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .error_unknown_user
+
+        cinvoke sqliteColumnText, [.stmt], 0
+
+        stdcall StrCompCase, eax, [.email]
+        jnc     .error_unknown_user
+
+        cinvoke sqliteFinalize, [.stmt]
+
+; check the ticket
+
+        mov     eax, uaResetingRequest  ; the ticket from the previous form.
+        call    .check_the_ticket
+        jc      .error_trick
+
+        stdcall LogUserActivity, esi, uaResetRequestSent, 0
+
+; Register the user for password reset.
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlResetRequest, sqlResetRequest.length, eax, 0
+
+        stdcall StrPtr, [.username]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+        stdcall StrPtr, [.email]
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteBindInt, [.stmt], 3, [esi+TSpecialParams.remoteIP]
+
+        stdcall GetRandomString, 32
+        push    eax
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_TRANSIENT
+        stdcall StrDel ; from the stack
+
+        cinvoke sqliteBindInt, [.stmt], 5, uopResetPassword
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     ebx, SQLITE_DONE
+        jne     .error_write
+
+        stdcall ProcessActivationEmails
+
+; delete possible tickets.
+
+        call    .cleanup_tickets
+
+        stdcall TextMakeRedirect, 0, "/!resetpassword/2"
+        jmp     .finish_redirect
+
+
+
+;---------------------------------------------------------------
+; Step 2 - the request has been sent, so show the reset form.
+
+.show_reset_form:
+
+        stdcall GetRandomString, 32
+        mov     [.ticket], eax
+
+        stdcall LogUserActivity, esi, uaResetingForm, [.ticket]
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLoginTicket, sqlLoginTicket.length, eax, 0
+
+        stdcall StrPtr, [.ticket]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+
+        stdcall RenderTemplate, 0, 'form_reset_password.tpl', [.stmt], esi
+        mov     [esp+4*regEAX], eax
+
+        cinvoke sqliteFinalize, [.stmt]
+        clc
+
+        jmp     .finish
+
+
+;---------------------------------------------------------------
+; Step 3 - check the parameters and actually reset the password
+
+sqlGetWaiting   text "select operation, nick, email, time_reg from WaitingActivation where a_secret = ?1"
+sqlSetUserPass  text "update users set passHash = ?1, salt = ?2 where nick = ?3"
+
+.do_reset_password:
+
+        mov     edi, [esi+TSpecialParams.post_array]
+        test    edi, edi
+        jz      .error_trick
+
+        stdcall GetPostString, edi, "username", 0
+        test    eax, eax
+        jz      .error_trick
+
+        mov     [.username], eax
+
+        stdcall GetPostString, edi, "email", 0
+        test    eax, eax
+        jz      .error_trick
+
+        mov     [.email], eax
+
+        stdcall GetPostString, edi, "secret", 0
+        test    eax, eax
+        jz      .error_trick
+
+        mov     [.secret], eax
+
+        stdcall GetPostString, edi, "ticket", 0
+        test    eax, eax
+        jz      .error_trick
+
+        mov     [.ticket], eax
+
+        stdcall GetPostString, edi, "password", 0
+        test    eax, eax
+        jz      .error_trick
+
+        mov     [.password], eax
+
+        stdcall GetPostString, edi, "password2", 0
+        test    eax, eax
+        jz      .error_trick
+
+        mov     [.password2], eax
+
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetWaiting, sqlGetWaiting.length, eax, 0
+
+        stdcall StrPtr, [.secret]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .error_missing_request
+
+        cinvoke sqliteColumnInt, [.stmt], 0     ; the operation
+        cmp     eax, uopResetPassword
+        jne     .error_missing_request
+
+        cinvoke sqliteColumnText, [.stmt], 1    ; the nick field.
+        stdcall StrCompCase, eax, [.username]
+        jnc     .error_missing_request
+
+        cinvoke sqliteColumnText, [.stmt], 2    ; the email used in the request.
+        stdcall StrCompCase, eax, [.email]
+        jnc     .error_missing_request
+
+        cinvoke sqliteFinalize, [.stmt]
+
+
+        stdcall StrCompCase, [.password], [.password2]
+        jnc     .error_not_match
+
+        stdcall StrLen, [.password]
+        cmp     eax, MIN_PASS_LENGTH
+        jb      .error_short_password
+
+        cmp     eax, MAX_PASS_LENGTH
+        ja      .error_trick
+
+        stdcall HashPassword, [.password]
+        mov     [.hash], eax
+        mov     [.salt], edx
+
+; check the ticket
+
+        mov     eax, uaResetingForm
+        call    .check_the_ticket
+        jc      .error_trick
+
+; everything is OK, so do reset the password.
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetUserPass, sqlSetUserPass.length, eax, 0
+
+        stdcall StrPtr, [.hash]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+        stdcall StrPtr, [.salt]
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
+        stdcall StrPtr, [.username]
+        cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     ebx, SQLITE_DONE
+        jne     .error_write
+
+; delete WaitingActivation record
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlDeleteWait, sqlDeleteWait.length, eax, 0
+
+        stdcall StrPtr, [.secret]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+; delete possible tickets.
+
+        call    .cleanup_tickets
+
+        stdcall TextMakeRedirect, 0, "/!message/congratulations"
+        jmp     .finish_redirect
+
+;.............................................................................................
+
+.error_write:
+        stdcall TextMakeRedirect, 0, "/!message/error_cant_write"
+        jmp     .finish_redirect
+
+.error_unknown_user:
+
+        cinvoke sqliteFinalize, [.stmt]
+
+.error_bad_user:
+
+        stdcall TextMakeRedirect, 0, "/!message/register_technical"
+        jmp     .finish_redirect
+
+.error_trick:
+
+        stdcall TextMakeRedirect, 0, "/!message/register_bot"
+        jmp     .finish_redirect
+
+.error_short_password:
+
+        stdcall TextMakeRedirect, 0, "/!message/register_short_pass"
+        jmp     .finish_redirect
+
+.error_not_match:
+
+        stdcall TextMakeRedirect, 0, "/!message/register_passwords_different"
+        jmp     .finish_redirect
+
+.error_missing_request:
+
+        cinvoke sqliteFinalize, [.stmt]
+        stdcall TextMakeRedirect, 0, "/!message/bad_secret"
+
+.finish_redirect:
+        mov     [esp+4*regEAX], edi
+        stc
+        jmp     .finish
+
+
+
+.check_the_ticket:
+        pushad
+
+;"select 1 from userlog where remoteIP=?1 and Client = ?2 and Param = ?3 and Activity = ?4"
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckLoginTicket, sqlCheckLoginTicket.length, eax, 0
+
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.remoteIP]
+
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_USER_AGENT"
+        jc      .no_ticket
+
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], "ticket", 0
+        test    eax, eax
+        jz      .no_ticket
+
+        push    eax
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_TRANSIENT
+        stdcall StrDel ; from the stack
+
+        mov     eax, [esp+4*regEAX]
+        cinvoke sqliteBindInt, [.stmt], 4, eax
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .no_ticket
+
+        cinvoke sqliteFinalize, [.stmt]
+        clc
+        popad
+        retn
+
+.no_ticket:
+        cinvoke sqliteFinalize, [.stmt]
+        stc
+        popad
+        retn
+
+
+.cleanup_tickets:
+        pushad
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlClearLoginTicket, sqlClearLoginTicket.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.remoteIP]
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+        popad
+        retn
+endp
+
+
+
 
 
 
@@ -1068,15 +1567,20 @@ begin
         stdcall StrPtr, [.email]
         cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC        ; new email
 
+        cinvoke sqliteBindInt, [.stmt], 5, [esi+TSpecialParams.remoteIP]
+
         stdcall StrPtr, [.secret]
         cinvoke sqliteBindText, [.stmt], 6, eax, [eax+string.len], SQLITE_STATIC        ; the secret
 
+        cinvoke sqliteBindInt, [.stmt], 7, uopChangeEmail
+
         cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_DONE
-        jne     .error_update
+        mov     ebx, eax
 
         cinvoke sqliteFinalize, [.stmt]
 
+        cmp     ebx, SQLITE_DONE
+        jne     .error_update
 
         stdcall GetParam, "email_confirm", gpInteger
         jc      .send_emails

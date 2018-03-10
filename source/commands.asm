@@ -64,6 +64,7 @@ PList tablePreCommands, tpl_func,                  \
       "!login",           UserLogin,               \
       "!logout",          UserLogout,              \
       "!register",        RegisterNewUser,         \
+      "!resetpassword",   ResetPassword,           \
       "!changepassword",  ChangePassword,          \
       "!changemail",      ChangeEmail,             \
       "!sqlite",          SQLiteConsole,           \
@@ -79,7 +80,8 @@ PList tablePreCommands, tpl_func,                  \
       "!chat_events",     ChatRealTime,            \
       "!echo_events",     EchoRealTime,            \    ; optional, depending on the options.DebugWebSSE
       "!postdebug",       PostDebug,               \    ; optional, depending on the options.DebugWeb
-      "!debuginfo",       DebugInfo                     ; optional, depending on the options.DebugSQLite
+      "!debuginfo",       DebugInfo,               \    ; optional, depending on the options.DebugSQLite
+      "!users",           UsersList
 end if
 
 if used tablePostCommands
@@ -107,7 +109,6 @@ proc ServeOneRequest, .hSocket, .requestID, .pParams2, .pPost2, .start_time
 .timehi   dd ?
 
 .timeRet  rd 2
-
 
 .special TSpecialParams
 
@@ -713,7 +714,7 @@ begin
         test    ecx, ecx
         jnz     .non_zero
 
-        stdcall StrCharCat, edi, "."
+        stdcall StrCat, edi, txt "."
         jmp     .href_ok
 
 .non_zero:
@@ -1035,6 +1036,10 @@ begin
         stdcall StrCompNoCase, [.extension], txt ".js"
         jc      .mime_ok
 
+        mov     eax, mimeTTF
+        stdcall StrCompNoCase, [.extension], txt ".ttf"
+        jc      .mime_ok
+
         xor     eax, eax
         stc
         return
@@ -1057,13 +1062,13 @@ mimePNG   text "image/png"
 mimeJPEG  text "image/jpeg"
 mimeSVG   text "image/svg+xml; charset=utf-8"
 mimeGIF   text "image/gif"
+mimeTTF   text "font/ttf"
 
 
 
 
 
-
-sqlSelectNotSent text "select id, nick, email, a_secret as secret, (select val from Params where id='host') as host, salt from WaitingActivation where time_email is NULL order by time_reg"
+sqlSelectNotSent text "select operation, nick, email, a_secret as secret, (select val from Params where id='host') as host, salt from WaitingActivation where time_email is NULL order by time_reg"
 sqlCleanWaiting  text "delete from WaitingActivation where time_reg < (strftime('%s','now') - 86400) and time_email is not NULL"
 
 proc ProcessActivationEmails
@@ -1092,7 +1097,7 @@ begin
 endp
 
 
-sqlUpdateEmailTime text "update WaitingActivation set time_email = strftime('%s','now') where id = ?"
+sqlUpdateEmailTime text "update WaitingActivation set time_email = strftime('%s','now') where a_secret = ?"
 
 proc SendActivationEmail, .stmt
 
@@ -1157,8 +1162,8 @@ begin
         lea     eax, [.stmt2]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateEmailTime, -1, eax, 0
 
-        cinvoke sqliteColumnInt, [.stmt], 0
-        cinvoke sqliteBindInt, [.stmt2], 1, eax
+        cinvoke sqliteColumnText, [.stmt], 3    ; secret
+        cinvoke sqliteBindText, [.stmt2], 1, eax, -1, SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt2]
         push    eax
@@ -1287,28 +1292,98 @@ endp
 
 
 
-sqlInsertGuest   text "insert or replace into Guests values (?, strftime('%s','now'), ?)"
-sqlClipGuests    text "delete from Guests where LastSeen < strftime('%s','now') - 864000"     ; 10 days = 864000 seconds
+sqlInsertGuest          text "insert into Guests values (?1, strftime('%s','now'), ?2)"
+sqlUpdateGuest          text "update Guests set LastSeen = strftime('%s','now'), Client = ?2 where addr = ?1"
+sqlInsertGuestRequest   text "insert into GuestRequests values (?1, strftime('%s','now'), ?2, ?3, ?4, ?5)"
+sqlClipGuests           text "delete from Guests where LastSeen < strftime('%s','now') - 864000"     ; 10 days = 864000 seconds
 
 proc InsertGuest, .pSpecial
-.stmt dd ?
+.stmt    dd ?
+.client  dd ?
+.method  dd ?
+.request dd ?
+.referer dd ?
+
 begin
         pushad
 
         mov     esi, [.pSpecial]
 
+        xor     eax, eax
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_USER_AGENT"
+        mov     [.client], eax
+
+        xor     eax, eax
+        stdcall ValueByName, [esi+TSpecialParams.params], "REQUEST_METHOD"
+        mov     [.method], eax
+
+        xor     eax, eax
+        stdcall ValueByName, [esi+TSpecialParams.params], "REQUEST_URI"
+        mov     [.request], eax
+
+        xor     eax, eax
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_REFERER"
+        mov     [.referer], eax
+
+
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertGuest, sqlInsertGuest.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.remoteIP]
+        cmp     [.client], 0
+        je      @f
+        stdcall StrPtr, [.client]
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+@@:
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
+        cinvoke sqliteFinalize, [.stmt]
 
-        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_USER_AGENT"
-        jc      @f
-        stdcall StrPtr, eax
+        cmp     ebx, SQLITE_DONE
+        je      .row_ok
+
+        cmp     ebx, SQLITE_CONSTRAINT
+        jne     .finish
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateGuest, sqlUpdateGuest.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.remoteIP]
+        cmp     [.client], 0
+        je      @f
+        stdcall StrPtr, [.client]
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 @@:
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 
+.row_ok:
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertGuestRequest, sqlInsertGuestRequest.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.remoteIP]
+
+        cmp     [.method], 0
+        je      @f
+        stdcall StrPtr, [.method]
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+@@:
+        cmp     [.request], 0
+        je      @f
+        stdcall StrPtr, [.request]
+        cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
+@@:
+        cmp     [.referer], 0
+        je      @f
+        stdcall StrPtr, [.referer]
+        cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
+@@:
+        cmp     [.client], 0
+        je      @f
+        stdcall StrPtr, [.client]
+        cinvoke sqliteBindText, [.stmt], 5, eax, [eax+string.len], SQLITE_STATIC
+@@:
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+.finish:
         cinvoke sqliteExec, [hMainDatabase], sqlClipGuests, 0, 0, 0
         popad
         return

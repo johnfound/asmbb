@@ -1,7 +1,24 @@
 @import "skin_variables.lsi";
 
+div.editor {
+  position: fixed;
+  right: 2.5%;
+  top: 16px;
+  width: 640px;
+  max-width: 60%;
+  overflow: hidden;
+  opacity: 0.5;
+  a {
+    font-weight: bold;
+  }
+}
+
+
+div.editor:hover {
+  opacity: 1;
+}
+
 #editform {
-  overflow: auto;
   margin: 8px 0px 0px 0px;
   padding: 16px;
   background-color: @clFormBG;
@@ -11,6 +28,12 @@
     font-weight: bold;
     margin: 0px 0px 4px 0px;
   }
+}
+
+#draghere {
+  background-color: @clFormBG;
+  padding: 8px 8px 0px 8px;
+  margin-bottom: 8px;
 }
 
 h1.fakeedit {
@@ -60,21 +83,3 @@ div.panel {
 }
 
 
-div.editor {
-  position: fixed;
-  right: 2.5%;
-  top: 16px;
-  width: 640px;
-  max-width: 60%;
-  margin: 8px;
-  opacity: 0.3;
-  overflow: auto;
-  a {
-    font-weight: bold;
-  }
-}
-
-
-div.editor:hover {
-  opacity: 1;
-}

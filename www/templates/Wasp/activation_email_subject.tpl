@@ -1,1 +1,1 @@
-[case:[salt]|Email change confirmation for http://[host]|Account activation link for http://[host]]
+[case:[operation]|Account activation link|Email change confirmation|Password reset request] for http://[host]
