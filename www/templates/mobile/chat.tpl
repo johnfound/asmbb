@@ -232,7 +232,7 @@
       };
     };
 
-    document.onvisibilitychange = function() {
+    document.addEventListener("visibilitychange", function() {
       if ( ! document.hidden ) {
         total_cnt = 0;
         document.title = title;
@@ -241,7 +241,7 @@
       } else {
         UserStatusChange(2);
       };
-    };
+    });
 
     function OnUserOnline (e) {
       var msgset = JSON.parse(e.data);
