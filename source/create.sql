@@ -22,6 +22,19 @@ create table Guests (
 );
 
 create index idxGuests_time on Guests(LastSeen);
+create index idxGuestsDesc on Guests(addr desc);
+
+create table GuestRequests (
+  addr integer references Guests(addr) on delete cascade,
+  time integer,
+  method text,
+  request text,
+  referer text,
+  client text
+);
+
+create index idxGuestRequests on GuestRequests(addr);
+
 
 create table Users (
   id        integer primary key autoincrement,

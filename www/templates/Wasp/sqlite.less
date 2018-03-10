@@ -64,27 +64,31 @@ table.sql_rows {
   border-collapse: collapse;
   border: 2px solid black;
   width: 100%;
+
+  th {
+    border: 2px solid black;
+    padding: 8px;
+    max-width: 300px;
+    text-align: center;
+  }
+
+  td {
+    font-family: @FontMonospace;
+    border: 2px solid gray;
+    padding: 8px;
+    max-width: 400px;
+    max-height: 400px;
+    text-align: left;
+    vertical-align: top;
+
+    white-space: pre-wrap;       /* css-3 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    word-break: break-all;
+  }
+
 }
 
-table.sql_rows th {
-  border: 2px solid black;
-  padding: 8px;
-  max-width: 300px;
-  text-align: center;
-}
 
-table.sql_rows td {
-  border: 2px solid gray;
-  padding: 8px;
-  max-width: 400px;
-  max-height: 400px;
-  text-align: left;
-  vertical-align: top;
-
-  white-space: pre-wrap;       /* css-3 */
-  word-wrap: break-word;       /* Internet Explorer 5.5+ */
-  word-break: break-all;
-}
 
 input.title {
   display: inline-block;

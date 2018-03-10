@@ -1,5 +1,5 @@
-C Added\sMoLight\sto\sthe\stemplates/untar.sh\sscript.
-D 2018-03-08T17:59:41.269
+C Added\smissing\sactivity18.tpl;\sFixed\sthe\sguests\slog\shanding\sSQL\sbug.\sFixed\smissing\salt=""\selements\sin\sthe\simages.
+D 2018-03-10T07:47:47.351
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 3bb8566e4074f08792a0ec093deb5bf58286249f
@@ -21,12 +21,12 @@ F source/accounts.asm 68bbfe93e1ef897978ef4dc79c654020abb34e69
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/chat.asm 8f9fcea1f9ccb3974470d2d861ea7c1d707f08d1
 F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
-F source/commands.asm 0295ed9fcc8f68f28c60438840704333caa89ccc
-F source/create.sql 24a7edc74cc0855e578cf5f5cfe8f450cedae2d8
+F source/commands.asm 21f46fbad1315350b2fd489608009448b092f6f2
+F source/create.sql b31cbe6edac30cc64067eb36bea6c913187985a2
 F source/delete.asm 5a916c3647c52baa753951d93fbbfaa3175627d4
 F source/edit.asm c7dcdfef76ba1f76ff2e86abf2c79a3f14460843
-F source/engine.asm 83b084a8d269a086fbf41f91338f3e467653693d
-F source/engine.fpr 35d170632898cabf19550c92df42fdf0e31168f9
+F source/engine.asm c8f0a171bc5de99b01418bbd09dfe7072868ba7a
+F source/engine.fpr cadb65e997231dc4ebf4f3a6ca7551c0b1405d1e
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 4c4271690919f55b4eddd71c7c4b0b44596f1c81
@@ -67,7 +67,7 @@ F source/users_online.asm 1f0f3ed36b3903ef9749f61c10c334f094d79420
 F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/userslist.asm bbc976c8ea94198220c0dd8edee8577c83374c46
 F source/userslist.sql 9ff073add084452a4ce34a7560eeee5384c6c8b8
-F source/util.sql 3ca632de8753d0ec4b088d19ff389d11fb1406e9
+F source/util.sql 6c2d84863debecd9c78f4f9b57aa56591d7b2847
 F source/version.asm 8f305267cf0d9c3c68169594562b26a2fb811052
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
@@ -185,6 +185,7 @@ F www/templates/Light/activity14.tpl 8012d3a8f8147ef4ea446c49fe994f4e0f0e0b38 l
 F www/templates/Light/activity15.tpl 955d52b0160283783778a2e3af17125bc2c9ee8e l
 F www/templates/Light/activity16.tpl c3bb31fa19e15df415b7e7d6f942dad1e80c70c7 l
 F www/templates/Light/activity17.tpl 1229faf8484fa7878c0ff385af534d94b012cf9a l
+F www/templates/Light/activity18.tpl a43359d158536a3a4a0deaa8e8ae9a86f34ee375 l
 F www/templates/Light/activity2.tpl 0c02bfb196ad6955c2e9bdfc53e313d15d32a6f6 l
 F www/templates/Light/activity3.tpl d076539803d955db90cc721ad51644f7c7d4bb70 l
 F www/templates/Light/activity4.tpl 6a7b65a1f69740098b92dfee5e56d9420a3d0980 l
@@ -258,6 +259,7 @@ F www/templates/MoLight/activity14.tpl 8012d3a8f8147ef4ea446c49fe994f4e0f0e0b38 
 F www/templates/MoLight/activity15.tpl 955d52b0160283783778a2e3af17125bc2c9ee8e l
 F www/templates/MoLight/activity16.tpl c3bb31fa19e15df415b7e7d6f942dad1e80c70c7 l
 F www/templates/MoLight/activity17.tpl 1229faf8484fa7878c0ff385af534d94b012cf9a l
+F www/templates/MoLight/activity18.tpl a43359d158536a3a4a0deaa8e8ae9a86f34ee375 l
 F www/templates/MoLight/activity2.tpl 0c02bfb196ad6955c2e9bdfc53e313d15d32a6f6 l
 F www/templates/MoLight/activity3.tpl d076539803d955db90cc721ad51644f7c7d4bb70 l
 F www/templates/MoLight/activity4.tpl 6a7b65a1f69740098b92dfee5e56d9420a3d0980 l
@@ -368,6 +370,7 @@ F www/templates/Wasp/activity14.tpl 8d46d831d6839fec9b7e24a168a5b36f0b424070
 F www/templates/Wasp/activity15.tpl ba75c6d1c3591ffecc8d72745c98a6836800d23b
 F www/templates/Wasp/activity16.tpl a74885cd31f3f68746d0bef134ce7f5d2f1378dc
 F www/templates/Wasp/activity17.tpl cf42ce77db0a0e6413a6a8b8240cc2df48e10c2a
+F www/templates/Wasp/activity18.tpl 87fc4a416760e5e7f5c37b121720c7ce45d53975
 F www/templates/Wasp/activity2.tpl 56e2d424b3fa2d47dfb3e39c84dc979e02783ef4
 F www/templates/Wasp/activity3.tpl 151d90f8a6ac52cfd53a32d38786496bb7c12d11
 F www/templates/Wasp/activity4.tpl eee15696527fd153d221b2437bf586c339f707bc
@@ -407,8 +410,8 @@ F www/templates/Wasp/nav_list.tpl 914df512f84e17ade19aa30d67c04ee684789ba8
 F www/templates/Wasp/nav_search.tpl 4713a709b1a400d292db0a3f20b94183b6659df5
 F www/templates/Wasp/nav_thread.tpl e32a01610e6aee21ad95636a770b917ea69d44fb
 F www/templates/Wasp/nav_userslist.tpl 6ef44e0325d1b57df7789021ec146acddf90c72d
-F www/templates/Wasp/navigation.less 9738e8097d95f75e85685300096d326bde44550f
-F www/templates/Wasp/one_user.tpl aa186aa25ad0bcd5e01ceb64e20fe2135ec09285
+F www/templates/Wasp/navigation.less 56c1fa736c4705d39d606fa47fa0486527595e55
+F www/templates/Wasp/one_user.tpl 6bf8fc5739971116473d7dd78425514f13bf6c4a
 F www/templates/Wasp/post_view.tpl f20d6d9d46c198b4dfab18a0bc5e9a221e20199d
 F www/templates/Wasp/posteditor.less d080939a47cb51602af1c8b9f111b06ad5afae40
 F www/templates/Wasp/postnew.less e6fb32ca27408023a01767162d7eb6ec337dd23f
@@ -418,7 +421,7 @@ F www/templates/Wasp/search.less 26d71c8302df47653ab962e35d9dc2c0f5adcbad
 F www/templates/Wasp/search_result.tpl d13272c6953e4dcb56e51c71028b2a9b0cb12794
 F www/templates/Wasp/settings.less 0078ba6b14e6639afd2bfaf7ab29ae59703bd53e
 F www/templates/Wasp/skin_variables.lsi da5d29a4a9d3929970a1ac0fffab855e2229c9f7
-F www/templates/Wasp/sqlite.less f49f986ce6b0a0dfa5bc906128aad37c3a233b0d
+F www/templates/Wasp/sqlite.less c08da11dabee8a18478a45a736bf673d9d58b3d7
 F www/templates/Wasp/statistics.tpl c0dd59a240e07c246fe9c0841eb1532b93f3f1ae
 F www/templates/Wasp/thread_info.tpl 970de92a09a675bac54da9aa73eaecd7ddd1ebf6
 F www/templates/Wasp/thread_list.less e783e396cc0884ae31df46074cd3e9d10550c10e
@@ -443,6 +446,7 @@ F www/templates/mobile/activity14.tpl 8012d3a8f8147ef4ea446c49fe994f4e0f0e0b38 l
 F www/templates/mobile/activity15.tpl 955d52b0160283783778a2e3af17125bc2c9ee8e l
 F www/templates/mobile/activity16.tpl c3bb31fa19e15df415b7e7d6f942dad1e80c70c7 l
 F www/templates/mobile/activity17.tpl 1229faf8484fa7878c0ff385af534d94b012cf9a l
+F www/templates/mobile/activity18.tpl a43359d158536a3a4a0deaa8e8ae9a86f34ee375 l
 F www/templates/mobile/activity2.tpl 0c02bfb196ad6955c2e9bdfc53e313d15d32a6f6 l
 F www/templates/mobile/activity3.tpl d076539803d955db90cc721ad51644f7c7d4bb70 l
 F www/templates/mobile/activity4.tpl 6a7b65a1f69740098b92dfee5e56d9420a3d0980 l
@@ -504,7 +508,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P b8547a13d021ca03edf37a76c7a4db36e088b564
-R 1b54737cea31dc25c28a571177e90966
+P 49e2afc20a4b3468a65e6a89cc10e3185287b084
+R f4c8cafaaf0370bf3e730b8a5a189d82
 U johnfound
-Z 5170afdb4d83339ffe6ebb98191830f9
+Z 433e97d0e804b23b75d55d931a371450
