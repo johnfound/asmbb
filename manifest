@@ -1,5 +1,5 @@
-C Added\smissing\sactivity18.tpl;\sFixed\sthe\sguests\slog\shanding\sSQL\sbug.\sFixed\smissing\salt=""\selements\sin\sthe\simages.
-D 2018-03-10T07:47:47.351
+C Admin\spriviledges\sfor\sthe\s!debuginfo\sand\sadditional\slist\sof\sall\sallocated\sstring.\sThis\scan\shelp\sto\sdebug\sstring\sleaks\sif\sany.
+D 2018-03-10T09:15:06.592
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 3bb8566e4074f08792a0ec093deb5bf58286249f
@@ -25,7 +25,7 @@ F source/commands.asm 21f46fbad1315350b2fd489608009448b092f6f2
 F source/create.sql b31cbe6edac30cc64067eb36bea6c913187985a2
 F source/delete.asm 5a916c3647c52baa753951d93fbbfaa3175627d4
 F source/edit.asm c7dcdfef76ba1f76ff2e86abf2c79a3f14460843
-F source/engine.asm c8f0a171bc5de99b01418bbd09dfe7072868ba7a
+F source/engine.asm 92190a2290c0faef593e9706f85426f8d7c09e76
 F source/engine.fpr cadb65e997231dc4ebf4f3a6ca7551c0b1405d1e
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -508,7 +508,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 49e2afc20a4b3468a65e6a89cc10e3185287b084
-R f4c8cafaaf0370bf3e730b8a5a189d82
+P 090f66b9b8d714b66561710e96874f3b3d8c5a72
+R 93c47a4dce825a6697813d6c84a9b20d
 U johnfound
-Z 433e97d0e804b23b75d55d931a371450
+Z e8c1bc7cb46c0432641195c689a636e6
