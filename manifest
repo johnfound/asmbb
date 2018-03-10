@@ -1,5 +1,5 @@
-C Merge\sthe\strunk\swith\s"reset_password"\sbranch.
-D 2018-03-10T09:16:40.101
+C Official\ssource\srelease\sv2.1
+D 2018-03-10T09:18:46.110
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 3bb8566e4074f08792a0ec093deb5bf58286249f
@@ -68,7 +68,7 @@ F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/userslist.asm bbc976c8ea94198220c0dd8edee8577c83374c46
 F source/userslist.sql 9ff073add084452a4ce34a7560eeee5384c6c8b8
 F source/util.sql 6c2d84863debecd9c78f4f9b57aa56591d7b2847
-F source/version.asm 8f305267cf0d9c3c68169594562b26a2fb811052
+F source/version.asm e626f9d54da7516361469c1d3d9c1afa5e74342d
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
 F www/images/chat_menu.svg d8485817c3e745dcb8b981bb80d264f18365e377
@@ -508,7 +508,8 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 0c12b88bb119dde4c1e2982933907e327c7ac1c9 e216b209df15884f124078791a6bb282ee94fba2
-R 93c47a4dce825a6697813d6c84a9b20d
+P 21aa17aef932487962291fc84ac815002ba4294b
+R 6f6cbcb8bf9f2a0a5e63131a82560c04
+T +sym-v2.1 *
 U johnfound
-Z a973a991c37c4ebf3cfc5ea70018dcbb
+Z 3f0ae240f367f91df78558439deecfa6
