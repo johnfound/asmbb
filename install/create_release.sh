@@ -18,6 +18,10 @@ echo "Compile mobile theme styles..."
 cd ../mobile/
 ./compile_styles.sh
 
+echo "Compile MoLight theme styles..."
+cd ../MoLight/
+./compile_styles.sh
+
 popd
 
 # copy engine files

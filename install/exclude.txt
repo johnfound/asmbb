@@ -1,4 +1,5 @@
 *.less
+*.lsi
 *.sh
 sources
 *.gz
