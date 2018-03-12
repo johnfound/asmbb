@@ -263,35 +263,51 @@ div.message {
 }
 
 
+/* Decorative checkbox mechanism. The label tag, must be styled separately! */
+
 input[type=checkbox] {
   position: absolute;
   z-index: -1;
 
-  &:focus ~ label {
+  &:focus + label {
     outline: 2px dotted @clSeparator;
     outline-offset: -2px;
   }
 
-  &:checked ~ label > span {
+  &:checked + label::before {
     color: lime;
     background-color: lime;
   }
 
-  ~ label {
-    display: block;
-    background-color: @clEditorBG;
-    color: @clEditorFG;
-    padding: 8px 8px 8px 14px;
+  &:checked + label.right::after {
+    color: lime;
+    background-color: lime;
+  }
 
-    span {
-        width: 20px;
-        line-height: 16px;
-        display: inline-block;
-        background-color: white;
-        color: white;
-        font-size: 16px;
-        border: 2px solid @clSeparator;
-        margin-right: 12px;
+  + label {
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    &::before {
+      content: '';
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      background-color: white;
+      border: 2px solid @clSeparator;
+      margin-right: 12px;
+      vertical-align: bottom;
     }
   }
+
+  + label.right::after {
+      margin-left: 12px;
+      margin-right: 0px;
+  }
+
 }

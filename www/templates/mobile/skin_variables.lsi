@@ -46,6 +46,7 @@
 
 @clButtonBG: #e05050;
 @clButtonFG: white;
+@buttonWidth: 100%;
 
 @clButtonActiveBG: #ff656c;
 @clButtonActiveFG: white;

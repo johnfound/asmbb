@@ -93,39 +93,9 @@ input.settings, select.settings {
 }
 
 
-label.checkbox {
-  display: inline-block;
-  width: auto !important;
-  height: auto !important;
-  padding: 0px !important;
-  line-height: 0px !important;
-  margin-right: 8px;
-
-  input {
-    display: none;
-  }
-
-  span {
-      width: 20px;
-      line-height: 16px;
-      display: inline-block;
-      background-color: white;
-      color: white;
-      font-size: 16px;
-      border: 2px solid @clSeparator;
-  }
-
-  input:checked + span {
-      color: lime;
-      background-color: lime;
-  }
-
-}
-
-
 input.button {
     height: 38px;
-    width: 128px;
+    width: @buttonWidth;
     background-color: @clButtonBG;
     color: @clButtonFG;
     border: none;
@@ -137,6 +107,7 @@ input.button {
     text-align: center;
     padding: 0px;
     display: block;
+    margin-bottom: 8px;
 }
 
 input.button:hover {
@@ -176,3 +147,13 @@ h1.msg {
 .hidden {
   opacity: 0.0 !important;
 }
+
+section {
+  column-width: 180px;
+  max-width: 600px;
+}
+
+input[type=checkbox] + label {
+    display: block;
+}
+
