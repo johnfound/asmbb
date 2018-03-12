@@ -1,5 +1,5 @@
-C work\son\sbetter\shtml...
-D 2018-03-12T18:08:21.368
+C settings.less\sin\smobile\sand\sMoLigth\sthemes\sreplaced\swith\slink\sto\sWasp/settings.less
+D 2018-03-12T18:09:53.636
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 512c660a477aaf85d037cd83239675032ee39afb
@@ -308,6 +308,7 @@ F www/templates/MoLight/posts.less 96108ce60e7f4d127269a5437765a62898fb94e7
 F www/templates/MoLight/preview.tpl 6bd29d06a6720e51db6d4d73b7572f9fcc1ff32f l
 F www/templates/MoLight/search.less 33b9d9d3e6a805df33f6b0e4ed846ab592fc014e
 F www/templates/MoLight/search_result.tpl 439d5d06fc9b2de76abc3f912b9dbd0ef9516801
+F www/templates/MoLight/settings.less ceddd6b5948701659f883fd99ed0b9a31067df6e l
 F www/templates/MoLight/skin_variables.lsi 9d5e2d373c59f075dc9708fe244c7e33d725d63f
 F www/templates/MoLight/sqlite.less d6c705801f27dd30658b51803f0638ded21bb45c l
 F www/templates/MoLight/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
@@ -494,6 +495,7 @@ F www/templates/mobile/posts.less 96108ce60e7f4d127269a5437765a62898fb94e7
 F www/templates/mobile/preview.tpl 6bd29d06a6720e51db6d4d73b7572f9fcc1ff32f l
 F www/templates/mobile/search.less 33b9d9d3e6a805df33f6b0e4ed846ab592fc014e
 F www/templates/mobile/search_result.tpl 439d5d06fc9b2de76abc3f912b9dbd0ef9516801
+F www/templates/mobile/settings.less ceddd6b5948701659f883fd99ed0b9a31067df6e l
 F www/templates/mobile/skin_variables.lsi 1298bc766b88841092c4b0faeb9e34b976b327ab
 F www/templates/mobile/sqlite.less d6c705801f27dd30658b51803f0638ded21bb45c l
 F www/templates/mobile/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
@@ -506,7 +508,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 2ca390334f55943b38483cf51f0041f8f12a55f8
-R 20307bf011a60b9ca88b08633b043a60
+P e8e76b9017ebc93df1507403b2ee09193580830b
+R edda2dfd177e74d9a062398f5cded470
 U johnfound
-Z 564c5f327b3492c0eaddf22662c23dde
+Z fa8ddadde44d73c6f1ef6947d180ae31
