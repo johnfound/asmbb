@@ -9,6 +9,7 @@ body {
   * {
     box-sizing: border-box;
     padding: 0px;
+    font-size: inherit;
   }
 
 }
@@ -62,6 +63,7 @@ div.header {
       text-align: right;
       display: inline;
       line-height: 1.5em;
+      text-shadow: 2px 2px @clColor1, -2px -2px @clColor1, 2px -2px @clColor1, -2px 2px @clColor1;
     }
   }
 }
@@ -258,4 +260,38 @@ div.message {
 .small {
   font-size: 80%;
   font-weight: normal;
+}
+
+
+input[type=checkbox] {
+  position: absolute;
+  z-index: -1;
+
+  &:focus ~ label {
+    outline: 2px dotted @clSeparator;
+    outline-offset: -2px;
+  }
+
+  &:checked ~ label > span {
+    color: lime;
+    background-color: lime;
+  }
+
+  ~ label {
+    display: block;
+    background-color: @clEditorBG;
+    color: @clEditorFG;
+    padding: 8px 8px 8px 14px;
+
+    span {
+        width: 20px;
+        line-height: 16px;
+        display: inline-block;
+        background-color: white;
+        color: white;
+        font-size: 16px;
+        border: 2px solid @clSeparator;
+        margin-right: 12px;
+    }
+  }
 }
