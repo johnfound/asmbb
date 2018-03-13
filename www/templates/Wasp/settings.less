@@ -29,6 +29,17 @@ form.settings {
     padding: 8px;
   }
 
+  h2 {
+    font-size: 120%;
+    color: @clColor1FG;
+  }
+
+  h3 {
+    font-size: @FontSize;
+    font-weight: bold;
+    margin: 8px 0px 4px 0px;
+  }
+
   table {
 
     border-collapse: collapse;
@@ -86,6 +97,7 @@ input.settings, select.settings {
   padding: 0px 8px;
   outline: none;
   border: @borderEdit;
+  margin: 4px 0px;
 
   background-color: @clEditorBG;
   color: @clEditorFG;
@@ -107,7 +119,7 @@ input.button {
     text-align: center;
     padding: 0px;
     display: block;
-    margin-bottom: 8px;
+    margin: 8px 0px;
 }
 
 input.button:hover {
@@ -117,11 +129,14 @@ input.button:hover {
 
 
 h1.msg {
+  position: fixed;
   margin: 0px;
   padding: 8px;
   text-align: center;
   display: block;
-  opacity: 1.0;
+  left: 16px;
+  top: 16px;
+  right: 16px;
 }
 
 .info {
@@ -149,11 +164,16 @@ h1.msg {
 }
 
 section {
-  column-width: 180px;
-  max-width: 600px;
+  display: block;
+  columns: 3 180px;
+  -webkit-columns: 3 180px;
+  -moz-columns: 3 180px;
+  margin: 8px 0px;
 }
 
 input[type=checkbox] + label {
     display: block;
+    margin-bottom: 4px;
+    margin-top: 4px;
 }
 

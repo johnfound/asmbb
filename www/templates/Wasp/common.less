@@ -1,7 +1,7 @@
 @import "skin_variables.lsi";
 
 body {
-  font-size: 16px;
+  font-size: @FontSize;
   font-family: @FontMain;
   background-color: @clBodyBG;
   color: @clBodyFG;
@@ -9,7 +9,6 @@ body {
   * {
     box-sizing: border-box;
     padding: 0px;
-    font-size: inherit;
   }
 
 }
@@ -269,17 +268,12 @@ input[type=checkbox] {
   position: absolute;
   z-index: -1;
 
-  &:focus + label {
-    outline: 2px dotted @clSeparator;
-    outline-offset: -2px;
+  &:focus + label::before {
+    outline: 2px dotted black;
+    outline-offset: 1px;
   }
 
   &:checked + label::before {
-    color: lime;
-    background-color: lime;
-  }
-
-  &:checked + label.right::after {
     color: lime;
     background-color: lime;
   }
@@ -304,10 +298,4 @@ input[type=checkbox] {
       vertical-align: bottom;
     }
   }
-
-  + label.right::after {
-      margin-left: 12px;
-      margin-right: 0px;
-  }
-
 }

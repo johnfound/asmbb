@@ -1,3 +1,4 @@
+[css:common.css]
 [css:settings.css]
 
 <div class="set_page">
@@ -8,31 +9,37 @@
 
   <h2>HTML/CSS options:</h2>
 
-  <label>Forum title:</label>
+  <h3>Forum title:</h3>
   <input type="text" value="[forum_title]" name="forum_title" class="settings" maxlength="512">
 
-  <label>Forum header:</label>
+  <h3>Forum header:</h3>
   <input type="text" value="[forum_header]" name="forum_header" class="settings" maxlength="512">
 
-  <label>Description:</label>
+  <h3>Description:</h3>
   <input type="text" value="[description]" name="description" class="settings" maxlength="256">
 
-  <label>Keywords:</label>
+  <h3>Keywords:</h3>
   <input type="text" value="[keywords]" name="keywords" class="settings" maxlength="256">
+
+  <section>
+    <input type="checkbox" [embeded_css] name="embeded_css" id="embeded_css"><label for="embeded_css">Embeded CSS</label>
+  </section>
 
   <h2>Server settings:</h2>
 
-  <label>Host:</label>
+  <h3>Host:</h3>
   <input type="text" value="[host]" name="host" class="settings" maxlength="320">
 
-  <label>SMTP server/port:</label>
+  <h3>SMTP server/port:</h3>
   <input type="text" value="[smtp_addr]" name="smtp_addr" class="settings" maxlength="256">
   <input type="text" value="[smtp_port]" name="smtp_port" class="settings" maxlength="5">
 
-  <label>SMTP account:</label><input type="text" value="[smtp_user]" name="smtp_user" class="settings" maxlength="256">
+  <h3>SMTP account:</h3>
+  <input type="text" value="[smtp_user]" name="smtp_user" class="settings" maxlength="256">
 
-  <input type="checkbox" [email_confirm] name="email_confirm" id="email_confirm" class="checkbox">
-  <label for="email_confirm" class="right">Confirm by email:</label>
+  <section>
+    <input type="checkbox" [email_confirm] name="email_confirm" id="email_confirm" class="checkbox"><label for="email_confirm">Confirm by email</label>
+  </section>
 
   <h2>Default user permissions:</h2>
 
@@ -51,18 +58,19 @@
 
   <h2>Forum features:</h2>
 
-  <label>Page length:</label>
+  <h3>Page length:</h3>
   <input type="text" value="[page_length]" name="page_length" class="settings" maxlength="256">
 
-  <label>Default skin:</label>
+  <h3>Default skin:</h3>
   <select class="settings" name="default_skin" >[special:skins=[default_skin]]</select>
 
-  <label>Default mobile skin:</label>
+  <h3>Default mobile skin:</h3>
   <select class="settings" name="default_mobile_skin">[special:skins=[default_mobile_skin]]</select>
 
-  <input type="checkbox" [chat_enabled] name="chat_enabled" id="chat_enabled"><label for="chat_enabled">Enable chat:</label>
-  <input type="checkbox" [chat_anon] name="chat_anon" id="chat_anon"><label for="chat_anon">Anonymous chat:</label>
-  <input type="checkbox" [embeded_css] name="embeded_css" id="embeded_css"><label for="embeded_css">Embeded CSS:</label>
+  <section>
+    <input type="checkbox" [chat_enabled] name="chat_enabled" id="chat_enabled"><label for="chat_enabled">Enable chat</label>
+    <input type="checkbox" [chat_anon] name="chat_anon" id="chat_anon"><label for="chat_anon">Anonymous chat</label>
+  </section>
 
   <input type="hidden" name="ticket" value="[Ticket]" >
   <input type="submit" name="save" class="button" value="Save">
@@ -71,6 +79,10 @@
 
 <script type="text/javascript">
 <!--
- if (document.getElementById('message')) setTimeout(function(){ document.getElementById('message').style.opacity = "0.0"; }, 3000);
+ if (document.getElementById('message'))
+   setTimeout( function() {
+                            document.getElementById('message').style.display = "none";
+                          }, 3000
+             );
 // -->
 </script>

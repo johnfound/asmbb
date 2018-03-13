@@ -46,6 +46,7 @@
 
 @clButtonBG: #105289;
 @clButtonFG: white;
+@buttonWidth: 128px;
 
 @clButtonActiveBG: #1e98ff;
 @clButtonActiveFG: white;
@@ -62,7 +63,10 @@
 @clPostInfoFG: black;
 
 @FontMain:      "Verdana", sans-serif;
+@FontSize:      16px;
+
 @FontMonospace: "Liberation Mono", "Courier New", monospaced;
+@FontSizeMono: 16px;
 
 @HeaderBackground: none;
 

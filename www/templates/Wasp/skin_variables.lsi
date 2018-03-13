@@ -66,7 +66,10 @@
 @clPostInfoFG: black;
 
 @FontMain:      "Verdana", sans-serif;
+@FontSize:      16px;
+
 @FontMonospace: "Liberation Mono", "Courier New", monospaced;
+@FontSizeMono: 16px;
 
 @HeaderBackground: @clColor1 url("[special:skin]/_images/yellow_back.png") -180px 0%/cover;
 
