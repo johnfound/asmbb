@@ -1,0 +1,41 @@
+@import "skin_variables.lsi";
+
+.editbtn {
+  width: @buttonHeight;
+  height: @buttonHeight;
+  display: inline-block;
+  background-size: 256px 16px;
+  background-repeat: no-repeat;
+
+  background-color: @clButtonBG;
+  border: (@buttonHeight - 16px)/2 solid @clButtonBG;
+
+  background-position: center center;
+  background-clip: content-box;
+  border-radius: @borderNavRad;
+  cursor: pointer;
+  background-image: url('[special:skin]/_images/toolbar.svg');
+  &:hover {
+    background-color: @clButtonActiveBG;
+    border-color: @clButtonActiveBG;
+  }
+}
+
+.icon_bold      { background-position: 0px; }
+.icon_italic    { background-position: -16px; }
+.icon_underline { background-position: -32px; }
+.icon_strike    { background-position: -48px; }
+.icon_code      { background-position: -64px; }
+.icon_link      { background-position: -80px; }
+.icon_picture   { background-position: -96px; }
+.icon_quote     { background-position: -112px; }
+.icon_blockcode { background-position: -128px; }
+
+.icon_smile { background-image: url('/images/emoticons_dark/smile.gif'); background-size: auto; border: 0px;}
+.icon_wink { background-image: url('/images/emoticons_dark/wink.gif'); background-size: auto; border: 0px; }
+.icon_lol { background-image: url('/images/emoticons_dark/lol.gif'); background-size: auto; border: 0px; }
+.icon_rofl { background-image: url('/images/emoticons_dark/rofl.gif'); background-size: auto; border: 0px; }
+.icon_sad { background-image: url('/images/emoticons_dark/sad.gif'); background-size: auto; border: 0px; }
+.icon_cry { background-image: url('/images/emoticons_dark/cry.gif'); background-size: auto; border: 0px; }
+.icon_tongue { background-image: url('/images/emoticons_dark/tongue.gif'); background-size: auto; border: 0px; }
+.icon_angry { background-image: url('/images/emoticons_dark/angry.gif'); background-size: auto; border: 0px; }

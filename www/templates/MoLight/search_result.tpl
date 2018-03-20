@@ -1,0 +1,1 @@
+../mobile/search_result.tpl

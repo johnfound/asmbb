@@ -1,0 +1,1 @@
+../mobile/thread_info.tpl
