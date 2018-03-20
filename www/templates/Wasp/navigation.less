@@ -13,7 +13,9 @@ div.ui {
 
 a.ui {
   display: block;
-  padding: 4px 8px;
+  padding: 0px 8px;
+  height: @buttonHeight;
+  line-height: @buttonHeight;
   background-color: @clButtonBG;
   color: @clButtonFG;
   text-decoration: none;
@@ -50,13 +52,14 @@ div.page_row {
   margin-top: 8px;
   display: flex;
   flex-wrap: wrap;
+  line-height: 24px;
 }
 
 a.page_link {
   background-color: @clColor1;
-  padding: @paddingNav;
+  padding: 0px 4px;
   text-align: center;
-  display:inline-block;
+  display:inline;
   min-width: 32px;
   margin: 0px 8px 8px 0px;
 }
@@ -64,9 +67,9 @@ a.page_link {
 span.current_page {
   background-color: @clButtonBG;
   color: @clButtonFG;
-  padding: @paddingNav;
+  padding: 0px 4px;
   text-align: center;
-  display:inline-block;
+  display:inline;
   min-width: 32px;
   border-radius: @borderNavRad;
   margin: 0px 8px 8px 0px;
@@ -79,13 +82,14 @@ span.page_hole {
 /* Buttons in forms */
 
 div.panel {
-  display: inline-block;
-  width: 100%;
-  text-align: left;
-  margin: 8px 0px 8px 0px;
+  margin: 8px 0px;
+
 
   input, a {
-    border: none;
+    height: @buttonHeight;
+    line-height: @buttonHeight;
+
+    border: @borderButton;
     border-radius: @borderNavRad;
     padding: @paddingNav;
     text-decoration: none;
@@ -101,3 +105,50 @@ div.panel {
   }
 }
 
+
+div.popup {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  width: @msgBoxWidth;
+  overflow: auto;
+
+  margin: 0px 16px 0px 0px;
+  padding: 16px;
+  background: @clDisabledBG;
+  color: @clArticleFG;
+
+  font-size: 80%;
+
+  box-shadow: 2px 0px 8px black;
+
+  display: none;
+  opacity: 0;
+}
+
+label.popup {
+  margin: 0px !important;
+  padding: 0px !important;
+  width: 32px;
+  height: 32px;
+  background-size: 20px 20px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: @clButtonBG !important;
+  border-radius: @borderNavRad;
+  &:hover {
+    background-color: @clButtonActiveBG !important;
+  }
+}
+
+
+label.help {
+  background-image: url('[special:skin]/_images/help.svg') !important;
+}
+
+
+label.close {
+  float: right;
+  background-image: url('[special:skin]/_images/close.svg') !important;
+}

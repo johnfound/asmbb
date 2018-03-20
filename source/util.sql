@@ -1,5 +1,44 @@
 /* This file contains some useful scripts for administration of AsmBB forum using the SQLite console. */
 
+-- selects all threads with unread posts for some userID:
+
+select
+  *
+from
+  threads t
+where
+  t.id in
+  ( select
+      p.threadID
+    from
+      posts p
+    where
+      p.id in
+      ( select
+          up.postid
+        from
+          unreadposts up
+        where
+          up.userid=?1
+      )
+  );
+
+-- and all unread posts.
+
+select
+  *
+from
+  posts p
+where
+  p.id in
+  ( select
+      up.postid
+    from
+      unreadposts up
+    where
+      up.userid=?1
+  );
+
 
 -- Displays all guests that downloaded only files like images, robots.txt, etc. without actually visiting the website.
 

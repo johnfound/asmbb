@@ -129,12 +129,13 @@ create table PostCnt (
 
 create index idxPostCount on PostCnt(postid);
 
-
 create table Tags (
   Tag         text primary key,
   Importance  integer not null default 0,
   Description text
 );
+
+create index idxTagImportance on Tags(Importance desc);
 
 
 /* Relation tables */

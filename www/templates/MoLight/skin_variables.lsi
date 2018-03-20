@@ -47,6 +47,7 @@
 @clButtonBG: #105289;
 @clButtonFG: white;
 @buttonWidth: 100%;
+@buttonHeight: 32px;
 
 @clButtonActiveBG: #1e98ff;
 @clButtonActiveFG: white;
@@ -78,3 +79,6 @@
 
 @clMsgWarningBG: yellow;
 @clMsgWarningFG: red;
+
+@pinnedWidth: 32px;
+@pinnedHeight: 30px;

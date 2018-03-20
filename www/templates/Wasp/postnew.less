@@ -1,13 +1,10 @@
 @import "skin_variables.lsi";
 
 div.new_editor {
-  position: relative;
   width: @globWidth;
   max-width: @globMaxWidth;
-  clear: both;
-  margin: 8px auto;
-
-  p{
+  margin: @globMargin;
+  p {
     color: @clColor1FG;
     font-weight: bold;
     margin: 8px 0px 4px 0px;
@@ -16,7 +13,6 @@ div.new_editor {
 
 
 #editform {
-  position: relative;
   padding: 16px;
   margin: 8px 0px 0px 0px;
   background-color: @clFormBG;
@@ -35,13 +31,12 @@ h1.fakeedit {
 }
 
 textarea.editor {
-  display: inline-block;
+  display: block;
   width: 100%;
   height: 20em;
   padding: 4px;
   margin-bottom: 8px;
   margin-top: -1px;
-  border-style: none;
   outline-style: none;
   overflow: auto;
   resize: vertical;

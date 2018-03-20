@@ -3,9 +3,9 @@
 /* Threads list styles */
 
 div.threads_list {
-  width: 95%;
-  max-width: 1280px;
-  margin: auto;
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
   clear: both;
 }
 
@@ -51,8 +51,8 @@ span.small {
 
 .pinned {
   display: block;
-  width: 32px;
-  height: 32px;
+  width: @pinnedWidth;
+  height: @pinnedHeight;
   margin: 0px auto;
   background-repeat: no-repeat;
 }

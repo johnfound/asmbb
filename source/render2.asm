@@ -110,6 +110,7 @@ local ..keynm, ..len, ..hash, ..char
 if used RenderTemplate
         PList tableRenderCmd, tpl_func,                  \
               'special:', RenderTemplate.cmd_special,   \
+              'include:', RenderTemplate.cmd_include,   \
               'minimag:', RenderTemplate.cmd_minimag,   \   ; HTML, no encoding.
               'html:',    RenderTemplate.cmd_html,      \   ; HTML, disables the encoding.
               'url:',     RenderTemplate.cmd_url,       \   ; Needs encoding!
@@ -592,6 +593,49 @@ begin
 
         mov     [.fEncode], 1
         jmp     .loop
+
+; ...................................................................
+
+.cmd_include:
+; here esi points to ":" of the "include:" command. edi points to the start "[" and ecx points to the end "]"
+
+        stdcall TextMoveGap, edx, ecx
+        inc     [edx+TText.GapEnd]
+
+        call    .clip_and_copy
+        mov     ebx, eax
+
+        mov     [edx+TText.GapBegin], edi
+        lea     ecx, [edi-1]
+
+        mov     esi, [.pSpecial]
+
+        stdcall GetCurrentDir
+        stdcall StrCat, eax, [esi+TSpecialParams.userSkin]
+        stdcall StrCat, eax, txt "/"
+        stdcall StrCat, eax, ebx
+        stdcall StrDel, ebx
+
+        stdcall FileOpenAccess, eax, faReadOnly
+        stdcall StrDel, eax
+        jc      .loop
+
+        mov     ebx, eax
+
+        stdcall FileSize, ebx
+        jc      .file_close
+
+        stdcall TextSetGapSize, edx, eax
+
+        mov     esi, [edx+TText.GapBegin]
+        add     esi, edx
+        stdcall FileRead, ebx, esi, eax
+        add     [edx+TText.GapBegin], eax
+
+.file_close:
+        stdcall FileClose, ebx
+        jmp     .loop
+
 
 ; ...................................................................
 

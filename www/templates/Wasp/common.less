@@ -103,7 +103,7 @@ form#search_form {
   background-color: @clButtonBG;
   background-image: url("[special:skin]/_images/search.svg");
   background-position: center;
-  background-size: 24px 24px;
+  background-size: 20px 20px;
   background-repeat: no-repeat;
 
   width: 32px;
@@ -128,6 +128,7 @@ div.footer {
   margin: 8px auto 0px auto;
   line-height: 1em;
   padding: @paddingFooter;
+  clear: both;
 
   p {
     margin: 4px 0px 0px 0px;
@@ -267,6 +268,7 @@ div.message {
 input[type=checkbox] {
   position: absolute;
   z-index: -1;
+  left: -10000px;
 
   &:focus + label::before {
     outline: 2px dotted black;
@@ -277,6 +279,15 @@ input[type=checkbox] {
     color: lime;
     background-color: lime;
   }
+
+  &:checked + .popup {
+    display: block;
+    opacity: 1;
+  }
+
+//  &:checked + .popup + div {
+//    float: left;
+//  }
 
   + label {
     cursor: pointer;

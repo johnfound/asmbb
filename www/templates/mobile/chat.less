@@ -26,8 +26,8 @@ body {
   top: 8px;
   width: 48px; height: 48px;
   border-radius: 24px;
-  background-color: @clColor1;
-  background-image: url("[special:skin]/_images/yellow_back.png");
+  background-color: @clColor1FG;
+  background: @HeaderBackground;
 }
 
 div {
@@ -56,6 +56,7 @@ div {
   max-height: 5.5em;
 
   margin-bottom: 4px;
+  border: @borderEdit;
 
   p {
     margin: 4px 0px;
@@ -72,7 +73,7 @@ div {
   }
 
   p.user {
-    color: @clColor1;
+    color: @clColor1FG;
   }
 
   p.fake_user {
@@ -113,7 +114,7 @@ div {
   }
 
   span.fake {
-    color: #ff80FF;
+    color: @clFakeUser;
   }
 
   a {
@@ -136,5 +137,6 @@ input.edit {
   background-color: @clEditorBG;
   color: @clEditorFG;
   margin-top: 4px;
+  border: @borderEdit;
 }
 
