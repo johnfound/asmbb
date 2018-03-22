@@ -8,13 +8,12 @@ begin
 
         mov     esi, [.pSpecial]
 
+        stdcall StrCat, [esi+TSpecialParams.page_title], ' Categories'
+
         stdcall TextCreate, sizeof.TText
         stdcall TextCat, eax, '<div class="threads_list">'
-        mov     edi, edx
-
-        stdcall StrDupMem, 'thread_list.css'
-        stdcall ListAddDistinct, [esi+TSpecialParams.pStyles], eax
-        mov     [esi+TSpecialParams.pStyles], edx
+        stdcall RenderTemplate, edx, "nav_categories.tpl", 0, esi
+        mov     edi, eax
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlReadCats, sqlReadCats.length, eax, 0

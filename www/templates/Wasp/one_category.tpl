@@ -1,8 +1,12 @@
 <div class="category">
+ <div>
  [case:[Unread]|
-   <img src="[special:skin]/_images/posts_gray.svg">|
-   <img src="[special:skin]/_images/posts.svg">
+   <img src="[special:skin]/_images/tag_gray.svg">|
+   <img src="[special:skin]/_images/tag.svg">
  ]
- <a href="/[Tag]/"><span>[Tag]:</span> [Description]</a>
-
+ </div>
+ <a href="/[Tag]/"><span>[Tag]: </span>[Description]</a>
+ <div>Threads<br><span>[cnt]</span></div>
+ <div>Posts<br><span>[postcnt]</span></div>
+ <div>Unread<br><span>[unread]</span></div>
 </div>

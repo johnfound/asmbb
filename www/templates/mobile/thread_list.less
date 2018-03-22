@@ -87,3 +87,49 @@ span.small {
   font-size: 80%;
   font-weight: normal;
 }
+
+
+.category {
+  margin: 8px 0px;
+  background-color: @clDarkBG;
+  color: @clDarkFG;
+  padding: 8px;
+  border: @borderEdit;
+
+  a {
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin: 8px;
+    text-decoration: none;
+    color: @clColor1FG;
+    min-height: 64px;
+
+    span {
+      font-size: 20px;
+      font-weight: black;
+      text-transform: uppercase;
+    }
+  }
+
+  div:first-child {
+    display: block;
+    width: auto;
+    float: left;
+    text-align: center;
+    background-color: @clDarkBG;
+    margin: 8px 8px 8px 0px;
+  }
+
+  div {
+    text-align: center;
+    width: 30%;
+    display: inline-block;
+    span {
+      font-size: 24px;
+      font-weight: bold;
+      color: @clButtonBG;
+    }
+  }
+}
