@@ -66,6 +66,7 @@ include "sqlite_console.asm"
 include "messages.asm"
 include "version.asm"
 include "images_png.asm"
+include "categories.asm"
 
 include "chat.asm"
 include "chat_ipc.asm"

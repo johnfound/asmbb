@@ -81,7 +81,8 @@ PList tablePreCommands, tpl_func,                  \
       "!echo_events",     EchoRealTime,            \    ; optional, depending on the options.DebugWebSSE
       "!postdebug",       PostDebug,               \    ; optional, depending on the options.DebugWeb
       "!debuginfo",       DebugInfo,               \    ; optional, depending on the options.DebugSQLite
-      "!users",           UsersList
+      "!users",           UsersList,               \
+      "!categories",      Categories
 end if
 
 if used tablePostCommands
