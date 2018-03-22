@@ -219,7 +219,7 @@ begin
 
 ; create the full filename.
 
-        stdcall GetCurrentDir
+        stdcall StrDup, [hCurrentDir]
         mov     ebx, eax
         mov     eax, [.pSpecial]
         test    eax, eax
@@ -548,7 +548,7 @@ begin
         push    ecx
 
         mov     ebx, [.pSpecial]
-        stdcall GetCurrentDir
+        stdcall StrDup, [hCurrentDir]
         stdcall StrCat, eax, [ebx+TSpecialParams.userSkin]
         stdcall StrCat, eax, "/minimag_suffix.tpl"
         push    eax
@@ -606,11 +606,11 @@ begin
         mov     ebx, eax
 
         mov     [edx+TText.GapBegin], edi
-        lea     ecx, [edi-1]
+        lea     ecx, [edi-1]                    ; moves ecx at the start of the included template.
 
         mov     esi, [.pSpecial]
 
-        stdcall GetCurrentDir
+        stdcall StrDup, [hCurrentDir]
         stdcall StrCat, eax, [esi+TSpecialParams.userSkin]
         stdcall StrCat, eax, txt "/"
         stdcall StrCat, eax, ebx
@@ -1662,7 +1662,7 @@ begin
         stdcall StrDup, [.hMinimag]
         mov     ebx, eax
 
-        stdcall GetCurrentDir
+        stdcall StrDup, [hCurrentDir]
         stdcall StrCat, eax, [edi+TSpecialParams.userSkin]
         stdcall StrCat, eax, "/minimag_suffix.tpl"
         push    eax
@@ -1912,7 +1912,7 @@ begin
         stdcall TextCreate, sizeof.TText
         mov     edx, eax
 
-        stdcall GetCurrentDir
+        stdcall StrDup, [hCurrentDir]
         stdcall StrCat, eax, "/templates/"
         push    eax
 

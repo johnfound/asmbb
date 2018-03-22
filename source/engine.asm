@@ -82,6 +82,7 @@ endg
 
 uglobal
   hMainDatabase dd ?
+  hCurrentDir   dd ?
   ProcessID     dd ?
   ProcessStart  dd ?
   fOwnSocket    dd ?
@@ -110,8 +111,10 @@ start:
         end if
 
         stdcall SetSegmentationFaultHandler, OnException
-
         stdcall SetForcedTerminateHandler, OnForcedTerminate
+
+        stdcall GetCurrentDir
+        mov     [hCurrentDir], eax
 
         cinvoke sqliteConfig, SQLITE_CONFIG_SERIALIZED
         cinvoke sqliteInitialize

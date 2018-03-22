@@ -870,7 +870,7 @@ begin
 
 ; check skin existence.
 
-        stdcall GetCurrentDir
+        stdcall StrDup, [hCurrentDir]
         push    eax
         stdcall StrCat, eax, edx
         stdcall StrCat, eax, SKIN_CHECK_FILE

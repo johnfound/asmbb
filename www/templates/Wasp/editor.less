@@ -1,14 +1,16 @@
 @import "skin_variables.lsi";
 
+@toolIconHeight: 20px;
+
 .editbtn {
   width: @buttonHeight;
   height: @buttonHeight;
   display: inline-block;
-  background-size: 256px 16px;
+  background-size: 340px @toolIconHeight;
   background-repeat: no-repeat;
 
   background-color: @clButtonBG;
-  border: (@buttonHeight - 16px)/2 solid @clButtonBG;
+  border: (@buttonHeight - @toolIconHeight)/2 solid @clButtonBG;
 
   background-position: center center;
   background-clip: content-box;
@@ -21,21 +23,21 @@
   }
 }
 
-.icon_bold      { background-position: 0px; }
-.icon_italic    { background-position: -16px; }
-.icon_underline { background-position: -32px; }
-.icon_strike    { background-position: -48px; }
-.icon_code      { background-position: -64px; }
-.icon_link      { background-position: -80px; }
-.icon_picture   { background-position: -96px; }
-.icon_quote     { background-position: -112px; }
-.icon_blockcode { background-position: -128px; }
+.icon_bold      { background-position: - 0 * @toolIconHeight; }
+.icon_italic    { background-position: - 1 * @toolIconHeight; }
+.icon_underline { background-position: - 2 * @toolIconHeight; }
+.icon_strike    { background-position: - 3 * @toolIconHeight; }
+.icon_code      { background-position: - 4 * @toolIconHeight; }
+.icon_link      { background-position: - 5 * @toolIconHeight; }
+.icon_picture   { background-position: - 6 * @toolIconHeight; }
+.icon_quote     { background-position: - 7 * @toolIconHeight; }
+.icon_blockcode { background-position: - 8 * @toolIconHeight; }
 
-.icon_smile { background-image: url('/images/emoticons_dark/smile.gif'); background-size: auto; border: 0px;}
-.icon_wink { background-image: url('/images/emoticons_dark/wink.gif'); background-size: auto; border: 0px; }
-.icon_lol { background-image: url('/images/emoticons_dark/lol.gif'); background-size: auto; border: 0px; }
-.icon_rofl { background-image: url('/images/emoticons_dark/rofl.gif'); background-size: auto; border: 0px; }
-.icon_sad { background-image: url('/images/emoticons_dark/sad.gif'); background-size: auto; border: 0px; }
-.icon_cry { background-image: url('/images/emoticons_dark/cry.gif'); background-size: auto; border: 0px; }
-.icon_tongue { background-image: url('/images/emoticons_dark/tongue.gif'); background-size: auto; border: 0px; }
-.icon_angry { background-image: url('/images/emoticons_dark/angry.gif'); background-size: auto; border: 0px; }
+.icon_smile     { background-position: - 9 * @toolIconHeight;}
+.icon_lol       { background-position: - 10 * @toolIconHeight;}
+.icon_rofl      { background-position: - 11 * @toolIconHeight;}
+.icon_wink   	{ background-position: - 12 * @toolIconHeight;}
+.icon_tongue   	{ background-position: - 13 * @toolIconHeight;}
+.icon_sad    	{ background-position: - 14 * @toolIconHeight;}
+.icon_cry 	{ background-position: - 15 * @toolIconHeight;}
+.icon_angry  	{ background-position: - 16 * @toolIconHeight;}
