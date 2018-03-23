@@ -44,7 +44,7 @@ where
 
 select
   (g.addr >> 24 & 255)||'.'||(g.addr >> 16 & 255)||'.'||(g.addr >> 8 & 255)||'.'||(g.addr & 255) as IP,
-  datetime(g.LastSeen, 'unixepoch') as Time,
+  datetime(gr.time, 'unixepoch') as Time,
   gr.method,
   gr.request,
   gr.client,

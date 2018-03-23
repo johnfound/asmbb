@@ -23,7 +23,7 @@
       <div class="panel">
         <input type="submit" name="submit" value="Submit" >
         <input type="submit" name="preview" value="Preview" >
-        <input type="hidden" name="ticket" value="[Ticketl]" >
+        <input type="hidden" name="ticket" value="[Ticket]" >
         <input type="reset" value="Revert" >
       </div>
     </form>

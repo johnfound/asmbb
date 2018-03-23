@@ -8,6 +8,8 @@ begin
 
         mov     esi, [.pSpecial]
 
+        stdcall LogUserActivity, esi, uaCategoriesList, 0
+
         stdcall StrCat, [esi+TSpecialParams.page_title], ' Categories'
 
         stdcall TextCreate, sizeof.TText

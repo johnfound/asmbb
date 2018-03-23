@@ -105,6 +105,7 @@ endp
  uaResetingForm      = 16       ; the reset password form.
  uaResetingPassword  = 17
  uaReadingUserlist   = 18
+ uaCategoriesList    = 19       ; /!categories
 
 
 

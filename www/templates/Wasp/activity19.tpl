@@ -1,0 +1,1 @@
+Browsing the categories list.
