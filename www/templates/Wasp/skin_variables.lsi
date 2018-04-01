@@ -49,13 +49,15 @@
 
 @clButtonBG: #e05050;
 @clButtonFG: white;
+@buttonWidth: 128px;
+@buttonHeight: 28px;
 
 @clButtonActiveBG: #ff656c;
 @clButtonActiveFG: white;
 @borderButton: none;
 @borderButtonActive: none;
 @borderNavRad: 0px;
-@paddingNav: 4px;
+@paddingNav: 0px 8px;
 
 @clSeparator: #404040;
 @borderQuote: 2px solid @clSeparator;
@@ -65,7 +67,10 @@
 @clPostInfoFG: black;
 
 @FontMain:      "Verdana", sans-serif;
+@FontSize:      16px;
+
 @FontMonospace: "Liberation Mono", "Courier New", monospaced;
+@FontSizeMono: 16px;
 
 @HeaderBackground: @clColor1 url("[special:skin]/_images/yellow_back.png") -180px 0%/cover;
 
@@ -77,3 +82,6 @@
 
 @clMsgWarningBG: yellow;
 @clMsgWarningFG: red;
+
+@pinnedWidth: 16px;
+@pinnedHeight: 16px;

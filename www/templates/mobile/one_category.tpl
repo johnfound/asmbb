@@ -1,0 +1,1 @@
+../Wasp/one_category.tpl

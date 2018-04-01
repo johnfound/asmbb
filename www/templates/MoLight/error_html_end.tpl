@@ -1,5 +1,1 @@
-<span class="notice">Click here</span>
-</a></div>
-[special:environment]
-</body>
-</html>
+../Wasp/error_html_end.tpl

@@ -2,8 +2,9 @@
 [css:thread_list.css]
 
 <div class="ui">
-  [case:[special:canstart]| |<a class="ui left" href="!post">New Thread</a>]
+  <a class="ui left" href="/!categories">Categories</a>
   [case:[special:userid]  | |<a class="ui left" href="!markread">Mark all as read</a>]
+  [case:[special:canstart]| |<a class="ui left" href="!post">New Thread</a>]
   [case:[special:canchat] | |<a class="ui left" href="/!chat">Chat</a>]
   <span class="spacer"></span>
   [case:[special:isadmin] | |

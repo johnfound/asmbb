@@ -12,7 +12,7 @@
     <input class="title" type="edit" value="[caption]" placeholder="Thread title" name="title" autofocus>
     <p>Tags: <span class="small">(max 3, comma delimited, no spaces)</span> [case:[special:dir]| |+ "[special:dir]"]</p>
     <input class="tags"  type="edit" value="[tags]" name="tags" placeholder="some tags here">
-    <label>[case:[special:isadmin]||<input class="pinned" type="checkbox" name="pinned" value="1" [case:[Pinned]||checked]> Pin the thread on top.]</label>
+    [case:[special:isadmin]||<input type="checkbox" id="pinned" name="pinned" value="1" [case:[Pinned]||checked]><label for="pinned">Pin the thread on top.</label>]
     <div class="panel">
       <input type="submit" name="submit" value="Submit" >
       <input type="hidden" name="ticket" value="[Ticket]" >

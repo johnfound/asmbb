@@ -39,10 +39,11 @@ div.user_info {
   background-color: @clDarkBG;
   background-repeat: no-repeat;
   background-position: 8px 8px;
+  background-size: 32px 32px;
   color: @clDarkFG;
 
-  flex-grow: 1;
-  max-width: 200px;
+  flex-shrink: 0;
+  width: 200px;
 }
 
 .unread0 {
@@ -124,7 +125,7 @@ div.post_text {
   padding: 0px;
   background-color: @clArticleBG;
   color: @clArticleFG;
-  width: 190px;
+//  width: 190px;
   flex-grow: 1;
 
   article {

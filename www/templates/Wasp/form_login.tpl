@@ -10,7 +10,7 @@
     <input type="text" value="" placeholder="Username" name="username" class="username" autofocus maxlength="256">
     <input type="password" value="" placeholder="Password" name="password" class="password" maxlength="1024" autocomplete="off">
     <input type="hidden" value="[special:referer]" name="backlink" id="backlink">
-    <input type="checkbox" name="persistent" id="persistent" value="1"><label for="persistent" class="checkbox"><span>&nbsp;</span> Persistent login</label>
+    <input type="checkbox" name="persistent" id="pr" value="1"><label for="pr">Persistent login</label>
     <input type="hidden" value="[ticket]" name="ticket" id="ticket">
     <input type="submit" name="submit" class="submit" value="Submit">
   </form>

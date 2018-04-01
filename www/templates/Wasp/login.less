@@ -2,8 +2,8 @@
 
 div.login {
   position: relative;
-  width: 95%;
-  max-width: 1280px;
+  width: @globWidth;
+  max-width: @globMaxWidth;
   clear: both;
   margin: 8px auto;
 
@@ -11,11 +11,11 @@ div.login {
     background-color: @clArticleBG;
     color: @clArticleFG;
     padding: 16px;
-    margin: 8px 16px 8px 16px;
+    margin: 8px auto;
 
     p {
       color: black;
-      margin: 1em;
+      margin: 16px;
     }
 
   }
@@ -25,7 +25,7 @@ div.login {
 /* login page styles */
 
 form.login-block, form.register-block {
-    width: 320px;
+    width: @msgBoxWidth;
     flex-shrink: 0;
     padding: 16px;
     background: @clColor1;
@@ -43,12 +43,6 @@ form.login-block h1, form.register-block h1, form.settings h1 {
     margin-bottom: 8px;
     padding: 8px;
 }
-
-input.username[readonly] {
-  background-color: @clReadOnlyBG !important;
-  color: @clReadOnlyFG;
-}
-
 
 input.username, input.email, input.password {
     width: 100%;
@@ -111,38 +105,9 @@ input.submit {
 }
 
 
-
-input[type=checkbox] {
-  position: absolute;
-  z-index: -1;
-
-  &:focus ~ label {
-    outline: 2px dotted @clSeparator;
-    outline-offset: -2px;
-  }
-
-  &:checked ~ label > span {
-    color: lime;
-    background-color: lime;
-  }
-
-  ~ label {
+input[type=checkbox] + label {
     display: block;
     background-color: @clEditorBG;
     color: @clEditorFG;
     padding: 8px 8px 8px 14px;
-
-    span {
-        width: 20px;
-        line-height: 16px;
-        display: inline-block;
-        background-color: white;
-        color: white;
-        font-size: 16px;
-        border: 2px solid @clSeparator;
-        margin-right: 12px;
-    }
-  }
 }
-
-

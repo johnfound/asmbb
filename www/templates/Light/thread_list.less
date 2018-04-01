@@ -3,9 +3,9 @@
 /* Threads list styles */
 
 div.threads_list {
-  width: 95%;
-  max-width: 1280px;
-  margin: auto;
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
   clear: both;
 }
 
@@ -51,8 +51,8 @@ span.small {
 
 .pinned {
   display: block;
-  width: 32px;
-  height: 32px;
+  width: @pinnedWidth;
+  height: @pinnedHeight;
   margin: 0px auto;
   background-repeat: no-repeat;
 }
@@ -117,3 +117,50 @@ div.thread_tags {
   }
 }
 
+
+.category {
+  display: flex;
+  align-items: stretch;
+  border-top: 2px solid @clSeparator;
+  align-items: stretch;
+  padding: 4px 0px;
+
+  img {
+    flex-shrink: 0;
+  }
+
+  a {
+    font-size: 20px;
+    flex-grow: 1;
+    margin: 0px 8px;
+    text-decoration: none;
+    color: @clColor1FG;
+    align-self: center;
+
+    span {
+      font-size: 20px;
+      font-weight: bold;
+      font-variant: small-caps;
+    }
+  }
+
+  div:first-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    width: 64px;
+  }
+
+  div {
+    text-align: center;
+    width: 100px;
+    flex-shrink: 0;
+    margin: 4px;
+    span {
+      font-size: 24px;
+      font-weight: bold;
+      color: @clColor1FG;
+    }
+  }
+}

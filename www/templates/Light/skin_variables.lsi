@@ -41,18 +41,23 @@
 
 @clEditorBG: white;
 @clEditorFG: black;
+@clReadOnlyBG: #e0e0e0;
+@clReadOnlyFG: black;
+
 @bgEditor: @clEditorBG 12px -14px ~"/" 24px 120px no-repeat;
 @bgEditorFocus: @clEditorBG 12px -74px ~"/" 24px 120px no-repeat;
 
 @clButtonBG: #105289;
 @clButtonFG: white;
+@buttonWidth: 128px;
+@buttonHeight: 28px;
 
 @clButtonActiveBG: #1e98ff;
 @clButtonActiveFG: white;
 @borderButton: none;
 @borderButtonActive: none;
 @borderNavRad: 4px;
-@paddingNav: 1px 4px;
+@paddingNav: 0px 8px;
 
 @clSeparator: #a0a0a0;
 @borderQuote: 2px solid @clSeparator;
@@ -62,7 +67,10 @@
 @clPostInfoFG: black;
 
 @FontMain:      "Verdana", sans-serif;
+@FontSize:      16px;
+
 @FontMonospace: "Liberation Mono", "Courier New", monospaced;
+@FontSizeMono: 16px;
 
 @HeaderBackground: none;
 
@@ -74,3 +82,6 @@
 
 @clMsgWarningBG: yellow;
 @clMsgWarningFG: red;
+
+@pinnedWidth: 32px;
+@pinnedHeight: 32px;

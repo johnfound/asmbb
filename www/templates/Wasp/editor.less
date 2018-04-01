@@ -1,0 +1,43 @@
+@import "skin_variables.lsi";
+
+@toolIconHeight: 20px;
+
+.editbtn {
+  width: @buttonHeight;
+  height: @buttonHeight;
+  display: inline-block;
+  background-size: 340px @toolIconHeight;
+  background-repeat: no-repeat;
+
+  background-color: @clButtonBG;
+  border: (@buttonHeight - @toolIconHeight)/2 solid @clButtonBG;
+
+  background-position: center center;
+  background-clip: content-box;
+  border-radius: @borderNavRad;
+  cursor: pointer;
+  background-image: url('[special:skin]/_images/toolbar.svg');
+  &:hover {
+    background-color: @clButtonActiveBG;
+    border-color: @clButtonActiveBG;
+  }
+}
+
+.icon_bold      { background-position: - 0 * @toolIconHeight; }
+.icon_italic    { background-position: - 1 * @toolIconHeight; }
+.icon_underline { background-position: - 2 * @toolIconHeight; }
+.icon_strike    { background-position: - 3 * @toolIconHeight; }
+.icon_code      { background-position: - 4 * @toolIconHeight; }
+.icon_link      { background-position: - 5 * @toolIconHeight; }
+.icon_picture   { background-position: - 6 * @toolIconHeight; }
+.icon_quote     { background-position: - 7 * @toolIconHeight; }
+.icon_blockcode { background-position: - 8 * @toolIconHeight; }
+
+.icon_smile     { background-position: - 9 * @toolIconHeight;}
+.icon_lol       { background-position: - 10 * @toolIconHeight;}
+.icon_rofl      { background-position: - 11 * @toolIconHeight;}
+.icon_wink   	{ background-position: - 12 * @toolIconHeight;}
+.icon_tongue   	{ background-position: - 13 * @toolIconHeight;}
+.icon_sad    	{ background-position: - 14 * @toolIconHeight;}
+.icon_cry 	{ background-position: - 15 * @toolIconHeight;}
+.icon_angry  	{ background-position: - 16 * @toolIconHeight;}

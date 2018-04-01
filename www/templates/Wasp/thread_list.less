@@ -62,8 +62,8 @@ div.thread_info {
   position: absolute;
   right: 8px;
   top: 8px;
-  width: 16px;
-  height: 16px;
+  width: @pinnedWidth;
+  height: @pinnedHeight;
   margin: 0px !important;
   border: 0px;
 }
@@ -118,3 +118,54 @@ div.thread_tags {
   font-size: 12px;
 }
 
+
+.category {
+  display: flex;
+  align-items: stretch;
+  margin: 8px 0px;
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+  height: 64px;
+  border-radius: 32px 0px 0px 32px;
+
+  img {
+    flex-shrink: 0;
+    margin: 0px 16px;
+  }
+
+  a {
+    font-size: 16px;
+    flex-grow: 1;
+    margin: 0px 8px;
+    text-decoration: none;
+    align-self: center;
+
+    span {
+      font-size: 16px;
+      font-weight: bold;
+      font-variant: small-caps;
+    }
+  }
+
+  div:first-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    background-color: @clDarkBG;
+    width: 64px;
+    border-radius: 50%;
+  }
+
+  div {
+    text-align: center;
+    width: 100px;
+    flex-shrink: 0;
+    margin: 4px;
+    span {
+      font-size: 24px;
+      font-weight: bold;
+      color: @clButtonBG;
+    }
+  }
+}

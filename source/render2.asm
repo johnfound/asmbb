@@ -110,6 +110,7 @@ local ..keynm, ..len, ..hash, ..char
 if used RenderTemplate
         PList tableRenderCmd, tpl_func,                  \
               'special:', RenderTemplate.cmd_special,   \
+              'include:', RenderTemplate.cmd_include,   \
               'minimag:', RenderTemplate.cmd_minimag,   \   ; HTML, no encoding.
               'html:',    RenderTemplate.cmd_html,      \   ; HTML, disables the encoding.
               'url:',     RenderTemplate.cmd_url,       \   ; Needs encoding!
@@ -218,7 +219,7 @@ begin
 
 ; create the full filename.
 
-        stdcall GetCurrentDir
+        stdcall StrDup, [hCurrentDir]
         mov     ebx, eax
         mov     eax, [.pSpecial]
         test    eax, eax
@@ -547,7 +548,7 @@ begin
         push    ecx
 
         mov     ebx, [.pSpecial]
-        stdcall GetCurrentDir
+        stdcall StrDup, [hCurrentDir]
         stdcall StrCat, eax, [ebx+TSpecialParams.userSkin]
         stdcall StrCat, eax, "/minimag_suffix.tpl"
         push    eax
@@ -592,6 +593,49 @@ begin
 
         mov     [.fEncode], 1
         jmp     .loop
+
+; ...................................................................
+
+.cmd_include:
+; here esi points to ":" of the "include:" command. edi points to the start "[" and ecx points to the end "]"
+
+        stdcall TextMoveGap, edx, ecx
+        inc     [edx+TText.GapEnd]
+
+        call    .clip_and_copy
+        mov     ebx, eax
+
+        mov     [edx+TText.GapBegin], edi
+        lea     ecx, [edi-1]                    ; moves ecx at the start of the included template.
+
+        mov     esi, [.pSpecial]
+
+        stdcall StrDup, [hCurrentDir]
+        stdcall StrCat, eax, [esi+TSpecialParams.userSkin]
+        stdcall StrCat, eax, txt "/"
+        stdcall StrCat, eax, ebx
+        stdcall StrDel, ebx
+
+        stdcall FileOpenAccess, eax, faReadOnly
+        stdcall StrDel, eax
+        jc      .loop
+
+        mov     ebx, eax
+
+        stdcall FileSize, ebx
+        jc      .file_close
+
+        stdcall TextSetGapSize, edx, eax
+
+        mov     esi, [edx+TText.GapBegin]
+        add     esi, edx
+        stdcall FileRead, ebx, esi, eax
+        add     [edx+TText.GapBegin], eax
+
+.file_close:
+        stdcall FileClose, ebx
+        jmp     .loop
+
 
 ; ...................................................................
 
@@ -1443,8 +1487,10 @@ endp
 
 
 
-sqlGetMaxTagUsed text "select max(cnt) from (select count(*) as cnt from ThreadTags group by tag)"
-sqlGetAllTags    text "select TT.tag, count(TT.tag) as cnt, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag group by TT.tag order by TT.tag"
+;sqlGetMaxTagUsed text "select max(cnt) from (select count(*) as cnt from ThreadTags group by tag)"
+;sqlGetAllTags    text "select TT.tag, count(TT.tag) as cnt, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag group by TT.tag order by TT.tag"
+sqlGetMaxTagUsed text "select max(cnt) from (select (select count() from ThreadTags TT where TT.tag = T.tag) as cnt from tags T where importance >= 0);"
+sqlGetAllTags    text "select TT.tag, count(TT.tag) as cnt, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag where T.Importance >= 0 group by TT.tag order by TT.tag"
 
 proc GetAllTags, .pSpecial
   .max   dd ?
@@ -1618,7 +1664,7 @@ begin
         stdcall StrDup, [.hMinimag]
         mov     ebx, eax
 
-        stdcall GetCurrentDir
+        stdcall StrDup, [hCurrentDir]
         stdcall StrCat, eax, [edi+TSpecialParams.userSkin]
         stdcall StrCat, eax, "/minimag_suffix.tpl"
         push    eax
@@ -1868,7 +1914,7 @@ begin
         stdcall TextCreate, sizeof.TText
         mov     edx, eax
 
-        stdcall GetCurrentDir
+        stdcall StrDup, [hCurrentDir]
         stdcall StrCat, eax, "/templates/"
         push    eax
 

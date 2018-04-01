@@ -8,9 +8,10 @@ div.editor {
   max-width: 60%;
   overflow: hidden;
   opacity: 0.5;
-  a {
-    font-weight: bold;
-  }
+  resize: both;
+  background-color: @clFormBG;
+  display: flex;
+  flex-direction: column;
 }
 
 
@@ -19,9 +20,11 @@ div.editor:hover {
 }
 
 #editform {
-  margin: 8px 0px 0px 0px;
-  padding: 16px;
+  padding: 8px 16px;
   background-color: @clFormBG;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 
   p {
     color: @clFormFG;
@@ -31,9 +34,9 @@ div.editor:hover {
 }
 
 #draghere {
-  background-color: @clFormBG;
+  background-color: @clSeparator;
   padding: 8px 8px 0px 8px;
-  margin-bottom: 8px;
+  margin: 0px;
 }
 
 h1.fakeedit {
@@ -48,38 +51,19 @@ h1.fakeedit {
 }
 
 textarea.editor {
-  display: inline-block;
   width: 100%;
   height: 20em;
   padding: 4px;
-  margin-bottom: 8px;
-  margin-top: -1px;
-  border-style: none;
+  margin: 8px 0px;
+  border: @borderEdit;
   outline-style: none;
   overflow: auto;
-  resize: vertical;
+  flex-grow: 1;
+  resize: none;
 
   font-family: "Liberation Mono", "Courier New", monospaced;
   background-color: @clEditorBG;
 }
 
-div.panel {
-  display: inline-block;
-  width: 100%;
-  text-align: left;
-  margin-bottom: 8px;
-
-  input {
-    border-style: none;
-    padding: 4px;
-
-    background-color: @clButtonBG;
-    color: @clButtonFG;
-  }
-
-  input:active, input:focus, input:hover {
-    background-color: @clButtonActiveBG;
-  }
-}
 
 

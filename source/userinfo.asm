@@ -274,7 +274,7 @@ begin
 
 .default_avatar:
 
-        stdcall GetCurrentDir
+        stdcall StrDup, [hCurrentDir]
         stdcall StrCat, eax, [esi+TSpecialParams.userSkin]
         stdcall StrCat, eax, "/_images/anon.png"
         push    eax

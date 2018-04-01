@@ -1,0 +1,1 @@
+../Wasp/edit_toolbar.tpl

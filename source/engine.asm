@@ -66,6 +66,7 @@ include "sqlite_console.asm"
 include "messages.asm"
 include "version.asm"
 include "images_png.asm"
+include "categories.asm"
 
 include "chat.asm"
 include "chat_ipc.asm"
@@ -82,6 +83,7 @@ endg
 
 uglobal
   hMainDatabase dd ?
+  hCurrentDir   dd ?
   ProcessID     dd ?
   ProcessStart  dd ?
   fOwnSocket    dd ?
@@ -110,8 +112,10 @@ start:
         end if
 
         stdcall SetSegmentationFaultHandler, OnException
-
         stdcall SetForcedTerminateHandler, OnForcedTerminate
+
+        stdcall GetCurrentDir
+        mov     [hCurrentDir], eax
 
         cinvoke sqliteConfig, SQLITE_CONFIG_SERIALIZED
         cinvoke sqliteInitialize
