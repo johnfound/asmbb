@@ -1,5 +1,5 @@
-C Fixed\sbug\sin\sthe\stemplates.\sAdded\snew\sactivity19.tpl\sfor\sthe\scategories\slist.
-D 2018-03-23T13:36:10.258
+C Added\slink\sto\scategories.
+D 2018-04-01T11:32:05.629
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 512c660a477aaf85d037cd83239675032ee39afb
@@ -440,7 +440,7 @@ F www/templates/Wasp/minimag_suffix.tpl ea20e08377b7ccdd55a2d7792071bb2734622813
 F www/templates/Wasp/nav_categories.tpl 80053896a6a06ee87351b1e586eaefd329a84109
 F www/templates/Wasp/nav_list.tpl 8aadf6bbd69f485cf082adeb610345f6bafde38f
 F www/templates/Wasp/nav_search.tpl 4713a709b1a400d292db0a3f20b94183b6659df5
-F www/templates/Wasp/nav_thread.tpl e32a01610e6aee21ad95636a770b917ea69d44fb
+F www/templates/Wasp/nav_thread.tpl f592650dc5ee095b17681ee418714407f8996b25
 F www/templates/Wasp/nav_userslist.tpl 6ef44e0325d1b57df7789021ec146acddf90c72d
 F www/templates/Wasp/navigation.less 92cbee7aa77312dec59791642bcbc6d3c328fb53
 F www/templates/Wasp/one_category.tpl 674c342c22ad8000f47eb53537fac7f0bc989614
@@ -547,7 +547,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P b888bfc96ac75957d9325543188a62c724079fbe
-R 2ad02d1c633a6bf9eab0912c253a6149
+P cfd986f06afa9a567249af000c62f492d825375d
+R 81926fa9c11514c9fd1810fa6fbf49ad
 U johnfound
-Z 880f7cd45629eb68019cb3867baadfc2
+Z fcb992180184a409f6d91f94e05c4c92

@@ -3,7 +3,8 @@
 [css:markdown.css]
 
 <div class="ui">
-  <a class="ui left" style="color: white" href="..">Thread list</a>
+  <a class="ui left" href="/!categories">Categories</a>
+  <a class="ui left" href="..">Thread list</a>
   [case:[special:canpost]| |<a class="ui left" href="!post">Answer</a>]
   <span class="spacer"></span>
   [case:[special:isadmin]| |
