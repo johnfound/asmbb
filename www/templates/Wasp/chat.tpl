@@ -82,6 +82,7 @@
     var total_cnt = 0;
     var title = document.title;
     var do_notify = false;
+    var cdate;   // current date
 
 // Entering the chat.
 
@@ -161,31 +162,35 @@
       return '<span onclick="InsertNick(this)" class="' + c + '" title="' + original + '">' + user + '</span>: ';
     };
 
-    function CreateTimeSpan(time) {
-      var date = new Date(time*1000);
-      var hours = "0" + date.getHours();
-      var minutes = "0" + date.getMinutes();
-      var seconds = "0" + date.getSeconds();
-
-      return '<span>(' + hours.substr(-2) + ':' + minutes.substr(-2) + ':' + seconds.substr(-2) + ')</span> ';
-    };
-
     function OnMessage(e) {
 
       var msgset = JSON.parse(e.data);
       var ntf = "";
       var cnt = 0;
-
       var all = document.createDocumentFragment();
 
       for (var i in msgset.msgs) {
         var msg = msgset.msgs[i];
 
         if ( ! document.getElementById("chat" + msg.id) ) {
+          var date = new Date(msg.time*1000);
+          var day = ("0" + date.getDate()).substr(-2);
+          var mon = ("0" + ( date.getMonth() + 1 )).substr(-2);
+          var fdate =  day + '.' + mon + '.' + date.getFullYear();
+          var hours = ("0" + date.getHours()).substr(-2);
+          var minutes = ("0" + date.getMinutes()).substr(-2);
+          var seconds = ("0" + date.getSeconds()).substr(-2);
+
+          if ( cdate != fdate ) {
+            cdate = fdate;
+            var h4 = document.createElement('h4');
+            h4.innerHTML = "<span>"+cdate+"</span>";
+            all.appendChild(h4);
+          }
 
           var p = document.createElement('p');
           p.id = "chat" + msg.id;
-          p.innerHTML = CreateTimeSpan(msg.time) + CreateUserSpan(msg.user, msg.originalname) + replaceEmoticons(linkify(msg.text));
+          p.innerHTML = '<span>(' + hours + ':' + minutes + ':' + seconds + ')</span> ' + CreateUserSpan(msg.user, msg.originalname) + replaceEmoticons(linkify(msg.text));
           all.appendChild(p);
           cnt++;
 

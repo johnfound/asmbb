@@ -89,29 +89,54 @@ create table Threads (
   Slug        text unique,
   Caption     text,
   LastChanged integer,
+  UserID      integer references Users(id),
   Pinned      integer default 0
 );
-
 
 create index idxThreadsPinnedLastChanged on Threads (Pinned desc, LastChanged desc);
 create index idxThreadsSlug on Threads (Slug);
 
 
-create table Private (
-  ThreadID integer references Threads(id) on delete cascade,
-  UserID   integer references Users(id) on delete cascade
+create table ThreadsHistory (
+  threadid    integer,
+  Slug        text,
+  Caption     text,
+  LastChanged integer,
+  UserID      integer,
+  Pinned      integer
 );
 
-create unique index idxPrivateUnique on Private ( ThreadID, UserID );
+-- in order to avoid duplicated information in the history.
+create unique index idxThreadsHistory on ThreadsHistory(Slug, Caption, Pinned);
+
+create trigger ThreadsAU after update of Slug, Caption, UserID, Pinned on Threads begin
+  insert or ignore into ThreadsHistory(threadid, Slug, Caption, LastChanged, Pinned) values (
+    old.id,
+    old.Slug,
+    old.Caption,
+    old.LastChanged,
+    old.Pinned
+  );
+end;
+
+create trigger ThreadsAD after delete on Threads begin
+  insert or ignore into ThreadsHistory(threadid, Slug, Caption, LastChanged, Pinned) values (
+    old.id,
+    old.Slug,
+    old.Caption,
+    old.LastChanged,
+    old.Pinned
+  );
+end;
 
 
 create table Posts (
   id          integer primary key autoincrement,
   threadID    integer references Threads(id) on delete cascade,
   userID      integer references Users(id) on delete cascade,
-
-  postTime    integer,  -- based on postTime the posts are sorted in the thread.
-  ReadCount   integer,  -- not used anymore, because updating Posts is very slow because of the triggers!
+  postTime    integer,
+  editUserID  integer default NULL references Users(id) on delete cascade,
+  editTime    integer default NULL,
   Content     text,
   Rendered    text
 );
@@ -128,6 +153,73 @@ create table PostCnt (
 );
 
 create index idxPostCount on PostCnt(postid);
+
+create table PostsHistory (
+  postID     integer,
+  threadID   integer,
+  userID     integer,
+  postTime   integer,
+  editUserID integer,
+  editTime   integer,
+  Content  text
+);
+
+create unique index idxPostsHistory on PostsHistory(threadID, Content);
+
+CREATE VIRTUAL TABLE PostFTS using fts5(Content, Caption, slug, User, Tags, prefix="1 2 3", tokenize='porter unicode61 remove_diacritics 1');
+
+CREATE TRIGGER PostsAI AFTER INSERT ON Posts BEGIN
+  insert into PostFTS(rowid, Content, Caption, slug, user, tags) VALUES (
+    new.id,
+    new.Content,
+    (select Caption from Threads where id=new.threadid),
+    (select slug from Threads where id = new.threadid),
+    (select nick from users where id = new.userid),
+    (select group_concat(TT.Tag, ", ") from ThreadTags TT where TT.threadID = new.threadid)
+  );
+  insert into PostCNT(postid,count) VALUES (new.id, 0);
+  update Users set PostCount = PostCount + 1 where Users.id = new.UserID;
+END;
+
+CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
+  delete from PostFTS where rowid = old.id;
+  delete from PostCNT where postid = old.id;
+  update Users set PostCount = PostCount - 1 where Users.id = old.UserID;
+
+  insert or ignore into PostsHistory(postID, threadID, userID, postTime, editUserID, editTime, Content) values (
+    old.id,
+    old.threadID,
+    old.userID,
+    old.postTime,
+    old.editUserID,
+    old.editTime,
+    old.Content
+  );
+END;
+
+CREATE TRIGGER PostsAU AFTER UPDATE OF Content, editTime, editUserID, threadID ON Posts BEGIN
+  update PostFTS set
+    rowid = new.id,
+    Content = new.Content,
+    Caption = (select Caption from Threads where id=new.threadid),
+    slug = (select slug from Threads where id = new.threadid),
+    user = (select nick from users where id = new.userid),
+    tags = (select group_concat(TT.Tag, ", ") from ThreadTags TT where TT.threadID = new.threadid)
+  where rowid = old.id;
+  insert or ignore into PostsHistory(postID, threadID, userID, postTime, editUserID, editTime, Content) values (
+    old.id,
+    old.threadID,
+    old.userID,
+    old.postTime,
+    old.editUserID,
+    old.editTime,
+    old.Content
+  );
+END;
+
+
+
+
 
 create table Tags (
   Tag         text primary key,
@@ -367,41 +459,6 @@ create table Log (
 create table ProcessID (
   id integer primary key autoincrement
 );
-
-
-
-CREATE VIRTUAL TABLE PostFTS using fts5(Content, Caption, slug, User, Tags, prefix="1 2 3", tokenize='porter unicode61 remove_diacritics 1');
-
-CREATE TRIGGER PostsAI AFTER INSERT ON Posts BEGIN
-  insert into PostFTS(rowid, Content, Caption, slug, user, tags) VALUES (
-    new.id,
-    new.Content,
-    (select Caption from Threads where id=new.threadid),
-    (select slug from Threads where id = new.threadid),
-    (select nick from users where id = new.userid),
-    (select group_concat(TT.Tag, ", ") from ThreadTags TT where TT.threadID = new.threadid)
-  );
-  insert into PostCNT(postid,count) VALUES (new.id, 0);
-  update Users set PostCount = PostCount + 1 where Users.id = new.UserID;
-END;
-
-CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
-  delete from PostFTS where rowid = old.id;
-  delete from PostCNT where postid = old.id;
-  update Users set PostCount = PostCount - 1 where Users.id = old.UserID;
-END;
-
-CREATE TRIGGER PostsAU AFTER UPDATE ON Posts BEGIN
-  update PostFTS set
-    rowid = new.id,
-    Content = new.Content,
-    Caption = (select Caption from Threads where id=new.threadid),
-    slug = (select slug from Threads where id = new.threadid),
-    user = (select nick from users where id = new.userid),
-    tags = (select group_concat(TT.Tag, ", ") from ThreadTags TT where TT.threadID = new.threadid)
-  where rowid = old.id;
-END;
-
 
 
 create table ScratchPad (

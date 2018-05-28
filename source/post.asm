@@ -10,7 +10,7 @@ sqlSelectConst text "select ?1 as slug, ?2 as caption, ?3 as source, ?4 as ticke
 
 sqlGetQuote   text "select U.nick, P.content from Posts P left join Users U on U.id = P.userID where P.id = ?"
 
-sqlInsertPost text "insert into Posts ( ThreadID, UserID, PostTime, Content, Rendered, ReadCount) values (?, ?, strftime('%s','now'), ?, ?, 0)"
+sqlInsertPost text "insert into Posts ( ThreadID, UserID, PostTime, Content, Rendered) values (?, ?, strftime('%s','now'), ?, ?)"
 sqlUpdateThreads text "update Threads set LastChanged = strftime('%s','now') where id = ?"
 sqlInsertThread  text "insert into Threads ( Caption ) values ( ? )"
 sqlSetThreadSlug text "update Threads set slug = ? where id = ?"
