@@ -28,6 +28,10 @@ cLoginDialogTitle       itext   EN: "Login",                    \
                                 RU: "Вход",                     \
                                 BG: "Включване"
 
+cForgetDialogTitle       itext  EN: "WARNING! This dialog can delete your user account!",                    \
+                                RU: "ВНИМАНИЕ! Этот диалог может стереть Вашу учетную запись!",                     \
+                                BG: "ВНИМАНИЕ! Този диалог може да изтрие акаунта Ви!"
+
 cUserProfileTitle       itext   EN: "Profile for: ",            \
                                 RU: "Профиль потребителя: ",    \
                                 BG: "Потребителски профил: "

@@ -1,5 +1,5 @@
-C Some\schat\simprovements\sincluding\sthe\sfront-end\sJS.\sAdded\s.mp3\smime\stype.\sChanged\sdatabase\sscheme\sto\ssupport\shistory\srecords\son\sediting\sand\sdelete.\sThe\srecording\sof\sthe\schanges\sis\simplemented\sthrough\striggers\sin\sthe\sdatabase,\sthis\sway\seven\sdirect\sedits\swill\sbe\sstored\sproperly.\sImplemented\spost\shistory\sbrowser\sfor\sthe\sadmin\susers.
-D 2018-05-28T15:48:09.343
+C This\sbranch\sis\sfor\simplementation\sof\sGDPR\sfeatures\s(like\suser\sforget)\sand\sother\sprivacy\srelated\sfeatures.
+D 2018-06-02T16:44:50.833
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 512c660a477aaf85d037cd83239675032ee39afb
@@ -17,18 +17,18 @@ F source/Linux/sqlite3.inc 49dc036ae22c327790d0314c81263d77d041990b
 F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
-F source/accounts.asm 68bbfe93e1ef897978ef4dc79c654020abb34e69
+F source/accounts.asm 26a94a7d4d600744609b96a4bfb39e3b1193a1b8
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm 1f129fd0bf05f31b23dd1b3846ecc9cf0ae1499e
 F source/categories.sql bdb9e206fac6884ae116e80de2bd602d7d80bc04
 F source/chat.asm 3aa264c27574bdc7fd374e25b0261ecef5337dbe
 F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
-F source/commands.asm 8c2c442723d57def0056da79d5685c3f760dba90
+F source/commands.asm 28dc6609c3c2df42c56025f2661520022160c0ed
 F source/create.sql 9f7e69f6d6c5b0413ece54e60d424a03e0307133
 F source/delete.asm 5a916c3647c52baa753951d93fbbfaa3175627d4
 F source/edit.asm 611383d1beaed390b50852432a09bbf8f2db94f8
-F source/engine.asm 308fcfc464720c2e3ddd6acc2bdf6afd670f8177
-F source/engine.fpr f9f894bd26b6f6121bb24fce1bae31e3fbf98490
+F source/engine.asm 2a55d2b159e440b7d7b05f8d24d6f04b268da3c4
+F source/engine.fpr b9288faa2665107f26e310d7d2b1a86ce49afbb7
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 4c4271690919f55b4eddd71c7c4b0b44596f1c81
@@ -61,13 +61,13 @@ F source/statistics.sql adf6bec52c32dba0b780cd7422e2de395ca19f7e
 F source/tests/Test1.tpl 3787fb082cb7f6404ff4631fd6ca67ed14c7beac
 F source/tests/test_templates.asm 9fbe778c983448663d18c9cc2cc3cd9d0107e93b
 F source/tests/test_templates.fpr 0b6d692c0d55f91a6e310f622a6fe2c49c06ddf9
-F source/text_constants.asm f785aa1c9c8e22e1a9f0fc9180e8f384d91b26ac
+F source/text_constants.asm 7675291baa5a3e5cbac10fcad4ca9e5e7211d65c
 F source/thread_attr.sql 0ca7eb00c75ca369b74e04fc6aa386bab425798e
 F source/threadlist.asm 8103fa162b24ee7462d897d32d0467decea44a35
 F source/threadlist.sql 5ff1c1b661fcca07c1a0c529a3d94080d3bc0261
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/userinfo.asm a95216c385dfda93a1651c84d1e85f397c58e0ee
-F source/users_online.asm 0a1e5415fbce181dadef5403c86745cb4d7bbafa
+F source/users_online.asm 7a6739272cfe2f873712c7a6c496462622d6722c
 F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/userslist.asm bbc976c8ea94198220c0dd8edee8577c83374c46
 F source/userslist.sql 9ff073add084452a4ce34a7560eeee5384c6c8b8
@@ -233,6 +233,7 @@ F www/templates/Light/form_reset_request.tpl 74a4b6da9f76d26f8ca433a6113ab9e87de
 F www/templates/Light/form_settings.tpl a4635e33d4fa270b3b69c39572f4bfc94ea8ccc2 l
 F www/templates/Light/form_setup.tpl 7e32c9ff828a1cd2698285f3519632978add1b00 l
 F www/templates/Light/form_sqlite_console.tpl b90d0e298e5cc10782bafbe2e403cceb365a2fe4 l
+F www/templates/Light/form_user_forget.tpl efbeeaaa0e2f13f72fafe39ed5b106a2d1b4b40a l
 F www/templates/Light/help_new_thread.tpl 579ed6559a0a3aee0fe3be3a2c841c1dd7b8b169 l
 F www/templates/Light/login.less 4af417eb9ae51e7d5691cba96a93ef5a9fd79dd2 l
 F www/templates/Light/main_html_end.tpl d8b3ec3c2cdc952fcab6638d4147ee7e9cd2ba96 l
@@ -315,6 +316,7 @@ F www/templates/MoLight/form_reset_request.tpl 74a4b6da9f76d26f8ca433a6113ab9e87
 F www/templates/MoLight/form_settings.tpl a4635e33d4fa270b3b69c39572f4bfc94ea8ccc2 l
 F www/templates/MoLight/form_setup.tpl 7e32c9ff828a1cd2698285f3519632978add1b00 l
 F www/templates/MoLight/form_sqlite_console.tpl b90d0e298e5cc10782bafbe2e403cceb365a2fe4 l
+F www/templates/MoLight/form_user_forget.tpl efbeeaaa0e2f13f72fafe39ed5b106a2d1b4b40a l
 F www/templates/MoLight/help_new_thread.tpl 579ed6559a0a3aee0fe3be3a2c841c1dd7b8b169 l
 F www/templates/MoLight/login.less fe0f3a1c24a296b6a19164b547a564eba8fc9400 l
 F www/templates/MoLight/main_html_end.tpl d8b3ec3c2cdc952fcab6638d4147ee7e9cd2ba96 l
@@ -441,8 +443,9 @@ F www/templates/Wasp/form_reset_request.tpl d2130d1b896ef0ae18a02d962914bcd9b9b7
 F www/templates/Wasp/form_settings.tpl 950eeb66244dd1daef3d2fb65493bc8440620b14
 F www/templates/Wasp/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Wasp/form_sqlite_console.tpl 3a92a49ce8b1f42eba70636ed51dac8c2548f397
+F www/templates/Wasp/form_user_forget.tpl 9ae5e0dc53ef66393d42c395f80b2705caf6de3d
 F www/templates/Wasp/help_new_thread.tpl 855afda41996bc3875d07bdf7a41adcdf2a31525
-F www/templates/Wasp/login.less 31a9c8bcfe048f719c6ffa5a30af8eebe338f55a
+F www/templates/Wasp/login.less 94c763c74d399d4d08010bee634aa25c8ef246a7
 F www/templates/Wasp/main_html_end.tpl f9390ce9052a9df9e6ac20a2c11f7257b9f442dd
 F www/templates/Wasp/main_html_start.tpl 1b647ffe602ad0fe878f406e870bbf309dc5aae8
 F www/templates/Wasp/markdown.less 5ed2ac8b0ab8df671ac9df8059e1675e21a6519e
@@ -525,6 +528,7 @@ F www/templates/mobile/form_reset_request.tpl 74a4b6da9f76d26f8ca433a6113ab9e87d
 F www/templates/mobile/form_settings.tpl a4635e33d4fa270b3b69c39572f4bfc94ea8ccc2 l
 F www/templates/mobile/form_setup.tpl 7e32c9ff828a1cd2698285f3519632978add1b00 l
 F www/templates/mobile/form_sqlite_console.tpl b90d0e298e5cc10782bafbe2e403cceb365a2fe4 l
+F www/templates/mobile/form_user_forget.tpl efbeeaaa0e2f13f72fafe39ed5b106a2d1b4b40a l
 F www/templates/mobile/help_new_thread.tpl 579ed6559a0a3aee0fe3be3a2c841c1dd7b8b169 l
 F www/templates/mobile/login.less 4af417eb9ae51e7d5691cba96a93ef5a9fd79dd2 l
 F www/templates/mobile/main_html_end.tpl d8b3ec3c2cdc952fcab6638d4147ee7e9cd2ba96 l
@@ -561,10 +565,10 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 4e788366b93b48e129a75b7167b5580e1fc3d811
-R c5ea895949c7b4e3618b3da56e68476a
-T *branch * history_support
-T *sym-history_support *
-T -sym-trunk *
+P 7679b1a16a408800386a8b537e83e9b19c6dba21
+R 27f365c1cbcaf5720ef5fc36bf0871d0
+T *branch * gdpr
+T *sym-gdpr *
+T -sym-history_support *
 U johnfound
-Z 9494e6cee106a8fb129e8f061635922d
+Z af7e9080f76a3ca82a21c7f42dac69d4

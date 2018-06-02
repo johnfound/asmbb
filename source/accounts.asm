@@ -1664,3 +1664,161 @@ begin
         pop     eax
         return
 endp
+
+
+
+
+; forget everything about this user.
+; This procedure will not delete the user posts in order to keep the threads consistent.
+; But it will anonymize all user account information - the nickname, will clean the password hash and the salt
+; will delete the avatar image if any. (later it is not clear what to do with the attached files when implemented)
+
+
+proc ForgetUser, .pSpecial
+.stmt  dd ?
+
+.user     dd ?
+.password dd ?
+.ticket   dd ?
+
+.userID   dd ?
+
+begin
+        pushad
+
+        xor     eax, eax
+        mov     [.user], eax
+        mov     [.password], eax
+        mov     [.ticket], eax
+        mov     [.userID], eax
+
+; check the information
+
+        mov     esi, [.pSpecial]
+        xor     ebx, ebx
+
+        cmp     [esi+TSpecialParams.session], ebx
+        je      .error_need_login
+
+; check the permissions
+
+        cmp     [esi+TSpecialParams.post_array], ebx
+        jne     .do_forget_user
+
+        stdcall StrCat, [esi+TSpecialParams.page_title], cForgetDialogTitle
+
+        stdcall SetUniqueTicket, [esi+TSpecialParams.session]
+        jc      .error_bad_ticket
+
+        mov     ebx, eax
+
+        lea     ecx, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLoginTicket, sqlLoginTicket.length, ecx, 0
+
+        stdcall StrPtr, ebx
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len],  SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+
+        stdcall RenderTemplate, 0, "form_user_forget.tpl", [.stmt], esi
+        mov     [esp+4*regEAX], eax
+
+        cinvoke sqliteFinalize, [.stmt]
+        stdcall StrDel, ebx
+
+        clc
+        popad
+        return
+
+.do_forget_user:
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "ticket", 0
+        mov     [.ticket], eax
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "username", 0
+        mov     [.user], eax
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "password", 0
+        mov     [.password], eax
+
+        stdcall CheckTicket, [.ticket], [esi+TSpecialParams.session]
+        jc      .error_bad_ticket
+
+
+; get the user info and check password
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetUserInfo, sqlGetUserInfo.length, eax, 0
+
+        stdcall StrPtr, [.user]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .error_bad_user
+
+; check permissions:
+
+        test    [esi+TSpecialParams.userStatus], permAdmin
+        jnz     .perm_ok
+
+        stdcall StrCompNoCase, [esi+TSpecialParams.userName], [.user]
+        jnc     .error_bad_user
+
+
+; check the password:
+
+        cinvoke sqliteColumnText, [.stmt], 1    ; the salt
+        stdcall StrDupMem, eax
+        push    eax
+
+        stdcall StrCat, eax, [.password]
+        stdcall StrMD5, eax
+        stdcall StrDel ; from the stack
+        xchg    eax, [.password]
+        stdcall StrDel, eax
+
+        cinvoke sqliteColumnText, [.stmt], 2    ; the password hash.
+
+        stdcall StrCompCase, [.password], eax
+        jnc     .error_bad_user
+
+.perm_ok:
+
+; All permissions are OK! Do forget the user!
+
+; get the user ID
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        mov     [.userID], eax
+
+
+
+
+
+        clc
+        popad
+        return
+
+
+
+
+
+
+.error_bad_user:
+        cinvoke sqliteFinalize, [.stmt]
+;        jmp     .redirect_back_bad_password
+
+
+
+.error_bad_ticket:
+
+
+
+.error_need_login:
+
+        clc
+        xor     eax, eax
+        mov     [esp+4*regEAX], eax
+        popad
+        return
+endp

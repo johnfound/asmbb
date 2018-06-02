@@ -72,6 +72,7 @@ PList tablePreCommands, tpl_func,                  \
       "!message",         ShowForumMessage,        \
       "!activate",        ActivateAccount,         \
       "!userinfo",        ShowUserInfo,            \
+      "!forgetuser",      ForgetUser,              \
       "!avatar_upload",   UpdateUserAvatar,        \
       "!setskin",         UpdateUserSkin,          \
       "!render_all",      RenderAll,               \

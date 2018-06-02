@@ -108,7 +108,6 @@ endp
  uaCategoriesList    = 19       ; /!categories
 
 
-
 sqlLogUserActivity text "insert into UserLog(userID, remoteIP, Time, Activity, Param, Client) values (?1, ?2, strftime('%s','now'), ?3, ?4, ?5)"
 sqlClipHistory     text "delete from UserLog where Time < strftime('%s','now') - 864000"
 
