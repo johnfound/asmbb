@@ -1,13 +1,13 @@
-C Merged\swith\shistory_support\sbranch.\sSource\srelease\sv2.2\salpha;\sSupports\ssaving\spost\sand\sthread\shistory\sand\shistory\sbrowsing\sfor\sthe\sadministrators.\sThe\srestoring\sfeature\swill\sbe\sreleased\slater,\swith\sthe\sv2.2\sfinal.
-D 2018-06-04T12:42:32.165
+C Binary\srelease\sv2.2alpha
+D 2018-06-04T12:46:19.195
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
-F install/asmbb.tar.gz 512c660a477aaf85d037cd83239675032ee39afb
+F install/asmbb.tar.gz 0bc69a8dcebcfbd72a0b9a44f10603d7553653dc
 F install/create_release.sh ede3b12ec27fb3a5b81f4754917640a7ce363729 x
 F install/exclude.txt 7678178e332c0c4a1a7d1ac8705ae6e2e2e57e74
 F install/install.txt 46093ff6d21640a09fa5f0b9b943de868fa7f1ac
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
-F install/unpack.tar.gz 0cdeffe05130f825cf2cb6ca9e4bdcf63262d20a
+F install/unpack.tar.gz 03b2029d36d4393b8fd13d879a7d3894e10dad0b
 F install/unpack/.htaccess efa046601aad51a87da0946b4eecadcc0d234c15
 F install/unpack/unpack.sh 4443f580fe76faffa7015e6e4b73b22f6290f4a0 x
 F source/Documents/FastCGI\sSpecification.html e2fc06a5abf1b3505c665e108ce3ad28b636095a
@@ -561,7 +561,8 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 4e788366b93b48e129a75b7167b5580e1fc3d811 1421ee35f2dc4447466c8bab17090cdf083fd6c3
-R 6f586d6164e775f7bb064e550f03c366
+P e5a7f85a91a13c6e3e81e8f70043bdb1596a73da
+R 6b14a3a97ea99aef74ca6cfeaf2c2aac
+T +sym-v2.2alpha *
 U johnfound
-Z 720a74a4a1f670fa4243ec727039b6c4
+Z a455e9080ea96792b06e76785c67845b
