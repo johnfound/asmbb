@@ -1,7 +1,8 @@
 CHAT_MAX_USER_NAME = 20
 CHAT_MAX_MESSAGE = 1000
+CHAT_BACKLOG_DEFAULT = 100
 
-sqlSelectChat           text "select id, time, user, original, message from chatlog where id in (select id from chatlog where id > ?1 order by id desc limit 1000) and time > strftime('%s', 'now') - 86400;"
+sqlSelectChat           text "select id, time, user, original, message from chatlog where id in (select id from chatlog where id > ?1 order by id desc limit ?2)"
 sqlSelectUsers          text "select time, session, username, original, status, force from ChatUsers where status<>0 order by original;"
 
 sqlUpdateChatSession    text "update ChatUsers set time = strftime('%s', 'now'), force = NULL where session = ?1;"
@@ -22,6 +23,7 @@ proc ChatRealTime, .pSpecialParams
 
 .msg_from   dd ?
 .prev_users dd ?
+.chat_backlog_len dd ?
 
 begin
         pushad
@@ -63,6 +65,10 @@ begin
 
         stdcall EnterChat, esi, [.session]
 
+        mov     eax, CHAT_BACKLOG_DEFAULT
+        stdcall GetParam, 'chat_backlog_length', gpInteger
+        mov     [.chat_backlog_len], eax
+
         and     [.msg_from], 0
 
         stdcall ValueByName, [esi+TSpecialParams.params], "Last-Event-ID"
@@ -90,6 +96,7 @@ begin
         jne     .finish_socket
 
         cinvoke sqliteBindInt, [.stmt], 1, [.msg_from]
+        cinvoke sqliteBindInt, [.stmt], 2, [.chat_backlog_len]
 
         stdcall StrDupMem, <txt 'event: message', 13, 10, 'data: { "msgs": [ '>         ; start of the messages data set.
         mov     edi, eax

@@ -39,6 +39,21 @@ where
       up.userid=?1
   );
 
+-- User activiry by chat nick name:
+select
+  (g.addr >> 24 & 255)||'.'||(g.addr >> 16 & 255)||'.'||(g.addr >> 8 & 255)||'.'||(g.addr & 255) as IP,
+  datetime(gr.time, 'unixepoch') as Time,
+  gr.method,
+  gr.request,
+  gr.client,
+  gr.referer
+from
+  guests g
+left join
+  guestrequests gr on g.addr = gr.addr
+where
+  g.addr = (select addr from guestrequests where time = (select time from chatlog where original = 'Anon5B' limit 1));
+
 
 -- Displays all guests that downloaded only files like images, robots.txt, etc. without actually visiting the website.
 

@@ -17,10 +17,10 @@
     <p>SQL statement:</p>
     <textarea class="sql_editor" name="source" id="source"  placeholder="SQL">[source]</textarea>
     <div class="panel">
+      <a id="sql_result" style="visibility: hidden; margin: 0px; padding: 0px;"></a>
       <input type="submit" value="Exec" >
       <input type="reset" value="Revert" >
       <input type="hidden" name="ticket" value="[Ticket]" >
     </div>
-    <a id="sql_result"></a>
   </form>
 </div>

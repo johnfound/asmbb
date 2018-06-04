@@ -9,12 +9,13 @@
     <div class="post_info">
       <div class="last_edit">
         <a href="#[id]">#[id]</a>
-        Last edited: [PostTime], read: [ReadCount] [case:[ReadCount]|times|time|times]
+        [case:[EditUser]|Created: [PostTime]|Last edited: [EditTime] by <a href="/!userinfo/[EditUser]">[EditUser]</a>], read: [ReadCount] [case:[ReadCount]|times|time|times]
       </div>
       <div class="edit_tools">
         [case:[special:canpost]| |<a class="icon_quote" href="[id]/!post"></a>]
         [case:[special:canedit]| |<a class="icon_edit"  href="[id]/!edit"></a>]
         [case:[special:candel] | |<a class="icon_del"   href="[id]/!del"></a>]
+        [case:[special:isadmin]| |<a class="icon_hist"  href="/[id]/!history"></a>]
       </div>
     </div>
     <article>

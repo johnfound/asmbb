@@ -94,6 +94,7 @@ PList tablePostCommands, tpl_func,                 \
       "!edit_thread",     EditThreadAttr,          \
       "!del",             DeletePost,              \
       "!by_id",           PostByID,                \
+      "!history",         ShowHistory,             \
       "!search",          ShowSearchResults2
 end if
 
@@ -1041,6 +1042,10 @@ begin
         stdcall StrCompNoCase, [.extension], txt ".ttf"
         jc      .mime_ok
 
+        mov     eax, mimeMP3
+        stdcall StrCompNoCase, [.extension], txt ".mp3"
+        jc      .mime_ok
+
         xor     eax, eax
         stc
         return
@@ -1064,6 +1069,7 @@ mimeJPEG  text "image/jpeg"
 mimeSVG   text "image/svg+xml; charset=utf-8"
 mimeGIF   text "image/gif"
 mimeTTF   text "font/ttf"
+mimeMP3   text "audio/mpeg"
 
 
 
