@@ -1,5 +1,5 @@
-C Binary\srelease\sv2.2alpha
-D 2018-06-04T12:46:19.195
+C Fixed\ssmall\sbug\sin\sthe\sSQL\sfor\sshowing\shistory.
+D 2018-06-05T11:07:23.076
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 0bc69a8dcebcfbd72a0b9a44f10603d7553653dc
@@ -44,7 +44,7 @@ F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
 F source/post.asm a88fe98448285625d2b555cc7069e53ee40915d2
 F source/post_data.asm 3ca626cfd4fe38680bfe5a61115edfc7f14bd70d
 F source/postdebug.asm bda4e22fe38390a011c9d0ed890756caf4d3207e
-F source/posthistory.sql 658e9565c626e9c953e7272dbd0d11980b770531
+F source/posthistory.sql c15286f32455df88ebd14168a10195e0c098545d
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/render2.asm 531ec98360e34ba298474f6d041e91fd4ee64fc0
@@ -71,7 +71,7 @@ F source/users_online.asm 0a1e5415fbce181dadef5403c86745cb4d7bbafa
 F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/userslist.asm bbc976c8ea94198220c0dd8edee8577c83374c46
 F source/userslist.sql 9ff073add084452a4ce34a7560eeee5384c6c8b8
-F source/util.sql 97ddf2705d068492a09dc322f039a02e917d9039
+F source/util.sql c88ad6aa7cbe44aed3523251f857c8876c2cd130
 F source/version.asm c447d26b56c89b7701006e9d6c8ad041504ae2b9
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
@@ -561,8 +561,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P e5a7f85a91a13c6e3e81e8f70043bdb1596a73da
-R 6b14a3a97ea99aef74ca6cfeaf2c2aac
-T +sym-v2.2alpha *
+P b10c59bca94a518db48b5ec6a024677f682bd010
+R f368edf583b3e8ca238e2b7d54152de4
 U johnfound
-Z a455e9080ea96792b06e76785c67845b
+Z 903f682d61bd668bd998a22c26d31952
