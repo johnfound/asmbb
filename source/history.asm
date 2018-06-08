@@ -8,12 +8,100 @@ proc ShowHistory, .pSpecial
 begin
         pushad
 
-        DebugMsg "History start."
-
         xor     edi, edi
         mov     esi, [.pSpecial]
         mov     [.cnt], edi
 
+        cmp     [esi+TSpecialParams.page_num], edi
+        je      .exit                                   ; CF = 0 and EDI=0 ---> error 404
+
+        test    [esi+TSpecialParams.userStatus], permAdmin
+        jz      .perm_error
+
+        stdcall StrCat, [esi+TSpecialParams.page_title], cHistoryTitle
+
+        stdcall TextCreate, sizeof.TText
+        mov     edi, eax
+
+        stdcall LogUserActivity, esi, uaAdminThings, 0
+
+        stdcall TextCat, edi, txt '<div class="thread">'
+        stdcall RenderTemplate, edx, "nav_history.tpl", 0, esi
+        mov     edi, eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlPostHistory, sqlPostHistory.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.page_num]
+
+.loop:
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .end_query
+
+        cinvoke sqliteColumnType, [.stmt], 0
+        mov     ebx, eax
+        cmp     ebx, SQLITE_NULL
+        jne     .current_ok
+
+        stdcall TextAddStr2, edi, -1, '<div class="current_version">', 100
+        mov     edi, edx
+
+.current_ok:
+        stdcall RenderTemplate, edi, "post_history.tpl", [.stmt], esi
+        mov     edi, eax
+
+        cmp     ebx, SQLITE_NULL
+        jne     .current_ok2
+
+        stdcall TextAddStr2, edi, -1, '</div>', 100
+        mov     edi, edx
+
+.current_ok2:
+
+        inc     [.cnt]
+        jmp     .loop
+
+.end_query:
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     [.cnt], 5
+        jbe     .back_navigation_ok
+
+        stdcall RenderTemplate, edi, "nav_history.tpl", 0, esi
+        mov     edi, eax
+
+.back_navigation_ok:
+
+        stdcall TextCat, edi, txt "</div>"   ; div.thread
+        mov     edi, edx
+
+.exit:
+        clc
+        mov     [esp+4*regEAX], edi
+        popad
+        return
+
+.perm_error:
+        stdcall TextMakeRedirect, 0, "/!message/only_for_admins"
+
+        stc
+        mov     [esp+4*regEAX], edi
+        popad
+        return
+endp
+
+
+
+sqlRestoreConfirmInfo text "select rowid as version, postID, Content, ?2 as Ticket from PostsHistory where rowid = ?1"
+
+
+proc RestorePost, .pSpecial
+.stmt dd ?
+begin
+        pushad
+
+        xor     edi, edi
+        mov     esi, [.pSpecial]
         cmp     [esi+TSpecialParams.page_num], edi
         je      .exit                                   ; CF = 0 and EDI=0 ---> error 404
 
@@ -25,72 +113,66 @@ begin
 
         stdcall LogUserActivity, esi, uaAdminThings, 0
 
+        cmp     [esi+TSpecialParams.post_array], 0
+        jne     .post_request
 
-        DebugMsg "History log actility"
+; get request, show the confirmation form:
 
-        stdcall TextCat, edi, txt '<div class="thread">'
-        stdcall RenderTemplate, edx, "nav_history.tpl", 0, esi
-        mov     edi, eax
+        stdcall SetUniqueTicket, esi
+        jc      .perm_error
+
+        mov     ebx, eax
+
+        stdcall StrCat, [esi+TSpecialParams.page_title], cPostRestoreTitle
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlPostHistory, sqlPostHistory.length, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRestoreConfirmInfo, sqlDelConfirmInfo.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.page_num]
 
-        DebugMsg "History SQL prepared"
+        stdcall StrPtr, ebx
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 
-.loop:
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
-        jne     .end_query
+        je      .render
 
-        DebugMsg "History post rendering start."
+        stdcall TextMakeRedirect, edi, "/!message/error_post_not_exists"
+        jmp     .finalize
 
-        stdcall RenderTemplate, edi, "post_history.tpl", [.stmt], esi
+.render:
+        stdcall RenderTemplate, edi, "restore_confirm.tpl", [.stmt], esi
         mov     edi, eax
 
-        DebugMsg "History post rendering end."
-
-        inc     [.cnt]
-        jmp     .loop
-
-.end_query:
-        DebugMsg "History end query."
+.finalize:
 
         cinvoke sqliteFinalize, [.stmt]
-
-        cmp     [.cnt], 5
-        jbe     .back_navigation_ok
-
-        stdcall RenderTemplate, edi, "nav_history.tpl", 0, esi
-        mov     edi, eax
-
-.back_navigation_ok:
-
-        DebugMsg "History close div"
-
-        stdcall TextCat, edi, txt "</div>"   ; div.thread
-        mov     edi, edx
+        stdcall StrDel, ebx
 
 .exit:
-        DebugMsg "History normal end"
-
         clc
         mov     [esp+4*regEAX], edi
         popad
         return
 
-.perm_error:
-        DebugMsg "History not admin"
 
+.db_error:
+
+
+
+.perm_error:
         stdcall TextMakeRedirect, 0, "/!message/only_for_admins"
 
         stc
         mov     [esp+4*regEAX], edi
         popad
         return
+
+
+.post_request:
+
+
+
 endp
-
-
 
 
 

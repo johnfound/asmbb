@@ -6,6 +6,14 @@ cPostDeleteTitle        itext   EN: "Delete confirmation",       \
                                 RU: "Подтверждение удаления",    \
                                 BG: "Потвърждаване на изтриване"
 
+cPostRestoreTitle       itext   EN: "Restore to old version", \
+                                RU: "Восстановить предыдущую версию", \
+                                BG: "Възстановяване до предна версия"
+
+cHistoryTitle           itext   EN: "Post edition history",     \
+                                RU: "История редакции",         \
+                                BG: "История на редакциите"
+
 
 cForumSettingsTitle     itext   EN: "Forum settings page",      \
                                 RU: "Настройки форума",         \

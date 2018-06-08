@@ -1,0 +1,1 @@
+../Wasp/restore_confirm.tpl

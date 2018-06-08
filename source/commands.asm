@@ -95,6 +95,7 @@ PList tablePostCommands, tpl_func,                 \
       "!del",             DeletePost,              \
       "!by_id",           PostByID,                \
       "!history",         ShowHistory,             \
+      "!restore",         RestorePost,             \
       "!search",          ShowSearchResults2
 end if
 
