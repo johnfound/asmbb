@@ -89,6 +89,88 @@ The script will unpack all files, prepare the proper .htaccess file and redirect
 to the new created forum working in setup mode.
 
 
+## Installation on VPS with nginx and systemd
+
+### Prerequisites 
+
+* VPS with GNU/Linux OS installed that uses systemd.
+
+* Installed and working Nginx web server. I will explain only how to integrate AsmBB.
+
+### Installing AsmBB
+
+Download the recent binary package from the permanent link: *[https://asm32.info/fossil/repo/asmbb/doc/trunk/install/asmbb.tar.gz][asmbb.tar.gz]*
+
+Create a new directory, where the forum sub-domain will stay. I will name it `/PATH/TO/FORUM/`. Put the downloaded file inside.
+
+Untar with the following commands:
+
+    $ tar -xvzf asmbb.tar.gz
+    $ mv asmbb/* ./
+    $ rm -rf asmbb/
+
+After the unpack, there are some unneeded files, like text files and example config files in the directory. You can safely delete them. Only the subdirectories and 3 executable files are required. Notice that the subdirectories may contain some important symlinks, so unpacking on local computer and then uploading through FTP will not work (because FTP can't copy symlinks).
+
+All the files and the directory must be owned by some non-root user that will run AsmBB later. I will name it `NON_ROOT`.
+
+### Nginx configuration
+
+Insert in the nginx config file (in `/etc/nginx/nginx.cong` or in the forum sub-domain configuration file) the following:
+
+    server {
+      ..... # Your subdomain server configuration. 
+            # Should contains at least "listen" and "server_name" nginx options.
+    
+      root /PATH/TO/FORUM/;
+    
+      location / {
+        fastcgi_pass unix:/PATH/TO/FORUM/engine.sock;  
+        include fastcgi_params;
+      }
+    }
+
+Don't forget to replace the placeholders!
+
+Restart Nginx:
+
+    $sudo systemctl restart nginx
+
+### Systemd configuration
+
+Now configure systemd service that to manage AsmBB engine.
+
+Will need root access here. Create as a root the file `/etc/systemd/system/asmbb.service` with the following text (of course replace the placeholders `/PATH/TO/FORUM` and `NON_ROOT`:
+
+[Unit]
+Description=AsmBB forum engine FastCGI script.
+After=nginx.service
+
+    [Service]
+    Type=simple
+    User=NON_ROOT
+    WorkingDirectory=/PATH/TO/FORUM
+    ExecStart=/PATH/TO/FORUM/engine
+    Restart=on-failure
+
+    [Install]
+    WantedBy=nginx.service
+
+### Finalizing
+
+Now the configuration is finished. You can open the forum sub-domain in your browser. You should get `502 bad gateway` error, because AsmBB is still not running.
+
+Start AsmBB:
+
+    $sudo systemctl start asmbb
+
+Refresh the browser. The admin setup dialog of AsmBB should appear. Setup your admin user and the forum should start working in regular mode.
+
+If everything is OK until now, let's make the startup of AsmBB automatic on server restart:
+
+    $sudo systemctl enable asmbb
+
+That is all. 
+
 
 ## Introduction to the forum configuration.
 
