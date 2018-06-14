@@ -13,6 +13,7 @@ select
   U.av_time as AVer,
   ?4 as Slug,
   (select count() from UnreadPosts UP where UP.UserID = ?5 and UP.PostID = P.id) as Unread,
+  (select count() from PostsHistory PH where PH.postID = P.id) as HistoryCount,
   PC.count as ReadCount
 
 from Posts P

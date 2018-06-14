@@ -200,17 +200,33 @@ begin
         cinvoke sqliteColumnInt, [.stmt], 1     ; threadID
         cinvoke sqliteBindInt, [.stmt2], 1, eax
 
+        cinvoke sqliteColumnType, [.stmt], 2
+        cmp     eax, SQLITE_NULL
+        je      .userid_ok
         cinvoke sqliteColumnInt, [.stmt], 2     ; userID
         cinvoke sqliteBindInt, [.stmt2], 2, eax
+.userid_ok:
 
+        cinvoke sqliteColumnType, [.stmt], 3
+        cmp     eax, SQLITE_NULL
+        je      .posttime_ok
         cinvoke sqliteColumnInt, [.stmt], 3     ; postTime
         cinvoke sqliteBindInt, [.stmt2], 3, eax
+.posttime_ok:
 
+        cinvoke sqliteColumnType, [.stmt], 4
+        cmp     eax, SQLITE_NULL
+        je      .edituser_ok
         cinvoke sqliteColumnInt, [.stmt], 4     ; editUserID
         cinvoke sqliteBindInt, [.stmt2], 4, eax
+.edituser_ok:
 
+        cinvoke sqliteColumnType, [.stmt], 5
+        cmp     eax, SQLITE_NULL
+        je      .edittime_ok
         cinvoke sqliteColumnInt, [.stmt], 5     ; editTime
         cinvoke sqliteBindInt, [.stmt2], 5, eax
+.edittime_ok:
 
         push    esi edi ebx
 
@@ -236,7 +252,11 @@ begin
         cmp     eax, SQLITE_DONE
         je      .restored_ok
 
-        OutputValue "Error writing SQLite: ", eax, 10, -1
+;        OutputValue "Error writing SQLite: ", eax, 10, -1
+;
+;        cinvoke sqliteErrMsg, [hMainDatabase]
+;        stdcall FileWriteString, [STDERR], eax
+;        stdcall FileWriteString, [STDERR], cCRLF2
 
         stdcall TextMakeRedirect, edi, "/!message/error_cant_write"
         stc
@@ -253,8 +273,10 @@ begin
 
 .restored_ok:
 
+
         stdcall NumToStr, [.postid], ntsDec or ntsUnsigned
         push    eax
+        stdcall StrInsert, eax, txt '/', 0
         stdcall StrCat, eax, "/!by_id"
         stdcall TextMakeRedirect, edi, eax
         stdcall StrDel ; from the stack

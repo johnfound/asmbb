@@ -164,7 +164,7 @@ create table PostsHistory (
   Content  text
 );
 
-create unique index idxPostsHistory on PostsHistory(threadID, Content);
+create unique index idxPostsHistory on PostsHistory(postID, Content);
 
 CREATE VIRTUAL TABLE PostFTS using fts5(Content, Caption, slug, User, Tags, prefix="1 2 3", tokenize='porter unicode61 remove_diacritics 1');
 

@@ -15,7 +15,7 @@
         [case:[special:canpost]| |<a class="icon_quote" href="[id]/!post"></a>]
         [case:[special:canedit]| |<a class="icon_edit"  href="[id]/!edit"></a>]
         [case:[special:candel] | |<a class="icon_del"   href="[id]/!del"></a>]
-        [case:[editUserID]||[case:[special:isadmin]| |<a class="icon_hist"  href="/[id]/!history"></a>]]
+        [case:[HistoryCount]||[case:[special:isadmin]| |<a class="icon_hist"  href="/[id]/!history"></a>]]
       </div>
     </div>
     <article>
