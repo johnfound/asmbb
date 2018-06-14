@@ -1,6 +1,7 @@
-select
+select * from
+(select
   NULL as rowid,
-  id as postsID,
+  id as postID,
   threadID,
   userID,
   editUserID,
@@ -10,7 +11,8 @@ select
   (select av_time from Users U where U.id = userID) as AVerP,
   strftime('%d.%m.%Y %H:%M:%S', postTime, 'unixepoch') as PostTime,
   strftime('%d.%m.%Y %H:%M:%S', editTime, 'unixepoch') as EditTime,
-  Content
+  Content,
+  editTime as EditTimeNum
 from
   Posts
 where
@@ -18,7 +20,7 @@ where
 union
 select
   rowid,
-  postsID,
+  postID,
   threadID,
   userID,
   editUserID,
@@ -28,9 +30,11 @@ select
   (select av_time from Users U where U.id = userID) as AVerP,
   strftime('%d.%m.%Y %H:%M:%S', postTime, 'unixepoch') as PostTime,
   strftime('%d.%m.%Y %H:%M:%S', editTime, 'unixepoch') as EditTime,
-  Content
+  Content,
+  editTime as EditTimeNum
 from
   PostsHistory
 where
-  postsID = ?1
-order by editTime desc;
+  postID = ?1
+)
+order by editTimeNum desc;

@@ -8,12 +8,106 @@ proc ShowHistory, .pSpecial
 begin
         pushad
 
-        DebugMsg "History start."
-
         xor     edi, edi
         mov     esi, [.pSpecial]
         mov     [.cnt], edi
 
+        cmp     [esi+TSpecialParams.page_num], edi
+        je      .exit                                   ; CF = 0 and EDI=0 ---> error 404
+
+        test    [esi+TSpecialParams.userStatus], permAdmin
+        jz      .perm_error
+
+        stdcall StrCat, [esi+TSpecialParams.page_title], cHistoryTitle
+
+        stdcall TextCreate, sizeof.TText
+        mov     edi, eax
+
+        stdcall LogUserActivity, esi, uaAdminThings, 0
+
+        stdcall TextCat, edi, txt '<div class="thread">'
+        stdcall RenderTemplate, edx, "nav_history.tpl", 0, esi
+        mov     edi, eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlPostHistory, sqlPostHistory.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.page_num]
+
+.loop:
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .end_query
+
+        cinvoke sqliteColumnType, [.stmt], 0
+        mov     ebx, eax
+        cmp     ebx, SQLITE_NULL
+        jne     .current_ok
+
+        stdcall TextAddStr2, edi, -1, '<div class="current_version">', 100
+        mov     edi, edx
+
+.current_ok:
+        stdcall RenderTemplate, edi, "post_history.tpl", [.stmt], esi
+        mov     edi, eax
+
+        cmp     ebx, SQLITE_NULL
+        jne     .current_ok2
+
+        stdcall TextAddStr2, edi, -1, '</div>', 100
+        mov     edi, edx
+
+.current_ok2:
+
+        inc     [.cnt]
+        jmp     .loop
+
+.end_query:
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     [.cnt], 5
+        jbe     .back_navigation_ok
+
+        stdcall RenderTemplate, edi, "nav_history.tpl", 0, esi
+        mov     edi, eax
+
+.back_navigation_ok:
+
+        stdcall TextCat, edi, txt "</div>"   ; div.thread
+        mov     edi, edx
+
+.exit:
+        clc
+        mov     [esp+4*regEAX], edi
+        popad
+        return
+
+.perm_error:
+        stdcall TextMakeRedirect, 0, "/!message/only_for_admins"
+
+        stc
+        mov     [esp+4*regEAX], edi
+        popad
+        return
+endp
+
+
+
+sqlRestoreConfirmInfo text "select rowid as version, postID, Content, ?2 as Ticket from PostsHistory where rowid = ?1"
+sqlGetPostVersion     text "select postID, threadID, userID, postTime, editUserID, editTime, Content from PostsHistory where rowid = ?1"
+sqlRestorePost StripText "restore.sql", SQL
+
+proc RestorePost, .pSpecial
+.stmt  dd ?
+.stmt2 dd ?
+.postid dd ?
+begin
+        pushad
+
+        xor     edi, edi
+        xor     ebx, ebx
+        mov     [.postid], ebx
+
+        mov     esi, [.pSpecial]
         cmp     [esi+TSpecialParams.page_num], edi
         je      .exit                                   ; CF = 0 and EDI=0 ---> error 404
 
@@ -25,278 +119,173 @@ begin
 
         stdcall LogUserActivity, esi, uaAdminThings, 0
 
+        cmp     [esi+TSpecialParams.post_array], 0
+        jne     .post_request
 
-        DebugMsg "History log actility"
+; get request, show the confirmation form:
 
-        stdcall TextCat, edi, txt '<div class="thread">'
-        stdcall RenderTemplate, edx, "nav_history.tpl", 0, esi
-        mov     edi, eax
+        stdcall SetUniqueTicket, [esi+TSpecialParams.session]
+        jc      .perm_error
+
+        mov     ebx, eax
+
+        stdcall StrCat, [esi+TSpecialParams.page_title], cPostRestoreTitle
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlPostHistory, sqlPostHistory.length, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRestoreConfirmInfo, sqlDelConfirmInfo.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.page_num]
 
-        DebugMsg "History SQL prepared"
+        stdcall StrPtr, ebx
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 
-.loop:
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
-        jne     .end_query
+        je      .render
 
-        DebugMsg "History post rendering start."
+.error_missing_row:
 
-        stdcall RenderTemplate, edi, "post_history.tpl", [.stmt], esi
+        stdcall TextMakeRedirect, edi, "/!message/error_post_not_exists"
+        stc
+        jmp     .finalize
+
+.render:
+        stdcall RenderTemplate, edi, "restore_confirm.tpl", [.stmt], esi
         mov     edi, eax
+        clc
 
-        DebugMsg "History post rendering end."
-
-        inc     [.cnt]
-        jmp     .loop
-
-.end_query:
-        DebugMsg "History end query."
-
+.finalize:
+        pushf
         cinvoke sqliteFinalize, [.stmt]
-
-        cmp     [.cnt], 5
-        jbe     .back_navigation_ok
-
-        stdcall RenderTemplate, edi, "nav_history.tpl", 0, esi
-        mov     edi, eax
-
-.back_navigation_ok:
-
-        DebugMsg "History close div"
-
-        stdcall TextCat, edi, txt "</div>"   ; div.thread
-        mov     edi, edx
+        popf
 
 .exit:
-        DebugMsg "History normal end"
-
-        clc
+        stdcall StrDel, ebx
         mov     [esp+4*regEAX], edi
         popad
         return
 
 .perm_error:
-        DebugMsg "History not admin"
-
-        stdcall TextMakeRedirect, 0, "/!message/only_for_admins"
-
+        stdcall TextMakeRedirect, edi, "/!message/only_for_admins"
         stc
-        mov     [esp+4*regEAX], edi
-        popad
-        return
+        jmp     .exit
+
+
+.post_request:
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], "ticket", 0
+        test    eax, eax
+        jz      .perm_error1
+
+
+
+        mov     ebx, eax
+        stdcall CheckTicket, ebx, [esi+TSpecialParams.session]
+        stdcall ClearTicket3, ebx
+        jc      .perm_error2
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetPostVersion, sqlGetPostVersion.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.page_num]
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .error_missing_row
+
+        lea     eax, [.stmt2]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRestorePost, sqlRestorePost.length, eax, 0
+
+        cinvoke sqliteColumnInt, [.stmt], 0     ; postID
+        mov     [.postid], eax
+        cinvoke sqliteBindInt, [.stmt2], 8, eax
+
+        cinvoke sqliteColumnInt, [.stmt], 1     ; threadID
+        cinvoke sqliteBindInt, [.stmt2], 1, eax
+
+        cinvoke sqliteColumnType, [.stmt], 2
+        cmp     eax, SQLITE_NULL
+        je      .userid_ok
+        cinvoke sqliteColumnInt, [.stmt], 2     ; userID
+        cinvoke sqliteBindInt, [.stmt2], 2, eax
+.userid_ok:
+
+        cinvoke sqliteColumnType, [.stmt], 3
+        cmp     eax, SQLITE_NULL
+        je      .posttime_ok
+        cinvoke sqliteColumnInt, [.stmt], 3     ; postTime
+        cinvoke sqliteBindInt, [.stmt2], 3, eax
+.posttime_ok:
+
+        cinvoke sqliteColumnType, [.stmt], 4
+        cmp     eax, SQLITE_NULL
+        je      .edituser_ok
+        cinvoke sqliteColumnInt, [.stmt], 4     ; editUserID
+        cinvoke sqliteBindInt, [.stmt2], 4, eax
+.edituser_ok:
+
+        cinvoke sqliteColumnType, [.stmt], 5
+        cmp     eax, SQLITE_NULL
+        je      .edittime_ok
+        cinvoke sqliteColumnInt, [.stmt], 5     ; editTime
+        cinvoke sqliteBindInt, [.stmt2], 5, eax
+.edittime_ok:
+
+        push    esi edi ebx
+
+        cinvoke sqliteColumnBytes, [.stmt], 6
+        mov     ebx, eax
+        cinvoke sqliteColumnText, [.stmt], 6
+        mov     esi, eax
+        cinvoke sqliteBindText, [.stmt2], 6, esi, ebx, SQLITE_STATIC
+
+        stdcall FormatPostText2, esi, [.pSpecial]
+        mov     edi, eax
+
+        stdcall StrPtr, edi
+        cinvoke sqliteBindText, [.stmt2], 7, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt2]
+        push    eax
+
+        cinvoke sqliteFinalize, [.stmt2]
+        stdcall StrDel, edi
+
+        pop     eax ebx edi esi
+        cmp     eax, SQLITE_DONE
+        je      .restored_ok
+
+;        OutputValue "Error writing SQLite: ", eax, 10, -1
+;
+;        cinvoke sqliteErrMsg, [hMainDatabase]
+;        stdcall FileWriteString, [STDERR], eax
+;        stdcall FileWriteString, [STDERR], cCRLF2
+
+        stdcall TextMakeRedirect, edi, "/!message/error_cant_write"
+        stc
+        jmp     .finalize
+
+.perm_error1:
+        DebugMsg "No ticket get!"
+        jmp      .perm_error
+
+.perm_error2:
+        DebugMsg "Wrong ticket value!"
+        jmp      .perm_error
+
+
+.restored_ok:
+
+
+        stdcall NumToStr, [.postid], ntsDec or ntsUnsigned
+        push    eax
+        stdcall StrInsert, eax, txt '/', 0
+        stdcall StrCat, eax, "/!by_id"
+        stdcall TextMakeRedirect, edi, eax
+        stdcall StrDel ; from the stack
+        stc
+        jmp     .finalize
+
+
 endp
 
 
 
 
-
-
-;
-;proc ShowThread, .pSpecial
-;
-;.stmt  dd ?
-;.stmt2 dd ?
-;
-;.threadID dd ?
-;
-;.list dd ?
-;.cnt  dd ?
-;
-;.rendered dd ?
-;
-; BenchVar .temp
-;
-;begin
-;        pushad
-;
-;        stdcall TextCreate, sizeof.TText
-;        mov     edi, eax
-;
-;        mov     esi, [.pSpecial]
-;
-;        stdcall StrNew
-;        mov     [.rendered], eax
-;
-;        stdcall LogUserActivity, esi, uaReadingThread, 0
-;
-;        cinvoke sqliteExec, [hMainDatabase], sqlBegin, 0, 0, 0
-;
-;        lea     eax, [.stmt2]
-;        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, sqlGetThreadInfo.length, eax, 0
-;
-;        stdcall StrPtr, [esi+TSpecialParams.thread]
-;        cinvoke sqliteBindText, [.stmt2], 1, eax, [eax+string.len], SQLITE_STATIC
-;
-;        cinvoke sqliteStep, [.stmt2]
-;        cmp     eax, SQLITE_ROW
-;        jne     .error
-;
-;        cinvoke sqliteColumnInt, [.stmt2], 0
-;        mov     [.threadID], eax
-;
-;; make the title
-;
-;        mov     ebx, [esi+TSpecialParams.page_title]
-;
-;        stdcall StrCat, ebx, txt ' "'
-;        cinvoke sqliteColumnText, [.stmt2], 1
-;
-;        stdcall StrEncodeHTML, eax
-;        stdcall StrCat, ebx, eax
-;        stdcall StrDel, eax
-;        stdcall StrCat, ebx, txt '"'
-;
-;        cmp     [esi+TSpecialParams.page_num], 0
-;        je      .page_ok
-;
-;        stdcall StrCat, ebx, ", page: "
-;        stdcall NumToStr, [esi+TSpecialParams.page_num], ntsDec or ntsUnsigned
-;        stdcall StrCat, ebx, eax
-;        stdcall StrDel, eax
-;
-;.page_ok:
-;        mov     [esi+TSpecialParams.page_title], ebx
-;
-;        stdcall TextCat, edi, txt '<div class="thread">'
-;        stdcall RenderTemplate, edx, "nav_thread.tpl", [.stmt2], esi
-;        mov     edi, eax
-;
-;; pages links
-;
-;        lea     eax, [.stmt]
-;        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetPostCount, sqlGetPostCount.length, eax, 0
-;        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
-;
-;        cinvoke sqliteStep, [.stmt]
-;
-;        cinvoke sqliteColumnInt, [.stmt], 0
-;        mov     [.cnt], eax
-;
-;        cinvoke sqliteFinalize, [.stmt]
-;
-;
-;        stdcall CreatePagesLinks2, [esi+TSpecialParams.page_num], [.cnt], 0, [esi+TSpecialParams.page_length]
-;        mov     [.list], eax
-;
-;        stdcall TextCat, edi, [.list]
-;        mov     edi, edx
-;
-;        lea     eax, [.stmt]
-;        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectPosts, sqlSelectPosts.length, eax, 0
-;
-;        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
-;        cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.page_length]
-;
-;        mov     eax, [esi+TSpecialParams.page_num]
-;        imul    eax, [esi+TSpecialParams.page_length]
-;        cinvoke sqliteBindInt, [.stmt], 3, eax
-;
-;        stdcall StrPtr, [esi+TSpecialParams.thread]
-;        cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
-;
-;        cinvoke sqliteBindInt, [.stmt], 5, [esi+TSpecialParams.userID]  ; the current user.
-;
-;        mov     [.cnt], 0
-;
-;.loop:
-;        cinvoke sqliteStep, [.stmt]
-;        cmp     eax, SQLITE_ROW
-;        jne     .finish
-;
-;        inc     [.cnt]
-;
-;        stdcall RenderTemplate, edi, "post_view.tpl", [.stmt], esi
-;        mov     edi, eax
-;
-;        cinvoke sqliteColumnInt, [.stmt], 0
-;
-;        stdcall StrCatNotEmpty, [.rendered], txt ","
-;        stdcall NumToStr, eax, ntsDec or ntsUnsigned
-;        stdcall StrCat, [.rendered], eax
-;        stdcall StrDel, eax
-;
-;        jmp     .loop
-;
-;
-;.finish:
-;        cinvoke sqliteFinalize, [.stmt]
-;
-;        BenchmarkStart .temp
-;
-;;        jmp     .skip_writes           ; not write the posts read count and clearing the unread posts.
-;                                        ; this is acceptable on very high loads for boosting performance.
-;
-;        mov     ebx, [esi+TSpecialParams.userID]
-;        test    ebx, ebx
-;        jz      .posts_read_ok
-;
-;        stdcall StrDupMem, sqlSetPostsRead
-;        stdcall StrCat, eax, [.rendered]
-;        stdcall StrCat, eax, txt ")"
-;
-;        push    eax
-;
-;        lea     ecx, [.stmt]
-;        stdcall StrPtr, eax
-;        cinvoke sqlitePrepare_v2, [hMainDatabase], eax, [eax+string.len], ecx, 0
-;        stdcall StrDel ; from the stack
-;
-;        cinvoke sqliteBindInt, [.stmt], 1, ebx
-;        cinvoke sqliteStep, [.stmt]
-;        cinvoke sqliteFinalize, [.stmt]
-;
-;        Benchmark  "Posts set unread [us]: "
-;
-;.posts_read_ok:
-;
-;        stdcall StrDupMem, sqlIncReadCount
-;        xchg    eax, [.rendered]
-;
-;        stdcall StrCat, [.rendered], eax
-;        stdcall StrDel, eax
-;        stdcall StrCat, [.rendered], txt ")"
-;
-;        lea     ecx, [.stmt]
-;        stdcall StrPtr, [.rendered]
-;        cinvoke sqlitePrepare_v2, [hMainDatabase], eax, [eax+string.len], ecx, 0
-;        cinvoke sqliteStep, [.stmt]
-;        cinvoke sqliteFinalize, [.stmt]
-;
-;;.skip_writes:
-;        stdcall StrDel, [.rendered]
-;
-;        Benchmark  "Posts increment count and set unread [us]: "
-;        BenchmarkEnd
-;
-;        cmp     [.cnt], 5
-;        jbe     .back_navigation_ok
-;
-;        stdcall TextCat, edi, [.list]
-;        stdcall RenderTemplate, edx, "nav_thread.tpl", [.stmt2], esi
-;        mov     edi, eax
-;
-;.back_navigation_ok:
-;
-;        stdcall StrDel, [.list]
-;        stdcall TextCat, edi, txt "</div>"   ; div.thread
-;        mov     edi, edx
-;
-;.exit:
-;        cinvoke sqliteFinalize, [.stmt2]
-;        cinvoke sqliteExec, [hMainDatabase], sqlCommit, 0, 0, 0
-;
-;        clc
-;        mov     [esp+4*regEAX], edi
-;        popad
-;        return
-;
-;.error:
-;        stdcall TextFree, edi
-;        xor     edi, edi
-;        jmp     .exit
-;
-;endp

@@ -39,7 +39,7 @@ where
       up.userid=?1
   );
 
--- User activiry by chat nick name:
+-- User activity by chat nick name:
 select
   (g.addr >> 24 & 255)||'.'||(g.addr >> 16 & 255)||'.'||(g.addr >> 8 & 255)||'.'||(g.addr & 255) as IP,
   datetime(gr.time, 'unixepoch') as Time,

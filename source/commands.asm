@@ -95,6 +95,7 @@ PList tablePostCommands, tpl_func,                 \
       "!del",             DeletePost,              \
       "!by_id",           PostByID,                \
       "!history",         ShowHistory,             \
+      "!restore",         RestorePost,             \
       "!search",          ShowSearchResults2
 end if
 
@@ -1470,6 +1471,7 @@ sqlClearTicket2 text "delete from Tickets where time < strftime('%s','now')-1440
 proc ClearTicket3, .ticket
 .stmt dd ?
 begin
+        pushf
         pushad
 
         cmp     [.ticket], 0
@@ -1490,6 +1492,7 @@ begin
         cinvoke sqliteFinalize, [.stmt]
 
         popad
+        popf
         return
 endp
 
