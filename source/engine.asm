@@ -21,7 +21,7 @@ LINUX_INTERPRETER equ './ld-musl-i386.so'
 options.ShowSkipped = 0
 options.ShowSizes = 0
 
-options.DebugMode = 0
+options.DebugMode = 1
 options.AlignCode = 0
 options.ShowImported = 0
 
@@ -92,7 +92,7 @@ uglobal
 endg
 
 
-rb 373
+;rb 373
 
 
 start:
@@ -324,7 +324,7 @@ begin
         mov     [eax+TStmtList.stmt], edi
         mov     [eax+TStmtList.dup], 0
 
-        OutputValue "Added $", edi, 16, 8
+;        OutputValue "Added $", edi, 16, 8
 
         stdcall MutexRelease, mxSQLite
 
@@ -362,7 +362,7 @@ begin
         stdcall DeleteArrayItems, [ptrSQList], ecx, 1
         mov     [ptrSQList], edx
 
-        OutputValue "Removed $", ebx, 16, 8
+;        OutputValue "Removed $", ebx, 16, 8
 
 .release:
         stdcall MutexRelease, mxSQLite
