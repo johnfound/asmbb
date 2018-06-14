@@ -1,5 +1,5 @@
-C Merged\swith\sthe\shistory_support\sbranch.\sPreparations\sfor\sv2.2
-D 2018-06-14T12:28:25.216
+C Source\srelease\sv2.2
+D 2018-06-14T12:52:07.589
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 0bc69a8dcebcfbd72a0b9a44f10603d7553653dc
@@ -74,7 +74,7 @@ F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/userslist.asm bbc976c8ea94198220c0dd8edee8577c83374c46
 F source/userslist.sql 9ff073add084452a4ce34a7560eeee5384c6c8b8
 F source/util.sql c88ad6aa7cbe44aed3523251f857c8876c2cd130
-F source/version.asm c447d26b56c89b7701006e9d6c8ad041504ae2b9
+F source/version.asm 2c233b8a04d4a85abe80aba4f2fb768e95efb9cc
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
 F www/images/chat_menu.svg d8485817c3e745dcb8b981bb80d264f18365e377
@@ -567,7 +567,8 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P b10c59bca94a518db48b5ec6a024677f682bd010 a55e1378d252ef3592700d27b7ed4e5073b88c0b
-R b8a60889397c70f7fd92fbfdb5229407
+P bfd431d1e1834e3a5dba60bdeac81315a15953a4
+R f2fc9be6c466e26a8b12151e63a33245
+T +sym-v2.2 *
 U johnfound
-Z bb364c6823bcd0907e94ce181de7b2bb
+Z f6c963047ee8dc17a57877228f3a5190
