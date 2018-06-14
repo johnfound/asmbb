@@ -1,13 +1,13 @@
-C Binary\srelease\sv2.2
-D 2018-06-14T13:03:35.951
+C Minor\supdate\sof\sthe\sbinary\spack.
+D 2018-06-14T13:08:35.539
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
-F install/asmbb.tar.gz 84d1e0b48366d4cec84a9b5725759fb2d1cb20be
+F install/asmbb.tar.gz 92addafc1654502c35dbd8ea2c6bd3a40d449ae7
 F install/create_release.sh ede3b12ec27fb3a5b81f4754917640a7ce363729 x
 F install/exclude.txt 7678178e332c0c4a1a7d1ac8705ae6e2e2e57e74
 F install/install.txt 64615f21455976e432bda238c6d4282fc561e340
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
-F install/unpack.tar.gz 7348cac31360c1526745c8811a6f070d00cc240d
+F install/unpack.tar.gz 554f772428c77580d3eb35b461beb8b57c2d68d6
 F install/unpack/.htaccess efa046601aad51a87da0946b4eecadcc0d234c15
 F install/unpack/unpack.sh 4443f580fe76faffa7015e6e4b73b22f6290f4a0 x
 F source/Documents/FastCGI\sSpecification.html e2fc06a5abf1b3505c665e108ce3ad28b636095a
@@ -567,8 +567,8 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P cfaf86b59d64d6a0aefe086277b2e34c4a496198
-R 370c813e4335908ba065f045e0bff19c
+P 405179d46baaebe8f0157a7037712b24d526f05c
+R 0ce889cde1f71532bad06059e58333da
 T +sym-v2.2 *
 U johnfound
-Z 86e38961f3019421d9c53e04b293227d
+Z 42667ae4d6ea3271712670e2a5c478d8
