@@ -78,7 +78,6 @@ PList tablePreCommands, tpl_func,                  \
       "!users_online",    UserActivityTable,       \
       "!chat",            ChatPage,                \
       "!chat_events",     ChatRealTime,            \
-      "!echo_events",     EchoRealTime,            \    ; optional, depending on the options.DebugWebSSE
       "!postdebug",       PostDebug,               \    ; optional, depending on the options.DebugWeb
       "!debuginfo",       DebugInfo,               \    ; optional, depending on the options.DebugSQLite
       "!users",           UsersList,               \
@@ -96,6 +95,7 @@ PList tablePostCommands, tpl_func,                 \
       "!by_id",           PostByID,                \
       "!history",         ShowHistory,             \
       "!restore",         RestorePost,             \
+      "!echoevents",      EchoRealTime,            \    ; optional, depending on the options.DebugWebSSE
       "!search",          ShowSearchResults2
 end if
 

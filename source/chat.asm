@@ -789,6 +789,9 @@ cCRLF2 text 13, 10, 13, 10
 
 if defined options.DebugWebSSE & options.DebugWebSSE
 
+cContentTypeEvent2 text 'Content-Type: text/event-stream', 13, 10, "X-Accel-Buffering: yes", 13, 10, 13, 10, "retry: 1000", 13, 10, 13, 10
+
+
 proc EchoRealTime, .pSpecialParams
 .bytes dd ?
 begin
@@ -801,7 +804,16 @@ begin
         cmp     [fChatTerminate], 0
         jne     .finish_socket
 
-        stdcall FCGI_output, [esi+TSpecialParams.hSocket], [esi+TSpecialParams.requestID], cContentTypeEvent, cContentTypeEvent.length, FALSE
+        mov     edi, cContentTypeEvent
+        mov     ecx, cContentTypeEvent.length
+        cmp     [esi+TSpecialParams.page_num], 0
+        je      @f
+
+        mov     edi, cContentTypeEvent2
+        mov     ecx, cContentTypeEvent2.length
+
+@@:
+        stdcall FCGI_output, [esi+TSpecialParams.hSocket], [esi+TSpecialParams.requestID], edi, ecx, FALSE
 
         stdcall StrDupMem, <txt 'event: message', 13, 10, 'data: '>        ; echo message
         mov     edi, eax

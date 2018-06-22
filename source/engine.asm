@@ -28,7 +28,7 @@ options.ShowImported = 0
 options.DebugWeb = 0
 options.DebugSQLite = 1
 
-options.DebugWebSSE = 0         ; debug server sent events - creates a command "!echo_events" for debugging SSE.
+options.DebugWebSSE = 1         ; debug server sent events - creates a command "!echo_events" for debugging SSE.
 options.Benchmark = 0
 
 ;HeapManager  equ ASM
