@@ -1,5 +1,5 @@
-C Extended\secho\sservice\sfor\sdebugging\sSSE.
-D 2018-06-22T12:51:07.514
+C This\sbranch\sis\sfor\shandling\sall\schat\sevents\sin\sa\ssingle\sthread.
+D 2018-07-09T08:57:20.014
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 92addafc1654502c35dbd8ea2c6bd3a40d449ae7
@@ -21,17 +21,17 @@ F source/accounts.asm 68bbfe93e1ef897978ef4dc79c654020abb34e69
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm 1f129fd0bf05f31b23dd1b3846ecc9cf0ae1499e
 F source/categories.sql bdb9e206fac6884ae116e80de2bd602d7d80bc04
-F source/chat.asm 100738cf9cab094794d8dc7c38e4fc5332d3248a
+F source/chat.asm ad21b4dac5a80cc8e061695dfcb3e06ece165a34
 F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
-F source/commands.asm c8b901a25d7de38f4cb681a1883ddd52b7c2c791
+F source/commands.asm b1fe7a344cbacdfc1e73869abee6c03d603aa81f
 F source/create.sql 725347a1b2b4cae0049203e73afde79317db45b6
 F source/delete.asm 5a916c3647c52baa753951d93fbbfaa3175627d4
 F source/edit.asm 611383d1beaed390b50852432a09bbf8f2db94f8
-F source/engine.asm 6702fe5614f5187e1d42e8a5e2706e8306ff1374
+F source/engine.asm 33c92fc11e7258512aed006e03fbd7e58ab20d19
 F source/engine.fpr f3631b74d72247939914656754ac005e7949b271
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
-F source/fcgi.asm 4c4271690919f55b4eddd71c7c4b0b44596f1c81
+F source/fcgi.asm c6ea5ad507684a53854755eb651a624f0060efc1
 F source/history.asm 60954615a27c21a67e1a20a82a636370ee55a9b7
 F source/http.asm 83348746eac5c0c9052144f61b626a3d9f0f53c0
 F source/images_png.asm cb69d9eafb85f6e61c526a3dcff4c7f2c3f4ebd6
@@ -47,9 +47,9 @@ F source/postdebug.asm bda4e22fe38390a011c9d0ed890756caf4d3207e
 F source/posthistory.sql c15286f32455df88ebd14168a10195e0c098545d
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
-F source/render2.asm 531ec98360e34ba298474f6d041e91fd4ee64fc0
+F source/render2.asm 3d1b87eef3446a289a5515d96873738c14991f06
 F source/restore.sql 14a8f13466ced19e05502d41ffcfddeecbc6954b
-F source/search.asm 15f6469bf4117fa6c22ded98a5613d07e2a8697a
+F source/search.asm b680e7e4b6b704fe6718e4d95ea0afd898c2493d
 F source/search.sql 34cf6eea11403e7ac709cd1588bd84c57257135f
 F source/search_cnt.sql 762c07c3e8a9186e966a6377517edc18ab50ef96
 F source/settings.asm c1a40aa8de214ecacce3826630ba37cb59464be7
@@ -62,7 +62,7 @@ F source/statistics.sql adf6bec52c32dba0b780cd7422e2de395ca19f7e
 F source/tests/Test1.tpl 3787fb082cb7f6404ff4631fd6ca67ed14c7beac
 F source/tests/test_templates.asm 9fbe778c983448663d18c9cc2cc3cd9d0107e93b
 F source/tests/test_templates.fpr 0b6d692c0d55f91a6e310f622a6fe2c49c06ddf9
-F source/text_constants.asm 0e1790e3b2d2f97f162fffe4b1a3afb93297428d
+F source/text_constants.asm 936b97405503dba1b5c735bacdc2079156ae613b
 F source/thread_attr.sql 0ca7eb00c75ca369b74e04fc6aa386bab425798e
 F source/threadlist.asm 8103fa162b24ee7462d897d32d0467decea44a35
 F source/threadlist.sql 5ff1c1b661fcca07c1a0c529a3d94080d3bc0261
@@ -159,7 +159,7 @@ F www/images/sources/yellow_back.png d7aed4145104dc3224a3fb46f03c14cf6d386167
 F www/images/title.svg cfda872f2467a82c172f6e309ae7a385fdaabff5
 F www/ld-musl-i386.so d787058cb540c591edd2bc5fc1ddad9fac72f61f x
 F www/libsqlite3.so 7ec554841266559cb0e08b27b2afd8aab1869044 x
-F www/lighttpd.conf 697f2a90588d5579f514022dc56f3c6d71fadbc2
+F www/lighttpd.conf eda26fccd80774266b883ba4572faab7fbf20176
 F www/robots.txt bed60589d6ab1cc0470f3ba582444612d1c4109a
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/Light/_images/anon.png 9184b9fe4cf4632fd4dc7baf7db2eeccd8c57334 l
@@ -422,7 +422,7 @@ F www/templates/Wasp/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
 F www/templates/Wasp/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/Wasp/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
 F www/templates/Wasp/chat.less 7893c4b9366f8de395eb09c6c83bb323d05df7d3
-F www/templates/Wasp/chat.tpl a7cbaf5e46fbd813adc3765938ff065b0eb474e0
+F www/templates/Wasp/chat.tpl 85d10c4a27d7be9be6fb784b2f35a6b494c8ce7d
 F www/templates/Wasp/common.less d7504428f391ec954b8845c44fac6ef9a67147e9
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 17d02b6b8ab0b59548446258f0f2efdf507d6af2
@@ -567,7 +567,10 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 7fb0a8d034ffdbfb968d10f36564d6ef7eaab8b2
-R c16936e9f2de7482c4ed718dea145b35
+P 1848495e79192b295789c2f9f445b587368fed45
+R 3ae9c48a50d11da3bd65399cb848769c
+T *branch * superchat
+T *sym-superchat *
+T -sym-trunk *
 U johnfound
-Z 11230ccff4b635cee17155fdb901c60f
+Z 0c7d5031114bb15466bea3c1c298650b

@@ -223,7 +223,7 @@ begin
         mov     edi, eax
 
         cmp     [.pages], 0
-        je      .search_ok      ; this means the total results count is 0, not the pages.
+        je      .empty_search      ; this means the total results count is 0, not the pages.
 
         stdcall TextCat, edi, [.pages]
         mov     edi, edx
@@ -283,6 +283,13 @@ begin
         popad
         return
 
+.empty_search:
+
+        stdcall TextCat, edi, txt '<h3>'
+        stdcall TextCat, edx, cEmptySearch
+        stdcall TextCat, edx, txt '</h3>'
+        mov     edi, edx
+        jmp     .search_ok
 
 .missing_query:
 

@@ -25,7 +25,8 @@ options.DebugMode = 0
 options.AlignCode = 0
 options.ShowImported = 0
 
-options.DebugWeb = 0
+options.DebugWeb = 0        ; not properly implemented. See the cross reference for details on use.
+options.DebugEnv = 0            ; prints on STDOUT the environment variables on every request.
 options.DebugSQLite = 1
 
 options.DebugWebSSE = 1         ; debug server sent events - creates a command "!echo_events" for debugging SSE.

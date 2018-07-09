@@ -2,6 +2,91 @@ CHAT_MAX_USER_NAME = 20
 CHAT_MAX_MESSAGE = 1000
 CHAT_BACKLOG_DEFAULT = 100
 
+; The structure for one chat user connected.
+
+struct TChatSocket
+  .hSocket   dd ?
+  .requestID dd ?
+  .session   dd ?
+  .last_send dd ?
+ends
+
+
+uglobal
+  mxChatUsers TMutex
+  pUsersList  dd ?       ; pointer to TArray
+endg
+
+
+
+proc ChatEventsThread, .dummy
+.futex dd ?
+begin
+        pushad
+
+        stdcall MutexCreate, 0, mxChatUsers
+        stdcall MutexRelease, mxChatUsers
+
+
+.main_loop:
+        mov     eax, [pChatFutex]
+        mov     eax, [eax]
+        mov     [.futex], eax
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        stdcall WaitForChatMessages, ebx
+        jc      .finish
+
+
+
+
+
+        popad
+        return
+endp
+
+
+
+
+
+
+
+proc AddUserToTheChat, .pSpecial
+begin
+
+
+
+
+
+
+        return
+endp
+
+
+
+
+
+
+
+
+
+
+
+
 sqlSelectChat           text "select id, time, user, original, message from chatlog where id in (select id from chatlog where id > ?1 order by id desc limit ?2)"
 sqlSelectUsers          text "select time, session, username, original, status, force from ChatUsers where status<>0 order by original;"
 
@@ -37,7 +122,7 @@ begin
         cmp     [fChatTerminate], 0
         jne     .finish_socket
 
-        call    ChatPermissions
+        stdcall ChatPermissions, esi
         jc      .error_no_permissions
 
         stdcall GetCookieValue, [esi+TSpecialParams.params], "chatsid"
@@ -339,11 +424,17 @@ begin
 
 ; the user permissions
 
-        call    ChatPermissions
+        DebugMsg "Chat page procedure!"
+
+        stdcall ChatPermissions, esi
         jc      .error_no_permissions
+
+        DebugMsg "Chat permission OK!"
 
         cmp     [esi+TSpecialParams.post_array], 0
         jne     .post_new_message
+
+        DebugMsg "Chat no post data!"
 
         stdcall StrCat, [esi+TSpecialParams.page_title], cChatTitle
         stdcall LogUserActivity, esi, uaChatting, 0
@@ -362,6 +453,8 @@ begin
 
 
 .post_new_message:
+
+        DebugMsg "Post chat request!"
 
         xor     edi, edi
         stdcall GetCookieValue, [esi+TSpecialParams.params], "chatsid"
@@ -393,6 +486,9 @@ begin
 
 
 .post_message:
+
+        DebugMsg "Post message!"
+
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "chat_message", 0
         mov     ebx, eax
         test    eax, eax
@@ -426,6 +522,8 @@ begin
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
+
+        OutputValue "Post message result: ", eax, 10, -1
 
 .finish_query:
 
@@ -529,8 +627,12 @@ endp
 
 
 
-proc ChatPermissions    ; esi is pointer to TSpecialParams
+proc ChatPermissions, .pSpecial
 begin
+        push    eax esi
+
+        mov     esi, [.pSpecial]
+
         stdcall GetParam, "chat_enabled", gpInteger
         jc      .not_ok
 
@@ -550,10 +652,12 @@ begin
 
 .not_ok:
         stc
+        pop     esi eax
         return
 
 .permissions_ok:
         clc
+        pop     esi eax
         return
 endp
 

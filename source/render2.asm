@@ -1147,7 +1147,7 @@ end if
         jmp     .one_permission
 
 .sp_canchat:
-        call    ChatPermissions
+        stdcall ChatPermissions, [.pSpecial]
         cmovc   eax, [.cBoolean]
         cmovnc  eax, [.cBoolean+4]
         jmp     .special_string

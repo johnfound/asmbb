@@ -595,16 +595,10 @@ begin
 .log_req_end_ok:
 
         test    [.requestFlags], FCGI_KEEP_CONN
-        jz      .finish
-
-;        DebugMsg "Keep connection"
-
-        jmp     .main_loop
+        jnz     .main_loop
 
 
 .finish:
-;        DebugMsg "Don't keep connection"
-
         stdcall FreeMem, esi
         call    .FreeAllocations
 

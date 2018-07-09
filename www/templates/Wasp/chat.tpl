@@ -125,7 +125,7 @@
       var http = new XMLHttpRequest();
 
       http.open("POST", "!chat", true);
-      http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      http.setRequestHeader("Content-Type", "application\/x-www-form-urlencoded");
       http.send("cmd=rename&username=" + encodeURIComponent(user_line.value));
     };
 
@@ -133,7 +133,7 @@
       var http = new XMLHttpRequest();
 
       http.open("POST", "!chat", true);
-      http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      http.setRequestHeader("Content-Type", "application\/x-www-form-urlencoded");
       http.send("cmd=status&status=" + status);
     };
 
@@ -143,7 +143,7 @@
         var http = new XMLHttpRequest();
 
         http.open("POST", "!chat", true);
-        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.setRequestHeader("Content-Type", "application\/x-www-form-urlencoded");
 
         var p = "cmd=message&chat_message=" + encodeURIComponent(edit_line.value);
         http.send(p);
@@ -285,4 +285,3 @@
       <a class="icon_btn" id="chat_submit" alt="?" onclick="SendMessage()"></a>
     </div>
   </div>
-

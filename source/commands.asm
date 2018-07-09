@@ -118,6 +118,28 @@ proc ServeOneRequest, .hSocket, .requestID, .pParams2, .pPost2, .start_time
 begin
         pushad
 
+if defined options.DebugEnv & options.DebugEnv
+        pushad
+
+        mov     esi, [.pParams2]
+        mov     ecx, [esi+TArray.count]
+        lea     esi, [esi+TArray.array]
+
+.dbgloop:
+        dec     ecx
+        js      .enddbg
+
+        stdcall FileWriteString, [STDOUT], [esi+8*ecx]
+        stdcall FileWriteString, [STDOUT], txt ' = '
+        stdcall FileWriteString, [STDOUT], [esi+8*ecx + 4]
+        stdcall FileWriteString, [STDOUT], <txt 13, 10>
+        jmp     .dbgloop
+
+.enddbg:
+        popad
+end if
+
+
         xor     eax, eax
         mov     [.root], eax
         mov     [.uri], eax

@@ -67,3 +67,7 @@ cChatTitle              itext   EN: "Chat ",            \
 cAnonName               itext   EN: "Anon",             \
                                 RU: "Анон",             \
                                 BG: "Анон"
+
+cEmptySearch            itext   EN: "The search found nothing. Try another keywords.",      \
+                                RU: "Поиск не нашел ничего. Попробуйте другой запрос.",      \
+                                BG: "Търсенето не намери нищо. Опитайте с други думи."
