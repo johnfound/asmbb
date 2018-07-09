@@ -37,7 +37,7 @@ begin
         cmp     [fChatTerminate], 0
         jne     .finish_socket
 
-        call    ChatPermissions
+        stdcall ChatPermissions, esi
         jc      .error_no_permissions
 
         stdcall GetCookieValue, [esi+TSpecialParams.params], "chatsid"
@@ -339,7 +339,7 @@ begin
 
 ; the user permissions
 
-        call    ChatPermissions
+        stdcall ChatPermissions, esi
         jc      .error_no_permissions
 
         cmp     [esi+TSpecialParams.post_array], 0
@@ -529,8 +529,12 @@ endp
 
 
 
-proc ChatPermissions    ; esi is pointer to TSpecialParams
+proc ChatPermissions, .pSpecial
 begin
+        push    eax esi
+
+        mov     esi, [.pSpecial]
+
         stdcall GetParam, "chat_enabled", gpInteger
         jc      .not_ok
 
@@ -550,10 +554,12 @@ begin
 
 .not_ok:
         stc
+        pop     esi eax
         return
 
 .permissions_ok:
         clc
+        pop     esi eax
         return
 endp
 
