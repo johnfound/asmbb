@@ -1,5 +1,5 @@
-C Binary\srelease\sbecause\sof\scritical\sregression\sfix.
-D 2018-07-09T10:52:03.935
+C Fixed\stypo.
+D 2018-07-10T06:23:50.199
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 75b7e85d74d81a31cf1dffb9c1d07bec879c3ba8
@@ -437,7 +437,7 @@ F www/templates/Wasp/form_edit_thread.tpl 258bbd841f40175f68c3f7828a9996d80f721c
 F www/templates/Wasp/form_editinfo.tpl 2668a6016f76f55d3bd5597e4344fdc2caee9198
 F www/templates/Wasp/form_login.tpl 59d96e0eba0c0019c0d68de935ae6d26e9614e49
 F www/templates/Wasp/form_new_post.tpl 9affa2192454fd47f7fee7d213ddba68626f2f41
-F www/templates/Wasp/form_new_thread.tpl acf388369d6ca6d6f24c54b12971d8ebfafc9d7b
+F www/templates/Wasp/form_new_thread.tpl b977c9a14bfde15cfb8a353c6feff684c8482210
 F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/Wasp/form_register.tpl 18c0fa0a762d78dc4c34f6c8bdcb11140f4b1e36
 F www/templates/Wasp/form_reset_password.tpl 0602acb7aaa6528a16ddc2b16d7ac7b05e24f09a
@@ -567,7 +567,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 845a4ee260885c42b77d238f01333a45caadcf3c
-R 49b7e30975ab93d7ccd3e6d0355cb60b
+P 07c698b341583eea75056878a98d8610020fc4b1
+R 0570145109f2fa8e7c459cbed4e00ea7
 U johnfound
-Z 936f52843ae33b746e3a4ca8ae448db1
+Z 594c6da03ee73196bdc1b337ce513724

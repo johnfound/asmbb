@@ -19,7 +19,7 @@
       </div>
       <p>Post content:</p>
       [include:edit_toolbar.tpl]
-      <textarea class="editor" name="source" id="source" placeholder="Share you thoughs here">[source]</textarea>
+      <textarea class="editor" name="source" id="source" placeholder="Share your thoughs here">[source]</textarea>
       <div class="panel">
         <input type="submit" name="submit" value="Submit" >
         <input type="submit" name="preview" value="Preview" >
