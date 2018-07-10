@@ -1,5 +1,5 @@
 C Fixed\stypo.
-D 2018-07-10T06:25:59.088
+D 2018-07-10T06:27:45.927
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 75b7e85d74d81a31cf1dffb9c1d07bec879c3ba8
@@ -52,7 +52,7 @@ F source/restore.sql 14a8f13466ced19e05502d41ffcfddeecbc6954b
 F source/search.asm 15f6469bf4117fa6c22ded98a5613d07e2a8697a
 F source/search.sql 34cf6eea11403e7ac709cd1588bd84c57257135f
 F source/search_cnt.sql 762c07c3e8a9186e966a6377517edc18ab50ef96
-F source/settings.asm c1a40aa8de214ecacce3826630ba37cb59464be7
+F source/settings.asm 9e5b28dde765d894f0601768d8d431ea263d91bc
 F source/showthread.asm ba5a0f583df5344544865db1e0621005e7e8437f
 F source/showthread.sql 284a3060114cb7668fead7008f4ebaf9258f14d2
 F source/sqlite3.asm 8e27aa526542e4c8bac6b9e741b6e0698220933f
@@ -567,7 +567,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P f073b6f1cd6349813f838f0bd2b69fdda0b66492
-R ccaf46ff14151c52a2847f24569aac8b
+P 1d34591b74275535b2583ee96d32dd6fb8bbe8c6
+R ef1f49facdfd0bf4640c7a4cc00697d9
 U johnfound
-Z cf538228520897a6dfb13670c580400a
+Z 34a4fc146cab15fac660a6f0766863c6

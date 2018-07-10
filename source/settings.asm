@@ -532,7 +532,7 @@ begin
         cmp     ebx, SQLITE_DONE
         jne     .error_commit
 
-        stdcall StrDupMem, "The settings has been saved"
+        stdcall StrDupMem, "The settings have been saved"
 
 .end_save:
         mov     ebx, eax
