@@ -4,7 +4,7 @@
   <a class="editbtn icon_bold"      onclick="insertTag('source', '*', '*', 1)" title="Bold"></a>
   <a class="editbtn icon_italic"    onclick="insertTag('source', '/', '/', 1)" title="Italic"></a>
   <a class="editbtn icon_underline" onclick="insertTag('source', '_', '_', 1)" title="Underlined"></a>
-  <a class="editbtn icon_strike"    onclick="insertTag('source', '-', '-', 1)" title="Striked trought"></a>
+  <a class="editbtn icon_strike"    onclick="insertTag('source', '-', '-', 1)" title="Strikethrough"></a>
   <a class="editbtn icon_code"      onclick="insertTag('source', '`', '`', 1)" title="Inline code"></a>
   <a class="editbtn icon_link"      onclick="insertTag('source', '[', '][]', 1)" title="Link [url][description]"></a>
   <a class="editbtn icon_picture"   onclick="insertTag('source', '[!', '][]', 1)" title="Picture [!url][alt text]"></a>

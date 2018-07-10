@@ -1,5 +1,5 @@
-C Set\splaceholder\stext\sin\sthe\sanswer\spost\seditor.
-D 2018-07-10T06:24:52.306
+C Fixed\stypo.
+D 2018-07-10T06:25:59.088
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 75b7e85d74d81a31cf1dffb9c1d07bec879c3ba8
@@ -427,7 +427,7 @@ F www/templates/Wasp/common.less d7504428f391ec954b8845c44fac6ef9a67147e9
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 17d02b6b8ab0b59548446258f0f2efdf507d6af2
 F www/templates/Wasp/delete.less f77246e7f9fd0680ddb1ef2351b2b4ec5cef54f2
-F www/templates/Wasp/edit_toolbar.tpl 37630bf23c711831c7ea10d856a9ae42d71b7312
+F www/templates/Wasp/edit_toolbar.tpl adcf4ee01502af9dc46da4dcf977007c28fcfff9
 F www/templates/Wasp/editor.less fcb2f6b451f366015c3d5cbc0377d2032596b0de
 F www/templates/Wasp/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Wasp/error_html_end.tpl 3729362af2738a816684e06dd05bbfff10a39d02
@@ -567,7 +567,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 74fe2c8f3fb2e4f33b0a12c2642b262f8d6ea775
-R 9df9a5a04412028df3d6cea45e116533
+P f073b6f1cd6349813f838f0bd2b69fdda0b66492
+R ccaf46ff14151c52a2847f24569aac8b
 U johnfound
-Z 80aab5f9ee7251ed5e9fa72cc354a822
+Z cf538228520897a6dfb13670c580400a
