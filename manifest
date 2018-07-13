@@ -1,5 +1,5 @@
-C Fixed\stypo.
-D 2018-07-10T06:27:45.927
+C Fixed\stypo.\sI\sshould\scheck\sthe\stexts\sbetter.
+D 2018-07-13T04:01:44.994
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 75b7e85d74d81a31cf1dffb9c1d07bec879c3ba8
@@ -437,7 +437,7 @@ F www/templates/Wasp/form_edit_thread.tpl 258bbd841f40175f68c3f7828a9996d80f721c
 F www/templates/Wasp/form_editinfo.tpl 2668a6016f76f55d3bd5597e4344fdc2caee9198
 F www/templates/Wasp/form_login.tpl 59d96e0eba0c0019c0d68de935ae6d26e9614e49
 F www/templates/Wasp/form_new_post.tpl fcc6d9ff896ab666a96159a595183856aa1c0972
-F www/templates/Wasp/form_new_thread.tpl b977c9a14bfde15cfb8a353c6feff684c8482210
+F www/templates/Wasp/form_new_thread.tpl 84d7fe12d0c45879862ac579fd79b44048d9065c
 F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/Wasp/form_register.tpl 18c0fa0a762d78dc4c34f6c8bdcb11140f4b1e36
 F www/templates/Wasp/form_reset_password.tpl 0602acb7aaa6528a16ddc2b16d7ac7b05e24f09a
@@ -567,7 +567,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 1d34591b74275535b2583ee96d32dd6fb8bbe8c6
-R ef1f49facdfd0bf4640c7a4cc00697d9
+P 894eb61e45a5d396cc3d6e38510dd5c669122dc0
+R d41cd69d0bc56f7c266da6bd626de11c
 U johnfound
-Z 34a4fc146cab15fac660a6f0766863c6
+Z abca34a847e1e605be92c3785064de07
