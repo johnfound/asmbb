@@ -2,7 +2,7 @@
 <div class="post">
   <div class="user_info unread[Unread]">
     <a class="user_name" href="/!userinfo/[UserName]">[UserName]
-    <img class="avatar" alt=":)" src="/!avatar/[UserName]?v=[AVer]"></a>
+    <img class="avatar" alt=":-)" src="/!avatar/[UserName]?v=[AVer]"></a>
     <div class="user_pcnt">Posts: [UserPostCount]</div>
   </div>
   <div class="post_text">

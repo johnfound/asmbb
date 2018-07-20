@@ -93,23 +93,23 @@ form#search_form {
 
 
 .search_btn {
+  width: 32px;
+  height: 32px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  text-align: center;
+
   display: block;
 
   border: @borderButton;
   border-radius: @borderNavRad;
 
-  vertical-align: top;
-
   background-color: @clButtonBG;
-  background-image: url("[special:skin]/_images/search.svg");
-  background-position: center;
-  background-size: 20px 20px;
-  background-repeat: no-repeat;
+  padding-top: 6px;
 
-  width: 32px;
-  height: 32px;
-  flex-grow: 0;
-  flex-shrink: 0;
+  color: @clButtonFG;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .search_btn:hover {
@@ -167,12 +167,16 @@ div.tags {
 
   line-height: 80%;
   border-bottom: @borderEdit;
+
+  a {
+    color: @clDarkFG;
+    padding: @paddingOneTag;
+    margin: @marginOneTag;
+    text-decoration: none;
+  }
 }
 
 a.taglink {
-  padding: @paddingOneTag;
-  margin: @marginOneTag;
-  color: @clDarkFG;
   display:inline-block;
   max-width: 20%;
   min-width: 16px;
@@ -181,7 +185,6 @@ a.taglink {
   vertical-align: middle;
   border-radius: @borderRadTags;
   border: @borderTags;
-  text-decoration: none;
   text-align: center;
   white-space: nowrap;
 }
@@ -195,25 +198,16 @@ a.current_tag {
   text-decoration: none;
 }
 
-.tagicon {
+
+img.tagicon {
   display: inline-block;
-  padding: 4px;
   width: 32px;
   height: 32px;
-  vertical-align: top;
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
   margin-right: 4px;
+  vertical-align: middle;
+  font-size: 90%;
 }
 
-.current {
-  background-image: url("[special:skin]/_images/posts.svg");
-}
-
-.not_current {
-  background-image: url("[special:skin]/_images/posts_gray.svg");
-}
 
 /* messages screen */
 

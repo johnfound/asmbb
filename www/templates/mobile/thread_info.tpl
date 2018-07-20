@@ -1,5 +1,6 @@
 <div class="thread_summary">
-  <a class="unread unread[case:[Unread]|0|1]" title="Mark thread as read." href="[case:[special:userid]|#|[Slug]/!markread]"></a><a class="thread_link" href="[Slug]/">[Caption]</a><br>
+  [case:[Unread]||<a href="[case:[special:userid]|#|[Slug]/!markread]">]
+  <img class="unread" src="[special:skin]/_images/posts[case:[Unread]|_gray|].svg" alt="UR" title="[case:[Unread]|No unread messages|Mark thread as read.]">[case:[Unread]||</a>]<a class="thread_link" href="[Slug]/">[Caption]</a><br>
   <span class="small">[special:posters=[id]]</span><br><br>
 
   [case:[Pinned]||<span class="pinned pin1"></span>]

@@ -54,25 +54,28 @@
 
       // build the regular expression and replace
       return text.replace(new RegExp(patterns.join('|'),'g'), function (match) {
-        return typeof emoticons[match] != 'undefined' ? '<img src="'+url+emoticons[match]+'">' : match;
+        return typeof emoticons[match] != 'undefined' ? '<img width="20" height="20" src="'+url+emoticons[match]+'" alt="'+match+'">' : match;
       });
     }
 
     function notify(Msg) {
+      var notify;
       if (!("Notification" in window)) {
         alert("This browser does not support desktop notification");
       } else if (Notification.permission === "granted") {
-               var notification = new Notification(Msg);
+               notify = new Notification(Msg);
              } else if (Notification.permission !== "denied") {
                       Notification.requestPermission( function (permission) {
                         if (permission === "granted") {
-                          var notification = new Notification(Msg);
+                          notify = new Notification(Msg);
                         }
                       });
                     }
     }
 
 // essential code.
+
+    var EventSource = window.EventSource;
 
     var source;
     var edit_line;
@@ -81,7 +84,13 @@
     var total_cnt = 0;
     var title = document.title;
     var do_notify = false;
-    var cdate;
+    var cdate;   // current date
+
+
+    function ScrollBottom(force) {
+      if ( force || ! do_notify ) chat_log.scrollTop = chat_log.scrollHeight - chat_log.clientHeight;
+    }
+
 
 // Entering the chat.
 
@@ -111,13 +120,13 @@
     function KeyPress(e, proc) {
       if (e.keyCode == '13') {
         proc();
-      };
-    };
+      }
+    }
 
     function InsertNick(element) {
       edit_line.value = '@' + element.textContent + ': ' + edit_line.value;
       edit_line.focus();
-    };
+    }
 
     function UserRename(new_name) {
       var http = new XMLHttpRequest();
@@ -125,7 +134,7 @@
       http.open("POST", "!chat", true);
       http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       http.send("cmd=rename&username=" + encodeURIComponent(new_name));
-    };
+    }
 
     function UserStatusChange(status) {
       var http = new XMLHttpRequest();
@@ -133,7 +142,7 @@
       http.open("POST", "!chat", true);
       http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       http.send("cmd=status&status=" + status);
-    };
+    }
 
 
     function SendMessage() {
@@ -146,7 +155,7 @@
             UserRename( '' );
           } else {
             UserRename(txt.replace(/^!(.+)$/,'$1'));
-          };
+          }
 
           edit_line.value = "";
           edit_line.focus();
@@ -162,18 +171,17 @@
 
           edit_line.value = "";
           edit_line.focus();
-        };
-      };
-    };
+        }
+      }
+    }
 
     function CreateUserSpan(user, original) {
-      if (user == original) {
-        var c = "user";
-      } else {
-        var c = "user fake";
-      };
+      var c = "user";
+      if (user != original) {
+        c += " fake";
+      }
       return '<span onclick="InsertNick(this)" class="' + c + '" title="' + original + '">' + user + '</span>: ';
-    };
+    }
 
     function OnMessage(e) {
 
@@ -182,7 +190,7 @@
       var cnt = 0;
       var all = document.createDocumentFragment();
 
-      for (var i in msgset.msgs) {
+      for (var i = 0; i < msgset.msgs.length; i++) {
         var msg = msgset.msgs[i];
 
         if ( ! document.getElementById("chat" + msg.id) ) {
@@ -207,45 +215,43 @@
           all.appendChild(p);
           cnt++;
 
-          if (ntf != "") { ntf += ", "};
+          if (ntf !== "") ntf += ", ";
           ntf += msg.user;
-        };
-      };
+        }
+      }
 
-      do_notify = (Math.abs((chat_log.scrollTop + chat_log.clientHeight) - chat_log.scrollHeight));
+      do_notify = ( Math.abs((chat_log.scrollTop + chat_log.clientHeight) - chat_log.scrollHeight) > 128 );
 
       if ( (! total_cnt) && (do_notify || document.hidden) && cnt ) {
         var last = chat_log.lastChild;
         if ( last && (last.tagName != 'HR') ) chat_log.appendChild(document.createElement('HR'));
-      };
+      }
 
       chat_log.appendChild(all);
+      ScrollBottom(false);
 
-      if (  ! do_notify ) {
-        chat_log.scrollTop = chat_log.scrollHeight - chat_log.clientHeight;
-        if (! document.hidden) {
+      if (  ! (do_notify || document.hidden)) {
           total_cnt = 0;
           document.title = title;
-        };
-      };
+      }
 
       if (cnt && document.hidden) notify("New messages in the chat from: " + ntf);
 
       if (cnt && (document.hidden || do_notify)) {
         total_cnt = total_cnt + cnt;
         document.title = '(' + total_cnt.toString() + ') ' + title;
-      };
-    };
+      }
+    }
 
     document.addEventListener("visibilitychange", function() {
       if ( ! document.hidden ) {
         total_cnt = 0;
         document.title = title;
         UserStatusChange(1);
-        chat_log.scrollTop = chat_log.scrollHeight - chat_log.clientHeight;
+        ScrollBottom(true);
       } else {
         UserStatusChange(2);
-      };
+      }
     });
 
     function OnUserOnline (e) {
@@ -253,33 +259,33 @@
 
       while (sys_log.firstChild) {
         sys_log.removeChild(sys_log.lastChild);
-      };
+      }
 
-      for (var i in msgset.users) {
+      for (var i = 0; i < msgset.users.length; i++) {
         var usr = msgset.users[i];
         var p = document.createElement('p');
 
         p.classList.add( usr.originalname == usr.user ? "user" : "fake_user");
         if (usr.status == 2) p.classList.add("gray_user");
-        p.onclick = function() { InsertNick(this) };
+        p.setAttribute( "onclick", "InsertNick(this);" );
         p.appendChild( document.createTextNode( usr.user ));
 
         sys_log.appendChild(p);
 
         if (usr.flagSelf) {
           edit_line.placeholder = "Chat as: " + usr.user + " (!new_name, !! default)";
-        };
-      };
-      if (  ! do_notify ) chat_log.scrollTop = chat_log.scrollHeight - chat_log.clientHeight;
-    };
+        }
+      }
+      ScrollBottom(false);
+    }
 
     function OnConnect(e) {
       // display connection status here.
-    };
+    }
 
     function OnError(e) {
       UserStatusChange(2);
-    };
+    }
 
   </script>
 

@@ -1,8 +1,8 @@
 <div class="category">
  <div>
  [case:[Unread]|
-   <img src="[special:skin]/_images/tag_gray.svg">|
-   <img src="[special:skin]/_images/tag.svg">
+   <img src="[special:skin]/_images/tag_gray.svg" alt="No unread">|
+   <img src="[special:skin]/_images/tag.svg" alt="Unread">
  ]
  </div>
  <a href="/[Tag]/"><span>[Tag]: </span>[Description]</a>
