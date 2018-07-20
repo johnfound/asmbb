@@ -1,25 +1,25 @@
 [css:editor.css]
 
 <div>
-  <a class="editbtn icon_bold"      onclick="insertTag('source', '*', '*', 1)" title="Bold"></a>
-  <a class="editbtn icon_italic"    onclick="insertTag('source', '/', '/', 1)" title="Italic"></a>
-  <a class="editbtn icon_underline" onclick="insertTag('source', '_', '_', 1)" title="Underlined"></a>
-  <a class="editbtn icon_strike"    onclick="insertTag('source', '-', '-', 1)" title="Strikethrough"></a>
-  <a class="editbtn icon_code"      onclick="insertTag('source', '`', '`', 1)" title="Inline code"></a>
-  <a class="editbtn icon_link"      onclick="insertTag('source', '[', '][]', 1)" title="Link [url][description]"></a>
-  <a class="editbtn icon_picture"   onclick="insertTag('source', '[!', '][]', 1)" title="Picture [!url][alt text]"></a>
+  <a class="editbtn" onclick="insertTag('source', '*', '*',   1)" title="Bold"                    ><img class="icon_bold"      src="[special:skin]/_images/toolbar.svg" alt="B"></a>
+  <a class="editbtn" onclick="insertTag('source', '/', '/',   1)" title="Italic"                  ><img class="icon_italic"    src="[special:skin]/_images/toolbar.svg" alt="I"></a>
+  <a class="editbtn" onclick="insertTag('source', '_', '_',   1)" title="Underlined"              ><img class="icon_underline" src="[special:skin]/_images/toolbar.svg" alt="U"></a>
+  <a class="editbtn" onclick="insertTag('source', '-', '-',   1)" title="Strikethrough"           ><img class="icon_strike"    src="[special:skin]/_images/toolbar.svg" alt="S"></a>
+  <a class="editbtn" onclick="insertTag('source', '`', '`',   1)" title="Inline code"             ><img class="icon_code"      src="[special:skin]/_images/toolbar.svg" alt="Code"></a>
+  <a class="editbtn" onclick="insertTag('source', '[', '][]', 1)" title="Link [url][description]" ><img class="icon_link"      src="[special:skin]/_images/toolbar.svg" alt="Link"></a>
+  <a class="editbtn" onclick="insertTag('source', '[!','][]', 1)" title="Picture [!url][alt text]"><img class="icon_picture"   src="[special:skin]/_images/toolbar.svg" alt="Image"></a>
 
-  <a class="editbtn icon_quote"     onclick="insertTag('source', ';quote', ';end', 0)" title="Block quote"></a>
-  <a class="editbtn icon_blockcode" onclick="insertTag('source', ';begin', ';end', 0)" title="Code block"></a>
+  <a class="editbtn" onclick="insertTag('source', ';quote', ';end', 0)" title="Block quote"       ><img class="icon_quote" src="[special:skin]/_images/toolbar.svg" alt="Quote"></a>
+  <a class="editbtn" onclick="insertTag('source', ';begin', ';end', 0)" title="Code block"        ><img class="icon_blockcode" src="[special:skin]/_images/toolbar.svg" alt="Code"></a>
 
-  <a class="editbtn icon_smile" onclick="insertTag('source', '[?:-)]', '', 1)" title="Emoticon smile"></a>
-  <a class="editbtn icon_lol"   onclick="insertTag('source', '[?:-D]', '', 1)" title="Emoticon LOL"></a>
-  <a class="editbtn icon_rofl"  onclick="insertTag('source', '[?rofl]', '', 1)" title="Emoticon ROFL"></a>
-  <a class="editbtn icon_wink"  onclick="insertTag('source', '[?;-)]', '', 1)" title="Emoticon wink"></a>
-  <a class="editbtn icon_tongue" onclick="insertTag('source', '[?:-P]', '', 1)" title="Emoticon tongue"></a>
-  <a class="editbtn icon_sad"   onclick="insertTag('source', '[?:-(]', '', 1)" title="Emoticon sad"></a>
-  <a class="editbtn icon_cry"   onclick="insertTag('source', '[?:\'-(]', '', 1)" title="Emoticon cry"></a>
-  <a class="editbtn icon_angry" onclick="insertTag('source', '[?>:-(]', '', 1)" title="Emoticon angry"></a>
+  <a class="editbtn" onclick="insertTag('source', '[?:-)]', '', 1)" title="Emoticon smile"        ><img class="icon_smile" src="[special:skin]/_images/toolbar.svg" alt="Smile"></a>
+  <a class="editbtn" onclick="insertTag('source', '[?:-D]', '', 1)" title="Emoticon LOL"          ><img class="icon_lol" src="[special:skin]/_images/toolbar.svg" alt="LOL"></a>
+  <a class="editbtn" onclick="insertTag('source', '[?rofl]', '', 1)" title="Emoticon ROFL"        ><img class="icon_rofl" src="[special:skin]/_images/toolbar.svg" alt="ROFL"></a>
+  <a class="editbtn" onclick="insertTag('source', '[?;-)]', '', 1)" title="Emoticon wink"         ><img class="icon_wink" src="[special:skin]/_images/toolbar.svg" alt="Wink"></a>
+  <a class="editbtn" onclick="insertTag('source', '[?:-P]', '', 1)" title="Emoticon tongue"       ><img class="icon_tongue" src="[special:skin]/_images/toolbar.svg" alt="Tongue"></a>
+  <a class="editbtn" onclick="insertTag('source', '[?:-(]', '', 1)" title="Emoticon sad"          ><img class="icon_sad" src="[special:skin]/_images/toolbar.svg" alt="Sad"></a>
+  <a class="editbtn" onclick="insertTag('source', '[?:\'-(]', '', 1)" title="Emoticon cry"        ><img class="icon_cry" src="[special:skin]/_images/toolbar.svg" alt="Cry"></a>
+  <a class="editbtn" onclick="insertTag('source', '[?>:-(]', '', 1)" title="Emoticon angry"       ><img class="icon_angry" src="[special:skin]/_images/toolbar.svg" alt="Angry"></a>
 </div>
 
 <script>

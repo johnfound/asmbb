@@ -1,5 +1,5 @@
-C More\saccessibility\sfor\sthe\stemplates.\sMainly\sreplacing\sthe\sbachground\simages\swith\s<img>\stags\swith\s"alt"\sattributes.\sFixed\sa\sbug\sin\sthe\schat\sJS\sand\sthe\sJS\scode\sstyle\simproved.
-D 2018-07-20T15:57:56.457
+C The\seditor\stoolbar\sreworked\sto\suse\s<img>\ssprites\swith\s"alt"\sattribute.
+D 2018-07-20T19:40:18.904
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 75b7e85d74d81a31cf1dffb9c1d07bec879c3ba8
@@ -427,8 +427,8 @@ F www/templates/Wasp/common.less f534a2970037071fcc58cab0fee497c6f26d52e3
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 17d02b6b8ab0b59548446258f0f2efdf507d6af2
 F www/templates/Wasp/delete.less f77246e7f9fd0680ddb1ef2351b2b4ec5cef54f2
-F www/templates/Wasp/edit_toolbar.tpl adcf4ee01502af9dc46da4dcf977007c28fcfff9
-F www/templates/Wasp/editor.less fcb2f6b451f366015c3d5cbc0377d2032596b0de
+F www/templates/Wasp/edit_toolbar.tpl c96d71b2de9c476e46087d8e548aa710b94355ad
+F www/templates/Wasp/editor.less 31a9c1af85110a4e9dce3fcf00ab16bbda9ce50a
 F www/templates/Wasp/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Wasp/error_html_end.tpl 3729362af2738a816684e06dd05bbfff10a39d02
 F www/templates/Wasp/error_html_start.tpl bb9719e341078e7b101f39c8ff92b54e403915c6
@@ -567,7 +567,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 72fb2a1de83d2d9ed719294e4c153dc3f6dca313
-R 74da0ef525ddc35d31db1b91d8e722ef
+P 03de707ac4275dea9912e74260e7684621aec222
+R e9e853e71a4f74b696038589f1957869
 U johnfound
-Z dfb4f63339623b999e57ac148b4b1a85
+Z 24763c10836d517cf22eea372916be8e

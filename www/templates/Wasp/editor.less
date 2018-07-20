@@ -3,41 +3,46 @@
 @toolIconHeight: 20px;
 
 .editbtn {
-  width: @buttonHeight;
-  height: @buttonHeight;
   display: inline-block;
-  background-size: 340px @toolIconHeight;
-  background-repeat: no-repeat;
+  min-width: @buttonHeight;
+  margin-bottom: 4px;
+  color: @clButtonFG;
+  text-align: center;
 
   background-color: @clButtonBG;
   border: (@buttonHeight - @toolIconHeight)/2 solid @clButtonBG;
 
-  background-position: center center;
-  background-clip: content-box;
   border-radius: @borderNavRad;
   cursor: pointer;
-  background-image: url('[special:skin]/_images/toolbar.svg');
   &:hover {
     background-color: @clButtonActiveBG;
     border-color: @clButtonActiveBG;
   }
+
+  img {
+    object-fit: cover;
+    width: @toolIconHeight;
+    height: @toolIconHeight;
+    vertical-align: top;
+  }
 }
 
-.icon_bold      { background-position: - 0 * @toolIconHeight; }
-.icon_italic    { background-position: - 1 * @toolIconHeight; }
-.icon_underline { background-position: - 2 * @toolIconHeight; }
-.icon_strike    { background-position: - 3 * @toolIconHeight; }
-.icon_code      { background-position: - 4 * @toolIconHeight; }
-.icon_link      { background-position: - 5 * @toolIconHeight; }
-.icon_picture   { background-position: - 6 * @toolIconHeight; }
-.icon_quote     { background-position: - 7 * @toolIconHeight; }
-.icon_blockcode { background-position: - 8 * @toolIconHeight; }
 
-.icon_smile     { background-position: - 9 * @toolIconHeight;}
-.icon_lol       { background-position: - 10 * @toolIconHeight;}
-.icon_rofl      { background-position: - 11 * @toolIconHeight;}
-.icon_wink   	{ background-position: - 12 * @toolIconHeight;}
-.icon_tongue   	{ background-position: - 13 * @toolIconHeight;}
-.icon_sad    	{ background-position: - 14 * @toolIconHeight;}
-.icon_cry 	{ background-position: - 15 * @toolIconHeight;}
-.icon_angry  	{ background-position: - 16 * @toolIconHeight;}
+.icon_bold      { object-position: - 0 * @toolIconHeight 0; font-weight: bold;  }
+.icon_italic    { object-position: - 1 * @toolIconHeight 0; font-style: italic; }
+.icon_underline { object-position: - 2 * @toolIconHeight 0; text-decoration: underline; }
+.icon_strike    { object-position: - 3 * @toolIconHeight 0; text-decoration: line-through; }
+.icon_code      { object-position: - 4 * @toolIconHeight 0; }
+.icon_link      { object-position: - 5 * @toolIconHeight 0; }
+.icon_picture   { object-position: - 6 * @toolIconHeight 0; }
+.icon_quote     { object-position: - 7 * @toolIconHeight 0; }
+.icon_blockcode { object-position: - 8 * @toolIconHeight 0; }
+
+.icon_smile     { object-position:  - 9 * @toolIconHeight 0;}
+.icon_lol       { object-position: - 10 * @toolIconHeight 0;}
+.icon_rofl      { object-position: - 11 * @toolIconHeight 0;}
+.icon_wink      { object-position: - 12 * @toolIconHeight 0;}
+.icon_tongue    { object-position: - 13 * @toolIconHeight 0;}
+.icon_sad       { object-position: - 14 * @toolIconHeight 0;}
+.icon_cry       { object-position: - 15 * @toolIconHeight 0;}
+.icon_angry     { object-position: - 16 * @toolIconHeight 0;}
