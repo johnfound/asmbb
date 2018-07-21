@@ -2,7 +2,7 @@
 [css:settings.css]
 
 <div class="set_page">
-[case:[message]|<h1 class="hidden msg">Message</h1>|<h1 id="message" class="msg [case:[error]|info|error]">[message]</h1>]
+[case:[message]||<h1 id="message" class="msg [case:[error]|info|error]">[message]</h1>]
 <form class="settings" method="post" action="/!settings">
   <h1>Forum engine settings</h1>
   <input type="submit" name="save" class="button" value="Save">

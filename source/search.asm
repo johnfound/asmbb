@@ -172,14 +172,14 @@ begin
         mov     [.sql_cnt], ebx
         mov     [.sql_search], edi
 
-        stdcall FileWriteString, [STDERR], [.sql_cnt]
-        stdcall FileWriteString, [STDERR], cCRLF2
-
-        stdcall FileWriteString, [STDERR], [.query]
-        stdcall FileWriteString, [STDERR], cCRLF2
-
-        stdcall FileWriteString, [STDERR], [.sql_search]
-        stdcall FileWriteString, [STDERR], cCRLF2
+;        stdcall FileWriteString, [STDERR], [.sql_cnt]
+;        stdcall FileWriteString, [STDERR], cCRLF2
+;
+;        stdcall FileWriteString, [STDERR], [.query]
+;        stdcall FileWriteString, [STDERR], cCRLF2
+;
+;        stdcall FileWriteString, [STDERR], [.sql_search]
+;        stdcall FileWriteString, [STDERR], cCRLF2
 
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ; counts the number of the search results in order to make the page links.
