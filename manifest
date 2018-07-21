@@ -1,5 +1,5 @@
-C Commented\sout\ssome\sforgoten\sdebug\scode.\sFixed\ssmall\sbug\sin\sthe\ssettings\sform.
-D 2018-07-21T18:50:34.408
+C Minor\sbug\sin\sthe\stemplate\sfixed.
+D 2018-07-21T19:09:39.753
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 75b7e85d74d81a31cf1dffb9c1d07bec879c3ba8
@@ -461,7 +461,7 @@ F www/templates/Wasp/navigation.less d283a0dd7cde55b78f9a97feec83d960fe904477
 F www/templates/Wasp/one_category.tpl 905154474371d1d4fbb764ae4087629d6699d58e
 F www/templates/Wasp/one_user.tpl 6bf8fc5739971116473d7dd78425514f13bf6c4a
 F www/templates/Wasp/post_history.tpl d4654a8299206f82b0f63525b390e04cd7ae5a2a
-F www/templates/Wasp/post_view.tpl a8835cf3b467cd4d033b56811464008b78857507
+F www/templates/Wasp/post_view.tpl 1d3bc14615ad9ecf4919053a3260477c9e2437e7
 F www/templates/Wasp/posteditor.less 8135ce92f68460e1212ca0a2599bb2158160a65a
 F www/templates/Wasp/postnew.less e980a3e2ff5ecb720fc1499266aa2ced9ec8e9cd
 F www/templates/Wasp/posts.less b75428d45d32fc00b6ac33ca83d7be3cc374e384
@@ -567,7 +567,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 3570190553b8e7f86ec29135783d546b3d8f50ab
-R 71e968da4b319b976dea200ab095bccf
+P e0a62d82fd7154ac5b455e91f8a1f03e2afee80d
+R 2825324b7452f3edcb772f9ca8eb4987
 U johnfound
-Z 4e74c65b438f7ff96d8b44e43158b4a5
+Z 687afa7276feed906bec7d59f3c4efd4

@@ -6,7 +6,7 @@
       <a class="user_name" href="/!userinfo/[UserName]">[UserName]</a>
     </div>
     <div class="avatar">
-      <img class="avatar" alt="(ツ)" src="/!avatar/[UserName]?v=[AVer]"></a>
+      <img class="avatar" alt="(ツ)" src="/!avatar/[UserName]?v=[AVer]">
       <div class="user_pcnt">Posts: [UserPostCount]</div>
     </div>
   </div>
