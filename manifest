@@ -1,5 +1,5 @@
-C The\seditor\stoolbar\sreworked\sto\suse\s<img>\ssprites\swith\s"alt"\sattribute.
-D 2018-07-20T19:40:18.904
+C Fixed\sbug\sin\sthe\ssearch\sengine,\srelated\sto\sthe\slatest\schanges\sof\sthe\sDB\sscheme.
+D 2018-07-21T15:44:35.466
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 75b7e85d74d81a31cf1dffb9c1d07bec879c3ba8
@@ -49,7 +49,7 @@ F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/render2.asm 3d1b87eef3446a289a5515d96873738c14991f06
 F source/restore.sql 14a8f13466ced19e05502d41ffcfddeecbc6954b
-F source/search.asm 15f6469bf4117fa6c22ded98a5613d07e2a8697a
+F source/search.asm 5feabceebe9876960ff946fa7858f4d71361b1a0
 F source/search.sql 34cf6eea11403e7ac709cd1588bd84c57257135f
 F source/search_cnt.sql 762c07c3e8a9186e966a6377517edc18ab50ef96
 F source/settings.asm 9e5b28dde765d894f0601768d8d431ea263d91bc
@@ -62,7 +62,7 @@ F source/statistics.sql adf6bec52c32dba0b780cd7422e2de395ca19f7e
 F source/tests/Test1.tpl 3787fb082cb7f6404ff4631fd6ca67ed14c7beac
 F source/tests/test_templates.asm 9fbe778c983448663d18c9cc2cc3cd9d0107e93b
 F source/tests/test_templates.fpr 0b6d692c0d55f91a6e310f622a6fe2c49c06ddf9
-F source/text_constants.asm 0e1790e3b2d2f97f162fffe4b1a3afb93297428d
+F source/text_constants.asm c736bdb4840fc1218bdea8ddbd2f573dbd69d2de
 F source/thread_attr.sql 0ca7eb00c75ca369b74e04fc6aa386bab425798e
 F source/threadlist.asm 8103fa162b24ee7462d897d32d0467decea44a35
 F source/threadlist.sql 5ff1c1b661fcca07c1a0c529a3d94080d3bc0261
@@ -567,7 +567,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 03de707ac4275dea9912e74260e7684621aec222
-R e9e853e71a4f74b696038589f1957869
+P 934691c819a22cc70d018e20e712dfbd6ce3f7a5
+R 3592050f044c891f36ac9202e18cbfba
 U johnfound
-Z 24763c10836d517cf22eea372916be8e
+Z 79bcb77ae3f8da6bd80017ee953c5b7c

@@ -10,13 +10,14 @@ sqlSearchPrefix text    "select ",                                              
                         "  U.av_time as AVer, ",                                                                                \
                         "  PostFTS.slug, ",                                                                                     \
                         "  strftime('%d.%m.%Y %H:%M:%S', P.postTime, 'unixepoch') as PostTime, ",                               \
-                        "  P.ReadCount, ",                                                                                      \
+                        "  PC.count as ReadCount, ",                                                                            \
                         "  snippet(PostFTS, 0, '*', '*', '...', 16) as Content, ",                                              \
                         "  PostFTS.Caption, ",                                                                                  \
                         "  (select count() from UnreadPosts UP where UP.UserID = ?4 and UP.PostID = PostFTS.rowid) as Unread ", \
                         "from ",                                                                                                \
                         "  PostFTS ",                                                                                           \
                         "  left join Posts P on P.id = PostFTS.rowid ",                                                         \
+                        "  left join PostCnt PC on PC.postID = P.id ",                                                          \
                         "  left join Users U on U.id = P.userID "
 
 
@@ -171,11 +172,14 @@ begin
         mov     [.sql_cnt], ebx
         mov     [.sql_search], edi
 
-;        stdcall FileWriteString, [STDERR], [.sql_cnt]
-;        stdcall FileWriteString, [STDERR], cCRLF2
-;
-;        stdcall FileWriteString, [STDERR], [.sql_search]
-;        stdcall FileWriteString, [STDERR], cCRLF2
+        stdcall FileWriteString, [STDERR], [.sql_cnt]
+        stdcall FileWriteString, [STDERR], cCRLF2
+
+        stdcall FileWriteString, [STDERR], [.query]
+        stdcall FileWriteString, [STDERR], cCRLF2
+
+        stdcall FileWriteString, [STDERR], [.sql_search]
+        stdcall FileWriteString, [STDERR], cCRLF2
 
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ; counts the number of the search results in order to make the page links.
@@ -198,6 +202,8 @@ begin
         cinvoke sqliteFinalize, [.stmt]
 
         mov     [.pages], edi
+        OutputValue "Search result count: ", edi, 10, -1
+
         test    edi, edi
         jz      .pages_ok
 
@@ -223,7 +229,7 @@ begin
         mov     edi, eax
 
         cmp     [.pages], 0
-        je      .search_ok      ; this means the total results count is 0, not the pages.
+        je      .empty_search      ; this means the total results count is 0, not the pages.
 
         stdcall TextCat, edi, [.pages]
         mov     edi, edx
@@ -231,6 +237,7 @@ begin
         lea     ecx, [.stmt]
         stdcall StrPtr, [.sql_search]
         cinvoke sqlitePrepare_v2, [hMainDatabase], eax, [eax+string.len], ecx, 0
+        OutputValue "Search prepare result: ", eax, 10, -1
 
         stdcall StrPtr, [.query]
         cmp     [eax+string.len], 0
@@ -249,6 +256,7 @@ begin
 
 .search_loop:
         cinvoke sqliteStep, [.stmt]
+        OutputValue "Search step result: ", eax, 10, -1
         cmp     eax, SQLITE_ROW
         jne     .finalize
 
@@ -283,6 +291,13 @@ begin
         popad
         return
 
+.empty_search:
+
+        stdcall TextCat, edi, txt '<h3>'
+        stdcall TextCat, edx, cEmptySearch
+        stdcall TextCat, edx, txt '</h3>'
+        mov     edi, edx
+        jmp     .search_ok
 
 .missing_query:
 
