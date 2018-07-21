@@ -182,30 +182,26 @@ a.taglink {
   min-width: 16px;
   overflow: hidden;
   text-overflow: ellipsis;
-  vertical-align: middle;
   border-radius: @borderRadTags;
   border: @borderTags;
   text-align: center;
   white-space: nowrap;
 }
 
-
 a.current_tag {
   background-color: @clCurrentTagBG;
-  color: @clCurrentTagFG;
-  border: @borderTags;
-  border-radius: @borderRadTags;
+  color: @clCurrentTagFG !important;
   text-decoration: none;
 }
 
 
 img.tagicon {
-  display: inline-block;
+  display: table-cell;
   width: 32px;
   height: 32px;
   margin-right: 4px;
   vertical-align: middle;
-  font-size: 90%;
+  text-align: center;
 }
 
 

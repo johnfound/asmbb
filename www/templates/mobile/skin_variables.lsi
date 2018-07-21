@@ -60,6 +60,9 @@
 @borderQuote: 2px solid @clSeparator;
 @clQuoteTitle: #808080;
 
+@clAvatarBG: #ffcc40;
+@clAvatarFG: black;
+
 @clPostInfoBG: #ffcc40;
 @clPostInfoFG: black;
 

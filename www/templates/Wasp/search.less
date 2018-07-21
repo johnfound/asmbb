@@ -23,18 +23,7 @@ div.search_info {
 
   background-color: @clDarkBG;
   color: @clDarkFG;
-  background-repeat: no-repeat;
-  background-position: 8px 8px;
 }
-
-.unread0 {
-  background-image: url("[special:skin]/_images/onepost_gray.svg");
-}
-
-.unread1 {
-  background-image: url("[special:skin]/_images/onepost.svg");
-}
-
 
 div.post_thread {
   margin-left: 200px;
@@ -43,19 +32,23 @@ div.post_thread {
   font-size: 12px;
 
   a {
-    font-size: 16px;
     font-weight: bold;
     text-overflow: ellipsis;
-    display: inline-block;
     overflow: hidden;
     max-width: 80%;
   }
 }
 
+img.unread {
+  display: inline;
+  margin-right: 8px;
+  vertical-align: middle;
+  flex-shrink:0;
+}
+
 a.user_name {
-  display: block;
+  display: inline;
   padding-top: 4px;
-  text-indent: 40px;
   color: @clColor1FG;
   font-weight: bold;
   overflow: hidden;
@@ -67,7 +60,10 @@ img.smallavatar {
   width: 64px;
   height: 64px;
   display: block;
-  background-color: @clColor1;
+  background-color: @clAvatarBG;
+  color: @clAvatarFG;
+  text-align: center;
+  font-size: 32px;
 }
 
 
@@ -101,6 +97,6 @@ div.changed {
 
   background-size: 16px 16px;
   background-repeat: no-repeat;
-  background-image: url("[special:skin]/_images/edit.svg");
+  background-image: url("[special:skin]/_images/edited.svg");
   text-indent: 24px;
 }

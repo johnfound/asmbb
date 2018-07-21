@@ -64,7 +64,7 @@
 @clQuoteTitle: #808080;
 
 @clAvatarBG: #ffcc40;
-@clAvatarFG: black;
+@clAvatarFG: #606060;
 
 @clPostInfoBG: #ffcc40;
 @clPostInfoFG: black;

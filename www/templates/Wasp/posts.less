@@ -16,12 +16,10 @@ h1.thread_caption {
   a {
     margin-left: 4px;
     display: inline-block;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 18px;
-    height: 18px;
-    background-image: url("[special:skin]/_images/edit.svg");
+    img {
+      height: 18px;
+      font-size: 16px;
+    }
   }
 }
 
@@ -39,7 +37,7 @@ div.post {
 }
 
 div.user_info {
-  padding: 8px 16px 8px 16px;
+  padding: 8px;
 
   border-right: @borderEdit;
   background-color: @clDarkBG;
@@ -50,28 +48,34 @@ div.user_info {
 
   flex-shrink: 0;
   width: 200px;
+  text-align: center;
 }
 
-.unread0 {
-  background-image: url("[special:skin]/_images/onepost_gray.svg");
+div.username {
+  display: flex;
+  align-items: center;
+  text-align: left;
 }
 
-.unread1 {
-  background-image: url("[special:skin]/_images/onepost.svg");
+
+img.unread {
+  display: inline;
+  margin-right: 8px;
+  vertical-align: middle;
+  flex-shrink:0;
 }
 
 a.user_name {
-  display: block;
-  padding-top: 4px;
-  text-indent: 40px;
+  display: inline;
   color: @clColor1FG;
   font-weight: bold;
   overflow: hidden;
   text-overflow: ellipsis;
+  flex-grow: 1;
 }
 
 img.avatar {
-  margin: 16px auto 0px auto;
+  margin: 8px auto 0px auto;
   width: 128px;
   height: 128px;
   display: block;
@@ -79,6 +83,7 @@ img.avatar {
   color: @clAvatarFG;
   text-indent: 0px;
   text-align: center;
+  font-size: 64px;
 }
 
 div.user_pcnt {
@@ -100,42 +105,24 @@ div.post_info {
 }
 
 div.last_edit {
-  margin-right: auto;
+  flex-grow: 1;
 }
 
 div.edit_tools {
+  display: flex;
+  margin-left: 8px;
   a {
     margin-right: 8px;
 
     display: inline-block;
     vertical-align: middle;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 18px;
-    height: 18px;
+    img {
+      object-fit: cover;
+      width: 18px;
+      height: 18px;
+      vertical-align: top;
+    }
   }
-
-  .icon_quote {
-    background-image: url("[special:skin]/_images/quote.svg");
-  }
-
-  .icon_edit {
-    background-image: url("[special:skin]/_images/edit.svg");
-  }
-
-  .icon_del {
-    background-image: url("[special:skin]/_images/del.svg");
-  }
-
-  .icon_rest {
-    background-image: url("[special:skin]/_images/restore.svg");
-  }
-
-  .icon_hist {
-    background-image: url("[special:skin]/_images/history.svg");
-  }
-
 }
 
 
@@ -143,7 +130,6 @@ div.post_text {
   padding: 0px;
   background-color: @clArticleBG;
   color: @clArticleFG;
-//  width: 190px;
   flex-grow: 1;
 
   article {

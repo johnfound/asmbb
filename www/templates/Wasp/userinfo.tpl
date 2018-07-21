@@ -3,7 +3,7 @@
 [css:markdown.css]
 
   <div class="user_desc">
-    <img class="profile_avatar" src="/!avatar/[username]?v=[AVer]" alt="Avatar image">
+    <img class="profile_avatar" src="/!avatar/[username]?v=[AVer]" alt="(ツ)">
     <h1>[username]</h1>
     [minimag:[user_desc]]
   </div>

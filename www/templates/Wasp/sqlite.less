@@ -87,15 +87,17 @@ table.sql_rows {
 
 }
 
+div.toolbar {
+  display: flex;
+  margin-bottom: 8px;
+}
 
 
 input.title {
-  display: inline-block;
-  width: 100%;
+  flex-grow: 1;
   border: @borderEdit;
   outline-style: none;
   padding: 4px;
-  margin-bottom: 8px;
 
   background-color: @clEditorBG;
   color: @clEditorFG;
@@ -103,27 +105,31 @@ input.title {
 
 
 .button {
-  display: inline-block;
+  display: block;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin-left: 8px;
+  padding: 4px;
+
   height: 32px;
-  width: 32px;
-  background-color: @clButtonBG;
+  min-width: 32px;
   color: @clButtonFG;
-  vertical-align: top;
-}
+  text-align: center;
 
-.button:hover {
-  background-color: @clButtonActiveBG;
-  color: @clButtonActiveFG;
-}
+  background-color: @clButtonBG;
+  border: (@buttonHeight - 32px)/2 solid @clButtonBG;
 
-.btn_edit {
-  background-image: url("[special:skin]/_images/edit_white.svg");
-}
+  border-radius: @borderNavRad;
+  cursor: pointer;
+  &:hover {
+    background-color: @clButtonActiveBG;
+    border-color: @clButtonActiveBG;
+  }
 
-.btn_save {
-  background-image: url("[special:skin]/_images/save_white.svg");
-}
-
-.btn_del {
-  background-image: url("[special:skin]/_images/del_white.svg");
+  img {
+    object-fit: none;
+    width: 24px;
+    height: 24px;
+    vertical-align: top;
+  }
 }

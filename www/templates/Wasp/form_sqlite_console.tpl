@@ -10,10 +10,12 @@
   </div>
   <form id="editform" action="/!sqlite/#sql_result" method="post">
     <p>Script name:</p>
-    <input class="title" style="width: 80%; height: 32px;" size="40" type="edit" value="" placeholder="Script name" name="name">
-    <a class="button btn_edit" href="/"></a>
-    <a class="button btn_save" href="/"></a>
-    <a class="button btn_del"  href="/"></a>
+    <div class="toolbar">
+      <input class="title" size="40" type="edit" value="" placeholder="Script name" name="name">
+      <a class="button" href="/"><img src="[special:skin]/_images/edit_white.svg" alt="Edit"></a>
+      <a class="button" href="/"><img src="[special:skin]/_images/save_white.svg" alt="Save"></a>
+      <a class="button" href="/"><img src="[special:skin]/_images/del_white.svg" alt="Del"></a>
+    </div>
     <p>SQL statement:</p>
     <textarea class="sql_editor" name="source" id="source"  placeholder="SQL">[source]</textarea>
     <div class="panel">

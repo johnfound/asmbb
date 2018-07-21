@@ -16,62 +16,78 @@ h1.thread_caption {
   a {
     margin-left: 4px;
     display: inline-block;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 18px;
-    height: 18px;
-    background-image: url("[special:skin]/_images/edit.svg");
+    img {
+      height: 18px;
+      font-size: 16px;
+    }
   }
+}
+
+div.current_version {
+  border-left: 8px solid @clColor1FG;
+  padding-left: 8px;
 }
 
 div.post {
   margin-top: 8px;
+  border-top: @borderEdit;
 }
 
 div.user_info {
-  float: left;
   padding: 8px;
-  margin: 8px;
-  max-width: 200px;
 
   background-color: @clDarkBG;
-  background-repeat: no-repeat;
-  background-position: 8px 8px;
   color: @clDarkFG;
+
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
 }
 
-.unread0 {
-  background-image: url("[special:skin]/_images/onepost_gray.svg");
+div.username {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 
-.unread1 {
-  background-image: url("[special:skin]/_images/onepost.svg");
+div.avatar {
+  display: flex;
+  align-items: center;
+  flex-grow: 0;
+  flex-direction: column;
+  margin-right: 8px;
+}
+
+img.unread {
+  display: inline;
+  margin-right: 8px;
+  vertical-align: middle;
+  flex-shrink:0;
 }
 
 a.user_name {
-  display: block;
-  padding-top: 4px;
-  text-indent: 40px;
+  display: inline-block;
   color: @clColor1FG;
   font-weight: bold;
   overflow: hidden;
   text-overflow: ellipsis;
+  flex-grow: 1;
+  width: 100px;
 }
 
 img.avatar {
-  margin: 16px auto 0px auto;
   width: 64px;
   height: 64px;
   display: block;
-  background-color: @clColor1;
+  background-color: @clAvatarBG;
+  color: @clAvatarFG;
+  text-align: center;
+  font-size: 32px;
 }
 
 div.user_pcnt {
-  margin-top: 8px;
-  text-align: left;
-  font-size: 80%;
-  background-color: @clDarkBG;
+  display:none;
 }
 
 div.post_info {
@@ -86,48 +102,35 @@ div.post_info {
 }
 
 div.last_edit {
-  margin-right: auto;
+  flex-grow: 1;
 }
 
 div.edit_tools {
+  display: flex;
+  margin-left: 8px;
   a {
     margin-right: 8px;
 
     display: inline-block;
     vertical-align: middle;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 18px;
-    height: 18px;
-  }
-
-  .icon_quote {
-    background-image: url("[special:skin]/_images/quote.svg");
-  }
-
-  .icon_edit {
-    background-image: url("[special:skin]/_images/edit.svg");
-  }
-
-  .icon_del {
-    background-image: url("[special:skin]/_images/del.svg");
+    img {
+      object-fit: cover;
+      width: 18px;
+      height: 18px;
+      vertical-align: top;
+    }
   }
 }
 
 
 div.post_text {
-  padding: 8px 8px 0px 8px;
+  padding: 0px;
   background-color: @clArticleBG;
   color: @clArticleFG;
+  flex-grow: 1;
+
+  article {
+    padding: 16px;
+  }
 }
 
-// In order to not allow the floating user info escaped from short posts.
-
-div.post_text::after {
-  content: " ";
-  display: block;
-  height: 1px;
-  clear: both;
-  margin-top: 7px;
-}

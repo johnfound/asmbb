@@ -5,7 +5,7 @@
   <a class="editbtn" onclick="insertTag('source', '/', '/',   1)" title="Italic"                  ><img class="icon_italic"    src="[special:skin]/_images/toolbar.svg" alt="I"></a>
   <a class="editbtn" onclick="insertTag('source', '_', '_',   1)" title="Underlined"              ><img class="icon_underline" src="[special:skin]/_images/toolbar.svg" alt="U"></a>
   <a class="editbtn" onclick="insertTag('source', '-', '-',   1)" title="Strikethrough"           ><img class="icon_strike"    src="[special:skin]/_images/toolbar.svg" alt="S"></a>
-  <a class="editbtn" onclick="insertTag('source', '`', '`',   1)" title="Inline code"             ><img class="icon_code"      src="[special:skin]/_images/toolbar.svg" alt="Code"></a>
+  <a class="editbtn" onclick="insertTag('source', '`', '`',   1)" title="Inline code"             ><img class="icon_code"      src="[special:skin]/_images/toolbar.svg" alt="Mono"></a>
   <a class="editbtn" onclick="insertTag('source', '[', '][]', 1)" title="Link [url][description]" ><img class="icon_link"      src="[special:skin]/_images/toolbar.svg" alt="Link"></a>
   <a class="editbtn" onclick="insertTag('source', '[!','][]', 1)" title="Picture [!url][alt text]"><img class="icon_picture"   src="[special:skin]/_images/toolbar.svg" alt="Image"></a>
 
