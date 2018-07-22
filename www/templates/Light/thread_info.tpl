@@ -14,7 +14,7 @@
   </div>
   <div class="col_center">
     [PostCount] [case:[PostCount]|posts|post|posts]
-    <div class="unread_cnt">[case:[Unread]| |<a href="/[FirstUnread]/!by_id" title="Go to first unread post.">][Unread] unread[case:[Unread]| |</a>]</div>
+    <div class="unread_cnt">[case:[Unread]||<a href="/[FirstUnread]/!by_id" title="Go to first unread post.">][Unread] unread[case:[Unread]||</a>]</div>
     <span class="small">[TimeChanged]</span>
   </div>
   <div class="col_center">

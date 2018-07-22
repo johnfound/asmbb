@@ -28,6 +28,11 @@ span.small {
     margin-right: 16px;
     flex-shrink: 0;
   }
+
+  a {
+    color: @clColor1FG;
+  }
+
 }
 
 
@@ -35,11 +40,14 @@ img.unread {
   color: @clDarkFG;
   display: inline-block;
   vertical-align: middle;
+  text-decoration: inherit;
 }
 
 
 .pinned {
   display: block;
+  width: @pinnedWidth;
+  height: @pinnedHeight;
   margin-right: 8px;
   font-size: 24px;
 }
