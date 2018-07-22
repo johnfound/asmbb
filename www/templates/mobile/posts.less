@@ -30,12 +30,10 @@ div.current_version {
 
 div.post {
   margin-top: 8px;
-  border-top: @borderEdit;
+  border: @borderEdit;
 }
 
 div.user_info {
-  padding: 8px;
-
   background-color: @clDarkBG;
   color: @clDarkFG;
 
@@ -49,6 +47,7 @@ div.username {
   align-items: center;
   flex-grow: 1;
   flex-shrink: 1;
+  flex-direction: row-reverse;
 }
 
 div.avatar {
@@ -98,7 +97,8 @@ div.post_info {
   padding: 4px;
   background-color: @clPostInfoBG;
   color: @clPostInfoFG;
-  font-size: 12px;
+  font-size: 14px;
+  border-bottom: @borderEdit;
 }
 
 div.last_edit {

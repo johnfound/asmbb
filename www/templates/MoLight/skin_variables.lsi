@@ -63,7 +63,7 @@
 @clAvatarBG: white;
 @clAvatarFG: #105289;
 
-@clPostInfoBG: #d0d0d0;
+@clPostInfoBG: white;
 @clPostInfoFG: black;
 
 @FontMain:      "Verdana", sans-serif;

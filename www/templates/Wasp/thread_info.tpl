@@ -1,9 +1,9 @@
 <div class="thread_summary">
   <div class="thread_info">
-    [case:[Pinned]||<span class="pinned pin1"></span>]
+    [case:[Pinned]||<img class="pinned" src="[special:skin]/_images/pinned.png" alt="📌">]
     <div>
       [case:[Unread]||<a href="[case:[special:userid]|#|[Slug]/!markread]">]
-        <img class="unread" src="[special:skin]/_images/posts[case:[Unread]|_gray|].svg" alt="UR" title="[case:[Unread]|No unread messages|Mark thread as read.]">
+        <img height="32" width="32" class="unread" src="[special:skin]/_images/posts[case:[Unread]|_gray|].svg" alt="UR" title="[case:[Unread]|No unread messages|Mark thread as read.]">
       [case:[Unread]||</a>]
       [PostCount] [case:[PostCount]|posts|post|posts]
     </div>

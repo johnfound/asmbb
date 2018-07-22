@@ -12,6 +12,7 @@ div.threads_list {
   position: relative;
   overflow: hidden;
   margin: 8px 0px;
+  line-height: 180%;
 
   background-color: @clDarkBG;
   color: @clDarkFG;
@@ -39,18 +40,10 @@ img.unread {
   position: absolute;
   right: 8px;
   top: 8px;
-  width: @pinnedWidth;
   height: @pinnedHeight;
   margin: 0px !important;
   border: 0px;
-}
-
-.pin0 {
-  background-image: url("[special:skin]/_images/pinned0.png");
-}
-
-.pin1 {
-  background-image: url("[special:skin]/_images/pinned.png");
+  font-size: 24px;
 }
 
 
@@ -62,20 +55,6 @@ a.thread_link {
   text-overflow: ellipsis;
   white-space: nowrap;
   width: calc(~"100% - 48px");
-}
-
-span.changed {
-  display: inline-block;
-  height: 16px;
-  padding-left: 24px;
-  background-size: 16px 16px;
-  background-repeat: no-repeat;
-  background-image: url("[special:skin]/_images/edited.svg");
-}
-
-span.small {
-  font-size: 80%;
-  font-weight: normal;
 }
 
 
