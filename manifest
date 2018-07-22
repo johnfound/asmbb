@@ -1,5 +1,5 @@
-C The\snext\ssmall\sskin\sfix.
-D 2018-07-22T09:12:14.860
+C Official\ssource\srelease\sof\sv2.3
+D 2018-07-22T09:41:50.534
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 75b7e85d74d81a31cf1dffb9c1d07bec879c3ba8
@@ -74,7 +74,7 @@ F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/userslist.asm bbc976c8ea94198220c0dd8edee8577c83374c46
 F source/userslist.sql 9ff073add084452a4ce34a7560eeee5384c6c8b8
 F source/util.sql c88ad6aa7cbe44aed3523251f857c8876c2cd130
-F source/version.asm 2c233b8a04d4a85abe80aba4f2fb768e95efb9cc
+F source/version.asm 1cc9c9060d19cee02ce39fd5a064e412c43e071d
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
 F www/images/chat_menu.svg d8485817c3e745dcb8b981bb80d264f18365e377
@@ -567,7 +567,8 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P e8d25c3c4510a65a32aff5511ffdd70bf63bad7d
-R 627a6aacf42ba16d98f44dbdf36673c5
+P c1268858ce3f0821c1d2cdc1bebcc8fcce831446
+R 002fb91f263bc99d75a2e6056e4f63a3
+T +sym-v2.3 *
 U johnfound
-Z e5cc169cb1fe0b3cab84401ece268af6
+Z 7dfc2c542da3fbebd80ab6f31bfc3f10
