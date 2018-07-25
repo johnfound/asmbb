@@ -83,5 +83,7 @@
 @clMsgWarningBG: yellow;
 @clMsgWarningFG: red;
 
-@pinnedWidth: 16px;
-@pinnedHeight: 16px;
+@pinnedWidth: 32px;
+@pinnedHeight: 30px;
+
+@clPinnedTxt: #e05050;

@@ -88,3 +88,5 @@
 
 @pinnedWidth: 32px;
 @pinnedHeight: 32px;
+
+@clPinnedTxt: red;

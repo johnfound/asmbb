@@ -9,7 +9,6 @@ div.threads_list {
 
 
 .thread_summary {
-  position: relative;
   overflow: hidden;
   margin: 8px 0px;
   line-height: 180%;
@@ -21,31 +20,43 @@ div.threads_list {
 
   a {
     color: @clColor1FG;
-    display: inline-block;
     vertical-align: middle;
   }
+}
 
+img.markread {
+  display: inline-block;
+  line-height: 16px;
+  color: @clPinnedTxt;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
 }
 
 img.unread {
   vertical-align: middle;
-  margin-right: 16px;
   display: inline-block;
   width: 32px;
   height: 32px;
-  text-decoration: inherit;
+  line-height: 32px;
+  font-size: 24px;
   font-weight: bold;
+  text-align: center;
+  margin-right: 8px;
+  flex-shrink: 0;
 }
 
 .pinned {
-  display: block;
-  position: absolute;
-  right: 8px;
-  top: 8px;
+  display: inline-block;
+  width: @pinnedWidth;
   height: @pinnedHeight;
-  margin: 0px !important;
-  border: 0px;
+  line-height: @pinnedHeight;
+  margin: 0px 8px 0px 0px;
   font-size: 24px;
+  color: @clPinnedTxt;
+  font-weight: bold;
+  text-align: center;
+  flex-shrink: 0;
 }
 
 
@@ -56,7 +67,7 @@ a.thread_link {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: calc(~"100% - 48px");
+  flex-grow: 1;
 }
 
 

@@ -48,7 +48,7 @@
 
   <div class="tags">
     <a href="/">
-      <img class="tagicon" src="[special:skin]/_images/posts[case:[special:dir]||_gray].svg" alt="/" title="Show all threads">
+      <img class="tagicon" src="[special:skin]/_images/alltags[case:[special:dir]||_gray].svg" alt="/" title="Show all threads">
     </a>
     [special:alltags]
   </div>

@@ -45,27 +45,34 @@ img.unread {
   display: inline-block;
   vertical-align: middle;
   margin-right: 8px;
-  text-decoration: inherit;
   font-weight: bold;
+  font-size: 24px;
+  text-align: center;
+  line-height: 32px;
 }
 
 .pinned {
-  display: block;
-  position: absolute;
-  right: 8px;
-  top: 8px;
-  height: @pinnedHeight;
-  margin: 0px !important;
-  border: 0px;
+  display: inline-block;
+  margin-right: 8px;
   font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: @clPinnedTxt;
 }
 
 
 div.unread_cnt {
   font-size: 12px;
   margin-bottom: 8px;
+  line-height: 16px;
   a {
-    color: @clDarkFG;
+    color: @clPinnedTxt;
+  }
+  img {
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
   }
 }
 
@@ -89,11 +96,11 @@ div.thread_link {
 a.thread_link {
   font-size: 16px;
   font-weight: bold;
-  display: inline-block;
+  display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   color: @clThreadLink;
-  max-width: 100%;
+  white-space: nowrap;
 }
 
 div.thread_tags {

@@ -12,7 +12,7 @@
     <h1 class="fakeedit">[caption]</h1>
     <p>Post content:</p>
     [include:edit_toolbar.tpl]
-    <textarea class="editor" name="source" id="source" placeholder="Ansewer the wrong one here">[source]</textarea>
+    <textarea class="editor" name="source" id="source" placeholder="Answer the wrong one here">[source]</textarea>
     <div class="panel">
       <input type="submit" name="submit" value="Submit" >
       <input type="submit" name="preview" value="Preview" >
