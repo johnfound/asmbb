@@ -48,7 +48,6 @@ img.unread {
 .pinned {
   display: inline;
   width: @pinnedWidth;
-  margin-right: 8px;
   font-size: 24px;
   text-align: center;
   color: @clPinnedTxt;
@@ -124,6 +123,9 @@ div.thread_tags {
 
   img {
     flex-shrink: 0;
+    color: @clPinnedTxt;
+    font-weight: bold;
+    text-align: center;
   }
 
   a {

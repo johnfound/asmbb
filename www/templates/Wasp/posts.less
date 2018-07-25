@@ -19,6 +19,7 @@ h1.thread_caption {
     img {
       height: 18px;
       font-size: 16px;
+      color: @clPinnedTxt;
     }
   }
 }
@@ -59,10 +60,15 @@ div.username {
 
 
 img.unread {
-  display: inline;
+  display: inline-block;
   margin-right: 8px;
   vertical-align: middle;
   flex-shrink:0;
+  line-height: 32px;
+  color: @clPinnedTxt;
+  font-weight: bold;
+  text-align: center;
+  font-size: 24px;
 }
 
 a.user_name {

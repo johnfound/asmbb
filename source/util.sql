@@ -1,5 +1,9 @@
 /* This file contains some useful scripts for administration of AsmBB forum using the SQLite console. */
 
+-- Insert unread posts:
+
+insert into UnreadPosts(UserID, PostID, Time) values (1, 6, strftime('%s', 'now'));
+
 -- selects all threads with unread posts for some userID:
 
 select
