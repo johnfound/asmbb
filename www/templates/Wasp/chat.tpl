@@ -281,7 +281,7 @@
     <div class="ui">
       <a class="ui" href="/">Forum</a>
     </div>
-    <div class="flex">
+    <div class="chatflex">
       <div id="chatlog"></div>
       <div id="syslog"></div>
     </div>

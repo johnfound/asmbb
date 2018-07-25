@@ -1,5 +1,5 @@
-C More\sfine\stuning\sfor\sthe\sskins.
-D 2018-07-25T13:48:29.164
+C Fixed\sregression\sin\sthe\sskin\sCSS.
+D 2018-07-25T15:22:16.533
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -427,8 +427,8 @@ F www/templates/Wasp/activity6.tpl 588b1dde51b134d63d350f7d99c73f787c6dcbeb
 F www/templates/Wasp/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
 F www/templates/Wasp/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/Wasp/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
-F www/templates/Wasp/chat.less 7893c4b9366f8de395eb09c6c83bb323d05df7d3
-F www/templates/Wasp/chat.tpl 995a38e7fff33b223afce64f9cb68f8c4b7b9a34
+F www/templates/Wasp/chat.less 1c61444403b14f006303009281ddf9393131c742
+F www/templates/Wasp/chat.tpl f7cad009e7922e75fff0fcf310627a5fc79f51aa
 F www/templates/Wasp/common.less 55a76e06bdfd5f6d980fbc9af4cd6eb30f8697bd
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 17d02b6b8ab0b59548446258f0f2efdf507d6af2
@@ -573,7 +573,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 251f1fc3f731d8c225a48fe741d4da44574bae68
-R b0558c2daa994cbee93297d62e2ff41f
+P e05b73547a52d7842b500a8f08d5814afc0cd0d9
+R 3c2be82bf01aac9f3cc160a2a2ab8b84
 U johnfound
-Z 3566b003fa5664327c27542a69cc9e0d
+Z a68aaeb4efa870f4bf9d07d905d75677
