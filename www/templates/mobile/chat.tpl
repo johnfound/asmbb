@@ -131,7 +131,7 @@
     function UserRename(new_name) {
       var http = new XMLHttpRequest();
 
-      http.open("POST", "!chat", true);
+      http.open("POST", "/!chat", true);
       http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       http.send("cmd=rename&username=" + encodeURIComponent(new_name));
     }
@@ -139,7 +139,7 @@
     function UserStatusChange(status) {
       var http = new XMLHttpRequest();
 
-      http.open("POST", "!chat", true);
+      http.open("POST", "/!chat", true);
       http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       http.send("cmd=status&status=" + status);
     }
@@ -163,7 +163,7 @@
 
           var http = new XMLHttpRequest();
 
-          http.open("POST", "!chat", true);
+          http.open("POST", "/!chat", true);
           http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
           var p = "cmd=message&chat_message=" + encodeURIComponent(edit_line.value);
