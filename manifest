@@ -1,5 +1,5 @@
-C Minor\smistake\sfixed\sto\sthe\schat\sJS.
-D 2018-07-26T16:56:34.789
+C Fixed\ssmall\smemory\sleak.
+D 2018-07-27T08:01:21.169
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -47,7 +47,7 @@ F source/postdebug.asm bda4e22fe38390a011c9d0ed890756caf4d3207e
 F source/posthistory.sql c15286f32455df88ebd14168a10195e0c098545d
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
-F source/render2.asm 3d1b87eef3446a289a5515d96873738c14991f06
+F source/render2.asm c4102ecd28f94476b7769d7eaf6d64e7d3a65d90
 F source/restore.sql 14a8f13466ced19e05502d41ffcfddeecbc6954b
 F source/search.asm 66938462090abf87a69bccf6c9c05b14a741fda4
 F source/search.sql 34cf6eea11403e7ac709cd1588bd84c57257135f
@@ -573,7 +573,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 12b4570fe813dd68d3131012e91fba576a422393
-R 278ca5d45d4ce198cf0997e8d14cd4c6
+P 307d5a0be2f4e09edbfae38cdbdd6989a4e18700
+R b3dadc3d387714b2f2369bd5f335d538
 U johnfound
-Z 18739f217329cb098edfb8ba472225a1
+Z 6be91f07768440f306b2206b1366c716

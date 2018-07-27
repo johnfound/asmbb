@@ -615,9 +615,10 @@ begin
         stdcall StrCat, eax, txt "/"
         stdcall StrCat, eax, ebx
         stdcall StrDel, ebx
+        push    eax
 
         stdcall FileOpenAccess, eax, faReadOnly
-        stdcall StrDel, eax
+        stdcall StrDel ; from the stack
         jc      .loop
 
         mov     ebx, eax
