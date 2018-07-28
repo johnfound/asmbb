@@ -58,7 +58,8 @@ div.header {
 
   div {
     text-align: right;
-    flex-grow: 1;
+    margin-left: 16px;
+
     a {
       font-weight: bold;
       text-align: right;
@@ -69,6 +70,12 @@ div.header {
   }
 }
 
+// This is a class that separate left-aligned and right-aligned items in a flexbox.
+.spacer {
+  flex-grow: 1;
+  min-width: 0px;
+  display:block;
+}
 
 
 /* Search form styles */

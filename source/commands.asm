@@ -81,6 +81,7 @@ PList tablePreCommands, tpl_func,                  \
       "!postdebug",       PostDebug,               \    ; optional, depending on the options.DebugWeb
       "!debuginfo",       DebugInfo,               \    ; optional, depending on the options.DebugSQLite
       "!users",           UsersList,               \
+      "!skincookie",      SkinCookie,              \
       "!categories",      Categories
 end if
 

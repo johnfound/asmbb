@@ -133,6 +133,7 @@ if used RenderTemplate
               "username",    RenderTemplate.sp_username,              \ ; Needs encoding!
               "userid",      RenderTemplate.sp_userid,                \ ; NUMBER, no encoding.
               "skin",        RenderTemplate.sp_skin,                  \ ; Controlled source, no encoding???
+              "skincookie",  RenderTemplate.sp_skincookie,            \
               "page",        RenderTemplate.sp_page,                  \ ; Number, no encoding.
               "dir",         RenderTemplate.sp_dir,                   \ ; Needs encoding!
               "thread",      RenderTemplate.sp_thread,                \ ; Needs encoding!
@@ -1020,6 +1021,11 @@ end if
 .sp_skin:
         mov     eax, [ebx+TSpecialParams.userSkin]
         jmp     .special_string
+
+.sp_skincookie:
+        xor     eax, eax
+        stdcall GetCookieValue, [ebx+TSpecialParams.params], txt "skin"
+        jmp     .special_string_free
 
 .sp_version:
         mov     eax, cVersion
@@ -2451,6 +2457,10 @@ begin
         test    esi, esi
         jz      .desktop
 
+        stdcall GetCookieValue, [esi+TSpecialParams.params], txt "skin"
+        jnc     .found_cookie
+
+.by_user_agent:
         stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_USER_AGENT"
         jc      .desktop
 
@@ -2477,6 +2487,24 @@ begin
         mov     [esp+4*regEAX], ebx
         popad
         return
+
+.found_cookie:
+        mov     edx, eax
+
+        stdcall StrDup, [hCurrentDir]
+        stdcall StrCat, eax, "/templates/"
+        push    eax
+        stdcall StrCat, eax, edx
+        stdcall StrCat, eax, SKIN_CHECK_FILE
+
+        stdcall FileExists, eax
+        stdcall StrDel ; from the stack
+        mov     eax, edx
+        jnc     .found
+
+        stdcall StrDel, eax
+        jmp     .by_user_agent
+
 endp
 
 

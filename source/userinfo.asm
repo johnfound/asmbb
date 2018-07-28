@@ -597,3 +597,57 @@ begin
         popad
         return
 endp
+
+
+
+
+
+
+proc SkinCookie, .pSpecial
+begin
+        pushad
+
+        stdcall TextCreate, sizeof.TText
+        mov     edi, eax
+
+        mov     esi, [.pSpecial]
+        cmp     [esi+TSpecialParams.post_array], 0
+        je      .finish                          ; only post requests
+
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "skin", 0
+        mov     ebx, eax
+        test    eax, eax
+        jz      .set_default
+
+        stdcall StrCompNoCase, ebx, txt "0"
+        jc      .default_free
+
+; now, set session cookie.
+
+        stdcall TextCat, edi, "Set-Cookie: skin="
+        stdcall TextCat, edx, ebx
+        stdcall TextCat, edx, "; HttpOnly; Path=/; "
+        stdcall TextCat, edx, <txt 13, 10>
+        mov     edi, edx
+
+        stdcall StrDel, ebx
+        jmp     .finish
+
+.default_free:
+        stdcall StrDel, ebx
+
+.set_default:
+; simply delete the cookie.
+        stdcall TextCat, edi, <"Set-Cookie: skin=; HttpOnly; Path=/; Max-Age=0", 13, 10>
+        mov     edi, edx
+
+.finish:
+        stdcall GetBackLink, esi
+        stdcall TextMakeRedirect, edi, eax
+        stdcall StrDel, eax
+        mov     [esp+4*regEAX], edi
+        stc
+        popad
+        return
+endp

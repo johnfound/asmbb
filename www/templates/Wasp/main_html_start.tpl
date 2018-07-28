@@ -34,6 +34,18 @@
 <body>
   <div class="header">
     [special:header]
+    <div class="spacer"></div>
+    <div style="text-align: left">
+      <form method="POST" action="/!skincookie">
+        <select class="skin" name="skin" onchange="this.form.submit()">
+          <option value="0">(Default)</option>
+          [special:skins=[special:skincookie]]
+        </select>
+        <noscript style="display: inline; margin-left: 0px">
+          <input type="submit" value="Go">
+        </noscript>
+      </form>
+    </div>
     <div>
       [case:[special:userid]|<a href="/!login/">Login</a><br><a href="/!register/">Register</a>|
       <a href="/!logout">Logout ( [special:username] )</a><br><a href="/!userinfo/[special:username]">User profile</a>]
