@@ -1931,7 +1931,10 @@ begin
         jc      .finish_skins
 
         mov     edi, eax
+        stdcall SortDirArray, edi, fdsByType
+
         mov     ecx, [edi+TArray.count]
+
 
 .dir_loop:
         dec     ecx
