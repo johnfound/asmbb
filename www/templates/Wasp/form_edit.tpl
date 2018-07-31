@@ -77,18 +77,17 @@ function previewIt(e) {
 
 document.onkeyup = function(e) {
   var key = e.which || e.keyCode;
+  var frm = document.getElementById("editform");
   if (e.ctrlKey && key == 13) {
-    var frm = document.getElementById("editform");
     frm.preview.click();
   } else if (key == 27) {
     window.location.href = "!by_id";
   } else if (e.ctrlKey && key == 83) {
-    var frm = document.getElementById("editform");
     frm.submit.click();
     e.preventDefault();
   }
   return false;
-}
+};
 
 document.onkeydown = function(e) {
   var key = e.which || e.keyCode;
@@ -98,7 +97,7 @@ document.onkeydown = function(e) {
     e.preventDefault();
     return false;
   }
-}
+};
 
 
 </script>

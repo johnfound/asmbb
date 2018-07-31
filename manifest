@@ -1,5 +1,5 @@
-C Combined\scommit.\sFixed\ssmall\smemory\sleak\sin\ssettings.asm;\sImplemented\sbetter\shandling\sof\sthe\stags\slimits\sin\sthe\sthreads.\sImplemented\spost\seditor\swith\spreview\sthrough\sJS\srequests\swithout\sreseting\sthe\seditor\swindow\sposition,\simplemented\skeyboard\sshortcuts.\sIt\sis\sstill\scompatible\swith\sthe\sbrowsers\swith\sJS\sswitched\soff.
-D 2018-07-31T11:10:45.799
+C Fixed\sminor\smistakes\sin\sthe\sedit\sform\sJS.
+D 2018-07-31T16:04:15.451
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -438,7 +438,7 @@ F www/templates/Wasp/editor.less 31a9c1af85110a4e9dce3fcf00ab16bbda9ce50a
 F www/templates/Wasp/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Wasp/error_html_end.tpl 3729362af2738a816684e06dd05bbfff10a39d02
 F www/templates/Wasp/error_html_start.tpl bb9719e341078e7b101f39c8ff92b54e403915c6
-F www/templates/Wasp/form_edit.tpl 45381320f7c20f0b87edf9ddcd659dc90989812f
+F www/templates/Wasp/form_edit.tpl c5496f1999006d8bb6311217a15d4c45bd55dc52
 F www/templates/Wasp/form_edit_thread.tpl 258bbd841f40175f68c3f7828a9996d80f721c6b
 F www/templates/Wasp/form_editinfo.tpl 2668a6016f76f55d3bd5597e4344fdc2caee9198
 F www/templates/Wasp/form_login.tpl 59d96e0eba0c0019c0d68de935ae6d26e9614e49
@@ -573,7 +573,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P c833462f0f16ae87969a3defa523dc96093fe236
-R 7d54bce8a52d60bbad3e623b7f8f3b4c
+P 36d46c68198a19c924edc34ffc78285421d30903
+R 3d69702a5288c278a2ad424c17d6bea4
 U johnfound
-Z 957ba408344034536787de41ca997e33
+Z 1cdc23ca0ca0327228daad1bee41c48d
