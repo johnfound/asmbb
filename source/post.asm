@@ -90,17 +90,8 @@ begin
 .title_ok:
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "tags", 0
+;        stdcall UniqueTagList, eax, [esi+TSpecialParams.dir]
         mov     [.tags], eax
-        test    eax, eax
-        jz      .tags_ok
-
-        cmp     [esi+TSpecialParams.dir], 0
-        je      .tags_ok
-
-        stdcall StrCat, [.tags], txt ', '
-        stdcall StrCat, [.tags], [esi+TSpecialParams.dir]
-
-.tags_ok:
         jmp     .thread_ok
 
 
@@ -285,6 +276,9 @@ begin
         cmp     [.caption], 0
         je      .show_edit_form
 
+        cmp     [.source], 0
+        je      .show_edit_form
+
         dec     [.fPreview]
 
 ; check the ticket
@@ -363,7 +357,7 @@ begin
 
 ; here process the tags
 
-        stdcall SaveThreadTags, [.tags], [.threadID]
+        stdcall SaveThreadTags, [.tags], [esi+TSpecialParams.dir], [.threadID]
 
 .post_in_thread:
 
@@ -544,10 +538,9 @@ sqlDelAllTags        text  "delete from ThreadTags where threadID = ?1"
 sqlInsertTags        text  "insert or ignore into Tags (tag, description) values (lower(?1), ?2)"
 sqlInsertThreadTags  text  "insert into ThreadTags(tag, threadID) values (lower(?1), ?2)"
 
-proc SaveThreadTags, .tags, .threadID
+proc SaveThreadTags, .tags, .dir, .threadID
 .stmt  dd ?
 .stmt2 dd ?
-.count dd ?
 begin
         pushad
 
@@ -567,18 +560,17 @@ begin
         cinvoke sqliteFinalize, [.stmt]
 
 .end_del:
-        cmp     [.tags], eax
+        cmp     [.tags], 0
         je      .finish
 
         stdcall StrSplitList, [.tags], ",", FALSE
         mov     esi, eax
 
-        mov     ebx, [esi+TArray.count]
+        stdcall UniqueList, esi, [.dir]
 
+        mov     ebx, [esi+TArray.count] ; the count can be max 4
         test    ebx, ebx
         jz      .finish_tags
-
-        mov     [.count], 4
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertTags, sqlInsertTags.length, eax, 0
@@ -596,13 +588,10 @@ begin
         dec     ebx
         js      .finish_tags
 
-        dec     [.count]
-        js      .finish_tags    ; 4 tags limit!
-
         stdcall StrSplitList, [esi+TArray.array+4*ebx], ":", FALSE
         mov     edi, eax
 
-        cmp     [edi+TArray.count], 0
+        cmp     [edi+TArray.count], 0   ; is it possible?
         je      .next_tag
 
         cmp     [edi+TArray.count], 2
@@ -653,3 +642,163 @@ begin
         return
 endp
 
+
+
+
+proc UniqueList, .pList, .hDir
+begin
+        pushad
+        mov     edx, [.pList]
+
+        mov     edi, [.hDir]
+        test    edi, edi
+        jz      .outer
+
+        stdcall StrDup, edi
+        mov     edi, eax
+
+        mov     ecx, [edx+TArray.count]
+
+.remove_dir:
+        dec     ecx
+        js      .outer
+
+        stdcall TagCmp, [edx+4*ecx+TArray.array], edi
+        test    eax, eax
+        jnz     .remove_dir
+
+        stdcall StrLen, [edx+4*ecx+TArray.array]
+        mov     ebx, eax
+
+        stdcall StrLen, edi
+        cmp     eax, ebx
+        jae     .len_ok1
+
+        pushd   [edx+4*ecx+TArray.array] edi
+        popd    [edx+4*ecx+TArray.array] edi
+
+.len_ok1:
+        stdcall StrDel, [edx+4*ecx+TArray.array]
+        stdcall DeleteArrayItems, edx, ecx, 1
+        jmp     .remove_dir
+
+.outer:
+        DebugMsg "Sorting array"
+
+        mov     ecx, [edx+TArray.count]
+        xor     ebx, ebx
+
+.inner:
+        dec     ecx
+        jle     .next
+
+        stdcall TagCmp, [edx+4*ecx+TArray.array], [edx+4*ecx+TArray.array-4]
+        test    eax, eax
+        jns     .inner
+
+        pushd   [edx+4*ecx+TArray.array] [edx+4*ecx+TArray.array-4]
+        popd    [edx+4*ecx+TArray.array] [edx+4*ecx+TArray.array-4]
+        inc     ebx
+        jmp     .inner
+
+.next:
+        test    ebx, ebx
+        jnz     .outer
+
+        DebugMsg "Array sorted, remove duplicates."
+
+        mov     ecx, [edx+TArray.count]
+
+.unique:
+        dec     ecx
+        jle     .end_unique
+
+        stdcall TagCmp, [edx+4*ecx+TArray.array], [edx+4*ecx+TArray.array-4]
+        test    eax, eax
+        jnz     .unique
+
+        stdcall StrLen, [edx+4*ecx+TArray.array]
+        mov     ebx, eax
+
+        stdcall StrLen, [edx+4*ecx+TArray.array-4]
+        cmp     eax, ebx
+        jae     .len_ok
+
+        pushd   [edx+4*ecx+TArray.array] [edx+4*ecx+TArray.array-4]   ; try to preserve the tag description.
+        popd    [edx+4*ecx+TArray.array] [edx+4*ecx+TArray.array-4]
+
+.len_ok:
+        stdcall StrDel, [edx+4*ecx+TArray.array]
+        stdcall DeleteArrayItems, edx, ecx, 1
+        jmp     .unique
+
+.end_unique:
+
+        mov     ecx, 3
+        test    edi, edi
+        jnz     .do_free
+
+        inc     ecx
+
+.do_free:
+        mov     ebx, ecx        ; the desired size of the array
+
+.free_loop:
+        cmp     ecx, [edx+TArray.count]
+        jae     .end_free
+
+        stdcall StrDel, [edx+4*ecx+TArray.array]
+        inc     ecx
+        jmp     .free_loop
+
+.end_free:
+        cmp     ebx, [edx+TArray.count]
+        cmova   ebx, [edx+TArray.count]
+        mov     [edx+TArray.count], ebx
+
+        test    edi, edi
+        jz      .finish
+
+        stdcall AddArrayItems, edx, 1
+        mov     [eax], edi
+        xor     edi, edi
+
+.finish:
+        DebugMsg "Array sorted, remove duplicates."
+
+        stdcall StrDel, edi
+        mov     [esp+4*regESI], edx
+        popad
+        return
+endp
+
+
+proc TagCmp, .hTag1, .hTag2
+begin
+        pushad
+
+        stdcall StrSplitList, [.hTag1], ":", FALSE
+        mov     esi, eax
+
+        stdcall StrSplitList, [.hTag2], ":", FALSE
+        mov     edi, eax
+
+        mov     eax, [esi+TArray.count]
+        test    eax, eax
+        lea     eax, [eax+1]
+        jz      .finish
+
+        mov     eax, [edi+TArray.count]
+        dec     eax
+        js      .finish
+
+        stdcall StrCompSort2, [esi+TArray.array], [edi+TArray.array], FALSE
+
+.finish:
+        mov     [esp+4*regEAX], eax
+        stdcall ListFree, esi, StrDel
+        stdcall ListFree, edi, StrDel
+
+        popad
+        return
+endp

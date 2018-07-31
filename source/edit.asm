@@ -19,6 +19,8 @@ proc EditUserMessage, .pSpecial
 .threadID dd ?
 .userID   dd ?
 
+.softPreview dd ?
+
 begin
         pushad
 
@@ -26,6 +28,7 @@ begin
         mov     [.source], ebx
         mov     [.rendered], ebx
         mov     [.ticket], ebx
+        mov     [.softPreview], ebx
 
         mov     esi, [.pSpecial]
 
@@ -86,6 +89,19 @@ begin
         test    eax, eax
         jnz     .save_post_and_exit
 
+        stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
+        mov     ebx, eax
+
+        stdcall GetQueryItem, ebx, txt "cmd=", 0
+        test    eax, eax
+        jz      .show_edit_form
+
+        stdcall StrCompNoCase, eax, "preview"
+        stdcall StrDel, eax
+        jnc     .show_edit_form
+
+        inc     [.softPreview]
+
 .show_edit_form:
 
         cmp     [.ticket], 0
@@ -130,13 +146,17 @@ begin
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
 
+        cmp     [.softPreview], 0
+        jne     .form_ok
         stdcall RenderTemplate, edi, "form_edit.tpl", [.stmt], esi
-        stdcall RenderTemplate, eax, "preview.tpl", [.stmt], esi
+        mov     edi, eax
+.form_ok:
+        stdcall RenderTemplate, edi, "preview.tpl", [.stmt], esi
         mov     edi, eax
 
         cinvoke sqliteFinalize, [.stmt]
 
-        clc
+        shr     [.softPreview], 1       ; set CF
         jmp     .finish
 
 
@@ -446,16 +466,6 @@ begin
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "tags", 0
         mov     [.tags], eax
-        test    eax, eax
-        jz      .tags_ok
-
-        cmp     [esi+TSpecialParams.dir], 0
-        je      .tags_ok
-
-        stdcall StrCat, [.tags], txt ','
-        stdcall StrCat, [.tags], [esi+TSpecialParams.dir]
-
-.tags_ok:
 
 ; Get the pinned
 
@@ -499,7 +509,7 @@ begin
         cmp     ebx, SQLITE_DONE
         jne     .error_write            ; strange write fault.
 
-        stdcall SaveThreadTags, [.tags], [.threadID]
+        stdcall SaveThreadTags, [.tags], [esi+TSpecialParams.dir], [.threadID]
 
 ; save the pinned flag. Only for admins!
 

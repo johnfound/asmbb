@@ -48,6 +48,7 @@ begin
         jz      .error_ok
 
         inc     [.error]
+        stdcall StrDel, eax
 
 .error_ok:
         stdcall GetQueryItem, ebx, txt "msg=", 0

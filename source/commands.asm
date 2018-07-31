@@ -1744,7 +1744,7 @@ begin
         je      .found
 
         inc     bl
-        jmp     .get_key_name   ; collisions resolving.
+        jmp     .get_key_name   ; collisions resolving. Do we need it if the table is created without collisions.
 
 .found:
         mov     ecx, [edx + sizeof.TPHashItem*ebx + TPHashItem.procCommand]
