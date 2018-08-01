@@ -1,14 +1,6 @@
 GENERAL_LIMIT_MAX_POST_LENGTH = 1024*1024   ; 1MB general limit on post data length. Everything above will be trunkated.
 
 
-struct TEventsItem
-  .hSocket   dd ?       ; the socket events to be sent.
-  .requestID dd ?       ; the requestID of the events request.
-  .events    dd ?       ; what type of events to be sent.
-ends
-
-
-
 ; The types for FCGI_Header.type
 
 FCGI_BEGIN_REQUEST      =  1
@@ -463,7 +455,7 @@ begin
 
 
 .mx_disabled:
-
+        DebugMsg "Request multiplex refused!"
         stdcall FCGI_send_end_request, [.hSocket], eax, FCGI_CANT_MPX_CONN
         jmp     .pack_loop
 
@@ -585,16 +577,17 @@ begin
 .log_serve_ok:
 
         ; SERVE THE REQUEST HERE
+        ; returns CF=1 if the socket must to be added to the events listener list
+        ; EDX:EAX in this case contains the events mask that the request want to receive.
+        ; if CF=0 the request is entirely served.
+
         stdcall ServeOneRequest, [.hSocket], [.requestID], [.requestParams], [.requestPost], [.start_time]
         jnc     .end_of_request
 
 ; long living connection
 
-        stdcall AddSocketToList, [.hSocket], [.requestID]
-
-        test    [.requestFlags], FCGI_KEEP_CONN
-        jnz     .main_loop                             ; this socket still can be used for another requests.
-        jmp     .exit
+        stdcall AddEventListener, [.hSocket], [.requestID], eax, edx
+        jmp     .exit   ; as long as multiplexing requests is not possible, exit this thread.
 
 
 .end_of_request:
@@ -666,13 +659,6 @@ begin
 
 endp
 
-
-
-proc AddSocketToList, .hSocket, .requestID
-begin
-
-        return
-endp
 
 
 

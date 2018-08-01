@@ -1,5 +1,5 @@
-C Handling\sthe\sSSE\sin\sone\scentralized\sway\sby\sa\ssingle\sthread\sservice.\sWill\sallow\sthe\suse\sof\sSSE\son\sall\spages.
-D 2018-08-01T05:17:03.080
+C Working\sevents\sservice,\sat\sleast\spartially.\sBut\sthe\schat\sis\sbroken\sactually.
+D 2018-08-01T20:53:44.624
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -21,17 +21,17 @@ F source/accounts.asm 68bbfe93e1ef897978ef4dc79c654020abb34e69
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm 1f129fd0bf05f31b23dd1b3846ecc9cf0ae1499e
 F source/categories.sql bdb9e206fac6884ae116e80de2bd602d7d80bc04
-F source/chat.asm 839a56748ddb6cba77f5d54c69ce0fcfdb6cd4cf
-F source/chat_ipc.asm 6654470c71266ade8ca690d3c377fef8de8a1442
-F source/commands.asm 6be967c6298c1a8b733595bd490c06810cd630a0
-F source/create.sql 725347a1b2b4cae0049203e73afde79317db45b6
+F source/chat.asm 7334a5d769b657422fbd56956180b92476da1e7e
+F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
+F source/commands.asm 25ba78441524a8eab4e8a7bed6f5052598cc8d80
+F source/create.sql 8581be01cbe2fb87061633f92dac11a6cdbfb258
 F source/delete.asm 5a916c3647c52baa753951d93fbbfaa3175627d4
 F source/edit.asm bc4e27a181ce6e404886020cae2f2db97f08a427
-F source/engine.asm 6702fe5614f5187e1d42e8a5e2706e8306ff1374
-F source/engine.fpr 866dfcf4548b0166a70a06a9cb80f1b9abc93b08
+F source/engine.asm cb21b2750158e76fb240e83f95c59dba6ce8e867
+F source/engine.fpr b0c6bf348a22f100e9f7e66d053e243d3499ebd7
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
-F source/fcgi.asm a1bce9dbedf82effb3ea7536ed5dce2b01034cb7
+F source/fcgi.asm 5ad38101885b3b2c5a117d6bd88f26ecc92ea626
 F source/history.asm 60954615a27c21a67e1a20a82a636370ee55a9b7
 F source/http.asm 83348746eac5c0c9052144f61b626a3d9f0f53c0
 F source/images_png.asm cb69d9eafb85f6e61c526a3dcff4c7f2c3f4ebd6
@@ -57,6 +57,7 @@ F source/showthread.asm ba5a0f583df5344544865db1e0621005e7e8437f
 F source/showthread.sql 284a3060114cb7668fead7008f4ebaf9258f14d2
 F source/sqlite3.asm 8e27aa526542e4c8bac6b9e741b6e0698220933f
 F source/sqlite_console.asm 4036ff078724d5f52ac9dacaf9cee9ec394f9e94
+F source/sse_service.asm a792625cb798c3961ef53db2c766ab6b5608b4ba
 F source/statistics.asm 8574bead31291bdaf459a032659cb41bc34883d3
 F source/statistics.sql adf6bec52c32dba0b780cd7422e2de395ca19f7e
 F source/tests/Test1.tpl 3787fb082cb7f6404ff4631fd6ca67ed14c7beac
@@ -573,10 +574,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P d703adf4b6f723db4d4f682a117c830f1cfe6e7f
-R d767cba2cd872cb6b6dbfd4908d61850
-T *branch * sse_service
-T *sym-sse_service *
-T -sym-trunk *
+P 016445296d72002427d263d6843dcfcd9685596c
+R 906c688593d97d8e6afd74208d7f73e1
 U johnfound
-Z fd83a4d1dc89aab1d79545a01f94fc9e
+Z ac8a8f83362d319c25313581cf2faa78

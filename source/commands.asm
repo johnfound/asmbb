@@ -22,6 +22,8 @@ struct TSpecialParams
   .requestID       dd ?         ;
 
   .fDontFree       dd ?         ; if TRUE, the socket should not be closed after ending of ServeOneRequest procedure.
+  .needEventsLo    dd ?         ; if fDontFree is TRUE, contains the events mask to be subscribed.
+  .needEventsHi    dd ?
 
 ; request parameters
 
@@ -395,6 +397,13 @@ begin
 
 
 .send_simple_result:
+        test    edx, edx
+        jnz     .final_send
+
+        cmp     [.special.fDontFree], 0
+        jne     .final_clean
+
+.final_send:
 
         stdcall FCGI_outputText, [.hSocket], [.requestID], edx, TRUE
 
@@ -420,8 +429,11 @@ begin
 
         stdcall FreePostDataArray, [.special.post_array]
 
+        xor     eax, eax
         shr     [.special.fDontFree], 1
         popad
+        cmovc   eax, [.special.needEventsLo]
+        cmovc   edx, [.special.needEventsHi]
         return
 
 

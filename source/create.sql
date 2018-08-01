@@ -491,6 +491,15 @@ create table ChatUsers (
   force       integer
 );
 
+
+create table EventQueue (
+  id         integer primary key autoincrement,
+  type       integer,
+  event      text
+);
+
+
+
 COMMIT;
 
 ANALYZE;
