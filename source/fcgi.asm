@@ -1,5 +1,14 @@
 GENERAL_LIMIT_MAX_POST_LENGTH = 1024*1024   ; 1MB general limit on post data length. Everything above will be trunkated.
 
+
+struct TEventsItem
+  .hSocket   dd ?       ; the socket events to be sent.
+  .requestID dd ?       ; the requestID of the events request.
+  .events    dd ?       ; what type of events to be sent.
+ends
+
+
+
 ; The types for FCGI_Header.type
 
 FCGI_BEGIN_REQUEST      =  1
@@ -577,6 +586,18 @@ begin
 
         ; SERVE THE REQUEST HERE
         stdcall ServeOneRequest, [.hSocket], [.requestID], [.requestParams], [.requestPost], [.start_time]
+        jnc     .end_of_request
+
+; long living connection
+
+        stdcall AddSocketToList, [.hSocket], [.requestID]
+
+        test    [.requestFlags], FCGI_KEEP_CONN
+        jnz     .main_loop                             ; this socket still can be used for another requests.
+        jmp     .exit
+
+
+.end_of_request:
 
         stdcall LogEvent, "RequestServeEnd", logNULL, 0, 0
 
@@ -595,20 +616,16 @@ begin
 .log_req_end_ok:
 
         test    [.requestFlags], FCGI_KEEP_CONN
-        jz      .finish
-
-;        DebugMsg "Keep connection"
-
-        jmp     .main_loop
-
+        jnz     .main_loop
 
 .finish:
 ;        DebugMsg "Don't keep connection"
 
+        stdcall SocketClose, [.hSocket]
+
+.exit:
         stdcall FreeMem, esi
         call    .FreeAllocations
-
-        stdcall SocketClose, [.hSocket]
 
         cmp     [fLogEvents], 0
         je      .log_thread_end_ok
@@ -651,7 +668,11 @@ endp
 
 
 
+proc AddSocketToList, .hSocket, .requestID
+begin
 
+        return
+endp
 
 
 

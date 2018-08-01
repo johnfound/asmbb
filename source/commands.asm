@@ -21,6 +21,8 @@ struct TSpecialParams
   .hSocket         dd ?         ; the "low level" request data.
   .requestID       dd ?         ;
 
+  .fDontFree       dd ?         ; if TRUE, the socket should not be closed after ending of ServeOneRequest procedure.
+
 ; request parameters
 
   .params          dd ?
@@ -43,7 +45,7 @@ struct TSpecialParams
   .setupmode       dd ?
   .pStyles         dd ?
 
-; logged user info.
+; logged-in user info.
 
   .userID          dd ?
   .userName        dd ?
@@ -418,11 +420,12 @@ begin
 
         stdcall FreePostDataArray, [.special.post_array]
 
+        shr     [.special.fDontFree], 1
         popad
         return
 
 
-.send_simple_replace:     ; replaces the EDI string with new one and sends it as a simple result
+.send_simple_replace:     ; replaces the EDX TText with new one and sends it as a simple result
 
         stdcall TextFree, edx
         mov     edx, eax
