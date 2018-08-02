@@ -582,15 +582,7 @@ begin
         ; if CF=0 the request is entirely served.
 
         stdcall ServeOneRequest, [.hSocket], [.requestID], [.requestParams], [.requestPost], [.start_time]
-        jnc     .end_of_request
-
-; long living connection
-
-        stdcall AddEventListener, [.hSocket], [.requestID], eax, edx
-        jmp     .exit   ; as long as multiplexing requests is not possible, exit this thread.
-
-
-.end_of_request:
+        jc      .exit    ; long living connection
 
         stdcall LogEvent, "RequestServeEnd", logNULL, 0, 0
 

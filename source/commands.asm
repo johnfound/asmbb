@@ -22,8 +22,6 @@ struct TSpecialParams
   .requestID       dd ?         ;
 
   .fDontFree       dd ?         ; if TRUE, the socket should not be closed after ending of ServeOneRequest procedure.
-  .needEventsLo    dd ?         ; if fDontFree is TRUE, contains the events mask to be subscribed.
-  .needEventsHi    dd ?
 
 ; request parameters
 
@@ -432,8 +430,6 @@ begin
         xor     eax, eax
         shr     [.special.fDontFree], 1
         popad
-        cmovc   eax, [.special.needEventsLo]
-        cmovc   edx, [.special.needEventsHi]
         return
 
 

@@ -482,20 +482,22 @@ create table ChatLog (
   Message     text
 );
 
-create table ChatUsers (
+
+create table EventSessions (
   session     text unique not null,
   time        integer,
   username    text,
   original    text,
-  status      integer,
-  force       integer
+  status      integer
 );
 
 
 create table EventQueue (
   id         integer primary key autoincrement,
   type       integer,
-  event      text
+  event      text,
+  sender     text,   -- the sessionID of the sender.
+  receiver   text    -- the sessionID of the receiver. If NULL then broadcast.
 );
 
 
