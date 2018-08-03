@@ -2,9 +2,6 @@ CHAT_MAX_USER_NAME = 20
 CHAT_MAX_MESSAGE = 1000
 CHAT_BACKLOG_DEFAULT = 100
 
-;sqlUpdateChatSession    text "update ChatUsers set time = strftime('%s', 'now'), force = NULL where session = ?1;"
-;sqlDeleteClosedSessions text "update ChatUsers set status = 0 where time < strftime('%s', 'now') - 10; delete from ChatUsers where time < strftime('%s', 'now') - 86400;"           ; 10 seconds timeout of the chat session.
-
 
 proc ChatRealTime, .pSpecial
 begin
@@ -15,7 +12,7 @@ begin
         stdcall ChatPermissions, esi
         jc      .error_no_permissions
 
-        stdcall InitEventSession, esi, evmMessage or evmUsersOnline, 0  ; if CF=0 returns session string in EAX
+        stdcall InitEventSession, esi, evmMessage or evmUsersOnline or evmUserChanged, 0  ; if CF=0 returns session string in EAX
         jc      .exit
 
         stdcall ChatInitialEvents, eax
@@ -114,8 +111,9 @@ begin
         stdcall AddEvent, evMessage, edi, [.session], [.session]
 
 .messages_ok:
+
+        stdcall SendUsersOnline, [.session]
         stdcall StrDel, edi
-        stdcall AddEvent, evUsersOnline, 0, [.session], [.session]
         popad
         return
 endp
@@ -319,7 +317,6 @@ endl
         push    eax
         stdcall StrToNumEx, eax
         stdcall StrDel ; from the stack
-
         stdcall SetEventStatus, edi, eax
         jmp     .finish
 

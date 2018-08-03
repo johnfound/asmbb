@@ -1,5 +1,5 @@
-C The\schat\sworks\sagain.\sAnd\sworks\spretty\sgood.\sBut\scrashes\sare\spossible\sand\smore\stests\sare\sneeded.
-D 2018-08-02T19:18:11.194
+C Now\sthe\suser\srelated\sevents\sare\ssent\sone\sby\sone\sonly\son\schange.\sThe\swhole\susers\sset\sis\ssent\sonly\son\sthe\sinitialization\sof\sthe\schat.\n\nThe\sevent\shandling\sservice\sseems\sto\swork\spretty\sconsistently.\sTests\sabout\smemory\sleaks\sare\sneeded.\sThe\sflagSelf\swas\sremoved\sfrom\sthe\susers\sevents\sand\sreplaced\swith\ssending\sthe\sfirst\s8\ssymbols\sfrom\sthe\sevent\ssession\sID.\sThis\sway,\sthe\sclients\scan\sdetect\sthe\nself\sevents\sby\scomparing\swith\stheir\sown\scookie.\s\n\nThe\sjs\scode\sof\sthe\schat\swas\srefactored\saccording\sto\sthe\snew\sevents\sand\sagressive\sautomatic\sreconnection\shas\sbeen\simplemented.
+D 2018-08-03T16:01:03.084
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -21,10 +21,10 @@ F source/accounts.asm 68bbfe93e1ef897978ef4dc79c654020abb34e69
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm 1f129fd0bf05f31b23dd1b3846ecc9cf0ae1499e
 F source/categories.sql bdb9e206fac6884ae116e80de2bd602d7d80bc04
-F source/chat.asm a3216f17dd1d1d13cb892a636972f2bccb947251
+F source/chat.asm d3823afbd1d0a4b43443691a846b670921a12f59
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm 6d640d5992d5a11455df6ecd46e7cfec180d56b0
-F source/create.sql 93868e22115ac2bbb2e5938e41f1afc5a97d7e0c
+F source/create.sql 615d704025a245ca6b38e6b39c6f40d7ec23afb9
 F source/delete.asm 5a916c3647c52baa753951d93fbbfaa3175627d4
 F source/edit.asm bc4e27a181ce6e404886020cae2f2db97f08a427
 F source/engine.asm ac14ccbbf3225dde4e8736ff7e791c2c07c923e0
@@ -57,7 +57,7 @@ F source/showthread.asm ba5a0f583df5344544865db1e0621005e7e8437f
 F source/showthread.sql 284a3060114cb7668fead7008f4ebaf9258f14d2
 F source/sqlite3.asm 8e27aa526542e4c8bac6b9e741b6e0698220933f
 F source/sqlite_console.asm 4036ff078724d5f52ac9dacaf9cee9ec394f9e94
-F source/sse_service.asm 8cdb279ec6ea04009c45170a4ce8dc6dc36e7b49
+F source/sse_service.asm d9f470b5d4d2f4c22a49c4510438ce6779c886c3
 F source/statistics.asm 8574bead31291bdaf459a032659cb41bc34883d3
 F source/statistics.sql adf6bec52c32dba0b780cd7422e2de395ca19f7e
 F source/tests/Test1.tpl 3787fb082cb7f6404ff4631fd6ca67ed14c7beac
@@ -429,7 +429,7 @@ F www/templates/Wasp/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
 F www/templates/Wasp/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/Wasp/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
 F www/templates/Wasp/chat.less 1c61444403b14f006303009281ddf9393131c742
-F www/templates/Wasp/chat.tpl 2158054d7475c2d1dc6a50e95751e75b6f49dbe9
+F www/templates/Wasp/chat.tpl 33619b30f9421cb798fb242477387b521b33c337
 F www/templates/Wasp/common.less 54e70d04e55cb64abf29e01c10de57105ed856a0
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 17d02b6b8ab0b59548446258f0f2efdf507d6af2
@@ -514,7 +514,7 @@ F www/templates/mobile/activity7.tpl 606eb1ee82da0767dd85e3d2ac63a07e9874a5fb l
 F www/templates/mobile/activity8.tpl 36d833a0164bb74532e88161cff3d7c8d05cef52 l
 F www/templates/mobile/activity9.tpl 60fe5018f101f822fa00434bff49db7a3f7da947 l
 F www/templates/mobile/chat.less fe56060d4be896af9b1425781ef86678d3475bde
-F www/templates/mobile/chat.tpl b392811962dec06f69c82edbe86d6b67f0a1a5a6
+F www/templates/mobile/chat.tpl 0011cc9b8c23062eca0996f32b15430f6c1bd93b
 F www/templates/mobile/common.less 762e4e8198de87fbcb131462b3476432725a2c65 l
 F www/templates/mobile/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/mobile/del_confirm.tpl cdcb838e2e3a339de5408643fd2c2f3c447ab916 l
@@ -574,7 +574,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P b279f5351d1f866b3f1ad19ebf194c12388ef47f
-R cbe6a5d0bea311ac5868e02b5d4c153c
+P 8ab72903a73053fed182b0cc296c0b4ecc687a6e
+R 8cdb593caf892ea5eca4b3da4c7081ea
 U johnfound
-Z dde618e3168f3dc414e263aff8fafe3a
+Z 0078312e066c0ed1069a9acfc9b0f6b2

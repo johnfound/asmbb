@@ -491,6 +491,9 @@ create table EventSessions (
   status      integer
 );
 
+create index idxEventSessionsTime on EventSessions(time);
+create index idxEventSessionsOrig on EventSessions(original);
+
 
 create table EventQueue (
   id         integer primary key autoincrement,

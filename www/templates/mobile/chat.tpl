@@ -5,6 +5,22 @@
 
 // some extras and utilities
 
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
     function linkify(inputText) {
         var replacedText, replacePattern1;
         //URLs starting with http://, https://, or ftp://
@@ -94,11 +110,7 @@
 
 // Entering the chat.
 
-    document.body.onload = function () {
-      edit_line = document.getElementById("chat_message");
-      chat_log  = document.getElementById("chatlog");
-      sys_log   = document.getElementById("syslog");
-
+    function connect() {
       source = new EventSource("/!chat_events");
 
       source.onmessage = OnMessage;
@@ -106,16 +118,36 @@
       source.onerror = OnError;
 
       source.addEventListener('message', OnMessage);
-      source.addEventListener('users_online', OnUserOnline);
+      source.addEventListener('users_online', OnUsersOnline);
+      source.addEventListener('user_changed', OnUserChanged);
+    }
+
+    document.body.onload = function () {
+      edit_line = document.getElementById("chat_message");
+      chat_log  = document.getElementById("chatlog");
+      sys_log   = document.getElementById("syslog");
+      connect();
     };
 
 //  Leaving the chat.
 
     window.onbeforeunload = function (e) {
       source.close();
+      source = null;
       UserStatusChange(0);
       return null;
     };
+
+    document.addEventListener("visibilitychange", function() {
+      if ( ! document.hidden ) {
+        total_cnt = 0;
+        document.title = title;
+        UserStatusChange(1);
+        ScrollBottom(true);
+      } else {
+        if ( source ) UserStatusChange(2);
+      }
+    });
 
     function KeyPress(e, proc) {
       if (e.keyCode == '13') {
@@ -243,18 +275,7 @@
       }
     }
 
-    document.addEventListener("visibilitychange", function() {
-      if ( ! document.hidden ) {
-        total_cnt = 0;
-        document.title = title;
-        UserStatusChange(1);
-        ScrollBottom(true);
-      } else {
-        UserStatusChange(2);
-      }
-    });
-
-    function OnUserOnline (e) {
+    function OnUsersOnline (e) {
       var msgset = JSON.parse(e.data);
 
       while (sys_log.firstChild) {
@@ -264,7 +285,7 @@
       for (var i = 0; i < msgset.users.length; i++) {
         var usr = msgset.users[i];
         var p = document.createElement('p');
-
+        p.id = 'user'+usr.sid;
         p.classList.add( usr.originalname == usr.user ? "user" : "fake_user");
         if (usr.status == 2) p.classList.add("gray_user");
         p.setAttribute( "onclick", "InsertNick(this);" );
@@ -272,18 +293,49 @@
 
         sys_log.appendChild(p);
 
-        if (usr.flagSelf) {
+        var mysid = getCookie("eventsid").substr(0, 8);
+        if (usr.sid === mysid ) {
           edit_line.placeholder = "Chat as: " + usr.user + " (!new_name, !! default)";
         }
       }
       ScrollBottom(false);
     }
 
+
+    function OnUserChanged (e) {
+      var usr = JSON.parse(e.data);
+      var pold = document.getElementById('user'+usr.sid);
+
+      if ( usr.status == 0 ) {
+        sys_log.removeChild(pold);
+      } else {
+        var p = document.createElement('p');
+        p.id = 'user'+usr.sid;
+        p.classList.add( usr.originalname == usr.user ? "user" : "fake_user");
+        if (usr.status == 2) p.classList.add("gray_user");
+        p.appendChild( document.createTextNode( usr.user ));
+
+        if ( pold ) sys_log.replaceChild(p, pold)
+        else sys_log.insertBefore(p, sys_log.firstChild);
+
+        var mysid = getCookie("eventsid").substr(0, 8);
+        if (usr.sid === mysid ) {
+          edit_line.placeholder = "Chat as: " + usr.user + " (!new_name, !! default)";
+        }
+      }
+    }
+
+
     function OnConnect(e) {
-      // display connection status here.
+      edit_line.style.backgroundColor = null;
+      UserStatusChange(1);
     }
 
     function OnError(e) {
+      edit_line.style.backgroundColor = "#ffa0a0";
+      setTimeout( function() {
+        connect();
+      }, 2000 );
       UserStatusChange(2);
     }
 
