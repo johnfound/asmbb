@@ -491,20 +491,17 @@ create table EventSessions (
   status      integer
 );
 
+
 create index idxEventSessionsTime on EventSessions(time);
 create index idxEventSessionsOrig on EventSessions(original);
-
 
 create table EventQueue (
   id         integer primary key autoincrement,
   type       integer,
   event      text,
-  sender     text,   -- the sessionID of the sender.
-  receiver   text    -- the sessionID of the receiver. If NULL then broadcast.
+  receiver   text    -- the sessionID of the receiver. If NULL then broadcast to all subscribed.
 );
 
 
 
 COMMIT;
-
-ANALYZE;

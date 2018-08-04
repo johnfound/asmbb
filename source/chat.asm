@@ -108,7 +108,7 @@ begin
         jz      .messages_ok
 
         stdcall StrCat, edi, txt " ] }"
-        stdcall AddEvent, evMessage, edi, [.session], [.session]
+        stdcall AddEvent, evMessage, edi, [.session]
 
 .messages_ok:
 
@@ -278,7 +278,7 @@ endl
 
         stdcall FormatJsonMessage, [.id], [.time], [.user], [.original], [.text]
 
-        stdcall AddEvent, evMessage, eax, 0, 0
+        stdcall AddEvent, evMessage, eax, 0
         stdcall StrDel, eax
 
 .finish:
@@ -299,8 +299,8 @@ endl
 
 .rename_user:
         stdcall GetPostString, [esi+TSpecialParams.post_array], "username", txt "  "
-
         mov     edx, eax
+
         stdcall EventUserName, esi
         stdcall RenameEventUser, edi, edx, eax
 
@@ -319,8 +319,6 @@ endl
         stdcall StrDel ; from the stack
         stdcall SetEventStatus, edi, eax
         jmp     .finish
-
-
 endp
 
 

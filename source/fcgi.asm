@@ -192,7 +192,7 @@ begin
         stdcall SocketBind, [STDIN], eax
         jc      .finish
 
-        stdcall SocketListen, [STDIN], 1024
+        stdcall SocketListen, [STDIN], -1       ; maximum allowed by the system.
         jnc     .loop
 
 

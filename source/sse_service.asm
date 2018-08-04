@@ -67,7 +67,7 @@ endg
 
 
 sqlGetInitialId text "select id from EventQueue order by id desc limit 1;"
-sqlGetEvents    text "select id, type, event, sender, receiver from EventQueue where id > ?1;"
+sqlGetEvents    text "select id, type, event, receiver from EventQueue where id > ?1;"
 
 proc sseServiceThread, .lparam
 .stmt  dd ?
@@ -243,7 +243,7 @@ endp
 ; the procedure gets the needed data and sends events to all registered listeners,
 ; according to the subscribed events and receiver parameter of the event.
 ;
-; select id, type, event, sender, receiver from EventQueue where id > ?1;
+; select id, type, event, receiver from EventQueue where id > ?1;
 
 proc DispatchEvent, .stmt
 .evMask rd 2
@@ -288,7 +288,7 @@ begin
         stdcall StrCat, eax, <txt 13, 10, 13, 10>
         mov     ebx, eax
 
-        cinvoke sqliteColumnText, [.stmt], 4    ; receiver
+        cinvoke sqliteColumnText, [.stmt], 3    ; receiver
         mov     esi, eax
 
         stdcall WaitForMutex, mxListeners, 10
@@ -428,7 +428,7 @@ begin
 
         OutputValue "Listener added: ", edi, 16, 8
 
-        stdcall SocketSetOption, [.hSocket], soSendTimeout, 0
+        stdcall SocketSetOption, [.hSocket], soSendTimeout, 10
         stdcall MutexRelease, mxListeners
         clc
 
@@ -440,9 +440,9 @@ endp
 
 
 
-sqlInsertEvent text "insert into EventQueue(type, event, sender, receiver) values (?1, ?2, ?3, ?4);"
+sqlInsertEvent text "insert into EventQueue(type, event, receiver) values (?1, ?2, ?3);"
 
-proc AddEvent, .evNumber, .evText, .sender, .receiver
+proc AddEvent, .evNumber, .evText, .receiver
 .stmt dd ?
 begin
         pushad
@@ -458,22 +458,11 @@ begin
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 
 .text_ok:
-        cmp     [.sender], 0
-        je      .sender_ok
-
-        stdcall StrLen, [.sender]
-        mov     ecx, eax
-        stdcall StrPtr, [.sender]
-        cinvoke sqliteBindText, [.stmt], 3, eax, ecx, SQLITE_STATIC
-
-.sender_ok:
         cmp     [.receiver], 0
         je      .receiver_ok
 
-        stdcall StrLen, [.receiver]
-        mov     ecx, eax
         stdcall StrPtr, [.receiver]
-        cinvoke sqliteBindText, [.stmt], 4, eax, ecx, SQLITE_STATIC
+        cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
 
 .receiver_ok:
         cinvoke sqliteStep, [.stmt]
@@ -760,7 +749,7 @@ begin
         cinvoke sqliteFinalize, [.stmt]
         stdcall StrCat, edi, txt " ] }"
 
-        stdcall AddEvent, evUsersOnline, edi, [.session], [.session]
+        stdcall AddEvent, evUsersOnline, edi, [.session]
         stdcall StrDel, edi
         popad
         return
@@ -817,7 +806,7 @@ begin
 
         stdcall StrCat, edi, txt '}'
 
-        stdcall AddEvent, evUserChanged, edi, [.session], 0
+        stdcall AddEvent, evUserChanged, edi, 0
         stdcall StrDel, edi
 
 .finalize:
