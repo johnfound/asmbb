@@ -1,5 +1,5 @@
-C Merged\swith\ssse_service\sbranch.\sNew,\sbetter\shandling\sof\sthe\sserver-sent-events.
-D 2018-08-04T12:37:51.851
+C Fixed\ssmall\sbug\sin\ssqlite.less
+D 2018-08-04T14:16:40.932
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -478,7 +478,7 @@ F www/templates/Wasp/search.less 17bfdc636da1019916443febbb2073b791ed79d1
 F www/templates/Wasp/search_result.tpl 6c5a46b179308b9b7b4f272c7f543fa8f526dd36
 F www/templates/Wasp/settings.less 550783db559b38a2ad60240cf02a9c3cd1caa65b
 F www/templates/Wasp/skin_variables.lsi 083eec6626d47cbdc1a051bbfafd13c88c5aa358
-F www/templates/Wasp/sqlite.less 68d9721620b69f7b77c47d68edc33346a0490634
+F www/templates/Wasp/sqlite.less 9ed43c40076b969c67d7c73d6d395da98dccbc83
 F www/templates/Wasp/statistics.tpl c0dd59a240e07c246fe9c0841eb1532b93f3f1ae
 F www/templates/Wasp/thread_info.tpl 4c7cc6a5156e1003b3235cb4dc0ff144d10a335d
 F www/templates/Wasp/thread_list.less cb178d6c75debc918a1c122ad59a3ac8369831ee
@@ -574,7 +574,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P d703adf4b6f723db4d4f682a117c830f1cfe6e7f 97d27df3c0ba97a6cd9a373d7e8a6bebcf28e19c
-R 7b6cb7201d4270c75c23f8ad6a9bcbb3
+P cc4fa9d1a2eecbfaace3b8f65726be96f2cb31ce
+R 7cd88b29630c5315e21403b4bd3876c9
 U johnfound
-Z 7e3b009d1bb3161cbc26ae2cf3de2be1
+Z 80da44e60f7a55e04337e1b2171f6124
