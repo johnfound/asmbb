@@ -482,15 +482,26 @@ create table ChatLog (
   Message     text
 );
 
-create table ChatUsers (
+
+create table EventSessions (
   session     text unique not null,
   time        integer,
   username    text,
   original    text,
-  status      integer,
-  force       integer
+  status      integer
 );
 
-COMMIT;
 
-ANALYZE;
+create index idxEventSessionsTime on EventSessions(time);
+create index idxEventSessionsOrig on EventSessions(original);
+
+create table EventQueue (
+  id         integer primary key autoincrement,
+  type       integer,
+  event      text,
+  receiver   text    -- the sessionID of the receiver. If NULL then broadcast to all subscribed.
+);
+
+
+
+COMMIT;

@@ -3,17 +3,17 @@ CHAT_WAKE_TIMEOUT = 3
 
 
 uglobal
-  fChatTerminate  dd ?
-  pChatFutex      dd ?
+  fEventsTerminate   dd ?
+  pEventsFutex       dd ?
 endg
 
 
 
-proc InitChatIPC
+proc InitEventsIPC
 begin
         pushad
 
-        and     [fChatTerminate], 0     ; it is 0 anyway, but...
+        and     [fEventsTerminate], 0     ; it is 0 anyway, but...
 
         stdcall FileOpenAccess, "./asmbb_ipc.bin", faReadWrite or faOpenAlways
         jc      .error
@@ -45,10 +45,10 @@ begin
         cmp     eax, -EBADF
         je      .error
 
-        mov     [pChatFutex], eax
+        mov     [pEventsFutex], eax
         stdcall FileClose, edi
 
-        OutputValue "Shared memory allocated at addr: ", [pChatFutex], 16, 8
+        OutputValue "Shared memory allocated at addr: ", [pEventsFutex], 16, 8
 
         clc
         popad
@@ -63,7 +63,7 @@ endp
 
 
 
-proc WaitForChatMessages, .value
+proc WaitForEvents, .value
 .timeout lnx_timespec
 begin
         pushad
@@ -72,7 +72,7 @@ begin
         mov     [.timeout.tv_nsec], 0
 
         mov     eax, sys_futex
-        mov     ebx, [pChatFutex]
+        mov     ebx, [pEventsFutex]
         mov     ecx, FUTEX_WAIT
         mov     edx, [.value]
         lea     esi, [.timeout]
@@ -99,11 +99,11 @@ begin
 endp
 
 
-proc SignalNewMessage
+proc SignalNewEvent
 begin
         pushad
 
-        mov     ebx, [pChatFutex]
+        mov     ebx, [pEventsFutex]
         lock inc dword [ebx]
 
         mov     eax, sys_futex

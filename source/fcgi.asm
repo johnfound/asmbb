@@ -1,5 +1,6 @@
 GENERAL_LIMIT_MAX_POST_LENGTH = 1024*1024   ; 1MB general limit on post data length. Everything above will be trunkated.
 
+
 ; The types for FCGI_Header.type
 
 FCGI_BEGIN_REQUEST      =  1
@@ -191,7 +192,7 @@ begin
         stdcall SocketBind, [STDIN], eax
         jc      .finish
 
-        stdcall SocketListen, [STDIN], 1024
+        stdcall SocketListen, [STDIN], -1       ; maximum allowed by the system.
         jnc     .loop
 
 
@@ -454,7 +455,7 @@ begin
 
 
 .mx_disabled:
-
+        DebugMsg "Request multiplex refused!"
         stdcall FCGI_send_end_request, [.hSocket], eax, FCGI_CANT_MPX_CONN
         jmp     .pack_loop
 
@@ -576,7 +577,12 @@ begin
 .log_serve_ok:
 
         ; SERVE THE REQUEST HERE
+        ; returns CF=1 if the socket must to be added to the events listener list
+        ; EDX:EAX in this case contains the events mask that the request want to receive.
+        ; if CF=0 the request is entirely served.
+
         stdcall ServeOneRequest, [.hSocket], [.requestID], [.requestParams], [.requestPost], [.start_time]
+        jc      .exit    ; long living connection
 
         stdcall LogEvent, "RequestServeEnd", logNULL, 0, 0
 
@@ -595,20 +601,16 @@ begin
 .log_req_end_ok:
 
         test    [.requestFlags], FCGI_KEEP_CONN
-        jz      .finish
-
-;        DebugMsg "Keep connection"
-
-        jmp     .main_loop
-
+        jnz     .main_loop
 
 .finish:
 ;        DebugMsg "Don't keep connection"
 
+        stdcall SocketClose, [.hSocket]
+
+.exit:
         stdcall FreeMem, esi
         call    .FreeAllocations
-
-        stdcall SocketClose, [.hSocket]
 
         cmp     [fLogEvents], 0
         je      .log_thread_end_ok
@@ -648,9 +650,6 @@ begin
 
 
 endp
-
-
-
 
 
 

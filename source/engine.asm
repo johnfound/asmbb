@@ -49,6 +49,7 @@ include "timeproc.asm"  ; date/time utility procedures.
 include "render2.asm"
 include "commands.asm"
 include "fcgi.asm"
+include "sse_service.asm"
 include "post_data.asm"
 include "threadlist.asm"
 include "showthread.asm"
@@ -98,7 +99,7 @@ endg
 start:
         InitializeAll
 
-        stdcall InitChatIPC
+        stdcall InitEventsIPC
         jc      .finish
 
         stdcall SetLanguage, 'EN'       ; It should be elsewhere!
@@ -145,6 +146,7 @@ start:
 
         stdcall LogEvent, "ScriptStart", logNULL, 0, 0
 
+        stdcall ThreadCreate, sseServiceThread, 0       ; the events handling thread.
 
         stdcall Listen
 
@@ -195,8 +197,8 @@ begin
 
         DebugMsg "OnForcedTerminate"
 
-        lock inc [fChatTerminate]
-        stdcall SignalNewMessage        ; should close the connections!
+        lock inc [fEventsTerminate]
+        stdcall SignalNewEvent        ; should close the connections!
 
         stdcall Sleep, 100
 
@@ -218,8 +220,8 @@ begin
 
         DebugMsg "OnException"
 
-        lock inc [fChatTerminate]
-        stdcall SignalNewMessage        ; should close the connections!
+        lock inc [fEventsTerminate]
+        stdcall SignalNewEvent        ; should close the connections!
 
         stdcall Sleep, 100
 
