@@ -1,5 +1,5 @@
-C Fixed\ssmall\sbug\sin\ssqlite.less
-D 2018-08-04T14:16:40.932
+C Cleanup\sof\sthe\sevents\stable.\sIt\swill\snot\swork\swith\smultiple\sinstances\sof\sthe\sengine.\sSome\sbetter\ssolution\sis\sneeded\still\sthe\srelease!
+D 2018-08-06T10:36:49.208
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -57,7 +57,7 @@ F source/showthread.asm ba5a0f583df5344544865db1e0621005e7e8437f
 F source/showthread.sql 284a3060114cb7668fead7008f4ebaf9258f14d2
 F source/sqlite3.asm 8e27aa526542e4c8bac6b9e741b6e0698220933f
 F source/sqlite_console.asm 4036ff078724d5f52ac9dacaf9cee9ec394f9e94
-F source/sse_service.asm 54908a89e2df1ec0bd9cfccff0eb0ff7d322b632
+F source/sse_service.asm 68a6bf1d96e6c2fb0b02d87a0c67d2387075ab01
 F source/statistics.asm 8574bead31291bdaf459a032659cb41bc34883d3
 F source/statistics.sql adf6bec52c32dba0b780cd7422e2de395ca19f7e
 F source/tests/Test1.tpl 3787fb082cb7f6404ff4631fd6ca67ed14c7beac
@@ -574,7 +574,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P cc4fa9d1a2eecbfaace3b8f65726be96f2cb31ce
-R 7cd88b29630c5315e21403b4bd3876c9
+P 60daad368eda26ff223fbf4782c03f313e51de1a
+R d3f97224d0795ae4c83f4bb28792f8d8
 U johnfound
-Z 80da44e60f7a55e04337e1b2171f6124
+Z d531b6241fa9df8fca4fe821f38aab24

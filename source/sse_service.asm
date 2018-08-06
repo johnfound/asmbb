@@ -68,6 +68,7 @@ endg
 
 sqlGetInitialId text "select id from EventQueue order by id desc limit 1;"
 sqlGetEvents    text "select id, type, event, receiver from EventQueue where id > ?1;"
+sqlCleanEvents  text "delete from EventQueue where id <= ?1;"
 
 proc sseServiceThread, .lparam
 .stmt  dd ?
@@ -125,6 +126,12 @@ begin
         stdcall SendHeartbeatAll
 
 .heartbeat_ok:
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCleanEvents, sqlCleanEvents.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.minid]
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
         stdcall UpdateAndCleanSessions
         stdcall WaitForEvents, [.futex]
         jmp     .main_loop
