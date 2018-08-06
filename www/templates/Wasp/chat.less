@@ -22,24 +22,6 @@ div.header {
   font-size: 60%;
 }
 
-.icon_btn  {
-  position: absolute;
-  right: 4px;
-  top: 4px;
-  border-style: none;
-  vertical-align: top;
-  background-color: @clButtonBG;
-  color: @clButtonFG;
-  width: 24px;
-  height: 24px;
-  text-align: center;
-}
-
-.icon_btn:hover  {
-  background-color: @clButtonActiveBG;
-  color: @clButtonActiveFG;
-}
-
 
 div.chat {
   width: 95%;
@@ -62,55 +44,48 @@ a.ui {
 
 
 #chatlog {
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   background-color: @clDarkBG;
   color: @clDarkFG;
   padding: 8px;
   flex-grow: 8;
   flex-shrink: 8;
   border: @borderEdit;
+}
 
-  p {
-    margin: 4px 0px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
 
-  span {
-    font-size: 80%;
-  }
+.message {
+  margin: 4px 0px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-  span.user {
-    color: @clColor1FG;
-    font-size: 100%;
-    font-weight: bold;
-    font-size: 100%;
-    cursor: pointer;
-  }
+.chatlink {
+  color: @clColor1FG;
+}
 
-  span.fake {
-    color: #ff80FF;
-  }
+.emo {
+  vertical-align: middle;
+  font-size: 20px;
+  line-height: 20px;
+}
 
-  a {
-    color: @clColor1FG;
-  }
+.time {
+  font-size: 80%;
+}
 
-  img {
-    vertical-align: middle;
-  }
+.hline {
+  line-height: 1px;
+  text-align: center;
+  font-size: @FontSize;
+  border-bottom: 1px solid @clColor1FG;
+}
 
-  h4 {
-    line-height: 1px;
-    text-align: center;
-    font-size: @FontSize;
-    border-bottom: 1px solid @clColor1FG;
-    span {
-      padding: 0px 8px;
-      background-color: @clDarkBG;
-    }
-  }
-
+.date {
+  font-size: 80%;
+  padding: 0px 8px;
+  background-color: @clDarkBG;
 }
 
 
@@ -123,29 +98,27 @@ a.ui {
   flex-grow: 1;
   flex-shrink: 0;
   max-width: 30%;
+  min-width: 150px;
   border: @borderEdit;
-
-  p {
-    margin: 4px 0px;
-    cursor: pointer;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: bold;
-  }
-
-  p.user {
-    color: @clColor1FG;
-  }
-
-  p.fake_user {
-    color: @clFakeUser;
-  }
-
-  p.gray_user {
-    opacity: 0.5;
-  }
-
 }
+
+.user {
+  color: @clColor1FG;
+  margin: 4px 0px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+}
+
+.fake_user {
+  color: @clFakeUser;
+}
+
+.gray_user {
+  opacity: 0.5;
+}
+
 
 
 div.chatflex {
@@ -158,39 +131,37 @@ div.chatflex {
 
 #chat_form {
   display: flex;
-  position: relative;
   flex-shrink: 0;
-
-  input {
-    height: 32px;
-    border: @borderEdit;
-    background-color: @clDarkBG;
-    color: @clDarkFG;
-    display:block;
-  }
-
-  input:focus {
-    background-color: @clEditorBG;
-    color: @clEditorFG;
-  }
-
-  .chat_line {
-    flex-grow: 1;
-    padding: 4px 36px 4px 8px;
-  }
-
-  .chat_user {
-    width: 200px;
-    padding: 4px;
-    text-align: right;
-    margin-right: 8px;
-    flex-shrink: 0;
-  }
 }
 
 
-#chat_submit {
-  background-position: center;
-  background-size: 24px 24px;
-  background-image: url("[special:skin]/_images/edit_white.svg");
+.chat_input {
+  height: 32px;
+  border: @borderEdit;
+  background-color: @clDarkBG;
+  color: @clDarkFG;
+  display:block;
+  margin-right: 8px;
+}
+
+.chat_input:focus {
+    background-color: @clEditorBG;
+    color: @clEditorFG;
+}
+
+#chat_message {
+  flex-grow: 1;
+  padding: 4px 36px 4px 8px;
+}
+
+#chat_user {
+  width: 200px;
+  padding: 4px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.icon_btn img {
+  width: 32px;
+  height: 32px;
 }

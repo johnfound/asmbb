@@ -1,5 +1,5 @@
-C Cleanup\sof\sthe\sevents\stable.\sIt\swill\snot\swork\swith\smultiple\sinstances\sof\sthe\sengine.\sSome\sbetter\ssolution\sis\sneeded\still\sthe\srelease!
-D 2018-08-06T10:36:49.208
+C Cleanup\sand\soptimization\sof\sthe\sCSS.\sProvided\sunicode-emoticons\salt\stext\sfor\sthe\schat\semoticons.
+D 2018-08-06T10:37:49.091
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -400,7 +400,7 @@ F www/templates/Wasp/_images/posts_gray.svg 809ee9b2688df16ae2f4fec535612e22f7bf
 F www/templates/Wasp/_images/quote.svg a57dfe55abff5e0685326195e49180c32bf2565c
 F www/templates/Wasp/_images/restore.svg e8fdd4924b182d74f5f20b1a71354077a8b0149f
 F www/templates/Wasp/_images/save_white.svg af0ea2e281c54c48c36dd963f446272ce0f9036e
-F www/templates/Wasp/_images/search.svg f87803eab5fe3eda6b4a431210cfe810784f3040
+F www/templates/Wasp/_images/search.svg 9da761054c10deb9ab4b363eb5c891e145156dd2
 F www/templates/Wasp/_images/tag.svg 2f3a0d76f36c983a6a5d1c55d507ce403e616257
 F www/templates/Wasp/_images/tag_gray.svg 48d4f93adf1bc6e94f76236ea3497492c1b9c94e
 F www/templates/Wasp/_images/toolbar.svg 0e5b5dfb249454ad45d1d1298e499e03ff41571c
@@ -428,9 +428,9 @@ F www/templates/Wasp/activity6.tpl 588b1dde51b134d63d350f7d99c73f787c6dcbeb
 F www/templates/Wasp/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
 F www/templates/Wasp/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/Wasp/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
-F www/templates/Wasp/chat.less 1c61444403b14f006303009281ddf9393131c742
-F www/templates/Wasp/chat.tpl 33619b30f9421cb798fb242477387b521b33c337
-F www/templates/Wasp/common.less 54e70d04e55cb64abf29e01c10de57105ed856a0
+F www/templates/Wasp/chat.less e57b611bba245767e3924f761c37393ee3bb53d2
+F www/templates/Wasp/chat.tpl 75366bd04701825104397dea09087756de854525
+F www/templates/Wasp/common.less a28b0eba675eabad68e6e29b7dd8c41f7b353a59
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 17d02b6b8ab0b59548446258f0f2efdf507d6af2
 F www/templates/Wasp/delete.less f77246e7f9fd0680ddb1ef2351b2b4ec5cef54f2
@@ -455,7 +455,7 @@ F www/templates/Wasp/form_sqlite_console.tpl 7efc4c110f2baaab4cb601c2eb68c0f65cc
 F www/templates/Wasp/help_new_thread.tpl 855afda41996bc3875d07bdf7a41adcdf2a31525
 F www/templates/Wasp/login.less 31a9c8bcfe048f719c6ffa5a30af8eebe338f55a
 F www/templates/Wasp/main_html_end.tpl f9390ce9052a9df9e6ac20a2c11f7257b9f442dd
-F www/templates/Wasp/main_html_start.tpl af2812af052ff1459fbc539a77ece96b8a17f6a4
+F www/templates/Wasp/main_html_start.tpl 48a998493752962780f5af1ae47010e28b20371b
 F www/templates/Wasp/markdown.less 728b194c01331eb110fd5de38efde71dfd78b9c0
 F www/templates/Wasp/minimag_suffix.tpl ea20e08377b7ccdd55a2d7792071bb2734622813
 F www/templates/Wasp/nav_categories.tpl 80053896a6a06ee87351b1e586eaefd329a84109
@@ -574,7 +574,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 60daad368eda26ff223fbf4782c03f313e51de1a
-R d3f97224d0795ae4c83f4bb28792f8d8
+P cf4d0a4cf03db2c200f4d82ba3a2bc7aabe3a362
+R d53c94c3beddb10a834c69c27feb1454
 U johnfound
-Z d531b6241fa9df8fca4fe821f38aab24
+Z 199d027d6c1e27c11bdf84590ce1c698

@@ -55,7 +55,7 @@
   <form class="tags" id="search_form" action="[case:[special:cmdtype]||/|../]!search/" method="get" >
     <input class="search_line" type="search" name="s" placeholder="text search" value="[special:search]">
     <input class="search_line" type="search" name="u" placeholder="user search" value="[special:usearch]">
-    <input class="search_btn"  type="image" src="[special:skin]/_images/search.svg" alt="?" title="Search">
+    <a class="icon_btn"><input class="img_input" type="image" width="32" height="32" src="[special:skin]/_images/search.svg" alt="&nbsp;Search&nbsp;" title="Search"></a>
   </form>
 
   <div class="tags">

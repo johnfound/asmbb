@@ -24,7 +24,6 @@ input {
   font-family: inherit;
 }
 
-
 /* header styles */
 
 div.header {
@@ -90,7 +89,7 @@ form#search_form {
 .search_line {
   height: 32px;
   margin: 0px 8px 0px 0px;
-  padding: 4px 36px 4px 8px;
+  padding: 4px 8px;
   border: @borderEdit;
   background-color: @clDarkBG;
   color: @clDarkFG;
@@ -101,25 +100,35 @@ form#search_form {
 }
 
 
-.search_btn {
-  width: 32px;
+.icon_btn {
   height: 32px;
+  line-height: 32px;
+  min-width: 32px;
   flex-grow: 0;
   flex-shrink: 0;
   text-align: center;
 
-  display: block;
+  display: inline-block;
 
   border: @borderButton;
   border-radius: @borderNavRad;
 
   background-color: @clButtonBG;
-  padding-top: 6px;
-
   color: @clButtonFG;
-  font-size: 20px;
-  font-weight: bold;
 }
+
+.img_btn {
+  width: 32px;
+  height: 32px;
+}
+
+.img_input {
+  background-color: @clButtonBG;
+  color: @clButtonFG;
+  border: @borderButton;
+  border-radius: @borderNavRad;
+}
+
 
 .search_btn:hover {
   background-color: @clButtonActiveBG;

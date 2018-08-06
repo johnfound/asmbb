@@ -25,37 +25,37 @@
         var replacedText, replacePattern1;
         //URLs starting with http://, https://, or ftp://
         replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
-        replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+        replacedText = inputText.replace(replacePattern1, '<a class="chatlink" href="$1" target="_blank">$1</a>');
         return replacedText;
     }
 
 
     function replaceEmoticons(text) {
       var emoticons = {
-        ':LOL:': 'rofl.gif',
-        ':lol:': 'rofl.gif',
-        ':ЛОЛ:': 'rofl.gif',
-        ':лол:': 'rofl.gif',
-        ':-)' : 'smile.gif',
-        ':)'  : 'smile.gif',
-        ':-D' : 'lol.gif',
-        ':D'  : 'lol.gif',
-        ':-Д' : 'lol.gif',
-        ':Д'  : 'lol.gif',
-        '&gt;:-(': 'angry.gif',
-        '&gt;:(' : 'angry.gif',
-        ':-(' : 'sad.gif',
-        ':('  : 'sad.gif',
-        ':`-(': 'cry.gif',
-        ':`(' : 'cry.gif',
-        ':\'-(': 'cry.gif',
-        ':\'(':  'cry.gif',
-        ';-)' : 'wink.gif',
-        ';)'  : 'wink.gif',
-        ':-P' : 'tongue.gif',
-        ':P'  : 'tongue.gif',
-        ':-П' : 'tongue.gif',
-        ':П'  : 'tongue.gif'
+        ':LOL:'  : ['rofl.gif', '&#x1F602;'],
+        ':lol:'  : ['rofl.gif', '&#x1F602;'],
+        ':ЛОЛ:'  : ['rofl.gif', '&#x1F602;'],
+        ':лол:'  : ['rofl.gif', '&#x1F602;'],
+        ':-)'    : ['smile.gif', '&#x1F60A;'],
+        ':)'     : ['smile.gif', '&#x1F60A;'],
+        ':-D'    : ['lol.gif', '&#x1F600;'],
+        ':D'     : ['lol.gif', '&#x1F600;'],
+        ':-Д'    : ['lol.gif', '&#x1F600;'],
+        ':Д'     : ['lol.gif', '&#x1F600;'],
+        '&gt;:-(': ['angry.gif', '&#x1F620;'],
+        '&gt;:(' : ['angry.gif', '&#x1F620;'],
+        ':-('    : ['sad.gif', '&#x1F61E;'],
+        ':('     : ['sad.gif', '&#x1F61E;'],
+        ':`-('   : ['cry.gif', '&#x1F62D;'],
+        ':`('    : ['cry.gif', '&#x1F62D;'],
+        ':\'-('  : ['cry.gif', '&#x1F62D;'],
+        ':\'('   : ['cry.gif', '&#x1F62D;'],
+        ';-)'    : ['wink.gif', '&#x1F609;'],
+        ';)'     : ['wink.gif', '&#x1F609;'],
+        ':-P'    : ['tongue.gif', '&#x1F61B;'],
+        ':P'     : ['tongue.gif', '&#x1F61B;'],
+        ':-П'    : ['tongue.gif', '&#x1F61B;'],
+        ':П'     : ['tongue.gif', '&#x1F61B;']
       };
       var url = "[special:skin]/_images/chatemoticons/";
       var patterns = [];
@@ -70,7 +70,7 @@
 
       // build the regular expression and replace
       return text.replace(new RegExp(patterns.join('|'),'g'), function (match) {
-        return typeof emoticons[match] != 'undefined' ? '<img width="20" height="20" src="'+url+emoticons[match]+'" alt="'+match+'">' : match;
+        return typeof emoticons[match] != 'undefined' ? '<img class="emo" width="20" height="20" src="'+url+emoticons[match][0]+'" alt="'+emoticons[match][1]+'">' : match;
       });
     }
 
@@ -198,7 +198,7 @@
     function CreateUserSpan(user, original) {
       var c = "user";
       if (user != original) {
-        c += " fake";
+        c += " fake_user";
       }
       return '<span onclick="InsertNick(this)" class="' + c + '" title="' + original + '">' + user + '</span>: ';
     }
@@ -225,13 +225,15 @@
           if ( cdate != fdate ) {
             cdate = fdate;
             var h4 = document.createElement('h4');
-            h4.innerHTML = "<span>"+cdate+"</span>";
+            h4.classList.add("hline");
+            h4.innerHTML = '<span class="date">'+cdate+'</span>';
             all.appendChild(h4);
           }
 
           var p = document.createElement('p');
           p.id = "chat" + msg.id;
-          p.innerHTML = '<span>(' + hours + ':' + minutes + ':' + seconds + ')</span> ' + CreateUserSpan(msg.user, msg.originalname) + replaceEmoticons(linkify(msg.text));
+          p.classList.add("message");
+          p.innerHTML = '<span class="time">(' + hours + ':' + minutes + ':' + seconds + ')</span> ' + CreateUserSpan(msg.user, msg.originalname) + replaceEmoticons(linkify(msg.text));
           all.appendChild(p);
           cnt++;
 
@@ -244,7 +246,11 @@
 
       if ( (! total_cnt) && (do_notify || document.hidden) && cnt ) {
         var last = chat_log.lastChild;
-        if ( last && (last.tagName != 'HR') ) chat_log.appendChild(document.createElement('HR'));
+        if ( last && (last.tagName != 'h4') ) {
+          var h4 = document.createElement('h4');
+          h4.classList.add("hline");
+          chat_log.appendChild(h4);
+        }
       }
 
       chat_log.appendChild(all);
@@ -263,6 +269,24 @@
       }
     }
 
+    function user_node(usr) {
+      var p = document.createElement('p');
+      p.id = 'user'+usr.sid;
+      p.classList.add("user");
+      if (usr.status == 2) p.classList.add("gray_user");
+      if (usr.originalname !== usr.user) p.classList.add("fake_user");
+      p.setAttribute( "onclick", "InsertNick(this);" );
+      p.innerHTML = usr.user;
+
+      var mysid = getCookie("eventsid").substr(0, 8);
+      if (usr.sid === mysid ) {
+        user_line.innerHTML = usr.user;
+        user_line.value = user_line.textContent;
+      }
+
+      return p;
+    }
+
     function OnUsersOnline (e) {
       var msgset = JSON.parse(e.data);
 
@@ -271,21 +295,8 @@
       }
 
       for (var i = 0; i < msgset.users.length; i++) {
-        var usr = msgset.users[i];
-        var p = document.createElement('p');
-        p.id = 'user'+usr.sid;
-        p.classList.add( usr.originalname == usr.user ? "user" : "fake_user");
-        if (usr.status == 2) p.classList.add("gray_user");
-        p.setAttribute( "onclick", "InsertNick(this);" );
-        p.appendChild( document.createTextNode( usr.user ));
-
+        var p = user_node(msgset.users[i]);
         sys_log.appendChild(p);
-
-        var mysid = getCookie("eventsid").substr(0, 8);
-        if (usr.sid === mysid ) {
-          user_line.innerHTML = usr.user;
-          user_line.value = user_line.textContent;
-        }
       }
       ScrollBottom(false);
     }
@@ -297,20 +308,9 @@
       if ( usr.status == 0 ) {
         sys_log.removeChild(pold);
       } else {
-        var p = document.createElement('p');
-        p.id = 'user'+usr.sid;
-        p.classList.add( usr.originalname == usr.user ? "user" : "fake_user");
-        if (usr.status == 2) p.classList.add("gray_user");
-        p.appendChild( document.createTextNode( usr.user ));
-
+        var p = user_node(usr);
         if ( pold ) sys_log.replaceChild(p, pold)
         else sys_log.insertBefore(p, sys_log.firstChild);
-
-        var mysid = getCookie("eventsid").substr(0, 8);
-        if (usr.sid === mysid ) {
-          user_line.innerHTML = usr.user;
-          user_line.value = user_line.textContent;
-        }
       }
     }
 
@@ -338,9 +338,9 @@
       <div id="syslog"></div>
     </div>
     <div id="chat_form">
-      <input class="chat_user" type="edit" placeholder="Username" id="chat_user" onkeypress="KeyPress(event, UserRename)" onChange="UserRename()">
-      <input class="chat_line" type="edit" placeholder="Type here" id="chat_message" autofocus onkeypress="KeyPress(event, SendMessage)">
-      <a class="icon_btn" id="chat_submit" alt="?" onclick="SendMessage()"></a>
+      <input class="chat_input" type="edit" placeholder="Username" id="chat_user" onkeypress="KeyPress(event, UserRename)" onChange="UserRename()">
+      <input class="chat_input" type="edit" placeholder="Type here" id="chat_message" autofocus onkeypress="KeyPress(event, SendMessage)">
+      <a class="icon_btn" onclick="SendMessage()"><img class="img_btn" src="[special:skin]/_images/edit_white.svg" alt="&nbsp;Post&nbsp;"></a>
     </div>
   </div>
 
