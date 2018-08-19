@@ -612,9 +612,18 @@ begin
 
         mov     esi, [.pSpecial]
         cmp     [esi+TSpecialParams.post_array], 0
-        je      .finish                          ; only post requests
+        jne     .get_post
 
+        mov     eax, [esi+TSpecialParams.cmd_list]
+        cmp     [eax+TArray.count], 0
+        je      .set_default
 
+        mov     ebx, [eax+TArray.array]
+        test    ebx, ebx
+        jz      .set_default
+        jmp     .set_cookie
+
+.get_post:
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "skin", 0
         mov     ebx, eax
         test    eax, eax
@@ -625,6 +634,7 @@ begin
 
 ; now, set session cookie.
 
+.set_cookie:
         stdcall TextCat, edi, "Set-Cookie: skin="
         stdcall TextCat, edx, ebx
         stdcall TextCat, edx, "; HttpOnly; Path=/; "

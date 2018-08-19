@@ -1,5 +1,5 @@
-C New\sskin\sfor\sterminal\slover\sgeeks\sand\ssome\ssmall\sfixes\shere\sand\sthere.
-D 2018-08-19T18:16:29.399
+C Temporary\schange\sthe\sskin\sby\sGET\srequest\s-\spossible\sto\sshare\sit\sas\sa\slink.
+D 2018-08-19T18:39:45.997
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -69,7 +69,7 @@ F source/threadlist.asm 8103fa162b24ee7462d897d32d0467decea44a35
 F source/threadlist.sql 5ff1c1b661fcca07c1a0c529a3d94080d3bc0261
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
-F source/userinfo.asm ba2794ac5e6700796812abaa257370aba9bfbe4b
+F source/userinfo.asm 303bf2dfd8dfe90c9a6fe316632586eea40097a3
 F source/users_online.asm 0a1e5415fbce181dadef5403c86745cb4d7bbafa
 F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/userslist.asm bbc976c8ea94198220c0dd8edee8577c83374c46
@@ -659,10 +659,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 653b8aeedd1c12add3cd92c8075cf90b0751a61a
-R 871dd40247e8dbfe1bc6a12cb093bc5a
-T *branch * TerminalSkin
-T *sym-TerminalSkin *
-T -sym-trunk *
+P 80f71cb6a8ee6154d4f02b305fd04d53b5b4a59f
+R 9040c3404b4fd96cc2c5dbaa6dc51b8e
 U johnfound
-Z b44a8b80c4c683d4fc8bb9413fd37d65
+Z 5a7060ae954eb24978aa046988ad4e9b
