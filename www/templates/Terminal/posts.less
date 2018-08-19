@@ -7,15 +7,15 @@
 .user_info {
   background-color: @clBackground;
   margin: @LineH 2ch @LineH 0;
-  padding: 0; //@LineH 2ch @LineH 0;
+  padding: 0;
   float: left;
+  width: 11ch;
 }
 
 .avatar {
   display: block;
   width: 9.5ch;
-  border-left: 0.25ch black;
-  border-right: 0.25ch black;
+  border: none;
   height: 5*@LineH;
   margin: @LineH 0 0 0;
   background-color: lime;
@@ -24,9 +24,9 @@
 
 .username {
   display: block;
-//  margin-bottom: @LineH;
   overflow: hidden;
-  text-overflow: ellipsis;
+//  text-overflow: ellipsis;
+  word-wrap: break-word;
 }
 
 .post_info {

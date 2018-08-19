@@ -91,7 +91,7 @@
     [special:alltags]
   </div>
 
-  <div id="measure" style="width: 1000ch; height: 1187.5rem; border: none; margin: 0; padding:0; display: block; position:fixed; z-index:-9999"></div>
+  <div id="measure" style="width: 1000ch; height: 1187.5rem; border: none; margin: 0; padding:0; display: block; position:fixed; left:-9999ch; z-index:-9999">test</div>
 
   <script>
     var measure = document.getElementById("measure");

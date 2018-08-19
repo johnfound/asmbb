@@ -1,5 +1,5 @@
-C Temporary\schange\sthe\sskin\sby\sGET\srequest\s-\spossible\sto\sshare\sit\sas\sa\slink.
-D 2018-08-19T18:39:45.997
+C Fine\stuning\sof\sTerminal\sskin\swith\sdifferent\sfonts.
+D 2018-08-19T19:35:03.406
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -385,7 +385,7 @@ F www/templates/Terminal/activity8.tpl 36d833a0164bb74532e88161cff3d7c8d05cef52 
 F www/templates/Terminal/activity9.tpl 60fe5018f101f822fa00434bff49db7a3f7da947 l
 F www/templates/Terminal/chat.less a5e82887d923825739932f820bbd9bc8b1d0bb94
 F www/templates/Terminal/chat.tpl 6aa4a2579f14c412ddcf51e5b7e296317eaa983b
-F www/templates/Terminal/common.less 9497f37083bf784d6d745ef1746ad9a5b311dc60
+F www/templates/Terminal/common.less e76cd70c5bfeae2c835aa10d8b2bf92e801fcdbb
 F www/templates/Terminal/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Terminal/del_confirm.tpl cdcb838e2e3a339de5408643fd2c2f3c447ab916 l
 F www/templates/Terminal/delete.less 4b875c5b69bdd522eb8b7f7e8c9a98c670fef7ad
@@ -410,7 +410,7 @@ F www/templates/Terminal/form_sqlite_console.tpl cec2ab66fbdf5c2a343b29391eea233
 F www/templates/Terminal/help_new_thread.tpl 579ed6559a0a3aee0fe3be3a2c841c1dd7b8b169 l
 F www/templates/Terminal/login.less bf30a3036ab6659a31a9b0c82c5f471a5a229c63
 F www/templates/Terminal/main_html_end.tpl b5e1e83e2ec57c8159d14343ca4dafbf4f12180e
-F www/templates/Terminal/main_html_start.tpl 175b801d153e654ff1fab8361c51f59e57a7e438
+F www/templates/Terminal/main_html_start.tpl a149c5200a84a898fb5b41dd3fc2fe1343d7a4fa
 F www/templates/Terminal/markdown.less 3f41aeb9e230ac732bcc6f28b5726f35e2904fa9
 F www/templates/Terminal/minimag_suffix.tpl f3a1414972a13590a7c984b53b6fd2ddd3a47f3a l
 F www/templates/Terminal/nav_categories.tpl 8a9010133716cb745f4ed027c96c7b9348e4b18a
@@ -424,15 +424,15 @@ F www/templates/Terminal/one_category.tpl 0a104ef1000580e594a26c60e550cea3c40348
 F www/templates/Terminal/one_user.tpl f1e1aacad832e82f4b446f755387efe7f6d815b1 l
 F www/templates/Terminal/post_history.tpl 252f022e564844721c84b264f05f527742108a19 l
 F www/templates/Terminal/post_view.tpl a50997da2d0f5446e43509cd47d3d796d76160fa
-F www/templates/Terminal/posteditor.less bec62ced48a143e74e2ec26e6ee37d0591cd67a1
+F www/templates/Terminal/posteditor.less ccaa00c913a6397753e234c7fd5fe2e8006ebc3a
 F www/templates/Terminal/postnew.less 12b3815115dd2a6b86e272fb87677df7407454ce
-F www/templates/Terminal/posts.less dfe57787c33c8ba9d419c80dccf172e1f2502c2d
+F www/templates/Terminal/posts.less 4263ad4044188a2ba4b100aaef6933b20094ae04
 F www/templates/Terminal/preview.tpl ac9aa99cae78c9173152938a2be2f573a3da3d52
 F www/templates/Terminal/restore_confirm.tpl c59340b4b594a629285efa18802ea6d542442afb l
 F www/templates/Terminal/search.less 0945b7c80d74e44ee3c658746428cb30797d3f46
 F www/templates/Terminal/search_result.tpl 48a609f423c8de989a1b81775228d657e433a6b8
 F www/templates/Terminal/settings.less 9b90c57164f1a074275c9d17a81ab77f0df5176c
-F www/templates/Terminal/skin_variables.lsi f67b13f571af85cec94d88fbb6fcd93b0904cb6d
+F www/templates/Terminal/skin_variables.lsi 99aea890170412e5479f681d0b1dca2181815597
 F www/templates/Terminal/sqlite.less 23129e00b0f96dd45869b9ea813a17258b750796
 F www/templates/Terminal/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
 F www/templates/Terminal/thread_info.tpl 0ad31e20129847ae08c2e04f90e2793195cf4a26
@@ -659,7 +659,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 80f71cb6a8ee6154d4f02b305fd04d53b5b4a59f
-R 9040c3404b4fd96cc2c5dbaa6dc51b8e
+P a8f4300d2721fb88421c8fe4c96e4f15863c5932
+R 74bf8c1a010b9456a2581089aca4f312
 U johnfound
-Z 5a7060ae954eb24978aa046988ad4e9b
+Z 3a001a91a862e8110dff7e6768ff6d14

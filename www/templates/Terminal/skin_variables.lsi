@@ -1,4 +1,4 @@
-@FontMain: "Liberation Mono", "Courier New", monospaced;
+@FontMain: "Lucida Console", "Liberation Mono", monospaced;
 @FontSize: 16px;
 @LineH: 1.1875em;
 
