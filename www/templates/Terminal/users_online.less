@@ -1,0 +1,55 @@
+@import "skin_variables.lsi";
+
+/* Users online table styles */
+
+table.users_table {
+  border-collapse: collapse;
+  border: none;
+  width: 100%;
+  background-color: @clTableBG1;
+  color: @clTableFG;
+  margin: @LineH 0;
+
+  a {
+    font-weight: normal;
+    color: @clTableFG !important;
+  }
+
+  a.ban_link {
+    display: inline-block;
+    color: @clTableFG;
+    &:after {
+      content: "Ban"
+    }
+  }
+
+  tr:first-of-type {
+    background-color: @clTableHeadBG !important;
+    color: @clTableHeadFG;
+    font-weight: black;
+  }
+
+  tr:nth-of-type(odd) {
+    background-color: @clTableBG2;
+  }
+
+  th {
+    border: none;
+    padding: 0 1ch;
+    max-width: 30ch;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  td {
+    border: none;
+    padding: 0 1ch;
+    text-align: left;
+    vertical-align: top;
+
+    white-space: pre-wrap;       /* css-3 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    word-break: break-all;
+  }
+}
+

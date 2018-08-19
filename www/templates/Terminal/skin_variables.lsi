@@ -1,0 +1,93 @@
+@FontMain: "Liberation Mono", "Courier New", monospaced;
+@FontSize: 16px;
+@LineH: 1.1875em;
+
+@clBackground: black;
+@clText: white;
+@clHighlight: #00ff40;
+
+@clHeaderBG: #000000;
+@clHeaderFG: #ffc040;
+
+@clThreadInfo: #000000;
+@clThreadPinned: #ff0000;
+@clThreadUnread: #00ff00;
+
+@clThreadLinkBG: #000000;
+@clThreadLinkFG: #ffc040;
+
+@clTagBG: #004080;
+@clTagFG: #ffffff;
+@clFTagBG: #0080ff;
+@clFTagFG: #ffffff;
+
+
+@clButton1BG: #008080;
+@clButton1FG: #ffffff;
+
+@clFButton1BG: #0080ff;
+@clFButton1FG: #ffffff;
+
+@clButton2BG: #a00000;
+@clButton2FG: #ffffff;
+
+@clFButton2BG: #ff0000;
+@clFButton2FG: #ffffff;
+
+@clH1: #ffc040;
+@clH2: #ffd040;
+@clH3: #ffe040;
+@clH4: #fff040;
+@clH5: #ffff40;
+@clH6: #ffff60;
+
+@clCodeFG: #ffff00;
+@clCodeBG: #000080;
+
+@clTableBG1: #a0a0a0;
+@clTableBG2: #808080;
+@clTableFG: #000000;
+
+@clTableHeadBG: #0000ff;
+@clTableHeadFG: #ffff00;
+
+@clQuoteHeadBG: #008080;
+@clQuoteHeadFG: #ffffff;
+
+@clThreadCaptionBG: #404040;
+@clThreadCaptionFG: #ffff00;
+
+
+@clFakeUser: #ff80FF;
+@clChatUser: #ffc040;
+
+@clChatBG: #202020;
+@clChatFG: #ffffff;
+
+@clDateBG: #606060;
+@clDateFG: #ffffff;
+
+@clTimeFG: #808080;
+
+@clEmoBG: #ff0080;
+@clEmoFG: #ffffff;
+
+@clEditorBG: #ffffff;
+@clEditorFG: #000000;
+
+@clDisabledBG: #e0e0e0;
+@clDisabledFG: #808080;
+
+@msgBoxWidth: 60ch;
+
+@clMsgErrorBG: red;
+@clMsgErrorFG: yellow;
+
+@clMsgWarningBG: yellow;
+@clMsgWarningFG: black;
+
+@clMsgInfoBG: green;
+@clMsgInfoFG: white;
+
+@clFormBG: #c0c0c0;
+@clFormFG: #000000;

@@ -1,0 +1,245 @@
+@import "skin_variables.lsi";
+
+* {
+  font-size: @FontSize;
+  font-family: @FontMain;
+  outline: 0 none;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: @clBackground;
+  color: @clText;
+  margin: @LineH 0;
+}
+
+#body {
+  margin: 0 4ch;
+}
+
+#ruler {
+  background-color: #202020;
+  position: fixed;
+  overflow: hidden;
+  left: 0;
+  top: 0;
+  cursor: col-resize;
+}
+
+.dragpos {
+  background-color: red;
+  cursor: col-resize;
+}
+
+.dragsz {
+  background-color: lime;
+  cursor: col-resize;
+}
+
+a {
+  color: @clHighlight;
+}
+
+.clear {
+  clear: both;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: top;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.taglink {
+  font-size: @FontSize !important;
+  background-color: @clTagBG;
+  color: @clTagFG;
+  padding: 0px 1ch;
+  text-decoration: none;
+//  margin: 0 0 @LineH 0;
+  display: inline-block;
+  &:hover, &:active {
+    background-color: @clFTagBG;
+    color: @clFTagFG;
+  }
+}
+
+.current_tag {
+  background-color: @clButton2BG;
+  color: @clButton2FG;
+  display: inline-block;
+  &:hover, &:active {
+    background-color: @clFButton2BG;
+    color: @clFButton2FG;
+    font-weight: bold;
+  }
+}
+
+#tags {
+  margin: 0rem;
+  text-align: justify;
+}
+
+input[type="search"], input[type="edit"] {
+  font-family: inherit;
+  font-size: inherit;
+  background-color: @clEditorBG;
+  color: @clEditorFG;
+  border: none;
+  padding: 0 1ch;
+}
+
+.search {
+  flex-grow: 1;
+  margin-right: 1ch;
+  width: 0px;
+}
+
+.submit {
+  background-color: @clButton1BG;
+  color: @clButton1FG;
+  border: none;
+  cursor: pointer;
+  padding: 0px 1ch;
+  &:hover, &:active {
+    background-color: @clFButton1BG;
+    color: @clFButton1FG;
+  }
+}
+
+
+
+#search_form {
+  margin: @LineH 0;
+  white-space: nowrap;
+  input {
+    width: 100%;
+    margin: 0;
+  }
+  table {
+    width: 100%;
+    tabla-layout: fixed;
+    border-collapse: collapse;
+    td {
+      margin: 0;
+    }
+    td.l {
+      padding: 0 1ch 0 0;
+    }
+    td.r {
+      width: 8ch;
+    }
+  }
+
+}
+
+.header {
+  background-color: @clHeaderBG;
+  color: @clHeaderFG;
+}
+
+#header {
+  margin: -@LineH 0 0 0;
+  overflow: hidden;
+  display: block;
+  white-space: pre;
+}
+
+#userlinks {
+  margin: @LineH 0 0 0;
+  float: right;
+  clear: none;
+}
+
+#skinform {
+  float: right;
+  clear: none;
+}
+
+.footer p {
+  margin: 0;
+}
+
+.skin {
+  background-color: @clHeaderBG;
+  color: @clHighlight;
+  border: none;
+  outline: none;
+  margin: @LineH 1ch;
+
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -appearance: none;
+
+  text-indent: 0.01px;
+  text-overflow: '';
+  padding: 0px 1ch;
+}
+
+.skin::-ms-expand {
+  display: none;
+}
+
+
+div.message_block {
+  width: @msgBoxWidth;
+  margin: @LineH auto;
+  text-align: center;
+  padding: @LineH 2ch;
+  clear: both;
+}
+
+div.message {
+  white-space: pre-wrap;
+  padding: @LineH 2ch;
+  text-align: left;
+  display: inline-block;
+}
+
+
+/* Decorative checkbox mechanism. The label tag, must be styled separately! */
+
+input[type=checkbox] {
+  position: absolute;
+  z-index: -1;
+  left: -10000px;
+
+  &:focus + label::before {
+    background-color: green;
+  }
+
+  &:checked + label::before {
+    color: white;
+    content: 'X';
+  }
+
+  &:checked + .popup {
+    display: block;
+    opacity: 1;
+  }
+
+  + label {
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    &::before {
+      content: '.';
+      width: 1ch;
+      padding: 0 1ch;
+      display: inline-block;
+      background-color: #404040;
+      color: #404040;
+      margin-right: 1ch;
+      vertical-align: top;
+    }
+  }
+}

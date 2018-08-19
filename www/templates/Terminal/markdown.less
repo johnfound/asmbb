@@ -1,0 +1,152 @@
+@import "skin_variables.lsi";
+
+h1 { color:@clH1; margin: 2*@LineH 0 @LineH 0; font-weight: bold; }
+h2 { color:@clH2; margin: 2*@LineH 0 @LineH 0; font-weight: bold; }
+h3 { color:@clH3; margin: 2*@LineH 0 @LineH 0; font-weight: bold; }
+h4 { color:@clH4; margin: 2*@LineH 0 @LineH 0; font-weight: bold; }
+h5 { color:@clH5; margin: 2*@LineH 0 @LineH 0; font-weight: bold; }
+h6 { color:@clH6; margin: 2*@LineH 0 @LineH 0; font-weight: bold; }
+
+/* paragraph style */
+
+div.post_text p {
+   text-align: left;
+   margin: @LineH 0 0 0;
+   word-wrap: break-word;
+}
+
+
+.uli:before {
+  content: "●";
+  color: @clHighlight;
+  margin-right: 1ch;
+}
+
+/* source code inline and blocks */
+
+code.block {
+  display: block;
+  background-color: @clCodeBG;
+  color: @clCodeFG;
+  text-align: left;
+  padding: @LineH 1ch;
+  margin: @LineH 0px;
+  overflow: auto;
+
+  white-space: pre;
+}
+
+
+code {
+  font-weight: bold;
+  color: @clCodeFG;
+  word-break: break-all;
+}
+
+
+/* Style of the text included image. */
+
+.ico {
+  width: 2ch;
+  height: 1rem;
+  vertical-align: bottom;
+}
+
+img.txt {
+  border-style: none;
+  border-width: 0px;
+  margin: 1ch auto;
+  display: block;
+  max-width: 95%;
+}
+
+img.txt1 {
+  border-style: none;
+  border-width: 0px;
+  display: block;
+  float: left;
+  clear: left;
+  margin-right: 1ch;
+  margin-bottom: 1ch;
+}
+
+img.txt2 {
+  border-style: none;
+  border-width: 0px;
+  display: block;
+  float: right;
+  clear: right;
+  margin-left: 1ch;
+  margin-bottom: 1ch;
+}
+
+
+/* article tables */
+table.txt {
+  margin: @LineH 1ch;
+  background-color: @clTableBG1;
+  color: @clTableFG;
+  border-collapse: collapse;
+
+  td {
+    padding: 0.5rem 1ch;
+    margin: 0;
+  }
+
+  tr:first-of-type {
+    background-color: @clTableHeadBG !important;
+    color: @clTableHeadFG;
+    font-weight: black;
+    td {
+      text-align: center;
+    }
+  }
+
+  tr:nth-of-type(odd) {
+    background-color: @clTableBG2;
+  }
+
+}
+
+
+/* block quotes */
+
+div.bq {
+  padding: @LineH 1ch;
+  margin:  @LineH 0;
+  background-color: #404040;
+  overflow: auto;
+  clear: none;
+}
+
+div.bq div.bq {
+  margin:  @LineH 1ch;
+  background-color: #606060;
+  opacity: 0.85;
+}
+
+div.bq div.bq div.bq {
+  background-color: #404040;
+  opacity: 0.65;
+}
+
+div.bq div.bq div.bq div.bq {
+  background-color: #606060;
+  opacity: 0.55;
+}
+
+div.bq div.bq div.bq div.bq div.bq {
+  background-color: #404040;
+  opacity: 0.35;
+}
+
+
+h1.bq
+{
+  padding: 0 1ch;
+  margin: -@LineH -1ch 0 -1ch;
+  background: @clQuoteHeadBG;
+  color: @clQuoteHeadFG;
+
+  font-weight: bold;
+}

@@ -11,3 +11,6 @@ cd ../mobile
 
 cd ../MoLight
 ./compile_styles.sh
+
+cd ../Terminal
+./compile_styles.sh

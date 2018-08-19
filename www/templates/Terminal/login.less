@@ -1,0 +1,45 @@
+@import "skin_variables.lsi";
+
+article {
+  padding: @LineH 2ch;
+  margin: @LineH auto;
+
+  p {
+    margin: @LineH 1ch;
+  }
+}
+
+
+/* login page styles */
+
+form.login-block, form.register-block {
+    width: @msgBoxWidth;
+    padding: @LineH 1ch;
+    margin: @LineH auto;
+    text-align: center;
+    background-color: @clFormBG;
+}
+
+form.login-block h1, form.register-block h1, form.settings h1 {
+    text-align: center;
+    color: @clHighlight;
+    background-color: @clBackground;
+    font-variant: small-caps;
+    margin: 0 0 @LineH 0;
+    padding: @LineH 1ch;
+}
+
+input.username, input.email, input.password {
+    width: 100%;
+    margin-bottom: @LineH;
+    padding: 0 1ch;
+    outline: none;
+    border: none;
+}
+
+
+input[type=checkbox] + label {
+    display: block;
+    color: @clFormFG;
+    margin: 0 0 @LineH 0;
+}
