@@ -1,0 +1,49 @@
+@import "skin_variables.lsi";
+
+div.users_list {
+
+  table {
+    margin: @LineH 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+
+    th {
+      padding: @LineH 1ch;
+      text-align: center;
+//      background-color: @clButton1BG;
+      a {
+        text-decoration: none;
+      }
+      a.sorted {
+        color: @clHighlight;
+      }
+    }
+
+    td {
+      padding: @LineH 2ch;
+      text-align: right;
+    }
+
+    td.nick {
+      text-align: left;
+    }
+
+    td.avatar {
+      text-align: center;
+      padding: 0;
+
+      img {
+        width: 5.5ch;
+        height: 3*@LineH;
+        background-color: lime;
+        display: block;
+        margin: 0 auto @LineH auto;
+      }
+    }
+
+  }
+
+
+}
+

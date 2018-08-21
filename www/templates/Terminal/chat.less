@@ -1,0 +1,188 @@
+@import "skin_variables.lsi";
+
+#body {
+  height: 95vh;
+  height: ~"calc( 100vh - " 2*@LineH ~")";
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+div.header {
+  flex-shrink: 0;
+}
+
+#tags, .footer, #search_form, .attribution {
+  display: none !important;
+}
+
+div.ui {
+  margin: @LineH 0 !important;
+}
+
+.attribution {
+  margin-top: @LineH;
+  br {
+    display: none;
+  }
+}
+
+div.chat {
+  flex-grow: 1;
+  height: @LineH;
+  display: flex;
+  flex-direction: column;
+}
+
+
+div.ui {
+  flex-shrink: 0;
+  margin: 0px;
+}
+
+a.ui {
+  margin: 0px;
+}
+
+
+#chatlog {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  background-color: @clChatBG;
+  color: @clChatFG;
+  padding: 8px;
+  flex-grow: 8;
+  flex-shrink: 8;
+  &::-webkit-scrollbar {
+    width: 1ch;
+    background-color: #404040;
+  }
+  &::-webkit-scrollbar-thumb {
+    width: 1ch;
+    background-color: @clHighlight;
+  }
+}
+
+#chatlog::-webkit-scrollbar {
+  width: 1ch;
+  background-color: #404040;
+}
+
+#chatlog::-webkit-scrollbar-thumb
+
+#chatlog::-moz-scrollbar {
+  width: 1ch;
+  background-color: #404040;
+}
+
+
+
+.message {
+  margin: 0rem 0px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chatlink {
+  color: @clHighlight;
+}
+
+.emo {
+  color: @clEmoBG;
+  margin: 0 0.5ch;
+  font-weight: bold;
+  vertical-align: top;
+}
+
+.hline {
+  text-align: center;
+  background-color: @clTimeFG;
+  margin: 0;
+  border-top: 1px solid @clTimeFG;
+}
+
+.date {
+  padding: 0px 1ch;
+  background-color: @clDateBG;
+  color: @clDateFG;
+}
+
+.time {
+  color: @clTimeFG;
+}
+
+
+#syslog {
+  margin: 0px 0px 0px 1ch;
+  overflow: auto;
+  background-color: @clChatBG;
+  color: @clChatFG;
+  padding: @LineH 1ch;
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+
+.user {
+  color: @clChatUser;
+  margin: 0;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+}
+
+.fake_user {
+  color: @clFakeUser;
+}
+
+.gray_user {
+  opacity: 0.5;
+}
+
+
+
+div.chatflex {
+  display: flex;
+  overflow: hidden;
+  margin: 0;
+  flex-grow: 1;
+}
+
+
+#chat_form {
+  display: flex;
+  flex-shrink: 0;
+  margin: @LineH 0 0 0;
+  background-color: @clChatBG;
+}
+
+
+.chat_input {
+  border: none;
+  background-color: @clBackground;
+  color: @clText;
+  margin-right: 1ch;
+  display:block;
+  padding: 0 1ch;
+}
+
+#chat_message {
+  flex-grow: 1;
+}
+
+#chat_user {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.sendbtn {
+  padding: 0 1ch;
+  margin: 0;
+  background-color: @clButton1BG;
+  color: @clButton1FG;
+  &:hover, &:active {
+    background-color: @clFButton1BG;
+    color: @clFButton1FG;
+  }
+}
+

@@ -1,0 +1,136 @@
+@import "skin_variables.lsi";
+
+/* User profile page */
+
+div.user_profile {
+  overflow: auto;
+  display: grid;
+  grid: 'area1 .' 'area1 .' 'area2 .' 'area2 .' 'area2 .';
+
+  div {
+    margin: @LineH 1ch;
+  }
+
+  form {
+    margin: @LineH 1ch;
+    padding: @LineH 1ch;
+    background-color: @clFormBG;
+    color: @clFormFG;
+    display: flex;
+    flex-direction: column;
+
+    select {
+      display: block;
+      padding: 0;
+      outline: none;
+      border: none;
+      margin: 0 0 @LineH 0;
+
+      background-color: @clEditorBG;
+      color: @clEditorFG;
+      width: 100%;
+
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      -appearance: none;
+
+      text-indent: 0.01px;
+      text-overflow: '';
+    }
+
+    input.browse {
+      padding: 0;
+      outline: none;
+      border: none;
+      margin: 0 0 @LineH 0;
+
+      background-color: @clEditorBG;
+      color: @clEditorFG;
+      width: 100%;
+    }
+
+    h1 {
+      text-align: left;
+      margin: 0 0 @LineH 0;
+      font-weight: bold;
+      color: @clFormFG;
+    }
+
+    label {
+      text-align: left;
+      margin: 0 0 @LineH 0;
+      font-weight: bold;
+      display: block;
+    }
+  }
+}
+
+div.user_desc {
+  padding: 0;
+  overflow: auto;
+  grid-area: area1;
+  max-height: 27*@LineH;
+
+  h1 {
+    text-align: center;
+    margin-top: 0;
+  }
+
+  p {
+     text-align: justify;
+     margin-top: @LineH;
+     margin-bottom: @LineH;
+     word-wrap: break-word;
+  }
+
+}
+
+
+img.profile_avatar {
+  float: left;
+  margin: 0 1ch @LineH 0;
+  width: 9.5ch;
+  height: 5*@LineH;
+  border-right: 0.5ch solid black;
+  background-color: lime;
+}
+
+textarea.user_desc {
+  width: 100%;
+  height: 10*@LineH;
+  flex-grow: 1;
+  display: block;
+  margin: 0 0 @LineH 0;
+  padding: @LineH 1ch;
+
+  background-color: @clEditorBG;
+  color: @clEditorFG;
+
+  resize: vertical;
+  overflow: auto;
+  border: none;
+}
+
+
+
+div.user_stat {
+  padding: 0;
+  grid-area: area2;
+
+  h1 {
+    text-align: left;
+    margin-top: 0;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  li:before {
+    content: "●";
+    color: @clHighlight;
+    margin: 0 1ch 0 0;
+  }
+}
+

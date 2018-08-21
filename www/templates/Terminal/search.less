@@ -1,0 +1,73 @@
+@import "skin_variables.lsi";
+
+table.post {
+  margin-top: @LineH;
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  td {
+    vertical-align: top;
+  }
+}
+
+.unread {
+  border-left: 1ch solid @clThreadUnread;
+}
+
+td.search_info {
+  width: 15ch;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  padding: 0 2ch;
+}
+
+div.post_thread {
+  padding: 0;
+  a {
+    font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+
+
+a.user_name {
+  display: inline;
+  color: @clColor1FG;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+img.smallavatar {
+  margin: @LineH 0 0 0;
+  width: 5.5ch;
+  height: 3*@LineH;
+  display: block;
+  background-color: #004000;
+  color: @clAvatarFG;
+  text-align: center;
+}
+
+
+div.post_sum {
+  padding: 0;
+  pre {
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin: @LineH 0 0 0;
+    padding: 0;
+  }
+}
+
+
+div.post_link {
+  text-align: right;
+}
+
+
+div.changed {
+  margin-top: @LineH;
+}

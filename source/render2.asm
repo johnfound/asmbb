@@ -1612,7 +1612,7 @@ begin
         stdcall TextCat, edx, edi
         stdcall TextCat, edx, txt '/">'
         stdcall TextCat, edx, edi
-        stdcall TextCat, edx, txt '</a>'
+        stdcall TextCat, edx, <txt '</a>', 13, 10>
         mov     ebx, edx
 
         stdcall StrDel, edi

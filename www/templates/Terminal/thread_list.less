@@ -1,0 +1,79 @@
+@import "skin_variables.lsi";
+
+
+.thread_summary {
+  display: flex;
+  margin: @LineH 0px;
+}
+
+.pinned {
+  border-left: 1ch solid @clThreadPinned !important;
+}
+
+.unread {
+  border-left: 1ch solid @clThreadUnread !important;
+}
+
+.thread_info {
+  flex-shrink: 0;
+  width: 14ch;
+  margin-right: 1ch;
+  padding-left: 1ch;
+  white-space: pre-wrap;
+  background-color: @clThreadInfo;
+}
+
+.thread_right {
+  flex-grow: 1;
+  background-color: @clThreadLinkBG;
+  padding: 0px 1ch;
+  br {
+    display:none;
+  }
+  b {
+    font-weight: normal;
+    margin-right: 2ch;
+  }
+  div {
+    margin-bottom: @LineH;
+  }
+}
+
+.thread_header {
+  word-break: break-all;
+}
+
+.thread_link {
+  display: inline;
+  color: @clThreadLinkFG;
+}
+
+
+.category {
+  display: flex;
+  align-items: stretch;
+  margin: @LineH 0;
+  background-color: #404040;
+  border-left: 1ch solid #404040;
+
+  a {
+    flex-grow: 1;
+    margin: @LineH 1ch;
+    text-decoration: none;
+
+    span {
+      font-weight: bold;
+      font-variant: small-caps;
+    }
+  }
+
+  div {
+    text-align: center;
+    width: 10ch;
+    flex-shrink: 0;
+    margin: @LineH 1ch;
+    span {
+      font-weight: bold;
+    }
+  }
+}

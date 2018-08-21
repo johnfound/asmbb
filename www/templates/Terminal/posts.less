@@ -1,0 +1,55 @@
+@import "skin_variables.lsi";
+
+.post {
+  margin-bottom: @LineH;
+}
+
+.user_info {
+  background-color: @clBackground;
+  margin: @LineH 2ch @LineH 0;
+  padding: 0;
+  float: left;
+  width: 11ch;
+}
+
+.avatar {
+  display: block;
+  width: 9.5ch;
+  border: none;
+  height: 5*@LineH;
+  margin: @LineH 0 0 0;
+  background-color: lime;
+  text-align: center;
+}
+
+.username {
+  display: block;
+  overflow: hidden;
+//  text-overflow: ellipsis;
+  word-wrap: break-word;
+}
+
+.post_info {
+  background-color: @clThreadCaptionBG;
+}
+
+.last_edit {
+  display: inline-block;
+}
+
+.edit_tools {
+  float: right;
+
+}
+
+h1.thread_caption {
+  padding: @LineH 1ch;
+  background-color: @clThreadCaptionBG;
+  color: @clThreadCaptionFG;
+  text-align: center;
+  margin: @LineH 0;
+  a {
+    float: right;
+    clear: none;
+  }
+}

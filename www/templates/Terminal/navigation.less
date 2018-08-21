@@ -1,0 +1,72 @@
+@import "skin_variables.lsi";
+
+.ui_panel {
+  margin: @LineH 0;
+  a {
+    display: inline-block;
+//    margin-bottom: @LineH;
+  }
+}
+
+
+.ui {
+  display: inline-block;
+  text-decoration: none;
+  font-weight: normal;
+  border: 0 none;
+  margin: 0;
+  outline: none;
+  &:focus {
+    outline: none;
+  }
+}
+
+.left {
+  background-color: @clButton1BG;
+  color: @clButton1FG;
+  padding: 0px 1ch;
+  &:hover, &:active, &:focus {
+    background-color: @clFButton1BG;
+    color: @clFButton1FG;
+  }
+}
+
+.right {
+  background-color: @clButton2BG;
+  color: @clButton2FG;
+  padding: 0px 1ch;
+  &:hover, &:active, &:focus {
+    background-color: @clFButton2BG;
+    color: @clFButton2FG;
+  }
+}
+
+.page_row {
+  margin: @LineH 0 @LineH 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+}
+
+.current_page {
+  padding: 0px 1ch;
+  background-color: @clButton2BG;
+  color: @clButton2FG;
+}
+
+.page_link {
+  padding: 0px 1ch;
+  background-color: @clButton1BG;
+  color: @clButton1FG;
+  text-decoration: none;
+  &:hover, &:active {
+    background-color: @clFButton1BG;
+    color: @clFButton1FG;
+  }
+}
+
+.page_hole {
+  width: 2ch;
+  margin-bottom: @LineH;
+  color: black;
+}

@@ -1,0 +1,69 @@
+@import "skin_variables.lsi";
+
+div.editor {
+  position: fixed;
+  right: 2ch;
+  top: @LineH;
+  width: 60ch;
+  overflow: hidden;
+  opacity: 0.4;
+  resize: both;
+  background-color: @clFormBG;
+  display: flex;
+  flex-direction: column;
+}
+
+div.editor:hover {
+  opacity: 1;
+}
+
+#editform {
+  padding: 0 2ch @LineH 2ch;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  p {
+    font-weight: bold;
+    margin: @LineH 0 0 0;
+    color: @clEditorFG;
+  }
+}
+
+#draghere {
+  background-color: @clTableHeadBG;
+  padding: 0;
+  margin: 0px 0px 0rem 0px;
+  display: flex;
+}
+
+h1.fakeedit {
+  border-style: none;
+  padding: 0 1ch;
+  margin: 0;
+
+  background-color: @clEditorBG;
+  color: @clDisabledFG;
+  font-weight: bold;
+  font-size: inherit;
+}
+
+textarea.editor {
+  display: block;
+  height: 15*@LineH;
+  padding: 0 1ch;
+  margin: 0;
+  border: none;
+  outline-style: none;
+  overflow: auto;
+  flex-grow: 1;
+  resize: none;
+
+  background-color: @clEditorBG;
+  color: @clEditorFG;
+}
+
+
+.toolbar, .panel {
+  margin: @LineH 0 0 0;
+}

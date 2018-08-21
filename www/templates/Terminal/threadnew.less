@@ -1,0 +1,32 @@
+@import "skin_variables.lsi";
+
+#editform {
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    td.l {
+      padding: 0 1ch 0 0;
+    }
+  }
+}
+
+div.new_editor label {
+  display: block;
+  color: @clColor1FG;
+  font-weight: bold;
+  margin: @LineH 0 0 0;
+}
+
+input.title, input.tags {
+  display: block;
+  width: 100%;
+  padding: 0 1ch;
+  margin: 0;
+  border: none;
+  outline-style: none;
+
+  background-color: @clEditorBG;
+  color: @clEditorFG;
+}
+

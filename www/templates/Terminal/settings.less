@@ -1,0 +1,173 @@
+@import "skin_variables.lsi";
+
+/* settings form styles */
+
+form.settings {
+  width: @msgBoxWidth;
+  padding: @LineH 2ch;
+  background-color: @clFormBG;
+  color: @clFormFG;
+  margin: @LineH auto;
+
+  h1 {
+    color: @clHeaderFG;
+    background-color: @clHeaderBG;
+    text-align: center;
+    font-variant: small-caps;
+    margin-top: 0;
+    margin-bottom: @LineH;
+  }
+
+  h2 {
+    font-weight: bold;
+    margin: @LineH 0 0 0;
+  }
+
+  h3 {
+    font-weight: bold;
+    margin: @LineH 0 0 0;
+  }
+
+  table {
+
+    border-collapse: collapse;
+    border-spacing: 0px;
+    width: 100%;
+
+    td {
+      text-align: left;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    td.lbl {
+      text-align: right;
+      font-weight: bold;
+    }
+
+    td.lblc {
+      text-align: left;
+      font-weight: bold;
+    }
+
+    td.grp {
+      font-weight: bold;
+      padding-top: @LineH;
+      padding-bottom: @LineH;
+    }
+
+    td.lblm {
+      color: maroon;
+    }
+
+    td.lblr {
+      color: red;
+    }
+
+    td.small {
+      width: 96px;
+    }
+
+    th {
+      margin: 0px;
+      padding: 0px;
+    }
+  }
+}
+
+input.settings {
+  padding: 0 1ch;
+  outline: none;
+  border: none;
+  margin: @LineH 0;
+
+  background-color: @clEditorBG;
+  color: @clEditorFG;
+  width: 100%;
+}
+
+select.settings {
+  padding: 0 1ch;
+  outline: none;
+  border: none;
+  margin: @LineH 0;
+
+  background-color: @clEditorBG;
+  color: @clEditorFG;
+  width: 100%;
+
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -appearance: none;
+
+  text-indent: 0.01px;
+  text-overflow: '';
+}
+
+
+input.button {
+    background-color: @clButton1BG;
+    color: @clButton1FG;
+    border: none;
+    outline: none;
+    font-weight: bold;
+    font-variant: small-caps;
+    cursor: pointer;
+    text-align: center;
+    padding: 0 1ch;
+    display: block;
+    margin: 0;
+}
+
+input.button:hover {
+    background: @clFButton1BG;
+    color: @clFButton1FG;
+}
+
+
+h1.msg {
+  position: fixed;
+  margin: 0px;
+  padding: @LineH 2ch;
+  text-align: center;
+  display: block;
+  left: 2ch;
+  top: @LineH;
+  right: 2ch;
+}
+
+.info {
+  background-color: @clMsgInfoBG;
+  color: @clMsgInfoFG;
+  transition: all 1s;
+  -webkit-transition: all 1s;
+}
+
+.error {
+  background-color: @clMsgErrorBG;
+  color: @clMsgErrorFG;
+  transition: all 3s;
+  -webkit-transition: all 3s;
+}
+
+.warning {
+  background-color: @clMsgWarningBG;
+  color: @clMsgWarningFG;
+}
+
+
+section {
+  display: block;
+  columns: 3 20ch;
+  -webkit-columns: 3 20ch;
+  -moz-columns: 3 20ch;
+  margin: @LineH 0px;
+}
+
+input[type=checkbox] + label {
+    display: block;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+

@@ -5,7 +5,7 @@
 <div class="editor" id="editor">
   <div class="ui" id="draghere">
     <span class="spacer"></span>
-    <a class="ui right" href="!by_id"><img src="[special:skin]/_images/close.svg" alt="Close" height="16"></a>
+    <a class="ui right" href="!by_id">X</a>
   </div>
   <form id="editform" action="!edit" method="post" onsubmit="previewIt(event)">
     <p>Thread title:</p>
@@ -14,8 +14,8 @@
     [include:edit_toolbar.tpl]
     <textarea class="editor" name="source" id="source">[source]</textarea>
     <div class="panel">
-      <input type="submit" name="preview" value="Preview" onclick="this.form.cmd='preview'" title="Ctrl+Enter for preview">
-      <input type="submit" name="submit" value="Submit" onclick="this.form.cmd='submit'" title="Ctrl+S for submit" >
+      <input class="ui left" type="submit" name="preview" value="Preview" onclick="this.form.cmd='preview'" title="Ctrl+Enter for preview">
+      <input class="ui left" type="submit" name="submit" value="Submit" onclick="this.form.cmd='submit'" title="Ctrl+S for submit" >
       <input type="hidden" name="ticket" value="[Ticket]" >
     </div>
   </form>
@@ -24,6 +24,10 @@
 
 <script>
 dragElement(document.getElementById("editor"),document.getElementById("draghere") );
+
+var measure = document.getElementById("measure");
+var cx = measure.offsetWidth/1000;
+var cy = measure.offsetHeight/1000;
 
 function dragElement(elmnt, hdr) {
   var posX = 0, posY = 0;
@@ -41,19 +45,19 @@ function dragElement(elmnt, hdr) {
   function elementDrag(e) {
     e = e || window.event;
 
-    var newx = e.clientX - posX;
-    var newy = e.clientY - posY;
+    var newx = Math.floor((e.clientX - posX)/cx);
+    var newy = Math.floor((e.clientY - posY)/cy);
 
-    var maxx = window.innerWidth - 32;
-    var maxy = window.innerHeight - 16;
+    var maxx = Math.floor(window.innerWidth/cx) - 3;
+    var maxy = Math.floor(window.innerHeight/cy) - 2;
 
     if (newx < 0) newx=0;
     if (newy < 0) newy=0;
     if (newx > maxx) newx = maxx;
     if (newy > maxy) newy = maxy;
 
-    elmnt.style.left =  newx + 'px';
-    elmnt.style.top = newy + 'px';
+    elmnt.style.left = newx * cx + 'px';
+    elmnt.style.top = newy * cy + 'px';
     e.preventDefault();
   }
 
