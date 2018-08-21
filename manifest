@@ -1,5 +1,5 @@
-C Fine\stuning\sof\sTerminal\sskin\swith\sdifferent\sfonts.
-D 2018-08-19T19:35:03.406
+C Some\sscript\sedits.\sBetter\shtml\sin\s"post_view.tpl".\sBetter\sterminal\sfonts\sfor\s"Terminal"\sskin.
+D 2018-08-21T17:12:12.382
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -27,7 +27,7 @@ F source/commands.asm 6d640d5992d5a11455df6ecd46e7cfec180d56b0
 F source/create.sql 567a8c585bf4a78e3b94d8d28b01fdcdfa4d918d
 F source/delete.asm 5a916c3647c52baa753951d93fbbfaa3175627d4
 F source/edit.asm bc4e27a181ce6e404886020cae2f2db97f08a427
-F source/engine.asm ac14ccbbf3225dde4e8736ff7e791c2c07c923e0
+F source/engine.asm ba7d7cd7532f542c68f62a6f28248e74e76e9901
 F source/engine.fpr dfd7f971be1c57f23b6c6c13894ddd7e3b1388b5
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -423,7 +423,7 @@ F www/templates/Terminal/navigation.less 5ba452ef78cfd6ebf550532b074722c4fce3678
 F www/templates/Terminal/one_category.tpl 0a104ef1000580e594a26c60e550cea3c403484c
 F www/templates/Terminal/one_user.tpl f1e1aacad832e82f4b446f755387efe7f6d815b1 l
 F www/templates/Terminal/post_history.tpl 252f022e564844721c84b264f05f527742108a19 l
-F www/templates/Terminal/post_view.tpl a50997da2d0f5446e43509cd47d3d796d76160fa
+F www/templates/Terminal/post_view.tpl 7b83de36a356e98686f30183dfbc5d3e3dcd8254
 F www/templates/Terminal/posteditor.less ccaa00c913a6397753e234c7fd5fe2e8006ebc3a
 F www/templates/Terminal/postnew.less 12b3815115dd2a6b86e272fb87677df7407454ce
 F www/templates/Terminal/posts.less 4263ad4044188a2ba4b100aaef6933b20094ae04
@@ -432,7 +432,7 @@ F www/templates/Terminal/restore_confirm.tpl c59340b4b594a629285efa18802ea6d5424
 F www/templates/Terminal/search.less 0945b7c80d74e44ee3c658746428cb30797d3f46
 F www/templates/Terminal/search_result.tpl 48a609f423c8de989a1b81775228d657e433a6b8
 F www/templates/Terminal/settings.less 9b90c57164f1a074275c9d17a81ab77f0df5176c
-F www/templates/Terminal/skin_variables.lsi 99aea890170412e5479f681d0b1dca2181815597
+F www/templates/Terminal/skin_variables.lsi 9b958307740eda776c1e9ab06d6ae682cdf6b9cd
 F www/templates/Terminal/sqlite.less 23129e00b0f96dd45869b9ea813a17258b750796
 F www/templates/Terminal/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
 F www/templates/Terminal/thread_info.tpl 0ad31e20129847ae08c2e04f90e2793195cf4a26
@@ -553,7 +553,7 @@ F www/templates/Wasp/navigation.less 25ad252c4ecb5c4bc3e2034e90aed8fca4aa375d
 F www/templates/Wasp/one_category.tpl b6a45167d23af803a4107d015451d762f51fe402
 F www/templates/Wasp/one_user.tpl 6bf8fc5739971116473d7dd78425514f13bf6c4a
 F www/templates/Wasp/post_history.tpl d4654a8299206f82b0f63525b390e04cd7ae5a2a
-F www/templates/Wasp/post_view.tpl 2bfdbccc2fcbd8bce7be66bb4107474e63776bf2
+F www/templates/Wasp/post_view.tpl 6c97443804cf87f71e10b78e58b5245b7df2cace
 F www/templates/Wasp/posteditor.less f9316aee19f5cfc973e18b8c8a8979419cdbd5a9
 F www/templates/Wasp/postnew.less e980a3e2ff5ecb720fc1499266aa2ced9ec8e9cd
 F www/templates/Wasp/posts.less 86301d28cf7a9ade71d8986cdf281e4cae06dca6
@@ -573,8 +573,8 @@ F www/templates/Wasp/userinfo.tpl 93460a6bc6dbef649516de9ead4d3b0744cbc8a4
 F www/templates/Wasp/users_online.less bd646392254c955b3c70def99c358ed1df2bf298
 F www/templates/Wasp/userslist.less 9dae27c4e52c68f3351549034bdd7f9754bce069
 F www/templates/Wasp/userslist_hdr.tpl aa1d0bbe31f3624bc75cdec179d471ac496fd990
-F www/templates/build_styles.sh c8ec7cd22512956ce5cbf54fb0c12ce30f4172b1 x
-F www/templates/create_tar.sh a99337fba10c58f44de425b75207c54d0b17c132 x
+F www/templates/build_styles.sh e96b1a637d443bfb023ed56033d35a329dd100c5 x
+F www/templates/create_tar.sh fb0382fd6113451aac332d6472909817ca34e258 x
 F www/templates/mobile/_images 70c26c9bd422a7e59f2dca80d02ec99f39b390fb l
 F www/templates/mobile/activation_email_subject.tpl e0bd685144e72197dd0034b068e82d7604f926d2 l
 F www/templates/mobile/activation_email_text.tpl 50d1d6b7fe42736e334ab6870d7cc72e9085889d l
@@ -658,8 +658,8 @@ F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d2 l
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
-F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P a8f4300d2721fb88421c8fe4c96e4f15863c5932
-R 74bf8c1a010b9456a2581089aca4f312
+F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
+P 2db9e1f5509aee44621e707a4cd90342cd7b8daf
+R 6de5163af0188f1cfeb5b2ffd3567f15
 U johnfound
-Z 3a001a91a862e8110dff7e6768ff6d14
+Z 0f774b996b9930b26e87b5ff7e3f4662

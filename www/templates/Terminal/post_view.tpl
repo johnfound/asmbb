@@ -1,5 +1,4 @@
-<a id="[id]"></a>
-<div class="post [case:[Unread]||unread]">
+<div class="post [case:[Unread]||unread]" id="[id]">
   <div class="post_text">
     <div class="post_info">
       <div class="last_edit">
