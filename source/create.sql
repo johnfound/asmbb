@@ -218,7 +218,12 @@ CREATE TRIGGER PostsAU AFTER UPDATE OF Content, editTime, editUserID, threadID O
 END;
 
 
+create table PrivateThreads (
+  threadID integer references Threads(id) on delete cascade,
+  userID   integer references Users(id) on delete cascade
+);
 
+create unique index idxPrivateThread on PrivateThreads(threadID, userID);
 
 
 create table Tags (

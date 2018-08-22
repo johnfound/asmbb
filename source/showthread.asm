@@ -1,6 +1,8 @@
 
 sqlSelectPosts StripText "showthread.sql", SQL
 
+sqlCheckAccess   text "select (select count() from PrivateThreads where threadID = ?1 and userid = ?2) > 0 or not exists (select 1 from PrivateThreads where threadID = ?1);"
+
 sqlGetPostCount  text "select count(1) from Posts where ThreadID = ?"
 sqlGetThreadInfo text "select T.id, T.caption, T.slug, (select userID from Posts P where P.threadID=T.id order by P.id limit 1) as UserID from Threads T where T.slug = ?1 limit 1"
 sqlIncReadCount  text "update PostCNT set Count = Count + 1 where postid in ("
@@ -71,6 +73,20 @@ begin
 
 .page_ok:
         mov     [esi+TSpecialParams.page_title], ebx
+
+; check the private thread access.
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckAccess, sqlCheckAccess.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
+        cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.userID]
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteColumnInt, [.stmt], 0
+        mov     ebx, eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        test    ebx, ebx
+        jz      .private_not_for_you
 
         stdcall TextCat, edi, txt '<div class="thread">'
         stdcall RenderTemplate, edx, "nav_thread.tpl", [.stmt2], esi
@@ -206,6 +222,12 @@ begin
         return
 
 .error:
+        stdcall TextFree, edi
+        xor     edi, edi
+        jmp     .exit
+
+.private_not_for_you:
+
         stdcall TextFree, edi
         xor     edi, edi
         jmp     .exit

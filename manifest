@@ -1,5 +1,5 @@
-C Merged\s"TerminalSkin"\sbranch.
-D 2018-08-21T17:13:29.427
+C Started\swork\son\sthe\sprivate\smessages.\sVery\searly\sstage.
+D 2018-08-22T14:02:28.460
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -24,7 +24,7 @@ F source/categories.sql bdb9e206fac6884ae116e80de2bd602d7d80bc04
 F source/chat.asm ba9592f29a64ae09eb61c203da1bf98ba8db230f
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm 6d640d5992d5a11455df6ecd46e7cfec180d56b0
-F source/create.sql 567a8c585bf4a78e3b94d8d28b01fdcdfa4d918d
+F source/create.sql 8bf366019fe5990cbcc17c59cbf6c04d61cf2fcf
 F source/delete.asm 5a916c3647c52baa753951d93fbbfaa3175627d4
 F source/edit.asm bc4e27a181ce6e404886020cae2f2db97f08a427
 F source/engine.asm ba7d7cd7532f542c68f62a6f28248e74e76e9901
@@ -53,7 +53,7 @@ F source/search.asm 66938462090abf87a69bccf6c9c05b14a741fda4
 F source/search.sql 34cf6eea11403e7ac709cd1588bd84c57257135f
 F source/search_cnt.sql 762c07c3e8a9186e966a6377517edc18ab50ef96
 F source/settings.asm a326d83c4054d7294831402c3e5401dd864b4f44
-F source/showthread.asm ba5a0f583df5344544865db1e0621005e7e8437f
+F source/showthread.asm 12258396766d9a4bff226121bf5e145685f29f6b
 F source/showthread.sql 284a3060114cb7668fead7008f4ebaf9258f14d2
 F source/sqlite3.asm 8e27aa526542e4c8bac6b9e741b6e0698220933f
 F source/sqlite_console.asm 4036ff078724d5f52ac9dacaf9cee9ec394f9e94
@@ -66,7 +66,7 @@ F source/tests/test_templates.fpr 0b6d692c0d55f91a6e310f622a6fe2c49c06ddf9
 F source/text_constants.asm c736bdb4840fc1218bdea8ddbd2f573dbd69d2de
 F source/thread_attr.sql 0ca7eb00c75ca369b74e04fc6aa386bab425798e
 F source/threadlist.asm 8103fa162b24ee7462d897d32d0467decea44a35
-F source/threadlist.sql 5ff1c1b661fcca07c1a0c529a3d94080d3bc0261
+F source/threadlist.sql afe8b3c298c131d0833229e83908d155709dedd5
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
 F source/userinfo.asm 303bf2dfd8dfe90c9a6fe316632586eea40097a3
@@ -267,8 +267,8 @@ F www/templates/Light/settings.less ceddd6b5948701659f883fd99ed0b9a31067df6e l
 F www/templates/Light/skin_variables.lsi 522a05e250cf93bf7aacd2b50df0e6d6edeb9e33
 F www/templates/Light/sqlite.less d6c705801f27dd30658b51803f0638ded21bb45c l
 F www/templates/Light/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
-F www/templates/Light/thread_info.tpl 756e30fc2ecf7bf5ad0a68274a1a4ca73e040deb
-F www/templates/Light/thread_list.less db71398c12f118ef6141641b323666c4a8bf9974
+F www/templates/Light/thread_info.tpl 81397dcc628631e4b79ef696e324f0521c309c3c
+F www/templates/Light/thread_list.less 539cf7bdb8d79f73fa7277d556c77ef7bea10867
 F www/templates/Light/threadnew.less c2af3d158e2e03851692576dce99f5287e50b0c6 l
 F www/templates/Light/userinfo.less 7ed31b5cc710b5821802771232bbc02db392ebf9 l
 F www/templates/Light/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
@@ -565,7 +565,7 @@ F www/templates/Wasp/settings.less 550783db559b38a2ad60240cf02a9c3cd1caa65b
 F www/templates/Wasp/skin_variables.lsi 083eec6626d47cbdc1a051bbfafd13c88c5aa358
 F www/templates/Wasp/sqlite.less 9ed43c40076b969c67d7c73d6d395da98dccbc83
 F www/templates/Wasp/statistics.tpl c0dd59a240e07c246fe9c0841eb1532b93f3f1ae
-F www/templates/Wasp/thread_info.tpl 4c7cc6a5156e1003b3235cb4dc0ff144d10a335d
+F www/templates/Wasp/thread_info.tpl 9f597e05034784a25973503b5a20a1aad92bad18
 F www/templates/Wasp/thread_list.less cb178d6c75debc918a1c122ad59a3ac8369831ee
 F www/templates/Wasp/threadnew.less 06c7cb06ff6fcaeae1ee25b9eb9cbeb4e8188dae
 F www/templates/Wasp/userinfo.less c4f9829d6108c57c875ddb2033036fccdd6c36d3
@@ -659,7 +659,10 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 653b8aeedd1c12add3cd92c8075cf90b0751a61a d62791ae3b593b1c21de49a51d6b97fba6471672
-R 6de5163af0188f1cfeb5b2ffd3567f15
+P 7a39506b5508be87944bb4aa6e80d3e23dfb1588
+R e75c2ac6db90035cadc0d0556856cbdb
+T *branch * PrivateMessages
+T *sym-PrivateMessages *
+T -sym-trunk *
 U johnfound
-Z cd473b7c7d24bcddcd7f79f59ea9a7da
+Z 37221ab56c2f91c921883c9e59feb8a2
