@@ -1,5 +1,5 @@
-C Merged\s"TerminalSkin"\sbranch.
-D 2018-08-21T17:13:29.427
+C Fixed\sbug\sin\sthe\sTerminal\sskin.
+D 2018-08-23T04:41:55.880
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -432,7 +432,7 @@ F www/templates/Terminal/restore_confirm.tpl c59340b4b594a629285efa18802ea6d5424
 F www/templates/Terminal/search.less 0945b7c80d74e44ee3c658746428cb30797d3f46
 F www/templates/Terminal/search_result.tpl 48a609f423c8de989a1b81775228d657e433a6b8
 F www/templates/Terminal/settings.less 9b90c57164f1a074275c9d17a81ab77f0df5176c
-F www/templates/Terminal/skin_variables.lsi 9b958307740eda776c1e9ab06d6ae682cdf6b9cd
+F www/templates/Terminal/skin_variables.lsi 99c18afb02e1530216bcc7c0271298e01f869fbc
 F www/templates/Terminal/sqlite.less 23129e00b0f96dd45869b9ea813a17258b750796
 F www/templates/Terminal/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
 F www/templates/Terminal/thread_info.tpl 0ad31e20129847ae08c2e04f90e2793195cf4a26
@@ -659,7 +659,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 653b8aeedd1c12add3cd92c8075cf90b0751a61a d62791ae3b593b1c21de49a51d6b97fba6471672
-R 6de5163af0188f1cfeb5b2ffd3567f15
+P 7a39506b5508be87944bb4aa6e80d3e23dfb1588
+R 0d1976396eb321500accb9cee7b1ca2f
 U johnfound
-Z cd473b7c7d24bcddcd7f79f59ea9a7da
+Z 4c9123e8e5f314ff585143a6ab6b8fbb

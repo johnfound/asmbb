@@ -1,4 +1,4 @@
-@FontMain: "Liberation Mono", "Source Code Pro", "Consolas", "Lucida Console", monospaced;
+@FontMain: "Liberation Mono", "Source Code Pro", "Consolas", "Lucida Console", monospace;
 @FontSize: 16px;
 @LineH: 1.1875em;
 
