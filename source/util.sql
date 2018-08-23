@@ -59,6 +59,47 @@ where
   g.addr = (select addr from guestrequests where time = (select time from chatlog where original = 'Anon5B' limit 1));
 
 
+-- More complex way, but detects even non active users:
+
+select
+  (g.addr >> 24 & 255)||'.'||(g.addr >> 16 & 255)||'.'||(g.addr >> 8 & 255)||'.'||(g.addr & 255) as IP,
+  datetime(gr.time, 'unixepoch') as Time,
+  gr.method,
+  gr.request,
+  gr.client,
+  gr.referer
+from
+  guests g
+left join
+  guestrequests gr on g.addr = gr.addr
+where
+  g.addr = (select addr from (
+
+select
+  *,
+  (~(e&f))&(e|f) as g
+from (
+select
+  *,
+  (~(a&b))&(a|b) as e,  -- xor(a,b)
+  (~(c&d))&(c|d) as f
+from (
+select
+*,
+(addr >> 24 & 255) as d,
+(addr >> 16 & 255) as c,
+(addr >> 8 & 255) as b,
+(addr & 255) as a
+from guests
+)) where g = 15 order by LastSeen desc limit 1  -- 15 means Anon0F
+));
+
+
+
+
+
+
+
 -- Displays all guests that downloaded only files like images, robots.txt, etc. without actually visiting the website.
 
 select

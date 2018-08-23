@@ -1,5 +1,5 @@
-C Started\swork\son\sthe\sprivate\smessages.\sVery\searly\sstage.
-D 2018-08-22T14:02:28.460
+C New\sutil\ssql\sadded.
+D 2018-08-23T04:40:27.389
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -74,7 +74,7 @@ F source/users_online.asm 0a1e5415fbce181dadef5403c86745cb4d7bbafa
 F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/userslist.asm bbc976c8ea94198220c0dd8edee8577c83374c46
 F source/userslist.sql 9ff073add084452a4ce34a7560eeee5384c6c8b8
-F source/util.sql b1996383ac64fb198f04a8c5fd08e6789787116b
+F source/util.sql 9b7d8d9b0a6655a7abf427158c8368cfcf20d249
 F source/version.asm 1cc9c9060d19cee02ce39fd5a064e412c43e071d
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
@@ -659,10 +659,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 7a39506b5508be87944bb4aa6e80d3e23dfb1588
-R e75c2ac6db90035cadc0d0556856cbdb
-T *branch * PrivateMessages
-T *sym-PrivateMessages *
-T -sym-trunk *
+P 7a92a011868b047fb33c765a9c3e300086083c0b
+R f77348a10a52cb6ea8426114e22ef518
 U johnfound
-Z 37221ab56c2f91c921883c9e59feb8a2
+Z b0cb2cce434e8cfcb53eebb8c4a291b0
