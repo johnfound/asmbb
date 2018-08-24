@@ -1,10 +1,8 @@
 
 iglobal
   sqlSelectThreads StripText "threadlist.sql", SQL
+  sqlThreadsCount  StripText "threadcount.sql", SQL
 endg
-
-sqlThreadsCount  text "select count() from Threads left join threadtags on id = threadid and tag = ?1 where ?1 is null or ?1 = tag;"
-
 
 proc ListThreads, .pSpecial
 
@@ -60,6 +58,7 @@ begin
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
 .tag_ok:
+        cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.userID]
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteColumnInt, [.stmt], 0
         mov     ebx, eax

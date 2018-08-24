@@ -223,7 +223,7 @@ create table PrivateThreads (
   userID   integer references Users(id) on delete cascade
 );
 
-create unique index idxPrivateThread on PrivateThreads(threadID, userID);
+create unique index idxPrivateThreads on PrivateThreads(threadID, userID);
 
 
 create table Tags (

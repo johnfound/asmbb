@@ -231,8 +231,6 @@ begin
 
         xor     eax, eax
         xchg    eax, [ebx+TArray.array]
-
-        stdcall StrURLDecode, eax
         mov     [.uri], eax
 
         stdcall ListFree, ebx, StrDel
@@ -249,6 +247,7 @@ begin
 
         stdcall StrDupMem, eax
         stdcall StrCat, eax, [.uri]
+        stdcall StrURLDecode, eax
         mov     [.filename], eax
 
         stdcall StrMatchPattern, "*.well-known/*", [.uri]
@@ -449,6 +448,18 @@ begin
         stdcall StrSplitList, [.uri], '/', FALSE        ; split the URI in order to analize it better.
         mov     [.special.cmd_list], eax
 
+        mov     ecx, [eax+TArray.count]
+        lea     eax, [eax+TArray.array]
+
+.decode_uri:
+        dec     ecx
+        js      .end_decode
+
+        stdcall StrURLDecode, [eax]
+        add     eax, 4
+        jmp     .decode_uri
+
+.end_decode:
         mov     ecx, CreateAdminAccount
         cmp     [.special.setupmode], 0
         jne     .exec_command

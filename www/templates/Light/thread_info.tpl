@@ -5,7 +5,8 @@
   [case:[Unread]||</a>]
   <div class="thread_link">
     <a class="thread_link" href="[Slug]/">[Caption]</a><br>
-    <span class="small">[special:posters=[id]]</span>
+    <span class="small">[special:posters=[id]]</span><br>
+    <span class="small comma">[special:invited=[id]]</span>
   </div>
   <div class="thread_tags">
     [special:threadtags=[id]]

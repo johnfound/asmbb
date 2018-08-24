@@ -1,7 +1,9 @@
 
 sqlSelectPosts StripText "showthread.sql", SQL
 
-sqlCheckAccess   text "select (select count() from PrivateThreads where threadID = ?1 and userid = ?2) > 0 or not exists (select 1 from PrivateThreads where threadID = ?1);"
+;sqlCheckAccess   text "select (select count() from PrivateThreads where threadID = ?1 and userid = ?2) > 0 or not exists (select 1 from PrivateThreads where threadID = ?1);"
+sqlCheckAccess   text "select not count() or sum(userID = ?2) from PrivateThreads where threadID = ?1;"
+
 
 sqlGetPostCount  text "select count(1) from Posts where ThreadID = ?"
 sqlGetThreadInfo text "select T.id, T.caption, T.slug, (select userID from Posts P where P.threadID=T.id order by P.id limit 1) as UserID from Threads T where T.slug = ?1 limit 1"

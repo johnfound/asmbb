@@ -12,11 +12,12 @@ select
   PT.userid as private
 
 from
-  Threads T left join ThreadTags TT on T.id = TT.ThreadID and TT.Tag = ?4 left join PrivateThreads PT on PT.threadid = T.id or PT.userid = ?3
+  Threads T left join ThreadTags TT on T.id = TT.ThreadID and TT.Tag = ?4 left join PrivateThreads PT on PT.threadid = T.id
 
 where
 
-  (?4 is null or TT.Tag = ?4) and
+  (?4 is null or TT.Tag = ?4 or ?4 = 'private') and
+  (((?4 is null or ?4 <> 'private') and PT.userid is null) or PT.userid =  ?3)
 
 order by Pinned desc, LastChanged desc
 

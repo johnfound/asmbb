@@ -153,6 +153,7 @@ if used RenderTemplate
               "usearch",     RenderTemplate.sp_usearch,               \ ; Needs encoding!
               "skins=",      RenderTemplate.sp_skins,                 \ ; HTML no encoding
               "posters=",    RenderTemplate.sp_posters,               \
+              "invited=",    RenderTemplate.sp_invited,               \
               "threadtags=", RenderTemplate.sp_threadtags,            \
               "environment", RenderTemplate.sp_environment              ; optional, depends on options.DebugWeb
 end if
@@ -1306,6 +1307,12 @@ endl
         stdcall GetPosters, ebx
         jmp     .special_string_free
 
+.sp_invited:
+; here esi points to the "=" char, ecx at the end "]" and edi at the start "["
+        call    .get_number
+        stdcall GetInvited, ebx
+        jmp     .special_string_free
+
 .sp_threadtags:
 ; here esi points to the "=" char, ecx at the end "]" and edi at the start "["
         call    .get_number
@@ -1782,8 +1789,6 @@ proc GetPosters, .threadID
 begin
         pushad
 
-        mov     ecx, eax
-
         stdcall StrNew
         mov     ebx, eax
 
@@ -1879,6 +1884,56 @@ begin
         return
 endp
 
+
+
+sqlGetThreadInvited text "select u.nick from PrivateThreads pt left join Users U on u.id = pt.userid where threadID = ?1 order by u.nick;"
+
+proc GetInvited, .threadID
+  .stmt  dd ?
+begin
+        pushad
+
+        stdcall StrNew
+        mov     ebx, eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInvited, sqlGetThreadInvited.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .finalize
+
+        stdcall StrCat, ebx, cAccessPrefix
+        jmp     .add_link
+
+.fetch:
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .finalize
+
+.add_link:
+        stdcall StrCat, ebx, '<a href="/!userinfo/'
+
+        cinvoke sqliteColumnText, [.stmt], 0
+        stdcall StrEncodeHTML, eax
+        mov     ecx, eax
+
+        stdcall StrURLEncode, ecx
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+        stdcall StrCat, ebx, txt '">'
+        stdcall StrCat, ebx, ecx
+        stdcall StrCat, ebx, txt '</a>'
+        stdcall StrDel, ecx
+        jmp     .fetch
+
+.finalize:
+        cinvoke sqliteFinalize, [.stmt]
+        mov     [esp+4*regEAX], ebx
+        popad
+        return
+endp
 
 
 

@@ -17,6 +17,18 @@ span.small {
   b { margin-right: 8px; }
 }
 
+.comma a::after {
+  content: ', ';
+  text-decoration: none;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+.comma a:last-child::after {
+  content: ' ';
+}
+
+
 .thread_summary {
   display: flex;
   margin: 8px 0px;
@@ -35,7 +47,10 @@ span.small {
 }
 
 .private {
-  background-color: #ffe0e0;
+  padding: 8px 8px 8px 8px;
+  background-color: #e0ffe0;
+  border-left: 4px solid #a0ff00;
+  border-bottom: none;
 }
 
 
