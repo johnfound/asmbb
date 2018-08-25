@@ -383,11 +383,8 @@ begin
 
         stdcall SaveThreadTags, [.tags], [esi+TSpecialParams.dir], [.threadID]
 
-        cmp     [.fPrivate], 0
-        je      .post_in_thread
-
 ; Process invited users for the private thread:
-        stdcall SaveInvited, [.invited], [esi+TSpecialParams.userName], [.threadID]
+        stdcall SaveInvited, [.fPrivate], [.invited], [esi+TSpecialParams.userName], [.threadID]
 
 .post_in_thread:
 
@@ -839,7 +836,7 @@ endp
 sqlDelAllInvited  text  "delete from PrivateThreads where threadID = ?1"
 sqlInsertInvited  text  "insert into PrivateThreads(threadID, userID) values (?1, ?2)"
 
-proc SaveInvited, .invited, .self, .threadID
+proc SaveInvited, .fPrivate, .invited, .self, .threadID
 .stmt  dd ?
 begin
         pushad
@@ -859,12 +856,21 @@ begin
         cinvoke sqliteFinalize, [.stmt]
 
 .end_del:
-        cmp     [.invited], 0
-        je      .finish
+        cmp     [.fPrivate], 0
+        je      .finish         ; only make the thread public!
 
+        cmp     [.invited], 0
+        jne     .split
+
+        stdcall CreateArray, 4
+        mov     esi, eax
+        jmp     .process_list
+
+.split:
         stdcall StrSplitList, [.invited], ",", FALSE
         mov     esi, eax
 
+.process_list:
         stdcall UniqueInvitedList, esi, [.self]
 
         mov     ebx, [esi+TArray.count]

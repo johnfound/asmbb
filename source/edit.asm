@@ -318,10 +318,14 @@ proc EditThreadAttr, .pSpecial
 .caption  dd ?
 .slug     dd ?
 .tags     dd ?
+.invited  dd ?
 .pinned   dd ?
+
+.fPrivate dd ?
 
 .threadID dd ?
 .userID   dd ?
+.userName dd ?
 
 begin
         pushad
@@ -334,6 +338,7 @@ begin
         mov     [.slug], eax
         mov     [.tags], eax
         mov     [.pinned], eax
+        mov     [.userName], eax
 
 ; default integer values
         mov     [.threadID], eax
@@ -427,6 +432,8 @@ begin
         stdcall StrDel, [.caption]
         stdcall StrDel, [.slug]
         stdcall StrDel, [.tags]
+        stdcall StrDel, [.invited]
+        stdcall StrDel, [.userName]
         mov     [esp+4*regEAX], edi
         popad
         return
@@ -466,6 +473,16 @@ begin
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "tags", 0
         mov     [.tags], eax
+
+; get the invited
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "invited", 0
+        mov     [.invited], eax
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "private", txt "0"
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack
+        mov     [.fPrivate], eax
 
 ; Get the pinned
 
@@ -510,6 +527,10 @@ begin
         jne     .error_write            ; strange write fault.
 
         stdcall SaveThreadTags, [.tags], [esi+TSpecialParams.dir], [.threadID]
+
+; save the invited users
+
+        stdcall SaveInvited, [.fPrivate], [.invited], [esi+TSpecialParams.userName], [.threadID]
 
 ; save the pinned flag. Only for admins!
 

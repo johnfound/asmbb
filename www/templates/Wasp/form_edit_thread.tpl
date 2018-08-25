@@ -14,7 +14,7 @@
     <p>Tags: <span class="small">(max 3, comma delimited, no spaces)</span> [case:[special:dir]| |+ "[special:dir]"]</p>
     <input type="edit" value="[tags]" name="tags" placeholder="some tags here">
     [case:[special:isadmin]||<input type="checkbox" id="pinned" name="pinned" value="1" [case:[Pinned]||checked]><label for="pinned">Pin the thread on top</label>]
-    <input type="checkbox" id="private" name="private" value="1" [case:[private]||checked]><label for="private">Private thread</label>
+    <input type="checkbox" id="private" name="private" value="1" [case:[private]||checked]><label for="private">Limited access thread</label>
     <div id="users_invited">
       <p>Invited users (comma separated list):</p>
       <input id="invited" type="edit" value="[invited]" name="invited">
