@@ -10,18 +10,18 @@ from
   users
 [case:[special:order]|
 order by id|
-order by nick collate nocase|
-order by nick collate nocase desc|
-order by av_time, nick collate nocase|
-order by av_time desc, nick collate nocase|
-order by Skin, nick collate nocase|
-order by Skin desc, nick collate nocase|
-order by PostCount, nick collate nocase|
-order by PostCount desc, nick collate nocase|
-order by Register, nick collate nocase|
-order by Register desc, nick collate nocase|
-order by LastSeen, nick collate nocase|
-order by LastSeen desc, nick collate nocase|
+order by nick|
+order by nick desc|
+order by av_time, nick|
+order by av_time desc, nick|
+order by Skin, nick|
+order by Skin desc, nick|
+order by PostCount, nick|
+order by PostCount desc, nick|
+order by Register, nick|
+order by Register desc, nick|
+order by LastSeen, nick|
+order by LastSeen desc, nick|
 order by id
 ]
 limit ?1

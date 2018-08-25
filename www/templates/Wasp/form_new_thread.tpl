@@ -12,17 +12,22 @@
     <form id="editform" action="!post" method="post">
       <div class="edit_groupL">
         <p>Title:</p>
-        <input class="title" type="edit" value="[caption]" placeholder="Thread title" name="title" autofocus>
+        <input type="edit" value="[caption]" placeholder="Thread title" name="title" autofocus>
       </div><div class="edit_groupR">
         <p>Tags: <span class="small">(max 3, comma delimited, no spaces)</span> [case:[special:dir]| |+ "[special:dir]"]</p>
-        <input class="tags"  type="edit" value="[tags]" name="tags" placeholder="some tags here">
+        <input type="edit" value="[tags]" name="tags" placeholder="some tags here">
+      </div>
+      <input type="checkbox" id="private" name="private" value="1" [case:[private]||checked]><label for="private">Private thread</label>
+      <div id="users_invited">
+        <p>Invited users (comma separated list):</p>
+        <input id="invited" type="edit" value="[invited]" name="invited">
       </div>
       <p>Post content:</p>
       [include:edit_toolbar.tpl]
       <textarea class="editor" name="source" id="source" placeholder="Share your thoughts here">[source]</textarea>
       <div class="panel">
-        <input type="submit" name="submit" value="Submit" >
         <input type="submit" name="preview" value="Preview" >
+        <input type="submit" name="submit" value="Submit" >
         <input type="hidden" name="ticket" value="[Ticket]" >
         <input type="reset" value="Revert" >
       </div>
