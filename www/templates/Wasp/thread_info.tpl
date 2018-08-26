@@ -1,4 +1,4 @@
-<div class="thread_summary [case:[private]||private]">
+<div class="thread_summary [case:[limited]||limited]">
   <div class="thread_info">
     <div class="flex">
       [case:[Pinned]||<img class="pinned" src="[special:skin]/_images/pinned.png" alt="!" title="Pinned thread">]

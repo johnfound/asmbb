@@ -12,7 +12,7 @@ select
   ( select
       group_concat(U.nick, ", ")
     from
-      PrivateThreads PT left join Users U on U.id = PT.userid
+      LimitedAccessThreads LT left join Users U on U.id = LT.userid
       where threadid = threads.id
   ) as invited,
   ( select
@@ -25,7 +25,7 @@ select
     limit 1
   ) as userid,
   Pinned,
-  exists (select 1 from PrivateThreads where threadid=threads.id) as private
+  exists (select 1 from LimitedAccessThreads where threadid=threads.id) as limited
 from
   threads
 where

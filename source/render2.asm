@@ -1886,7 +1886,7 @@ endp
 
 
 
-sqlGetThreadInvited text "select u.nick from PrivateThreads pt left join Users U on u.id = pt.userid where threadID = ?1 order by u.nick;"
+sqlGetThreadInvited text "select u.nick from LimitedAccessThreads LT left join Users U on U.id = LT.userid where threadID = ?1 order by U.nick;"
 
 proc GetInvited, .threadID
   .stmt  dd ?

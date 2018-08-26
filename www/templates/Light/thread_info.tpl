@@ -1,4 +1,4 @@
-<div class="thread_summary [case:[private]||private]">
+<div class="thread_summary [case:[limited]||limited]">
   [case:[Pinned]||<img class="pinned" src="[special:skin]/_images/pinned.png" alt="!" title="Pinned thread">]
   [case:[Unread]||<a href="[Slug]/#[FirstUnread]">]
   <img  height="32" width="32" class="unread" src="[special:skin]/_images/posts[case:[Unread]|_gray|].svg" alt="[case:[Unread]||>]" title="[case:[Unread]|No unread messages|Go to first unread]">

@@ -6,7 +6,7 @@ LIMIT_TAG_DESCRIPTION = 1024
 cNewPostForm   text "form_new_post.tpl"
 cNewThreadForm text "form_new_thread.tpl"
 
-sqlSelectConst text "select ?1 as slug, ?2 as caption, ?3 as source, ?4 as ticket, ?5 as tags, ?6 as private, ?7 as invited"
+sqlSelectConst text "select ?1 as slug, ?2 as caption, ?3 as source, ?4 as ticket, ?5 as tags, ?6 as limited, ?7 as invited"
 
 sqlGetQuote   text "select U.nick, P.content from Posts P left join Users U on U.id = P.userID where P.id = ?"
 
@@ -26,7 +26,7 @@ proc PostUserMessage, .pSpecial
 
 .caption  dd ?
 .tags     dd ?
-.fPrivate dd ?
+.fLimited dd ?
 .invited  dd ?
 .count    dd ?
 
@@ -47,7 +47,7 @@ begin
         mov     [.rendered], eax
         mov     [.caption], eax
         mov     [.tags], eax
-        mov     [.fPrivate], eax
+        mov     [.fLimited], eax
         mov     [.invited], eax
         mov     [.ticket], eax
         mov     [.stmt], eax
@@ -97,11 +97,11 @@ begin
 ;        stdcall UniqueTagList, eax, [esi+TSpecialParams.dir]
         mov     [.tags], eax
 
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "private", txt "0"
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "limited", txt "0"
         push    eax
         stdcall StrToNumEx, eax
         stdcall StrDel ; from the stack
-        mov     [.fPrivate], eax
+        mov     [.fLimited], eax
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "invited", 0
         mov     [.invited], eax
@@ -255,7 +255,7 @@ begin
 
 .tags_zero:
 
-        cinvoke sqliteBindInt, [.stmt], 6, [.fPrivate]
+        cinvoke sqliteBindInt, [.stmt], 6, [.fLimited]
 
         stdcall StrPtr, [.invited]
         test    eax, eax
@@ -383,8 +383,8 @@ begin
 
         stdcall SaveThreadTags, [.tags], [esi+TSpecialParams.dir], [.threadID]
 
-; Process invited users for the private thread:
-        stdcall SaveInvited, [.fPrivate], [.invited], [esi+TSpecialParams.userName], [.threadID]
+; Process invited users for the limited access thread:
+        stdcall SaveInvited, [.fLimited], [.invited], [esi+TSpecialParams.userName], [.threadID]
 
 .post_in_thread:
 
@@ -833,10 +833,10 @@ endp
 
 
 
-sqlDelAllInvited  text  "delete from PrivateThreads where threadID = ?1"
-sqlInsertInvited  text  "insert into PrivateThreads(threadID, userID) values (?1, ?2)"
+sqlDelAllInvited  text  "delete from LimitedAccessThreads where threadID = ?1"
+sqlInsertInvited  text  "insert into LimitedAccessThreads(threadID, userID) values (?1, ?2)"
 
-proc SaveInvited, .fPrivate, .invited, .self, .threadID
+proc SaveInvited, .fLimited, .invited, .self, .threadID
 .stmt  dd ?
 begin
         pushad
@@ -856,7 +856,7 @@ begin
         cinvoke sqliteFinalize, [.stmt]
 
 .end_del:
-        cmp     [.fPrivate], 0
+        cmp     [.fLimited], 0
         je      .finish         ; only make the thread public!
 
         cmp     [.invited], 0

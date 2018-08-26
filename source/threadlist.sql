@@ -9,17 +9,17 @@ select
   (select count() from posts P2, UnreadPosts U where P2.id = U.PostID and P2.threadID = T.id and U.userID = ?3 ) as Unread,
   (select PostID from posts P3, UnreadPosts U2 where P3.id = U2.PostID and P3.threadID = T.id and U2.userID = ?3 limit 1) as FirstUnread,
   (select Count from PostCnt PC where PC.postid = (select id from Posts P4 where P4.threadID = T.id limit 1)) as ReadCount,
-  PT.userid as private
+  LT.userid as limited
 
 from
   Threads T
 left join ThreadTags TT on T.id = TT.ThreadID and TT.Tag = ?4
-left join PrivateThreads PT on PT.threadid = T.id
+left join LimitedAccessThreads LT on LT.threadid = T.id
 
 where
 
   (?4 is null or TT.Tag = ?4) and
-  (PT.userid is null or PT.userid = ?3)
+  (LT.userid is null or LT.userid = ?3)
 
 order by Pinned desc, LastChanged desc
 

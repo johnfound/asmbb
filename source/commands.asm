@@ -1428,7 +1428,7 @@ endp
 
 
 sqlSetUnread text "insert or replace into UnreadPosts (UserID, PostID, `Time`) values (?2, ?1, strftime('%s','now'))"
-sqlSelectInvited text "select userid from PrivateThreads where threadid = (select threadid from Posts where id = ?1)"
+sqlSelectInvited text "select userid from LimitedAccessThreads where threadid = (select threadid from Posts where id = ?1)"
 sqlSelectAllActive text "select id from users where strftime('%s','now') - LastSeen < 2592000"
 
 proc RegisterUnreadPost, .postID

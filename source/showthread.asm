@@ -1,8 +1,8 @@
 
 sqlSelectPosts StripText "showthread.sql", SQL
 
-;sqlCheckAccess   text "select (select count() from PrivateThreads where threadID = ?1 and userid = ?2) > 0 or not exists (select 1 from PrivateThreads where threadID = ?1);"
-sqlCheckAccess   text "select not count() or sum(userID = ?2) from PrivateThreads where threadID = ?1;"
+;sqlCheckAccess   text "select (select count() from LimitedAccessThreads where threadID = ?1 and userid = ?2) > 0 or not exists (select 1 from LimitedAccessThreads where threadID = ?1);"
+sqlCheckAccess   text "select not count() or sum(userID = ?2) from LimitedAccessThreads where threadID = ?1;"
 
 
 sqlGetPostCount  text "select count(1) from Posts where ThreadID = ?"
@@ -76,7 +76,7 @@ begin
 .page_ok:
         mov     [esi+TSpecialParams.page_title], ebx
 
-; check the private thread access.
+; check for limited access thread
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckAccess, sqlCheckAccess.length, eax, 0
@@ -88,7 +88,7 @@ begin
         cinvoke sqliteFinalize, [.stmt]
 
         test    ebx, ebx
-        jz      .private_not_for_you
+        jz      .limited_not_for_you
 
         stdcall TextCat, edi, txt '<div class="thread">'
         stdcall RenderTemplate, edx, "nav_thread.tpl", [.stmt2], esi
@@ -228,7 +228,7 @@ begin
         xor     edi, edi
         jmp     .exit
 
-.private_not_for_you:
+.limited_not_for_you:
 
         stdcall TextFree, edi
         xor     edi, edi

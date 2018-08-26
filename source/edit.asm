@@ -321,7 +321,7 @@ proc EditThreadAttr, .pSpecial
 .invited  dd ?
 .pinned   dd ?
 
-.fPrivate dd ?
+.fLimited dd ?
 
 .threadID dd ?
 .userID   dd ?
@@ -478,11 +478,11 @@ begin
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "invited", 0
         mov     [.invited], eax
 
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "private", txt "0"
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "limited", txt "0"
         push    eax
         stdcall StrToNumEx, eax
         stdcall StrDel ; from the stack
-        mov     [.fPrivate], eax
+        mov     [.fLimited], eax
 
 ; Get the pinned
 
@@ -530,7 +530,7 @@ begin
 
 ; save the invited users
 
-        stdcall SaveInvited, [.fPrivate], [.invited], [esi+TSpecialParams.userName], [.threadID]
+        stdcall SaveInvited, [.fLimited], [.invited], [esi+TSpecialParams.userName], [.threadID]
 
 ; save the pinned flag. Only for admins!
 
