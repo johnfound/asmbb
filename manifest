@@ -1,5 +1,5 @@
-C Changed\s"private"\sword\swith\s"limited"\sand\s"PrivateThreads"\stable\srenamed\sto\s"LimitedAccessThreads"\sin\sorder\sto\snot\nassociate\swith\s"privacy".\sThe\slimited\saccess\sthreads\sare\sstill\saccessible\sfor\sthe\sadministrator,\salthough\ssome\skind\sof\sinvisible\nbecause\sare\snot\sshowed\sin\sthe\sthreads\slist.
-D 2018-08-26T08:29:20.893
+C Categories\sSQL\smodified\sto\scount\sproperly\sthe\slimited\saccess\sthreads.
+D 2018-08-26T09:03:10.018
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -20,7 +20,7 @@ F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm ed0ec6e7cf9ade327dc855545380e1b6026a5a2e
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm 1f129fd0bf05f31b23dd1b3846ecc9cf0ae1499e
-F source/categories.sql bdb9e206fac6884ae116e80de2bd602d7d80bc04
+F source/categories.sql 59de0e46960300567ed03ff1046e87e806a42643
 F source/chat.asm ba9592f29a64ae09eb61c203da1bf98ba8db230f
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm 9790ce0e108e3e4d40044f59a5458b99cfbff84c
@@ -660,7 +660,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P ed6734860a4244b60bcea2d3b97a70a59aa671f5
-R c3e721d6983478a955e879f116f40ebf
+P 85095ec5c2af85fbd7c70f980177be672d201be4
+R 01686488c9f51abd779a23d520480a50
 U johnfound
-Z b908b42b5c033d83068b22d8a85eb8f3
+Z 0179e574c921450578dab97fcaf0dd3b
