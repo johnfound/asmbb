@@ -1427,23 +1427,51 @@ endp
 
 
 
-
-sqlSetUnread text "insert or replace into UnreadPosts (UserID, PostID, `Time`) select U.id, ?, strftime('%s','now') from users U where (strftime('%s','now') - U.LastSeen < 2592000)"
+sqlSetUnread text "insert or replace into UnreadPosts (UserID, PostID, `Time`) values (?2, ?1, strftime('%s','now'))"
+sqlSelectInvited text "select userid from PrivateThreads where threadid = (select threadid from Posts where id = ?1)"
+sqlSelectAllActive text "select id from users where strftime('%s','now') - LastSeen < 2592000"
 
 proc RegisterUnreadPost, .postID
-.stmt dd ?
+.stmt  dd ?
+.users dd ?
 begin
         pushad
 
+        lea     eax, [.users]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectInvited, sqlSelectInvited.length, eax, 0
+        cinvoke sqliteBindInt, [.users], 1, [.postID]
+        cinvoke sqliteStep, [.users]
+        cmp     eax, SQLITE_ROW
+        je      .users_ok
+
+        cinvoke sqliteFinalize, [.users]
+
+        lea     eax, [.users]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectAllActive, sqlSelectAllActive.length, eax, 0
+        cinvoke sqliteStep, [.users]
+        cmp     eax, SQLITE_ROW
+        jne     .finish
+
+.users_ok:
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetUnread, -1, eax, 0
-
         cinvoke sqliteBindInt, [.stmt], 1, [.postID]
+
+.set_loop:
+        cinvoke sqliteColumnInt, [.users], 0
+        cinvoke sqliteBindInt, [.stmt], 2, eax
         cinvoke sqliteStep, [.stmt]
-        mov     [esp+4*regEAX], eax
+
+        cinvoke sqliteReset, [.stmt]
+
+        cinvoke sqliteStep, [.users]
+        cmp     eax, SQLITE_ROW
+        je      .set_loop
 
         cinvoke sqliteFinalize, [.stmt]
 
+.finish:
+        cinvoke sqliteFinalize, [.users]
         popad
         return
 endp

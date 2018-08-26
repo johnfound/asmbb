@@ -1,5 +1,5 @@
-C Renamed\s"private\sthread"\sto\s"Limited\saccess\sthread"\s(LAT)\sin\sthe\sUI\sin\sorder\sto\snot\smislead\sthe\susers.\sAlso,\srenamed\sthe\srelated\s"private"\stag\sto\s"limited"\stag.\sNow\sthe\sLAT\sworks\sfor\sthe\snew\sthreads\sand\sthe\sthread\sedits.
-D 2018-08-25T20:06:13.446
+C Added\sforgotten\sfile.\sFixed\sthe\sunread\sposts\shandling\saccording\sto\sthe\slimited\saccess\sthreads.
+D 2018-08-26T06:31:52.477
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -23,7 +23,7 @@ F source/categories.asm 1f129fd0bf05f31b23dd1b3846ecc9cf0ae1499e
 F source/categories.sql bdb9e206fac6884ae116e80de2bd602d7d80bc04
 F source/chat.asm ba9592f29a64ae09eb61c203da1bf98ba8db230f
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
-F source/commands.asm 8bbf257a795d905f0a95b44605b41d8d84d35a21
+F source/commands.asm 8c268254ecd99b103c6cf28886955ff3e0f09050
 F source/create.sql a98b6e61ebdf5e9418db84e812f0b6a5e50d33c0
 F source/delete.asm 5a916c3647c52baa753951d93fbbfaa3175627d4
 F source/edit.asm ae260489ebf2fba4811b9689518aecde58cfdf21
@@ -65,6 +65,7 @@ F source/tests/test_templates.asm 9fbe778c983448663d18c9cc2cc3cd9d0107e93b
 F source/tests/test_templates.fpr 0b6d692c0d55f91a6e310f622a6fe2c49c06ddf9
 F source/text_constants.asm 3b01e340dd45c4d5529a2a399a13695adbd47656
 F source/thread_attr.sql 7c4e74a18cc1a37d17ef1a1cfe28811d0aa9f166
+F source/threadcount.sql 19d29cf95c20ce5ee29f7c8214c807a3b9c2fa4d
 F source/threadlist.asm de1b0518fcff91926ab6fe0cb80cd766aad8ffef
 F source/threadlist.sql 22895d449132f5291386205c90e1351f0ff86e22
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
@@ -659,7 +660,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 7918900c5170fcc9efdc0c6f8529107ff3029974
-R 274aad46585641526eee8d8f265f364b
+P f0a0a848817d182638fa0843c64c77b0721b9c0c
+R f8fed08e8774533ca152c643246e2bcc
 U johnfound
-Z 23a97c63692f2455ff71efbf1cdbf323
+Z 2b5c7c47ae59a5f9028b77324d69dc7e
