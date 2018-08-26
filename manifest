@@ -1,5 +1,5 @@
-C Categories\sSQL\smodified\sto\scount\sproperly\sthe\slimited\saccess\sthreads.
-D 2018-08-26T09:03:10.018
+C Make\ssearch\sengine\sto\srespect\slimited\saccess\sthreads.
+D 2018-08-26T11:43:14.799
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -28,7 +28,7 @@ F source/create.sql 541e7dcbcb427149e490caf36ab6c9f25ed66d18
 F source/delete.asm 5a916c3647c52baa753951d93fbbfaa3175627d4
 F source/edit.asm b539ef0009b62fd417cc3ef99d1907d0bbca98ca
 F source/engine.asm 892b5a8a9efbb0e7ae9976e6d9ea6985ef76169f
-F source/engine.fpr 0c5e3af654e8e1f8b2a7b460a93314fd35ab35e6
+F source/engine.fpr aa3213224157c3e7c9c70a45610e049525cbd2a5
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm f3c173a93c4260f275865ed66e5fe0e8c08d2104
@@ -49,9 +49,9 @@ F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/render2.asm 7c528c042eb8d0b834c2add01cfc164c5f27efc6
 F source/restore.sql 14a8f13466ced19e05502d41ffcfddeecbc6954b
-F source/search.asm 66938462090abf87a69bccf6c9c05b14a741fda4
-F source/search.sql 34cf6eea11403e7ac709cd1588bd84c57257135f
-F source/search_cnt.sql 762c07c3e8a9186e966a6377517edc18ab50ef96
+F source/search.asm 66833e46196d20ff02330cb0bd78c4ad6e1753ae
+F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
+F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm a326d83c4054d7294831402c3e5401dd864b4f44
 F source/showthread.asm 99680d2e15724f07c7034178ec9ccec842e7861b
 F source/showthread.sql 284a3060114cb7668fead7008f4ebaf9258f14d2
@@ -70,7 +70,8 @@ F source/threadlist.asm de1b0518fcff91926ab6fe0cb80cd766aad8ffef
 F source/threadlist.sql 3e7708459e6e46b14a1934a4dfb2313959f9a6c9
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
-F source/userinfo.asm 303bf2dfd8dfe90c9a6fe316632586eea40097a3
+F source/userinfo.asm 6840694be279b7c02e856d7b6ed023c12c2b80d0
+F source/userinfo.sql ca2e53af55fc3ed7dd18b34702bae10c361976d5
 F source/users_online.asm 0a1e5415fbce181dadef5403c86745cb4d7bbafa
 F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/userslist.asm bbc976c8ea94198220c0dd8edee8577c83374c46
@@ -660,7 +661,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 85095ec5c2af85fbd7c70f980177be672d201be4
-R 01686488c9f51abd779a23d520480a50
+P 5579d63d5ec3d41f2962faded77b452bc0319fcb
+R 980fd3aebe9e9f4eacc43cfcd135a8fa
 U johnfound
-Z 0179e574c921450578dab97fcaf0dd3b
+Z d7c2ba60f110466f731ddaf49754c35e
