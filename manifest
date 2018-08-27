@@ -1,5 +1,5 @@
-C Make\ssearch\sengine\sto\srespect\slimited\saccess\sthreads.
-D 2018-08-26T11:43:14.799
+C Fixed\sbug\sin\sedit\sthread\spermission\scheck.
+D 2018-08-27T04:53:51.225
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -26,7 +26,7 @@ F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm 9790ce0e108e3e4d40044f59a5458b99cfbff84c
 F source/create.sql 541e7dcbcb427149e490caf36ab6c9f25ed66d18
 F source/delete.asm 5a916c3647c52baa753951d93fbbfaa3175627d4
-F source/edit.asm b539ef0009b62fd417cc3ef99d1907d0bbca98ca
+F source/edit.asm 5e578e70a417516d6133009a89f5520ba962cf55
 F source/engine.asm 892b5a8a9efbb0e7ae9976e6d9ea6985ef76169f
 F source/engine.fpr aa3213224157c3e7c9c70a45610e049525cbd2a5
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
@@ -412,7 +412,7 @@ F www/templates/Terminal/form_sqlite_console.tpl cec2ab66fbdf5c2a343b29391eea233
 F www/templates/Terminal/help_new_thread.tpl 579ed6559a0a3aee0fe3be3a2c841c1dd7b8b169 l
 F www/templates/Terminal/login.less bf30a3036ab6659a31a9b0c82c5f471a5a229c63
 F www/templates/Terminal/main_html_end.tpl b5e1e83e2ec57c8159d14343ca4dafbf4f12180e
-F www/templates/Terminal/main_html_start.tpl a149c5200a84a898fb5b41dd3fc2fe1343d7a4fa
+F www/templates/Terminal/main_html_start.tpl 2c868bca1856fe00d1c4904dfa696fb35b2b227d
 F www/templates/Terminal/markdown.less 3f41aeb9e230ac732bcc6f28b5726f35e2904fa9
 F www/templates/Terminal/minimag_suffix.tpl f3a1414972a13590a7c984b53b6fd2ddd3a47f3a l
 F www/templates/Terminal/nav_categories.tpl 8a9010133716cb745f4ed027c96c7b9348e4b18a
@@ -530,7 +530,7 @@ F www/templates/Wasp/form_edit.tpl c8700a07d4a2e51e5c033b1624ced56bd8c39e4d
 F www/templates/Wasp/form_edit_thread.tpl 1abe8063408bd1a7578ecfd473cc19e09b538dc1
 F www/templates/Wasp/form_editinfo.tpl 2668a6016f76f55d3bd5597e4344fdc2caee9198
 F www/templates/Wasp/form_login.tpl 59d96e0eba0c0019c0d68de935ae6d26e9614e49
-F www/templates/Wasp/form_new_post.tpl 21772bc9262049762bdeae9f2e2faff5e921d1c3
+F www/templates/Wasp/form_new_post.tpl 0ed10cd592aac8e664e75487e4d955f8a47c6660
 F www/templates/Wasp/form_new_thread.tpl 676af87e54eb3ddb8b705df528b75a62fdc11401
 F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/Wasp/form_register.tpl 18c0fa0a762d78dc4c34f6c8bdcb11140f4b1e36
@@ -661,7 +661,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 5579d63d5ec3d41f2962faded77b452bc0319fcb
-R 980fd3aebe9e9f4eacc43cfcd135a8fa
+P 665e67d2628b010b069c7b76ee3a28888093e931
+R 127b07a797fabe2bd91c868e254d84bf
 U johnfound
-Z d7c2ba60f110466f731ddaf49754c35e
+Z cfbeccff917cea9d697778c05029ebc1

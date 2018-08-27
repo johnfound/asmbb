@@ -390,10 +390,10 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .error_missing_thread
 
-        cinvoke sqliteColumnInt, [.stmt], 0
+        cinvoke sqliteColumnInt, [.stmt], 0     ; threadID
         mov     [.threadID], eax
 
-        cinvoke sqliteColumnInt, [.stmt], 4
+        cinvoke sqliteColumnInt, [.stmt], 5     ; userID
         mov     [.userID], eax
 
 ; check the permissions.
@@ -418,7 +418,7 @@ begin
 
         stdcall StrCat, [esi+TSpecialParams.page_title], cEditingThreadTitle
 
-        cinvoke sqliteColumnText, [.stmt], 1
+        cinvoke sqliteColumnText, [.stmt], 1    ; Thread caption.
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
 
         stdcall RenderTemplate, edi, "form_edit_thread.tpl", [.stmt], esi
