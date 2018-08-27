@@ -1,5 +1,5 @@
-C Fixed\sbug\sin\sedit\sthread\spermission\scheck.
-D 2018-08-27T04:53:51.225
+C Read\saccess\sfor\sthe\sadmins\sfor\sall\s\sLATs.
+D 2018-08-27T11:24:56.565
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -53,7 +53,7 @@ F source/search.asm 66833e46196d20ff02330cb0bd78c4ad6e1753ae
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm a326d83c4054d7294831402c3e5401dd864b4f44
-F source/showthread.asm 99680d2e15724f07c7034178ec9ccec842e7861b
+F source/showthread.asm b3ebc3d0c7e282d0943064c260cd3d3464445bd0
 F source/showthread.sql 284a3060114cb7668fead7008f4ebaf9258f14d2
 F source/sqlite3.asm 8e27aa526542e4c8bac6b9e741b6e0698220933f
 F source/sqlite_console.asm 4036ff078724d5f52ac9dacaf9cee9ec394f9e94
@@ -661,7 +661,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 665e67d2628b010b069c7b76ee3a28888093e931
-R 127b07a797fabe2bd91c868e254d84bf
+P aab08ec59263fac987ef11473a647fc9b55f426a
+R 47188b8e50a5613a7775d9081d8e2453
 U johnfound
-Z cfbeccff917cea9d697778c05029ebc1
+Z a91dcfacb43c3796830bd14d0cc968bc

@@ -76,6 +76,9 @@ begin
 .page_ok:
         mov     [esi+TSpecialParams.page_title], ebx
 
+        test    [esi+TSpecialParams.userStatus], permAdmin
+        jnz     .have_access
+
 ; check for limited access thread
 
         lea     eax, [.stmt]
@@ -89,6 +92,8 @@ begin
 
         test    ebx, ebx
         jz      .limited_not_for_you
+
+.have_access:
 
         stdcall TextCat, edi, txt '<div class="thread">'
         stdcall RenderTemplate, edx, "nav_thread.tpl", [.stmt2], esi
