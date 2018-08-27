@@ -48,8 +48,17 @@ begin
         mov     edi, eax
 
 ; links to the pages.
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlThreadsCount, sqlThreadsCount.length, eax, 0
+        stdcall TextCreate, sizeof.TText
+        mov     edx, eax
+
+        stdcall TextAddStr2, edx, 0, sqlThreadsCount, sqlThreadsCount.length
+        stdcall RenderTemplate, edx, 0, 0, esi
+        stdcall TextCompact, eax
+        push    edx
+
+        lea     ecx, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], edx, eax, ecx, 0
+        stdcall TextFree ; from the stack
 
         cmp     [esi+TSpecialParams.dir], 0
         je      .tag_ok
@@ -72,8 +81,18 @@ begin
 
 ; now append the list itself.
 
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectThreads, sqlSelectThreads.length, eax, 0
+        stdcall TextCreate, sizeof.TText
+        mov     edx, eax
+
+        stdcall TextAddStr2, edx, 0, sqlSelectThreads, sqlSelectThreads.length
+
+        stdcall RenderTemplate, edx, 0, 0, esi
+        stdcall TextCompact, eax
+        push    edx
+
+        lea     ecx, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], edx, eax, ecx, 0
+        stdcall TextFree ; from the stack.
 
         cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.page_length]
 

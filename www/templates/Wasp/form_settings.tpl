@@ -13,7 +13,8 @@
   <input type="text" value="[forum_title]" name="forum_title" class="settings" maxlength="512">
 
   <h3>Forum header:</h3>
-  <input type="text" value="[forum_header]" name="forum_header" class="settings" maxlength="512">
+  <textarea class=settings" name="forum_header">[forum_header]</textarea>
+  [case:0||<input type="text" value="[forum_header]" name="forum_header" class="settings" maxlength="512">]
 
   <h3>Description:</h3>
   <input type="text" value="[description]" name="description" class="settings" maxlength="256">

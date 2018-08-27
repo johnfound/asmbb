@@ -1,12 +1,13 @@
-<div class="thread_summary [case:[limited]||limited]">
+<div class="thread_summary">
   [case:[Pinned]||<img class="pinned" src="[special:skin]/_images/pinned.png" alt="!" title="Pinned thread">]
+  [case:[limited]||<img width="32" height="32" class="unread" src="[special:skin]/_images/limited.svg" alt="#" title="Limited access thread">]
   [case:[Unread]||<a href="[Slug]/#[FirstUnread]">]
   <img  height="32" width="32" class="unread" src="[special:skin]/_images/posts[case:[Unread]|_gray|].svg" alt="[case:[Unread]||>]" title="[case:[Unread]|No unread messages|Go to first unread]">
   [case:[Unread]||</a>]
   <div class="thread_link">
     <a class="thread_link" href="[Slug]/">[Caption]</a><br>
-    <span class="small">[special:posters=[id]]</span><br>
-    <span class="small comma">[special:invited=[id]]</span>
+    <span class="small comma posters">[special:posters=[id]]</span>
+    <span class="small comma invited">[special:invited=[id]]</span>
   </div>
   <div class="thread_tags">
     [special:threadtags=[id]]

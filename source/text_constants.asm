@@ -71,7 +71,3 @@ cAnonName               itext   EN: "Anon",             \
 cEmptySearch            itext   EN: "The search found nothing. Try another keywords.",      \
                                 RU: "Поиск не нашел ничего. Попробуйте другой запрос.",      \
                                 BG: "Търсенето не намери нищо. Опитайте с други думи."
-
-cAccessPrefix           itext   EN: "<b>Access for: </b>",             \
-                                RU: "<b>Доступ для: </b>",             \
-                                BG: "<b>Достъп за: </b>"
