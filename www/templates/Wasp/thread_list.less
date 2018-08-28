@@ -15,6 +15,63 @@ span.small {
   font-weight: normal;
 }
 
+.comma a::after {
+  content: ', ';
+  text-decoration: none;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+.comma a:last-child::after {
+  content: ' ';
+}
+
+.posters a:first-child::before {
+  display: inline-block;
+  color: @clArticleFG;
+  margin-right: 8px;
+  font-weight: bold;
+  content: 'Started by: ';
+}
+
+.posters a:first-child::after {
+  margin-right: 8px;
+  content: ' ';
+}
+
+
+.posters a:nth-child(2)::before {
+  display: inline-block;
+  color: @clArticleFG;
+  font-weight: bold;
+  margin-right: 8px;
+  content: 'Joined: ';
+}
+
+
+.invited a:first-child::before {
+  display: inline-block;
+  color: @clArticleFG;
+  margin-right: 8px;
+  font-weight: bold;
+  content: 'Invited: ';
+}
+
+.thread_tags {
+  background-color: @clColor1FG;
+  padding: 8px;
+  font-size: 12px;
+
+  a:first-child::before {
+    display: inline-block;
+    color: @clArticleFG;
+    margin-right: 8px;
+    font-weight: bold;
+    content: 'Tags: ';
+  }
+}
+
+
 .thread_summary {
   display: flex;
   margin: 8px 0px;
@@ -101,12 +158,6 @@ a.thread_link {
   text-overflow: ellipsis;
   color: @clThreadLink;
   white-space: nowrap;
-}
-
-div.thread_tags {
-  background-color: @clColor1FG;
-  padding: 8px;
-  font-size: 12px;
 }
 
 

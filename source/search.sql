@@ -1,36 +1,17 @@
 select
-
-  U.nick as UserName,
-  U.id as UserID,
-  U.av_time as AVer,
-  T.slug,
-  strftime('%d.%m.%Y %H:%M:%S', P.postTime, 'unixepoch') as PostTime,
-  P.ReadCount,
   PostFTS.rowid,
-  snippet(PostFTS, 0, '', '', '...', 16) as Content,
-  T.Caption,
-  (select count() from UnreadPosts UP where UP.UserID = ?6 and UP.PostID = PostFTS.rowid) as Unread
-
+  PostFTS.user as UserName,
+  P.userID,
+  U.av_time as AVer,
+  PostFTS.slug,
+  strftime('%d.%m.%Y %H:%M:%S', P.postTime, 'unixepoch') as PostTime,
+  PC.count as ReadCount,
+  snippet(PostFTS, 0, '*', '*', '...', 16) as Content,
+  PostFTS.Caption,
+  (select count() from UnreadPosts UP where UP.UserID = ?4 and UP.PostID = PostFTS.rowid) as Unread
 from
   PostFTS
-
-left join
-  Posts P on P.id = PostFTS.rowid
-
-left join
-  Threads T on T.id = P.threadID
-
-left join
-  ThreadTags TT on TT.ThreadID = T.id and TT.Tag = ?5
-
-left join
-  Users U on P.userID = U.id
-
-where
-  PostFTS match ?1 and ( ?4 is null or T.slug = ?4) and (?5 is null or TT.tag = ?5)
-
-order by rank
-
-limit ?2
-
-offset ?3
+  left join Posts P on P.id = PostFTS.rowid
+  left join PostCnt PC on PC.postID = P.id
+  left join Users U on U.id = P.userID
+  left join LimitedAccessThreads LT on LT.threadID = P.threadID

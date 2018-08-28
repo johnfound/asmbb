@@ -58,11 +58,17 @@ begin
 
 ; check the permissions.
 
-        test    [esi+TSpecialParams.userStatus], permEditOwn or permEditAll or permAdmin
+        test    [esi+TSpecialParams.userStatus], permAdmin                              ; the admin is always allowed to edit!
+        jnz     .permissions_ok
+
+        stdcall CheckLimitedAccess, [.threadID], [esi+TSpecialParams.userID]            ; Other users must have permission to view the thread in order to be able to edit it.
         jz      .error_wrong_permissions
 
-        test    [esi+TSpecialParams.userStatus], permEditAll or permAdmin
+        test    [esi+TSpecialParams.userStatus], permEditAll                            ; the moderators have permission to edit limited access threads if they are invited.
         jnz     .permissions_ok
+
+        test    [esi+TSpecialParams.userStatus], permEditOwn                            ; all other can edit only their own posts and only if have permission to edit.
+        jz      .error_wrong_permissions
 
         mov     eax, [.userID]
         cmp     eax, [esi+TSpecialParams.userID]
@@ -318,10 +324,14 @@ proc EditThreadAttr, .pSpecial
 .caption  dd ?
 .slug     dd ?
 .tags     dd ?
+.invited  dd ?
 .pinned   dd ?
+
+.fLimited dd ?
 
 .threadID dd ?
 .userID   dd ?
+.userName dd ?
 
 begin
         pushad
@@ -334,6 +344,7 @@ begin
         mov     [.slug], eax
         mov     [.tags], eax
         mov     [.pinned], eax
+        mov     [.userName], eax
 
 ; default integer values
         mov     [.threadID], eax
@@ -385,22 +396,30 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .error_missing_thread
 
-        cinvoke sqliteColumnInt, [.stmt], 0
+        cinvoke sqliteColumnInt, [.stmt], 0     ; threadID
         mov     [.threadID], eax
 
-        cinvoke sqliteColumnInt, [.stmt], 4
+        cinvoke sqliteColumnInt, [.stmt], 5     ; userID
         mov     [.userID], eax
 
 ; check the permissions.
 
-        test    [esi+TSpecialParams.userStatus], permEditOwn or permEditAll or permAdmin
-        jz      .error_wrong_permissions
-
-        test    [esi+TSpecialParams.userStatus], permEditAll or permAdmin
+        test    [esi+TSpecialParams.userStatus], permAdmin                              ; the admin is always allowed to edit!
         jnz     .permissions_ok
 
-        cmp     [esi+TSpecialParams.userID], eax
+        stdcall CheckLimitedAccess, [.threadID], [esi+TSpecialParams.userID]            ; Other users must have permission to view the thread in order to be able to edit it.
+        jz      .error_wrong_permissions
+
+        test    [esi+TSpecialParams.userStatus], permEditAll                            ; the moderators have permission to edit limited access threads if they are invited.
+        jnz     .permissions_ok
+
+        test    [esi+TSpecialParams.userStatus], permEditOwn                            ; all other can edit only their own posts and only if have permission to edit.
+        jz      .error_wrong_permissions
+
+        mov     eax, [.userID]
+        cmp     eax, [esi+TSpecialParams.userID]
         jne     .error_wrong_permissions
+
 
 .permissions_ok:
 
@@ -413,7 +432,7 @@ begin
 
         stdcall StrCat, [esi+TSpecialParams.page_title], cEditingThreadTitle
 
-        cinvoke sqliteColumnText, [.stmt], 1
+        cinvoke sqliteColumnText, [.stmt], 1    ; Thread caption.
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
 
         stdcall RenderTemplate, edi, "form_edit_thread.tpl", [.stmt], esi
@@ -427,6 +446,8 @@ begin
         stdcall StrDel, [.caption]
         stdcall StrDel, [.slug]
         stdcall StrDel, [.tags]
+        stdcall StrDel, [.invited]
+        stdcall StrDel, [.userName]
         mov     [esp+4*regEAX], edi
         popad
         return
@@ -466,6 +487,16 @@ begin
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "tags", 0
         mov     [.tags], eax
+
+; get the invited
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "invited", 0
+        mov     [.invited], eax
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "limited", txt "0"
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack
+        mov     [.fLimited], eax
 
 ; Get the pinned
 
@@ -510,6 +541,10 @@ begin
         jne     .error_write            ; strange write fault.
 
         stdcall SaveThreadTags, [.tags], [esi+TSpecialParams.dir], [.threadID]
+
+; save the invited users
+
+        stdcall SaveInvited, [.fLimited], [.invited], [esi+TSpecialParams.userName], [.threadID]
 
 ; save the pinned flag. Only for admins!
 

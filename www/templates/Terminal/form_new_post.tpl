@@ -14,8 +14,8 @@
     [include:edit_toolbar.tpl]
     <textarea class="editor" name="source" id="source" placeholder="Answer the wrong one here">[source]</textarea>
     <div class="panel">
-      <input type="submit" name="submit" value="Submit" >
       <input type="submit" name="preview" value="Preview" >
+      <input type="submit" name="submit" value="Submit" >
       <input type="hidden" name="ticket" value="[Ticket]" >
       <input type="reset" value="Revert" >
     </div>

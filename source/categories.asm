@@ -17,8 +17,18 @@ begin
         stdcall RenderTemplate, edx, "nav_categories.tpl", 0, esi
         mov     edi, eax
 
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlReadCats, sqlReadCats.length, eax, 0
+        stdcall TextCreate, sizeof.TText
+        mov     edx, eax
+
+        stdcall TextAddStr2, edx, 0, sqlReadCats, sqlReadCats.length
+        stdcall RenderTemplate, edx, 0, 0, esi
+        stdcall TextCompact, eax
+        push    edx
+
+        lea     ecx, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], edx, eax, ecx, 0
+        stdcall TextFree ; from the stack
+
         cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.userID]
 
 .loop:

@@ -12,21 +12,31 @@ div.edit_groupR {
   padding-left: 8px;
 }
 
-div.new_editor label {
-  display: block;
-  color: @clColor1FG;
-  font-weight: bold;
-  margin: 8px 0px 4px 0px;
+div.new_editor {
+  label {
+    display: block;
+    color: @clColor1FG;
+    font-weight: bold;
+    margin: 8px 0px 4px 0px;
+  }
+
+  input[type="edit"] {
+    display: block;
+    width: 100%;
+    padding: 4px;
+    margin-bottom: 8px;
+    border: @borderEdit;
+    outline-style: none;
+
+    background-color: @clEditorBG;
+    color: @clEditorFG;
+  }
 }
 
-input.title, input.tags {
-  display: block;
-  width: 100%;
-  padding: 4px;
-  margin-bottom: 8px;
-  border: @borderEdit;
-  outline-style: none;
+#users_invited {
+  display: none;
+}
 
-  background-color: @clEditorBG;
-  color: @clEditorFG;
+#limited:checked ~ #users_invited {
+  display: block;
 }

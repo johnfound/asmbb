@@ -38,7 +38,7 @@ create index idxGuestRequests on GuestRequests(addr);
 
 create table Users (
   id        integer primary key autoincrement,
-  nick      text unique,
+  nick      text unique collate nocase,
   passHash  text unique,
   salt      text unique,
   status    integer,           -- see permXXXXX constants.
@@ -53,7 +53,7 @@ create table Users (
   PostCount integer default 0  -- Speed optimization in order to not count the posts every time. Need automatic count.
 );
 
-create index idxUsers_nick on Users (nick);
+-- create index idxUsers_nick on Users (nick collate nocase); - not needed because of the UNIQUE clause.
 create index idxUsers_email on Users (email);
 create index idxUsersX on Users(id, nick, avatar);
 create index idxUsers_LastSeen on Users(LastSeen);
@@ -74,7 +74,7 @@ create index idxUserLogTime on UserLog(time);  -- Any other index on UserLog rui
 create table WaitingActivation (
   a_secret text primary key,
   operation integer not null,    -- 0 = Registering account; 1 = change email; 2 = reseting password.
-  nick text unique,
+  nick text unique collate nocase,
   passHash text unique,
   salt  text unique,
   email text unique,
@@ -218,7 +218,12 @@ CREATE TRIGGER PostsAU AFTER UPDATE OF Content, editTime, editUserID, threadID O
 END;
 
 
+create table LimitedAccessThreads (
+  threadID integer references Threads(id) on delete cascade,
+  userID   integer references Users(id) on delete cascade
+);
 
+create unique index idxLimitedAccessThreads on LimitedAccessThreads(threadID, userID);
 
 
 create table Tags (

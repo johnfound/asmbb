@@ -6,7 +6,7 @@ LIMIT_TAG_DESCRIPTION = 1024
 cNewPostForm   text "form_new_post.tpl"
 cNewThreadForm text "form_new_thread.tpl"
 
-sqlSelectConst text "select ?1 as slug, ?2 as caption, ?3 as source, ?4 as ticket, ?5 as tags"
+sqlSelectConst text "select ?1 as slug, ?2 as caption, ?3 as source, ?4 as ticket, ?5 as tags, ?6 as limited, ?7 as invited"
 
 sqlGetQuote   text "select U.nick, P.content from Posts P left join Users U on U.id = P.userID where P.id = ?"
 
@@ -26,6 +26,8 @@ proc PostUserMessage, .pSpecial
 
 .caption  dd ?
 .tags     dd ?
+.fLimited dd ?
+.invited  dd ?
 .count    dd ?
 
 .source   dd ?
@@ -45,6 +47,8 @@ begin
         mov     [.rendered], eax
         mov     [.caption], eax
         mov     [.tags], eax
+        mov     [.fLimited], eax
+        mov     [.invited], eax
         mov     [.ticket], eax
         mov     [.stmt], eax
         mov     [.stmt2], eax
@@ -92,6 +96,16 @@ begin
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "tags", 0
 ;        stdcall UniqueTagList, eax, [esi+TSpecialParams.dir]
         mov     [.tags], eax
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "limited", txt "0"
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack
+        mov     [.fLimited], eax
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "invited", 0
+        mov     [.invited], eax
+
         jmp     .thread_ok
 
 
@@ -241,6 +255,16 @@ begin
 
 .tags_zero:
 
+        cinvoke sqliteBindInt, [.stmt], 6, [.fLimited]
+
+        stdcall StrPtr, [.invited]
+        test    eax, eax
+        jz      .invited_ok
+
+        cinvoke sqliteBindText, [.stmt], 7, eax, [eax+string.len], SQLITE_STATIC
+
+.invited_ok:
+
         cinvoke sqliteStep, [.stmt]
 
         mov     ecx, cNewThreadForm
@@ -359,6 +383,9 @@ begin
 
         stdcall SaveThreadTags, [.tags], [esi+TSpecialParams.dir], [.threadID]
 
+; Process invited users for the limited access thread:
+        stdcall SaveInvited, [.fLimited], [.invited], [esi+TSpecialParams.userName], [.threadID]
+
 .post_in_thread:
 
         lea     eax, [.stmt]
@@ -464,6 +491,7 @@ begin
         stdcall StrDel, [.rendered]
         stdcall StrDel, [.caption]
         stdcall StrDel, [.tags]
+        stdcall StrDel, [.invited]
         stdcall StrDel, [.ticket]
 
         mov     [esp+4*regEAX], edi
@@ -566,7 +594,7 @@ begin
         stdcall StrSplitList, [.tags], ",", FALSE
         mov     esi, eax
 
-        stdcall UniqueList, esi, [.dir]
+        stdcall UniqueTagList, esi, [.dir]
 
         mov     ebx, [esi+TArray.count] ; the count can be max 4
         test    ebx, ebx
@@ -645,7 +673,7 @@ endp
 
 
 
-proc UniqueList, .pList, .hDir
+proc UniqueTagList, .pList, .hDir
 begin
         pushad
         mov     edx, [.pList]
@@ -799,6 +827,193 @@ begin
         stdcall ListFree, esi, StrDel
         stdcall ListFree, edi, StrDel
 
+        popad
+        return
+endp
+
+
+
+sqlDelAllInvited  text  "delete from LimitedAccessThreads where threadID = ?1"
+sqlInsertInvited  text  "insert into LimitedAccessThreads(threadID, userID) values (?1, ?2)"
+
+proc SaveInvited, .fLimited, .invited, .self, .threadID
+.stmt  dd ?
+begin
+        pushad
+
+        xor     eax, eax
+        mov     [.stmt], eax
+
+; remove all currently invited users...
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlDelAllInvited, sqlDelAllInvited.length, eax, 0
+        test    eax, eax
+        jnz     .end_del
+
+        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+.end_del:
+        cmp     [.fLimited], 0
+        je      .finish         ; only make the thread public!
+
+        cmp     [.invited], 0
+        jne     .split
+
+        stdcall CreateArray, 4
+        mov     esi, eax
+        jmp     .process_list
+
+.split:
+        stdcall StrSplitList, [.invited], ",", FALSE
+        mov     esi, eax
+
+.process_list:
+        stdcall UniqueInvitedList, esi, [.self]
+
+        mov     ebx, [esi+TArray.count]
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertInvited, sqlInsertInvited.length, eax, 0
+
+.user_loop:
+        dec     ebx
+        js      .finish_users
+
+        cinvoke sqliteBindInt,  [.stmt], 1, [.threadID]
+        cinvoke sqliteBindInt, [.stmt], 2, [esi+TArray.array + 4*ebx]
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteClearBindings, [.stmt]
+        cinvoke sqliteReset, [.stmt]
+        jmp     .user_loop
+
+
+.finish_users:
+
+        stdcall FreeMem, esi
+        cinvoke sqliteFinalize, [.stmt]
+
+.finish:
+        popad
+        return
+endp
+
+
+sqlGetUserID text "select id from users where nick = ?1"
+
+proc UniqueInvitedList, .pList, .hSelf
+.stmt dd ?
+begin
+        pushad
+        mov     edx, [.pList]
+
+        mov     edi, [.hSelf]
+        test    edi, edi
+        jz      .outer
+
+        stdcall StrDup, edi
+        mov     edi, eax
+
+        mov     ecx, [edx+TArray.count]
+
+.loop_remove_self:
+        dec     ecx
+        js      .outer
+
+        stdcall StrCompNoCase, [edx+4*ecx+TArray.array], [.hSelf]
+        jnc     .loop_remove_self
+
+        stdcall StrDel, [edx+4*ecx+TArray.array]
+        stdcall DeleteArrayItems, edx, ecx, 1
+        jmp     .loop_remove_self
+
+.outer:
+        DebugMsg "Sorting invited array"
+
+        mov     ecx, [edx+TArray.count]
+        xor     ebx, ebx
+
+.inner:
+        dec     ecx
+        jle     .next
+
+        stdcall StrCompSort2, [edx+4*ecx+TArray.array], [edx+4*ecx+TArray.array-4], FALSE
+        test    eax, eax
+        jns     .inner
+
+        pushd   [edx+4*ecx+TArray.array] [edx+4*ecx+TArray.array-4]
+        popd    [edx+4*ecx+TArray.array] [edx+4*ecx+TArray.array-4]
+        inc     ebx
+        jmp     .inner
+
+.next:
+        test    ebx, ebx
+        jnz     .outer
+
+        DebugMsg "Array sorted, remove duplicated users."
+
+        mov     ecx, [edx+TArray.count]
+
+.unique:
+        dec     ecx
+        jle     .end_unique
+
+        stdcall StrCompNoCase, [edx+4*ecx+TArray.array], [edx+4*ecx+TArray.array-4]
+        jnc     .unique
+
+        stdcall StrDel, [edx+4*ecx+TArray.array]
+        stdcall DeleteArrayItems, edx, ecx, 1
+        jmp     .unique
+
+.end_unique:
+
+; add self:
+
+        stdcall StrDup, [.hSelf]
+        mov     edi, eax
+
+        stdcall AddArrayItems, edx, 1
+        mov     [eax], edi
+
+; now replace the nicks with IDs:
+
+        mov     edi, edx
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetUserID, sqlGetUserID.length, eax, 0
+
+        mov     ebx, [edi+TArray.count]
+
+.id_loop:
+        dec     ebx
+        js      .list_ok
+
+        stdcall StrPtr, [edi+TArray.array + 4*ebx]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        je      .get_id
+
+        stdcall StrDel, [edi+TArray.array + 4*ebx]
+        stdcall DeleteArrayItems, edi, ebx, 1
+        mov     edi, edx
+        jmp     .next_user
+
+.get_id:
+        cinvoke sqliteColumnInt, [.stmt], 0
+        xchg    eax, [edi+TArray.array + 4*ebx]
+        stdcall StrDel, eax
+
+.next_user:
+        cinvoke sqliteReset, [.stmt]
+        cinvoke sqliteClearBindings, [.stmt]
+        jmp     .id_loop
+
+.list_ok:
+        cinvoke sqliteFinalize, [.stmt]
+        mov     [esp+4*regESI], edi
         popad
         return
 endp

@@ -15,7 +15,7 @@ uopResetPassword = 2
 ; uopDeleteAccount ?
 
 
-sqlGetUserInfo   text "select id, salt, passHash, status from Users where lower(nick) = lower(?)"
+sqlGetUserInfo   text "select id, salt, passHash, status from Users where nick = ?"
 sqlInsertSession text "insert into sessions (userID, sid, FromIP, last_seen) values ( ?1, ?2, ?3, strftime('%s','now') )"
 sqlUpdateSession text "update Sessions set userID = ?1, FromIP = ?3, last_seen = strftime('%s','now') where sid = ?2"
 sqlCheckSession  text "select sid from sessions where userID = ? and fromIP = ?"
@@ -368,7 +368,7 @@ endp
 
 ;sqlCheckMinInterval text "select (strftime('%s','now') - time_reg) as delta from WaitingActivation where (ip_from = ?) and ( delta>30 ) order by time_reg desc limit 1"
 sqlRegisterUser    text "insert or replace into WaitingActivation (nick, passHash, salt, email, ip_from, time_reg, time_email, a_secret, operation) values (?1, ?2, ?3, ?4, ?5, strftime('%s','now'), NULL, ?6, ?7)"
-sqlCheckUserExists text "select 1 from Users where lower(nick) = lower(?) or email = ? limit 1"
+sqlCheckUserExists text "select 1 from Users where nick = ? or email = ? limit 1"
 
 proc RegisterNewUser, .pSpecial
 
