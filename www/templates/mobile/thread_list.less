@@ -66,7 +66,7 @@ a.thread_link {
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+//  white-space: nowrap;
   flex-grow: 1;
 }
 
@@ -113,5 +113,62 @@ a.thread_link {
       font-weight: bold;
       color: @clButtonBG;
     }
+  }
+}
+
+
+.small {
+  display: block;
+}
+
+.comma a::after {
+  content: ', ';
+  text-decoration: none;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+.comma a:last-child::after {
+  content: ' ';
+}
+
+.posters a:first-child::before {
+  display: inline-block;
+  color: @clDarkFG;
+  margin-right: 8px;
+  font-weight: bold;
+  content: 'Started by: ';
+}
+
+.posters a:first-child::after {
+  margin-right: 8px;
+  content: ' ';
+}
+
+
+.posters a:nth-child(2)::before {
+  display: inline-block;
+  color: @clDarkFG;
+  font-weight: bold;
+  margin-right: 8px;
+  content: 'Joined: ';
+}
+
+
+.invited a:first-child::before {
+  display: inline-block;
+  color: @clDarkFG;
+  margin-right: 8px;
+  font-weight: bold;
+  content: 'Invited: ';
+}
+
+.thread_tags {
+  a:first-child::before {
+    display: inline-block;
+    color: @clDarkFG;
+    margin-right: 8px;
+    font-weight: bold;
+    content: 'Tags: ';
   }
 }

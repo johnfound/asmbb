@@ -73,12 +73,12 @@
         <input type="submit" value="Go">
       </noscript>
     </form>
-<div id="header">
+<h1 id="header">
  ▄▄             ▄▄▄  ▄▄▄ Power
 █  █ ▄▄▄▄ ▄▄▄▄▄ █  █ █  █
 █▄▄█ █▄▄▄ █ █ █ █▀▀▄ █▀▀▄
 █  █ ▄▄▄█ █ █ █ █▄▄▀ █▄▄▀
-</div>
+</h1>
     <div class="clear"></div>
   </div>
 

@@ -54,7 +54,7 @@
 @borderButton: none;
 @borderButtonActive: none;
 @borderNavRad: 4px;
-@paddingNav: 1px 4px;
+@paddingNav: 0px 8px;
 
 @clSeparator: #a0a0a0;
 @borderQuote: 2px solid @clSeparator;

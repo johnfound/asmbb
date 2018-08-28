@@ -5,7 +5,7 @@
 
 <div class="new_editor">
   <div class="ui">
-    <a class="ui" href=".">The thread</a>
+    <a class="ui left" href=".">The thread</a>
   </div>
   <form id="editform" action="!edit_thread" method="post">
 

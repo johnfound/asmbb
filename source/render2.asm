@@ -1781,15 +1781,34 @@ endp
 
 
 ;sqlGetThreadPosters  text "select (select nick from users where id = P.userid) from Posts P where P.threadID = ?1 order by P.id limit 20;"
-sqlGetThreadPosters  text "select nick from users where id in (select distinct userid as nick from Posts P where P.threadID = ?1)"
+; sqlGetThreadPosters  text "select nick from users where id in (select distinct userid from Posts P where P.threadID = ?1)"
+
+sqlGetThreadStarter  text "select u.id, nick from posts p left join users u on p.userid = u.id where p.threadid = ?1 order by p.id"
+sqlGetThreadPosters  text "select id, nick from (select distinct userid from posts where threadid = ?1) left join Users on id = userid"
 
 proc GetPosters, .threadID
   .stmt  dd ?
+  .starter dd ?
 begin
         pushad
 
         stdcall StrNew
         mov     ebx, eax
+
+; read the thread starter:
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadStarter, sqlGetThreadStarter.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .end_thread_posters
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        mov     [.starter], eax
+
+        call    .adduser
+        cinvoke sqliteFinalize, [.stmt]
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadPosters, sqlGetThreadPosters.length, eax, 0
@@ -1801,7 +1820,23 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .end_thread_posters
 
-        cinvoke sqliteColumnText, [.stmt], 0
+        cinvoke sqliteColumnInt, [.stmt], 0
+        cmp     eax, [.starter]
+        je      .thread_posters_loop
+
+        call    .adduser
+
+        jmp     .thread_posters_loop
+
+.end_thread_posters:
+
+        cinvoke sqliteFinalize, [.stmt]
+        mov     [esp+4*regEAX], ebx
+        popad
+        return
+
+.adduser:
+        cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrEncodeHTML, eax
         mov     ecx, eax
         stdcall StrURLEncode, eax
@@ -1813,14 +1848,8 @@ begin
         stdcall StrCat, ebx, ecx
         stdcall StrDel, ecx
         stdcall StrCat, ebx, txt '</a>'
-        jmp     .thread_posters_loop
+        retn
 
-.end_thread_posters:
-
-        cinvoke sqliteFinalize, [.stmt]
-        mov     [esp+4*regEAX], ebx
-        popad
-        return
 endp
 
 

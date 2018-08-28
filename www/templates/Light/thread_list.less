@@ -31,14 +31,29 @@ span.small {
   color: @clArticleFG;
   margin-right: 8px;
   font-weight: bold;
-  content: 'Posters: ';
+  content: 'Started by: ';
 }
+
+.posters a:first-child::after {
+  margin-right: 8px;
+  content: ' ';
+}
+
+
+.posters a:nth-child(2)::before {
+  display: inline-block;
+  color: @clArticleFG;
+  font-weight: bold;
+  margin-right: 8px;
+  content: 'Joined: ';
+}
+
 
 .invited a:first-child::before {
   display: inline-block;
   color: @clArticleFG;
-  margin-right: 8px;
   font-weight: bold;
+  margin-right: 8px;
   content: 'Invited: ';
 }
 
