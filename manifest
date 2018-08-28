@@ -1,5 +1,5 @@
-C More\suniversal\srendering\sof\ssome\stags\scombined\swith\smore\sadvanced\scss.\sNot\sall\sskins\sare\sfixed.\sMore\stests\sneeded.\s\n\nMake\sthe\sadmin\sto\sbe\sable\sto\sread\sand\ssee\sthe\slimited\saccess\sthreads.\sMore\swork\sand\stests\sare\sneeded.
-D 2018-08-27T22:25:30.800
+C Better\spermissions\scheck\sfor\sthe\sedits\sand\sdeletes\srelated\sto\sthe\slimited\saccess\sthreads.
+D 2018-08-28T06:28:53.271
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -25,8 +25,8 @@ F source/chat.asm ba9592f29a64ae09eb61c203da1bf98ba8db230f
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm 9790ce0e108e3e4d40044f59a5458b99cfbff84c
 F source/create.sql 541e7dcbcb427149e490caf36ab6c9f25ed66d18
-F source/delete.asm 5a916c3647c52baa753951d93fbbfaa3175627d4
-F source/edit.asm 5e578e70a417516d6133009a89f5520ba962cf55
+F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
+F source/edit.asm 45f6a0f275c6c3bb53458b0d6ec058435922b2e9
 F source/engine.asm 892b5a8a9efbb0e7ae9976e6d9ea6985ef76169f
 F source/engine.fpr aa3213224157c3e7c9c70a45610e049525cbd2a5
 F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
@@ -53,7 +53,7 @@ F source/search.asm 66833e46196d20ff02330cb0bd78c4ad6e1753ae
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm a326d83c4054d7294831402c3e5401dd864b4f44
-F source/showthread.asm b3ebc3d0c7e282d0943064c260cd3d3464445bd0
+F source/showthread.asm 037c2cd9efb1c8469eacafd16f8f62db07249916
 F source/showthread.sql 284a3060114cb7668fead7008f4ebaf9258f14d2
 F source/sqlite3.asm 8e27aa526542e4c8bac6b9e741b6e0698220933f
 F source/sqlite_console.asm 4036ff078724d5f52ac9dacaf9cee9ec394f9e94
@@ -478,7 +478,7 @@ F www/templates/Wasp/_images/emoticons/tongue.gif f37a376e83402b21c9770767728282
 F www/templates/Wasp/_images/emoticons/wink.gif fea56f9c71694b38842aa0f6295d26cc330fcca7
 F www/templates/Wasp/_images/help.svg 2581fe16847d84dc21ab16d5cc133297769393e3
 F www/templates/Wasp/_images/history.svg 4323f28b013a59737835e422217f8e3d066ea748
-F www/templates/Wasp/_images/limited.svg 3f9c2d19ece9903d82b2db5e68221a9baa05bd99 w www/templates/Wasp/_images/group.svg
+F www/templates/Wasp/_images/limited.svg 3f9c2d19ece9903d82b2db5e68221a9baa05bd99
 F www/templates/Wasp/_images/markread.svg 9400f96f6c802e860bced2e7fd56227fd2d04976
 F www/templates/Wasp/_images/onepost.svg 41b518db5955c7192d1272566a64bb0ae2da17f1
 F www/templates/Wasp/_images/onepost_gray.svg e24f6a889dd6389c2a0a045b06e7761616cba763
@@ -664,7 +664,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 59460aab88863b444fe70da19e159c0f3c6455df
-R 84d4d4fbb955e0aedda733744b053e48
+P 65d6e4daf42dd5ca46d00331ac628fd23e23f498
+R 33fc8c4925031c0f0083c84de571f48b
 U johnfound
-Z 0645762d474c7c673e292e4fbf4e2a57
+Z 885f7c1cb939ea4fb615529a4a1d4422

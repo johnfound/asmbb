@@ -10,6 +10,33 @@ sqlGetThreadInfo text "select T.id, T.caption, T.slug, (select userID from Posts
 sqlIncReadCount  text "update PostCNT set Count = Count + 1 where postid in ("
 sqlSetPostsRead  text "delete from UnreadPosts where UserID = ?1 and PostID in ("
 
+; Checks the permissions of the thread, towards some user.
+;
+; Returns ZF=0 if the user has permissions to view the thread.
+;         ZF=1 otherwize.
+;
+; It always return ZF=0 for the public threads and
+; for the limited access threads where the user is included
+; in the list of the invited users.
+
+proc CheckLimitedAccess, .threadID, .userID
+.stmt dd ?
+begin
+        pushad
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckAccess, sqlCheckAccess.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
+        cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.userID]
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteColumnInt, [.stmt], 0
+        mov     ebx, eax
+        cinvoke sqliteFinalize, [.stmt]
+        test    ebx, ebx
+        popad
+        return
+endp
+
+
 
 proc ShowThread, .pSpecial
 
@@ -76,21 +103,12 @@ begin
 .page_ok:
         mov     [esi+TSpecialParams.page_title], ebx
 
-        test    [esi+TSpecialParams.userStatus], permAdmin
+        test    [esi+TSpecialParams.userStatus], permAdmin      ; the admins have always access, but not the morerators!
         jnz     .have_access
 
 ; check for limited access thread
 
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckAccess, sqlCheckAccess.length, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
-        cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.userID]
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteColumnInt, [.stmt], 0
-        mov     ebx, eax
-        cinvoke sqliteFinalize, [.stmt]
-
-        test    ebx, ebx
+        stdcall CheckLimitedAccess, [.threadID], [esi+TSpecialParams.userID]
         jz      .limited_not_for_you
 
 .have_access:

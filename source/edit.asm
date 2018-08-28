@@ -58,11 +58,17 @@ begin
 
 ; check the permissions.
 
-        test    [esi+TSpecialParams.userStatus], permEditOwn or permEditAll or permAdmin
+        test    [esi+TSpecialParams.userStatus], permAdmin                              ; the admin is always allowed to edit!
+        jnz     .permissions_ok
+
+        stdcall CheckLimitedAccess, [.threadID], [esi+TSpecialParams.userID]            ; Other users must have permission to view the thread in order to be able to edit it.
         jz      .error_wrong_permissions
 
-        test    [esi+TSpecialParams.userStatus], permEditAll or permAdmin
+        test    [esi+TSpecialParams.userStatus], permEditAll                            ; the moderators have permission to edit limited access threads if they are invited.
         jnz     .permissions_ok
+
+        test    [esi+TSpecialParams.userStatus], permEditOwn                            ; all other can edit only their own posts and only if have permission to edit.
+        jz      .error_wrong_permissions
 
         mov     eax, [.userID]
         cmp     eax, [esi+TSpecialParams.userID]
@@ -398,14 +404,22 @@ begin
 
 ; check the permissions.
 
-        test    [esi+TSpecialParams.userStatus], permEditOwn or permEditAll or permAdmin
-        jz      .error_wrong_permissions
-
-        test    [esi+TSpecialParams.userStatus], permEditAll or permAdmin
+        test    [esi+TSpecialParams.userStatus], permAdmin                              ; the admin is always allowed to edit!
         jnz     .permissions_ok
 
-        cmp     [esi+TSpecialParams.userID], eax
+        stdcall CheckLimitedAccess, [.threadID], [esi+TSpecialParams.userID]            ; Other users must have permission to view the thread in order to be able to edit it.
+        jz      .error_wrong_permissions
+
+        test    [esi+TSpecialParams.userStatus], permEditAll                            ; the moderators have permission to edit limited access threads if they are invited.
+        jnz     .permissions_ok
+
+        test    [esi+TSpecialParams.userStatus], permEditOwn                            ; all other can edit only their own posts and only if have permission to edit.
+        jz      .error_wrong_permissions
+
+        mov     eax, [.userID]
+        cmp     eax, [esi+TSpecialParams.userID]
         jne     .error_wrong_permissions
+
 
 .permissions_ok:
 

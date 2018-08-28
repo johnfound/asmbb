@@ -54,10 +54,18 @@ begin
         cinvoke sqliteColumnInt, [.stmt], 5
         mov     [.post_cnt], eax                                ; post_cnt
 
-        test    [esi+TSpecialParams.userStatus], permDelAll
+; check the permissions.
+
+        test    [esi+TSpecialParams.userStatus], permAdmin              ; the admin is always right!
         jnz     .perm_ok
 
-        test    [esi+TSpecialParams.userStatus], permDelOwn
+        stdcall CheckLimitedAccess, [.threadID], [esi+TSpecialParams.userID]  ; Other users must have permission to view the thread in order to be able to delete posts there!
+        jz      .perm_not_ok
+
+        test    [esi+TSpecialParams.userStatus], permDelAll                   ; moderator can delete every post that he can read.
+        jnz     .perm_ok
+
+        test    [esi+TSpecialParams.userStatus], permDelOwn                   ; the regular users can delete only their own posts and only if have permission to delete at all.
         jz      .perm_not_ok
 
         cinvoke sqliteColumnInt, [.stmt], 3                     ; UserID
