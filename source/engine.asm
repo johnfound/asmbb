@@ -74,6 +74,7 @@ include "chat.asm"
 include "chat_ipc.asm"
 
 include "postdebug.asm"
+include "attachments.asm"
 
 
 iglobal

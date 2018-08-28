@@ -13,6 +13,7 @@
     <p>Post content:</p>
     [include:edit_toolbar.tpl]
     <textarea class="editor" name="source" id="source" placeholder="Answer the wrong one here">[source]</textarea>
+    [case:[special:canupload]| |<p class="panel">Attach file(s):</p><div class="attach"><input type="file" placeholder="Select file to attach" name="attach" multiple="multiple"></div>]
     <div class="panel">
       <input type="submit" name="preview" value="Preview" >
       <input type="submit" name="submit" value="Submit" >

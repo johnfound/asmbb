@@ -101,22 +101,23 @@ local ..keynm, ..len, ..hash, ..char
     load ..hash byte from Pfunc + ..hash
   end repeat
 
-  disp 3,'Keyword hash : ', <..hash, 10>, ' on "', key, '"', 10
+;  disp 3,'Keyword hash : ', <..hash, 10>, ' on "', key, '"', 10
 
   . = ..hash
 }
 
 
 if used RenderTemplate
-        PList tableRenderCmd, tpl_func,                  \
-              'special:', RenderTemplate.cmd_special,   \
-              'include:', RenderTemplate.cmd_include,   \
-              'minimag:', RenderTemplate.cmd_minimag,   \   ; HTML, no encoding.
-              'html:',    RenderTemplate.cmd_html,      \   ; HTML, disables the encoding.
-              'url:',     RenderTemplate.cmd_url,       \   ; Needs encoding!
-              'css:',     RenderTemplate.cmd_css,       \   ; No output, no encoding.
-              'case:',    RenderTemplate.cmd_case,      \   ; No encoding.
-              'sql:',     RenderTemplate.cmd_sql            ; Needs encoding!
+        PList tableRenderCmd, tpl_func,                         \
+              'special:',     RenderTemplate.cmd_special,       \
+              'include:',     RenderTemplate.cmd_include,       \
+              'minimag:',     RenderTemplate.cmd_minimag,       \   ; HTML, no encoding.
+              'html:',        RenderTemplate.cmd_html,          \   ; HTML, disables the encoding.
+              'attachments:', RenderTemplate.cmd_attachments,   \   ; HTML, no encoding.
+              'url:',         RenderTemplate.cmd_url,           \   ; Needs encoding!
+              'css:',         RenderTemplate.cmd_css,           \   ; No output, no encoding.
+              'case:',        RenderTemplate.cmd_case,          \   ; No encoding.
+              'sql:',         RenderTemplate.cmd_sql            ; Needs encoding!
 
 
         PList tableSpecial, tpl_func,                                 \
@@ -145,6 +146,7 @@ if used RenderTemplate
               "canedit",     RenderTemplate.sp_canedit,               \ ; 1/0 no encoding
               "candel",      RenderTemplate.sp_candelete,             \ ; 1/0 no encoding
               "canchat",     RenderTemplate.sp_canchat,               \ ; 1/0 no encoding
+              "canupload",   RenderTemplate.sp_canupload,             \ ; 1/0 no encoding
               "referer",     RenderTemplate.sp_referer,               \ ; 1/0 no encoding
               "alltags",     RenderTemplate.sp_alltags,               \ ; HTML no encoding
               "setupmode",   RenderTemplate.sp_setupmode,             \ ; no encoding
@@ -656,6 +658,97 @@ begin
         mov     [.fEncode], 1
         jmp     .loop
 
+; ...................................................................
+
+sqlGetAttachments text "select id, filename, length(file), strftime('%d.%m.%Y %H:%M:%S', changed, 'unixepoch'), dcnt from Attachments where postID = ?1"
+
+.cmd_attachments:
+; here esi points to the ":" char of the "attachments" command, ecx at the end "]" and edi at the start "["
+
+locals
+  .fileid     dd ?
+  .filename   dd ?
+  .filesize   dd ?
+  .uploadtime dd ?
+  .count      dd ?
+endl
+
+        call    .get_number
+
+        stdcall TextMoveGap, edx, ecx
+        inc     [edx+TText.GapEnd]
+        mov     [edx+TText.GapBegin], edi       ; clear the whole command.
+
+        stdcall TextIns, edx, '<section class="attachments">'
+        mov     edi, edx
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetAttachments, sqlGetAttachments.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, ebx
+
+.att_loop:
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .end_of_attachments
+
+        cinvoke sqliteColumnInt, [.stmt], 0             ; ID of the file.
+        mov     [.fileid], eax
+
+        cinvoke sqliteColumnText, [.stmt], 1            ; filename of the file.
+        mov     [.filename], eax
+
+        cinvoke sqliteColumnInt, [.stmt], 2             ; file size
+        mov     [.filesize], eax
+
+        cinvoke sqliteColumnText, [.stmt], 3            ; upload time
+        mov     [.uploadtime], eax
+
+        cinvoke sqliteColumnInt, [.stmt], 4             ; download count
+        mov     [.count], eax
+
+        mov     edx, edi
+
+        stdcall TextIns, edx, '<section class="onefile"><a class="attach" href="/!attached/'
+        stdcall NumToStr, [.fileid], ntsDec or ntsUnsigned
+        stdcall TextIns, edx, eax
+        stdcall StrDel, eax
+        stdcall TextIns, edx, txt '">'
+
+        stdcall StrEncodeHTML, [.filename]
+        stdcall TextAddStr2, edx, [edx+TText.GapBegin], eax, 0
+        stdcall StrDel, eax
+        stdcall TextIns, edx, txt '</a>'
+
+        stdcall TextIns, edx, txt '<p class="filesize">'
+        stdcall FormatFileSize, [.filesize]
+        stdcall TextIns, edx, eax
+        stdcall StrDel, eax
+
+        stdcall TextIns, edx, txt '</p><p class="time">'
+        stdcall TextIns, edx, [.uploadtime]
+        stdcall TextIns, edx, '</p><p class="counter">'
+
+        stdcall NumToStr, [.count], ntsDec or ntsUnsigned
+        stdcall TextIns, edx, eax
+        stdcall StrDel, eax
+        stdcall TextIns, edx, txt "</p></section>"
+
+        mov     edi, edx
+        jmp     .att_loop
+
+.end_of_attachments:
+        cinvoke sqliteFinalize, [.stmt]
+
+        mov     edx, edi
+        stdcall TextIns, edx, '</section>'
+
+        mov     ecx, [edx+TText.GapBegin]
+        dec     ecx
+
+        mov     [.fEncode], 1
+        jmp     .loop
+
+
 
 ; ...................................................................
 ; here esi points to ":" of the "css:" command. edi points to the start "[" and ecx points to the end "]"
@@ -1154,12 +1247,15 @@ end if
         mov     eax, permThreadStart
         jmp     .one_permission
 
+.sp_canupload:
+        mov     eax, permAttach
+        jmp     .one_permission
+
 .sp_canchat:
         stdcall ChatPermissions, [.pSpecial]
         cmovc   eax, [.cBoolean]
         cmovnc  eax, [.cBoolean+4]
         jmp     .special_string
-
 
 locals
   .permOwn dd ?
@@ -1651,6 +1747,15 @@ begin
         return
 endp
 
+
+proc TextIns, .pText, .hString
+begin
+        push    eax
+        mov     edx, [.pText]
+        stdcall TextAddStr2, edx, [edx+TText.GapBegin], [.hString], 256
+        pop     eax
+        return
+endp
 
 
 proc FormatPostText, .ptrMinimag
@@ -2540,5 +2645,16 @@ begin
 
 .finish:
         pop     esi
+        return
+endp
+
+
+
+; Later can be made to compose KB/MB/GB suffixes.
+
+proc FormatFileSize, .size
+begin
+        stdcall NumToStr, [.size], ntsDec or ntsUnsigned
+        stdcall StrCat, eax, txt " bytes"
         return
 endp

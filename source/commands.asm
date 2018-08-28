@@ -11,6 +11,9 @@ permDelOwn      = 64
 permDelAll      = 128
 permChat        = 256
 
+permAttach      = 512           ; Can attach/edit/delete files to posts.
+permDownload    = 1024          ; Can download the attached files.
+
 permAdmin       = $80000000
 
 
@@ -63,6 +66,7 @@ if used tablePreCommands
 
 PList tablePreCommands, tpl_func,                  \
       "!avatar",          UserAvatar,              \
+      "!attached",        GetAttachedFile,         \
       "!login",           UserLogin,               \
       "!logout",          UserLogout,              \
       "!register",        RegisterNewUser,         \

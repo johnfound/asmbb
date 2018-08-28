@@ -144,3 +144,61 @@ div.post_text {
     padding: 16px;
   }
 }
+
+/* The attachments table */
+
+section.attachments {
+  display: inline-block;
+  background-color: @clBodyBG;
+  color: @clButtonBG;
+  font-weight: bold;
+  padding: 8px;
+  margin: 8px 8px 8px 0px;
+  &:before {
+    content: "Attached files:"
+  }
+
+  section.onefile {
+    color: @clBodyFG;
+    font-weight: normal;
+    display: block;
+    clear: both;
+    overflow: hidden;
+    margin-bottom: 4px;
+    a {
+      font-size: 90%;
+      font-weight: bold;
+    }
+    span {
+      font-size: 90%;
+      font-weight: bold;
+      text-decoration: line-through;
+    }
+    p {
+      margin: 4px;
+      float: right;
+      clear: right;
+    }
+    p.filesize {
+      font-size: 60%;
+      &:before {
+        content: "Size: ";
+      }
+    }
+    p.time {
+      float: left;
+      clear: both;
+      margin-left: 0px;
+      font-size: 60%;
+      &:before {
+        content: "Date: ";
+      }
+    }
+    p.counter {
+      font-size: 60%;
+      &:before {
+        content: "Downloads: ";
+      }
+    }
+  }
+}

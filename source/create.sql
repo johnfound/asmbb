@@ -257,14 +257,15 @@ create unique index idxUnreadPosts on UnreadPosts(UserID, PostID);
 create index idxUnreadPostsPostID on UnreadPosts(PostID);
 
 
-create table Attachements (
+create table Attachments (
   id       integer primary key autoincrement,
   postID   integer references Posts(id) on delete cascade,
   filename text,
-  notes    text,
-  file     blob
+  changed  integer,
+  dcnt     integer not null default 0,
+  file     blob,
+  md5sum   text
 );
-
 
 
 create table Sessions (
