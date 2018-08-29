@@ -2,6 +2,9 @@ LIMIT_POST_LENGTH = 16*1024
 LIMIT_POST_CAPTION = 512
 LIMIT_TAG_DESCRIPTION = 1024
 
+MAX_ATTACHMENT_COUNT = 10
+MAX_ATTACHMENT_SIZE = 1024*1024
+
 
 cNewPostForm   text "form_new_post.tpl"
 cNewThreadForm text "form_new_thread.tpl"
@@ -112,7 +115,8 @@ begin
 .get_caption_from_thread:
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, -1, eax, 0
+
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, sqlGetThreadInfo.length, eax, 0
 
         stdcall StrPtr, [esi+TSpecialParams.thread]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
@@ -169,7 +173,7 @@ begin
 ; get the quoted text
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetQuote, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetQuote, sqlGetQuote.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, ebx
         cinvoke sqliteStep, [.stmt]
 
@@ -218,7 +222,7 @@ begin
 
 .ticket_ok:
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectConst, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectConst, sqlSelectConst.length, eax, 0
 
         cmp     [esi+TSpecialParams.thread], 0
         je      .slug_ok
@@ -341,7 +345,7 @@ begin
         jz      .error_invalid_caption
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertThread, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertThread, sqlInsertThread.length, eax, 0
 
         cmp     [.caption], 0
         je      .rollback
@@ -389,7 +393,7 @@ begin
 .post_in_thread:
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, sqlGetThreadInfo.length, eax, 0
 
         stdcall StrPtr, [.slug]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
@@ -406,7 +410,7 @@ begin
 ; insert new post
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertPost, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertPost, sqlInsertPost.length, eax, 0
 
         cinvoke sqliteBindInt, [.stmt], 1, ebx
         cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.userID]
@@ -430,7 +434,7 @@ begin
 
         cinvoke sqliteBindText, [.stmt], 3, eax, ecx, SQLITE_STATIC
 
-; bind the rendered htmlt
+; bind the rendered html
 
         stdcall StrPtr, [.rendered]
         mov     ecx, [eax+string.len]
@@ -449,10 +453,18 @@ begin
         cinvoke sqliteLastInsertRowID, [hMainDatabase]
         mov     esi, eax                                                ; ESI is now the inserted postID!!!!
 
+; Save the attachments:
+
+        stdcall DumpPostArray, [.pSpecial]
+
+        stdcall DelAttachments, esi, [.pSpecial]
+        stdcall WriteAttachments, esi, [.pSpecial]
+;       jc      .attachments_error_uploading            ; ??? What we should do here? Rollback? Ignore? Format the HDD?
+
 ; Update thread LastChanged
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateThreads, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateThreads, sqlUpdateThreads.length, eax, 0
 
         cinvoke sqliteBindInt, [.stmt], 1, ebx
         cinvoke sqliteStep, [.stmt]
@@ -468,7 +480,7 @@ begin
 ; commit transaction
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCommit, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCommit, sqlCommit.length, eax, 0
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_DONE
         jne     .rollback
@@ -1014,6 +1026,152 @@ begin
 .list_ok:
         cinvoke sqliteFinalize, [.stmt]
         mov     [esp+4*regESI], edi
+        popad
+        return
+endp
+
+
+
+
+sqlAttach text "insert into Attachments(postID, filename, file, changed) values (?1, ?2, ?3, strftime('%s','now'))"
+
+proc WriteAttachments, .postID, .pSpecial
+.stmt dd ?
+.max_size dd ?
+begin
+        pushad
+        mov     ebx, [.pSpecial]
+
+        test    [ebx+TSpecialParams.userStatus], permAttach or permAdmin
+        jz      .error_permissions
+
+        stdcall ValueByName, [ebx+TSpecialParams.post_array], txt "attach"
+        jc      .error_post_data
+
+        mov     esi, eax        ; TArray of TPostFileItem
+        and     eax, $c0000000
+        jnz     .error_post_data        ; it is a string instead of array of attached files.
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlAttach, sqlAttach.length, eax, 0
+        cmp     eax, SQLITE_OK
+        jne     .error_prepare
+
+        mov     ebx, [esi+TArray.count]
+        lea     esi, [esi+TArray.array]
+
+        stdcall GetParam, "max_attachment_size", gpInteger
+        jnc     .max_size_ok
+        mov     eax, MAX_ATTACHMENT_SIZE
+.max_size_ok:
+        mov     [.max_size], eax
+
+        stdcall GetParam, "max_attachment_count", gpInteger
+        jnc     .max_cnt_ok
+        mov     eax, MAX_ATTACHMENT_COUNT
+.max_cnt_ok:
+
+        cmp     ebx, eax
+        cmovg   ebx, eax
+
+.loop:
+        dec     ebx
+        js      .end_of_files
+
+        mov     eax, [esi+TPostFileItem.size]
+        test    eax, eax
+        jz      .next
+
+        cmp     eax, [.max_size]
+        ja      .next
+
+        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
+
+        stdcall StrPtr, [esi+TPostFileItem.filename]
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteBindBlob, [.stmt], 3, [esi+TPostFileItem.data], [esi+TPostFileItem.size], SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+        mov     edi, eax
+        cmp     eax, SQLITE_DONE
+        jne     .end_of_files
+
+        cinvoke sqliteClearBindings, [.stmt]
+        cinvoke sqliteReset, [.stmt]
+
+.next:
+        add     esi, sizeof.TPostFileItem
+        jmp     .loop
+
+.end_of_files:
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     edi, SQLITE_DONE
+        jne     .error_write
+
+        clc
+        popad
+        return
+
+.error_permissions:
+.error_prepare:
+.error_write:
+.error_post_data:
+        stc
+        popad
+        return
+endp
+
+
+
+proc DelAttachments, .postID, .pSpecial
+begin
+        pushad
+        mov     esi, [.pSpecial]
+        mov     edx, [esi+TSpecialParams.post_array]
+
+; now search the files that need to be deleted:
+
+        mov     ecx, [edx+TArray.count]
+
+.loop:
+        dec     ecx
+        js      .finish
+
+        stdcall StrCompNoCase, [edx+TArray.array + 8*ecx], txt 'attch_del'
+        jnc     .loop
+
+        mov     eax, [edx+TArray.array + 8*ecx + 4]
+        cmp     eax, $c0000000
+        jb      .loop
+
+        stdcall StrToNumEx, eax
+        jc      .loop
+
+        stdcall __DelOneFile, [.postID], eax
+        jmp     .loop
+
+.finish:
+        popad
+        return
+endp
+
+
+
+sqlDelFile text "delete from Attachments where id = ?1 and postid = ?2"
+
+proc __DelOneFile, .postID, .fileID
+.stmt dd ?
+begin
+        pushad
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlDelFile, sqlDelFile.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.fileID]
+        cinvoke sqliteBindInt, [.stmt], 2, [.postID]
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
         popad
         return
 endp

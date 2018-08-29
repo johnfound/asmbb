@@ -84,6 +84,8 @@ begin
 
 ; ok, get the action then:
 
+        stdcall DumpPostArray, esi
+
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "ticket", 0
         mov     [.ticket], eax
 
@@ -152,17 +154,35 @@ begin
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
 
-        cmp     [.softPreview], 0
-        jne     .form_ok
+; deal with the attachments:
+
+        cmp     [esi+TSpecialParams.post_array], 0
+        je      .attch_ok
+
+        cinvoke sqliteColumnInt, [.stmt], 0     ; postID
+        mov     ebx, eax
+
+        stdcall DelAttachments, ebx, esi
+        stdcall WriteAttachments, ebx, esi
+
+.attch_ok:
+        shr     [.softPreview], 1
+        jnc     .render_all
+
+; JS call request:
+
+        stdcall RenderTemplate, edi, "edit.json", [.stmt], esi
+        stc
+        jmp     .finish
+
+.render_all:
         stdcall RenderTemplate, edi, "form_edit.tpl", [.stmt], esi
-        mov     edi, eax
-.form_ok:
-        stdcall RenderTemplate, edi, "preview.tpl", [.stmt], esi
+        stdcall RenderTemplate, eax, "preview.tpl", [.stmt], esi
         mov     edi, eax
 
         cinvoke sqliteFinalize, [.stmt]
 
-        shr     [.softPreview], 1       ; set CF
+        clc
         jmp     .finish
 
 

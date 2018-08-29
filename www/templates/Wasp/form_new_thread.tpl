@@ -9,7 +9,7 @@
     <a class="ui" href=".">Thread list</a>
     <div class="spacer"></div>
   </div>
-    <form id="editform" action="!post" method="post">
+    <form id="editform" action="!post" method="post" enctype="multipart/form-data">
       <div class="edit_groupL">
         <p>Title:</p>
         <input type="edit" value="[caption]" placeholder="Thread title" name="title" autofocus>
@@ -25,7 +25,11 @@
       <p>Post content:</p>
       [include:edit_toolbar.tpl]
       <textarea class="editor" name="source" id="source" placeholder="Share your thoughts here">[source]</textarea>
-      <div class="panel">
+      [case:[special:canupload]||<p class="panel">Attach file(s):</p><div class="attach"><input type="file" placeholder="Select file to attach" name="attach" multiple="multiple"></div>]
+      <div class="attachments">
+        [attach_edit:[id]]
+      </div>
+    <div class="panel">
         <input type="submit" name="preview" value="Preview" >
         <input type="submit" name="submit" value="Submit" >
         <input type="hidden" name="ticket" value="[Ticket]" >

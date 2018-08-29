@@ -267,6 +267,8 @@ create table Attachments (
   md5sum   text
 );
 
+create index idxAttachments on Attachments(postID);
+
 
 create table Sessions (
   id        integer primary key autoincrement,

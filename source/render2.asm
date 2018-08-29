@@ -114,7 +114,9 @@ if used RenderTemplate
               'minimag:',     RenderTemplate.cmd_minimag,       \   ; HTML, no encoding.
               'html:',        RenderTemplate.cmd_html,          \   ; HTML, disables the encoding.
               'attachments:', RenderTemplate.cmd_attachments,   \   ; HTML, no encoding.
+              'attach_edit:', RenderTemplate.cmd_attachedit,    \   ; HTML, no encoding.
               'url:',         RenderTemplate.cmd_url,           \   ; Needs encoding!
+              'json:',        RenderTemplate.cmd_json,          \   ; No encoding.
               'css:',         RenderTemplate.cmd_css,           \   ; No output, no encoding.
               'case:',        RenderTemplate.cmd_case,          \   ; No encoding.
               'sql:',         RenderTemplate.cmd_sql            ; Needs encoding!
@@ -660,7 +662,7 @@ begin
 
 ; ...................................................................
 
-sqlGetAttachments text "select id, filename, length(file), strftime('%d.%m.%Y %H:%M:%S', changed, 'unixepoch'), dcnt from Attachments where postID = ?1"
+sqlGetAttachments text "select id, filename, length(file), strftime('%d.%m.%Y', changed, 'unixepoch'), dcnt from Attachments where postID = ?1"
 
 .cmd_attachments:
 ; here esi points to the ":" char of the "attachments" command, ecx at the end "]" and edi at the start "["
@@ -671,27 +673,44 @@ locals
   .filesize   dd ?
   .uploadtime dd ?
   .count      dd ?
+  .fEdit      dd ?
 endl
 
-        call    .get_number
+        mov     [.fEdit], 0
+
+.do_attachments:
+
+        call    .get_number     ; returns the ID in the ebx.
 
         stdcall TextMoveGap, edx, ecx
         inc     [edx+TText.GapEnd]
         mov     [edx+TText.GapBegin], edi       ; clear the whole command.
 
-        stdcall TextIns, edx, '<section class="attachments">'
         mov     edi, edx
+        mov     esi, [.pSpecial]
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetAttachments, sqlGetAttachments.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, ebx
 
-.att_loop:
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
         jne     .end_of_attachments
 
-        cinvoke sqliteColumnInt, [.stmt], 0             ; ID of the file.
+        mov     edx, edi
+
+        stdcall TextIns, edx, txt '<table><tr><td class="head" colspan="5">Attached files:</td></tr><tr>'
+        cmp     [.fEdit], 0
+        je      .edit_ok
+
+        stdcall TextIns, edx, txt '<th>Del</th>'
+
+.edit_ok:
+        stdcall TextIns, edx, txt '<th>File</th><th>Size</th><th>Uploaded</th><th>Downloads</th></tr>'
+        mov     edi, edx
+
+.att_loop:
+        cinvoke sqliteColumnText, [.stmt], 0             ; ID of the file.
         mov     [.fileid], eax
 
         cinvoke sqliteColumnText, [.stmt], 1            ; filename of the file.
@@ -703,51 +722,68 @@ endl
         cinvoke sqliteColumnText, [.stmt], 3            ; upload time
         mov     [.uploadtime], eax
 
-        cinvoke sqliteColumnInt, [.stmt], 4             ; download count
+        cinvoke sqliteColumnText, [.stmt], 4             ; download count
         mov     [.count], eax
 
         mov     edx, edi
 
-        stdcall TextIns, edx, '<section class="onefile"><a class="attach" href="/!attached/'
-        stdcall NumToStr, [.fileid], ntsDec or ntsUnsigned
-        stdcall TextIns, edx, eax
-        stdcall StrDel, eax
+        stdcall TextIns, edx, txt '<tr>'
+
+        cmp     [.fEdit], 0
+        je      .edit_ok2
+
+        stdcall TextIns, edx, txt '<td class="delcheck"><input type="checkbox" name="attch_del" id="attch'
+        stdcall TextIns, edx, [.fileid]
+        stdcall TextIns, edx, txt '" value="'
+        stdcall TextIns, edx, [.fileid]
+        stdcall TextIns, edx, txt '"><label for="attch'
+        stdcall TextIns, edx, [.fileid]
+        stdcall TextIns, edx, txt '"></label></td>'
+
+.edit_ok2:
+        stdcall TextIns, edx, txt '<td class="filename"><a href="/!attached/'
+        stdcall TextIns, edx, [.fileid]
         stdcall TextIns, edx, txt '">'
 
         stdcall StrEncodeHTML, [.filename]
         stdcall TextAddStr2, edx, [edx+TText.GapBegin], eax, 0
         stdcall StrDel, eax
-        stdcall TextIns, edx, txt '</a>'
+        stdcall TextIns, edx, txt '</a></td><td class="filesize">'
 
-        stdcall TextIns, edx, txt '<p class="filesize">'
         stdcall FormatFileSize, [.filesize]
         stdcall TextIns, edx, eax
         stdcall StrDel, eax
 
-        stdcall TextIns, edx, txt '</p><p class="time">'
+        stdcall TextIns, edx, txt '</td><td class="filetime">'
         stdcall TextIns, edx, [.uploadtime]
-        stdcall TextIns, edx, '</p><p class="counter">'
+        stdcall TextIns, edx, txt '</td><td class="filecnt">'
 
-        stdcall NumToStr, [.count], ntsDec or ntsUnsigned
-        stdcall TextIns, edx, eax
-        stdcall StrDel, eax
-        stdcall TextIns, edx, txt "</p></section>"
-
+        stdcall TextIns, edx, [.count]
+        stdcall TextIns, edx, txt "</td></tr>"
         mov     edi, edx
-        jmp     .att_loop
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        je      .att_loop
+
+        stdcall TextIns, edi, txt '</table>'
+        mov     edi, edx
 
 .end_of_attachments:
+
         cinvoke sqliteFinalize, [.stmt]
 
         mov     edx, edi
-        stdcall TextIns, edx, '</section>'
-
         mov     ecx, [edx+TText.GapBegin]
         dec     ecx
 
         mov     [.fEncode], 1
         jmp     .loop
 
+
+.cmd_attachedit:
+        mov     [.fEdit], 1
+        jmp     .do_attachments
 
 
 ; ...................................................................
@@ -836,6 +872,68 @@ endl
         dec     ecx
         jmp     .loop
 
+
+.cmd_json:
+; here esi points to ":" of the "[json:" command. edi points to the start "[" and ecx points to the end "]"
+        mov       eax, ecx
+        sub       eax, esi
+        shl       eax, 2        ; 4*length
+        stdcall  TextSetGapSize, edx, eax
+        stdcall  TextMoveGap, edx, edi
+        add      [edx+TText.GapEnd], 6
+        sub      ecx, 7
+
+        mov     ebx, ecx
+        add     ebx, [edx+TText.GapEnd]
+        sub     ebx, [edx+TText.GapBegin]
+
+        mov     esi, [edx+TText.GapEnd]
+        xor     eax, eax
+
+.json_loop:
+        cmp     esi, ebx
+        je      .end_json
+
+        mov     al, [edx+esi]
+
+        cmp     al, '"'
+        je      .json_enc
+
+        cmp     al, '\'
+        je      .json_enc
+
+        cmp     al, '/'
+        je      .json_enc
+
+        cmp     al, ' '
+        jae     .store_char
+
+        mov     al, [.json_ctrl + eax]
+        cmp     al, ' '
+        je      .store_char
+
+.json_enc:
+        mov     byte [edx+edi], '\'
+        inc     edi
+        inc     ecx
+
+.store_char:
+        mov     [edx+edi], al
+        inc     esi
+        inc     edi
+        jmp     .json_loop
+
+.end_json:
+        inc     esi
+        mov     [edx+TText.GapBegin], edi
+        mov     [edx+TText.GapEnd], esi
+        dec     ecx
+        jmp     .loop
+
+.json_ctrl db ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '
+           db 'b', 't', 'n', ' ', 'f', 't', ' ', ' '
+           db ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '
+           db ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '
 
 .cmd_sql:
 ; here esi points to ":" of the "[sql:" command. edi points to the start "[" and ecx points to the end "]"

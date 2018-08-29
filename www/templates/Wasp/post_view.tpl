@@ -24,7 +24,9 @@
     </div>
     <article>
       [html:[Rendered]]
-      [attachments:[id]]
+      <div class="attachments">
+        [attachments:[id]]
+      </div>
     </article>
   </div>
 </div>

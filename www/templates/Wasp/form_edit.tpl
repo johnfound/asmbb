@@ -7,12 +7,16 @@
     <span class="spacer"></span>
     <a class="ui right" href="!by_id"><img src="[special:skin]/_images/close.svg" alt="Close" height="16"></a>
   </div>
-  <form id="editform" action="!edit" method="post" onsubmit="previewIt(event)">
+  <form id="editform" action="!edit" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
     <p>Thread title:</p>
     <h1 class="fakeedit">[caption]</h1>
     <p>Post content:</p>
     [include:edit_toolbar.tpl]
     <textarea class="editor" name="source" id="source">[source]</textarea>
+    [case:[special:canupload]| |<p>Attach file(s):</p><input type="file" placeholder="Select file to attach" name="attach" multiple="multiple">]
+    <div class="attachments">
+      [attach_edit:[id]]
+    </div>
     <div class="panel">
       <input type="submit" name="preview" value="Preview" onclick="this.form.cmd='preview'" title="Ctrl+Enter for preview">
       <input type="submit" name="submit" value="Submit" onclick="this.form.cmd='submit'" title="Ctrl+S for submit" >
