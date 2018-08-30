@@ -1697,12 +1697,11 @@ endp
 
 
 
-
-
 ;sqlGetMaxTagUsed text "select max(cnt) from (select count(*) as cnt from ThreadTags group by tag)"
 ;sqlGetAllTags    text "select TT.tag, count(TT.tag) as cnt, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag group by TT.tag order by TT.tag"
-sqlGetMaxTagUsed text "select max(cnt) from (select (select count() from ThreadTags TT where TT.tag = T.tag) as cnt from tags T where importance >= 0);"
-sqlGetAllTags    text "select TT.tag, count(TT.tag) as cnt, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag where T.Importance >= 0 group by TT.tag order by TT.tag"
+sqlGetMaxTagUsed text "select max(cnt) from (select (select count() from ThreadTags TT where TT.tag = T.tag) as cnt from tags T where importance > -1)"
+;sqlGetAllTags    text "select TT.tag, count(TT.tag) as cnt, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag where T.Importance >= 0 group by TT.tag order by TT.tag"
+sqlGetAllTags    text "select T.Tag, (select count() from threadtags where Tag = T.tag) as cnt, T.Description from Tags T where T.Importance > -1 order by T.Tag"
 
 proc GetAllTags, .pSpecial
   .max   dd ?
@@ -1741,22 +1740,23 @@ begin
 
         cinvoke sqliteColumnInt, [.stmt], 1     ; the count used
         mov     [.cnt], eax
-        mov     ecx, 100
+        mov     ecx, 32
         mul     ecx
         div     [.max]
         test    eax, eax
         jz      .tag_loop
 
-        cmp     eax, ecx
-        cmova   eax, ecx
+        cmp     eax, ecx          ;
+        cmova   eax, ecx          ; should never happen!
+        push    eax     ; from 1 to 32
 
-        movzx   eax, [.scale+eax-1]
-        test    eax, eax
-        jz      .tag_loop
+        stdcall TextCat, ebx, txt  '<a class="taglink tagsize'
+        mov     ebx, edx
 
-        push    eax
-
-        stdcall TextCat, ebx, txt  '<a class="taglink'
+        pop     eax
+        stdcall NumToStr, eax, ntsDec or ntsUnsigned
+        stdcall TextCat, ebx, eax
+        stdcall StrDel, eax
         mov     ebx, edx
 
         cmp     [esi+TSpecialParams.dir], 0
@@ -1771,14 +1771,7 @@ begin
 
 .current_ok:
 
-        stdcall TextCat, ebx, txt '" style="font-size:'
-
-        pop     eax
-        stdcall NumToStr, eax, ntsDec or ntsUnsigned
-
-        stdcall TextCat, edx, eax
-        stdcall StrDel, eax
-        stdcall TextCat, edx, txt '%;" title="'
+        stdcall TextCat, ebx, txt '" title="'
         mov     ebx, edx
 
         cinvoke sqliteColumnText, [.stmt], 0
@@ -1829,13 +1822,6 @@ begin
         mov     [esp+4*regEAX], ebx
         popad
         return
-
-.scale   db 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 32, 33, 35, 37, 38
-         db 40, 41, 43, 44, 46, 47, 48, 50, 51, 52, 53, 55, 56, 57, 58, 59, 60, 62, 63, 64
-         db 65, 66, 67, 68, 69, 70, 70, 71, 72, 73, 74, 75, 76, 76, 77, 78, 79, 79, 80, 81
-         db 82, 82, 83, 83, 84, 85, 85, 86, 87, 87, 88, 88, 89, 89, 90, 90, 91, 91, 92, 92
-         db 93, 93, 94, 94, 95, 95, 95, 96, 96, 97, 97, 97, 98, 98, 98, 99, 99, 99, 100,100
-
 endp
 
 

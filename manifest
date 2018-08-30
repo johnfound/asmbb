@@ -1,5 +1,5 @@
-C Working\son\sthe\sattachments,\sadditionally\soptimized\sthe\scode\sfor\sget/set\suser\spermissions\s(in\sthe\ssettings.asm),\smake\sattached\sfiles\sunique,\smake\s[json:]\srender\scommand\sproperly\sencode,\smove\ssqlParams\sin\sexternal\ssql\sfile\sand\smake\sit\suniversal,\smake\stabbed\snavigation\sin\sthe\spost\seditor\s(in\sorder\sto\sput\sattached\sfiles\smanagement\sin\slimited\sspace),\sremove\sobsolete\sstyles\sfrom\ssettings.less.
-D 2018-08-30T17:26:05.495
+C Avoid\sstyling\sinside\sthe\shtml\scode.\sUse\sclases\sinstead.
+D 2018-08-30T22:04:05.598
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -25,12 +25,12 @@ F source/categories.sql b1fa5a2cca7204372b3ca3714edbbc669103b1cf
 F source/chat.asm ba9592f29a64ae09eb61c203da1bf98ba8db230f
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm e74fc0b6fc4043a829bb1b202e71040a43c0d4ac
-F source/create.sql 813001c32374373c78443ca4d97e53de7bf3535b
+F source/create.sql 71a8fd33546f77531e477a502c1f4de5d96e258a
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 82b4638168e3a71e83ec6e3567f637ea1ff8cd87
 F source/engine.asm 0c205f79365aa8788cc2729b45229f1abb57da94
-F source/engine.fpr 8734bfb0cea764f140a123d6c1318940d01ba5a7
-F source/exponential_scaling.ods 0502eee7fe92926ea89d0a5b933dce8bedbde231
+F source/engine.fpr bf41f15196de137c89b40066f8aa551c5fbc45f0
+F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm f3c173a93c4260f275865ed66e5fe0e8c08d2104
 F source/history.asm 60954615a27c21a67e1a20a82a636370ee55a9b7
@@ -48,7 +48,7 @@ F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql c15286f32455df88ebd14168a10195e0c098545d
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
-F source/render2.asm fd921decab35687c8adbbcd864c3ce9b25a9d5ae
+F source/render2.asm 37346169f67f85a60c96a5103fbedd56fe2cbef5
 F source/restore.sql 14a8f13466ced19e05502d41ffcfddeecbc6954b
 F source/search.asm 66833e46196d20ff02330cb0bd78c4ad6e1753ae
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -522,7 +522,7 @@ F www/templates/Wasp/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/Wasp/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
 F www/templates/Wasp/chat.less e57b611bba245767e3924f761c37393ee3bb53d2
 F www/templates/Wasp/chat.tpl 75366bd04701825104397dea09087756de854525
-F www/templates/Wasp/common.less 232239e859f9033bbb61f52ffc15783777a73085
+F www/templates/Wasp/common.less 23e9c140af9f436af2e817e1dfb282602ffb4422
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 17d02b6b8ab0b59548446258f0f2efdf507d6af2
 F www/templates/Wasp/delete.less f77246e7f9fd0680ddb1ef2351b2b4ec5cef54f2
@@ -667,7 +667,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P b7bbe288834f353366fdc052367fbc58983baf97
-R af58646311dde1b115224019a479d7fc
+P 29c4b94c14dca26d21172a7538bcb2b3f2ea43f2
+R 6036d5e3c4684f4ce5a2f57db1b2e241
 U johnfound
-Z 4e2f89b818177eaed96ed93176eedd92
+Z c09fd7b9a55df4e66ebb343fb2511c68

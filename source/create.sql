@@ -233,6 +233,7 @@ create table Tags (
 );
 
 create index idxTagImportance on Tags(Importance desc);
+create index idxTagsTagImp on Tags(tag, importance desc);
 
 
 /* Relation tables */
