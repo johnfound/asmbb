@@ -455,7 +455,7 @@ begin
 
 ; Save the attachments:
 
-        stdcall DumpPostArray, [.pSpecial]
+;        stdcall DumpPostArray, [.pSpecial]
 
         stdcall DelAttachments, esi, [.pSpecial]
         stdcall WriteAttachments, esi, [.pSpecial]
@@ -1033,11 +1033,13 @@ endp
 
 
 
-sqlAttach text "insert into Attachments(postID, filename, file, changed) values (?1, ?2, ?3, strftime('%s','now'))"
+sqlAttach text "insert into Attachments(postID, filename, file, changed, md5sum) values (?1, ?2, ?3, strftime('%s','now'), ?4)"
+sqlAttachCnt text "select count() from Attachments where postid = ?1"
 
 proc WriteAttachments, .postID, .pSpecial
 .stmt dd ?
 .max_size dd ?
+.max_count dd ?
 begin
         pushad
         mov     ebx, [.pSpecial]
@@ -1052,6 +1054,30 @@ begin
         and     eax, $c0000000
         jnz     .error_post_data        ; it is a string instead of array of attached files.
 
+; get the limits.
+        mov     eax, MAX_ATTACHMENT_SIZE
+        stdcall GetParam, "max_attachment_size", gpInteger
+        mov     [.max_size], eax
+
+        mov     eax, MAX_ATTACHMENT_COUNT
+        stdcall GetParam, "max_attachment_count", gpInteger
+        mov     [.max_count], eax
+
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlAttachCnt, sqlAttachCnt.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .error_finalize
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        mov     ebx, eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        sub     [.max_count], ebx
+        jle     .error_limits
+
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlAttach, sqlAttach.length, eax, 0
         cmp     eax, SQLITE_OK
@@ -1059,20 +1085,6 @@ begin
 
         mov     ebx, [esi+TArray.count]
         lea     esi, [esi+TArray.array]
-
-        stdcall GetParam, "max_attachment_size", gpInteger
-        jnc     .max_size_ok
-        mov     eax, MAX_ATTACHMENT_SIZE
-.max_size_ok:
-        mov     [.max_size], eax
-
-        stdcall GetParam, "max_attachment_count", gpInteger
-        jnc     .max_cnt_ok
-        mov     eax, MAX_ATTACHMENT_COUNT
-.max_cnt_ok:
-
-        cmp     ebx, eax
-        cmovg   ebx, eax
 
 .loop:
         dec     ebx
@@ -1091,11 +1103,20 @@ begin
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
         cinvoke sqliteBindBlob, [.stmt], 3, [esi+TPostFileItem.data], [esi+TPostFileItem.size], SQLITE_STATIC
 
-        cinvoke sqliteStep, [.stmt]
-        mov     edi, eax
-        cmp     eax, SQLITE_DONE
-        jne     .end_of_files
+        stdcall DataMD5, [esi+TPostFileItem.data], [esi+TPostFileItem.size]
+        push    eax
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_TRANSIENT
+        stdcall StrDel ; from the stack
 
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_DONE
+        jne     .clear
+
+        dec     [.max_count]
+        jz      .end_of_files
+
+.clear:
         cinvoke sqliteClearBindings, [.stmt]
         cinvoke sqliteReset, [.stmt]
 
@@ -1105,17 +1126,18 @@ begin
 
 .end_of_files:
         cinvoke sqliteFinalize, [.stmt]
-
-        cmp     edi, SQLITE_DONE
-        jne     .error_write
-
         clc
         popad
         return
 
+
+.error_finalize:
+
+        cinvoke sqliteFinalize, [.stmt]
+
+.error_limits:
 .error_permissions:
 .error_prepare:
-.error_write:
 .error_post_data:
         stc
         popad

@@ -732,7 +732,7 @@ endl
         cmp     [.fEdit], 0
         je      .edit_ok2
 
-        stdcall TextIns, edx, txt '<td class="delcheck"><input type="checkbox" name="attch_del" id="attch'
+        stdcall TextIns, edx, txt '<td class="delcheck"><input type="checkbox" autocomplete="off" name="attch_del" id="attch'
         stdcall TextIns, edx, [.fileid]
         stdcall TextIns, edx, txt '" value="'
         stdcall TextIns, edx, [.fileid]
@@ -877,17 +877,20 @@ endl
 ; here esi points to ":" of the "[json:" command. edi points to the start "[" and ecx points to the end "]"
         mov       eax, ecx
         sub       eax, esi
-        shl       eax, 2        ; 4*length
+        shl       eax, 1        ; 2*length
         stdcall  TextSetGapSize, edx, eax
         stdcall  TextMoveGap, edx, edi
         add      [edx+TText.GapEnd], 6
-        sub      ecx, 7
+        sub      ecx, 6
 
         mov     ebx, ecx
         add     ebx, [edx+TText.GapEnd]
         sub     ebx, [edx+TText.GapBegin]
 
         mov     esi, [edx+TText.GapEnd]
+
+;        lea     eax, [edx+ebx-4]
+;        stdcall OutputMemoryByte, eax, 9
         xor     eax, eax
 
 .json_loop:
@@ -927,11 +930,12 @@ endl
         inc     esi
         mov     [edx+TText.GapBegin], edi
         mov     [edx+TText.GapEnd], esi
+
         dec     ecx
         jmp     .loop
 
 .json_ctrl db ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '
-           db 'b', 't', 'n', ' ', 'f', 't', ' ', ' '
+           db 'b', 't', 'n', ' ', 'f', 'r', ' ', ' '
            db ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '
            db ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '
 

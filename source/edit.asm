@@ -1,6 +1,4 @@
 
-
-
 sqlReadPost    text "select P.id, T.caption, P.content as source, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
 sqlEditedPost  text "select P.id, T.caption, ?3 as source, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
 
@@ -84,7 +82,7 @@ begin
 
 ; ok, get the action then:
 
-        stdcall DumpPostArray, esi
+;        stdcall DumpPostArray, esi
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "ticket", 0
         mov     [.ticket], eax
@@ -171,7 +169,18 @@ begin
 
 ; JS call request:
 
+        stdcall TextAddStr2, edi, 0, cHeadersJSON, cHeadersJSON.length
+
         stdcall RenderTemplate, edi, "edit.json", [.stmt], esi
+        mov     edi, eax
+
+        cinvoke sqliteFinalize, [.stmt]
+
+;        stdcall TextCompact, edi
+;        mov     edi, edx
+;        stdcall FileWrite, [STDERR], edi, eax
+;        stdcall FileWriteString, [STDERR], <txt 13, 10>
+
         stc
         jmp     .finish
 

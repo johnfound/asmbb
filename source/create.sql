@@ -268,6 +268,7 @@ create table Attachments (
 );
 
 create index idxAttachments on Attachments(postID);
+create unique index idxAttachmentsUnique on Attachments(postID, md5sum);
 
 
 create table Sessions (

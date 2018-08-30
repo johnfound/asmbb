@@ -1,13 +1,5 @@
 
-
-sqlParameters   text "select ?1 as host, ?2 as smtp_addr, ?3 as smtp_port, ",                                    \
-                            "?4 as smtp_user, ?5 as forum_title, ?19 as Description, ?20 as Keywords, ",         \
-                            "?7 as message, ?8 as error, ?9 as page_length, ",                                   \
-                            "?10 as user_perm0, ?11 as user_perm2, ?12 as user_perm3, ?13 as user_perm4, ",      \
-                            "?14 as user_perm5, ?15 as user_perm6, ?16 as user_perm7, ?17 as user_perm8, ",      \
-                            "?18 as user_perm31, ?21 as chat_enabled, ?22 as chat_anon, ?23 as email_confirm, ", \
-                            "?24 as default_skin, ?25 as default_mobile_skin, ?26 as forum_header, ",            \
-                            "?27 as embeded_css, ?28 as Ticket"
+sqlParameters StripText 'settings.sql', SQL
 
 proc BoardSettings, .pSpecial
 
@@ -163,63 +155,24 @@ begin
 .page_size_ok:
         cinvoke sqliteBindInt, [.stmt], 9, eax
 
+; Default users permissions:
+
         stdcall GetParam, "user_perm", gpInteger
         mov     ebx, eax
+        mov     edi, 200
 
-        test    ebx, permLogin
-        jz      @f
+.perm_loop:
+        shr     ebx, 1
+        jnc     .next_perm
 
-        cinvoke sqliteBindText, [.stmt], 10, "checked", -1, SQLITE_STATIC
+        cinvoke sqliteBindText, [.stmt], edi, txt 'checked', -1, SQLITE_STATIC
 
-@@:
-        test    ebx, permPost
-        jz      @f
+.next_perm:
+        inc     edi
+        cmp     edi, 232
+        jne     .perm_loop
 
-        cinvoke sqliteBindText, [.stmt], 11, "checked", -1, SQLITE_STATIC
-
-@@:
-        test    ebx, permThreadStart
-        jz      @f
-
-        cinvoke sqliteBindText, [.stmt], 12, "checked", -1, SQLITE_STATIC
-
-@@:
-        test    ebx, permEditOwn
-        jz      @f
-
-        cinvoke sqliteBindText, [.stmt], 13, "checked", -1, SQLITE_STATIC
-
-@@:
-        test    ebx, permEditAll
-        jz      @f
-
-        cinvoke sqliteBindText, [.stmt], 14, "checked", -1, SQLITE_STATIC
-
-@@:
-        test    ebx, permDelOwn
-        jz      @f
-
-        cinvoke sqliteBindText, [.stmt], 15, "checked", -1, SQLITE_STATIC
-
-@@:
-        test    ebx, permDelAll
-        jz      @f
-
-        cinvoke sqliteBindText, [.stmt], 16, "checked", -1, SQLITE_STATIC
-
-@@:
-        test    ebx, permChat
-        jz      @f
-
-        cinvoke sqliteBindText, [.stmt], 17, "checked", -1, SQLITE_STATIC
-
-@@:
-        test    ebx, permAdmin
-        jz      @f
-
-        cinvoke sqliteBindText, [.stmt], 18, "checked", -1, SQLITE_STATIC
-
-@@:
+; Chat settings:
 
         stdcall GetParam, txt "chat_enabled", gpInteger
         jc      .chat_enabled_ok
@@ -452,72 +405,29 @@ begin
         jz      .error_invalid_page_len
         jmp     .error_write
 
-
 .save_perm:
         xor     ebx, ebx
+        mov     edx, [esi+TSpecialParams.post_array]
+        mov     ecx, [edx+TArray.count]
 
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_perm0", 0
-        push    eax
+.loop:
+        dec     ecx
+        js      .end_collect_perm
+
+        stdcall StrCompNoCase, [edx+TArray.array + 8*ecx], txt 'user_perm'
+        jnc     .loop
+
+        mov     eax, [edx+TArray.array + 8*ecx + 4]
+        cmp     eax, $c0000000
+        jb      .loop                   ; not a string!
+
         stdcall StrToNumEx, eax
-        stdcall StrDel ; from the stack.
+        jc      .loop                   ; not a number!
 
-        or      ebx, eax
+        or      ebx, eax                ; permissions mask
+        jmp     .loop
 
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_perm2", 0
-        push    eax
-        stdcall StrToNumEx, eax
-        stdcall StrDel ; from the stack.
-
-        or      ebx, eax
-
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_perm3", 0
-        push    eax
-        stdcall StrToNumEx, eax
-        stdcall StrDel ; from the stack.
-
-        or      ebx, eax
-
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_perm4", 0
-        push    eax
-        stdcall StrToNumEx, eax
-        stdcall StrDel ; from the stack.
-
-        or      ebx, eax
-
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_perm5", 0
-        push    eax
-        stdcall StrToNumEx, eax
-        stdcall StrDel ; from the stack.
-
-        or      ebx, eax
-
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_perm6", 0
-        push    eax
-        stdcall StrToNumEx, eax
-        stdcall StrDel ; from the stack.
-
-        or      ebx, eax
-
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_perm7", 0
-        push    eax
-        stdcall StrToNumEx, eax
-        stdcall StrDel ; from the stack.
-
-        or      ebx, eax
-
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_perm8", 0
-        push    eax
-        stdcall StrToNumEx, eax
-        stdcall StrDel ; from the stack.
-
-        or      ebx, eax
-
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_perm31", 0
-        push    eax
-        stdcall StrToNumEx, eax
-        stdcall StrDel ; from the stack.
-
-        or      ebx, eax
+.end_collect_perm:
 
         stdcall SetParamInt, txt "user_perm", ebx
         jc      .error_write

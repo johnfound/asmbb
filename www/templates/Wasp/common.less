@@ -324,3 +324,65 @@ input[type=checkbox] {
   display: flex;
   align-items: center;
 }
+
+
+
+/* Tabbed navigation handling */
+
+.tabbed {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  align-items: flex-start;
+  flex-grow: 1;
+  background: #808080;
+
+  & > input {
+    position: absolute;
+    opacity: 0;
+    & + label {
+      flex-grow: 0;
+      padding: 8px 16px;
+      font-size: @FontSize;
+      line-height: @FontSize;
+      border-top: 2px solid #808080;
+      background: #808080;
+      cursor: pointer;
+      font-weight: bold;
+      color: black;
+
+      &:hover {
+        background: #d8d8d8;
+      }
+
+      &:active {
+        background: #ccc;
+      }
+
+      & + section {
+        display: none;
+        padding: 8px;
+        background: #404040;
+        order: 99;
+        flex-grow: 1;
+        flex-direction: column;
+        height: ~"calc( 100% - 32px )";
+        flex-basis: 100%;
+      }
+    }
+
+    &:focus + label {
+      border-top: 2px solid #ff8000;
+      z-index: 1;
+    }
+
+    &:checked + label {
+      background: #404040;
+      color: #ffffff;
+      & + section {
+        display: flex;
+      }
+    }
+  }
+}
+
