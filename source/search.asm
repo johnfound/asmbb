@@ -25,13 +25,15 @@ proc ShowSearchResults2, .pSpecial
 begin
         pushad
 
+        mov     esi, [.pSpecial]
+        test    [esi+TSpecialParams.userStatus], permRead or permAdmin
+        jz      .error_cant_read
+
         stdcall StrNew
         mov     [.query], eax
 
         stdcall StrNew
         mov     [.order], eax
-
-        mov     esi, [.pSpecial]
 
         xor     eax, eax
         mov     edx, [esi+TSpecialParams.cmd_list]
@@ -284,6 +286,15 @@ begin
         stdcall TextMakeRedirect, 0, "/!message/missing_query/"
         stc
         jmp     .finish
+
+; the user have no permissions to read posts!
+.error_cant_read:
+
+        stdcall TextMakeRedirect, 0, "/!message/cant_read/"
+        mov     [esp+4*regEAX], edi
+        stc
+        popad
+        return
 endp
 
 

@@ -17,6 +17,9 @@ begin
         stdcall TextCreate, sizeof.TText
         mov     edi, eax
 
+        test    [esi+TSpecialParams.userStatus], permRead or permAdmin
+        jz      .error_cant_read
+
         stdcall LogUserActivity, esi, uaThreadList, 0
 
 ; make the title
@@ -142,6 +145,18 @@ begin
         clc
         popad
         return
+
+
+; the user have no permissions to read posts!
+.error_cant_read:
+
+        stdcall TextMakeRedirect, edi, "/!message/cant_read/"
+        mov     [esp+4*regEAX], edi
+        stc
+        popad
+        return
+
+
 endp
 
 

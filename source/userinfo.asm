@@ -15,6 +15,8 @@ begin
         pushad
 
         mov     esi, [.pSpecial]
+        test    [esi+TSpecialParams.userStatus], permRead or permAdmin
+        jz      .error_cant_read
 
         xor     edi, edi
         mov     [.ticket],edi
@@ -113,6 +115,16 @@ begin
         mov     edi, edx
         stc
         jmp     .finish
+
+; the user have no permissions to read information from the forum!
+.error_cant_read:
+
+        stdcall TextMakeRedirect, 0, "/!message/cant_read/"
+        mov     [esp+4*regEAX], edi
+        stc
+        popad
+        return
+
 
 
 .save_user_info:

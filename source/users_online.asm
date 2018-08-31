@@ -237,6 +237,8 @@ begin
         pushad
 
         mov     esi, [.pSpecialData]
+        test    [esi+TSpecialParams.userStatus], permRead or permAdmin
+        jz      .error_cant_read
 
         stdcall StrCat, [esi+TSpecialParams.page_title], cUsersOnlineTitle
         stdcall LogUserActivity, esi, uaTrackingUsers, 0
@@ -385,6 +387,15 @@ begin
         stdcall TextCat, edi, txt '</table></div>'
         mov     [esp+4*regEAX], edx
         clc
+        popad
+        return
+
+; the user have no permissions to read information from the forum!
+.error_cant_read:
+
+        stdcall TextMakeRedirect, 0, "/!message/cant_read/"
+        mov     [esp+4*regEAX], edi
+        stc
         popad
         return
 endp

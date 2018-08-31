@@ -456,6 +456,11 @@ Unknown but so desired.
 Do meditate first.
 ','What are you looking for?',NULL);
 
+insert into Messages VALUES ('cant_read','Knocking on the door
+Please introduce yourself.
+Are you expected?
+','Private place!','<a href="/!login">Login first</a>');
+
 
 create table Log (
   process_id integer,   -- the unique process id
