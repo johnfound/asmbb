@@ -3,7 +3,7 @@
 
 <div class="set_page">
 [case:[message]||<h1 id="message" class="msg [case:[error]|info|error]">[message]</h1>]
-<form class="settings" method="post" action="/!settings">
+<form class="settings msgbox" method="post" action="/!settings">
   <h1>Forum engine settings</h1>
   <input type="submit" name="save" class="button" value="Save">
 
@@ -41,23 +41,44 @@
     <input type="checkbox" [email_confirm] name="email_confirm" id="email_confirm" class="checkbox"><label for="email_confirm">Confirm by email</label>
   </td></tr></table>
 
-  <h2>Default user permissions:</h2>
+  <h2>Default permissions:</h2>
 
+  <h3>For new users:</h3>
   <table><tr>
     <td>
       <input type="checkbox" [user_perm0]  name="user_perm" id="up0"  value="1"><label for="up0">Login</label>
+      <input type="checkbox" [user_perm1]  name="user_perm" id="up1"  value="2"><label for="up1">Read</label>
       <input type="checkbox" [user_perm2]  name="user_perm" id="up2"  value="4"><label for="up2">Post</label>
       <input type="checkbox" [user_perm3]  name="user_perm" id="up3"  value="8"><label for="up3">Start threads</label>
-      <input type="checkbox" [user_perm4]  name="user_perm" id="up4"  value="16"><label for="up4">Edit own posts</label>
     </td><td>
+      <input type="checkbox" [user_perm4]  name="user_perm" id="up4"  value="16"><label for="up4">Edit own posts</label>
       <input type="checkbox" [user_perm5]  name="user_perm" id="up5"  value="32"><label for="up5">Edit all posts</label>
       <input type="checkbox" [user_perm6]  name="user_perm" id="up6"  value="64"><label for="up6">Delete own posts</label>
       <input type="checkbox" [user_perm7]  name="user_perm" id="up7"  value="128"><label for="up7">Delete all posts</label>
-      <input type="checkbox" [user_perm8]  name="user_perm" id="up8"  value="256"><label for="up8">Chat</label>
     </td><td>
+      <input type="checkbox" [user_perm8]  name="user_perm" id="up8"  value="256"><label for="up8">Chat</label>
       <input type="checkbox" [user_perm9]  name="user_perm" id="up9"  value="512"><label for="up9">Download files</label>
       <input type="checkbox" [user_perm10] name="user_perm" id="up10" value="1024"><label for="up10">Attach files</label>
       <input type="checkbox" [user_perm31] name="user_perm" id="up31" value="$80000000"><label for="up31">Administrator</label>
+  </tr></table>
+
+  <h3>For guests:</h3>
+  <table><tr>
+    <td>
+      <input type="checkbox" [anon_perm0]  name="anon_perm" id="ap0"  value="1"><label for="ap0">Login</label>
+      <input type="checkbox" [anon_perm1]  name="anon_perm" id="ap1"  value="2"><label for="ap1">Read</label>
+      <input type="checkbox" [anon_perm2]  name="anon_perm" id="ap2"  value="4"><label for="ap2">Post</label>
+      <input type="checkbox" [anon_perm3]  name="anon_perm" id="ap3"  value="8"><label for="ap3">Start threads</label>
+    </td><td>
+      <input type="checkbox" [anon_perm4]  name="anon_perm" id="ap4"  value="16"><label for="ap4">Edit own posts</label>
+      <input type="checkbox" [anon_perm5]  name="anon_perm" id="ap5"  value="32"><label for="ap5">Edit all posts</label>
+      <input type="checkbox" [anon_perm6]  name="anon_perm" id="ap6"  value="64"><label for="ap6">Delete own posts</label>
+      <input type="checkbox" [anon_perm7]  name="anon_perm" id="ap7"  value="128"><label for="ap7">Delete all posts</label>
+    </td><td>
+      <input type="checkbox" [anon_perm8]  name="anon_perm" id="ap8"  value="256"><label for="ap8">Chat</label>
+      <input type="checkbox" [anon_perm9]  name="anon_perm" id="ap9"  value="512"><label for="ap9">Download files</label>
+      <input type="checkbox" [anon_perm10] name="anon_perm" id="ap10" value="1024"><label for="ap10">Attach files</label>
+      <input type="checkbox" [anon_perm31] name="anon_perm" id="ap31" value="$80000000"><label for="ap31">Administrator</label>
   </tr></table>
 
   <h2>Forum features:</h2>
@@ -73,7 +94,6 @@
 
   <table><tr>
     <td><input type="checkbox" [chat_enabled] name="chat_enabled" id="chat_enabled"><label for="chat_enabled">Enable chat</label></td>
-    <td><input type="checkbox" [chat_anon] name="chat_anon" id="chat_anon"><label for="chat_anon">Anonymous chat</label></td>
   </tr></table>
 
   <input type="hidden" name="ticket" value="[Ticket]" >

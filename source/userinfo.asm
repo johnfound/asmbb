@@ -5,6 +5,7 @@ MAX_SKIN_NAME   = 256
 
 sqlGetFullUserInfo StripText "userinfo.sql", SQL
 sqlUpdateUserDesc   text "update users set user_desc = ?1 where nick = ?2"
+sqlUpdateUserPerm   text "update users set status = ?1 where nick = ?2"
 
 
 proc ShowUserInfo, .pSpecial
@@ -160,6 +161,28 @@ endl
 
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
+
+; update user permissions if the current user is admin.
+
+        test    [esi+TSpecialParams.userStatus], permAdmin
+        jz      .user_perm_ok
+
+        stdcall GetPostPermissions, txt 'user_perm', esi
+        jc      .user_perm_ok
+
+        mov     edi, eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateUserPerm, sqlUpdateUserPerm.length, eax, 0
+
+        cinvoke sqliteBindInt, [.stmt], 1, edi
+
+        stdcall StrPtr, ebx
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+.user_perm_ok:
 
         stdcall StrDupMem, "/!userinfo/"
         stdcall StrCat, eax, ebx

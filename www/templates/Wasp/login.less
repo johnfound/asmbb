@@ -30,6 +30,13 @@ form.login-block, form.register-block {
     padding: 16px;
     background: @clColor1;
     margin: 8px auto 8px auto;
+
+    input[type=checkbox] + label {
+        display: block;
+        background-color: @clEditorBG;
+        color: @clEditorFG;
+        padding: 8px 8px 8px 14px;
+    }
 }
 
 form.login-block h1, form.register-block h1, form.settings h1 {
@@ -102,12 +109,4 @@ input.submit {
     outline: 2px dotted @clSeparator;
     outline-offset: -2px;
   }
-}
-
-
-input[type=checkbox] + label {
-    display: block;
-    background-color: @clEditorBG;
-    color: @clEditorFG;
-    padding: 8px 8px 8px 14px;
 }

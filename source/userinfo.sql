@@ -8,14 +8,20 @@ select
   strftime('%d.%m.%Y %H:%M:%S', LastSeen, 'unixepoch') as LastSeen,
   email,
   (select count() from posts p left join LimitedAccessThreads lt on lt.threadid = p.threadid where p.userid = u.id and (lt.userid is null or lt.userid = ?3)) as totalposts,
-  (select status & 1 <> 0) as canlogin,
-  (select status & 4 <> 0) as canpost,
-  (select status & 8 <> 0) as canstart,
-  (select status & 16 <> 0) as caneditown,
-  (select status & 32 <> 0) as caneditall,
-  (select status & 64 <> 0) as candelown,
-  (select status & 128 <> 0) as candelall,
-  (select status & 0x80000000 <> 0) as isadmin,
-  ?2 as Ticket
+  ?2 as Ticket,
+
+  case when (status & 1)        then 'checked' end user_perm0,
+  case when (status & 2)        then 'checked' end user_perm1,
+  case when (status & 4)        then 'checked' end user_perm2,
+  case when (status & 8)        then 'checked' end user_perm3,
+  case when (status & 16)       then 'checked' end user_perm4,
+  case when (status & 32)       then 'checked' end user_perm5,
+  case when (status & 64)       then 'checked' end user_perm6,
+  case when (status & 128)      then 'checked' end user_perm7,
+  case when (status & 256)      then 'checked' end user_perm8,
+  case when (status & 512)      then 'checked' end user_perm9,
+  case when (status & 1024)     then 'checked' end user_perm10,
+  case when (status & 0x80000000) then 'checked' end user_perm31
+
 from users u
 where nick = ?1

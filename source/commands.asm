@@ -3,6 +3,7 @@ DEFAULT_PAGE_LENGTH = 20
 ; User permissions status flags:
 
 permLogin       = 1             ; can login
+permRead        = 2             ; can view threads and read posts.
 permPost        = 4             ; can post messages
 permThreadStart = 8             ; can start threads
 permEditOwn     = 16            ; can edit his own posts

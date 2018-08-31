@@ -1,5 +1,5 @@
-C Avoid\sstyling\sinside\sthe\shtml\scode.\sUse\sclases\sinstead.
-D 2018-08-30T22:04:05.598
+C Handle\sthe\saccess\sto\sthe\schat\sfor\sthe\sanonymous\susers\sthrough\sanon_perm,\snot\sthrough\sseparate\sparameter.\sInclude\sanon_perm\sparameter\sin\sthe\sforum\ssettins\spage.\s(Isn't\sit\stime\sto\smake\sit\stabbed?)\sIncluded\suser\spermissions\sset\son\sthe\suser\sprofile\spage.\sIt\sis\svisible/editable\sonly\sfor\sthe\sadmins.\sMore\stesting\sof\sthe\sdifferent\spermissions\sbehavior\sis\sneeded.\sEspecially\sfor\sthe\sreintroduced\spermRead.\sIt\sstill\sdoes\snot\swork,\sbut\swill\sbe\simplemented\ssoon.
+D 2018-08-31T09:18:30.959
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -16,20 +16,21 @@ F source/Documents/rfc7578.txt 5dff43151910fe753f8649b08d650137f07a96ff
 F source/Linux/sqlite3.inc 49dc036ae22c327790d0314c81263d77d041990b
 F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
+F source/TestsWithTags.sql 6384a56d553e36aa1c54cdb61a147bb2806e3e9d
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm ed0ec6e7cf9ade327dc855545380e1b6026a5a2e
 F source/attachments.asm cbad985fe3a241410c6c53ae0ea73c6461d2d49b
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm edf38ee0bf1a17c39f660acd7c37ebebea612745
 F source/categories.sql b1fa5a2cca7204372b3ca3714edbbc669103b1cf
-F source/chat.asm ba9592f29a64ae09eb61c203da1bf98ba8db230f
+F source/chat.asm c0469c0067c6361d0894e18d9f32e01562a3c94c
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
-F source/commands.asm e74fc0b6fc4043a829bb1b202e71040a43c0d4ac
-F source/create.sql 71a8fd33546f77531e477a502c1f4de5d96e258a
+F source/commands.asm 01b1196b30f61baf1e87aa2b0cfcd505d2ae925d
+F source/create.sql 645482092e6d9467cfc5c36fec13c48fdaa4d9ba
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 82b4638168e3a71e83ec6e3567f637ea1ff8cd87
 F source/engine.asm 0c205f79365aa8788cc2729b45229f1abb57da94
-F source/engine.fpr bf41f15196de137c89b40066f8aa551c5fbc45f0
+F source/engine.fpr 201088be822b63cf5bd3d0cb78b31f70cacf4658
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm f3c173a93c4260f275865ed66e5fe0e8c08d2104
@@ -53,8 +54,8 @@ F source/restore.sql 14a8f13466ced19e05502d41ffcfddeecbc6954b
 F source/search.asm 66833e46196d20ff02330cb0bd78c4ad6e1753ae
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
-F source/settings.asm 28c627330e0d4e77ab0cd0ce8180986d74cc9bda
-F source/settings.sql b106e27c8b5860c5a1873a55964e7302d5520e3d
+F source/settings.asm b8a7c7184cc4786df871ad904663c6e799b82c9f
+F source/settings.sql a288c4c62dec4c713f22542109589b010c2da1bf
 F source/showthread.asm 037c2cd9efb1c8469eacafd16f8f62db07249916
 F source/showthread.sql 284a3060114cb7668fead7008f4ebaf9258f14d2
 F source/sqlite3.asm 8e27aa526542e4c8bac6b9e741b6e0698220933f
@@ -72,8 +73,8 @@ F source/threadlist.asm f1200d260c26ca8eea5923724f6e03abc6d0bd38
 F source/threadlist.sql 049a40af73d8d699dbfb8f97d75765a996a15a4d
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
-F source/userinfo.asm 6840694be279b7c02e856d7b6ed023c12c2b80d0
-F source/userinfo.sql ca2e53af55fc3ed7dd18b34702bae10c361976d5
+F source/userinfo.asm ce6fe5cd63d0089a2bb3806ccceadaaf2c67544e
+F source/userinfo.sql 2651e8dcd44fa0024120db10c781b6d246cc8872
 F source/users_online.asm 0a1e5415fbce181dadef5403c86745cb4d7bbafa
 F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/userslist.asm bbc976c8ea94198220c0dd8edee8577c83374c46
@@ -534,7 +535,7 @@ F www/templates/Wasp/error_html_end.tpl 3729362af2738a816684e06dd05bbfff10a39d02
 F www/templates/Wasp/error_html_start.tpl bb9719e341078e7b101f39c8ff92b54e403915c6
 F www/templates/Wasp/form_edit.tpl cadd8fc64a3a8b5b25951afc35cb21d05bfc3552
 F www/templates/Wasp/form_edit_thread.tpl 793c6fa9d479db0f52e167d39eb55ecafbbd67e3
-F www/templates/Wasp/form_editinfo.tpl 2668a6016f76f55d3bd5597e4344fdc2caee9198
+F www/templates/Wasp/form_editinfo.tpl 9c9b8107864d1c9a23e7ec1c57e57616edf84e2c
 F www/templates/Wasp/form_login.tpl 59d96e0eba0c0019c0d68de935ae6d26e9614e49
 F www/templates/Wasp/form_new_post.tpl d8efa79d9a38731bc7220acad4b713c63666c597
 F www/templates/Wasp/form_new_thread.tpl 6de116c0296b3f1380ea5cb3d13a69d6a070496c
@@ -542,11 +543,11 @@ F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e44992
 F www/templates/Wasp/form_register.tpl 18c0fa0a762d78dc4c34f6c8bdcb11140f4b1e36
 F www/templates/Wasp/form_reset_password.tpl 0602acb7aaa6528a16ddc2b16d7ac7b05e24f09a
 F www/templates/Wasp/form_reset_request.tpl d2130d1b896ef0ae18a02d962914bcd9b9b7e594
-F www/templates/Wasp/form_settings.tpl c318126f9280869a77718391ba2e0146ec17e639
+F www/templates/Wasp/form_settings.tpl 8e9af91b8720110e507f4737ad6c27cc015bb5bf
 F www/templates/Wasp/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Wasp/form_sqlite_console.tpl 7efc4c110f2baaab4cb601c2eb68c0f65cc532fb
 F www/templates/Wasp/help_new_thread.tpl 855afda41996bc3875d07bdf7a41adcdf2a31525
-F www/templates/Wasp/login.less 31a9c8bcfe048f719c6ffa5a30af8eebe338f55a
+F www/templates/Wasp/login.less b8467882b426bdd8949171fa410c3cb71ced6cdd
 F www/templates/Wasp/main_html_end.tpl f9390ce9052a9df9e6ac20a2c11f7257b9f442dd
 F www/templates/Wasp/main_html_start.tpl 04d08e65f7812bdef3a89db988d082f9c481c8a0
 F www/templates/Wasp/markdown.less 728b194c01331eb110fd5de38efde71dfd78b9c0
@@ -569,15 +570,15 @@ F www/templates/Wasp/preview.tpl 2a375478a56a5b03c9e8cdf715d73b2257c7f48b
 F www/templates/Wasp/restore_confirm.tpl b72f733c8a4c7b0ec7229bafcd2eaeac786fd90b
 F www/templates/Wasp/search.less 17bfdc636da1019916443febbb2073b791ed79d1
 F www/templates/Wasp/search_result.tpl 6c5a46b179308b9b7b4f272c7f543fa8f526dd36
-F www/templates/Wasp/settings.less 262f4bd2e7e8ab6125a821af8386ae12b46b734f
+F www/templates/Wasp/settings.less b66dccf31a7c698e9c0e010bc3139ce138de23f8
 F www/templates/Wasp/skin_variables.lsi 083eec6626d47cbdc1a051bbfafd13c88c5aa358
 F www/templates/Wasp/sqlite.less 9ed43c40076b969c67d7c73d6d395da98dccbc83
 F www/templates/Wasp/statistics.tpl c0dd59a240e07c246fe9c0841eb1532b93f3f1ae
 F www/templates/Wasp/thread_info.tpl 2dec92b60a9e17703c4b3a4e7cb13cd252257b40
 F www/templates/Wasp/thread_list.less 578089ef813e12726fecd8d745408baefe1a67d1
 F www/templates/Wasp/threadnew.less 8568bd4b1f91da4dabddea77a171ecdaf9b9ae63
-F www/templates/Wasp/userinfo.less c4f9829d6108c57c875ddb2033036fccdd6c36d3
-F www/templates/Wasp/userinfo.tpl 93460a6bc6dbef649516de9ead4d3b0744cbc8a4
+F www/templates/Wasp/userinfo.less c6ed9e57a0a59b3c43874366a605649a76ef3b4f
+F www/templates/Wasp/userinfo.tpl d548efd00f00e9a07a75e87b7445424a60d64d47
 F www/templates/Wasp/users_online.less bd646392254c955b3c70def99c358ed1df2bf298
 F www/templates/Wasp/userslist.less 9dae27c4e52c68f3351549034bdd7f9754bce069
 F www/templates/Wasp/userslist_hdr.tpl aa1d0bbe31f3624bc75cdec179d471ac496fd990
@@ -667,7 +668,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 29c4b94c14dca26d21172a7538bcb2b3f2ea43f2
-R 6036d5e3c4684f4ce5a2f57db1b2e241
+P d2d3a06b43ec58b3a4f0309304991d3c6c20cfbb
+R e8cf942b93078b5077ba12953b923150
 U johnfound
-Z c09fd7b9a55df4e66ebb343fb2511c68
+Z 48807fc40947124e16030f5122f1942b

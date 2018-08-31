@@ -157,20 +157,15 @@ begin
 
 ; Default users permissions:
 
+        xor     eax, eax
         stdcall GetParam, "user_perm", gpInteger
-        mov     ebx, eax
-        mov     edi, 200
+        stdcall BindSQLBits, [.stmt], eax, 200, txt 'checked'
 
-.perm_loop:
-        shr     ebx, 1
-        jnc     .next_perm
+; Default guests permissions:
 
-        cinvoke sqliteBindText, [.stmt], edi, txt 'checked', -1, SQLITE_STATIC
-
-.next_perm:
-        inc     edi
-        cmp     edi, 232
-        jne     .perm_loop
+        xor     eax, eax
+        stdcall GetParam, "anon_perm", gpInteger
+        stdcall BindSQLBits, [.stmt], eax, 300, txt 'checked'
 
 ; Chat settings:
 
@@ -182,15 +177,6 @@ begin
         cinvoke sqliteBindText, [.stmt], 21, "checked", -1, SQLITE_STATIC
 
 .chat_enabled_ok:
-
-        stdcall GetParam, txt "chat_anon", gpInteger
-        jc      .chat_anon_ok
-        test    eax, eax
-        jz      .chat_anon_ok
-
-        cinvoke sqliteBindText, [.stmt], 22, "checked", -1, SQLITE_STATIC
-
-.chat_anon_ok:
 
         stdcall GetParam, txt "email_confirm", gpInteger
         jc      .email_confirm_ok
@@ -379,22 +365,6 @@ begin
         stdcall SetParamInt, txt "chat_enabled", ebx
         jc      .error_write
 
-; save chat anon
-
-        xor     ebx, ebx
-
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "chat_anon", 0
-        test    eax, eax
-        jz      .save_chat_anon
-
-        inc     ebx
-        stdcall StrDel, eax
-
-.save_chat_anon:
-
-        stdcall SetParamInt, txt "chat_anon", ebx
-        jc      .error_write
-
 ; save page_length
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "page_length", 0
@@ -406,30 +376,17 @@ begin
         jmp     .error_write
 
 .save_perm:
-        xor     ebx, ebx
-        mov     edx, [esi+TSpecialParams.post_array]
-        mov     ecx, [edx+TArray.count]
 
-.loop:
-        dec     ecx
-        js      .end_collect_perm
+        stdcall GetPostPermissions, 'user_perm', esi
+        jc      .error_invalid_permissions
 
-        stdcall StrCompNoCase, [edx+TArray.array + 8*ecx], txt 'user_perm'
-        jnc     .loop
+        stdcall SetParamInt, txt "user_perm", eax
+        jc      .error_write
 
-        mov     eax, [edx+TArray.array + 8*ecx + 4]
-        cmp     eax, $c0000000
-        jb      .loop                   ; not a string!
+        stdcall GetPostPermissions, 'anon_perm', esi
+        jc      .error_invalid_permissions
 
-        stdcall StrToNumEx, eax
-        jc      .loop                   ; not a number!
-
-        or      ebx, eax                ; permissions mask
-        jmp     .loop
-
-.end_collect_perm:
-
-        stdcall SetParamInt, txt "user_perm", ebx
+        stdcall SetParamInt, txt "anon_perm", eax
         jc      .error_write
 
 ; everything is OK
@@ -485,6 +442,10 @@ begin
         stdcall StrDupMem, "Error: Invalid number as page length."
         jmp     .error_write
 
+.error_invalid_permissions:
+
+        stdcall StrDupMem, "Error: Missing or invalid permissions parameters."
+        jmp     .error_write
 
 .error_transaction:
 .error_commit:
@@ -787,3 +748,75 @@ endp
 
 
 
+; Retrives from the POST data the user permissions encoded in the POST group .hGroupName
+; Notice, that the checkboxes in the group should have numeric values, according to the
+; permXXXX values, defined in 'commands.asm' file!
+
+proc GetPostPermissions, .hGroupName, .pSpecial
+begin
+        pushad
+        mov     esi, [.pSpecial]
+
+        xor     ebx, ebx
+        mov     edx, [esi+TSpecialParams.post_array]
+        test    edx, edx
+        jz      .error
+
+        mov     ecx, [edx+TArray.count]
+
+.loop:
+        dec     ecx
+        js      .end_collect_perm
+
+        stdcall StrCompNoCase, [edx+TArray.array + 8*ecx], [.hGroupName]
+        jnc     .loop
+
+        mov     eax, [edx+TArray.array + 8*ecx + 4]
+        cmp     eax, $c0000000
+        jb      .error                   ; not a string!
+
+        stdcall StrToNumEx, eax
+        jc      .error                   ; not a number!
+
+        or      ebx, eax                ; permissions mask
+        jmp     .loop
+
+.end_collect_perm:
+        clc
+
+.finish:
+        mov     [esp+4*regEAX], ebx
+        popad
+        return
+
+.error:
+        xor     ebx, ebx
+        stc
+        jmp     .finish
+endp
+
+
+; binds a bit-field parameters group to the SQLite statement, according to the bits
+; of the [.bitmask] argument.
+
+proc BindSQLBits, .stmt, .bitmask, .bindOffset, .pBindConst
+begin
+        pushad
+        mov     ebx, [.bitmask]
+        mov     edi, [.bindOffset]
+        mov     esi, 32
+
+.bit_loop:
+        shr     ebx, 1
+        jnc     .next_bit
+
+        cinvoke sqliteBindText, [.stmt], edi, [.pBindConst], -1, SQLITE_STATIC
+
+.next_bit:
+        inc     edi
+        dec     esi
+        jnz     .bit_loop
+
+        popad
+        return
+endp
