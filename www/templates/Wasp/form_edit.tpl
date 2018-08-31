@@ -22,7 +22,7 @@
       <input id="rad2" name="tabselector" type="radio">
       <label for="rad2">Attachments</label>
       <section>
-        [case:[special:canupload]| |<p>Attach file(s): <span class="small">(count&le;10, size&le;1MB)</span> </p><input id="browse" type="file" placeholder="Select file to attach" name="attach" multiple="multiple">]
+        [case:[special:canupload]||<p>Attach file(s): <span class="small">(count&le;10, size&le;1MB)</span></p><input id="browse" type="file" placeholder="Select file to attach" name="attach" multiple="multiple">]
         <div id="attachments" class="attach_del">
           [attach_edit:[id]]
         </div>

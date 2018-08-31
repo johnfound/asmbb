@@ -1,0 +1,9 @@
+To check the skins (especially Terminal) for the new implemented features: download/attach, access, etc.
+
+---FIXED: The tabbed edit form not working good in Light skin. Another are not tested as well.
+
+---FIXED: The tabbed edit is not styling properly in Chromium! Check the tricks about flex auto scaling!
+
+On logout, all sessions for this IP are deleted. Should be more relaxed...
+
+The attached files must be encripted in the database in order to not allow them to the file system in original form.

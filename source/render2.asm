@@ -662,7 +662,7 @@ begin
 
 ; ...................................................................
 
-sqlGetAttachments text "select id, filename, length(file), strftime('%d.%m.%Y', changed, 'unixepoch'), dcnt from Attachments where postID = ?1"
+sqlGetAttachments text "select id, filename, length(file), strftime('%d.%m.%Y', changed, 'unixepoch'), dcnt, md5sum from Attachments where postID = ?1"
 
 .cmd_attachments:
 ; here esi points to the ":" char of the "attachments" command, ecx at the end "]" and edi at the start "["
@@ -673,6 +673,7 @@ locals
   .filesize   dd ?
   .uploadtime dd ?
   .count      dd ?
+  .md5sum     dd ?
   .fEdit      dd ?
 endl
 
@@ -706,7 +707,12 @@ endl
         stdcall TextIns, edx, txt '<th>Del</th>'
 
 .edit_ok:
-        stdcall TextIns, edx, txt '<th>File</th><th>Size</th><th>Uploaded</th><th>Downloads</th></tr>'
+        stdcall TextIns, edx, txt '<th>File</th><th>Size</th><th>Uploaded</th><th>Downloads</th>'
+        cmp     [.fEdit], 0
+        jne     .head_md5_ok
+        stdcall TextIns, edx, txt '<th>MD5 hash</th>'
+.head_md5_ok:
+        stdcall TextIns, edx, txt '</tr>'
         mov     edi, edx
 
 .att_loop:
@@ -724,6 +730,9 @@ endl
 
         cinvoke sqliteColumnText, [.stmt], 4             ; download count
         mov     [.count], eax
+
+        cinvoke sqliteColumnText, [.stmt], 5             ; MD5 checksum
+        mov     [.md5sum], eax
 
         mov     edx, edi
 
@@ -757,9 +766,17 @@ endl
         stdcall TextIns, edx, txt '</td><td class="filetime">'
         stdcall TextIns, edx, [.uploadtime]
         stdcall TextIns, edx, txt '</td><td class="filecnt">'
-
         stdcall TextIns, edx, [.count]
-        stdcall TextIns, edx, txt "</td></tr>"
+
+        cmp     [.fEdit], 0
+        jne     .checksum_ok
+
+        stdcall TextIns, edx, txt '</td><td class="checksum">'
+        stdcall TextIns, edx, [.md5sum]
+
+.checksum_ok:
+
+        stdcall TextIns, edx, txt '</td></tr>'
         mov     edi, edx
 
         cinvoke sqliteStep, [.stmt]

@@ -15,7 +15,8 @@ insert into Params values ('chat_enabled', 1);
 insert into Params values ('default_skin', 'Wasp');
 insert into Params values ('default_mobile_skin', 'mobile');
 insert into Params values ('email_confirm', 1);
-insert into Params values ('forum_header', '<img src="/images/title.svg" alt=" ▄▄             ▄▄▄  ▄▄▄ Power
+insert into Params values ('forum_header', '<img src="/images/title.svg" alt=
+" ▄▄             ▄▄▄  ▄▄▄ Power
 █  █ ▄▄▄▄ ▄▄▄▄▄ █  █ █  █
 █▄▄█ █▄▄▄ █ █ █ █▀▀▄ █▀▀▄
 █  █ ▄▄▄█ █ █ █ █▄▄▀ █▄▄▀
@@ -272,6 +273,7 @@ create table Attachments (
   changed  integer,
   dcnt     integer not null default 0,
   file     blob,
+  key      blob,        -- the random key for xor encrypting the blob
   md5sum   text
 );
 

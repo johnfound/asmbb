@@ -108,7 +108,7 @@ PList tablePostCommands, tpl_func,                 \
 end if
 
 
-cHeadersJSON text 'Content-Type: text/json', 13, 10, 13, 10
+cHeadersJSON text 'Content-Type: application/json', 13, 10, 13, 10
 
 
 
