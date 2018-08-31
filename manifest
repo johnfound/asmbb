@@ -1,5 +1,5 @@
-C Comply\swith\sthe\spermRead\spermission.\sNew\shaiku\serror\smessage.\sThis\sis\sthe\sway\sto\smake\sclosed\sprivate\sforums\s-\ssimply\sreset\sthe\s"Read"\spermission\sfor\sthe\sguests.
-D 2018-08-31T11:13:34.730
+C Ascii\sart\sexample\stitle\sfor\sthe\snew\screated\sforums.
+D 2018-08-31T11:15:12.656
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -26,7 +26,7 @@ F source/categories.sql b1fa5a2cca7204372b3ca3714edbbc669103b1cf
 F source/chat.asm c0469c0067c6361d0894e18d9f32e01562a3c94c
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm 01b1196b30f61baf1e87aa2b0cfcd505d2ae925d
-F source/create.sql e56858f4097a63697cb4eb20b9b4378cc04c8da1
+F source/create.sql eb352e3575eabb44d3fb9cebfd331b27913eb1e7
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 82b4638168e3a71e83ec6e3567f637ea1ff8cd87
 F source/engine.asm 0c205f79365aa8788cc2729b45229f1abb57da94
@@ -668,7 +668,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 0f5a2a80be960acc0df72b8f75090e59bdab372f
-R 55d0a8351dd26b9c110ba0d68bb5e08a
+P ec6f6ec047cc5efde404354c5a0c061039e3b79d
+R 925abe1d19e0405ef0e519e19d517be3
 U johnfound
-Z 8ae156b4d2e64c3447ffdf9065662cd0
+Z e4d7bd50bc842d26e562389bcc65d397
