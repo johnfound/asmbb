@@ -1,5 +1,5 @@
-C Encrypt\sthe\sattached\sfiles\sfor\ssecurity\sreasons.\sAdd\sthe\sfiles\sto\sthe\sTText\sas\sa\sbinary\s(with\sTextAddBytes).\sGroup\sthe\sattachments\sprocedures\sin\sone\sfile\s(attachments.asm).\sShow\sthe\smd5\ssum\sof\sthe\sfiles\sto\sthe\susers.\sFixed\sless/tpl\sfiles\shere\sand\sthere.
-D 2018-08-31T18:40:25.294
+C Added\smissed\sfiles\s(symlinks).
+D 2018-08-31T18:41:29.834
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -229,6 +229,7 @@ F www/templates/Light/common.less 762e4e8198de87fbcb131462b3476432725a2c65 l
 F www/templates/Light/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Light/del_confirm.tpl cdcb838e2e3a339de5408643fd2c2f3c447ab916 l
 F www/templates/Light/delete.less 3a74460f12ec494d6ac273a831839c1242abdc60 l
+F www/templates/Light/edit.json bbf3ccaa55253deb23dd57baa42a9044a3827169 l
 F www/templates/Light/edit_toolbar.tpl b3d0d80bd108930946ecc811b03731fc2ea0fb00 l
 F www/templates/Light/editor.less 01d0be8c4eaa0f91139b00b7bedaa3fb66dc4450 l
 F www/templates/Light/error.less 83cd53cf80eb467b611ebe7865c41c96694c293f l
@@ -312,6 +313,7 @@ F www/templates/MoLight/common.less 762e4e8198de87fbcb131462b3476432725a2c65 l
 F www/templates/MoLight/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/MoLight/del_confirm.tpl cdcb838e2e3a339de5408643fd2c2f3c447ab916 l
 F www/templates/MoLight/delete.less 3a74460f12ec494d6ac273a831839c1242abdc60 l
+F www/templates/MoLight/edit.json bbf3ccaa55253deb23dd57baa42a9044a3827169 l
 F www/templates/MoLight/edit_toolbar.tpl b3d0d80bd108930946ecc811b03731fc2ea0fb00 l
 F www/templates/MoLight/editor.less 01d0be8c4eaa0f91139b00b7bedaa3fb66dc4450 l
 F www/templates/MoLight/error.less 83cd53cf80eb467b611ebe7865c41c96694c293f l
@@ -615,6 +617,7 @@ F www/templates/mobile/common.less 762e4e8198de87fbcb131462b3476432725a2c65 l
 F www/templates/mobile/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/mobile/del_confirm.tpl cdcb838e2e3a339de5408643fd2c2f3c447ab916 l
 F www/templates/mobile/delete.less 3a74460f12ec494d6ac273a831839c1242abdc60 l
+F www/templates/mobile/edit.json bbf3ccaa55253deb23dd57baa42a9044a3827169 l
 F www/templates/mobile/edit_toolbar.tpl b3d0d80bd108930946ecc811b03731fc2ea0fb00 l
 F www/templates/mobile/editor.less 01d0be8c4eaa0f91139b00b7bedaa3fb66dc4450 l
 F www/templates/mobile/error.less 83cd53cf80eb467b611ebe7865c41c96694c293f l
@@ -670,7 +673,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P e9ba6a1d1fdb62978972ff69de19e0c17d273078
-R 837fae86e1722e2ae6dd5ef1acb64e12
+P 7ac0dcf3e6986dc66805e4ce77c8182d5408287b
+R e586418bb00306d5c5b454f0edf82912
 U johnfound
-Z e1030513b471dd07d7d8c9cba0879449
+Z 22e8d2f7cc2f931a27df72190a1db4fd
