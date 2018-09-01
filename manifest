@@ -1,5 +1,5 @@
-C For\sthe\sguests\sdefault\spermLogin\smeans\s"can\sregister".\sThe\stemplates\sedited\saccordingly.\s[special:canlogin]\schanged\sto\s[special:canregister].
-D 2018-09-01T19:49:23.655
+C Limit\sthe\sanon\spermissions\sto\sthe\ssafe\spermissions.\sThe\sanonymous\svisitors\scan't\smake\sthings\sthat\sneed\sactive\ssession.
+D 2018-09-01T20:12:16.345
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -55,7 +55,7 @@ F source/restore.sql 14a8f13466ced19e05502d41ffcfddeecbc6954b
 F source/search.asm 4a2bfd137375606dc7a0da5d8f7ebc242a6ec6ac
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
-F source/settings.asm b8a7c7184cc4786df871ad904663c6e799b82c9f
+F source/settings.asm d3ef81aa11b2cfd67cc7b71b132c19fd32ceef77
 F source/settings.sql a288c4c62dec4c713f22542109589b010c2da1bf
 F source/showthread.asm f457c5b8883df31c5dd1d9cb7b9a53336fea573d
 F source/showthread.sql 284a3060114cb7668fead7008f4ebaf9258f14d2
@@ -547,7 +547,7 @@ F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e44992
 F www/templates/Wasp/form_register.tpl 18c0fa0a762d78dc4c34f6c8bdcb11140f4b1e36
 F www/templates/Wasp/form_reset_password.tpl 0602acb7aaa6528a16ddc2b16d7ac7b05e24f09a
 F www/templates/Wasp/form_reset_request.tpl d2130d1b896ef0ae18a02d962914bcd9b9b7e594
-F www/templates/Wasp/form_settings.tpl e65ba579766d6e4d03cf57d581763aad327a5eff
+F www/templates/Wasp/form_settings.tpl 70381822ce03289c0486bd4d407b995e110dbe0c
 F www/templates/Wasp/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Wasp/form_sqlite_console.tpl 7efc4c110f2baaab4cb601c2eb68c0f65cc532fb
 F www/templates/Wasp/help_new_thread.tpl 855afda41996bc3875d07bdf7a41adcdf2a31525
@@ -673,7 +673,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 99a276b2b3dc6f2f81aef187d34fd8d59df5e87e
-R bc340cc35ae9c1e2024a26a7bad7a5d4
+P 2b9a6c3efc0ec5824e96b880f17aba286bfb6782
+R bbddc842e5672a1cacc4855c84e13dcb
 U johnfound
-Z 6cf8cad750b52a8dcddbf9178c89df68
+Z 11551ddedbcc94fef002ed611a390020

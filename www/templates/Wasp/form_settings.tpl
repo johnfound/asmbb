@@ -74,18 +74,9 @@
         <td>
           <input type="checkbox" [anon_perm0]  name="anon_perm" id="ap0"  value="1"><label for="ap0">Register</label>
           <input type="checkbox" [anon_perm1]  name="anon_perm" id="ap1"  value="2"><label for="ap1">Read</label>
-          <input type="checkbox" [anon_perm2]  name="anon_perm" id="ap2"  value="4"><label for="ap2">Post</label>
-          <input type="checkbox" [anon_perm3]  name="anon_perm" id="ap3"  value="8"><label for="ap3">Start threads</label>
-        </td><td>
-          <input type="checkbox" [anon_perm4]  name="anon_perm" id="ap4"  value="16"><label for="ap4">Edit own posts</label>
-          <input type="checkbox" [anon_perm5]  name="anon_perm" id="ap5"  value="32"><label for="ap5">Edit all posts</label>
-          <input type="checkbox" [anon_perm6]  name="anon_perm" id="ap6"  value="64"><label for="ap6">Delete own posts</label>
-          <input type="checkbox" [anon_perm7]  name="anon_perm" id="ap7"  value="128"><label for="ap7">Delete all posts</label>
         </td><td>
           <input type="checkbox" [anon_perm8]  name="anon_perm" id="ap8"  value="256"><label for="ap8">Chat</label>
           <input type="checkbox" [anon_perm9]  name="anon_perm" id="ap9"  value="512"><label for="ap9">Download files</label>
-          <input type="checkbox" [anon_perm10] name="anon_perm" id="ap10" value="1024"><label for="ap10">Attach files</label>
-          <input type="checkbox" [anon_perm31] name="anon_perm" id="ap31" value="$80000000"><label for="ap31">Administrator</label>
       </tr></table>
     </section>
 

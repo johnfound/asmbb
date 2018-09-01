@@ -386,6 +386,8 @@ begin
         stdcall GetPostPermissions, 'anon_perm', esi
         jc      .error_invalid_permissions
 
+        and     eax, permLogin or permRead or permChat or permDownload
+
         stdcall SetParamInt, txt "anon_perm", eax
         jc      .error_write
 
