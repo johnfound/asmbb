@@ -16,7 +16,7 @@
   </form>
   <article>
     <p>If you forgot your password, <b><a href="/!resetpassword">click here</a></b>. You have limited reset attempts.</p>
-    <p>If you don't have an account, you should <b><a href="/!register">register one</a></b>.</p>
+    [case:[special:canregister]||<p>If you don't have an account, you should <b><a href="/!register">register one</a></b>.</p>]
     <p></p>
     <p>The login process uses cookies. If the "Persistent login" checkbox is checked, the cookie will be stored persistently in your browser.</p>
     <p>If the "Persistent login" checkbox is not checked (default), AsmBB uses so called "session cookies" that are automatically removed when you close your browser.</p>

@@ -142,7 +142,7 @@ if used RenderTemplate
               "thread",      RenderTemplate.sp_thread,                \ ; Needs encoding!
               "permissions", RenderTemplate.sp_permissions,           \ ; NUMBER, no encoding
               "isadmin",     RenderTemplate.sp_isadmin,               \ ; 1/0 no encoding
-              "canlogin",    RenderTemplate.sp_canlogin,              \ ; 1/0 no encoding
+              "canregister", RenderTemplate.sp_canregister,           \ ; 1/0 no encoding
               "canpost",     RenderTemplate.sp_canpost,               \ ; 1/0 no encoding
               "canstart",    RenderTemplate.sp_canstart,              \ ; 1/0 no encoding
               "canedit",     RenderTemplate.sp_canedit,               \ ; 1/0 no encoding
@@ -1344,7 +1344,7 @@ end if
         cmovnz  eax, [.cBoolean+4]
         jmp     .special_string
 
-.sp_canlogin:
+.sp_canregister:
         mov     eax, permLogin
         jmp     .one_permission
 

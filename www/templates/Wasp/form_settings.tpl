@@ -10,7 +10,7 @@
   <div class="tabbed">
 
     <input id="tab1" name="tabselector" type="radio" checked>
-    <label for="tab1">HTTP/CSS</label>
+    <label for="tab1">HTML/CSS</label>
     <section>
       <h3>Forum title:</h3>
       <input type="text" value="[forum_title]" name="forum_title" class="settings" maxlength="512">
@@ -72,7 +72,7 @@
       <h3>For guests:</h3>
       <table><tr>
         <td>
-          <input type="checkbox" [anon_perm0]  name="anon_perm" id="ap0"  value="1"><label for="ap0">Login</label>
+          <input type="checkbox" [anon_perm0]  name="anon_perm" id="ap0"  value="1"><label for="ap0">Register</label>
           <input type="checkbox" [anon_perm1]  name="anon_perm" id="ap1"  value="2"><label for="ap1">Read</label>
           <input type="checkbox" [anon_perm2]  name="anon_perm" id="ap2"  value="4"><label for="ap2">Post</label>
           <input type="checkbox" [anon_perm3]  name="anon_perm" id="ap3"  value="8"><label for="ap3">Start threads</label>

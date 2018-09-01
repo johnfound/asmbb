@@ -47,7 +47,7 @@
       </form>
     </div>
     <div>
-      [case:[special:userid]|<a href="/!login/">Login</a><br><a href="/!register/">Register</a>|
+      [case:[special:userid]|<a href="/!login/">Login</a><br>[case:[special:canregister]||<a href="/!register/">Register</a>]|
       <a href="/!logout">Logout ( [special:username] )</a><br><a href="/!userinfo/[special:username]">User profile</a>]
     </div>
   </div>

@@ -1,5 +1,5 @@
-C Some\sskins\sedits\sabout\sthe\sattachments.\sMost\sin\sthe\sTerminal\sskin.
-D 2018-09-01T19:06:04.693
+C For\sthe\sguests\sdefault\spermLogin\smeans\s"can\sregister".\sThe\stemplates\sedited\saccordingly.\s[special:canlogin]\schanged\sto\s[special:canregister].
+D 2018-09-01T19:49:23.655
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -17,9 +17,9 @@ F source/Linux/sqlite3.inc 49dc036ae22c327790d0314c81263d77d041990b
 F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/TestsWithTags.sql 6384a56d553e36aa1c54cdb61a147bb2806e3e9d
-F source/ToDo.txt ee71ecd4f833a439ce91ebb24b070c0cc0553a5c
+F source/ToDo.txt da65b2e849e8d979b478e0f5c0718cff5f6d6048
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
-F source/accounts.asm ed0ec6e7cf9ade327dc855545380e1b6026a5a2e
+F source/accounts.asm 913cd36916b2934e526e0351d05cf093e9afc230
 F source/attachments.asm bf4b82333c52c2f1750ef2266170cddd37af0f5f
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm 87830583d32bdf406d7a0a0615cff0b23fda9283
@@ -27,7 +27,7 @@ F source/categories.sql b1fa5a2cca7204372b3ca3714edbbc669103b1cf
 F source/chat.asm c0469c0067c6361d0894e18d9f32e01562a3c94c
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm 2e31554f9429f4cf0f28a7db357008d581d1b019
-F source/create.sql 09d510952f467db2b5e3d072a6dfe2d83ce2db24
+F source/create.sql 7464901729b2ccb0e8d4fb2c6ff8977e66de4774
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 5d85cf6d0ac6c1eb80eead78c6d98783f22c8574
 F source/engine.asm 0c205f79365aa8788cc2729b45229f1abb57da94
@@ -50,7 +50,7 @@ F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql c15286f32455df88ebd14168a10195e0c098545d
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
-F source/render2.asm b087af66177d5e0821438963c621fe73ffd765eb
+F source/render2.asm aa12a5b98321352e7974398f90596c31ee49ff2e
 F source/restore.sql 14a8f13466ced19e05502d41ffcfddeecbc6954b
 F source/search.asm 4a2bfd137375606dc7a0da5d8f7ebc242a6ec6ac
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -408,7 +408,7 @@ F www/templates/Terminal/error_html_start.tpl a1bc27205b6552aaf2b9ddfa1dc91e16d7
 F www/templates/Terminal/form_edit.tpl 1e7f509c2b4ea20cc0b9544967e56c3bcc2eef59
 F www/templates/Terminal/form_edit_thread.tpl 9ba48416deb4498a8dcad61198289fb396592980 l
 F www/templates/Terminal/form_editinfo.tpl 91a3644fb4b1021bffa2356f7291f6e457eebe1e l
-F www/templates/Terminal/form_login.tpl a3e5766ed6f54935d60b6b58e43b942d7a150291
+F www/templates/Terminal/form_login.tpl 9469d81acf2f61039eca07cd347499ca9075bb32
 F www/templates/Terminal/form_new_post.tpl d1083e2c493d1a7bafdbac53fc44693bf4c242e0
 F www/templates/Terminal/form_new_thread.tpl 8523496bff3e42ac3dac1201dd4ad1b4305a7005
 F www/templates/Terminal/form_post_debug.tpl 0a3e574bb2595001a5c1cebbd66c59aefd6aaab7 l
@@ -421,7 +421,7 @@ F www/templates/Terminal/form_sqlite_console.tpl cec2ab66fbdf5c2a343b29391eea233
 F www/templates/Terminal/help_new_thread.tpl 579ed6559a0a3aee0fe3be3a2c841c1dd7b8b169 l
 F www/templates/Terminal/login.less 9bfb1ccb94f4b4e8354ff9ed6944c89924063a3b
 F www/templates/Terminal/main_html_end.tpl b5e1e83e2ec57c8159d14343ca4dafbf4f12180e
-F www/templates/Terminal/main_html_start.tpl 5b6f2da69117e705da887c7ab14f75e2d1ae5f60
+F www/templates/Terminal/main_html_start.tpl b61b794eb3df558d07b10574591d0b80c3509543
 F www/templates/Terminal/markdown.less 3f41aeb9e230ac732bcc6f28b5726f35e2904fa9
 F www/templates/Terminal/minimag_suffix.tpl f3a1414972a13590a7c984b53b6fd2ddd3a47f3a l
 F www/templates/Terminal/nav_categories.tpl 8a9010133716cb745f4ed027c96c7b9348e4b18a
@@ -540,20 +540,20 @@ F www/templates/Wasp/error_html_start.tpl bb9719e341078e7b101f39c8ff92b54e403915
 F www/templates/Wasp/form_edit.tpl df5ab02e3b3dbd78d969309d9d318c0074bce6ea
 F www/templates/Wasp/form_edit_thread.tpl 793c6fa9d479db0f52e167d39eb55ecafbbd67e3
 F www/templates/Wasp/form_editinfo.tpl 9c9b8107864d1c9a23e7ec1c57e57616edf84e2c
-F www/templates/Wasp/form_login.tpl 8dedfc5091e2038904ed5b80de37ca2008280e1b
+F www/templates/Wasp/form_login.tpl cdddb5dad351d6b0545df008607b9485892c99a4
 F www/templates/Wasp/form_new_post.tpl d8efa79d9a38731bc7220acad4b713c63666c597
 F www/templates/Wasp/form_new_thread.tpl 6de116c0296b3f1380ea5cb3d13a69d6a070496c
 F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/Wasp/form_register.tpl 18c0fa0a762d78dc4c34f6c8bdcb11140f4b1e36
 F www/templates/Wasp/form_reset_password.tpl 0602acb7aaa6528a16ddc2b16d7ac7b05e24f09a
 F www/templates/Wasp/form_reset_request.tpl d2130d1b896ef0ae18a02d962914bcd9b9b7e594
-F www/templates/Wasp/form_settings.tpl 47c801daac4879d7150938866e4ace4212b351be
+F www/templates/Wasp/form_settings.tpl e65ba579766d6e4d03cf57d581763aad327a5eff
 F www/templates/Wasp/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Wasp/form_sqlite_console.tpl 7efc4c110f2baaab4cb601c2eb68c0f65cc532fb
 F www/templates/Wasp/help_new_thread.tpl 855afda41996bc3875d07bdf7a41adcdf2a31525
 F www/templates/Wasp/login.less b8467882b426bdd8949171fa410c3cb71ced6cdd
 F www/templates/Wasp/main_html_end.tpl f9390ce9052a9df9e6ac20a2c11f7257b9f442dd
-F www/templates/Wasp/main_html_start.tpl 04d08e65f7812bdef3a89db988d082f9c481c8a0
+F www/templates/Wasp/main_html_start.tpl 0b6660caa2b332c98f7ed939b9c463f5c0f0a19a
 F www/templates/Wasp/markdown.less 728b194c01331eb110fd5de38efde71dfd78b9c0
 F www/templates/Wasp/minimag_suffix.tpl ea20e08377b7ccdd55a2d7792071bb2734622813
 F www/templates/Wasp/nav_categories.tpl 80053896a6a06ee87351b1e586eaefd329a84109
@@ -673,7 +673,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 306f019f397f5bfb666991131416ea3d4c607d7f
-R 9ae3883f955ebf81a034d11cecafd59b
+P 99a276b2b3dc6f2f81aef187d34fd8d59df5e87e
+R bc340cc35ae9c1e2024a26a7bad7a5d4
 U johnfound
-Z 7c195592b468edf088f8c2af3be61cee
+Z 6cf8cad750b52a8dcddbf9178c89df68

@@ -480,6 +480,10 @@ Please introduce yourself.
 Are you expected?
 ','Private place!','<a href="/!login">Login first</a>');
 
+insert into Messages VALUES ('closed_registration','This very place
+Is not a place for you.
+Go elsewhere now.
+','Closed forum!','<a href="https://duckduckgo.com">A good place to start</a>');
 
 create table Log (
   process_id integer,   -- the unique process id
