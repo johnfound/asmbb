@@ -1,5 +1,5 @@
-C Limit\sthe\sanon\spermissions\sto\sthe\ssafe\spermissions.\sThe\sanonymous\svisitors\scan't\smake\sthings\sthat\sneed\sactive\ssession.
-D 2018-09-01T20:12:16.345
+C Fixed\sa\sbug\sin\sthe\screate.sql\sscript.
+D 2018-09-01T21:53:50.986
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -27,10 +27,10 @@ F source/categories.sql b1fa5a2cca7204372b3ca3714edbbc669103b1cf
 F source/chat.asm c0469c0067c6361d0894e18d9f32e01562a3c94c
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm 2e31554f9429f4cf0f28a7db357008d581d1b019
-F source/create.sql 7464901729b2ccb0e8d4fb2c6ff8977e66de4774
+F source/create.sql f75b46984041063de30389f3d985854b01e2bf77
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 5d85cf6d0ac6c1eb80eead78c6d98783f22c8574
-F source/engine.asm 0c205f79365aa8788cc2729b45229f1abb57da94
+F source/engine.asm 64f4523c4101f418570ac817c8806f517d895cc0
 F source/engine.fpr a5e0be50f4efcf070cbecbe589362a50d6217667
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -55,7 +55,7 @@ F source/restore.sql 14a8f13466ced19e05502d41ffcfddeecbc6954b
 F source/search.asm 4a2bfd137375606dc7a0da5d8f7ebc242a6ec6ac
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
-F source/settings.asm d3ef81aa11b2cfd67cc7b71b132c19fd32ceef77
+F source/settings.asm 9a8764ade01648787f11d6dfbce4edd07414fb4e
 F source/settings.sql a288c4c62dec4c713f22542109589b010c2da1bf
 F source/showthread.asm f457c5b8883df31c5dd1d9cb7b9a53336fea573d
 F source/showthread.sql 284a3060114cb7668fead7008f4ebaf9258f14d2
@@ -673,7 +673,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 2b9a6c3efc0ec5824e96b880f17aba286bfb6782
-R bbddc842e5672a1cacc4855c84e13dcb
+P 9a49d4acc7af21a4a120adde3617c087ddf11f4a
+R 6f3b19ce3317f0405189fa3e6015d3a4
 U johnfound
-Z 11551ddedbcc94fef002ed611a390020
+Z 492c0a173319f9eeda367c2ac403f070

@@ -626,7 +626,6 @@ begin
         return
 
 
-
 .create_account:
         stdcall StrDupMem, "/?err=1&msg="
         mov     [.message], eax
@@ -695,7 +694,7 @@ begin
 
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_DONE
-        jne     .error_no_data
+        jne     .error_sql
 
         cinvoke sqliteFinalize, [.stmt]
         stdcall TextMakeRedirect, 0, "/!login"
@@ -716,6 +715,20 @@ begin
         stdcall StrCat, [.message], eax
         stdcall StrDel, eax
         jmp     .error_del_eax
+
+.error_sql:
+        mov     ecx, eax
+        stdcall StrURLEncode, "Error: SQL return code "
+        mov     edx, eax
+
+        stdcall NumToStr, ecx, ntsDec
+        stdcall StrCat, edx, eax
+        stdcall StrDel, eax
+        stdcall StrCat, [.message], edx
+        stdcall StrDel, edx
+        jmp     .error_finalize
+
+
 
 .error_no_data:
         stdcall StrURLEncode, "Error: POST data invalid!"

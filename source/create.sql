@@ -20,7 +20,7 @@ insert into Params values ('forum_header', '<img src="/images/title.svg" alt=
 █  █ ▄▄▄▄ ▄▄▄▄▄ █  █ █  █
 █▄▄█ █▄▄▄ █ █ █ █▀▀▄ █▀▀▄
 █  █ ▄▄▄█ █ █ █ █▄▄▀ █▄▄▀
-">
+">'
 );
 
 create table Guests (
