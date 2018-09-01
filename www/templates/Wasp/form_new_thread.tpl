@@ -25,11 +25,10 @@
       <p>Post content:</p>
       [include:edit_toolbar.tpl]
       <textarea class="editor" name="source" id="source" placeholder="Share your thoughts here">[source]</textarea>
-      [case:[special:canupload]||<p class="panel">Attach file(s):</p><div class="attach"><input type="file" placeholder="Select file to attach" name="attach" multiple="multiple"></div>
+      [case:[special:canupload]||<p class="panel">Attach file(s):</p><div class="attach"><input type="file" placeholder="Select file to attach" name="attach" multiple="multiple"></div>]
       <div class="attachments">
         [attach_edit:[id]]
       </div>
-      ]
     <div class="panel">
         <input type="submit" name="preview" value="Preview" >
         <input type="submit" name="submit" value="Submit" >

@@ -10,9 +10,31 @@
   <form id="editform" action="!edit" method="post" onsubmit="previewIt(event)">
     <p>Thread title:</p>
     <h1 class="fakeedit">[caption]</h1>
-    <p>Post content:</p>
-    [include:edit_toolbar.tpl]
-    <textarea class="editor" name="source" id="source">[source]</textarea>
+    <div class="tabbed">
+      <input id="rad1" name="tabselector" type="radio" checked>
+      <label for="rad1">Text</label>
+      <section>
+        <p>Post content:</p>
+        [include:edit_toolbar.tpl]
+        <textarea class="editor" name="source" id="source">[source]</textarea>
+      </section>
+
+      <input id="rad2" name="tabselector" type="radio">
+      <label for="rad2">Attachments</label>
+      <section>
+        [case:[special:canupload]||
+          <div class="attach">
+            <input type="file" placeholder="Select file to attach" name="attach" multiple="multiple" id="browse" onchange="GetSelectedFiles()">
+            <label class="browse" for="browse">Browse</label>
+            <span class="showfiles" id="showfiles"></span>
+          </div>
+        ]
+        <div id="attachments" class="attach_del">
+          [attach_edit:[id]]
+        </div>
+      </section>
+    </div>
+
     <div class="panel">
       <input class="ui left" type="submit" name="preview" value="Preview" onclick="this.form.cmd='preview'" title="Ctrl+Enter for preview">
       <input class="ui left" type="submit" name="submit" value="Submit" onclick="this.form.cmd='submit'" title="Ctrl+S for submit" >
@@ -79,8 +101,14 @@ function previewIt(e) {
     xhr.onload = function(event){
       if (event.target.status === 200) {
         var prv = document.getElementById("preview");
-        prv.outerHTML = event.target.response;
+        var attch = document.getElementById("attachments");
+        var resp = JSON.parse(event.target.response);
+
+        prv.innerHTML = resp.preview;
+        attch.innerHTML = resp.attach_del;
       }
+      document.getElementById("browse").value = '';
+      document.getElementById("showfiles").innerText = '';
       document.getElementById("source").focus();
     };
 
@@ -112,6 +140,15 @@ document.onkeydown = function(e) {
     return false;
   }
 };
+
+function GetSelectedFiles() {
+  var where = document.getElementById("showfiles");
+  var browse = document.getElementById("browse");
+  if (browse.files.length == 0) where.innerText = '';
+  else if (browse.files.length == 1) where.innerText = browse.files[0].name;
+  else where.innerText = browse.files.length + " files are selected";
+}
+
 
 
 </script>

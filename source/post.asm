@@ -453,7 +453,7 @@ begin
 
 ;        stdcall DumpPostArray, [.pSpecial]
 
-        stdcall DelAttachments, esi, [.pSpecial]
+;        stdcall DelAttachments, esi, [.pSpecial]        ; ??? what attachments to del???
         stdcall WriteAttachments, esi, [.pSpecial]
 ;       jc      .attachments_error_uploading            ; ??? What we should do here? Rollback? Ignore? Format the HDD?
 

@@ -7,7 +7,7 @@
     <a class="user_name" href="/!userinfo/[special:username]">[special:username]</a>
     <div class="avatar"><img class="avatar" alt="(ツ)" src="/!avatar/[special:username]" /></div>
   </div>
-    <div class="post_text" style="margin:0px;">
+    <div class="post_text">
       <article>
         [minimag:[source]]
         <div class="attachments">

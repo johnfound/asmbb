@@ -78,7 +78,7 @@
 @clDisabledBG: #e0e0e0;
 @clDisabledFG: #808080;
 
-@msgBoxWidth: 60ch;
+@msgBoxWidth: 64ch;
 
 @clMsgErrorBG: red;
 @clMsgErrorFG: yellow;
@@ -91,3 +91,10 @@
 
 @clFormBG: #c0c0c0;
 @clFormFG: #000000;
+
+// Tabbed pages styles:
+
+@clTabBG: #a0a0a0;
+@clTabFG: #000000;
+@clTabHover: #d8d8d8;
+@clTabFocus: #e05050;

@@ -25,6 +25,7 @@ body {
   left: 0;
   top: 0;
   cursor: col-resize;
+  z-index: 1000;
 }
 
 .dragpos {
@@ -245,3 +246,66 @@ input[type=checkbox] {
     }
   }
 }
+
+/* Tabbed navigation handling */
+
+.tabbed {
+  flex-grow: 1;
+  position: relative;
+  margin: @LineH 0;
+  overflow: auto;
+
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+
+  & > input {
+    position: absolute;
+    opacity: 0;
+    & + label {
+      float: left;
+      -webkit-user-select: none; /* Safari 3.1+ */
+      -moz-user-select: none; /* Firefox 2+ */
+      -ms-user-select: none; /* IE 10+ */
+      user-select: none; /* Standard syntax */
+
+      padding: 0 2ch;
+      line-height: @LineH;
+      cursor: pointer;
+      font-weight: bold;
+      color: black;
+
+      &:hover {
+        background: @clTabHover;
+      }
+
+      & + section {
+        position: absolute;
+        top: @LineH;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        display: none;
+        padding: @LineH 1ch;
+        background: @clTabBG;
+        flex-direction: column;
+      }
+    }
+
+    &:focus + label {
+      z-index: 1;
+    }
+
+    &:checked + label {
+      background: @clTabBG;
+      color: @clTabFG;
+      & + section {
+        display: flex;
+      }
+    }
+  }
+}
+

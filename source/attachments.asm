@@ -161,6 +161,8 @@ begin
 
         OutputValue "Max attachment count:", eax, 10, -1
 
+        OutputValue "Post ID = ", [.postID], 10, -1
+
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlAttachCnt, sqlAttachCnt.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [.postID]

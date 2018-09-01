@@ -13,6 +13,9 @@
       </div>
       <article>
         [minimag:[source]]
+        <div class="attachments">
+          [attachments:[id]]
+        </div>
       </article>
       <div class="clear"></div>
       <div class="post_info">
