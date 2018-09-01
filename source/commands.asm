@@ -154,8 +154,11 @@ begin
         stdcall GetDefaultSkin, eax
         mov     [.special.userSkin], eax
 
+        cmp     [.pPost2], 0
+        je      .post_ok
+
         stdcall DecodePostData, [.pPost2], [.special.params]
-        jc      .post_ok
+        jc      .error400
 
         mov     [.special.post_array], eax
 

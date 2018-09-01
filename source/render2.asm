@@ -184,14 +184,8 @@ proc RenderTemplate, .pText, .hTemplate, .sqlite_statement, .pSpecial
 
 .tblFields TFieldSlot
            rb 255 * sizeof.TFieldSlot       ; a hash table of the statement field names.
-
-  BenchVar .temp
-  BenchVar .temp2
-
 begin
         pushad
-
-        BenchmarkStart .temp
 
         xor     eax, eax
         mov     [.sepcnt], eax
@@ -662,7 +656,7 @@ begin
 
 ; ...................................................................
 
-sqlGetAttachments text "select id, filename, length(file), strftime('%d.%m.%Y', changed, 'unixepoch'), dcnt, md5sum from Attachments where postID = ?1"
+sqlGetAttachments text "select id, filename, length(file), strftime('%d.%m.%Y', changed, 'unixepoch'), count, md5sum from Attachments left join AttachCnt on fileid = id where postID = ?1"
 
 .cmd_attachments:
 ; here esi points to the ":" char of the "attachments" command, ecx at the end "]" and edi at the start "["
@@ -1116,8 +1110,6 @@ endl
 .cmd_special:
 
 
-        BenchmarkStart .temp2
-
 ;        DebugMsg "Special"
 
         xor     ebx, ebx
@@ -1204,7 +1196,6 @@ end if
         sub     ecx, esi
         add     ecx, eax
 
-        Benchmark "Special strng[us]: "
         jmp     .loop
 
 .sp_title:
@@ -1273,7 +1264,6 @@ end if
         sub     ecx, esi
         add     ecx, eax
 
-        Benchmark "Special strng with free[us]: "
         jmp     .loop
 
 .sp_cmdtype:
@@ -1478,7 +1468,6 @@ endl
         sub     ecx, esi
         add     ecx, eax
 
-        Benchmark "Special TText [us]: "
         jmp     .loop
 
 
@@ -1542,10 +1531,6 @@ endl
         jmp     .finish
 
 .exit:
-        BenchmarkEnd
-        Benchmark 'Template <', [.hTemplate], '> rendering time[us]: '
-        BenchmarkEnd
-
         mov     [esp+4*regEAX], edx
         popad
         return

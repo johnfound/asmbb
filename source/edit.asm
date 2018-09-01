@@ -22,6 +22,8 @@ proc EditUserMessage, .pSpecial
 begin
         pushad
 
+        DebugMsg "Edit user message."
+
         xor     ebx, ebx
         mov     [.source], ebx
         mov     [.rendered], ebx
@@ -80,6 +82,8 @@ begin
         cmp     [esi+TSpecialParams.post_array], 0
         je      .show_edit_form
 
+        DebugMsg "POST request."
+
 ; ok, get the action then:
 
 ;        stdcall DumpPostArray, esi
@@ -109,6 +113,8 @@ begin
         inc     [.softPreview]
 
 .show_edit_form:
+
+        DebugMsg "SHOW edit form."
 
         cmp     [.ticket], 0
         jne     .ticket_ok

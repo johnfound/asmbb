@@ -366,6 +366,12 @@ input[type=checkbox] {
   flex-grow: 1;
   position: relative;
 
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+
   & > input {
     position: absolute;
     opacity: 0;

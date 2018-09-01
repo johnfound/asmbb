@@ -19,6 +19,9 @@ div.set_page {
 }
 
 form.settings {
+  height: 800px;
+  display: flex;
+  flex-direction: column;
   h1 {
     height: 38px;
     text-align: center;
@@ -40,6 +43,7 @@ form.settings {
     font-size: @FontSize;
     font-weight: bold;
     margin: 8px 0px 4px 0px;
+    color: @clDarkFG;
   }
 
   table {
@@ -73,6 +77,8 @@ input.settings, select.settings {
 textarea.settings {
   width: 100%;
   white-space: pre;
+  resize: none;
+  flex-grow: 1;
 }
 
 
@@ -134,4 +140,5 @@ input[type=checkbox] + label {
     display: block;
     margin-bottom: 4px;
     margin-top: 4px;
+    color: @clDarkFG;
 }

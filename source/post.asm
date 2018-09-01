@@ -2,10 +2,6 @@ LIMIT_POST_LENGTH = 16*1024
 LIMIT_POST_CAPTION = 512
 LIMIT_TAG_DESCRIPTION = 1024
 
-MAX_ATTACHMENT_COUNT = 10
-MAX_ATTACHMENT_SIZE = 1024*1024
-
-
 cNewPostForm   text "form_new_post.tpl"
 cNewThreadForm text "form_new_thread.tpl"
 

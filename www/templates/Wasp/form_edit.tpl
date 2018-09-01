@@ -96,8 +96,8 @@ function previewIt(e) {
 
         prv.innerHTML = resp.preview;
         attch.innerHTML = resp.attach_del;
-        document.getElementById("browse").value = '';
       }
+      document.getElementById("browse").value = '';
       document.getElementById("source").focus();
     };
 

@@ -271,7 +271,6 @@ create table Attachments (
   postID   integer references Posts(id) on delete cascade,
   filename text,
   changed  integer,
-  dcnt     integer not null default 0,
   file     blob,
   key      blob,        -- the random key for xor encrypting the blob
   md5sum   text
@@ -279,6 +278,18 @@ create table Attachments (
 
 create index idxAttachments on Attachments(postID);
 create unique index idxAttachmentsUnique on Attachments(postID, md5sum);
+
+create table AttachCnt (
+  fileID integer references Attachments(id) on delete cascade,
+  count  integer not null default 0
+);
+
+create index idxAttachCnt on AttachCnt(fileID);
+
+create trigger AttachmentsAI after insert on Attachments begin
+  insert into AttachCnt(fileid, count) VALUES (new.id, 0);
+end;
+
 
 
 create table Sessions (
