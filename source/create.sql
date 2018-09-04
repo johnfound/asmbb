@@ -104,6 +104,15 @@ create table Threads (
 create index idxThreadsPinnedLastChanged on Threads (Pinned desc, LastChanged desc);
 create index idxThreadsSlug on Threads (Slug);
 
+create table ThreadPosters (
+  firstPost   integer primary key references Posts(id) on delete cascade on update cascade,
+  threadID    integer references Threads(id) on delete cascade on update cascade,
+  userID      integer references Users(id) on delete cascade on update cascade
+);
+
+create unique index idxThreadPosters on ThreadPosters(threadID, userID);
+create index idxThreadPostersOrder on ThreadPosters(threadid, firstPost, userid);
+
 
 create table ThreadsHistory (
   threadid    integer,
@@ -186,12 +195,12 @@ CREATE TRIGGER PostsAI AFTER INSERT ON Posts BEGIN
     (select group_concat(TT.Tag, ", ") from ThreadTags TT where TT.threadID = new.threadid)
   );
   insert into PostCNT(postid,count) VALUES (new.id, 0);
+  insert into ThreadPosters(firstPost, threadID, userID) values (new.id, new.threadID, new.userID);
   update Users set PostCount = PostCount + 1 where Users.id = new.UserID;
 END;
 
 CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
   delete from PostFTS where rowid = old.id;
-  delete from PostCNT where postid = old.id;
   update Users set PostCount = PostCount - 1 where Users.id = old.UserID;
 
   insert or ignore into PostsHistory(postID, threadID, userID, postTime, editUserID, editTime, Content) values (

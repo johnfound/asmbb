@@ -1,5 +1,5 @@
-C Fixed\sa\sbug\sin\sthe\screate.sql\sscript.
-D 2018-09-01T21:53:50.986
+C Remove\sthe\sprecompiled\sbinary\slibraries.\sAdd\sbuild\sscript\sfor\sbuilding\sC\slibraries.\sThread\slist\sSQL\swas\simproved\sand\sthe\stemplates\soptimized\saccordingly.\sNow\sthe\sthread\slist\sis\srendered\sfaster.
+D 2018-09-04T16:16:38.859
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -10,6 +10,8 @@ F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
 F install/unpack.tar.gz 9390bd3b1f236b0206314628d3c94d6e23b25d35
 F install/unpack/.htaccess efa046601aad51a87da0946b4eecadcc0d234c15
 F install/unpack/unpack.sh 4443f580fe76faffa7015e6e4b73b22f6290f4a0 x
+F musl_sqlite/README 9c5dd3ed2295fa7e9e1f7bf31fb5da462b449c0a
+F musl_sqlite/build 7a3f5f7806394b2e85c6811fd15aadf96476f59b x
 F source/Documents/FastCGI\sSpecification.html e2fc06a5abf1b3505c665e108ce3ad28b636095a
 F source/Documents/futex.pdf 3297d3e1739a7b294fa0c96ba6d59bae7170c6b9
 F source/Documents/rfc7578.txt 5dff43151910fe753f8649b08d650137f07a96ff
@@ -27,11 +29,11 @@ F source/categories.sql b1fa5a2cca7204372b3ca3714edbbc669103b1cf
 F source/chat.asm c0469c0067c6361d0894e18d9f32e01562a3c94c
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm 2e31554f9429f4cf0f28a7db357008d581d1b019
-F source/create.sql f75b46984041063de30389f3d985854b01e2bf77
+F source/create.sql 5df901925ce0cc79bd503f2c20d038d93acddfdc
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 5d85cf6d0ac6c1eb80eead78c6d98783f22c8574
 F source/engine.asm 64f4523c4101f418570ac817c8806f517d895cc0
-F source/engine.fpr a5e0be50f4efcf070cbecbe589362a50d6217667
+F source/engine.fpr 3818d619042f945db805b07408065d82cfc403ef
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm c1dfb0297685352865a7bb7eacff90d173f3d919
@@ -71,7 +73,7 @@ F source/text_constants.asm c736bdb4840fc1218bdea8ddbd2f573dbd69d2de
 F source/thread_attr.sql 96f479d9e4ab2a93221b81be1bbb8a8ba6e277f3
 F source/threadcount.sql 86f4cf8623b00ca9ed81d648eb95ab8f77d544f3
 F source/threadlist.asm 7100f2160b33b2382b6dd5a050df1291d2527019
-F source/threadlist.sql 049a40af73d8d699dbfb8f97d75765a996a15a4d
+F source/threadlist.sql 439888aab35f6474a78d1910012dfcc224fe895a
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
 F source/userinfo.asm aa28e5a0ce21e65d57b3fa332e3c6b295e6d9b55
@@ -165,8 +167,6 @@ F www/images/sources/title2.svg 38a1b994139b4814b00b4cfda84577a31467d7ad
 F www/images/sources/toolbar.svg b2a8e653d8f7360888db706887a6344ee23b96e4
 F www/images/sources/yellow_back.png d7aed4145104dc3224a3fb46f03c14cf6d386167
 F www/images/title.svg cfda872f2467a82c172f6e309ae7a385fdaabff5
-F www/ld-musl-i386.so d787058cb540c591edd2bc5fc1ddad9fac72f61f x
-F www/libsqlite3.so 7ec554841266559cb0e08b27b2afd8aab1869044 x
 F www/lighttpd.conf cebee97b8e632682bfa9c02f2858d2675e6b15c6
 F www/robots.txt bed60589d6ab1cc0470f3ba582444612d1c4109a
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
@@ -276,7 +276,7 @@ F www/templates/Light/settings.less ceddd6b5948701659f883fd99ed0b9a31067df6e l
 F www/templates/Light/skin_variables.lsi cf2b410e3b0c71058d97c45fdb9c05473971210e
 F www/templates/Light/sqlite.less d6c705801f27dd30658b51803f0638ded21bb45c l
 F www/templates/Light/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
-F www/templates/Light/thread_info.tpl ae4a9a87e0f55fbbe733ccf8e6b81f14b984cfb0
+F www/templates/Light/thread_info.tpl de37c7aac2a444d49695f09c6077f5db95045f34
 F www/templates/Light/thread_list.less afd16c7f1e89a8b973807a90d19485fec09db85a
 F www/templates/Light/threadnew.less c2af3d158e2e03851692576dce99f5287e50b0c6 l
 F www/templates/Light/userinfo.less 7ed31b5cc710b5821802771232bbc02db392ebf9 l
@@ -578,7 +578,7 @@ F www/templates/Wasp/settings.less fa502f60cdab5f9142aef35639f676e087c9ad9d
 F www/templates/Wasp/skin_variables.lsi fb5ba1ad6ed9fb632fc7c449cc7710d449d7fbf1
 F www/templates/Wasp/sqlite.less 9ed43c40076b969c67d7c73d6d395da98dccbc83
 F www/templates/Wasp/statistics.tpl c0dd59a240e07c246fe9c0841eb1532b93f3f1ae
-F www/templates/Wasp/thread_info.tpl 2dec92b60a9e17703c4b3a4e7cb13cd252257b40
+F www/templates/Wasp/thread_info.tpl 126fb55912538b91496876cc0184e51514a2fb4e
 F www/templates/Wasp/thread_list.less 578089ef813e12726fecd8d745408baefe1a67d1
 F www/templates/Wasp/threadnew.less 8568bd4b1f91da4dabddea77a171ecdaf9b9ae63
 F www/templates/Wasp/userinfo.less c6ed9e57a0a59b3c43874366a605649a76ef3b4f
@@ -664,7 +664,7 @@ F www/templates/mobile/settings.less ceddd6b5948701659f883fd99ed0b9a31067df6e l
 F www/templates/mobile/skin_variables.lsi 31f84977455e95b7d52476fbd961bbd2f2ae3dd9
 F www/templates/mobile/sqlite.less d6c705801f27dd30658b51803f0638ded21bb45c l
 F www/templates/mobile/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
-F www/templates/mobile/thread_info.tpl 5b89ad05bed1f441010c902aa1b78276cac672ad
+F www/templates/mobile/thread_info.tpl 480bb68a425750a7fde5e8b3533c6df79084792e
 F www/templates/mobile/thread_list.less 5957166253e27ee148e9f9e1234cf379da22cbc5
 F www/templates/mobile/threadnew.less c2af3d158e2e03851692576dce99f5287e50b0c6 l
 F www/templates/mobile/userinfo.less b7006bfd2dbf9669e3aae8c029040fd65a8ecfb1
@@ -673,7 +673,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 9a49d4acc7af21a4a120adde3617c087ddf11f4a
-R 6f3b19ce3317f0405189fa3e6015d3a4
+P 945f8ee0c3bc0b8e038c67694cc671cc02d3fbbf
+R 6757642cf3a8c0246b8c4f70a1ea4e39
 U johnfound
-Z 492c0a173319f9eeda367c2ac403f070
+Z 3c5593d671a246afc1ae0eaa3a32f149
