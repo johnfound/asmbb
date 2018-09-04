@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#First compile the binary files
+
 mkdir asmbb
 
 # complile less files
@@ -21,6 +23,13 @@ cd ../mobile/
 echo "Compile MoLight theme styles..."
 cd ../MoLight/
 ./compile_styles.sh
+
+popd
+
+pushd .
+
+cd ../musl_sqlite/
+./build
 
 popd
 

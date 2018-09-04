@@ -1,9 +1,9 @@
-C Remove\sthe\sprecompiled\sbinary\slibraries.\sAdd\sbuild\sscript\sfor\sbuilding\sC\slibraries.\sThread\slist\sSQL\swas\simproved\sand\sthe\stemplates\soptimized\saccordingly.\sNow\sthe\sthread\slist\sis\srendered\sfaster.
-D 2018-09-04T16:16:38.859
+C Compile\sthe\sC\ssource\scode\swhen\sbuilding\sbinary\spackage.
+D 2018-09-04T17:41:46.145
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
-F install/create_release.sh ede3b12ec27fb3a5b81f4754917640a7ce363729 x
+F install/create_release.sh d303dc7066894188d185bbb39abdac0746696618 x
 F install/exclude.txt 7678178e332c0c4a1a7d1ac8705ae6e2e2e57e74
 F install/install.txt 64615f21455976e432bda238c6d4282fc561e340
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
@@ -673,7 +673,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 945f8ee0c3bc0b8e038c67694cc671cc02d3fbbf
-R 6757642cf3a8c0246b8c4f70a1ea4e39
+P a17a18bf62516303302ecca735cfea7fb47e2b20
+R 5bea2632fdef524e61158a7f92f8952e
 U johnfound
-Z 3c5593d671a246afc1ae0eaa3a32f149
+Z 7db5b11cf6b750ac6d981d58668d8101
