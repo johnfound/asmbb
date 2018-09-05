@@ -350,7 +350,19 @@ input[type=checkbox] {
       vertical-align: bottom;
     }
   }
+
+// Collapsable block of elements.
+  &.collapseit {
+    &:checked {
+    }
+    &:not(:checked) + * {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
 }
+
 
 
 .flex {
@@ -422,4 +434,6 @@ input[type=checkbox] {
     }
   }
 }
+
+
 

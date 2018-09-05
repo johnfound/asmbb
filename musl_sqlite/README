@@ -4,36 +4,27 @@ you need to have the following tools installed and working:
 gcc
 tar
 unzip
+wget
 
 Most of the Linux distributions have these tools already installed.
 You don't need to have root priviledges. Never run this script as 
 a root or with sudo!
 
-Then follow these steps:
+In case the source files for the libraries are missing, the
+script will download the latest versions from the respective
+servers.
 
-1. Download from: 
+If you want to use other version, download it and place the archive
+file in this directory. The script is looking for:
 
-https://www.musl-libc.org/download.html 
+"musl*.tar.gz" for MUSL
+"sqlite*.tar.gz" or "sqlite*.zip" for SQLite
 
-...the latest (or older) version of MUSL library.
-It is named "musl-X.X.XX.tar.gz" where X is a digit. 
+If such file exists the script will use it. If not, tries to download
+the latest sources.
 
-Place the tarball in this directory.
-
-2. Download from:
-
-https://www.sqlite.org/download.html 
-
-...the latest (or older) amalgamation sources archive of sqlite3 sources.
-There are several options, named:
-
-sqlite-snapshot-XXXXXXXXXXXX.tar.gz - for the latest pre-release snapshot.
-sqlite-amalgamation-XXXXXXX.zip - for the official release.
-
-(There are other options, but they are not suitable for this build)
-Place the sqlite3 source archive in this directory as well.
-
-3. Open console in the musl_sqlite directory and execute:
+The most simple use of the script is to delete all archives from the 
+directory and run:
 
 $ ./build
 
@@ -41,5 +32,4 @@ The script will compile the sqlite3 library with musl and will copy
 the needed files to the binary directory of AsmBB (../www/)
 
 Report every building problems. I am testing on Manjaro/Arch linux
-and some problems on other distributions are possible (but not expected)
-
+and some problems on other distributions are possible (but not expected).

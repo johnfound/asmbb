@@ -15,18 +15,24 @@ span.small {
   font-weight: normal;
 }
 
-.comma a::after {
-  content: ', ';
-  text-decoration: none;
+.comma > * {
   display: inline-block;
-  margin-right: 4px;
+  &::after {
+    content: ', ';
+    text-decoration: none;
+    margin-right: 4px;
+  }
 }
 
-.comma a:last-child::after {
+.comma > *:last-child::after {
   content: ' ';
 }
 
-.posters a:first-child::before {
+.posters {
+  margin: 0;
+}
+
+.posters > *:first-child::before {
   display: inline-block;
   color: @clArticleFG;
   margin-right: 8px;
@@ -34,13 +40,13 @@ span.small {
   content: 'Started by: ';
 }
 
-.posters a:first-child::after {
+.posters > *:first-child::after {
   margin-right: 8px;
   content: ' ';
 }
 
 
-.posters a:nth-child(2)::before {
+.posters > *:nth-child(2)::before {
   display: inline-block;
   color: @clArticleFG;
   font-weight: bold;
@@ -48,13 +54,15 @@ span.small {
   content: 'Joined: ';
 }
 
-
-.invited a:first-child::before {
-  display: inline-block;
-  color: @clArticleFG;
-  font-weight: bold;
-  margin-right: 8px;
-  content: 'Invited: ';
+.invited {
+  margin: 0;
+  & > *:first-child::before {
+    display: inline-block;
+    color: @clArticleFG;
+    font-weight: bold;
+    margin-right: 4px;
+    content: 'Invited: ';
+  }
 }
 
 

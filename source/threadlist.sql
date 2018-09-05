@@ -9,8 +9,8 @@ select
   (select count() from posts P2, UnreadPosts U where P2.id = U.PostID and P2.threadID = T.id and U.userID = ?3 ) as Unread,
   (select PostID from posts P3, UnreadPosts U2 where P3.id = U2.PostID and P3.threadID = T.id and U2.userID = ?3 limit 1) as FirstUnread,
   (select Count from PostCnt PC where PC.postid = (select id from Posts P4 where P4.threadID = T.id limit 1)) as ReadCount,
-  (select group_concat('<a href="/!userinfo/'||nick||'">'||nick||'</a>','') from (select nick from threadposters left join users on userID = id where threadid = T.id order by firstPost)) as ThreadPosters,
-  (select group_concat('<a href="/!userinfo/'||nick||'">'||nick||'</a>','') from LimitedAccessThreads left join Users on id = userid where threadID = T.id) as Invited,
+  (select group_concat('<li><a href="/!userinfo/'||nick||'">'||nick||'</a></li>','') from (select nick from threadposters left join users on userID = id where threadid = T.id order by firstPost)) as ThreadPosters,
+  (select group_concat('<li><a href="/!userinfo/'||nick||'">'||nick||'</a></li>','') from LimitedAccessThreads left join Users on id = userid where threadID = T.id) as Invited,
   [case:[special:isadmin]|
   LT.userid
 |
