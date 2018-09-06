@@ -1,5 +1,5 @@
-C Improved\sthe\stext\sof\sthe\sreadme\sand\scomments.
-D 2018-09-06T15:30:51.698
+C Fixed\sa\sproblem\swith\sattachments\snot\swritten\son\seditted\spost\ssubmit,\sbut\sonly\son\spreview.
+D 2018-09-06T16:05:25.531
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -31,7 +31,7 @@ F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm 30e3793226739b4f5e7c2dfcd6bb780617d2c3be
 F source/create.sql 5df901925ce0cc79bd503f2c20d038d93acddfdc
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
-F source/edit.asm 5d85cf6d0ac6c1eb80eead78c6d98783f22c8574
+F source/edit.asm 04775fbeca072097de1aedd6a5a4885fb0305499
 F source/engine.asm 64f4523c4101f418570ac817c8806f517d895cc0
 F source/engine.fpr fcc4b41174d8d30e9bdab4c32df7f9593979167e
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
@@ -673,7 +673,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P ec5c3ca5278ac4bd0db8a007500b58cb4789a7ae
-R 8ad124188651916e1eaa9568df1dc29d
+P bf37245374da82841b723bfd485e1ef496180813
+R fb1dfc4f067925f161b13aa6593a0a60
 U johnfound
-Z 6cd800845bdceadf61090e844247ea92
+Z 18790f5ba65ed5223d77c400e6673264

@@ -267,6 +267,11 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
+; deal with the attachments.
+
+        stdcall DelAttachments, [esi+TSpecialParams.page_num], esi
+        stdcall WriteAttachments, [esi+TSpecialParams.page_num], esi
+
 ; update the last changed time of the thread.
 
         lea     eax, [.stmt]
