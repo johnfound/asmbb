@@ -6,6 +6,7 @@
   outline: 0 none;
   box-sizing: border-box;
   line-height: @LineH;
+  padding: 0;
 }
 
 body {
@@ -245,6 +246,20 @@ input[type=checkbox] {
       vertical-align: top;
     }
   }
+
+// Collapsable block of elements.
+  &.collapseit {
+    &:checked {
+    }
+    &:not(:checked) {
+      & + * {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
 }
 
 /* Tabbed navigation handling */

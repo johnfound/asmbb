@@ -14,8 +14,8 @@
   <div class="thread_right">
     <div class="thread_link">
       <a class="thread_link" href="[Slug]/">[Caption]</a><br>
-      <span class="small comma posters">[html:[ThreadPosters]]</span>
-      <span class="small comma invited">[html:[Invited]]</span>
+      <label><input type="checkbox" class="collapseit"><ul class="small comma posters">[html:[Posters]]</ul></label>
+      <label><input type="checkbox" class="collapseit"><ul class="small comma invited">[html:[Invited]]</ul></label>
     </div>
     <span class="small comma thread_tags">[special:threadtags=[id]]</span>
   </div>
