@@ -20,7 +20,6 @@ div.threads_list {
 
   a {
     color: @clColor1FG;
-    vertical-align: middle;
   }
 }
 
@@ -117,51 +116,59 @@ a.thread_link {
 }
 
 
-.small {
-  display: block;
-}
-
-.comma a::after {
-  content: ', ';
-  text-decoration: none;
+.comma > * {
   display: inline-block;
-  margin-right: 4px;
-}
 
-.comma a:last-child::after {
-  content: ' ';
-}
+  &::after {
+    content: ', ';
+    text-decoration: none;
+    margin-right: 4px;
+  }
 
-.posters a:first-child::before {
-  display: inline-block;
-  color: @clDarkFG;
-  margin-right: 8px;
-  font-weight: bold;
-  content: 'Started by: ';
-}
-
-.posters a:first-child::after {
-  margin-right: 8px;
-  content: ' ';
+  &:last-child::after {
+    content: ' ';
+  }
 }
 
 
-.posters a:nth-child(2)::before {
-  display: inline-block;
-  color: @clDarkFG;
-  font-weight: bold;
-  margin-right: 8px;
-  content: 'Joined: ';
+.posters {
+  margin: 0;
+  & > * {
+
+    &:first-child::before {
+      display: inline-block;
+      color: @clDarkFG;
+      margin-right: 8px;
+      font-weight: bold;
+      content: 'Started by: ';
+    }
+
+    &:first-child::after {
+      margin-right: 8px;
+      content: ' ';
+    }
+
+    &:nth-child(2)::before {
+      display: inline-block;
+      color: @clDarkFG;
+      font-weight: bold;
+      margin-right: 8px;
+      content: 'Joined: ';
+    }
+  }
 }
 
-
-.invited a:first-child::before {
-  display: inline-block;
-  color: @clDarkFG;
-  margin-right: 8px;
-  font-weight: bold;
-  content: 'Invited: ';
+.invited {
+  margin: 0;
+  & > *:first-child::before {
+    display: inline-block;
+    color: @clDarkFG;
+    font-weight: bold;
+    margin-right: 4px;
+    content: 'Invited: ';
+  }
 }
+
 
 .thread_tags {
   a:first-child::before {

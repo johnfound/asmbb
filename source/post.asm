@@ -2,7 +2,6 @@ LIMIT_POST_LENGTH = 16*1024
 LIMIT_POST_CAPTION = 512
 LIMIT_TAG_DESCRIPTION = 1024
 
-
 cNewPostForm   text "form_new_post.tpl"
 cNewThreadForm text "form_new_thread.tpl"
 
@@ -112,7 +111,8 @@ begin
 .get_caption_from_thread:
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, -1, eax, 0
+
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, sqlGetThreadInfo.length, eax, 0
 
         stdcall StrPtr, [esi+TSpecialParams.thread]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
@@ -169,7 +169,7 @@ begin
 ; get the quoted text
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetQuote, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetQuote, sqlGetQuote.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, ebx
         cinvoke sqliteStep, [.stmt]
 
@@ -218,7 +218,7 @@ begin
 
 .ticket_ok:
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectConst, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectConst, sqlSelectConst.length, eax, 0
 
         cmp     [esi+TSpecialParams.thread], 0
         je      .slug_ok
@@ -341,7 +341,7 @@ begin
         jz      .error_invalid_caption
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertThread, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertThread, sqlInsertThread.length, eax, 0
 
         cmp     [.caption], 0
         je      .rollback
@@ -389,7 +389,7 @@ begin
 .post_in_thread:
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, sqlGetThreadInfo.length, eax, 0
 
         stdcall StrPtr, [.slug]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
@@ -406,7 +406,7 @@ begin
 ; insert new post
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertPost, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertPost, sqlInsertPost.length, eax, 0
 
         cinvoke sqliteBindInt, [.stmt], 1, ebx
         cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.userID]
@@ -430,7 +430,7 @@ begin
 
         cinvoke sqliteBindText, [.stmt], 3, eax, ecx, SQLITE_STATIC
 
-; bind the rendered htmlt
+; bind the rendered html
 
         stdcall StrPtr, [.rendered]
         mov     ecx, [eax+string.len]
@@ -449,10 +449,18 @@ begin
         cinvoke sqliteLastInsertRowID, [hMainDatabase]
         mov     esi, eax                                                ; ESI is now the inserted postID!!!!
 
+; Save the attachments:
+
+;        stdcall DumpPostArray, [.pSpecial]
+
+;        stdcall DelAttachments, esi, [.pSpecial]        ; ??? what attachments to del???
+        stdcall WriteAttachments, esi, [.pSpecial]
+;       jc      .attachments_error_uploading            ; ??? What we should do here? Rollback? Ignore? Format the HDD?
+
 ; Update thread LastChanged
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateThreads, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateThreads, sqlUpdateThreads.length, eax, 0
 
         cinvoke sqliteBindInt, [.stmt], 1, ebx
         cinvoke sqliteStep, [.stmt]
@@ -468,7 +476,7 @@ begin
 ; commit transaction
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCommit, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCommit, sqlCommit.length, eax, 0
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_DONE
         jne     .rollback
@@ -1017,3 +1025,7 @@ begin
         popad
         return
 endp
+
+
+
+

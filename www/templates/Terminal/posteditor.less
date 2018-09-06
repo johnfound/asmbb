@@ -4,6 +4,7 @@ div.editor {
   position: fixed;
   right: 2ch;
   top: @LineH;
+  bottom: @LineH;
   width: 60ch;
   overflow: hidden;
   opacity: 0.4;
@@ -17,16 +18,49 @@ div.editor:hover {
   opacity: 1;
 }
 
+div.attach {
+  height: @LineH;
+  display: flex;
+  margin: @LineH 0 0 0;
+}
+
+label.browse {
+  height: @LineH;
+  line-height: @LineH;
+  background: @clButton1BG;
+  color: @clButton1FG;
+  padding: 0 1ch;
+  margin: 0;
+}
+
+span.showfiles {
+  background-color: @clEditorBG;
+  color: @clEditorFG;
+  padding: 0 1ch;
+  margin: 0;
+  flex-grow: 1;
+  height: @LineH;
+  line-height: @LineH;
+}
+
+
 #editform {
   padding: 0 2ch @LineH 2ch;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 
+  input[type="file"] {
+    display: none;
+  }
+
   p {
     font-weight: bold;
-    margin: @LineH 0 0 0;
+    margin: 0;
     color: @clEditorFG;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -65,5 +99,8 @@ textarea.editor {
 
 
 .toolbar, .panel {
-  margin: @LineH 0 0 0;
+  margin: 0 0 @LineH 0;
+  text-align: justify;
 }
+
+

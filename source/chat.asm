@@ -337,14 +337,6 @@ begin
         test    eax, eax
         jz      .not_ok
 
-        stdcall GetParam, "chat_anon", gpInteger
-        jc      .check_permissions
-
-        test    eax, eax
-        jnz     .permissions_ok
-
-.check_permissions:
-
         test    [esi+TSpecialParams.userStatus], permChat or permAdmin
         jnz     .permissions_ok
 

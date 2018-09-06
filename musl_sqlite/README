@@ -1,0 +1,35 @@
+In order to build the required by AsmBB libraries (musl and sqlite3) 
+you need to have the following tools installed and working:
+
+gcc
+tar
+unzip
+wget
+
+Most of the Linux distributions have these tools already installed.
+You don't need to have root priviledges. Never run this script as 
+a root or with sudo!
+
+In case the source files for the libraries are missing, the
+script will download the latest versions from the respective
+servers.
+
+If you want to use other version, download it and place the archive
+file in this directory. The script is looking for:
+
+"musl*.tar.gz" for MUSL
+"sqlite*.tar.gz" or "sqlite*.zip" for SQLite
+
+If such file exists the script will use it. If not, tries to download
+the latest sources.
+
+The most simple use of the script is to delete all archives from the 
+directory and run:
+
+$ ./build
+
+The script will compile the sqlite3 library with musl and will copy
+the needed files to the binary directory of AsmBB (../www/)
+
+Report every building problems. I am testing on Manjaro/Arch linux
+and some problems on other distributions are possible (but not expected).

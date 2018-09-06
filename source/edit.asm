@@ -1,6 +1,4 @@
 
-
-
 sqlReadPost    text "select P.id, T.caption, P.content as source, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
 sqlEditedPost  text "select P.id, T.caption, ?3 as source, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
 
@@ -23,6 +21,8 @@ proc EditUserMessage, .pSpecial
 
 begin
         pushad
+
+        DebugMsg "Edit user message."
 
         xor     ebx, ebx
         mov     [.source], ebx
@@ -82,7 +82,11 @@ begin
         cmp     [esi+TSpecialParams.post_array], 0
         je      .show_edit_form
 
+        DebugMsg "POST request."
+
 ; ok, get the action then:
+
+;        stdcall DumpPostArray, esi
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "ticket", 0
         mov     [.ticket], eax
@@ -109,6 +113,8 @@ begin
         inc     [.softPreview]
 
 .show_edit_form:
+
+        DebugMsg "SHOW edit form."
 
         cmp     [.ticket], 0
         jne     .ticket_ok
@@ -152,17 +158,46 @@ begin
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
 
-        cmp     [.softPreview], 0
-        jne     .form_ok
-        stdcall RenderTemplate, edi, "form_edit.tpl", [.stmt], esi
-        mov     edi, eax
-.form_ok:
-        stdcall RenderTemplate, edi, "preview.tpl", [.stmt], esi
+; deal with the attachments:
+
+        cmp     [esi+TSpecialParams.post_array], 0
+        je      .attch_ok
+
+        cinvoke sqliteColumnInt, [.stmt], 0     ; postID
+        mov     ebx, eax
+
+        stdcall DelAttachments, ebx, esi
+        stdcall WriteAttachments, ebx, esi
+
+.attch_ok:
+        shr     [.softPreview], 1
+        jnc     .render_all
+
+; JS call request:
+
+        stdcall TextAddStr2, edi, 0, cHeadersJSON, cHeadersJSON.length
+
+        stdcall RenderTemplate, edi, "edit.json", [.stmt], esi
         mov     edi, eax
 
         cinvoke sqliteFinalize, [.stmt]
 
-        shr     [.softPreview], 1       ; set CF
+;        stdcall TextCompact, edi
+;        mov     edi, edx
+;        stdcall FileWrite, [STDERR], edi, eax
+;        stdcall FileWriteString, [STDERR], <txt 13, 10>
+
+        stc
+        jmp     .finish
+
+.render_all:
+        stdcall RenderTemplate, edi, "form_edit.tpl", [.stmt], esi
+        stdcall RenderTemplate, eax, "preview.tpl", [.stmt], esi
+        mov     edi, eax
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        clc
         jmp     .finish
 
 

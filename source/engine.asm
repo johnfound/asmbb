@@ -74,6 +74,7 @@ include "chat.asm"
 include "chat_ipc.asm"
 
 include "postdebug.asm"
+include "attachments.asm"
 
 
 iglobal
@@ -93,7 +94,7 @@ uglobal
 endg
 
 
-rb 373
+;rb 373
 
 
 start:

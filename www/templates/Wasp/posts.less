@@ -144,3 +144,72 @@ div.post_text {
     padding: 16px;
   }
 }
+
+/* The attachments table */
+
+.attachments, .attach_del {
+  table {
+    font-size: 80%;
+    font-weight: normal;
+    clear: both;
+    border-collapse: collapse;
+
+    a {
+      font-size: 100%;
+      font-weight: bold;
+      color: @clDarkFG;
+    }
+
+    td {
+      background-color: @clDarkBG;
+      color: @clDarkFG;
+      padding: 2px 8px;
+      vertical-align: middle;
+    }
+
+    th {
+      background-color: @clPostInfoBG;
+      color: @clPostInfoFG;
+      text-align: center;
+      padding: 2px 8px;
+      vertical-align: middle;
+    }
+
+    label, label::before {
+      margin: 0 !important;
+    }
+
+    .head {
+      background-color: @clDarkBG;
+      color: @clDarkFG;
+      font-weight: bold;
+      padding: 8px 8px 2px 8px;
+    }
+
+    .delcheck {
+      text-align: center;
+    }
+
+    .filename {
+      text-align: left;
+    }
+
+    .filesize {
+      text-align: right;
+    }
+
+    .filetime {
+      text-align: left;
+    }
+
+    .filecnt {
+      text-align: right;
+      font-weight: bold;
+    }
+
+    .checksum {
+      text-align: left;
+      font-family: @FontMonospace;
+    }
+  }
+}

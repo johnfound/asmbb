@@ -29,6 +29,7 @@
 .thread_right {
   flex-grow: 1;
   padding: 0px 1ch;
+  overflow: hidden;
   br {
     display:none;
   }
@@ -78,47 +79,60 @@
   }
 }
 
-.comma a::after {
-  content: ', ';
-  text-decoration: none;
+
+.comma > * {
   display: inline-block;
-  margin-right: 1ch;
-}
 
-.comma a:last-child::after {
-  content: ' ';
-}
+  &::after {
+    content: ', ';
+    text-decoration: none;
+    margin-right: 1ch;
+  }
 
-.posters a:first-child::before {
-  display: inline-block;
-  color: @clText;
-  margin-right: 1ch;
-  font-weight: bold;
-  content: 'Started by: ';
-}
-
-.posters a:first-child::after {
-  margin-right: 1ch;
-  content: ' ';
+  &:last-child::after {
+    content: ' ';
+  }
 }
 
 
-.posters a:nth-child(2)::before {
-  display: inline-block;
-  color: @clText;
-  font-weight: bold;
-  margin-right: 1ch;
-  content: 'Joined: ';
+.posters {
+  margin: 0;
+  & > * {
+
+    &:first-child::before {
+      display: inline-block;
+      color: @clText;
+      margin-right: 1ch;
+      font-weight: bold;
+      content: 'Started by: ';
+    }
+
+    &:first-child::after {
+      margin-right: 1ch;
+      content: ' ';
+    }
+
+    &:nth-child(2)::before {
+      display: inline-block;
+      color: @clText;
+      font-weight: bold;
+      margin-right: 1ch;
+      content: 'Joined: ';
+    }
+  }
 }
 
-
-.invited a:first-child::before {
-  display: inline-block;
-  color: @clText;
-  margin-right: 1ch;
-  font-weight: bold;
-  content: 'Invited: ';
+.invited {
+  margin: 0;
+  & > *:first-child::before {
+    display: inline-block;
+    color: @clText;
+    font-weight: bold;
+    margin-right: 1ch;
+    content: 'Invited: ';
+  }
 }
+
 
 .thread_tags {
   margin-top: @LineH;

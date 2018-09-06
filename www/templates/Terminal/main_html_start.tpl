@@ -61,7 +61,7 @@
 ------->
   <div class="header">
     <div id="userlinks">
-      [case:[special:userid]|<a href="/!login/">Login</a><br><a href="/!register/">Register</a>|
+      [case:[special:userid]|<a href="/!login/">Login</a>[case:[special:canregister]||<br><a href="/!register/">Register</a>]|
       <a href="/!logout">Logout ( [special:username] )</a><br><a href="/!userinfo/[special:username]">User profile</a>]
     </div>
     <form id="skinform" method="POST" action="/!skincookie">

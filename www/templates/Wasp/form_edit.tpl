@@ -7,12 +7,28 @@
     <span class="spacer"></span>
     <a class="ui right" href="!by_id"><img src="[special:skin]/_images/close.svg" alt="Close" height="16"></a>
   </div>
-  <form id="editform" action="!edit" method="post" onsubmit="previewIt(event)">
+  <form id="editform" action="!edit" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
     <p>Thread title:</p>
     <h1 class="fakeedit">[caption]</h1>
-    <p>Post content:</p>
-    [include:edit_toolbar.tpl]
-    <textarea class="editor" name="source" id="source">[source]</textarea>
+    <div class="tabbed">
+      <input id="rad1" name="tabselector" type="radio" checked>
+      <label for="rad1">Text</label>
+      <section>
+        <p>Post content:</p>
+        [include:edit_toolbar.tpl]
+        <textarea class="editor" name="source" id="source">[source]</textarea>
+      </section>
+
+      <input id="rad2" name="tabselector" type="radio">
+      <label for="rad2">Attachments</label>
+      <section>
+        [case:[special:canupload]||<p>Attach file(s): <span class="small">(count&le;10, size&le;1MB)</span></p><input id="browse" type="file" placeholder="Select file to attach" name="attach" multiple="multiple">]
+        <div id="attachments" class="attach_del">
+          [attach_edit:[id]]
+        </div>
+      </section>
+    </div>
+
     <div class="panel">
       <input type="submit" name="preview" value="Preview" onclick="this.form.cmd='preview'" title="Ctrl+Enter for preview">
       <input type="submit" name="submit" value="Submit" onclick="this.form.cmd='submit'" title="Ctrl+S for submit" >
@@ -75,8 +91,13 @@ function previewIt(e) {
     xhr.onload = function(event){
       if (event.target.status === 200) {
         var prv = document.getElementById("preview");
-        prv.outerHTML = event.target.response;
+        var attch = document.getElementById("attachments");
+        var resp = JSON.parse(event.target.response);
+
+        prv.innerHTML = resp.preview;
+        attch.innerHTML = resp.attach_del;
       }
+      document.getElementById("browse").value = '';
       document.getElementById("source").focus();
     };
 

@@ -1,6 +1,6 @@
-[css:markdown.css]
-
-<div id="preview" class="thread">
+{
+"attach_del": "[json:[attach_edit:[id]]]",
+"preview": "[json:
   <h1 class="thread_caption">[caption]<a href="#editform"></a></h1>
   <div class="post unread">
     <div class="post_text">
@@ -23,4 +23,5 @@
       </div>
     </div>
   </div>
-</div>
+]"
+}

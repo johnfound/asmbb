@@ -60,6 +60,11 @@ begin
 
         mov     esi, [.pSpecial]
 
+; check permissions
+
+        test    [esi+TSpecialParams.userStatus], permRead or permAdmin
+        jz      .error_cant_read
+
         stdcall StrNew
         mov     [.rendered], eax
 
@@ -256,6 +261,15 @@ begin
         stdcall TextFree, edi
         xor     edi, edi
         jmp     .exit
+
+; the user have no permissions to read posts!
+.error_cant_read:
+
+        stdcall TextMakeRedirect, edi, "/!message/cant_read/"
+        mov     [esp+4*regEAX], edi
+        stc
+        popad
+        return
 
 endp
 

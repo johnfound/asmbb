@@ -101,22 +101,25 @@ local ..keynm, ..len, ..hash, ..char
     load ..hash byte from Pfunc + ..hash
   end repeat
 
-  disp 3,'Keyword hash : ', <..hash, 10>, ' on "', key, '"', 10
+;  disp 3,'Keyword hash : ', <..hash, 10>, ' on "', key, '"', 10
 
   . = ..hash
 }
 
 
 if used RenderTemplate
-        PList tableRenderCmd, tpl_func,                  \
-              'special:', RenderTemplate.cmd_special,   \
-              'include:', RenderTemplate.cmd_include,   \
-              'minimag:', RenderTemplate.cmd_minimag,   \   ; HTML, no encoding.
-              'html:',    RenderTemplate.cmd_html,      \   ; HTML, disables the encoding.
-              'url:',     RenderTemplate.cmd_url,       \   ; Needs encoding!
-              'css:',     RenderTemplate.cmd_css,       \   ; No output, no encoding.
-              'case:',    RenderTemplate.cmd_case,      \   ; No encoding.
-              'sql:',     RenderTemplate.cmd_sql            ; Needs encoding!
+        PList tableRenderCmd, tpl_func,                         \
+              'special:',     RenderTemplate.cmd_special,       \
+              'include:',     RenderTemplate.cmd_include,       \
+              'minimag:',     RenderTemplate.cmd_minimag,       \   ; HTML, no encoding.
+              'html:',        RenderTemplate.cmd_html,          \   ; HTML, disables the encoding.
+              'attachments:', RenderTemplate.cmd_attachments,   \   ; HTML, no encoding.
+              'attach_edit:', RenderTemplate.cmd_attachedit,    \   ; HTML, no encoding.
+              'url:',         RenderTemplate.cmd_url,           \   ; Needs encoding!
+              'json:',        RenderTemplate.cmd_json,          \   ; No encoding.
+              'css:',         RenderTemplate.cmd_css,           \   ; No output, no encoding.
+              'case:',        RenderTemplate.cmd_case,          \   ; No encoding.
+              'sql:',         RenderTemplate.cmd_sql            ; Needs encoding!
 
 
         PList tableSpecial, tpl_func,                                 \
@@ -139,12 +142,13 @@ if used RenderTemplate
               "thread",      RenderTemplate.sp_thread,                \ ; Needs encoding!
               "permissions", RenderTemplate.sp_permissions,           \ ; NUMBER, no encoding
               "isadmin",     RenderTemplate.sp_isadmin,               \ ; 1/0 no encoding
-              "canlogin",    RenderTemplate.sp_canlogin,              \ ; 1/0 no encoding
+              "canregister", RenderTemplate.sp_canregister,           \ ; 1/0 no encoding
               "canpost",     RenderTemplate.sp_canpost,               \ ; 1/0 no encoding
               "canstart",    RenderTemplate.sp_canstart,              \ ; 1/0 no encoding
               "canedit",     RenderTemplate.sp_canedit,               \ ; 1/0 no encoding
               "candel",      RenderTemplate.sp_candelete,             \ ; 1/0 no encoding
               "canchat",     RenderTemplate.sp_canchat,               \ ; 1/0 no encoding
+              "canupload",   RenderTemplate.sp_canupload,             \ ; 1/0 no encoding
               "referer",     RenderTemplate.sp_referer,               \ ; 1/0 no encoding
               "alltags",     RenderTemplate.sp_alltags,               \ ; HTML no encoding
               "setupmode",   RenderTemplate.sp_setupmode,             \ ; no encoding
@@ -180,14 +184,8 @@ proc RenderTemplate, .pText, .hTemplate, .sqlite_statement, .pSpecial
 
 .tblFields TFieldSlot
            rb 255 * sizeof.TFieldSlot       ; a hash table of the statement field names.
-
-  BenchVar .temp
-  BenchVar .temp2
-
 begin
         pushad
-
-        BenchmarkStart .temp
 
         xor     eax, eax
         mov     [.sepcnt], eax
@@ -656,6 +654,148 @@ begin
         mov     [.fEncode], 1
         jmp     .loop
 
+; ...................................................................
+
+sqlGetAttachments text "select id, filename, length(file), strftime('%d.%m.%Y', changed, 'unixepoch'), count, md5sum from Attachments left join AttachCnt on fileid = id where postID = ?1"
+
+.cmd_attachments:
+; here esi points to the ":" char of the "attachments" command, ecx at the end "]" and edi at the start "["
+
+locals
+  .fileid     dd ?
+  .filename   dd ?
+  .filesize   dd ?
+  .uploadtime dd ?
+  .count      dd ?
+  .md5sum     dd ?
+  .fEdit      dd ?
+endl
+
+        mov     [.fEdit], 0
+
+.do_attachments:
+
+        call    .get_number     ; returns the ID in the ebx.
+
+        stdcall TextMoveGap, edx, ecx
+        inc     [edx+TText.GapEnd]
+        mov     [edx+TText.GapBegin], edi       ; clear the whole command.
+
+        mov     edi, edx
+        mov     esi, [.pSpecial]
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetAttachments, sqlGetAttachments.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, ebx
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .end_of_attachments
+
+        mov     edx, edi
+
+        stdcall TextIns, edx, txt '<table><tr><td class="head" colspan="5">Attached files:</td></tr><tr>'
+        cmp     [.fEdit], 0
+        je      .edit_ok
+
+        stdcall TextIns, edx, txt '<th>Del</th>'
+
+.edit_ok:
+        stdcall TextIns, edx, txt '<th>File</th><th>Size</th><th>Uploaded</th><th>Downloads</th>'
+        cmp     [.fEdit], 0
+        jne     .head_md5_ok
+        stdcall TextIns, edx, txt '<th>MD5 hash</th>'
+.head_md5_ok:
+        stdcall TextIns, edx, txt '</tr>'
+        mov     edi, edx
+
+.att_loop:
+        cinvoke sqliteColumnText, [.stmt], 0             ; ID of the file.
+        mov     [.fileid], eax
+
+        cinvoke sqliteColumnText, [.stmt], 1            ; filename of the file.
+        mov     [.filename], eax
+
+        cinvoke sqliteColumnInt, [.stmt], 2             ; file size
+        mov     [.filesize], eax
+
+        cinvoke sqliteColumnText, [.stmt], 3            ; upload time
+        mov     [.uploadtime], eax
+
+        cinvoke sqliteColumnText, [.stmt], 4             ; download count
+        mov     [.count], eax
+
+        cinvoke sqliteColumnText, [.stmt], 5             ; MD5 checksum
+        mov     [.md5sum], eax
+
+        mov     edx, edi
+
+        stdcall TextIns, edx, txt '<tr>'
+
+        cmp     [.fEdit], 0
+        je      .edit_ok2
+
+        stdcall TextIns, edx, txt '<td class="delcheck"><input type="checkbox" autocomplete="off" name="attch_del" id="attch'
+        stdcall TextIns, edx, [.fileid]
+        stdcall TextIns, edx, txt '" value="'
+        stdcall TextIns, edx, [.fileid]
+        stdcall TextIns, edx, txt '"><label for="attch'
+        stdcall TextIns, edx, [.fileid]
+        stdcall TextIns, edx, txt '"></label></td>'
+
+.edit_ok2:
+        stdcall TextIns, edx, txt '<td class="filename"><a href="/!attached/'
+        stdcall TextIns, edx, [.fileid]
+        stdcall TextIns, edx, txt '">'
+
+        stdcall StrEncodeHTML, [.filename]
+        stdcall TextAddStr2, edx, [edx+TText.GapBegin], eax, 0
+        stdcall StrDel, eax
+        stdcall TextIns, edx, txt '</a></td><td class="filesize">'
+
+        stdcall FormatFileSize, [.filesize]
+        stdcall TextIns, edx, eax
+        stdcall StrDel, eax
+
+        stdcall TextIns, edx, txt '</td><td class="filetime">'
+        stdcall TextIns, edx, [.uploadtime]
+        stdcall TextIns, edx, txt '</td><td class="filecnt">'
+        stdcall TextIns, edx, [.count]
+
+        cmp     [.fEdit], 0
+        jne     .checksum_ok
+
+        stdcall TextIns, edx, txt '</td><td class="checksum">'
+        stdcall TextIns, edx, [.md5sum]
+
+.checksum_ok:
+
+        stdcall TextIns, edx, txt '</td></tr>'
+        mov     edi, edx
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        je      .att_loop
+
+        stdcall TextIns, edi, txt '</table>'
+        mov     edi, edx
+
+.end_of_attachments:
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        mov     edx, edi
+        mov     ecx, [edx+TText.GapBegin]
+        dec     ecx
+
+        mov     [.fEncode], 1
+        jmp     .loop
+
+
+.cmd_attachedit:
+        mov     [.fEdit], 1
+        jmp     .do_attachments
+
 
 ; ...................................................................
 ; here esi points to ":" of the "css:" command. edi points to the start "[" and ecx points to the end "]"
@@ -743,6 +883,72 @@ begin
         dec     ecx
         jmp     .loop
 
+
+.cmd_json:
+; here esi points to ":" of the "[json:" command. edi points to the start "[" and ecx points to the end "]"
+        mov       eax, ecx
+        sub       eax, esi
+        shl       eax, 1        ; 2*length
+        stdcall  TextSetGapSize, edx, eax
+        stdcall  TextMoveGap, edx, edi
+        add      [edx+TText.GapEnd], 6
+        sub      ecx, 6
+
+        mov     ebx, ecx
+        add     ebx, [edx+TText.GapEnd]
+        sub     ebx, [edx+TText.GapBegin]
+
+        mov     esi, [edx+TText.GapEnd]
+
+;        lea     eax, [edx+ebx-4]
+;        stdcall OutputMemoryByte, eax, 9
+        xor     eax, eax
+
+.json_loop:
+        cmp     esi, ebx
+        je      .end_json
+
+        mov     al, [edx+esi]
+
+        cmp     al, '"'
+        je      .json_enc
+
+        cmp     al, '\'
+        je      .json_enc
+
+        cmp     al, '/'
+        je      .json_enc
+
+        cmp     al, ' '
+        jae     .store_char
+
+        mov     al, [.json_ctrl + eax]
+        cmp     al, ' '
+        je      .store_char
+
+.json_enc:
+        mov     byte [edx+edi], '\'
+        inc     edi
+        inc     ecx
+
+.store_char:
+        mov     [edx+edi], al
+        inc     esi
+        inc     edi
+        jmp     .json_loop
+
+.end_json:
+        inc     esi
+        mov     [edx+TText.GapBegin], edi
+        mov     [edx+TText.GapEnd], esi
+
+        dec     ecx
+        jmp     .loop
+
+.json_ctrl db ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '
+           db 'b', 't', 'n', ' ', 'f', 'r', ' ', ' '
+           db ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '
+           db ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '
 
 .cmd_sql:
 ; here esi points to ":" of the "[sql:" command. edi points to the start "[" and ecx points to the end "]"
@@ -904,8 +1110,6 @@ begin
 .cmd_special:
 
 
-        BenchmarkStart .temp2
-
 ;        DebugMsg "Special"
 
         xor     ebx, ebx
@@ -992,7 +1196,6 @@ end if
         sub     ecx, esi
         add     ecx, eax
 
-        Benchmark "Special strng[us]: "
         jmp     .loop
 
 .sp_title:
@@ -1061,7 +1264,6 @@ end if
         sub     ecx, esi
         add     ecx, eax
 
-        Benchmark "Special strng with free[us]: "
         jmp     .loop
 
 .sp_cmdtype:
@@ -1142,7 +1344,7 @@ end if
         cmovnz  eax, [.cBoolean+4]
         jmp     .special_string
 
-.sp_canlogin:
+.sp_canregister:
         mov     eax, permLogin
         jmp     .one_permission
 
@@ -1154,12 +1356,15 @@ end if
         mov     eax, permThreadStart
         jmp     .one_permission
 
+.sp_canupload:
+        mov     eax, permAttach
+        jmp     .one_permission
+
 .sp_canchat:
         stdcall ChatPermissions, [.pSpecial]
         cmovc   eax, [.cBoolean]
         cmovnc  eax, [.cBoolean+4]
         jmp     .special_string
-
 
 locals
   .permOwn dd ?
@@ -1263,7 +1468,6 @@ endl
         sub     ecx, esi
         add     ecx, eax
 
-        Benchmark "Special TText [us]: "
         jmp     .loop
 
 
@@ -1327,10 +1531,6 @@ endl
         jmp     .finish
 
 .exit:
-        BenchmarkEnd
-        Benchmark 'Template <', [.hTemplate], '> rendering time[us]: '
-        BenchmarkEnd
-
         mov     [esp+4*regEAX], edx
         popad
         return
@@ -1499,12 +1699,11 @@ endp
 
 
 
-
-
 ;sqlGetMaxTagUsed text "select max(cnt) from (select count(*) as cnt from ThreadTags group by tag)"
 ;sqlGetAllTags    text "select TT.tag, count(TT.tag) as cnt, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag group by TT.tag order by TT.tag"
-sqlGetMaxTagUsed text "select max(cnt) from (select (select count() from ThreadTags TT where TT.tag = T.tag) as cnt from tags T where importance >= 0);"
-sqlGetAllTags    text "select TT.tag, count(TT.tag) as cnt, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag where T.Importance >= 0 group by TT.tag order by TT.tag"
+sqlGetMaxTagUsed text "select max(cnt) from (select (select count() from ThreadTags TT where TT.tag = T.tag) as cnt from tags T where importance > -1)"
+;sqlGetAllTags    text "select TT.tag, count(TT.tag) as cnt, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag where T.Importance >= 0 group by TT.tag order by TT.tag"
+sqlGetAllTags    text "select T.Tag, (select count() from threadtags where Tag = T.tag) as cnt, T.Description from Tags T where T.Importance > -1 order by T.Tag"
 
 proc GetAllTags, .pSpecial
   .max   dd ?
@@ -1543,22 +1742,23 @@ begin
 
         cinvoke sqliteColumnInt, [.stmt], 1     ; the count used
         mov     [.cnt], eax
-        mov     ecx, 100
+        mov     ecx, 32
         mul     ecx
         div     [.max]
         test    eax, eax
         jz      .tag_loop
 
-        cmp     eax, ecx
-        cmova   eax, ecx
+        cmp     eax, ecx          ;
+        cmova   eax, ecx          ; should never happen!
+        push    eax     ; from 1 to 32
 
-        movzx   eax, [.scale+eax-1]
-        test    eax, eax
-        jz      .tag_loop
+        stdcall TextCat, ebx, txt  '<a class="taglink tagsize'
+        mov     ebx, edx
 
-        push    eax
-
-        stdcall TextCat, ebx, txt  '<a class="taglink'
+        pop     eax
+        stdcall NumToStr, eax, ntsDec or ntsUnsigned
+        stdcall TextCat, ebx, eax
+        stdcall StrDel, eax
         mov     ebx, edx
 
         cmp     [esi+TSpecialParams.dir], 0
@@ -1573,14 +1773,7 @@ begin
 
 .current_ok:
 
-        stdcall TextCat, ebx, txt '" style="font-size:'
-
-        pop     eax
-        stdcall NumToStr, eax, ntsDec or ntsUnsigned
-
-        stdcall TextCat, edx, eax
-        stdcall StrDel, eax
-        stdcall TextCat, edx, txt '%;" title="'
+        stdcall TextCat, ebx, txt '" title="'
         mov     ebx, edx
 
         cinvoke sqliteColumnText, [.stmt], 0
@@ -1631,13 +1824,6 @@ begin
         mov     [esp+4*regEAX], ebx
         popad
         return
-
-.scale   db 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 32, 33, 35, 37, 38
-         db 40, 41, 43, 44, 46, 47, 48, 50, 51, 52, 53, 55, 56, 57, 58, 59, 60, 62, 63, 64
-         db 65, 66, 67, 68, 69, 70, 70, 71, 72, 73, 74, 75, 76, 76, 77, 78, 79, 79, 80, 81
-         db 82, 82, 83, 83, 84, 85, 85, 86, 87, 87, 88, 88, 89, 89, 90, 90, 91, 91, 92, 92
-         db 93, 93, 94, 94, 95, 95, 95, 96, 96, 97, 97, 97, 98, 98, 98, 99, 99, 99, 100,100
-
 endp
 
 
@@ -1651,6 +1837,15 @@ begin
         return
 endp
 
+
+proc TextIns, .pText, .hString
+begin
+        push    eax
+        mov     edx, [.pText]
+        stdcall TextAddStr2, edx, [edx+TText.GapBegin], [.hString], 256
+        pop     eax
+        return
+endp
 
 
 proc FormatPostText, .ptrMinimag
@@ -2540,5 +2735,16 @@ begin
 
 .finish:
         pop     esi
+        return
+endp
+
+
+
+; Later can be made to compose KB/MB/GB suffixes.
+
+proc FormatFileSize, .size
+begin
+        stdcall NumToStr, [.size], ntsDec or ntsUnsigned
+        stdcall StrCat, eax, txt " bytes"
         return
 endp

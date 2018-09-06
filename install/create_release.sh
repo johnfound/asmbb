@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#First compile the binary files
+
 mkdir asmbb
 
 # complile less files
@@ -24,9 +26,16 @@ cd ../MoLight/
 
 popd
 
+pushd .
+
+cd ../musl_sqlite/
+./build
+
+popd
+
 # copy engine files
 cp ../www/engine asmbb/
-cp ../www/*.so asmbb/
+cp ../musl_sqlite/*.so asmbb/
 
 # copy images
 rsync -ar ../www/images/* asmbb/images/ --exclude-from=exclude.txt

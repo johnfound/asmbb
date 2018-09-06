@@ -3,74 +3,100 @@
 
 <div class="set_page">
 [case:[message]||<h1 id="message" class="msg [case:[error]|info|error]">[message]</h1>]
-<form class="settings" method="post" action="/!settings">
+<form class="settings msgbox" method="post" action="/!settings">
   <h1>Forum engine settings</h1>
   <input type="submit" name="save" class="button" value="Save">
 
-  <h2>HTML/CSS options:</h2>
+  <div class="tabbed">
 
-  <h3>Forum title:</h3>
-  <input type="text" value="[forum_title]" name="forum_title" class="settings" maxlength="512">
+    <input id="tab1" name="tabselector" type="radio" checked>
+    <label for="tab1">HTML/CSS</label>
+    <section>
+      <h3>Forum title:</h3>
+      <input type="text" value="[forum_title]" name="forum_title" class="settings" maxlength="512">
 
-  <h3>Forum header:</h3>
-  <textarea rows="6" class="settings" name="forum_header">[forum_header]</textarea>
+      <h3>Forum header:</h3>
+      <textarea rows="6" class="settings" name="forum_header">[forum_header]</textarea>
 
-  <h3>Description:</h3>
-  <input type="text" value="[description]" name="description" class="settings" maxlength="256">
+      <h3>Description:</h3>
+      <input type="text" value="[description]" name="description" class="settings" maxlength="256">
 
-  <h3>Keywords:</h3>
-  <input type="text" value="[keywords]" name="keywords" class="settings" maxlength="256">
+      <h3>Keywords:</h3>
+      <input type="text" value="[keywords]" name="keywords" class="settings" maxlength="256">
 
-  <section>
-    <input type="checkbox" [embeded_css] name="embeded_css" id="embeded_css"><label for="embeded_css">Embeded CSS</label>
-  </section>
+      <table><tr><td>
+        <input type="checkbox" [embeded_css] name="embeded_css" id="embeded_css"><label for="embeded_css">Embeded CSS</label>
+      </td></tr></table>
+    </section>
 
-  <h2>Server settings:</h2>
+    <input id="tab2" name="tabselector" type="radio">
+    <label for="tab2">Server</label>
+    <section>
+      <h3>Host:</h3>
+      <input type="text" value="[host]" name="host" class="settings" maxlength="320">
 
-  <h3>Host:</h3>
-  <input type="text" value="[host]" name="host" class="settings" maxlength="320">
+      <h3>SMTP server/port:</h3>
+      <input type="text" value="[smtp_addr]" name="smtp_addr" class="settings" maxlength="256">
+      <input type="text" value="[smtp_port]" name="smtp_port" class="settings" maxlength="5">
 
-  <h3>SMTP server/port:</h3>
-  <input type="text" value="[smtp_addr]" name="smtp_addr" class="settings" maxlength="256">
-  <input type="text" value="[smtp_port]" name="smtp_port" class="settings" maxlength="5">
+      <h3>SMTP account:</h3>
+      <input type="text" value="[smtp_user]" name="smtp_user" class="settings" maxlength="256">
 
-  <h3>SMTP account:</h3>
-  <input type="text" value="[smtp_user]" name="smtp_user" class="settings" maxlength="256">
+      <table><tr><td>
+        <input type="checkbox" [email_confirm] name="email_confirm" id="email_confirm" class="checkbox"><label for="email_confirm">Confirm by email</label>
+      </td></tr></table>
+    </section>
 
-  <section>
-    <input type="checkbox" [email_confirm] name="email_confirm" id="email_confirm" class="checkbox"><label for="email_confirm">Confirm by email</label>
-  </section>
+    <input id="tab3" name="tabselector" type="radio">
+    <label for="tab3">Permissions</label>
+    <section>
+      <h3>For new users:</h3>
+      <table><tr>
+        <td>
+          <input type="checkbox" [user_perm0]  name="user_perm" id="up0"  value="1"><label for="up0">Login</label>
+          <input type="checkbox" [user_perm1]  name="user_perm" id="up1"  value="2"><label for="up1">Read</label>
+          <input type="checkbox" [user_perm2]  name="user_perm" id="up2"  value="4"><label for="up2">Post</label>
+          <input type="checkbox" [user_perm3]  name="user_perm" id="up3"  value="8"><label for="up3">Start threads</label>
+        </td><td>
+          <input type="checkbox" [user_perm4]  name="user_perm" id="up4"  value="16"><label for="up4">Edit own posts</label>
+          <input type="checkbox" [user_perm5]  name="user_perm" id="up5"  value="32"><label for="up5">Edit all posts</label>
+          <input type="checkbox" [user_perm6]  name="user_perm" id="up6"  value="64"><label for="up6">Delete own posts</label>
+          <input type="checkbox" [user_perm7]  name="user_perm" id="up7"  value="128"><label for="up7">Delete all posts</label>
+        </td><td>
+          <input type="checkbox" [user_perm8]  name="user_perm" id="up8"  value="256"><label for="up8">Chat</label>
+          <input type="checkbox" [user_perm9]  name="user_perm" id="up9"  value="512"><label for="up9">Download files</label>
+          <input type="checkbox" [user_perm10] name="user_perm" id="up10" value="1024"><label for="up10">Attach files</label>
+          <input type="checkbox" [user_perm31] name="user_perm" id="up31" value="$80000000"><label for="up31">Administrator</label>
+      </tr></table>
 
-  <h2>Default user permissions:</h2>
+      <h3>For guests:</h3>
+      <table><tr>
+        <td>
+          <input type="checkbox" [anon_perm0]  name="anon_perm" id="ap0"  value="1"><label for="ap0">Register</label>
+          <input type="checkbox" [anon_perm1]  name="anon_perm" id="ap1"  value="2"><label for="ap1">Read</label>
+        </td><td>
+          <input type="checkbox" [anon_perm8]  name="anon_perm" id="ap8"  value="256"><label for="ap8">Chat</label>
+          <input type="checkbox" [anon_perm9]  name="anon_perm" id="ap9"  value="512"><label for="ap9">Download files</label>
+      </tr></table>
+    </section>
 
-  <section>
-    <input type="checkbox" [user_perm0] name="user_perm0" id="up0" value="1"><label for="up0">Login</label>
-    <input type="checkbox" [user_perm2] name="user_perm2" id="up2" value="4"><label for="up2">Post</label>
-    <input type="checkbox" [user_perm3] name="user_perm3" id="up3" value="8"><label for="up3">Start threads</label>
-    <input type="checkbox" [user_perm4] name="user_perm4" id="up4" value="16"><label for="up4">Edit own posts</label>
-    <input type="checkbox" [user_perm8] name="user_perm8" id="up8" value="256"><label for="up8">Chat</label>
+    <input id="tab4" name="tabselector" type="radio">
+    <label for="tab4">Features</label>
+    <section>
+      <h3>Page length:</h3>
+      <input type="text" value="[page_length]" name="page_length" class="settings" maxlength="256">
 
-    <input type="checkbox" [user_perm5] name="user_perm5" id="up5" value="32"><label for="up5">Edit all posts</label>
-    <input type="checkbox" [user_perm6] name="user_perm6" id="up6" value="64"><label for="up6">Delete own posts</label>
-    <input type="checkbox" [user_perm7] name="user_perm7" id="up7" value="128"><label for="up7">Delete all posts</label>
-    <input type="checkbox" [user_perm31] name="user_perm31" id="up31" value="$80000000"><label for="up31">Administrator</label>
-  </section>
+      <h3>Default skin:</h3>
+      <select class="settings" name="default_skin" >[special:skins=[default_skin]]</select>
 
-  <h2>Forum features:</h2>
+      <h3>Default mobile skin:</h3>
+      <select class="settings" name="default_mobile_skin">[special:skins=[default_mobile_skin]]</select>
 
-  <h3>Page length:</h3>
-  <input type="text" value="[page_length]" name="page_length" class="settings" maxlength="256">
-
-  <h3>Default skin:</h3>
-  <select class="settings" name="default_skin" >[special:skins=[default_skin]]</select>
-
-  <h3>Default mobile skin:</h3>
-  <select class="settings" name="default_mobile_skin">[special:skins=[default_mobile_skin]]</select>
-
-  <section>
-    <input type="checkbox" [chat_enabled] name="chat_enabled" id="chat_enabled"><label for="chat_enabled">Enable chat</label>
-    <input type="checkbox" [chat_anon] name="chat_anon" id="chat_anon"><label for="chat_anon">Anonymous chat</label>
-  </section>
+      <table><tr>
+        <td><input type="checkbox" [chat_enabled] name="chat_enabled" id="chat_enabled"><label for="chat_enabled">Enable chat</label></td>
+      </tr></table>
+    </section>
+  </div>
 
   <input type="hidden" name="ticket" value="[Ticket]" >
   <input type="submit" name="save" class="button" value="Save">

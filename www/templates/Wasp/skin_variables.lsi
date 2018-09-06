@@ -90,3 +90,10 @@
 @pinnedHeight: 16px;
 
 @clPinnedTxt: #e05050;
+
+// Tabbed pages styles:
+
+@clTabBG: #404040;
+@clTabFG: #ffffff;
+@clTabHover: #d8d8d8;
+@clTabFocus: #e05050;

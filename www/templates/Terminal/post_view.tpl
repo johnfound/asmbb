@@ -18,6 +18,9 @@
     </div>
     <article>
       [html:[Rendered]]
+      <div class="attachments">
+        [attachments:[id]]
+      </div>
     </article>
   </div>
   <div class="clear"></div>

@@ -13,8 +13,8 @@
     <p>Post content:</p>
     <textarea class="editor" name="source" id="source">[source]</textarea>
     <div class="panel">
-      <input type="submit" name="submit" value="Submit" >
       <input type="submit" name="preview" value="Preview" >
+      <input type="submit" name="submit" value="Submit" >
       <input type="hidden" name="ticket" value="[Ticket]" >
     </div>
 </form>

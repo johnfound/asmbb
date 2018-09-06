@@ -63,7 +63,8 @@
 @clAvatarBG: white;
 @clAvatarFG: #105289;
 
-@clPostInfoBG: white;
+@clPostInfoBG: #d0d0d0;
+//@clPostInfoBG: white;
 @clPostInfoFG: black;
 
 @FontMain:      "Verdana", sans-serif;
@@ -87,3 +88,10 @@
 @pinnedHeight: 30px;
 
 @clPinnedTxt: red;
+
+// Tabbed pages styles:
+
+@clTabBG: #f0f0f0;
+@clTabFG: #105289;
+@clTabHover: #c0c0c0;
+@clTabFocus: #105289;

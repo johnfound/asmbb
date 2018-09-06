@@ -4,6 +4,10 @@
 
 form.settings {
   width: @msgBoxWidth;
+  height: 30*@LineH;
+  display: flex;
+  flex-direction: column;
+
   padding: @LineH 2ch;
   background-color: @clFormBG;
   color: @clFormFG;
@@ -13,31 +17,33 @@ form.settings {
     color: @clHeaderFG;
     background-color: @clHeaderBG;
     text-align: center;
-    font-variant: small-caps;
     margin-top: 0;
     margin-bottom: @LineH;
   }
 
   h2 {
     font-weight: bold;
-    margin: @LineH 0 0 0;
+    margin: 0; //@LineH 0 0 0;
   }
 
   h3 {
     font-weight: bold;
-    margin: @LineH 0 0 0;
+    margin: 0; //@LineH 0 0 0;
   }
 
   table {
 
     border-collapse: collapse;
-    border-spacing: 0px;
+    border-spacing: 0;
     width: 100%;
+    margin: 0 0 @LineH 0;
 
     td {
       text-align: left;
       vertical-align: middle;
       white-space: nowrap;
+      padding: 0;
+      margin: 0;
     }
 
     td.lbl {
@@ -79,18 +85,19 @@ input.settings {
   padding: 0 1ch;
   outline: none;
   border: none;
-  margin: @LineH 0;
+  margin: 0 0 @LineH 0;
 
   background-color: @clEditorBG;
   color: @clEditorFG;
   width: 100%;
+  height: @LineH;
 }
 
 select.settings {
   padding: 0 1ch;
   outline: none;
   border: none;
-  margin: @LineH 0;
+  margin: 0 0 @LineH 0;
 
   background-color: @clEditorBG;
   color: @clEditorFG;
@@ -107,6 +114,10 @@ select.settings {
 textarea.settings {
   width: 100%;
   white-space: pre;
+  border: none;
+  padding: none;
+  resize: none;
+  margin: 0 0 @LineH 0;
 }
 
 input.button {
@@ -115,12 +126,12 @@ input.button {
     border: none;
     outline: none;
     font-weight: bold;
-    font-variant: small-caps;
     cursor: pointer;
     text-align: center;
     padding: 0 1ch;
-    display: block;
+    display: inline-block;
     margin: 0;
+    align-self: flex-start;
 }
 
 input.button:hover {
@@ -159,14 +170,6 @@ h1.msg {
   color: @clMsgWarningFG;
 }
 
-
-section {
-  display: block;
-  columns: 3 20ch;
-  -webkit-columns: 3 20ch;
-  -moz-columns: 3 20ch;
-  margin: @LineH 0px;
-}
 
 input[type=checkbox] + label {
     display: block;

@@ -8,12 +8,20 @@ create table Params (
 );
 
 
-insert into Params values ('user_perm', 349);  -- permLogin + permPost + permThreadStart + permEditOwn + permDelOwn + permChat
+insert into Params values ('user_perm', 1887);  -- permLogin + permRead + permPost + permThreadStart + permEditOwn + permDelOwn + permChat + permDownload + permAttach
+insert into Params values ('anon_perm', 3);     -- permLogin + permRead
 insert into Params values ('log_events', 0);
 insert into Params values ('chat_enabled', 1);
 insert into Params values ('default_skin', 'Wasp');
 insert into Params values ('default_mobile_skin', 'mobile');
 insert into Params values ('email_confirm', 1);
+insert into Params values ('forum_header', '<img src="/images/title.svg" alt=
+" ▄▄             ▄▄▄  ▄▄▄ Power
+█  █ ▄▄▄▄ ▄▄▄▄▄ █  █ █  █
+█▄▄█ █▄▄▄ █ █ █ █▀▀▄ █▀▀▄
+█  █ ▄▄▄█ █ █ █ █▄▄▀ █▄▄▀
+">'
+);
 
 create table Guests (
   addr     integer primary key not null,
@@ -95,6 +103,15 @@ create table Threads (
 
 create index idxThreadsPinnedLastChanged on Threads (Pinned desc, LastChanged desc);
 create index idxThreadsSlug on Threads (Slug);
+
+create table ThreadPosters (
+  firstPost   integer primary key references Posts(id) on delete cascade on update cascade,
+  threadID    integer references Threads(id) on delete cascade on update cascade,
+  userID      integer references Users(id) on delete cascade on update cascade
+);
+
+create unique index idxThreadPosters on ThreadPosters(threadID, userID);
+create index idxThreadPostersOrder on ThreadPosters(threadid, firstPost, userid);
 
 
 create table ThreadsHistory (
@@ -178,12 +195,12 @@ CREATE TRIGGER PostsAI AFTER INSERT ON Posts BEGIN
     (select group_concat(TT.Tag, ", ") from ThreadTags TT where TT.threadID = new.threadid)
   );
   insert into PostCNT(postid,count) VALUES (new.id, 0);
+  insert into ThreadPosters(firstPost, threadID, userID) values (new.id, new.threadID, new.userID);
   update Users set PostCount = PostCount + 1 where Users.id = new.UserID;
 END;
 
 CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
   delete from PostFTS where rowid = old.id;
-  delete from PostCNT where postid = old.id;
   update Users set PostCount = PostCount - 1 where Users.id = old.UserID;
 
   insert or ignore into PostsHistory(postID, threadID, userID, postTime, editUserID, editTime, Content) values (
@@ -233,6 +250,7 @@ create table Tags (
 );
 
 create index idxTagImportance on Tags(Importance desc);
+create index idxTagsTagImp on Tags(tag, importance desc);
 
 
 /* Relation tables */
@@ -257,13 +275,29 @@ create unique index idxUnreadPosts on UnreadPosts(UserID, PostID);
 create index idxUnreadPostsPostID on UnreadPosts(PostID);
 
 
-create table Attachements (
+create table Attachments (
   id       integer primary key autoincrement,
   postID   integer references Posts(id) on delete cascade,
   filename text,
-  notes    text,
-  file     blob
+  changed  integer,
+  file     blob,
+  key      blob,        -- the random key for xor encrypting the blob
+  md5sum   text
 );
+
+create index idxAttachments on Attachments(postID);
+create unique index idxAttachmentsUnique on Attachments(postID, md5sum);
+
+create table AttachCnt (
+  fileID integer references Attachments(id) on delete cascade,
+  count  integer not null default 0
+);
+
+create index idxAttachCnt on AttachCnt(fileID);
+
+create trigger AttachmentsAI after insert on Attachments begin
+  insert into AttachCnt(fileid, count) VALUES (new.id, 0);
+end;
 
 
 
@@ -450,6 +484,15 @@ Unknown but so desired.
 Do meditate first.
 ','What are you looking for?',NULL);
 
+insert into Messages VALUES ('cant_read','Knocking on the door
+Please introduce yourself.
+Are you expected?
+','Private place!','<a href="/!login">Login first</a>');
+
+insert into Messages VALUES ('closed_registration','This very place
+Is not a place for you.
+Go elsewhere now.
+','Closed forum!','<a href="https://duckduckgo.com">A good place to start</a>');
 
 create table Log (
   process_id integer,   -- the unique process id

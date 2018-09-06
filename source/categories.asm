@@ -7,6 +7,8 @@ begin
         pushad
 
         mov     esi, [.pSpecial]
+        test    [esi+TSpecialParams.userStatus], permRead or permAdmin
+        jz      .error_cant_read
 
         stdcall LogUserActivity, esi, uaCategoriesList, 0
 
@@ -50,4 +52,15 @@ begin
         clc
         popad
         return
+
+; the user have no permissions to read posts!
+.error_cant_read:
+
+        stdcall TextMakeRedirect, 0, "/!message/cant_read/"
+        mov     [esp+4*regEAX], edi
+        stc
+        popad
+        return
+
+
 endp

@@ -1,4 +1,7 @@
-GENERAL_LIMIT_MAX_POST_LENGTH = 1024*1024   ; 1MB general limit on post data length. Everything above will be trunkated.
+; NOTICE that this limit is only a second level of the protection.
+; The proper limit must be set to the web server in order to be handled much earlier
+; in the chain!
+GENERAL_LIMIT_MAX_POST_LENGTH = 10*1024*1024   ; 10MB general limit on post data length.
 
 
 ; The types for FCGI_Header.type
@@ -547,10 +550,11 @@ begin
         xor     eax, eax
         stosd
 
-        cmp     [ebx+TByteStream.size], GENERAL_LIMIT_MAX_POST_LENGTH
-        ja      .stdin_received
-
         pop     esi
+
+        cmp     [ebx+TByteStream.size], GENERAL_LIMIT_MAX_POST_LENGTH
+        ja      .error_request_too_big
+
         jmp     .pack_loop
 
 
@@ -562,6 +566,17 @@ begin
         jz      .serve_request
 
         jmp     .pack_loop
+
+
+.error_request_too_big:         ; this request should not be passed to the ServeOneRequest procedure,
+                                ; because it contains invalid data.
+
+        DebugMsg "The POST data is too big. Send 413"
+
+cError413 text "Status: 413 Payload Too Large", 13, 10, "Content-type: text/html", 13, 10, 13, 10, "<html><head></head><body><h1>Payload Too Large</h1></body></html>", 13, 10
+
+        stdcall FCGI_output, [.hSocket], [.requestID], cError413, cError413.length, TRUE
+        jmp     .request_complete
 
 
 ; Processing of the request. Here all data is ready, so serve the request!

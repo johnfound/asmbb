@@ -2,14 +2,18 @@ DEFAULT_PAGE_LENGTH = 20
 
 ; User permissions status flags:
 
-permLogin       = 1
-permPost        = 4
-permThreadStart = 8
-permEditOwn     = 16
-permEditAll     = 32
-permDelOwn      = 64
-permDelAll      = 128
+permLogin       = 1             ; can login
+permRead        = 2             ; can view threads and read posts.
+permPost        = 4             ; can post messages
+permThreadStart = 8             ; can start threads
+permEditOwn     = 16            ; can edit his own posts
+permEditAll     = 32            ; can edit all posts (moderator)
+permDelOwn      = 64            ; can delete his own posts
+permDelAll      = 128           ; can delete
 permChat        = 256
+
+permDownload    = 512           ; Can download the attached files.
+permAttach      = 1024          ; Can attach/edit/delete files to posts.
 
 permAdmin       = $80000000
 
@@ -63,6 +67,7 @@ if used tablePreCommands
 
 PList tablePreCommands, tpl_func,                  \
       "!avatar",          UserAvatar,              \
+      "!attached",        GetAttachedFile,         \
       "!login",           UserLogin,               \
       "!logout",          UserLogout,              \
       "!register",        RegisterNewUser,         \
@@ -101,6 +106,10 @@ PList tablePostCommands, tpl_func,                 \
       "!echoevents",      EchoRealTime,            \    ; optional, depending on the options.DebugWebSSE
       "!search",          ShowSearchResults2
 end if
+
+
+cHeadersJSON text 'Content-Type: application/json', 13, 10, 13, 10
+
 
 
 proc ServeOneRequest, .hSocket, .requestID, .pParams2, .pPost2, .start_time
@@ -145,8 +154,11 @@ begin
         stdcall GetDefaultSkin, eax
         mov     [.special.userSkin], eax
 
+        cmp     [.pPost2], 0
+        je      .post_ok
+
         stdcall DecodePostData, [.pPost2], [.special.params]
-        jc      .post_ok
+        jc      .error400
 
         mov     [.special.post_array], eax
 

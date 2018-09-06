@@ -11,12 +11,17 @@ div.set_page {
   padding: 16px;
 }
 
-form.settings {
+.msgbox {
   width: @msgBoxWidth;
   padding: 16px;
   background-color: @clFormBG;
   margin: 8px auto 8px auto;
+}
 
+form.settings {
+  height: 800px;
+  display: flex;
+  flex-direction: column;
   h1 {
     height: 38px;
     text-align: center;
@@ -38,55 +43,20 @@ form.settings {
     font-size: @FontSize;
     font-weight: bold;
     margin: 8px 0px 4px 0px;
+    color: @clDarkFG;
   }
 
   table {
-
     border-collapse: collapse;
     border-spacing: 0px;
     width: 100%;
+    margin-top: 8px;
 
     td {
       text-align: left;
-      vertical-align: middle;
+      vertical-align: top;
       white-space: nowrap;
-      padding: 2px;
-    }
-
-    td.lbl {
-      text-align: right;
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    td.lblc {
-      text-align: left;
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    td.grp {
-      font-size: 16px;
-      font-weight: bold;
-      padding-top: 16px;
-      padding-bottom: 8px;
-    }
-
-    td.lblm {
-      color: maroon;
-    }
-
-    td.lblr {
-      color: red;
-    }
-
-    td.small {
-      width: 96px;
-    }
-
-    th {
-      margin: 0px;
-      padding: 0px;
+      padding: 2px 0;
     }
   }
 }
@@ -107,6 +77,8 @@ input.settings, select.settings {
 textarea.settings {
   width: 100%;
   white-space: pre;
+  resize: none;
+  flex-grow: 1;
 }
 
 
@@ -164,17 +136,9 @@ h1.msg {
 }
 
 
-section {
-  display: block;
-  columns: 3 180px;
-  -webkit-columns: 3 180px;
-  -moz-columns: 3 180px;
-  margin: 8px 0px;
-}
-
 input[type=checkbox] + label {
     display: block;
     margin-bottom: 4px;
     margin-top: 4px;
+    color: @clDarkFG;
 }
-

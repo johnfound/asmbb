@@ -1,0 +1,140 @@
+#!/bin/sh
+
+# Exit codes:
+#
+# 1: missing source archive. can't download
+# 2: broken source archive.
+# 3: compilation of MUSL failed
+# 4: compilation of SQLite failed
+
+# First, cleanup from previous builds.
+
+rm -rf ./muslsrc/
+rm -rf ./musl/
+
+# First find sqlite3.c file. As an existing file, existing source archive or download from Internet.
+
+if [ -f ./sqlite3.c ]; then
+  echo "Using the existing file sqlite3.c ..."
+else
+  if [ ! -f ./sqlite*.zip ] && [ ! -f ./sqlite*.tar.gz ]; then
+    echo "Downloading latest SQLite source archive..."
+    { wget -q -O - https://www.sqlite.org/cgi/src/tarball/sqlite3.tar.gz?r=release | tar -xz 2> /dev/null; } || { echo >&2 "Error: Can't download SQLite sources."; exit 2;}
+    cd ./sqlite3
+    echo "Building the amalgamation sqlite3.c ..."
+    ./configure > /dev/null 2>&1 || { echo >&2 "Error: Can't configure SQLite sources"; exit 4; }
+    make sqlite3.c > /dev/null 2>&1 || { echo >&2 "Error: Can't make sqlite3.c"; exit 4; }
+    cd ..
+    cp ./sqlite3/sqlite3.c ./
+    rm -rf ./sqlite3/ &
+  else
+    if [ -f ./sqlite*.zip ]; then
+      files=( sqlite*.zip )
+      echo "Extracting sqlite from ${files[0]}..."
+      unzip -joq "${files[0]}" *sqlite3.c || { echo >&2 "Error: Broken SQLite source archive."; exit 2; }
+    else 
+      files=( sqlite*.tar.gz )
+      echo "Extracting sqlite from ${files[0]}..."
+      tar --wildcards --strip-components 1 -xzf "${files[0]}" */sqlite3.c || { echo >&2 "Error: Broken SQLite source archive."; exit 2; }
+    fi
+  fi
+fi
+
+
+# Second, find the MUSL sources. As an existing archive or download from Internet.
+
+if [ ! -f ./musl*.tar.gz ]; then
+  echo "Downloading MUSL source archive..."
+  { wget https://www.musl-libc.org/releases/musl-latest.tar.gz 2> /dev/null; } || { echo >&2 "Error: missing MUSL sources."; exit 1; }
+fi
+
+echo "Extracting MUSL source code..."
+
+mkdir muslsrc
+{ tar --wildcards --strip-components 1 -C ./muslsrc/ -xzf ./musl*.tar.gz 2> /dev/null; } || { echo "Error: Broken MUSL source archive."; exit 2; }
+
+cd muslsrc
+
+# Configure and compile MUSL; 
+
+echo "Compiling MUSL ..."
+
+./configure --prefix=../musl --host=i386 CC="gcc -m32" CFLAGS="-O3 -mpreferred-stack-boundary=2 -march=x86-64" CROSS_COMPILE="/bin/" > /dev/null 2>&1 || { echo >&2 "Error: Can't configure MUSL."; exit 3; }
+make -j 4 > /dev/null 2>&1 || { echo >&2 "Error: Can't compile MUSL."; exit 3; }
+make -j 4 install > /dev/null 2>&1 || { echo >&2 "Error: Can't install MUSL to the current directory."; exit 3; }
+
+cd ..
+rm -rf ./muslsrc/ &
+
+echo "Create gcc.specs file..."
+
+# THE BLANK LINES IN THE BELOW TEXT ARE IMPORTANT! 
+# DON'T EDIT IF YOU DON'T KNOW WHAT YOU ARE DOING!
+# IT IS A BLACK GCC MAGIC!
+cat <<EOT > musl/musl-gcc.specs
+*asm:
+--32
+
+%rename cpp_options old_cpp_options
+
+*cpp_options:
+-nostdinc -isystem ./musl/include -isystem include%s %(old_cpp_options)
+
+*cc1:
+%(cc1_cpu) -nostdinc -isystem ./musl/include -isystem include%s
+
+*link_libgcc:
+-L./musl/lib -L .%s
+
+*libgcc:
+32/libgcc.a%s %:if-exists(libgcc_eh.a%s)
+
+*startfile:
+%{!shared: ./musl/lib/%{pie:S}crt1.o} ./musl/lib/crti.o %{shared|pie:crtbeginS.o%s;:crtbeginS.o%s}
+
+*endfile:
+%{shared|pie:crtendS.o%s;:crtendS.o%s} ./musl/lib/crtn.o
+
+*link:
+-m elf_i386 -dynamic-linker /lib/ld-musl-i386.so.1 -nostdlib %{shared:-shared} %{static:-static} %{rdynamic:-export-dynamic}
+
+*esp_link:
+
+
+*esp_options:
+
+
+*esp_cpp_options:
+
+
+EOT
+
+# Compile the sqlite3.so shared library.
+
+echo "Compiling SQLite ..."
+
+gcc -m32 -O3 -shared -fno-stack-protector -mpreferred-stack-boundary=2 -march=x86-64    \
+    -specs musl/musl-gcc.specs                                                          \
+    -DSQLITE_DEFAULT_MEMSTATUS=0                                                        \
+    -DSQLITE_LIKE_DOESNT_MATCH_BLOBS                                                    \
+    -DSQLITE_MAX_EXPR_DEPTH=0                                                           \
+    -DSQLITE_OMIT_DEPRECATED                                                            \
+    -DSQLITE_OMIT_PROGRESS_CALLBACK                                                     \
+    -DSQLITE_OMIT_SHARED_CACHE                                                          \
+    -DSQLITE_ENABLE_FTS5                                                                \
+    -DSQLITE_OMIT_COMPLETE                                                              \
+    -DSQLITE_OMIT_GET_TABLE                                                             \
+    -DSQLITE_OMIT_UTF16                                                                 \
+    -DSQLITE_OMIT_AUTHORIZATION                                                         \
+    -DSQLITE_THREADSAFE=1                                                               \
+    -DSQLITE_ENABLE_STAT4                                                               \
+./sqlite3.c -o ./libsqlite3.so							        \
+|| { echo >&2 "Error: Can't compile SQLite."; exit 4; }
+
+mv ./musl/lib/libc.so ./ld-musl-i386.so
+rm -rf ./musl/ &
+
+strip ./libsqlite3.so
+strip ./ld-musl-i386.so
+
+echo "Building process finished successfully."

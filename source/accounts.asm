@@ -397,6 +397,12 @@ begin
 ; check the information
 
         mov     esi, [.pSpecial]
+        cmp     [esi+TSpecialParams.userID], 0
+        jne     .error_trick
+
+        test    [esi+TSpecialParams.userStatus], permLogin
+        jz      .error_closed_registration
+
         mov     ebx, [esi+TSpecialParams.post_array]
         test    ebx, ebx
         jnz     .do_register_user
@@ -631,6 +637,9 @@ begin
         stdcall TextMakeRedirect, 0, "/!message/register_short_pass/"
         jmp     .finish
 
+.error_closed_registration:
+        stdcall TextMakeRedirect, 0, "/!message/closed_registration/"
+        jmp     .finish
 
 .error_different:
 

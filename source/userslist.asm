@@ -15,6 +15,9 @@ begin
 
         mov     esi, [.pSpecial]
 
+        test    [esi+TSpecialParams.userStatus], permRead or permAdmin
+        jz      .error_cant_read
+
         stdcall LogUserActivity, esi, uaReadingUserlist, 0
 
         mov     edx, [esi+TSpecialParams.cmd_list]
@@ -124,6 +127,15 @@ begin
 
         stdcall StrDel, [.list]
         clc
+        popad
+        return
+
+; the user have no permissions to read information from the forum!
+.error_cant_read:
+
+        stdcall TextMakeRedirect, 0, "/!message/cant_read/"
+        mov     [esp+4*regEAX], edi
+        stc
         popad
         return
 endp

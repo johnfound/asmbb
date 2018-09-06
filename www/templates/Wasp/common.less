@@ -216,6 +216,39 @@ a.current_tag {
   text-decoration: none;
 }
 
+.tagsize1  { font-size: 30% }
+.tagsize2  { font-size: 30% }
+.tagsize3  { font-size: 32% }
+.tagsize4  { font-size: 35% }
+.tagsize5  { font-size: 41% }
+.tagsize6  { font-size: 47% }
+.tagsize7  { font-size: 52% }
+.tagsize8  { font-size: 57% }
+.tagsize9  { font-size: 62% }
+.tagsize10 { font-size: 66% }
+.tagsize11 { font-size: 70% }
+.tagsize12 { font-size: 73% }
+.tagsize13 { font-size: 76% }
+.tagsize14 { font-size: 79% }
+.tagsize15 { font-size: 81% }
+.tagsize16 { font-size: 83% }
+.tagsize17 { font-size: 85% }
+.tagsize18 { font-size: 87% }
+.tagsize19 { font-size: 89% }
+.tagsize20 { font-size: 90% }
+.tagsize21 { font-size: 91% }
+.tagsize22 { font-size: 93% }
+.tagsize23 { font-size: 94% }
+.tagsize24 { font-size: 95% }
+.tagsize25 { font-size: 96% }
+.tagsize26 { font-size: 97% }
+.tagsize27 { font-size: 97% }
+.tagsize28 { font-size: 98% }
+.tagsize29 { font-size: 99% }
+.tagsize30 { font-size: 99% }
+.tagsize31 { font-size: 100% }
+.tagsize32 { font-size: 100% }
+
 
 img.tagicon {
   display: table-cell;
@@ -317,10 +350,92 @@ input[type=checkbox] {
       vertical-align: bottom;
     }
   }
+
+// Collapsable block of elements.
+  &.collapseit {
+    &:checked {
+    }
+    &:not(:checked) {
+      & + * {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
 }
+
 
 
 .flex {
   display: flex;
   align-items: center;
 }
+
+
+
+/* Tabbed navigation handling */
+
+.tabbed {
+  flex-grow: 1;
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+
+  & > input {
+    position: absolute;
+    opacity: 0;
+    & + label {
+      float: left;
+      -webkit-user-select: none; /* Safari 3.1+ */
+      -moz-user-select: none; /* Firefox 2+ */
+      -ms-user-select: none; /* IE 10+ */
+      user-select: none; /* Standard syntax */
+
+      padding: 8px 16px;
+      font-size: @FontSize;
+      line-height: @FontSize;
+      border-top: 2px solid transparent;
+      cursor: pointer;
+      font-weight: bold;
+      color: black;
+
+      &:hover {
+        background: @clTabHover;
+      }
+
+      & + section {
+        position: absolute;
+        top: 32px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+
+        display: none;
+        padding: 8px;
+        background: @clTabBG;
+        flex-direction: column;
+      }
+    }
+
+    &:focus + label {
+      border-top: 2px solid @clTabFocus;
+      z-index: 1;
+    }
+
+    &:checked + label {
+      background: @clTabBG;
+      color: @clTabFG;
+      & + section {
+        display: flex;
+      }
+    }
+  }
+}
+
+
+
