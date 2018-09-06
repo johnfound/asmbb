@@ -9,7 +9,7 @@ permThreadStart = 8             ; can start threads
 permEditOwn     = 16            ; can edit his own posts
 permEditAll     = 32            ; can edit all posts (moderator)
 permDelOwn      = 64            ; can delete his own posts
-permDelAll      = 128           ; can delete
+permDelAll      = 128           ; can delete all posts (moderator)
 permChat        = 256
 
 permDownload    = 512           ; Can download the attached files.

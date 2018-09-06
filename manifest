@@ -1,5 +1,5 @@
-C Merged\swith\sattachments.\sThese\sare\sthe\slast\smajor\schanges\sbefore\sthe\srelease.
-D 2018-09-06T10:59:28.018
+C Improved\sthe\stext\sof\sthe\sreadme\sand\scomments.
+D 2018-09-06T15:30:51.698
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -10,7 +10,7 @@ F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
 F install/unpack.tar.gz 9390bd3b1f236b0206314628d3c94d6e23b25d35
 F install/unpack/.htaccess efa046601aad51a87da0946b4eecadcc0d234c15
 F install/unpack/unpack.sh 4443f580fe76faffa7015e6e4b73b22f6290f4a0 x
-F musl_sqlite/README 92a47b39196c7b69c90b4901d081e03a48a5dff3
+F musl_sqlite/README 46ab7567ba9efea4d58e5d8e8c01610155a78c02
 F musl_sqlite/build 69c935899302762a1321c98fb7c1a25be5078e38 x
 F source/Documents/FastCGI\sSpecification.html e2fc06a5abf1b3505c665e108ce3ad28b636095a
 F source/Documents/futex.pdf 3297d3e1739a7b294fa0c96ba6d59bae7170c6b9
@@ -28,12 +28,12 @@ F source/categories.asm 87830583d32bdf406d7a0a0615cff0b23fda9283
 F source/categories.sql b1fa5a2cca7204372b3ca3714edbbc669103b1cf
 F source/chat.asm c0469c0067c6361d0894e18d9f32e01562a3c94c
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
-F source/commands.asm 2e31554f9429f4cf0f28a7db357008d581d1b019
+F source/commands.asm 30e3793226739b4f5e7c2dfcd6bb780617d2c3be
 F source/create.sql 5df901925ce0cc79bd503f2c20d038d93acddfdc
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 5d85cf6d0ac6c1eb80eead78c6d98783f22c8574
 F source/engine.asm 64f4523c4101f418570ac817c8806f517d895cc0
-F source/engine.fpr 3818d619042f945db805b07408065d82cfc403ef
+F source/engine.fpr fcc4b41174d8d30e9bdab4c32df7f9593979167e
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm c1dfb0297685352865a7bb7eacff90d173f3d919
@@ -673,7 +673,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P bd38a490a8843cc33a40c09bff1ef093b1906b77 b5e0624f349e064508512a98b036de8b32be83f4
-R f8f3a4db34a41e542902401dac0b1735
+P ec5c3ca5278ac4bd0db8a007500b58cb4789a7ae
+R 8ad124188651916e1eaa9568df1dc29d
 U johnfound
-Z f734a5a66f3e8e37293f47bca2507c5e
+Z 6cd800845bdceadf61090e844247ea92

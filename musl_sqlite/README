@@ -18,18 +18,24 @@ If you want to use other version, download it and place the archive
 file in this directory. The script is looking for:
 
 "musl*.tar.gz" for MUSL
-"sqlite*.tar.gz" or "sqlite*.zip" for SQLite
+
+"sqlite3.c", "sqlite*.zip" or "sqlite*.tar.gz" for SQLite.
 
 If such file exists the script will use it. If not, tries to download
-the latest sources.
+the latest sources from the respective Internet sites.
 
-The most simple use of the script is to delete all archives from the 
-directory and run:
+The most simple use of the script (although slower) is to delete all 
+archives and source files from the directory and run:
 
 $ ./build
 
-The script will compile the sqlite3 library with musl and will copy
-the needed files to the binary directory of AsmBB (../www/)
+The script will compile the sqlite3 library with musl and will create
+two files: "libsqlite3.so" and "ld-musl-i386.so"; Copy these files
+in the AsmBB directory in order to use them.
+
+This script is called automatically from the script 
+"install/create_relese.sh" that creates the binary release archives.
+
 
 Report every building problems. I am testing on Manjaro/Arch linux
 and some problems on other distributions are possible (but not expected).
