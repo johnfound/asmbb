@@ -35,7 +35,7 @@ popd
 
 # copy engine files
 cp ../www/engine asmbb/
-cp ../www/*.so asmbb/
+cp ../musl_sqlite/*.so asmbb/
 
 # copy images
 rsync -ar ../www/images/* asmbb/images/ --exclude-from=exclude.txt

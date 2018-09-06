@@ -1,9 +1,9 @@
-C Fixed\sthe\scollapsable\slists\sfor\sthe\sthread\sposters\snad\sinvited\susers\sfor\sall\sskins.\sRenamed\squery\scolumn\sfrom\sThreadPosters\sto\sPosters.
-D 2018-09-06T06:35:51.639
+C Binary\srelease\sscript\supdated.\sFixed\sthe\sCSS\sand\stabindex\sattribute\sof\s"file"\sinput\selements.
+D 2018-09-06T07:40:19.560
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
-F install/create_release.sh d303dc7066894188d185bbb39abdac0746696618 x
+F install/create_release.sh 396f452f7c1af50c844fbd0f37a37d58e8bc662d x
 F install/exclude.txt 7678178e332c0c4a1a7d1ac8705ae6e2e2e57e74
 F install/install.txt 64615f21455976e432bda238c6d4282fc561e340
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
@@ -410,7 +410,7 @@ F www/templates/Terminal/form_edit_thread.tpl 9ba48416deb4498a8dcad61198289fb396
 F www/templates/Terminal/form_editinfo.tpl 91a3644fb4b1021bffa2356f7291f6e457eebe1e l
 F www/templates/Terminal/form_login.tpl 9469d81acf2f61039eca07cd347499ca9075bb32
 F www/templates/Terminal/form_new_post.tpl d1083e2c493d1a7bafdbac53fc44693bf4c242e0
-F www/templates/Terminal/form_new_thread.tpl 8523496bff3e42ac3dac1201dd4ad1b4305a7005
+F www/templates/Terminal/form_new_thread.tpl f545e9d7ed24c6b3cfeb82cdb098bb3ec5308f7e
 F www/templates/Terminal/form_post_debug.tpl 0a3e574bb2595001a5c1cebbd66c59aefd6aaab7 l
 F www/templates/Terminal/form_register.tpl 6e44ae46c9d0df170d76cb91b145bc2f3d60b7ea l
 F www/templates/Terminal/form_reset_password.tpl 90a83e1c6756ae652670b3470bbe6aac02972276 l
@@ -541,8 +541,8 @@ F www/templates/Wasp/form_edit.tpl df5ab02e3b3dbd78d969309d9d318c0074bce6ea
 F www/templates/Wasp/form_edit_thread.tpl 793c6fa9d479db0f52e167d39eb55ecafbbd67e3
 F www/templates/Wasp/form_editinfo.tpl 9c9b8107864d1c9a23e7ec1c57e57616edf84e2c
 F www/templates/Wasp/form_login.tpl cdddb5dad351d6b0545df008607b9485892c99a4
-F www/templates/Wasp/form_new_post.tpl d8efa79d9a38731bc7220acad4b713c63666c597
-F www/templates/Wasp/form_new_thread.tpl 6de116c0296b3f1380ea5cb3d13a69d6a070496c
+F www/templates/Wasp/form_new_post.tpl f9371d72de177afaa11b8f4172a3633e1d7cc571
+F www/templates/Wasp/form_new_thread.tpl 4885fac0e10f7a026d7a882781baff04be68acfb
 F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/Wasp/form_register.tpl 18c0fa0a762d78dc4c34f6c8bdcb11140f4b1e36
 F www/templates/Wasp/form_reset_password.tpl 0602acb7aaa6528a16ddc2b16d7ac7b05e24f09a
@@ -568,7 +568,7 @@ F www/templates/Wasp/one_user.tpl 6bf8fc5739971116473d7dd78425514f13bf6c4a
 F www/templates/Wasp/post_history.tpl d4654a8299206f82b0f63525b390e04cd7ae5a2a
 F www/templates/Wasp/post_view.tpl ce6ea96073b6f16df064c4e60aa61cc8d9b86561
 F www/templates/Wasp/posteditor.less ca7bc69c7343690776ccc50c9b95f3864efe29c0
-F www/templates/Wasp/postnew.less e980a3e2ff5ecb720fc1499266aa2ced9ec8e9cd
+F www/templates/Wasp/postnew.less baa6d6d872f7d4bd97a4283a84194b38e044a796
 F www/templates/Wasp/posts.less e583a6f95fecdec9823719b7ce2c1d72a3b5e898
 F www/templates/Wasp/preview.tpl 2a375478a56a5b03c9e8cdf715d73b2257c7f48b
 F www/templates/Wasp/restore_confirm.tpl b72f733c8a4c7b0ec7229bafcd2eaeac786fd90b
@@ -673,7 +673,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P aaf2db454e0a3970803d5ded209d944ab07cdaa6
-R 279f5f0a354de2d28cd525b27ea29612
+P 53ec1d67dc5bbf51eebf861e96010f1b4ea02fda
+R f8f3a4db34a41e542902401dac0b1735
 U johnfound
-Z 99acda9da26426eb26820df2083958af
+Z 2237ed3d0903f8235dd72afbb5c58d3d

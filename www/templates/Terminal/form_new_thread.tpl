@@ -2,7 +2,6 @@
 [css:postnew.css]
 [css:threadnew.css]
 [css:navigation.css]
-[css:markdown.css]
 
 <div class="ui_panel">
   <a class="ui left" href=".">Thread list</a>

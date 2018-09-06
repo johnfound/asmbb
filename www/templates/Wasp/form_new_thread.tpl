@@ -2,7 +2,6 @@
 [css:postnew.css]
 [css:threadnew.css]
 [css:navigation.css]
-[css:markdown.css]
 
 <div class="new_editor">
   <div class="ui">
@@ -25,7 +24,7 @@
       <p>Post content:</p>
       [include:edit_toolbar.tpl]
       <textarea class="editor" name="source" id="source" placeholder="Share your thoughts here">[source]</textarea>
-      [case:[special:canupload]||<p class="panel">Attach file(s):</p><div class="attach"><input type="file" placeholder="Select file to attach" name="attach" multiple="multiple"></div>]
+      [case:[special:canupload]||<p class="panel">Attach file(s):</p><div class="attach"><input type="file" placeholder="Select file to attach" name="attach" multiple="multiple" tabindex="-1"></div>]
       <div class="attachments">
         [attach_edit:[id]]
       </div>
