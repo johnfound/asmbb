@@ -15,3 +15,4 @@
 <h1 class="thread_caption">[caption]
   [case:[special:canedit]| |<a href="!edit_thread" title="Edit the thread title and tags."><img src="[special:skin]/_images/edit.svg" alt="Edit"></a>]
 </h1>
+<div class="thread_tags">[special:threadtags=[id]]</div>

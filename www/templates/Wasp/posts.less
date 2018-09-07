@@ -12,6 +12,7 @@ h1.thread_caption {
   font-size: 20px;
   margin: 16px 0px 0px 0px;
   clear:both;
+  text-align: center;
 
   a {
     margin-left: 4px;
@@ -23,6 +24,35 @@ h1.thread_caption {
     }
   }
 }
+
+
+.thread_tags {
+  margin: 8px 0 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  a {
+
+    display:inline-block;
+    max-width: 150px;
+    min-width: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: @borderRadTags;
+    border: @borderTags;
+    text-align: center;
+    white-space: nowrap;
+
+    background-color: @clCurrentTagBG;
+    color: @clCurrentTagFG !important;
+    text-decoration: none;
+
+    padding: @paddingOneTag;
+    margin: 0 4px 0 0;
+  }
+}
+
 
 div.current_version {
   border-left: 8px solid @clColor1FG;

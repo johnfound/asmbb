@@ -4,6 +4,23 @@
   <script type='text/javascript'>
 
 // some extras and utilities
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
     function linkify(inputText) {
         var replacedText, replacePattern1;
         //URLs starting with http://, https://, or ftp://
@@ -27,8 +44,8 @@
         ':Д'     : ['lol.gif', ':D'],
         '&gt;:-(': ['angry.gif', '>:('],
         '&gt;:(' : ['angry.gif', '>:('],
-        ':-('    : ['sad.gif', ':('],
-        ':('     : ['sad.gif', ':('],
+        ':-('    : ["sad.gif", ':('],
+        ':('     : ["sad.gif", ':('],
         ':`-('   : ['cry.gif', ':`('],
         ':`('    : ['cry.gif', ':`('],
         ':\'-('  : ['cry.gif', ':`('],
