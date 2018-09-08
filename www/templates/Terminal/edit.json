@@ -8,8 +8,8 @@
          &nbsp;Post preview:
       </div>
       <div class="user_info">
-        <a class="username" href="/!userinfo/[UserName]">[special:username]
-        <img class="avatar" alt="(ツ)" src="/!avatar/[special:username]"></a>
+        <a class="username" href="/!userinfo/[UserName]">[UserName]
+        <img class="avatar" alt="(ツ)" src="/!avatar/[UserName]"></a>
       </div>
       <article>
         [html:[minimag:[source]]]

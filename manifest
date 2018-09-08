@@ -1,5 +1,5 @@
-C Removed\sa\slapse\sin\sthe\stemplate.
-D 2018-09-08T10:40:01.676
+C Fixed\sthe\susername\sdisplay\swhen\spost\sis\sedited\sby\sother\suser\s(admin\sor\smoderator).
+D 2018-09-08T11:43:19.473
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -399,7 +399,7 @@ F www/templates/Terminal/common.less 4754c8ddc65f586cb25f8ebf504ad0e08e6b2ccc
 F www/templates/Terminal/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Terminal/del_confirm.tpl cdcb838e2e3a339de5408643fd2c2f3c447ab916 l
 F www/templates/Terminal/delete.less 4b875c5b69bdd522eb8b7f7e8c9a98c670fef7ad
-F www/templates/Terminal/edit.json 66be2817517a9f8fc02c33ec60847c9763d2e6b8
+F www/templates/Terminal/edit.json bfc2d1f8e2d4370a6a547e33f02b0bf687bc7930
 F www/templates/Terminal/edit_toolbar.tpl acbb6599675164c5a695bc9d4276ecc380b51808
 F www/templates/Terminal/editor.less eb9cdf49f02a0910b8fe0d2dae78fdf846ecb583
 F www/templates/Terminal/error.less 8fbd13bfa0b6d82d1c3cbdcbb9e11af5588271dd
@@ -438,7 +438,7 @@ F www/templates/Terminal/post_view.tpl 6415151954792c3bccba16639f0a10a12183f1c7
 F www/templates/Terminal/posteditor.less 9008ab729f4908a9f3971dd5abc6ec02f691b01b
 F www/templates/Terminal/postnew.less 0019f1af77582a801e810ae59b6d034ff18515b8
 F www/templates/Terminal/posts.less a134f71bfe0c5b6542e365bbfd978e48d0cae6ac
-F www/templates/Terminal/preview.tpl 83ed2bbd7ea38d01d20f21b23f27ec8987cf501e
+F www/templates/Terminal/preview.tpl 6bfb18cc561190a0b59f68267378578a3f6aea2b
 F www/templates/Terminal/restore_confirm.tpl c59340b4b594a629285efa18802ea6d542442afb l
 F www/templates/Terminal/search.less 0945b7c80d74e44ee3c658746428cb30797d3f46
 F www/templates/Terminal/search_result.tpl 48a609f423c8de989a1b81775228d657e433a6b8
@@ -531,7 +531,7 @@ F www/templates/Wasp/common.less 59bda5160b031b076279a8005dc44fea0b3242ea
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 27678b543c744bd64421b50b66d3e60253bb4d3e
 F www/templates/Wasp/delete.less f77246e7f9fd0680ddb1ef2351b2b4ec5cef54f2
-F www/templates/Wasp/edit.json aa69cc02d8be80f814903c8006b0266ca6b04dad
+F www/templates/Wasp/edit.json 8eab35c75a88cfcf9a3f0b53a7fd80610ed30286
 F www/templates/Wasp/edit_toolbar.tpl 0a84d91c9190f6338a09f281067cff9e0f838100
 F www/templates/Wasp/editor.less 31a9c1af85110a4e9dce3fcf00ab16bbda9ce50a
 F www/templates/Wasp/error.less 43f5b23eace778d249411d453321ec6d16d4f306
@@ -570,7 +570,7 @@ F www/templates/Wasp/post_view.tpl ce6ea96073b6f16df064c4e60aa61cc8d9b86561
 F www/templates/Wasp/posteditor.less ca7bc69c7343690776ccc50c9b95f3864efe29c0
 F www/templates/Wasp/postnew.less baa6d6d872f7d4bd97a4283a84194b38e044a796
 F www/templates/Wasp/posts.less c3fa199066d35ee15841424178da87dbb794719f
-F www/templates/Wasp/preview.tpl de76de988e74d0e3215c7d8314b7dc09f356c418
+F www/templates/Wasp/preview.tpl 3e341c8a5624a3669a13b82247c924863d9a8d06
 F www/templates/Wasp/restore_confirm.tpl c101e4ccda03878c89c22aa70b96db20c33ce063
 F www/templates/Wasp/search.less 17bfdc636da1019916443febbb2073b791ed79d1
 F www/templates/Wasp/search_result.tpl 6c5a46b179308b9b7b4f272c7f543fa8f526dd36
@@ -673,7 +673,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P a1c41ff31fda9674cc76c1180df9befb372df1a9
-R 3b60f88278b9d4200dbf9fae12389b89
+P ac93357955b61e7b4ab803023ef50aeba08f498d
+R 8adf988745e19de04c8492b5f87b3241
 U johnfound
-Z 9544701f452539f39432da9aef0ee2f3
+Z 28ecd634fbce1b439738c46c0faa4482
