@@ -170,6 +170,8 @@ struct TFieldSlot
 ends
 
 
+ESCAPE_CHAR = "^"
+
 ; returns the rendered template in EAX
 
 proc RenderTemplate, .pText, .hTemplate, .sqlite_statement, .pSpecial
@@ -277,6 +279,9 @@ begin
         cmp     eax, [edx+TText.Length]
         jae     .finish
 
+        cmp     byte [edx+eax], ESCAPE_CHAR
+        je      .delete_escape
+
         cmp     byte [edx+eax], '|'
         je      .separator
 
@@ -286,16 +291,6 @@ begin
         cmp     byte [edx+eax], '['
         jne     .loop
 
-;.start_param:
-; here something have to be done abour HTML encoding of the generated text!
-
-        cmp     dword [edx+eax+1], 'mini'
-        jne     .check_html
-
-        cmp     dword [edx+eax+5], 'mag:'
-        je      .disable_encoding
-
-.check_html:
         cmp     dword [edx+eax+1], 'html'
         jne     .not_html
         cmp     byte [edx+eax+5], ':'
@@ -369,6 +364,21 @@ begin
         je      .command
 
         jmp     .hash
+
+
+.delete_escape:
+        cmp     byte [edx+eax+1], "["
+        je      .escape
+        cmp     byte [edx+eax+1], "]"
+        je      .escape
+        cmp     byte [edx+eax+1], ESCAPE_CHAR
+        jne     .loop
+
+.escape:
+        stdcall TextMoveGap, edx, ecx
+        inc     [edx+TText.GapEnd]
+        jmp     .loop   ; Don't decrease ecx here, because the next char after the escate should be skipped.
+
 
 .check_fields:
 
@@ -590,8 +600,6 @@ begin
         stdcall StrDel ; from the stack
 
         add     ecx, eax
-
-        mov     [.fEncode], 1
         jmp     .loop
 
 ; ...................................................................
@@ -787,8 +795,6 @@ endl
         mov     edx, edi
         mov     ecx, [edx+TText.GapBegin]
         dec     ecx
-
-        mov     [.fEncode], 1
         jmp     .loop
 
 

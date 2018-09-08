@@ -5,7 +5,7 @@ div.popup { display: none };
 <input type="checkbox" id="help">
 <div class="popup post_text">
 <label class="popup close" for="help"></label>
-[minimag:
+[html:[minimag:
 
 #Post editing help
 
@@ -110,5 +110,5 @@ Renders to:
      xchg eax, ecx
 ;end
 --------------------------
-]
+]]
 </div>

@@ -6,20 +6,20 @@
   <a class="editbtn" onclick="insertTag('source', '_', '_',   1)" title="Underlined"              ><span class="icon_underline">U</span></a>
   <a class="editbtn" onclick="insertTag('source', '-', '-',   1)" title="Strikethrough"           ><span class="icon_strike">S</span></a>
   <a class="editbtn" onclick="insertTag('source', '`', '`',   1)" title="Inline code"             ><span class="icon_code">Mono</span></a>
-  <a class="editbtn" onclick="insertTag('source', '[', '][]', 1)" title="Link [url][description]" ><span class="icon_link">Link</span></a>
-  <a class="editbtn" onclick="insertTag('source', '[!','][]', 1)" title="Picture [!url][alt text]"><span class="icon_picture">Image</span></a>
+  <a class="editbtn" onclick="insertTag('source', '^[', '^]^[My Link^]', 1)" title="Link ^[url^]^[description^]" ><span class="icon_link">Link</span></a>
+  <a class="editbtn" onclick="insertTag('source', '^[!','^]^[My Picture^]', 1)" title="Picture ^[!url^]^[alt text^]"><span class="icon_picture">Image</span></a>
 
   <a class="editbtn" onclick="insertTag('source', ';quote', ';end', 0)" title="Block quote"       ><span class="icon_quote">Quote</span></a>
   <a class="editbtn" onclick="insertTag('source', ';begin', ';end', 0)" title="Code block"        ><span class="icon_blockcode">Code</span></a>
 
-  <a class="editbtn" onclick="insertTag('source', '[?:-)]', '', 1)" title="Emoticon smile"        ><span class="icon_smile">Smile</span></a>
-  <a class="editbtn" onclick="insertTag('source', '[?:-D]', '', 1)" title="Emoticon LOL"          ><span class="icon_lol">LOL</span></a>
-  <a class="editbtn" onclick="insertTag('source', '[?rofl]', '', 1)" title="Emoticon ROFL"        ><span class="icon_rofl">ROFL</span></a>
-  <a class="editbtn" onclick="insertTag('source', '[?;-)]', '', 1)" title="Emoticon wink"         ><span class="icon_wink">Wink</span></a>
-  <a class="editbtn" onclick="insertTag('source', '[?:-P]', '', 1)" title="Emoticon tongue"       ><span class="icon_tongue">Tongue</span></a>
-  <a class="editbtn" onclick="insertTag('source', '[?:-(]', '', 1)" title="Emoticon sad"          ><span class="icon_sad">Sad</span></a>
-  <a class="editbtn" onclick="insertTag('source', '[?:\'-(]', '', 1)" title="Emoticon cry"        ><span class="icon_cry">Cry</span></a>
-  <a class="editbtn" onclick="insertTag('source', '[?>:-(]', '', 1)" title="Emoticon angry"       ><span class="icon_angry">Angry</span></a>
+  <a class="editbtn" onclick="insertTag('source', '^[?:-)^]', '', 1)" title="Emoticon smile"        ><span class="icon_smile">Smile</span></a>
+  <a class="editbtn" onclick="insertTag('source', '^[?:-D^]', '', 1)" title="Emoticon LOL"          ><span class="icon_lol">LOL</span></a>
+  <a class="editbtn" onclick="insertTag('source', '^[?rofl^]', '', 1)" title="Emoticon ROFL"        ><span class="icon_rofl">ROFL</span></a>
+  <a class="editbtn" onclick="insertTag('source', '^[?;-)^]', '', 1)" title="Emoticon wink"         ><span class="icon_wink">Wink</span></a>
+  <a class="editbtn" onclick="insertTag('source', '^[?:-P^]', '', 1)" title="Emoticon tongue"       ><span class="icon_tongue">Tongue</span></a>
+  <a class="editbtn" onclick="insertTag('source', '^[?:-(^]', '', 1)" title="Emoticon sad"          ><span class="icon_sad">Sad</span></a>
+  <a class="editbtn" onclick="insertTag('source', '^[?:\'-(^]', '', 1)" title="Emoticon cry"        ><span class="icon_cry">Cry</span></a>
+  <a class="editbtn" onclick="insertTag('source', '^[?>:-(^]', '', 1)" title="Emoticon angry"       ><span class="icon_angry">Angry</span></a>
 </div>
 
 <script>
@@ -38,12 +38,12 @@
     if ( sel !== '' ) newpos += closetag.length;
 
     if (fInline) {
-      if ( /[a-zA-Z0-9\]]/.test(prevch) || ! prevch ) {
+      if ( /^[a-zA-Z0-9\^]^]/.test(prevch) || ! prevch ) {
         opentag = ' ' + opentag;
         newpos++;
       };
 
-      if ( /[a-zA-Z0-9]/.test(nextch) || ! nextch) {
+      if ( /^[a-zA-Z0-9^]/.test(nextch) || ! nextch) {
         closetag = closetag + ' ';
       };
 

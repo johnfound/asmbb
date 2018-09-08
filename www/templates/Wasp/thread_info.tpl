@@ -4,7 +4,7 @@
       [case:[Pinned]||<img class="pinned" src="[special:skin]/_images/pinned.png" alt="!" title="Pinned thread">]
       [case:[limited]||<img height="32" width="32" class="unread" src="[special:skin]/_images/limited.svg" alt="#" title="Limited access thread">]
       [case:[Unread]||<a href="[Slug]/#[FirstUnread]">]
-        <img height="32" width="32" class="unread" src="[special:skin]/_images/posts[case:[Unread]|_gray|].svg" alt="[case:[Unread]||>]" title="[case:[Unread]|No unread messages|Go to first unread]">[case:[Unread]||</a>]
+        <img height="32" width="32" class="unread" src="[special:skin]/_images/posts[case:[Unread]|_gray|].svg" alt="[case:[Unread]||&gt;]" title="[case:[Unread]|No unread messages|Go to first unread]">[case:[Unread]||</a>]
       [PostCount] [case:[PostCount]|posts|post|posts]
     </div>
     [case:[Unread]||<div class="unread_cnt">( [Unread] unread ) <a href="[Slug]/!markread" title="Mark thread read"><img width="16" height="16" src="[special:skin]/_images/markread.svg" alt="X"></a></div>]

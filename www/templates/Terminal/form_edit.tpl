@@ -145,7 +145,7 @@ function GetSelectedFiles() {
   var where = document.getElementById("showfiles");
   var browse = document.getElementById("browse");
   if (browse.files.length == 0) where.innerText = '';
-  else if (browse.files.length == 1) where.innerText = browse.files[0].name;
+  else if (browse.files.length == 1) where.innerText = browse.files^[0^].name;
   else where.innerText = browse.files.length + " files are selected";
 }
 

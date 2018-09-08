@@ -12,7 +12,7 @@
         <img class="avatar" alt="(ツ)" src="/!avatar/[special:username]"></a>
       </div>
       <article>
-        [minimag:[source]]
+        [html:[minimag:[source]]]
         <div class="attachments">
           [attachments:[id]]
         </div>

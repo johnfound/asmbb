@@ -9,8 +9,8 @@
         var name = cname + "=";
         var decodedCookie = decodeURIComponent(document.cookie);
         var ca = decodedCookie.split(';');
-        for(var i = 0; i <ca.length; i++) {
-            var c = ca[i];
+        for(var i = 0; i < ca.length; i++) {
+            var c = ca^[i^];
             while (c.charAt(0) == ' ') {
                 c = c.substring(1);
             }
@@ -24,7 +24,7 @@
     function linkify(inputText) {
         var replacedText, replacePattern1;
         //URLs starting with http://, https://, or ftp://
-        replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+        replacePattern1 = /(\b(https?|ftp):\/\/^[-A-Z0-9+&@#\/%?=~_|!:,.;^]*^[-A-Z0-9+&@#\/%=~_|^])/gim;
         replacedText = inputText.replace(replacePattern1, '<a class="chatlink" href="$1" target="_blank">$1</a>');
         return replacedText;
     }
@@ -32,34 +32,34 @@
 
     function replaceEmoticons(text) {
       var emoticons = {
-        ':LOL:'  : ['rofl.gif', ':D'],
-        ':lol:'  : ['rofl.gif', ':D'],
-        ':ЛОЛ:'  : ['rofl.gif', ':D'],
-        ':лол:'  : ['rofl.gif', ':D'],
-        ':-)'    : ['smile.gif', ':)'],
-        ':)'     : ['smile.gif', ':)'],
-        ':-D'    : ['lol.gif', ':D'],
-        ':D'     : ['lol.gif', ':D'],
-        ':-Д'    : ['lol.gif', ':D'],
-        ':Д'     : ['lol.gif', ':D'],
-        '&gt;:-(': ['angry.gif', '>:('],
-        '&gt;:(' : ['angry.gif', '>:('],
-        ':-('    : ["sad.gif", ':('],
-        ':('     : ["sad.gif", ':('],
-        ':`-('   : ['cry.gif', ':`('],
-        ':`('    : ['cry.gif', ':`('],
-        ':\'-('  : ['cry.gif', ':`('],
-        ':\'('   : ['cry.gif', ':`('],
-        ';-)'    : ['wink.gif', ';)'],
-        ';)'     : ['wink.gif', ';)'],
-        ':-P'    : ['tongue.gif', ':P'],
-        ':P'     : ['tongue.gif', ':P'],
-        ':-П'    : ['tongue.gif', ':P'],
-        ':П'     : ['tongue.gif', ':P']
+        ':LOL:'  : ^['rofl.gif', ':D'^],
+        ':lol:'  : ^['rofl.gif', ':D'^],
+        ':ЛОЛ:'  : ^['rofl.gif', ':D'^],
+        ':лол:'  : ^['rofl.gif', ':D'^],
+        ':-)'    : ^['smile.gif', ':)'^],
+        ':)'     : ^['smile.gif', ':)'^],
+        ':-D'    : ^['lol.gif', ':D'^],
+        ':D'     : ^['lol.gif', ':D'^],
+        ':-Д'    : ^['lol.gif', ':D'^],
+        ':Д'     : ^['lol.gif', ':D'^],
+        '&gt;:-(': ^['angry.gif', '>:('^],
+        '&gt;:(' : ^['angry.gif', '>:('^],
+        ':-('    : ^['sad.gif', ':(' ^],
+        ':('     : ^['sad.gif', ':(' ^],
+        ':`-('   : ^['cry.gif', ':`('^],
+        ':`('    : ^['cry.gif', ':`('^],
+        ':\'-('  : ^['cry.gif', ':`('^],
+        ':\'('   : ^['cry.gif', ':`('^],
+        ';-)'    : ^['wink.gif', ';)'^],
+        ';)'     : ^['wink.gif', ';)'^],
+        ':-P'    : ^['tongue.gif', ':P'^],
+        ':P'     : ^['tongue.gif', ':P'^],
+        ':-П'    : ^['tongue.gif', ':P'^],
+        ':П'     : ^['tongue.gif', ':P'^]
       };
       var url = "[special:skin]/_images/chatemoticons/";
-      var patterns = [];
-      var metachars = /[[\]{}()*+?.\\|^$\-,&#\s]/g;
+      var patterns = ^[^];
+      var metachars = /^[^[\^]{}()*+?.\\|^$\-,&#\s^]/g;
 
       // build a regex pattern for each defined property
       for (var i in emoticons) {
@@ -70,8 +70,8 @@
 
       // build the regular expression and replace
       return text.replace(new RegExp(patterns.join('|'),'g'), function (match) {
-//ONLY THE TEXT:  return typeof emoticons[match] != 'undefined' ? '<span class="emo">'+emoticons[match][1]+'</span>' : match;
-        return typeof emoticons[match] != 'undefined' ? '<img class="emo" style="width: 2ch; height: 1.2em;" src="'+url+emoticons[match][0]+'" alt="'+emoticons[match][1]+'">' : match;
+//ONLY THE TEXT:  return typeof emoticons^[match^] != 'undefined' ? '<span class="emo">'+emoticons^[match^]^[1^]+'</span>' : match;
+        return typeof emoticons^[match^] != 'undefined' ? '<img class="emo" style="width: 2ch; height: 1.2em;" src="'+url+emoticons^[match^]^[0^]+'" alt="'+emoticons^[match^]^[1^]+'">' : match;
       });
     }
 
@@ -212,7 +212,7 @@
       var all = document.createDocumentFragment();
 
       for (var i = 0; i < msgset.msgs.length; i++) {
-        var msg = msgset.msgs[i];
+        var msg = msgset.msgs^[i^];
 
         if ( ! document.getElementById("chat" + msg.id) ) {
           var date = new Date(msg.time*1000);
@@ -296,7 +296,7 @@
       }
 
       for (var i = 0; i < msgset.users.length; i++) {
-        var p = user_node(msgset.users[i]);
+        var p = user_node(msgset.users^[i^]);
         sys_log.appendChild(p);
       }
       ScrollBottom(false);

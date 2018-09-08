@@ -15,7 +15,7 @@
       </div>
     </div>
     <article>
-      [minimag:[Content]]
+      [html:[minimag:[Content]]]
     </article>
   </div>
 </div>

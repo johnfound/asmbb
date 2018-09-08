@@ -6,7 +6,7 @@
   <div class="user_desc">
     <img class="profile_avatar" src="/!avatar/[username]?v=[AVer]" alt="(ツ)">
     <h1>[username]</h1>
-    [minimag:[user_desc]]
+    [html:[minimag:[user_desc]]]
   </div>
   <div class="user_stat">
     <h1>Statistics for [username]:</h1>

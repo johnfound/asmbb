@@ -9,11 +9,11 @@
   </div>
     <div class="post_text" style="margin:0px;">
       <article>
-        [minimag:[source]]
+        [html:[minimag:[source]]]
         <div class="attachments">
           [attachments:[id]]
         </div>
       </article>
     </div>
   </div>
-</div>
+</div>  `A
