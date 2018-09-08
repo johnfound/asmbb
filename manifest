@@ -1,5 +1,5 @@
-C Fixed\sthe\susername\sdisplay\swhen\spost\sis\sedited\sby\sother\suser\s(admin\sor\smoderator).
-D 2018-09-08T11:43:19.473
+C Official\ssource\scode\srelease\sv2.4
+D 2018-09-08T16:00:51.030
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -83,7 +83,7 @@ F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
 F source/userslist.asm ba5c967f5321b88703e3457e039884399c3fe5d8
 F source/userslist.sql a671e06a5beecc94edd3bb87cf0a4357b2554686
 F source/util.sql 9b7d8d9b0a6655a7abf427158c8368cfcf20d249
-F source/version.asm 1cc9c9060d19cee02ce39fd5a064e412c43e071d
+F source/version.asm 5429dfb0ca6d328d47bf95435903f1b961358c17
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
 F www/images/chat_menu.svg d8485817c3e745dcb8b981bb80d264f18365e377
@@ -673,7 +673,8 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P ac93357955b61e7b4ab803023ef50aeba08f498d
-R 8adf988745e19de04c8492b5f87b3241
+P b42b2af00a4c1f7dc77a6f7b7beb1484302d000d
+R d7c1d30c3a4eaab95f78071dffa73a17
+T +sym-v2.4 *
 U johnfound
-Z 28ecd634fbce1b439738c46c0faa4482
+Z e3715832c6b7864a0f5aab122866267b
