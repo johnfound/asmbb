@@ -1,13 +1,13 @@
-C Official\sbinary\srelease\sv2.4
-D 2018-09-08T16:21:20.336
+C Fixed\sbug\sin\sthe\sposting\strigger.\sBinary\spackage\supdated.
+D 2018-09-08T20:45:43.196
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
-F install/asmbb.tar.gz 10f8fdc8d5739e46cfa31a43ebabc066d4ee3283
+F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
 F install/create_release.sh 396f452f7c1af50c844fbd0f37a37d58e8bc662d x
 F install/exclude.txt 7678178e332c0c4a1a7d1ac8705ae6e2e2e57e74
 F install/install.txt 64615f21455976e432bda238c6d4282fc561e340
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
-F install/unpack.tar.gz 04453027c232a25821744b7f511c6398deb56aa9
+F install/unpack.tar.gz ca127574274548568bb883d0443d7db9bbb127ba
 F install/unpack/.htaccess efa046601aad51a87da0946b4eecadcc0d234c15
 F install/unpack/unpack.sh 4443f580fe76faffa7015e6e4b73b22f6290f4a0 x
 F musl_sqlite/README 46ab7567ba9efea4d58e5d8e8c01610155a78c02
@@ -29,7 +29,7 @@ F source/categories.sql b1fa5a2cca7204372b3ca3714edbbc669103b1cf
 F source/chat.asm c0469c0067c6361d0894e18d9f32e01562a3c94c
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm 30e3793226739b4f5e7c2dfcd6bb780617d2c3be
-F source/create.sql 5df901925ce0cc79bd503f2c20d038d93acddfdc
+F source/create.sql 9ed3273f2746b1b964aa11fcdd6e8b55e6eac457
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 04775fbeca072097de1aedd6a5a4885fb0305499
 F source/engine.asm 64f4523c4101f418570ac817c8806f517d895cc0
@@ -673,8 +673,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P abcae803d481411d5021074b2bfb93f0312c1839
-R a8832995a741198fc715e3f858fa243d
-T +sym-v2.4 *
+P 3da390ce637739d09a16329cb5f13b39b94da3ff
+R fbec23e53484099848953bc528aca46c
 U johnfound
-Z 3675a7aae1b0cff3bf3c3280bb3a1135
+Z 56c7ad23f70315ade06879db9db420a4

@@ -195,7 +195,7 @@ CREATE TRIGGER PostsAI AFTER INSERT ON Posts BEGIN
     (select group_concat(TT.Tag, ", ") from ThreadTags TT where TT.threadID = new.threadid)
   );
   insert into PostCNT(postid,count) VALUES (new.id, 0);
-  insert into ThreadPosters(firstPost, threadID, userID) values (new.id, new.threadID, new.userID);
+  insert or ignore into ThreadPosters(firstPost, threadID, userID) values (new.id, new.threadID, new.userID);
   update Users set PostCount = PostCount + 1 where Users.id = new.UserID;
 END;
 
