@@ -1,5 +1,5 @@
-C The\sremplate\srender\ssupport\sfor\sescaping\sspecial\scharacters.\sThe\sHTML\sencoding\sis\snow\scontrolled\sonly\sby\sthe\s[html:]\scommand.\sThe\stemplates\sfixed\saccording\sto\sthese\schanges.
-D 2018-09-08T07:45:24.556
+C Removed\sa\slapse\sin\sthe\stemplate.
+D 2018-09-08T10:40:01.676
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 900ba87cbbe6ab990e5c25accfbd8b71c686f19a
@@ -570,7 +570,7 @@ F www/templates/Wasp/post_view.tpl ce6ea96073b6f16df064c4e60aa61cc8d9b86561
 F www/templates/Wasp/posteditor.less ca7bc69c7343690776ccc50c9b95f3864efe29c0
 F www/templates/Wasp/postnew.less baa6d6d872f7d4bd97a4283a84194b38e044a796
 F www/templates/Wasp/posts.less c3fa199066d35ee15841424178da87dbb794719f
-F www/templates/Wasp/preview.tpl bd1daa44276885c3fdc8472f7f286f9daee3f82a
+F www/templates/Wasp/preview.tpl de76de988e74d0e3215c7d8314b7dc09f356c418
 F www/templates/Wasp/restore_confirm.tpl c101e4ccda03878c89c22aa70b96db20c33ce063
 F www/templates/Wasp/search.less 17bfdc636da1019916443febbb2073b791ed79d1
 F www/templates/Wasp/search_result.tpl 6c5a46b179308b9b7b4f272c7f543fa8f526dd36
@@ -673,7 +673,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 206ae9d070780f43d32df50a67d0812da17fbe76
-R e35064ee4494b68f8c94209cb6e97e42
+P a1c41ff31fda9674cc76c1180df9befb372df1a9
+R 3b60f88278b9d4200dbf9fae12389b89
 U johnfound
-Z 4334db67585ef45d6f0a717d07b86587
+Z 9544701f452539f39432da9aef0ee2f3
