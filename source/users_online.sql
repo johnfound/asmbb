@@ -1,19 +1,19 @@
 select
 
-  (select nick from Users where id = UL.userID) as nick,
-  UL.Activity,
-  UL.Param,
-  strftime('%H:%M:%S', UL.Time, 'unixepoch') as Time,
+  (select nick from Users where id = userID) as nick,
+  Activity,
+  Param,
+  strftime('%H:%M:%S', max(time), 'unixepoch') as Time,
   remoteIP,
   Client
 
 from
 
-  UserLog UL
+  UserLog
 
 where
 
-  UL.time > strftime('%s', 'now')-300
+  time > strftime('%s', 'now')-300
 
 group by userid, remoteIP, Client
-order by rowid desc;
+order by time desc;

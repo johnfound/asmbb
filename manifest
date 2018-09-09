@@ -1,5 +1,5 @@
-C Fixed\sbug\sin\sthe\sposting\strigger.\sBinary\spackage\supdated.
-D 2018-09-08T20:45:43.196
+C Fixed\sminor\sbug\sin\sthe\susers\sonline\ssql\squery.
+D 2018-09-09T07:47:58.854
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -79,7 +79,7 @@ F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
 F source/userinfo.asm aa28e5a0ce21e65d57b3fa332e3c6b295e6d9b55
 F source/userinfo.sql 2651e8dcd44fa0024120db10c781b6d246cc8872
 F source/users_online.asm fbcb75d5e0ed20a45fbef96b1840446b080b1e3b
-F source/users_online.sql 31e918eeeb2d75704dddf625d422c12bd39aa055
+F source/users_online.sql 419ecd742f570ce4c34354c917d9dc06d33115a0
 F source/userslist.asm ba5c967f5321b88703e3457e039884399c3fe5d8
 F source/userslist.sql a671e06a5beecc94edd3bb87cf0a4357b2554686
 F source/util.sql 9b7d8d9b0a6655a7abf427158c8368cfcf20d249
@@ -673,7 +673,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 3da390ce637739d09a16329cb5f13b39b94da3ff
-R fbec23e53484099848953bc528aca46c
+P 2cf7a5caaef6efbe6f7c950c0baab43696ae476c
+R e0c7b9679112d64417ee777c0b69f81f
 U johnfound
-Z 56c7ad23f70315ade06879db9db420a4
+Z 58318f65310f5a70b35ecb621308bdce
