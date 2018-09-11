@@ -151,6 +151,7 @@ if used RenderTemplate
               "canupload",   RenderTemplate.sp_canupload,             \ ; 1/0 no encoding
               "referer",     RenderTemplate.sp_referer,               \ ; 1/0 no encoding
               "alltags",     RenderTemplate.sp_alltags,               \ ; HTML no encoding
+              "allusers",    RenderTemplate.sp_allusers,              \
               "setupmode",   RenderTemplate.sp_setupmode,             \ ; no encoding
               "search",      RenderTemplate.sp_search,                \ ; Needs encoding!
               "order",       RenderTemplate.sp_sort,                  \ ; Needs encoding!
@@ -1497,6 +1498,9 @@ endl
         stdcall GetAllTags, [.pSpecial]
         jmp     .special_ttext
 
+.sp_allusers:
+        stdcall GetAllUsers
+        jmp     .special_ttext
 
 .sp_stats:
         stdcall Statistics, [.pSpecial]
@@ -1705,6 +1709,39 @@ endp
 
 
 
+sqlGetAllUsers text "select nick from Users"
+proc GetAllUsers
+.stmt dd ?
+begin
+        pushad
+
+        stdcall TextCreate, sizeof.TText
+        mov     ebx, eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetAllUsers, sqlGetAllUsers.length, eax, 0
+
+.loop:
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .finish
+
+        cinvoke sqliteColumnText, [.stmt], 0
+
+        stdcall TextCat, ebx, txt '<option value="'
+        stdcall TextCat, edx, eax
+        stdcall TextCat, edx, txt '">'
+        mov     ebx, edx
+        jmp     .loop
+
+.finish:
+        cinvoke sqliteFinalize, [.stmt]
+        mov     [esp+4*regEAX], ebx
+        popad
+        return
+endp
+
+
 ;sqlGetMaxTagUsed text "select max(cnt) from (select count(*) as cnt from ThreadTags group by tag)"
 ;sqlGetAllTags    text "select TT.tag, count(TT.tag) as cnt, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag group by TT.tag order by TT.tag"
 sqlGetMaxTagUsed text "select max(cnt) from (select (select count() from ThreadTags TT where TT.tag = T.tag) as cnt from tags T where importance > -1)"
@@ -1831,7 +1868,6 @@ begin
         popad
         return
 endp
-
 
 
 

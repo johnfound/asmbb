@@ -1,5 +1,5 @@
-C Fixed\sminor\sbug\sin\sthe\susers\sonline\ssql\squery.
-D 2018-09-09T07:47:58.854
+C Two\sways\sto\sget\sthe\slist\sof\sall\susers\sfor\sautocomplete\sfor\sexample:\s"[special:allusers]"\sin\sthe\stemplate\swill\screate\sa\slist\sof\s<option>\stags\sfor\suse\swith\s<datalist>;\nA\srequest\sto\s/!usersmatch/STR\swill\sreturn\sJSON\sarray\swith\sall\susers\smatching\s"STR%"\slike\spattern.\sThis\svariant\sis\smuch\sbetter\swhen\stalking\sabout\s\nforum\swith\shuge\snumber\sof\susers\sregistered.
+D 2018-09-11T09:14:07.639
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -28,7 +28,7 @@ F source/categories.asm 87830583d32bdf406d7a0a0615cff0b23fda9283
 F source/categories.sql b1fa5a2cca7204372b3ca3714edbbc669103b1cf
 F source/chat.asm c0469c0067c6361d0894e18d9f32e01562a3c94c
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
-F source/commands.asm 30e3793226739b4f5e7c2dfcd6bb780617d2c3be
+F source/commands.asm 02f8782dbdde0a589e11115f9158d85dbcd5e510
 F source/create.sql 9ed3273f2746b1b964aa11fcdd6e8b55e6eac457
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 04775fbeca072097de1aedd6a5a4885fb0305499
@@ -52,7 +52,7 @@ F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql c15286f32455df88ebd14168a10195e0c098545d
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
-F source/render2.asm 87a8c62e2159ff6196a37009f83e73c8116f33a8
+F source/render2.asm c2d57f8e464c1972097a9fe18b3afade9ff1d2d5
 F source/restore.sql 14a8f13466ced19e05502d41ffcfddeecbc6954b
 F source/search.asm 4a2bfd137375606dc7a0da5d8f7ebc242a6ec6ac
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -80,7 +80,7 @@ F source/userinfo.asm aa28e5a0ce21e65d57b3fa332e3c6b295e6d9b55
 F source/userinfo.sql 2651e8dcd44fa0024120db10c781b6d246cc8872
 F source/users_online.asm fbcb75d5e0ed20a45fbef96b1840446b080b1e3b
 F source/users_online.sql 419ecd742f570ce4c34354c917d9dc06d33115a0
-F source/userslist.asm ba5c967f5321b88703e3457e039884399c3fe5d8
+F source/userslist.asm 30beec0e73179267ac80c34e8925703dc3cff655
 F source/userslist.sql a671e06a5beecc94edd3bb87cf0a4357b2554686
 F source/util.sql 9b7d8d9b0a6655a7abf427158c8368cfcf20d249
 F source/version.asm 5429dfb0ca6d328d47bf95435903f1b961358c17
@@ -673,7 +673,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 2cf7a5caaef6efbe6f7c950c0baab43696ae476c
-R e0c7b9679112d64417ee777c0b69f81f
+P 23cbed64993421e8cdb4fd8d7b14c3ea73e1df52
+R 094bba1e149808e4f94c65cb9ce20106
 U johnfound
-Z 58318f65310f5a70b35ecb621308bdce
+Z 891a490ed7ce745b056fda7ef78d883b

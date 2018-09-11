@@ -139,3 +139,70 @@ begin
         popad
         return
 endp
+
+
+
+sqlUsersMatch text "select nick from users where nick like ?1 order by nick limit 100"
+
+proc UsersMatch, .pSpecial
+.stmt dd ?
+begin
+        pushad
+
+        mov     esi, [.pSpecial]
+
+        stdcall StrNew
+        mov     ebx, eax
+
+        stdcall TextCreate, sizeof.TText
+        stdcall TextCat, eax, cHeadersJSON
+        stdcall TextCat, edx, txt '['
+        mov     edi, edx
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUsersMatch, sqlUsersMatch.length, eax, 0
+
+        mov     esi, [esi+TSpecialParams.cmd_list]
+        cmp     [esi+TArray.count], 0
+        je      .cmd_ok
+
+        stdcall StrCat, ebx, [esi+TArray.array]
+
+.cmd_ok:
+        stdcall StrCat, ebx, txt "%"
+        stdcall StrPtr, ebx
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+; the first row
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .finish
+
+        cinvoke sqliteColumnText, [.stmt], 0
+        stdcall TextCat, edi, txt '"'
+        stdcall TextCat, edx, eax
+        stdcall TextCat, edx, txt '"'
+        mov     edi, edx
+
+.loop:
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .finish
+
+        cinvoke sqliteColumnText, [.stmt], 0
+
+        stdcall TextCat, edi, txt ', "'
+        stdcall TextCat, edx, eax
+        stdcall TextCat, edx, txt '"'
+        mov     edi, edx
+        jmp     .loop
+
+.finish:
+        cinvoke sqliteFinalize, [.stmt]
+        stdcall StrDel, ebx
+        stdcall TextCat, edi, txt ']'
+        mov     [esp+4*regEAX], edx
+        stc
+        popad
+        return
+endp
