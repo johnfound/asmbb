@@ -5,7 +5,7 @@ LIMIT_TAG_DESCRIPTION = 1024
 cNewPostForm   text "form_new_post.tpl"
 cNewThreadForm text "form_new_thread.tpl"
 
-sqlSelectConst text "select ?1 as slug, ?2 as caption, ?3 as source, ?4 as ticket, ?5 as tags, ?6 as limited, ?7 as invited"
+sqlSelectConst text "select ?1 as slug, ?2 as caption, ?3 as source, ?4 as ticket, ?5 as tags, ?6 as limited, ?7 as invited, ?8 as UserName"
 
 sqlGetQuote   text "select U.nick, P.content from Posts P left join Users U on U.id = P.userID where P.id = ?"
 
@@ -265,6 +265,14 @@ begin
 
 .invited_ok:
 
+        stdcall StrPtr, [esi+TSpecialParams.userName]
+        test    eax, eax
+        jz      .username_ok
+
+        cinvoke sqliteBindText, [.stmt], 8, eax, [eax+string.len], SQLITE_STATIC
+
+.username_ok:
+
         cinvoke sqliteStep, [.stmt]
 
         mov     ecx, cNewThreadForm
@@ -333,6 +341,8 @@ begin
 
 .new_thread:
 
+        DebugMsg "Create new thread"
+
         stdcall StrSlugify, [.caption]
         mov     [.slug], eax
 
@@ -365,7 +375,6 @@ begin
         stdcall StrCat, [.slug], eax
         stdcall StrDel, eax
 
-
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetThreadSlug, sqlSetThreadSlug.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 2, [.threadID]
@@ -379,14 +388,20 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
+        DebugMsg "Thread is created. Write the tags"
+
 ; here process the tags
 
         stdcall SaveThreadTags, [.tags], [esi+TSpecialParams.dir], [.threadID]
+
+        DebugMsg "Thread is created. Write invited."
 
 ; Process invited users for the limited access thread:
         stdcall SaveInvited, [.fLimited], [.invited], [esi+TSpecialParams.userName], [.threadID]
 
 .post_in_thread:
+
+        DebugMsg "Post in this thread."
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, sqlGetThreadInfo.length, eax, 0
@@ -606,17 +621,13 @@ begin
 
         mov     ebx, [esi+TArray.count] ; the count can be max 4
         test    ebx, ebx
-        jz      .finish_tags
+        jz      .finish_list
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertTags, sqlInsertTags.length, eax, 0
-        test    eax, eax
-        jnz     .finish_tags
 
         lea     eax, [.stmt2]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertThreadTags, sqlInsertThreadTags.length, eax, 0
-        test    eax, eax
-        jnz     .finish_tags
 
         cinvoke sqliteBindInt,  [.stmt2], 2, [.threadID]
 
@@ -667,11 +678,12 @@ begin
 
 .finish_tags:
 
-        stdcall ListFree, esi, StrDel
-
-.finalize:
         cinvoke sqliteFinalize, [.stmt]
         cinvoke sqliteFinalize, [.stmt2]
+
+.finish_list:
+
+        stdcall ListFree, esi, StrDel
 
 .finish:
         popad

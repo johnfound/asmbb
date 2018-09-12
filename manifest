@@ -1,5 +1,5 @@
-C AJAX\sfunctions\sand\stemplates\sfor\sautocomplete\sof\sthe\sinvited\sand\stag\sfields\sof\sthe\snew\sthread\sand\sedit\sthread\sdialogs.
-D 2018-09-12T12:38:46.523
+C Fixed\sbug\son\sposting\snew\sthreads\swith\sno\stags\sattached.
+D 2018-09-12T15:55:45.365
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -46,7 +46,7 @@ F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
 F source/migration1.sql fe97ef3b5046a916f0215336a8a56ea4c8a3b98a
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
-F source/post.asm b1b2669c01130cd39c81685c900dd34de749eba6
+F source/post.asm 64e9bbf9e576a156263853f5598cd03d225f9c3d
 F source/post_data.asm 3ca626cfd4fe38680bfe5a61115edfc7f14bd70d
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql c15286f32455df88ebd14168a10195e0c098545d
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 090fca3512629f545bbd46fdd0664a3d8bac1915
-R f6d72b80b09b91b5345e8c60be25c801
+P 1d519cc20cd8eb60a21c2d0a42b981abeb3f76aa
+R 642e52f83e08accdcb0720a05afedeef
 U johnfound
-Z f8eaf3abbbdcf6ce6ed218d83f7e640f
+Z 16e7b139eb00a73a01b6b2d1e95d01ea
