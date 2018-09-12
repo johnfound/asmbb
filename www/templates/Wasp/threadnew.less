@@ -40,3 +40,30 @@ div.new_editor {
 #limited:checked ~ #users_invited {
   display: block;
 }
+
+#autocomplete {
+  display: none;
+  position: absolute;
+  background-color: @clDarkBG;
+  border: @borderEdit;
+  color: @clDarkFG;
+  padding: 4px;
+  margin: 0;
+  overflow: auto;
+  max-height: 20 * @LineH;
+  li {
+    list-style: none;
+    cursor: pointer;
+    &:focus {
+      background-color: @clCurrentTagBG;
+      color: @clCurrentTagFG;
+      outline: none;
+    }
+  }
+}
+
+#__ruler {
+  visibility: hidden;
+  position: absolute;
+  white-space: nowrap;
+}

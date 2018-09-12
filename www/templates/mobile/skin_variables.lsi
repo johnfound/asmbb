@@ -1,6 +1,7 @@
 @globWidth: 100%;
 @globMaxWidth: none;
 @globMargin: 8px auto 8px auto;
+@LineH: 1.1875em;
 
 @msgBoxWidth: 100%;
 

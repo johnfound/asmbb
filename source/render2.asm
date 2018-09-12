@@ -151,7 +151,7 @@ if used RenderTemplate
               "canupload",   RenderTemplate.sp_canupload,             \ ; 1/0 no encoding
               "referer",     RenderTemplate.sp_referer,               \ ; 1/0 no encoding
               "alltags",     RenderTemplate.sp_alltags,               \ ; HTML no encoding
-              "allusers",    RenderTemplate.sp_allusers,              \
+              "allusers",    RenderTemplate.sp_allusers,              \ ; returns JSON array.
               "setupmode",   RenderTemplate.sp_setupmode,             \ ; no encoding
               "search",      RenderTemplate.sp_search,                \ ; Needs encoding!
               "order",       RenderTemplate.sp_sort,                  \ ; Needs encoding!

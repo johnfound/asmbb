@@ -89,6 +89,7 @@ PList tablePreCommands, tpl_func,                  \
       "!debuginfo",       DebugInfo,               \    ; optional, depending on the options.DebugSQLite
       "!users",           UsersList,               \
       "!usersmatch",      UsersMatch,              \
+      "!tagmatch",        TagsMatch,               \
       "!skincookie",      SkinCookie,              \
       "!categories",      Categories
 end if

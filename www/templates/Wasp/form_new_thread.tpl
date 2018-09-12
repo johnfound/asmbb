@@ -14,12 +14,12 @@
         <input type="edit" value="[caption]" placeholder="Thread title" name="title" autofocus>
       </div><div class="edit_groupR">
         <p>Tags: <span class="small">(max 3, comma delimited, no spaces)</span> [case:[special:dir]| |+ "[special:dir]"]</p>
-        <input type="edit" value="[tags]" name="tags" placeholder="some tags here">
+        <input type="edit" value="[tags]" name="tags" id="tags" placeholder="some tags here" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
       </div>
       <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]><label for="limited">Limited access thread</label>
       <div id="users_invited">
         <p>Invited users (comma separated list):</p>
-        <input id="invited" type="edit" value="[invited]" name="invited">
+        <input id="invited" type="edit" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
       </div>
       <p>Post content:</p>
       [include:edit_toolbar.tpl]
@@ -28,7 +28,7 @@
       <div class="attachments">
         [attach_edit:[id]]
       </div>
-    <div class="panel">
+      <div class="panel">
         <input type="submit" name="preview" value="Preview" >
         <input type="submit" name="submit" value="Submit" >
         <input type="hidden" name="ticket" value="[Ticket]" >
@@ -36,4 +36,5 @@
       </div>
     </form>
   </div>
-</div>
+
+[include:autocomplete.js]
