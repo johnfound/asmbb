@@ -20,7 +20,7 @@ div.new_editor label {
 }
 */
 
-input.title, input.tags {
+input.title, #tagsedit {
   display: block;
   width: 100%;
   padding: 0 1ch;
@@ -41,3 +41,30 @@ input.title, input.tags {
   display: block;
 }
 
+#autocomplete {
+  display: none;
+  position: absolute;
+  background-color: @clBackground;
+  color: @clText;
+  padding: 0;
+  margin: 0;
+  overflow: auto;
+  max-height: 20 * @LineH;
+  li {
+    list-style: none;
+    cursor: pointer;
+    padding: 0 1ch;
+    white-space: nowrap;
+    &:focus {
+      background-color: @clFTagBG;
+      color: @clFTagFG;
+      outline: none;
+    }
+  }
+}
+
+#__ruler {
+  visibility: hidden;
+  position: absolute;
+  white-space: nowrap;
+}

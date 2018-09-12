@@ -34,10 +34,11 @@ function Complete(nm, inpid) {
 
 function ShowAutocomplete(users, inp) {
   var list = document.getElementById('autocomplete');
+  var rect = inp.getBoundingClientRect();
 
   list.parentEditor = inp;
-  list.style.left = ( inp.offsetLeft + VisibleWidth(inp.value)) + "px";
-  list.style.top = (inp.offsetTop + inp.offsetHeight) + "px";
+  list.style.left = ( rect.left + VisibleWidth(inp.value) + document.documentElement.scrollLeft) + "px";
+  list.style.top = ( rect.top + inp.offsetHeight + document.documentElement.scrollTop ) + "px";
 //  list.style.width = (list.offsetWidth + 32) + "px";  // something is wrong here!
 
   var ul = JSON.parse(users);
@@ -63,9 +64,9 @@ function ShowAutocomplete(users, inp) {
 function InputChanged(inp) {
   var list = SplitAndTrim(inp);
   var last = list^[list.length-1^];
-  if (last !== "" && cache^[inp.id^] && cache^[inp.id^]^[last^]) {
+  if (last !== "" && cache^[inp.id^] && cache^[inp.id^]^[last^])
     ShowAutocomplete(cache^[inp.id^]^[last^], inp);
-  } else if (last) {
+  else if (last) {
     var url = inp.attributes.getlist.value + last;
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url);
@@ -112,15 +113,15 @@ function ListKeyDown(e) {
 
   if (key == 40) {
 
-    if (src.nextSibling) src.nextSibling.focus()
-    else if (src.parentElement.parentEditor) src.parentElement.parentEditor.focus()
+    if (src.nextSibling) src.nextSibling.focus();
+    else if (src.parentElement.parentEditor) src.parentElement.parentEditor.focus();
          else src.parentElement.firstChild.focus();
     ignore = true;
 
   } else if (key == 38) {
 
-    if (src.previousSibling) src.previousSibling.focus()
-    else if (src.parentElement.parentEditor) src.parentElement.parentEditor.focus()
+    if (src.previousSibling) src.previousSibling.focus();
+    else if (src.parentElement.parentEditor) src.parentElement.parentEditor.focus();
          else src.parentElement.lastChild.focus();
     ignore = true;
 

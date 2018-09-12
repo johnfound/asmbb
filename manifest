@@ -1,5 +1,5 @@
-C Fixed\sbug\son\sposting\snew\sthreads\swith\sno\stags\sattached.
-D 2018-09-12T15:55:45.365
+C Autocomplete\sfor\sTerminal\sskin.
+D 2018-09-12T19:33:33.654
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -33,7 +33,7 @@ F source/create.sql 9ed3273f2746b1b964aa11fcdd6e8b55e6eac457
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 04775fbeca072097de1aedd6a5a4885fb0305499
 F source/engine.asm 64f4523c4101f418570ac817c8806f517d895cc0
-F source/engine.fpr da2536d7476fc4e8bea7ffd052427be090eaed57
+F source/engine.fpr b28e9fce280f0a9074533c50b370ec4e55eee4cd
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm c1dfb0297685352865a7bb7eacff90d173f3d919
@@ -395,7 +395,7 @@ F www/templates/Terminal/activity6.tpl b5c8a9fbc2efa2eac931ea024f5d78047618cfc5 
 F www/templates/Terminal/activity7.tpl 606eb1ee82da0767dd85e3d2ac63a07e9874a5fb l
 F www/templates/Terminal/activity8.tpl 36d833a0164bb74532e88161cff3d7c8d05cef52 l
 F www/templates/Terminal/activity9.tpl 60fe5018f101f822fa00434bff49db7a3f7da947 l
-F www/templates/Terminal/autocomplete.js df766975b9770663433b909129959c0038cbfb0e
+F www/templates/Terminal/autocomplete.js d450c2bf8ceb754676165e326a28787de288f112
 F www/templates/Terminal/chat.less a5e82887d923825739932f820bbd9bc8b1d0bb94
 F www/templates/Terminal/chat.tpl d7244c31d120e70c3fe776e9d595c09aa38b82d0
 F www/templates/Terminal/common.less 4754c8ddc65f586cb25f8ebf504ad0e08e6b2ccc
@@ -413,7 +413,7 @@ F www/templates/Terminal/form_edit_thread.tpl 9ba48416deb4498a8dcad61198289fb396
 F www/templates/Terminal/form_editinfo.tpl 91a3644fb4b1021bffa2356f7291f6e457eebe1e l
 F www/templates/Terminal/form_login.tpl 9469d81acf2f61039eca07cd347499ca9075bb32
 F www/templates/Terminal/form_new_post.tpl 4f553ae70cef20cfaac46e2f6b046bdaa200abe5
-F www/templates/Terminal/form_new_thread.tpl 525c723bbc071acf3bc0bfa78073822c2d1aa052
+F www/templates/Terminal/form_new_thread.tpl dde9c3d5a53210891acb037cb393c9f94e929d9b
 F www/templates/Terminal/form_post_debug.tpl 0a3e574bb2595001a5c1cebbd66c59aefd6aaab7 l
 F www/templates/Terminal/form_register.tpl 6e44ae46c9d0df170d76cb91b145bc2f3d60b7ea l
 F www/templates/Terminal/form_reset_password.tpl 90a83e1c6756ae652670b3470bbe6aac02972276 l
@@ -451,7 +451,7 @@ F www/templates/Terminal/sqlite.less 23129e00b0f96dd45869b9ea813a17258b750796
 F www/templates/Terminal/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
 F www/templates/Terminal/thread_info.tpl df79a23d105686fba9aef65db3948fc649ecc297
 F www/templates/Terminal/thread_list.less 283cce8e01075f834ea13f78effba38f979542f3
-F www/templates/Terminal/threadnew.less 3d20f5550c73f03dd93206a08cde50cf83815497
+F www/templates/Terminal/threadnew.less 0bbd21d1106044a2cc6c7e56de36864a0cb89f51
 F www/templates/Terminal/userinfo.less 808fb0a243f3b11304f95386d8f9be181c8738d5
 F www/templates/Terminal/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/Terminal/users_online.less 3a4a93014754dc41d86c07b672ad39a29f44e3a4
@@ -528,7 +528,7 @@ F www/templates/Wasp/activity6.tpl 588b1dde51b134d63d350f7d99c73f787c6dcbeb
 F www/templates/Wasp/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
 F www/templates/Wasp/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/Wasp/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
-F www/templates/Wasp/autocomplete.js df766975b9770663433b909129959c0038cbfb0e
+F www/templates/Wasp/autocomplete.js 579f2d7f549799fb8256412c4672b7126cd9e739
 F www/templates/Wasp/chat.less e57b611bba245767e3924f761c37393ee3bb53d2
 F www/templates/Wasp/chat.tpl 32d13cec3ff9bc2439ad4bd6b29867ca33f492b2
 F www/templates/Wasp/common.less 59bda5160b031b076279a8005dc44fea0b3242ea
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 1d519cc20cd8eb60a21c2d0a42b981abeb3f76aa
-R 642e52f83e08accdcb0720a05afedeef
+P b86f25b0b32c533693f7e247dc4bb0f3341b00b2
+R 12e3344830238a25da8364cc766ae198
 U johnfound
-Z 16e7b139eb00a73a01b6b2d1e95d01ea
+Z 51811022251e260e85c21236dc31d637
