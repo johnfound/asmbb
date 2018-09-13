@@ -27,4 +27,4 @@
   </form>
 </div>
 
-[include:autocomplete.js]
+[raw:autocomplete.js]

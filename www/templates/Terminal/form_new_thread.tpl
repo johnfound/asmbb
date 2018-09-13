@@ -59,4 +59,4 @@
   }
 </script>
 
-[include:autocomplete.js]
+[raw:autocomplete.js]

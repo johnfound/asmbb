@@ -110,6 +110,7 @@ local ..keynm, ..len, ..hash, ..char
 if used RenderTemplate
         PList tableRenderCmd, tpl_func,                         \
               'special:',     RenderTemplate.cmd_special,       \
+              'raw:',         RenderTemplate.cmd_raw,           \
               'include:',     RenderTemplate.cmd_include,       \
               'minimag:',     RenderTemplate.cmd_minimag,       \   ; HTML, no encoding.
               'html:',        RenderTemplate.cmd_html,          \   ; HTML, disables the encoding.
@@ -608,6 +609,17 @@ begin
 .cmd_include:
 ; here esi points to ":" of the "include:" command. edi points to the start "[" and ecx points to the end "]"
 
+        lea     eax, [edi-1]
+        push    eax
+        pushd   0
+        jmp     .cmd_incraw
+
+.cmd_raw:
+; here esi points to ":" of the "raw:" command. edi points to the start "[" and ecx points to the end "]"
+        push    ecx
+        pushd   -1
+
+.cmd_incraw:
         stdcall TextMoveGap, edx, ecx
         inc     [edx+TText.GapEnd]
 
@@ -615,7 +627,6 @@ begin
         mov     ebx, eax
 
         mov     [edx+TText.GapBegin], edi
-        lea     ecx, [edi-1]                    ; moves ecx at the start of the included template.
 
         mov     esi, [.pSpecial]
 
@@ -641,9 +652,13 @@ begin
         add     esi, edx
         stdcall FileRead, ebx, esi, eax
         add     [edx+TText.GapBegin], eax
+        and     [esp], eax
 
 .file_close:
         stdcall FileClose, ebx
+        pop     eax
+        pop     ecx             ; moves ecx at the start of the included template for "include" and does not change it on "raw".
+        add     ecx, eax        ; increment with the size of the included file if it was "raw" include.
         jmp     .loop
 
 

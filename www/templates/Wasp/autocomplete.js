@@ -8,7 +8,7 @@ var cache = {};
 function VisibleWidth(s) {
   var l = s.split(",");
   if (l.length > 0) l.length--;
-  for (var i = 0; i < l.length; i++) l^[i^] = l^[i^].trim();
+  for (var i = 0; i < l.length; i++) l[i] = l[i].trim();
 
   var r = document.getElementById("__ruler");
   r.innerHTML = l.join(', ');
@@ -17,7 +17,7 @@ function VisibleWidth(s) {
 
 function SplitAndTrim(inp) {
   var list = inp.value.split(",");
-  for (var i = 0; i < list.length; i++) list^[i^] = list^[i^].trim();
+  for (var i = 0; i < list.length; i++) list[i] = list[i].trim();
   return list;
 }
 
@@ -25,10 +25,10 @@ function SplitAndTrim(inp) {
 function Complete(nm, inpid) {
   var inp = document.getElementById(inpid);
   var list = SplitAndTrim(inp);
-  list^[list.length - 1^] = nm + ', ';
+  list[list.length - 1] = nm + ', ';
   inp.value = list.join(", ");
   inp.focus();
-  ShowAutocomplete("^[^]", inp);
+  ShowAutocomplete("[]", inp);
 }
 
 
@@ -49,10 +49,10 @@ function ShowAutocomplete(users, inp) {
   if (ul.length != 0) {
     for (var i = 0; i < ul.length; i++) {
       var li = document.createElement('li');
-      li.setAttribute('onclick', 'Complete("' + ul^[i^] + '", "' + inp.id + '");');
+      li.setAttribute('onclick', 'Complete("' + ul[i] + '", "' + inp.id + '");');
       li.setAttribute('onkeydown', 'ListKeyDown(event)');
       li.tabIndex = 0;
-      li.innerHTML = ul^[i^];
+      li.innerHTML = ul[i];
       list.appendChild(li);
     }
     list.style.display = "block";
@@ -62,22 +62,22 @@ function ShowAutocomplete(users, inp) {
 
 function InputChanged(inp) {
   var list = SplitAndTrim(inp);
-  var last = list^[list.length-1^];
-  if (last !== "" && cache^[inp.id^] && cache^[inp.id^]^[last^])
-    ShowAutocomplete(cache^[inp.id^]^[last^], inp);
+  var last = list[list.length-1];
+  if (last !== "" && cache[inp.id] && cache[inp.id][last])
+    ShowAutocomplete(cache[inp.id][last], inp);
   else if (last) {
     var url = inp.attributes.getlist.value + last;
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url);
     xhr.onload = function(net) {
       if (net.target.status == 200) {
-        if (! (inp.id in cache)) cache^[inp.id^] = {};
-        cache^[inp.id^]^[last^] = net.target.response;
-        ShowAutocomplete(cache^[inp.id^]^[last^], inp);
+        if (! (inp.id in cache)) cache[inp.id] = {};
+        cache[inp.id][last] = net.target.response;
+        ShowAutocomplete(cache[inp.id][last], inp);
       }
     };
     xhr.send();
-  } else ShowAutocomplete("^[^]", inp);
+  } else ShowAutocomplete("[]", inp);
 }
 
 
@@ -91,42 +91,62 @@ function OnKeyboard(inp) {
 
 function EditKeyDown(e, inp) {
   var list = document.getElementById('autocomplete');
+  var ignore = true;
+
   if (list.style.display === "block" ) {
     var key = e.which || e.keyCode;
-    if (key == 40) {  // down
-      list.firstChild.focus();
-      e.preventDefault();
-      return false;
-    } else if (key == 38) {
-      list.lastChild.focus();
-      e.preventDefault();
-      return false;
+    switch (key) {
+      case 40:
+        list.firstChild.focus();
+        break;
+      case 38:
+        list.lastChild.focus();
+        break;
+      case 13:
+        list.firstChild.click();
+        break
+      case 27:
+        list.style.display = "none";
+        break;
+      default:
+        ignore = false;
     }
+    if (ignore) e.preventDefault();
   }
 }
+
 
 function ListKeyDown(e) {
   var src = e.srcElement;
   var key = e.which || e.keyCode;
-  var ignore = false;
+  var ignore = true;
 
-  if (key == 40) {
+  console.log(key);
 
-    if (src.nextSibling) src.nextSibling.focus();
-    else if (src.parentElement.parentEditor) src.parentElement.parentEditor.focus();
-         else src.parentElement.firstChild.focus();
-    ignore = true;
+  switch (key) {
+    case 40:
+      if (src.nextSibling) src.nextSibling.focus();
+      else if (src.parentElement.parentEditor) src.parentElement.parentEditor.focus();
+           else src.parentElement.firstChild.focus();
+      break;
 
-  } else if (key == 38) {
+    case 38:
+      if (src.previousSibling) src.previousSibling.focus();
+      else if (src.parentElement.parentEditor) src.parentElement.parentEditor.focus();
+           else src.parentElement.lastChild.focus();
+      break;
 
-    if (src.previousSibling) src.previousSibling.focus();
-    else if (src.parentElement.parentEditor) src.parentElement.parentEditor.focus();
-         else src.parentElement.lastChild.focus();
-    ignore = true;
+    case 13:
+      src.click();
+      break;
 
-  } else if ( key == 13 || key == 32 ) {
-    src.click();
-    ignore = true;
+    case 27:
+      src.parentElement.style.display = "none";
+      src.parentElement.parentEditor.focus();
+      break;
+
+    default:
+      ignore = false;
   }
 
   if (ignore) e.preventDefault();
