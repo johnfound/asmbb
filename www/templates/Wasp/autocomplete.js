@@ -121,8 +121,6 @@ function ListKeyDown(e) {
   var key = e.which || e.keyCode;
   var ignore = true;
 
-  console.log(key);
-
   switch (key) {
     case 40:
       if (src.nextSibling) src.nextSibling.focus();

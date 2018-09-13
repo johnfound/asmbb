@@ -1,5 +1,5 @@
-C Implemented\s[raw:filename]\sinclude\scommand\sin\sthe\stemplate\srender.\sIt\sincludes\sa\sfile\swithout\sparsing\sit\safter\sthe\sinclude.\nUseful\sfor\sincluding\s.js\sfiles\swithout\sscanning\sneed\sfor\sescaping\ssymbols.\sBut\sthese\sfiles\scan't\scontain\sdatabase\sfields\sand\nrender\scommands,\sbecause\sthey\swill\snot\sbe\sreplaced\swith\svalues.
-D 2018-09-13T07:40:50.659
+C Removed\sconsole.log()\sfrom\sthe\s.js\sfile.
+D 2018-09-13T07:43:25.308
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -528,7 +528,7 @@ F www/templates/Wasp/activity6.tpl 588b1dde51b134d63d350f7d99c73f787c6dcbeb
 F www/templates/Wasp/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
 F www/templates/Wasp/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
 F www/templates/Wasp/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
-F www/templates/Wasp/autocomplete.js 917e90d94dd77e24adcc0ecae2c7b9039cf8a090
+F www/templates/Wasp/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
 F www/templates/Wasp/chat.less e57b611bba245767e3924f761c37393ee3bb53d2
 F www/templates/Wasp/chat.tpl 32d13cec3ff9bc2439ad4bd6b29867ca33f492b2
 F www/templates/Wasp/common.less 59bda5160b031b076279a8005dc44fea0b3242ea
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P bbd98fb2361d8d9399c36c8dacfad8923cb58796
-R 1f8b807fbc288cd29ee3084ef3a524d3
+P becb108e09a6332e64d24105a79a9ca9a58cd7c2
+R 1b5afcfa179c4b1d9a00c6d2a882ffa6
 U johnfound
-Z 7af07e7dc951e47bccb26edab2519dc3
+Z 4ce6187e3dcf7e4e8e4b5846019b52b6
