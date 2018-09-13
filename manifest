@@ -1,5 +1,5 @@
-C Removed\sconsole.log()\sfrom\sthe\s.js\sfile.
-D 2018-09-13T07:43:25.308
+C Experiments\swith\suser\sdefined\sfunctions\sin\sSQLite.\sSome\swill\sbe\svery\suseful\sfor\sencoding/decoding\sURL\sor\sHTML.
+D 2018-09-13T15:51:57.321
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -32,7 +32,7 @@ F source/commands.asm 320e1acd3a506066cf50eba4cb4cb1bbea97302b
 F source/create.sql 9ed3273f2746b1b964aa11fcdd6e8b55e6eac457
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 04775fbeca072097de1aedd6a5a4885fb0305499
-F source/engine.asm 64f4523c4101f418570ac817c8806f517d895cc0
+F source/engine.asm 800b7fc92233337f68fbf9868222b34d408162bb
 F source/engine.fpr b28e9fce280f0a9074533c50b370ec4e55eee4cd
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -61,7 +61,7 @@ F source/settings.asm 9a8764ade01648787f11d6dfbce4edd07414fb4e
 F source/settings.sql a288c4c62dec4c713f22542109589b010c2da1bf
 F source/showthread.asm 36f135088ddd34db24b6cf9c158f23b47f205cb4
 F source/showthread.sql 284a3060114cb7668fead7008f4ebaf9258f14d2
-F source/sqlite3.asm 8e27aa526542e4c8bac6b9e741b6e0698220933f
+F source/sqlite3.asm 36534ac36a540f2f941a8abbe633c82655dfeb12
 F source/sqlite_console.asm 4036ff078724d5f52ac9dacaf9cee9ec394f9e94
 F source/sse_service.asm 68a6bf1d96e6c2fb0b02d87a0c67d2387075ab01
 F source/statistics.asm 8574bead31291bdaf459a032659cb41bc34883d3
@@ -73,7 +73,7 @@ F source/text_constants.asm c736bdb4840fc1218bdea8ddbd2f573dbd69d2de
 F source/thread_attr.sql 96f479d9e4ab2a93221b81be1bbb8a8ba6e277f3
 F source/threadcount.sql 86f4cf8623b00ca9ed81d648eb95ab8f77d544f3
 F source/threadlist.asm 7100f2160b33b2382b6dd5a050df1291d2527019
-F source/threadlist.sql fddfead72e6e4a5ff8b59d52976ccae441f046c8
+F source/threadlist.sql 615d9514148a909b1459e0db37aeee6e58ca21c4
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
 F source/userinfo.asm aa28e5a0ce21e65d57b3fa332e3c6b295e6d9b55
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P becb108e09a6332e64d24105a79a9ca9a58cd7c2
-R 1b5afcfa179c4b1d9a00c6d2a882ffa6
+P cbb01864793d8896a4fe89cf4e30baf5cd9c348d
+R aea828df1b3f1c3c27d91c394898e6b0
 U johnfound
-Z 4ce6187e3dcf7e4e8e4b5846019b52b6
+Z b788d58e3a8397010c29e20afdd42319

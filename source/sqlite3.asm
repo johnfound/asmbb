@@ -54,3 +54,32 @@ begin
         pop     ebx esi edi
         return
 endp
+
+
+proc SQliteRegisterFunctions, .ptrDatabase
+begin
+        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "url_encode", 1, SQLITE_UTF8, 0, sqliteURLEncode, 0, 0, 0
+        return
+endp
+
+
+
+proc sqliteURLEncode, .context, .num, .pValue
+begin
+        pushad
+
+;        DebugMsg "SQLITE USER DEFINED FUNCTION"
+
+        mov     esi, [.pValue]
+        cinvoke sqliteValueText, [esi]
+
+        stdcall StrURLEncode, eax
+        push    eax
+
+        stdcall StrPtr, eax
+        cinvoke sqliteResultText, [.context], eax, [eax+string.len], SQLITE_TRANSIENT
+        stdcall StrDel ; from the stack
+
+        popad
+        cret
+endp

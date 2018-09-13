@@ -126,6 +126,8 @@ start:
         stdcall OpenOrCreate, cDatabaseFilename, hMainDatabase, sqlCreateDB
         jc      .finish
 
+        stdcall SQliteRegisterFunctions, [hMainDatabase]
+
         cinvoke sqliteBusyTimeout, [hMainDatabase], 5000
         cinvoke sqliteExec, [hMainDatabase], "PRAGMA journal_mode = WAL", 0, 0, 0
         cinvoke sqliteExec, [hMainDatabase], "PRAGMA foreign_keys = TRUE", 0, 0, 0
