@@ -64,27 +64,31 @@ div.threads_list {
 }
 
 
-div.thread_tags {
+ul.thread_tags {
   flex-basis: 0;
   flex-grow: 1;
   flex-shrink: 1;
   font-size: 80%;
   text-align: right;
+  margin: 0;
 
-  a {
+  li {
     display: inline-block;
-    background-color: @clButtonBG;
     color: @clButtonFG;
-    text-decoration: none;
+    background-color: @clButtonBG;
     padding: 2px 4px;
     margin: 0 4px 2px 0;
     border-radius: 8px 0px 0px 8px;
     max-width: 100px;
     text-overflow: ellipsis;
     overflow: hidden;
+    a {
+      color: @clButtonFG;
+      text-decoration: none;
+    }
   }
 
-  a:hover {
+  li:hover {
     background-color: @clButtonActiveBG;
   }
 }

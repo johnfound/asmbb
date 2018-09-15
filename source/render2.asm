@@ -1760,6 +1760,7 @@ endp
 ;sqlGetMaxTagUsed text "select max(cnt) from (select count(*) as cnt from ThreadTags group by tag)"
 ;sqlGetAllTags    text "select TT.tag, count(TT.tag) as cnt, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag group by TT.tag order by TT.tag"
 sqlGetMaxTagUsed text "select max(cnt) from (select (select count() from ThreadTags TT where TT.tag = T.tag) as cnt from tags T where importance > -1)"
+
 ;sqlGetAllTags    text "select TT.tag, count(TT.tag) as cnt, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag where T.Importance >= 0 group by TT.tag order by TT.tag"
 sqlGetAllTags    text "select T.Tag, (select count() from threadtags where Tag = T.tag) as cnt, T.Description from Tags T where T.Importance > -1 order by T.Tag"
 
@@ -2272,7 +2273,7 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .end_thread_tags
 
-        stdcall StrCat, ebx, txt '<a '
+        stdcall StrCat, ebx, txt '<li><a '
 
         cinvoke sqliteColumnText, [.stmt], 1
         test    eax, eax
@@ -2295,7 +2296,7 @@ begin
         stdcall StrCat, ebx, eax
         stdcall StrCat, ebx, txt '/">'
         stdcall StrCat, ebx, eax
-        stdcall StrCat, ebx, txt '</a>'
+        stdcall StrCat, ebx, txt '</a></li>'
         stdcall StrDel, eax
 
         jmp     .thread_tag_loop

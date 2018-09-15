@@ -32,7 +32,7 @@ h1.thread_caption {
   flex-wrap: wrap;
   align-items: center;
 
-  a {
+  li {
 
     display:inline-block;
     max-width: 150px;
@@ -50,6 +50,10 @@ h1.thread_caption {
 
     padding: @paddingOneTag;
     margin: 0 4px 0 0;
+    a {
+      color: @clCurrentTagFG !important;
+      text-decoration: none;
+    }
   }
 }
 

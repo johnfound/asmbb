@@ -59,6 +59,7 @@ endp
 proc SQliteRegisterFunctions, .ptrDatabase
 begin
         cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "url_encode", 1, SQLITE_UTF8, 0, sqliteURLEncode, 0, 0, 0
+        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "html_encode", 1, SQLITE_UTF8, 0, sqliteHTMLEncode, 0, 0, 0
         return
 endp
 
@@ -66,20 +67,53 @@ endp
 
 proc sqliteURLEncode, .context, .num, .pValue
 begin
-        pushad
-
-;        DebugMsg "SQLITE USER DEFINED FUNCTION"
-
-        mov     esi, [.pValue]
-        cinvoke sqliteValueText, [esi]
+        mov     eax, [.pValue]
+        cinvoke sqliteValueText, [eax]
+        test    eax, eax
+        jz      .null
 
         stdcall StrURLEncode, eax
         push    eax
-
         stdcall StrPtr, eax
+
+.result:
         cinvoke sqliteResultText, [.context], eax, [eax+string.len], SQLITE_TRANSIENT
         stdcall StrDel ; from the stack
-
-        popad
         cret
+
+.null:
+        mov     eax, cEmptyStr
+        push    0
+        jmp     .result
+
+;        cinvoke sqliteResultNULL, [.context]
+;        cret
 endp
+
+
+
+proc sqliteHTMLEncode, .context, .num, .pValue
+begin
+        mov     eax, [.pValue]
+        cinvoke sqliteValueText, [eax]
+        test    eax, eax
+        jz      .null
+
+        stdcall StrEncodeHTML, eax
+        push    eax
+        stdcall StrPtr, eax
+
+.result:
+        cinvoke sqliteResultText, [.context], eax, [eax+string.len], SQLITE_TRANSIENT
+        stdcall StrDel ; from the stack
+        cret
+
+.null:
+        mov     eax, cEmptyStr
+        push    0
+        jmp     .result
+;        cinvoke sqliteResultNULL, [.context]
+;        cret
+endp
+
+cEmptyStr dd 0,0

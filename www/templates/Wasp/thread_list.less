@@ -66,13 +66,13 @@ div.threads_list {
 .thread_tags {
   background-color: @clColor1FG;
   padding: 8px;
-  font-size: 12px;
+  margin: 0;
 
-  a:first-child::before {
+  & > *:first-child::before {
     display: inline-block;
     color: @clArticleFG;
-    margin-right: 8px;
     font-weight: bold;
+    margin-right: 4px;
     content: 'Tags: ';
   }
 }

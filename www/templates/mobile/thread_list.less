@@ -171,7 +171,8 @@ a.thread_link {
 
 
 .thread_tags {
-  a:first-child::before {
+  margin: 0;
+  & > *:first-child::before {
     display: inline-block;
     color: @clDarkFG;
     margin-right: 8px;

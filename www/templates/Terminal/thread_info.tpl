@@ -9,7 +9,6 @@
     </div>
     <label><input type="checkbox" class="collapseit"><ul class="comma posters">[html:[Posters]]</ul></label>
     <label><input type="checkbox" class="collapseit"><ul class="comma invited">[html:[Invited]]</ul></label>
-    <div class="comma thread_tags">[special:threadtags=[id]]
-    </div>
+    <ul class="comma thread_tags">[html:[ThreadTags]]</ul>
   </div>
 </div>

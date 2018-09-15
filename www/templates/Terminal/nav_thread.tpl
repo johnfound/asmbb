@@ -13,4 +13,4 @@
   ]
 </div>
 <h1 class="thread_caption">[caption][case:[special:canedit]||<a class="ui left" href="!edit_thread" title="Edit the thread title and tags.">Edit</a>]</h1>
-<div>Thread tags: [special:threadtags=[id]]</div>
+<ul class="comma thread_tags">[special:threadtags=[id]]</ul>

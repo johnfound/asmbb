@@ -119,3 +119,29 @@ h1.thread_caption {
     }
   }
 }
+
+.comma > * {
+  display: inline-block;
+
+  &::after {
+    content: ', ';
+    text-decoration: none;
+    margin-right: 1ch;
+  }
+
+  &:last-child::after {
+    content: ' ';
+  }
+}
+
+.thread_tags {
+  margin-top: @LineH;
+  & > *:first-child::before {
+    display: inline-block;
+    color: @clText;
+    margin-right: 1ch;
+    font-weight: bold;
+    content: 'Tags:';
+  }
+}
+

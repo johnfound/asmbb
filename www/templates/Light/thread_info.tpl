@@ -9,9 +9,7 @@
     <label><input type="checkbox" class="collapseit"><ul class="small comma posters">[html:[Posters]]</ul></label>
     <label><input type="checkbox" class="collapseit"><ul class="small comma invited">[html:[Invited]]</ul></label>
   </div>
-  <div class="thread_tags">
-    [special:threadtags=[id]]
-  </div>
+  <ul class="thread_tags">[html:[ThreadTags]]</ul>
   <div class="col_date">
     [PostCount] [case:[PostCount]|posts|post|posts]<br>
     [case:[Unread]||<div class="unread_cnt">( [Unread] unread ) <a href="[Slug]/!markread" title="Mark thread read"><img width="16" height="16" src="[special:skin]/_images/markread.svg" alt="X"></a></div>]

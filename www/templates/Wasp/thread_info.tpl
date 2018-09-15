@@ -17,6 +17,6 @@
       <label><input type="checkbox" class="collapseit"><ul class="small comma posters">[html:[Posters]]</ul></label>
       <label><input type="checkbox" class="collapseit"><ul class="small comma invited">[html:[Invited]]</ul></label>
     </div>
-    <span class="small comma thread_tags">[special:threadtags=[id]]</span>
+    <ul class="small comma thread_tags">[html:[ThreadTags]]</ul>
   </div>
 </div>
