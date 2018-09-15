@@ -98,7 +98,8 @@ create table Threads (
   Caption     text,
   LastChanged integer,
   UserID      integer references Users(id),
-  Pinned      integer default 0
+  Pinned      integer default 0,
+  PostCount   integer default 0
 );
 
 create index idxThreadsPinnedLastChanged on Threads (Pinned desc, LastChanged desc);
@@ -197,11 +198,13 @@ CREATE TRIGGER PostsAI AFTER INSERT ON Posts BEGIN
   insert into PostCNT(postid,count) VALUES (new.id, 0);
   insert or ignore into ThreadPosters(firstPost, threadID, userID) values (new.id, new.threadID, new.userID);
   update Users set PostCount = PostCount + 1 where Users.id = new.UserID;
+  update Threads set PostCount = PostCount + 1 where id = new.threadID;
 END;
 
 CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
   delete from PostFTS where rowid = old.id;
   update Users set PostCount = PostCount - 1 where Users.id = old.UserID;
+  update Threads set PostCount = PostCount - 1 where id = old.threadID;
 
   insert or ignore into PostsHistory(postID, threadID, userID, postTime, editUserID, editTime, Content) values (
     old.id,
@@ -232,6 +235,8 @@ CREATE TRIGGER PostsAU AFTER UPDATE OF Content, editTime, editUserID, threadID O
     old.editTime,
     old.Content
   );
+  update Threads set PostCount = PostCount - 1 where id = old.threadID;
+  update Threads set PostCount = PostCount + 1 where id = new.threadID;
 END;
 
 

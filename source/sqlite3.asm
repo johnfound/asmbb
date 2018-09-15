@@ -82,12 +82,8 @@ begin
         cret
 
 .null:
-        mov     eax, cEmptyStr
-        push    0
-        jmp     .result
-
-;        cinvoke sqliteResultNULL, [.context]
-;        cret
+        cinvoke sqliteResultNULL, [.context]
+        cret
 endp
 
 
@@ -109,11 +105,7 @@ begin
         cret
 
 .null:
-        mov     eax, cEmptyStr
-        push    0
-        jmp     .result
-;        cinvoke sqliteResultNULL, [.context]
-;        cret
+        cinvoke sqliteResultNULL, [.context]
+        cret
 endp
 
-cEmptyStr dd 0,0

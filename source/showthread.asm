@@ -5,8 +5,8 @@ sqlSelectPosts StripText "showthread.sql", SQL
 sqlCheckAccess   text "select not count() or sum(userID = ?2) from LimitedAccessThreads where threadID = ?1;"
 
 
-sqlGetPostCount  text "select count(1) from Posts where ThreadID = ?"
-sqlGetThreadInfo text "select T.id, T.caption, T.slug, (select userID from Posts P where P.threadID=T.id order by P.id limit 1) as UserID from Threads T where T.slug = ?1"
+sqlGetPostCount  text "select PostCount from threads where id = ?1"
+sqlGetThreadInfo text "select T.id, T.caption from Threads T where T.slug = ?1"
 sqlIncReadCount  text "update PostCNT set Count = Count + 1 where postid in ("
 sqlSetPostsRead  text "delete from UnreadPosts where UserID = ?1 and PostID in ("
 
@@ -49,8 +49,6 @@ proc ShowThread, .pSpecial
 .cnt  dd ?
 
 .rendered dd ?
-
- BenchVar .temp
 
 begin
         pushad
@@ -117,7 +115,6 @@ begin
         jz      .limited_not_for_you
 
 .have_access:
-
         stdcall TextCat, edi, txt '<div class="thread">'
         stdcall RenderTemplate, edx, "nav_thread.tpl", [.stmt2], esi
         mov     edi, eax
@@ -182,8 +179,6 @@ begin
 .finish:
         cinvoke sqliteFinalize, [.stmt]
 
-        BenchmarkStart .temp
-
 ;        jmp     .skip_writes           ; not write the posts read count and clearing the unread posts.
                                         ; this is acceptable on very high loads for boosting performance.
 
@@ -206,8 +201,6 @@ begin
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 
-        Benchmark  "Posts set unread [us]: "
-
 .posts_read_ok:
 
         stdcall StrDupMem, sqlIncReadCount
@@ -223,11 +216,8 @@ begin
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 
-;.skip_writes:
+.skip_writes:
         stdcall StrDel, [.rendered]
-
-        Benchmark  "Posts increment count and set unread [us]: "
-        BenchmarkEnd
 
         cmp     [.cnt], 5
         jbe     .back_navigation_ok

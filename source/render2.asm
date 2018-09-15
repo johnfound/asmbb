@@ -1757,16 +1757,10 @@ begin
 endp
 
 
-;sqlGetMaxTagUsed text "select max(cnt) from (select count(*) as cnt from ThreadTags group by tag)"
-;sqlGetAllTags    text "select TT.tag, count(TT.tag) as cnt, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag group by TT.tag order by TT.tag"
-sqlGetMaxTagUsed text "select max(cnt) from (select (select count() from ThreadTags TT where TT.tag = T.tag) as cnt from tags T where importance > -1)"
-
-;sqlGetAllTags    text "select TT.tag, count(TT.tag) as cnt, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag where T.Importance >= 0 group by TT.tag order by TT.tag"
 sqlGetAllTags    text "select T.Tag, (select count() from threadtags where Tag = T.tag) as cnt, T.Description from Tags T where T.Importance > -1 order by T.Tag"
 
 proc GetAllTags, .pSpecial
   .max   dd ?
-  .cnt   dd ?
   .stmt  dd ?
 begin
         pushad
@@ -1776,49 +1770,33 @@ begin
         stdcall TextCreate, sizeof.TText
         mov     ebx, eax
 
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetMaxTagUsed, sqlGetMaxTagUsed.length, eax, 0
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        jne     .end_tags
-
-        cinvoke sqliteColumnInt, [.stmt], 0
-        test    eax, eax
-        jz      .end_tags
-
-        mov     [.max], eax
-
-        cinvoke sqliteFinalize, [.stmt]
+        mov     [.max], 1
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetAllTags, sqlGetAllTags.length, eax, 0
 
+        push    0       ; end marker
+
 .tag_loop:
         cinvoke sqliteStep, [.stmt]
-
         cmp     eax, SQLITE_ROW
-        jne     .end_tags
+        jne     .fix_loop
+
+        stdcall TextCat, ebx, txt  '<a class="taglink tagsize32'
+        mov     ebx, edx
 
         cinvoke sqliteColumnInt, [.stmt], 1     ; the count used
-        mov     [.cnt], eax
-        mov     ecx, 32
-        mul     ecx
-        div     [.max]
         test    eax, eax
         jz      .tag_loop
 
-        cmp     eax, ecx          ;
-        cmova   eax, ecx          ; should never happen!
-        push    eax     ; from 1 to 32
+        push    eax
 
-        stdcall TextCat, ebx, txt  '<a class="taglink tagsize'
-        mov     ebx, edx
+        mov     ecx, [.max]
+        cmp     ecx, eax
+        cmovb   ecx, eax
+        mov     [.max], ecx
 
-        pop     eax
-        stdcall NumToStr, eax, ntsDec or ntsUnsigned
-        stdcall TextCat, ebx, eax
-        stdcall StrDel, eax
-        mov     ebx, edx
+        push    [ebx+TText.GapBegin]    ; points at the end of "tagsize32" word
 
         cmp     [esi+TSpecialParams.dir], 0
         je      .current_ok
@@ -1856,12 +1834,13 @@ begin
 
 .title_ok:
 
-        stdcall NumToStr, [.cnt], ntsDec or ntsUnsigned
+        mov     eax, [esp+4]    ; the current count
+        stdcall NumToStr, eax, ntsDec or ntsUnsigned
         stdcall TextCat, ebx, eax
         stdcall StrDel, eax
 
         stdcall TextCat, edx, txt ' thread'
-        cmp     [.cnt], 1
+        cmp     dword [esp+4], 1               ; the current count pushed!
         je      .plural_ok
 
         stdcall TextCat, edx, txt 's'
@@ -1877,9 +1856,31 @@ begin
         stdcall StrDel, edi
         jmp     .tag_loop
 
+.fix_loop:
+        pop     esi
+        test    esi, esi
+        jz      .end_fix
 
-.end_tags:
+        pop     eax
+        mov     ecx, 32
+        mul     ecx
+        div     [.max]
+        mov     ecx, 10
+
+        xor     edx,edx
+        div     ecx
+        add     dl, '0'
+        mov     [ebx+esi-1], dl
+
+        xor     edx,edx
+        div     ecx
+        add     dl, '0'
+        mov     [ebx+esi-2], dl
+        jmp     .fix_loop
+
+.end_fix:
         cinvoke sqliteFinalize, [.stmt]
+
         mov     [esp+4*regEAX], ebx
         popad
         return
