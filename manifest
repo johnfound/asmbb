@@ -1,5 +1,5 @@
-C Some\sexperiments\swith\sSQLite\srequests...
-D 2018-09-15T19:26:09.577
+C Better\snaming\sin\sthe\squery.
+D 2018-09-16T06:57:00.498
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -60,7 +60,7 @@ F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm 9a8764ade01648787f11d6dfbce4edd07414fb4e
 F source/settings.sql a288c4c62dec4c713f22542109589b010c2da1bf
 F source/showthread.asm 08e6b0ba28e8ad4dd056ec3471de6eb1e99be145
-F source/showthread.sql 2ad78e3bfd0efc3a13849d21de00d1733d5111ae
+F source/showthread.sql 126265fc08d2d112eb409665e32a0a6d18b595c0
 F source/sqlite3.asm 8f0f4ac4450cc9de82d34850afe823501f00cb7b
 F source/sqlite_console.asm 4036ff078724d5f52ac9dacaf9cee9ec394f9e94
 F source/sse_service.asm 68a6bf1d96e6c2fb0b02d87a0c67d2387075ab01
@@ -437,7 +437,7 @@ F www/templates/Terminal/navigation.less d9244dc553c663c0d4df87245e612cbd56b2057
 F www/templates/Terminal/one_category.tpl 0a104ef1000580e594a26c60e550cea3c403484c
 F www/templates/Terminal/one_user.tpl f1e1aacad832e82f4b446f755387efe7f6d815b1 l
 F www/templates/Terminal/post_history.tpl 252f022e564844721c84b264f05f527742108a19 l
-F www/templates/Terminal/post_view.tpl 6415151954792c3bccba16639f0a10a12183f1c7
+F www/templates/Terminal/post_view.tpl eb3845f9db3863509d9adc0b72bd8609c9567edc
 F www/templates/Terminal/posteditor.less 9008ab729f4908a9f3971dd5abc6ec02f691b01b
 F www/templates/Terminal/postnew.less 0019f1af77582a801e810ae59b6d034ff18515b8
 F www/templates/Terminal/posts.less 893eb4f1f9cf66e4def3ced9cfa0e08ac11cc3fa
@@ -570,7 +570,7 @@ F www/templates/Wasp/navigation.less 25ad252c4ecb5c4bc3e2034e90aed8fca4aa375d
 F www/templates/Wasp/one_category.tpl b6a45167d23af803a4107d015451d762f51fe402
 F www/templates/Wasp/one_user.tpl 6bf8fc5739971116473d7dd78425514f13bf6c4a
 F www/templates/Wasp/post_history.tpl cc8b0ededf762aa5dcc8f54e54cc2671b412ac37
-F www/templates/Wasp/post_view.tpl ce6ea96073b6f16df064c4e60aa61cc8d9b86561
+F www/templates/Wasp/post_view.tpl 3964e7912cbfb5f16d28fdc6e3a3a536d6c4cacd
 F www/templates/Wasp/posteditor.less ca7bc69c7343690776ccc50c9b95f3864efe29c0
 F www/templates/Wasp/postnew.less baa6d6d872f7d4bd97a4283a84194b38e044a796
 F www/templates/Wasp/posts.less 4ed601865e9a70e407e43450263e864c29ec8b14
@@ -678,10 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 5d905e7776d39925be0f8ed83a9fc2c7bc736080
-R 0b656f52ab8b48262ac9835b3869d1d3
-T *branch * sql_hacks
-T *sym-sql_hacks *
-T -sym-trunk *
+P aeeb35f90220ddbbe8bb6ab3cef1428ef4a300d5
+R ade06910107b41d155df11c2ecc6dcca
 U johnfound
-Z 5e3caf13cf3f312f5952db8501fb16a2
+Z f2ac5efdc7ef734d1d530f295ecd27ab
