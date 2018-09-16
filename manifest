@@ -1,5 +1,5 @@
-C Formatting\sthe\sthreadtags\sthe\ssame\sway\sas\sposters\sand\sinvited.\sAvoid\susing\s[special:threadtags=]\smore\sthan\sonce\s-\sit\sexecutes\sSQL\squery\severy\stime\sused.\nurl_encode\sand\shtml_encode\sSQLite\sfunctions\sreturn\sempty\sstring\son\sNULL\sinput.
-D 2018-09-15T07:07:16.291
+C fixed\sbroken\squery.
+D 2018-09-16T06:25:43.433
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -73,7 +73,7 @@ F source/text_constants.asm c736bdb4840fc1218bdea8ddbd2f573dbd69d2de
 F source/thread_attr.sql 96f479d9e4ab2a93221b81be1bbb8a8ba6e277f3
 F source/threadcount.sql 86f4cf8623b00ca9ed81d648eb95ab8f77d544f3
 F source/threadlist.asm 7100f2160b33b2382b6dd5a050df1291d2527019
-F source/threadlist.sql 08a38a0906135ca671be39a09cc2b30bf0b1f776
+F source/threadlist.sql f06749fdeb7f5cbd9d18eb168d9c80ccaaa4e62a
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
 F source/userinfo.asm aa28e5a0ce21e65d57b3fa332e3c6b295e6d9b55
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 95222fb19d1985a594b164edc139a794935f5fd4
-R 290405272dab75e19dfb221f6521ab9a
+P 5d905e7776d39925be0f8ed83a9fc2c7bc736080
+R 11e2b46a4abdb38c43e60c92d81b5dbb
 U johnfound
-Z ba76829d56962446bf65ff35de21cbc6
+Z c623c2feece6cd768482e66b100995b8
