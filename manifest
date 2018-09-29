@@ -1,5 +1,5 @@
-C More\scompact\sview\sin\sthe\ssqlite\sconsole.\sThe\sstatic\shash\stables\smacro\sis\snow\spart\sof\sFreshLib,\ssource\schanged\saccordingly.\s\nIndependent\sthread\sread\scounter\s-\sit\swill\sbe\sboth\smore\scorrect\sand\sfaster.\sThe\sfield\sin\sThreads\stable\sis\sadded,\sbut\sthe\scount\nmechanism\sstill\sneed\sto\sbe\simplemented.
-D 2018-09-29T19:31:55.086
+C Increment\sof\sthread\scounter.\sStop\scounting\son\srefreshes\sboth\sthread\sand\sposts.
+D 2018-09-29T20:13:26.085
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -59,7 +59,7 @@ F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm 9a8764ade01648787f11d6dfbce4edd07414fb4e
 F source/settings.sql a288c4c62dec4c713f22542109589b010c2da1bf
-F source/showthread.asm 08e6b0ba28e8ad4dd056ec3471de6eb1e99be145
+F source/showthread.asm 0a69c0b25b0f887623a51735e82e21911f95f6de
 F source/showthread.sql e574b7b1e489cae2efb3d86181a0f3ee7d9eeb20
 F source/sqlite3.asm 8f0f4ac4450cc9de82d34850afe823501f00cb7b
 F source/sqlite_console.asm 4f2cc615e52780075f5b485e8f886a2180147386
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P e71c601eb75341c2550a073d8860cd63b8061d22
-R 1fa5732c48b606df7411e7df9ad2fb9e
+P 17d3bf3355907c77848758d20b7544caa23718b5
+R 4f8b39f531e974aaa61dcfff63253e54
 U johnfound
-Z 6534c199f5019963d1f18a0d9d2695c4
+Z 962829dee673af73ea4c5ac9838b0575

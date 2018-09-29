@@ -10,6 +10,8 @@ sqlGetThreadInfo text "select T.id, T.caption from Threads T where T.slug = ?1"
 sqlIncReadCount  text "update PostCNT set Count = Count + 1 where postid in ("
 sqlSetPostsRead  text "delete from UnreadPosts where UserID = ?1 and PostID in ("
 
+sqlIncThreadReadCount text "update Threads set ReadCount = ReadCount + 1 where id = ?1"
+
 ; Checks the permissions of the thread, towards some user.
 ;
 ; Returns ZF=0 if the user has permissions to view the thread.
@@ -182,6 +184,24 @@ begin
 ;        jmp     .skip_writes           ; not write the posts read count and clearing the unread posts.
                                         ; this is acceptable on very high loads for boosting performance.
 
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_CACHE_CONTROL"
+        jc      .do_increments
+
+        stdcall StrCompCase, eax, "max-age=0"
+        jc      .skip_writes                           ; no need to inc posts counts, because the page is refreshed.
+
+.do_increments:
+
+; Increment thread read counter
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlIncThreadReadCount, sqlThreadsCount.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+.thread_counter_ok:
+
+; Increment posts read counters
         mov     ebx, [esi+TSpecialParams.userID]
         test    ebx, ebx
         jz      .posts_read_ok
