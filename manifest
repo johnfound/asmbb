@@ -1,5 +1,5 @@
-C Increment\sof\sthread\scounter.\sStop\scounting\son\srefreshes\sboth\sthread\sand\sposts.
-D 2018-09-29T20:13:26.085
+C Don't\scount\sthread\sreads\son\schanging\spages\sand\sbots\swhere\sHTTP_REFERER\sis\snot\sset\sproperly.
+D 2018-09-29T20:19:06.741
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -59,7 +59,7 @@ F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm 9a8764ade01648787f11d6dfbce4edd07414fb4e
 F source/settings.sql a288c4c62dec4c713f22542109589b010c2da1bf
-F source/showthread.asm 0a69c0b25b0f887623a51735e82e21911f95f6de
+F source/showthread.asm 48b99f49512ed12134736a58549a8a6604edf39f
 F source/showthread.sql e574b7b1e489cae2efb3d86181a0f3ee7d9eeb20
 F source/sqlite3.asm 8f0f4ac4450cc9de82d34850afe823501f00cb7b
 F source/sqlite_console.asm 4f2cc615e52780075f5b485e8f886a2180147386
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 17d3bf3355907c77848758d20b7544caa23718b5
-R 4f8b39f531e974aaa61dcfff63253e54
+P 3db80ea01445b32f1f98a94d7989bd17b143aa51
+R e32952f7cae535ea730f391f3d4283d5
 U johnfound
-Z 962829dee673af73ea4c5ac9838b0575
+Z 43c83aeb7d0c75f36dd37dca875a2c81

@@ -193,6 +193,14 @@ begin
 .do_increments:
 
 ; Increment thread read counter
+
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_REFERER"
+        jc      .thread_counter_ok
+
+        stdcall StrPos, eax, [esi+TSpecialParams.thread]
+        test    eax, eax
+        jnz     .thread_counter_ok
+
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlIncThreadReadCount, sqlThreadsCount.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
