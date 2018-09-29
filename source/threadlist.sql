@@ -7,7 +7,7 @@ select
   T.PostCount,
   Unread,
   FirstUnread,
-  (select Count from PostCnt where postid = (select id from Posts where threadID = T.id limit 1)) as ReadCount,
+  ReadCount,
   (select group_concat('<li><a href="/!userinfo/'||url_encode(nick)||'">'||html_encode(nick)||'</a></li>','') from ThreadPosters left join Users on userID = id where threadID = T.id order by firstPost) as Posters,
   (select group_concat('<li><a href="/!userinfo/'||url_encode(nick)||'">'||html_encode(nick)||'</a></li>','') from LimitedAccessThreads left join Users on id = userid where threadID = T.id) as Invited,
   group_concat('<li><a href="/'||url_encode(TT.tag)||'/" title="['||TT.tag||'] '||ifnull(html_encode(TG.description),'')||'">'||TT.tag||'</a></li>','') ThreadTags,

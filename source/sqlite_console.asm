@@ -113,6 +113,8 @@ begin
 
         stdcall StrEncodeHTML, eax
         stdcall StrDel ; from the stack
+        stdcall StrClipSpacesR, eax
+        stdcall StrClipSpacesL, eax
 
         stdcall TextCat, edi, "<h5>Statement executed:</h5><pre>"
         stdcall TextCat, edx, eax

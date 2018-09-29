@@ -1,5 +1,5 @@
-C Better\snaming\sin\sthe\squery.
-D 2018-09-16T06:57:00.498
+C More\scompact\sview\sin\sthe\ssqlite\sconsole.\sThe\sstatic\shash\stables\smacro\sis\snow\spart\sof\sFreshLib,\ssource\schanged\saccordingly.\s\nIndependent\sthread\sread\scounter\s-\sit\swill\sbe\sboth\smore\scorrect\sand\sfaster.\sThe\sfield\sin\sThreads\stable\sis\sadded,\sbut\sthe\scount\nmechanism\sstill\sneed\sto\sbe\simplemented.
+D 2018-09-29T19:31:55.086
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -28,8 +28,8 @@ F source/categories.asm 87830583d32bdf406d7a0a0615cff0b23fda9283
 F source/categories.sql b1fa5a2cca7204372b3ca3714edbbc669103b1cf
 F source/chat.asm c0469c0067c6361d0894e18d9f32e01562a3c94c
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
-F source/commands.asm 320e1acd3a506066cf50eba4cb4cb1bbea97302b
-F source/create.sql 691a57fb20d479b9c821e70b5aad6acef892b581
+F source/commands.asm b999d1760ed06b02a01df5ea1f379fbf2100690d
+F source/create.sql 0e0269c4b2c7be7a4089801dff30d5bfc9cb76ff
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 04775fbeca072097de1aedd6a5a4885fb0305499
 F source/engine.asm 800b7fc92233337f68fbf9868222b34d408162bb
@@ -52,7 +52,7 @@ F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql c15286f32455df88ebd14168a10195e0c098545d
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
-F source/render2.asm ee37be78ebeaf67f136ea549d7713cdfde2a3541
+F source/render2.asm 1533e92e03db09877e90a211444c0cbf88e62edb
 F source/restore.sql 14a8f13466ced19e05502d41ffcfddeecbc6954b
 F source/search.asm 4a2bfd137375606dc7a0da5d8f7ebc242a6ec6ac
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -60,9 +60,9 @@ F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm 9a8764ade01648787f11d6dfbce4edd07414fb4e
 F source/settings.sql a288c4c62dec4c713f22542109589b010c2da1bf
 F source/showthread.asm 08e6b0ba28e8ad4dd056ec3471de6eb1e99be145
-F source/showthread.sql 126265fc08d2d112eb409665e32a0a6d18b595c0
+F source/showthread.sql e574b7b1e489cae2efb3d86181a0f3ee7d9eeb20
 F source/sqlite3.asm 8f0f4ac4450cc9de82d34850afe823501f00cb7b
-F source/sqlite_console.asm 4036ff078724d5f52ac9dacaf9cee9ec394f9e94
+F source/sqlite_console.asm 4f2cc615e52780075f5b485e8f886a2180147386
 F source/sse_service.asm 68a6bf1d96e6c2fb0b02d87a0c67d2387075ab01
 F source/statistics.asm 8574bead31291bdaf459a032659cb41bc34883d3
 F source/statistics.sql adf6bec52c32dba0b780cd7422e2de395ca19f7e
@@ -73,7 +73,7 @@ F source/text_constants.asm c736bdb4840fc1218bdea8ddbd2f573dbd69d2de
 F source/thread_attr.sql 96f479d9e4ab2a93221b81be1bbb8a8ba6e277f3
 F source/threadcount.sql 86f4cf8623b00ca9ed81d648eb95ab8f77d544f3
 F source/threadlist.asm 7100f2160b33b2382b6dd5a050df1291d2527019
-F source/threadlist.sql b6df8d4f3fe8ba23045001d05d5e2d8db5b05530
+F source/threadlist.sql b962e59159b65aba89fcb9f77d8f62e54f9dd539
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
 F source/userinfo.asm aa28e5a0ce21e65d57b3fa332e3c6b295e6d9b55
@@ -447,7 +447,7 @@ F www/templates/Terminal/search.less 0945b7c80d74e44ee3c658746428cb30797d3f46
 F www/templates/Terminal/search_result.tpl 48a609f423c8de989a1b81775228d657e433a6b8
 F www/templates/Terminal/settings.less a1abd42b5ec4bce135a9276891b56c13e33d532a
 F www/templates/Terminal/skin_variables.lsi e8a9464214822142c2fe0d09dc2c73a827c6e281
-F www/templates/Terminal/sqlite.less 23129e00b0f96dd45869b9ea813a17258b750796
+F www/templates/Terminal/sqlite.less d616929dcf7b35797bda7b71c8289be6f1c5b3f9
 F www/templates/Terminal/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
 F www/templates/Terminal/thread_info.tpl 62d0be775186fa5d86ff98addda03e996c0774e9
 F www/templates/Terminal/thread_list.less 154cdfa79961711477f85da50234bc25506aaa7a
@@ -531,7 +531,7 @@ F www/templates/Wasp/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
 F www/templates/Wasp/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
 F www/templates/Wasp/chat.less e57b611bba245767e3924f761c37393ee3bb53d2
 F www/templates/Wasp/chat.tpl 32d13cec3ff9bc2439ad4bd6b29867ca33f492b2
-F www/templates/Wasp/common.less 0d911e4081505db81095cd86387523e0269cca17
+F www/templates/Wasp/common.less 173319c801bbd83d43674feab9a2148da1894509
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 27678b543c744bd64421b50b66d3e60253bb4d3e
 F www/templates/Wasp/delete.less f77246e7f9fd0680ddb1ef2351b2b4ec5cef54f2
@@ -580,7 +580,7 @@ F www/templates/Wasp/search.less 17bfdc636da1019916443febbb2073b791ed79d1
 F www/templates/Wasp/search_result.tpl 6c5a46b179308b9b7b4f272c7f543fa8f526dd36
 F www/templates/Wasp/settings.less fa502f60cdab5f9142aef35639f676e087c9ad9d
 F www/templates/Wasp/skin_variables.lsi 02c61b8a2db6ce98aabc97e5affb2c1c53b5149c
-F www/templates/Wasp/sqlite.less 9ed43c40076b969c67d7c73d6d395da98dccbc83
+F www/templates/Wasp/sqlite.less f4a2edc06c2c1410f5d78ad1ea298439251482af
 F www/templates/Wasp/statistics.tpl c0dd59a240e07c246fe9c0841eb1532b93f3f1ae
 F www/templates/Wasp/thread_info.tpl 1dd9c683fa8042a3724dead1b0a15b8eac73b86c
 F www/templates/Wasp/thread_list.less a0ac773e053714a3576eaa80a87a436f835b769c
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P aeeb35f90220ddbbe8bb6ab3cef1428ef4a300d5
-R ade06910107b41d155df11c2ecc6dcca
+P e71c601eb75341c2550a073d8860cd63b8061d22
+R 1fa5732c48b606df7411e7df9ad2fb9e
 U johnfound
-Z f2ac5efdc7ef734d1d530f295ecd27ab
+Z 6534c199f5019963d1f18a0d9d2695c4

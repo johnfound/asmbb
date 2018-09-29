@@ -23,4 +23,7 @@ left join
 left join
   Users U on U.id = P.userID
 where
-  P.id in (select id from posts where threadid=?1 limit ?2 offset ?3);
+  P.threadID = ?1 and
+  P.id >= (select id from posts where threadid = ?1 order by id limit 1 offset ?3)
+order by P.id
+limit ?2;

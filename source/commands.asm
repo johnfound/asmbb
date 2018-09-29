@@ -63,51 +63,46 @@ struct TSpecialParams
 ends
 
 
-if used tablePreCommands
+PHashTable tablePreCommands, tpl_func,                  \
+        "!avatar",          UserAvatar,                 \
+        "!attached",        GetAttachedFile,            \
+        "!login",           UserLogin,                  \
+        "!logout",          UserLogout,                 \
+        "!register",        RegisterNewUser,            \
+        "!resetpassword",   ResetPassword,              \
+        "!changepassword",  ChangePassword,             \
+        "!changemail",      ChangeEmail,                \
+        "!sqlite",          SQLiteConsole,              \
+        "!settings",        BoardSettings,              \
+        "!message",         ShowForumMessage,           \
+        "!activate",        ActivateAccount,            \
+        "!userinfo",        ShowUserInfo,               \
+        "!avatar_upload",   UpdateUserAvatar,           \
+        "!setskin",         UpdateUserSkin,             \
+        "!render_all",      RenderAll,                  \
+        "!users_online",    UserActivityTable,          \
+        "!chat",            ChatPage,                   \
+        "!chat_events",     ChatRealTime,               \
+        "!postdebug",       PostDebug,                  \    ; optional, depending on the options.DebugWeb
+        "!debuginfo",       DebugInfo,                  \    ; optional, depending on the options.DebugSQLite
+        "!users",           UsersList,                  \
+        "!usersmatch",      UsersMatch,                 \
+        "!tagmatch",        TagsMatch,                  \
+        "!skincookie",      SkinCookie,                 \
+        "!categories",      Categories
 
-PList tablePreCommands, tpl_func,                  \
-      "!avatar",          UserAvatar,              \
-      "!attached",        GetAttachedFile,         \
-      "!login",           UserLogin,               \
-      "!logout",          UserLogout,              \
-      "!register",        RegisterNewUser,         \
-      "!resetpassword",   ResetPassword,           \
-      "!changepassword",  ChangePassword,          \
-      "!changemail",      ChangeEmail,             \
-      "!sqlite",          SQLiteConsole,           \
-      "!settings",        BoardSettings,           \
-      "!message",         ShowForumMessage,        \
-      "!activate",        ActivateAccount,         \
-      "!userinfo",        ShowUserInfo,            \
-      "!avatar_upload",   UpdateUserAvatar,        \
-      "!setskin",         UpdateUserSkin,          \
-      "!render_all",      RenderAll,               \
-      "!users_online",    UserActivityTable,       \
-      "!chat",            ChatPage,                \
-      "!chat_events",     ChatRealTime,            \
-      "!postdebug",       PostDebug,               \    ; optional, depending on the options.DebugWeb
-      "!debuginfo",       DebugInfo,               \    ; optional, depending on the options.DebugSQLite
-      "!users",           UsersList,               \
-      "!usersmatch",      UsersMatch,              \
-      "!tagmatch",        TagsMatch,               \
-      "!skincookie",      SkinCookie,              \
-      "!categories",      Categories
-end if
 
-if used tablePostCommands
-
-PList tablePostCommands, tpl_func,                 \
-      "!markread",        MarkThreadRead,          \
-      "!post",            PostUserMessage,         \
-      "!edit",            EditUserMessage,         \
-      "!edit_thread",     EditThreadAttr,          \
-      "!del",             DeletePost,              \
-      "!by_id",           PostByID,                \
-      "!history",         ShowHistory,             \
-      "!restore",         RestorePost,             \
-      "!echoevents",      EchoRealTime,            \    ; optional, depending on the options.DebugWebSSE
-      "!search",          ShowSearchResults2
-end if
+PHashTable tablePostCommands, tpl_func,                 \
+        "!markread",        MarkThreadRead,             \
+        "!post",            PostUserMessage,            \
+        "!edit",            EditUserMessage,            \
+        "!edit_thread",     EditThreadAttr,             \
+        "!del",             DeletePost,                 \
+        "!by_id",           PostByID,                   \
+        "!history",         ShowHistory,                \
+        "!restore",         RestorePost,                \
+        "!echoevents",      EchoRealTime,               \    ; optional, depending on the options.DebugWebSSE
+        "!search",          ShowSearchResults2
 
 
 cHeadersJSON text 'Content-Type: application/json', 13, 10, 13, 10
@@ -1795,23 +1790,32 @@ begin
 
 .end_hash:
         mov     edx, [.pTable]
-        mov     eax, esi
 
 .get_key_name:
         mov     edi, [edx + sizeof.TPHashItem*ebx + TPHashItem.pKeyname]
         test    edi, edi
         jz      .not_found
 
-        mov     esi, eax
-        mov     ecx, [esi+string.len]
-        repe cmpsb
-        je      .found
+        movzx   ecx, byte [edi - 1]
+        cmp     ecx, [esi+string.len]
+        jne     .not_found
 
-        inc     bl
-        jmp     .get_key_name   ; collisions resolving. Do we need it if the table is created without collisions.
+        jecxz   .found          ; the key is an empty string.
+
+.cmp_loop:
+        lodsb
+
+        mov     ah, al
+        and     ah, $40
+        shr     ah, 1
+        or      al, ah
+
+        scasb
+        loope   .cmp_loop
+        jne     .not_found
 
 .found:
-        mov     ecx, [edx + sizeof.TPHashItem*ebx + TPHashItem.procCommand]
+        mov     ecx, [edx + sizeof.TPHashItem*ebx + TPHashItem.Value]
         mov     [esp+4*regECX], ecx
         stc
         popad

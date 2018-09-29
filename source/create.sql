@@ -99,7 +99,8 @@ create table Threads (
   LastChanged integer,
   UserID      integer references Users(id),
   Pinned      integer default 0,
-  PostCount   integer default 0
+  PostCount   integer default 0,
+  ReadCount   integer default 0
 );
 
 create index idxThreadsPinnedLastChanged on Threads (Pinned desc, LastChanged desc);
