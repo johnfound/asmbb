@@ -36,9 +36,10 @@ PHashTable tableRenderCmd, tpl_func,                    \
         'case:',        RenderTemplate.cmd_case,          \   ; No encoding.
         'sql:',         RenderTemplate.cmd_sql            ; Needs encoding!
 
-PHashTable tableSpecial, tpl_func,                            \
+PHashTable tableSpecial, tpl_func,                              \
         "visitors",    RenderTemplate.sp_visitors,              \ ; HTML no encoding
         "version",     RenderTemplate.sp_version,               \ ; no encoding
+        "sqliteversion", RenderTemplate.sp_sqlite_version,      \ ; no encoding
         "cmdtype",     RenderTemplate.sp_cmdtype,               \ ; 0/1/2 no encoding
         "stats",       RenderTemplate.sp_stats,                 \ ; HTML no encoding
         "timestamp",   RenderTemplate.sp_timestamp,             \ ; NUMBER no encoding
@@ -1168,6 +1169,25 @@ end if
 .sp_version:
         mov     eax, cVersion
         jmp     .special_string
+
+.sp_sqlite_version:
+        push    ebx esi
+
+        stdcall StrDupMem, txt '<b>SQLite v'
+        mov     ebx, eax
+
+        stdcall StrCat, ebx, [sqliteVersion]
+        stdcall StrCat, ebx, txt '</b> (check-in: <a href="http://sqlite.org/cgi/src/info/'
+
+        cinvoke sqliteSourceID
+        lea     esi, [eax+20]                   ; skip the date/time of the string.
+        stdcall StrCatMem, ebx, esi, 16
+        stdcall StrCat, ebx, txt '">'
+        stdcall StrCatMem, ebx, esi, 16
+        stdcall StrCat, ebx, txt '</a>)'
+        mov     eax, ebx
+        pop     esi ebx
+        jmp     .special_string_free
 
 ; ...................................................................
 

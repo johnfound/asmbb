@@ -1,5 +1,5 @@
-C Preparations\sfor\sadding\sBBCode\sparser.
-D 2018-09-30T13:36:45.539
+C [special:sqliteversion]\stemplate\scommand.
+D 2018-09-30T14:53:16.706
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -53,7 +53,7 @@ F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql c15286f32455df88ebd14168a10195e0c098545d
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
-F source/render2.asm 1533e92e03db09877e90a211444c0cbf88e62edb
+F source/render2.asm 8c7ddd9e187a98b9a87f7e6b43ae7f4339e195b6
 F source/restore.sql 14a8f13466ced19e05502d41ffcfddeecbc6954b
 F source/search.asm 4a2bfd137375606dc7a0da5d8f7ebc242a6ec6ac
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -557,7 +557,7 @@ F www/templates/Wasp/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Wasp/form_sqlite_console.tpl 7efc4c110f2baaab4cb601c2eb68c0f65cc532fb
 F www/templates/Wasp/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
 F www/templates/Wasp/login.less b8467882b426bdd8949171fa410c3cb71ced6cdd
-F www/templates/Wasp/main_html_end.tpl f9390ce9052a9df9e6ac20a2c11f7257b9f442dd
+F www/templates/Wasp/main_html_end.tpl 8171b26f17bc549e7fe93a839c82e66d0ad6be53
 F www/templates/Wasp/main_html_start.tpl 0b6660caa2b332c98f7ed939b9c463f5c0f0a19a
 F www/templates/Wasp/markdown.less 728b194c01331eb110fd5de38efde71dfd78b9c0
 F www/templates/Wasp/minimag_suffix.tpl ea20e08377b7ccdd55a2d7792071bb2734622813
@@ -679,7 +679,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P f4d9d287f2d63629863c7ce3b242b512753de445
-R 5d9096f4044af2db5f4d796d267761e4
+P e3289b6101edfbeb30d51cd837653c91456f49d0
+R c8764c5a7417ed115a0c4802f7ed16d6
 U johnfound
-Z f188bde147d7858a27def8847730cece
+Z 3e78b0e709fcc0004cabb4a51cbeca8a
