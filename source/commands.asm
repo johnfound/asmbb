@@ -1493,6 +1493,8 @@ sqlInsertTicket text "insert into Tickets (ssn, time, ticket) values ((select id
 proc SetUniqueTicket, .session
 .stmt dd ?
 begin
+        DebugMsg "Set unique ticket."
+
         pushad
         stdcall GetRandomString, 32
         mov     ebx, eax
@@ -1535,6 +1537,8 @@ begin
         pushf
         pushad
 
+        DebugMsg "Clear unique ticket."
+
         cmp     [.ticket], 0
         je      .cleanup_old
 
@@ -1571,10 +1575,10 @@ begin
         pushad
 
         cmp     [.ticket], 0
-        je      .error
+        je      .error1
 
         cmp     [.session], 0
-        je      .error
+        je      .error1
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckTicket, sqlCheckTicket.length, eax, 0
@@ -1594,11 +1598,18 @@ begin
         cmp     ebx, SQLITE_ROW
         jne     .error
 
+        DebugMsg "Ticket found!"
+
         clc
         popad
         return
 
+.error1:
+        DebugMsg "Check ticket wrong parameters."
+
+
 .error:
+        DebugMsg "Ticket not found!"
         stc
         popad
         return

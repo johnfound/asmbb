@@ -117,28 +117,20 @@ function previewIt(e) {
   }
 }
 
-document.onkeyup = function(e) {
+document.onkeydown = function(e) {
   var key = e.which || e.keyCode;
   var frm = document.getElementById("editform");
+  var stop = true;
+
   if (e.ctrlKey && key == 13) {
     frm.preview.click();
   } else if (key == 27) {
     window.location.href = "!by_id";
   } else if (e.ctrlKey && key == 83) {
     frm.submit.click();
-    e.preventDefault();
-  }
-  return false;
-};
+  } else stop = false;
 
-document.onkeydown = function(e) {
-  var key = e.which || e.keyCode;
-  if (e.ctrlKey && key == 83) {
-    var frm = document.getElementById("editform");
-    frm.submit.click();
-    e.preventDefault();
-    return false;
-  }
+  if (stop) e.preventDefault();
 };
 
 function GetSelectedFiles() {
@@ -148,7 +140,5 @@ function GetSelectedFiles() {
   else if (browse.files.length == 1) where.innerText = browse.files^[0^].name;
   else where.innerText = browse.files.length + " files are selected";
 }
-
-
 
 </script>
