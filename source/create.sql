@@ -156,6 +156,7 @@ create table Posts (
   postTime    integer,
   editUserID  integer default NULL references Users(id) on delete cascade,
   editTime    integer default NULL,
+  format      integer,
   Content     text,
   Rendered    text
 );
@@ -180,6 +181,7 @@ create table PostsHistory (
   postTime   integer,
   editUserID integer,
   editTime   integer,
+  format     integer,
   Content  text
 );
 
@@ -214,11 +216,12 @@ CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
     old.postTime,
     old.editUserID,
     old.editTime,
+    old.format,
     old.Content
   );
 END;
 
-CREATE TRIGGER PostsAU AFTER UPDATE OF Content, editTime, editUserID, threadID ON Posts BEGIN
+CREATE TRIGGER PostsAU AFTER UPDATE OF Content, editTime, editUserID, threadID, format ON Posts BEGIN
   update PostFTS set
     rowid = new.id,
     Content = new.Content,
@@ -234,6 +237,7 @@ CREATE TRIGGER PostsAU AFTER UPDATE OF Content, editTime, editUserID, threadID O
     old.postTime,
     old.editUserID,
     old.editTime,
+    old.format,
     old.Content
   );
   update Threads set PostCount = PostCount - 1 where id = old.threadID;

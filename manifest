@@ -1,5 +1,5 @@
-C Don't\scount\sthread\sreads\son\schanging\spages\sand\sbots\swhere\sHTTP_REFERER\sis\snot\sset\sproperly.
-D 2018-09-29T20:19:06.741
+C Preparations\sfor\sadding\sBBCode\sparser.
+D 2018-09-30T13:36:45.539
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -29,11 +29,11 @@ F source/categories.sql b1fa5a2cca7204372b3ca3714edbbc669103b1cf
 F source/chat.asm c0469c0067c6361d0894e18d9f32e01562a3c94c
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm b999d1760ed06b02a01df5ea1f379fbf2100690d
-F source/create.sql 0e0269c4b2c7be7a4089801dff30d5bfc9cb76ff
+F source/create.sql c0f689c9e8eab7341ef1ce73937b54a0b9e6ba26
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 04775fbeca072097de1aedd6a5a4885fb0305499
 F source/engine.asm 800b7fc92233337f68fbf9868222b34d408162bb
-F source/engine.fpr b28e9fce280f0a9074533c50b370ec4e55eee4cd
+F source/engine.fpr 5ea0c23acd7fa9673a0c5f2d423d2b520c6bd0e9
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm c1dfb0297685352865a7bb7eacff90d173f3d919
@@ -45,6 +45,7 @@ F source/messages.asm f1f350f40073680e2ed26e007312987ef9eb327f
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
 F source/migration1.sql fe97ef3b5046a916f0215336a8a56ea4c8a3b98a
+F source/migration2.sql fe978700e39265c6680b69ea8cbfb5444cfdce63
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
 F source/post.asm 64e9bbf9e576a156263853f5598cd03d225f9c3d
 F source/post_data.asm 3ca626cfd4fe38680bfe5a61115edfc7f14bd70d
@@ -678,7 +679,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 3db80ea01445b32f1f98a94d7989bd17b143aa51
-R e32952f7cae535ea730f391f3d4283d5
+P f4d9d287f2d63629863c7ce3b242b512753de445
+R 5d9096f4044af2db5f4d796d267761e4
 U johnfound
-Z 43c83aeb7d0c75f36dd37dca875a2c81
+Z f188bde147d7858a27def8847730cece
