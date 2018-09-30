@@ -1,5 +1,5 @@
-C Fixed\smistake\sin\sthe\screate.sql
-D 2018-09-30T16:58:36.235
+C Removed\sredundant\serror\scheck.
+D 2018-09-30T19:17:56.654
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -31,7 +31,7 @@ F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm e1c413ddbd85f71bca30ab856724e3c8c2a28b50
 F source/create.sql b0c585175efa8daffcc586537555fb2905f80234
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
-F source/edit.asm 75944a5b2a7dfe35584025bc2eedf70caf68435f
+F source/edit.asm 7df442dc9dedf5ab1da3bca63bb91813e1fa068a
 F source/engine.asm 800b7fc92233337f68fbf9868222b34d408162bb
 F source/engine.fpr 5ea0c23acd7fa9673a0c5f2d423d2b520c6bd0e9
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
@@ -679,7 +679,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 3832fb665348857de50ce40e74e20efbdc774400
-R a52bc7e5a3df51b3eacd6857394f315b
+P 09af1e38055a846d1a9c155a431d16e94805ad5a
+R 0165345b0edd0a3de8bc70f9e8b11554
 U johnfound
-Z 7b218c91c5d5549936fede5a4e743f6b
+Z f8728e68086f5a727d20685521b3e596
