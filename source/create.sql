@@ -209,7 +209,7 @@ CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
   update Users set PostCount = PostCount - 1 where Users.id = old.UserID;
   update Threads set PostCount = PostCount - 1 where id = old.threadID;
 
-  insert or ignore into PostsHistory(postID, threadID, userID, postTime, editUserID, editTime, Content) values (
+  insert or ignore into PostsHistory(postID, threadID, userID, postTime, editUserID, editTime, format, Content) values (
     old.id,
     old.threadID,
     old.userID,
@@ -230,7 +230,7 @@ CREATE TRIGGER PostsAU AFTER UPDATE OF Content, editTime, editUserID, threadID, 
     user = (select nick from users where id = new.userid),
     tags = (select group_concat(TT.Tag, ", ") from ThreadTags TT where TT.threadID = new.threadid)
   where rowid = old.id;
-  insert or ignore into PostsHistory(postID, threadID, userID, postTime, editUserID, editTime, Content) values (
+  insert or ignore into PostsHistory(postID, threadID, userID, postTime, editUserID, editTime, format, Content) values (
     old.id,
     old.threadID,
     old.userID,

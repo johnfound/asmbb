@@ -1,5 +1,5 @@
-C ThreadID\sis\scontained\sin\sUnreadPosts\sas\swell\sfor\sfaster\saccess.
-D 2018-09-30T16:34:35.748
+C Fixed\smistake\sin\sthe\screate.sql
+D 2018-09-30T16:58:36.235
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -29,7 +29,7 @@ F source/categories.sql b1fa5a2cca7204372b3ca3714edbbc669103b1cf
 F source/chat.asm c0469c0067c6361d0894e18d9f32e01562a3c94c
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm e1c413ddbd85f71bca30ab856724e3c8c2a28b50
-F source/create.sql e4c8a978fc19a394b6bc7296d1c5cc924bfbebb5
+F source/create.sql b0c585175efa8daffcc586537555fb2905f80234
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 75944a5b2a7dfe35584025bc2eedf70caf68435f
 F source/engine.asm 800b7fc92233337f68fbf9868222b34d408162bb
@@ -679,7 +679,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P d9919ca4fcd88b19f5b5e92c9d56926ffd6fd976
-R 6df857bcc93bf447c23b4a0448019ac8
+P 3832fb665348857de50ce40e74e20efbdc774400
+R a52bc7e5a3df51b3eacd6857394f315b
 U johnfound
-Z 323cc95b9c2b26da1e59da84962142aa
+Z 7b218c91c5d5549936fede5a4e743f6b
