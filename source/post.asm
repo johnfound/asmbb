@@ -33,9 +33,6 @@ proc PostUserMessage, .pSpecial
 .rendered dd ?
 .ticket   dd ?
 
-.postID   dd ?
-.threadID dd ?
-
 begin
         pushad
 
@@ -341,6 +338,10 @@ begin
 
 .new_thread:
 
+locals
+  .threadID dd ?
+endl
+
         DebugMsg "Create new thread"
 
         stdcall StrSlugify, [.caption]
@@ -486,7 +487,7 @@ begin
 
 ; register as unread for all active users.
 
-        stdcall RegisterUnreadPost, esi
+        stdcall RegisterUnreadPost, esi, ebx
 
 ; commit transaction
 

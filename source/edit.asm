@@ -281,7 +281,7 @@ begin
         cmp     eax, SQLITE_DONE
         jne     .error_write
 
-        stdcall RegisterUnreadPost, [esi+TSpecialParams.page_num]
+        stdcall RegisterUnreadPost, [esi+TSpecialParams.page_num], [.threadID]
         cmp     eax, SQLITE_DONE
         jne     .error_write
 

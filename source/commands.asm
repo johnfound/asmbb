@@ -1436,11 +1436,11 @@ endp
 
 
 
-sqlSetUnread text "insert or replace into UnreadPosts (UserID, PostID, `Time`) values (?2, ?1, strftime('%s','now'))"
-sqlSelectInvited text "select userid from LimitedAccessThreads where threadid = (select threadid from Posts where id = ?1)"
+sqlSetUnread text "insert or replace into UnreadPosts (UserID, PostID, ThreadID, `Time`) values (?2, ?1, ?3, strftime('%s','now'))"
+sqlSelectInvited text "select userid from LimitedAccessThreads where threadid = ?1"
 sqlSelectAllActive text "select id from users where strftime('%s','now') - LastSeen < 2592000"
 
-proc RegisterUnreadPost, .postID
+proc RegisterUnreadPost, .postID, .threadID
 .stmt  dd ?
 .users dd ?
 begin
@@ -1448,7 +1448,7 @@ begin
 
         lea     eax, [.users]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectInvited, sqlSelectInvited.length, eax, 0
-        cinvoke sqliteBindInt, [.users], 1, [.postID]
+        cinvoke sqliteBindInt, [.users], 1, [.threadID]
         cinvoke sqliteStep, [.users]
         cmp     eax, SQLITE_ROW
         je      .users_ok
@@ -1465,6 +1465,7 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetUnread, -1, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [.postID]
+        cinvoke sqliteBindInt, [.stmt], 3, [.threadID]
 
 .set_loop:
         cinvoke sqliteColumnInt, [.users], 0

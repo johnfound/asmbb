@@ -277,13 +277,14 @@ create index idxThreadsTagsTags on ThreadTags (Tag);
 create table UnreadPosts (
   UserID integer references Users(id) on delete cascade,
   PostID integer references Posts(id) on delete cascade,
+  ThreadID integer references Threads(id) on delete cascade on update cascade,
   Time   integer
 );
 
 
 create unique index idxUnreadPosts on UnreadPosts(UserID, PostID);
+create index idxThreadUnread on UnreadPosts(userID, threadID);
 create index idxUnreadPostsPostID on UnreadPosts(PostID);
-
 
 create table Attachments (
   id       integer primary key autoincrement,
