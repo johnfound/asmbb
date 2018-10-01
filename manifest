@@ -1,5 +1,5 @@
-C Start\sof\sthe\sintegration\sof\sBBCode\sparser\sas\sa\ssecond\smarkup\slanguage\sfor\sthe\sposts.\n\nFixed\sthe\smarkdown\sstyles\sin\saccordance\swith\sthe\schanges\sin\sFreshLib\sMiniMagAsm\sparser.
-D 2018-10-01T21:25:01.633
+C Text\sdecoration\son\sthe\stag\slink\sin\sthe\susers\sonline\stable\sremoved.
+D 2018-10-01T22:32:45.172
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -532,7 +532,7 @@ F www/templates/Wasp/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
 F www/templates/Wasp/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
 F www/templates/Wasp/chat.less e57b611bba245767e3924f761c37393ee3bb53d2
 F www/templates/Wasp/chat.tpl 32d13cec3ff9bc2439ad4bd6b29867ca33f492b2
-F www/templates/Wasp/common.less 173319c801bbd83d43674feab9a2148da1894509
+F www/templates/Wasp/common.less b12d47f60d794b7c22bdd674b2c696c55b410867
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 27678b543c744bd64421b50b66d3e60253bb4d3e
 F www/templates/Wasp/delete.less f77246e7f9fd0680ddb1ef2351b2b4ec5cef54f2
@@ -679,10 +679,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P f0131082d790247a2ac596e45d37ba31276fee46
-R 5fbc19df1e51327de854f3765a6bc732
-T *branch * bbcode
-T *sym-bbcode *
-T -sym-sql_hacks *
+P f5cf9ca4d94545ed3045090062ae9ae1b75609eb
+R b8d066dc015d06f303a03c5e8635ee03
 U johnfound
-Z d4a6ba8eb5330e77ca19f0ffc5df5a81
+Z b2bc06c4b19f1a19206a652a07c768d2
