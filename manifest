@@ -1,5 +1,5 @@
-C More\sdebug\smessages.\sFixed\sbug\sin\sthe\spost\seditor\sJS\scode.
-D 2018-09-30T20:00:06.579
+C Start\sof\sthe\sintegration\sof\sBBCode\sparser\sas\sa\ssecond\smarkup\slanguage\sfor\sthe\sposts.\n\nFixed\sthe\smarkdown\sstyles\sin\saccordance\swith\sthe\schanges\sin\sFreshLib\sMiniMagAsm\sparser.
+D 2018-10-01T21:25:01.633
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -426,7 +426,7 @@ F www/templates/Terminal/help_new_thread.tpl 579ed6559a0a3aee0fe3be3a2c841c1dd7b
 F www/templates/Terminal/login.less 9bfb1ccb94f4b4e8354ff9ed6944c89924063a3b
 F www/templates/Terminal/main_html_end.tpl 98d81369839da6e3445df49e6af62545ce9705d4
 F www/templates/Terminal/main_html_start.tpl b61b794eb3df558d07b10574591d0b80c3509543
-F www/templates/Terminal/markdown.less 3f41aeb9e230ac732bcc6f28b5726f35e2904fa9
+F www/templates/Terminal/markdown.less d478bd464cd01eba806eb3a5fa76e943410b7f5b
 F www/templates/Terminal/minimag_suffix.tpl f3a1414972a13590a7c984b53b6fd2ddd3a47f3a l
 F www/templates/Terminal/nav_categories.tpl 8a9010133716cb745f4ed027c96c7b9348e4b18a
 F www/templates/Terminal/nav_history.tpl bebfd24b9db5592d5222ad8cf2df125f258ec6bc
@@ -559,7 +559,7 @@ F www/templates/Wasp/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991e
 F www/templates/Wasp/login.less b8467882b426bdd8949171fa410c3cb71ced6cdd
 F www/templates/Wasp/main_html_end.tpl f1e4b1ef234a14345fb8a2d7348944d5eb6abfab
 F www/templates/Wasp/main_html_start.tpl 0b6660caa2b332c98f7ed939b9c463f5c0f0a19a
-F www/templates/Wasp/markdown.less 728b194c01331eb110fd5de38efde71dfd78b9c0
+F www/templates/Wasp/markdown.less 6a4ff357b65caa9a906f9895f3a51258c035d53c
 F www/templates/Wasp/minimag_suffix.tpl ea20e08377b7ccdd55a2d7792071bb2734622813
 F www/templates/Wasp/nav_categories.tpl 80053896a6a06ee87351b1e586eaefd329a84109
 F www/templates/Wasp/nav_history.tpl ec672e45848f639e46cd390f9058ed0672d5289b
@@ -574,7 +574,7 @@ F www/templates/Wasp/post_history.tpl cc8b0ededf762aa5dcc8f54e54cc2671b412ac37
 F www/templates/Wasp/post_view.tpl 3964e7912cbfb5f16d28fdc6e3a3a536d6c4cacd
 F www/templates/Wasp/posteditor.less ca7bc69c7343690776ccc50c9b95f3864efe29c0
 F www/templates/Wasp/postnew.less baa6d6d872f7d4bd97a4283a84194b38e044a796
-F www/templates/Wasp/posts.less 4ed601865e9a70e407e43450263e864c29ec8b14
+F www/templates/Wasp/posts.less 90d9b437e4267d4842d8ec355904892f4e651a98
 F www/templates/Wasp/preview.tpl 3e341c8a5624a3669a13b82247c924863d9a8d06
 F www/templates/Wasp/restore_confirm.tpl c101e4ccda03878c89c22aa70b96db20c33ce063
 F www/templates/Wasp/search.less 17bfdc636da1019916443febbb2073b791ed79d1
@@ -646,7 +646,7 @@ F www/templates/mobile/help_new_thread.tpl 579ed6559a0a3aee0fe3be3a2c841c1dd7b8b
 F www/templates/mobile/login.less 4af417eb9ae51e7d5691cba96a93ef5a9fd79dd2 l
 F www/templates/mobile/main_html_end.tpl d8b3ec3c2cdc952fcab6638d4147ee7e9cd2ba96 l
 F www/templates/mobile/main_html_start.tpl b93c0043a09f7ef6614707de05a8b45f8af6b33f l
-F www/templates/mobile/markdown.less 7b690ba50cd9f2e9ec8b0ec039765f211b2a7c9f
+F www/templates/mobile/markdown.less 56e08a5779e9c67fd405d3036150b7c52816d419
 F www/templates/mobile/minimag_suffix.tpl f3a1414972a13590a7c984b53b6fd2ddd3a47f3a l
 F www/templates/mobile/nav_categories.tpl f7d6f653d7de3ea424b62ebae575e3c5c1f4d98b l
 F www/templates/mobile/nav_history.tpl ac180ed4422e7ee62e4421a19c1ee7d69a72e503 l
@@ -661,7 +661,7 @@ F www/templates/mobile/post_history.tpl 252f022e564844721c84b264f05f527742108a19
 F www/templates/mobile/post_view.tpl 4e4b1a73db2462b1954e92ec092c71c438b63e85 l
 F www/templates/mobile/posteditor.less af013f51fda1a0a8710d4aa2be99f1a4481abcd1
 F www/templates/mobile/postnew.less 3df1b56984c0e0268104a69862782120a40f06be l
-F www/templates/mobile/posts.less 0ce5f8c3b77e2c93c1245601c4acec4b710d7fc8
+F www/templates/mobile/posts.less 1c62bbcf1f3b1faaa11c69c38606f4bd8b13c1c2
 F www/templates/mobile/preview.tpl 6bd29d06a6720e51db6d4d73b7572f9fcc1ff32f l
 F www/templates/mobile/restore_confirm.tpl c59340b4b594a629285efa18802ea6d542442afb l
 F www/templates/mobile/search.less 4aae680b0042d04f27b06a36469268d5dfec7e89
@@ -679,7 +679,10 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P d892c604c7c5fe54308483a626620e16434bafcb
-R 415c49fcef2a0616e7f71a98cedc5c03
+P f0131082d790247a2ac596e45d37ba31276fee46
+R 5fbc19df1e51327de854f3765a6bc732
+T *branch * bbcode
+T *sym-bbcode *
+T -sym-sql_hacks *
 U johnfound
-Z 858673e372f9ee77176a5d8c736855d6
+Z d4a6ba8eb5330e77ca19f0ffc5df5a81
