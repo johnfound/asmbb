@@ -1,5 +1,5 @@
-C Text\sdecoration\son\sthe\stag\slink\sin\sthe\susers\sonline\stable\sremoved.
-D 2018-10-01T22:32:45.172
+C Removed\sobsolete\sand\sforgotten\stable\sin\screate.sql;\sMore\ssimple\scode\sfor\ssetup\smode\sdetection.\s\n\nSome\snotes\sabout\sDB\swrites\sper\srequest\sin\sToDo.txt\sfile.
+D 2018-10-02T08:58:54.646
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -19,7 +19,7 @@ F source/Linux/sqlite3.inc 49dc036ae22c327790d0314c81263d77d041990b
 F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/TestsWithTags.sql 6384a56d553e36aa1c54cdb61a147bb2806e3e9d
-F source/ToDo.txt da65b2e849e8d979b478e0f5c0718cff5f6d6048
+F source/ToDo.txt 20d426f2aadc84615ad67970a2e6c86e31123a6d
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm 913cd36916b2934e526e0351d05cf093e9afc230
 F source/attachments.asm bf4b82333c52c2f1750ef2266170cddd37af0f5f
@@ -28,19 +28,18 @@ F source/categories.asm 87830583d32bdf406d7a0a0615cff0b23fda9283
 F source/categories.sql b1fa5a2cca7204372b3ca3714edbbc669103b1cf
 F source/chat.asm c0469c0067c6361d0894e18d9f32e01562a3c94c
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
-F source/commands.asm c86ad6ad9946b5437f545bcae7e25ba0283dc7c6
-F source/create.sql b0c585175efa8daffcc586537555fb2905f80234
+F source/commands.asm fe5183ed65d115315b3f64457b9630c50b748270
+F source/create.sql bc90396d81a0bee8aa4d48fc4e628a982491463a
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 7df442dc9dedf5ab1da3bca63bb91813e1fa068a
 F source/engine.asm 800b7fc92233337f68fbf9868222b34d408162bb
-F source/engine.fpr 5ea0c23acd7fa9673a0c5f2d423d2b520c6bd0e9
+F source/engine.fpr 70c9d2b004080dc41b57b77612baca1b1171a444
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm c1dfb0297685352865a7bb7eacff90d173f3d919
 F source/history.asm 60954615a27c21a67e1a20a82a636370ee55a9b7
 F source/http.asm 83348746eac5c0c9052144f61b626a3d9f0f53c0
 F source/images_png.asm cb69d9eafb85f6e61c526a3dcff4c7f2c3f4ebd6
-F source/keywords.txt 8e374a274b6a178e582656652edb52e65fbebfb2
 F source/messages.asm f1f350f40073680e2ed26e007312987ef9eb327f
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
@@ -60,7 +59,7 @@ F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm 9a8764ade01648787f11d6dfbce4edd07414fb4e
 F source/settings.sql a288c4c62dec4c713f22542109589b010c2da1bf
-F source/showthread.asm 48b99f49512ed12134736a58549a8a6604edf39f
+F source/showthread.asm debecaced96ceeca14461ce5ca6d31f705c3a056
 F source/showthread.sql e574b7b1e489cae2efb3d86181a0f3ee7d9eeb20
 F source/sqlite3.asm 8f0f4ac4450cc9de82d34850afe823501f00cb7b
 F source/sqlite_console.asm 4f2cc615e52780075f5b485e8f886a2180147386
@@ -679,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P f5cf9ca4d94545ed3045090062ae9ae1b75609eb
-R b8d066dc015d06f303a03c5e8635ee03
+P 603b18707e50e039edfa2a5addff4c5449718848
+R 3e0de5928c97dfadbf61427b463a4119
 U johnfound
-Z b2bc06c4b19f1a19206a652a07c768d2
+Z 11048934ab603123ef7b4fdc4cec5fd3

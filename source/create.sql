@@ -526,13 +526,6 @@ create table ScratchPad (
 );
 
 
-create table BadCookies (
-  cookie text,
-  agent  text,
-  remote text
-);
-
-
 create table ChatLog (
   id          integer primary key autoincrement,
   time        integer,

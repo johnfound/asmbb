@@ -197,7 +197,7 @@ begin
         stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_REFERER"
         jc      .thread_counter_ok
 
-        stdcall StrPos, eax, [esi+TSpecialParams.thread]
+        stdcall StrPos, eax, [esi+TSpecialParams.thread]        ; don't increment on browsing thread pages.
         test    eax, eax
         jnz     .thread_counter_ok
 

@@ -847,22 +847,14 @@ begin
 
 
 .port_ok:
-
-        xor     ebx, ebx
-
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetUserExists, sqlGetUserExists.length, eax, 0
         cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        je      .setupmode_ok
-
-        inc     ebx
-
-.setupmode_ok:
+        mov     ebx, eax
         cinvoke sqliteFinalize, [.stmt]
-        mov     [edi+TSpecialParams.setupmode], ebx
 
-        test    ebx, ebx
+        sub     ebx, SQLITE_ROW                         ; 0 if at least one user exists.
+        mov     [edi+TSpecialParams.setupmode], ebx
         jnz     .finish
 
         stdcall GetCookieValue, [edi+TSpecialParams.params], txt 'sid'

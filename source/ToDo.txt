@@ -12,3 +12,35 @@ On logout, all sessions for this IP are deleted. Should be more relaxed...
 The tabs still working weird, because the absolute positioning.
 
 ---DONE: The permLogin for the anon users to work as permRegister in order to allow the forum to close the registration.
+
+
+
+
+
+Write operations on a request:
+
+; For all requests:
+
+GetLoggedUser -> SetUserLastSeen -> update Users; (only for logged-in users)
+              -> InsertGuest -> insert into Guests;
+                             -> update Guests;
+                             -> insert into GuestRequests;
+                             -> delete from Guests; (clip the log size);
+
+
+; For all requests for forum resources/features (thread lists, login, logout, etc.)
+
+LogUserActivity -> insert into UserLog
+                -> delete from UserLog (clip the log size)
+
+
+; For thread show requests: ( not for refresh requests, detected by HTTP_CACHE_CONTROL="max-age=0" )
+
+Update PostCNT table for every post rendered.
+Delete from UnreadPosts for every post rendered.
+Update Threads(ReadCount)
+
+
+; For all form requests:
+
+SetUniqueTicket -> insert into Tickets;
