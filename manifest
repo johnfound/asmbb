@@ -1,5 +1,5 @@
-C Regression\sfixed,\srelated\sto\s[special:canedit]\sfor\sthread\sattributes\sand\snon-administrator\suser.
-D 2018-10-12T17:26:54.892
+C Don't\sshow\sthe\spermissions\sset\sdialog\sin\sthe\suser\sprofile\sfor\snon-admins.\sKeep\sprofile\sforms\stight\sin\sthe\sgrid.
+D 2018-10-12T19:39:57.769
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -543,7 +543,7 @@ F www/templates/Wasp/error_html_end.tpl 3729362af2738a816684e06dd05bbfff10a39d02
 F www/templates/Wasp/error_html_start.tpl bb9719e341078e7b101f39c8ff92b54e403915c6
 F www/templates/Wasp/form_edit.tpl 7a6d3b2d0807fc327bdc0c480bbd32be224f0b93
 F www/templates/Wasp/form_edit_thread.tpl a07f24d40f0bca454ce1fd6feab498ecf62ff69d
-F www/templates/Wasp/form_editinfo.tpl 9c9b8107864d1c9a23e7ec1c57e57616edf84e2c
+F www/templates/Wasp/form_editinfo.tpl 92b3b181a5698a39fac31ebe736cdc8bfc93ccd8
 F www/templates/Wasp/form_login.tpl cdddb5dad351d6b0545df008607b9485892c99a4
 F www/templates/Wasp/form_new_post.tpl f9371d72de177afaa11b8f4172a3633e1d7cc571
 F www/templates/Wasp/form_new_thread.tpl ca33fb6fbd9f7118d94ea1bd418808753261c017
@@ -585,7 +585,7 @@ F www/templates/Wasp/statistics.tpl c0dd59a240e07c246fe9c0841eb1532b93f3f1ae
 F www/templates/Wasp/thread_info.tpl f29ae867d14ec65c2c69a8d38856710f71ffc4f0
 F www/templates/Wasp/thread_list.less a0ac773e053714a3576eaa80a87a436f835b769c
 F www/templates/Wasp/threadnew.less 3576cacff07ebd24a7f587c1d7bec5a1fae2561e
-F www/templates/Wasp/userinfo.less c6ed9e57a0a59b3c43874366a605649a76ef3b4f
+F www/templates/Wasp/userinfo.less b6cd4b1080cd81c98bc73a911d0ec600748cbf8c
 F www/templates/Wasp/userinfo.tpl 065baf1ff673106a93156df180f2ea56db7abc65
 F www/templates/Wasp/users_online.less bd646392254c955b3c70def99c358ed1df2bf298
 F www/templates/Wasp/userslist.less 9dae27c4e52c68f3351549034bdd7f9754bce069
@@ -672,13 +672,13 @@ F www/templates/mobile/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
 F www/templates/mobile/thread_info.tpl 65200d66f17830130538c90657ee620e36cbfdf0
 F www/templates/mobile/thread_list.less 8724eec6f8e947a0b8b332edddf14f3a581372d0
 F www/templates/mobile/threadnew.less c2af3d158e2e03851692576dce99f5287e50b0c6 l
-F www/templates/mobile/userinfo.less b7006bfd2dbf9669e3aae8c029040fd65a8ecfb1
+F www/templates/mobile/userinfo.less a25b03b200d98fb91b0f063b7883b62d84744499
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d2 l
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P dcf1a39cddfdc82288f0e96ca0988744df1ff807
-R 6d15ba1c7dbf5bef79e18448815c9963
+P 3ccf67b951d46739b5d0033993dba15f55557f33
+R 5619a9823ddc94b7b185ca3a618e9577
 U johnfound
-Z 26d8ec79bcb708698d4a55262306a014
+Z 23e898602781c7f6453ed42b03b83306

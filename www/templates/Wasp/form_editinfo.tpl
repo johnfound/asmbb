@@ -1,7 +1,7 @@
 <form class="user_edit_info settings" method="post" action="/!userinfo/[username]">
   <h2>User description:<span class="small"> (Formatted text)</span></h2>
   <textarea class="user_desc" name="user_desc">[user_desc]</textarea>
-  [case:[special:isadmin]|
+  [case:[special:isadmin]||
   <h2>User permissions:</h2>
   <table><tr>
     <td>
