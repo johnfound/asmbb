@@ -6,7 +6,10 @@ sqlCheckAccess   text "select not count() or sum(userID = ?2) from LimitedAccess
 
 
 sqlGetPostCount  text "select PostCount from threads where id = ?1"
-sqlGetThreadInfo text "select T.id, T.caption from Threads T where T.slug = ?1"
+
+; IMPORTANT: userID is needed because of [special:canedit] template statement!
+sqlGetThreadInfo text "select T.id, T.caption, (select userID from Posts where threadID=T.id order by id limit 1) as UserID from Threads T where T.slug = ?1"
+
 sqlIncReadCount  text "update PostCNT set Count = Count + 1 where postid in ("
 sqlSetPostsRead  text "delete from UnreadPosts where UserID = ?1 and PostID in ("
 

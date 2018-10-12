@@ -1,5 +1,5 @@
-C Merged\swith\sthe\sbbcode\sin\sorder\sto\sget\sthe\slatest\sstyles,\safter\sthe\sFreshLib\sMiniMag\smarkup\sparser\swas\schanged.
-D 2018-10-12T16:50:46.839
+C Regression\sfixed,\srelated\sto\s[special:canedit]\sfor\sthread\sattributes\sand\snon-administrator\suser.
+D 2018-10-12T17:26:54.892
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -59,7 +59,7 @@ F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm 9a8764ade01648787f11d6dfbce4edd07414fb4e
 F source/settings.sql a288c4c62dec4c713f22542109589b010c2da1bf
-F source/showthread.asm debecaced96ceeca14461ce5ca6d31f705c3a056
+F source/showthread.asm bedfb905dcc70f707be0bed170e401d41bf5a0c9
 F source/showthread.sql e574b7b1e489cae2efb3d86181a0f3ee7d9eeb20
 F source/sqlite3.asm 8f0f4ac4450cc9de82d34850afe823501f00cb7b
 F source/sqlite_console.asm 4f2cc615e52780075f5b485e8f886a2180147386
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P d0e04d89f93bfa289981af15cd2930d5ddf09924 b74072b7160a2823cc730bc4b6d7de97060b4b66
-R c0640098c847a4aaed494b205de68caa
+P dcf1a39cddfdc82288f0e96ca0988744df1ff807
+R 6d15ba1c7dbf5bef79e18448815c9963
 U johnfound
-Z 6014a8b740096034bda6680cec242f24
+Z 26d8ec79bcb708698d4a55262306a014
