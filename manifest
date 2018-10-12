@@ -1,5 +1,5 @@
-C Fixed\sbug\sin\sthe\sthread\slist\sSQL\squery.\sFixed\sbug\sin\s"goto\sfirst\sunread"\slink\sin\sthe\sthread\slist.
-D 2018-10-12T11:13:04.648
+C Merged\swith\sthe\sbbcode\sin\sorder\sto\sget\sthe\slatest\sstyles,\safter\sthe\sFreshLib\sMiniMag\smarkup\sparser\swas\schanged.
+D 2018-10-12T16:50:46.839
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -19,7 +19,7 @@ F source/Linux/sqlite3.inc 49dc036ae22c327790d0314c81263d77d041990b
 F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/TestsWithTags.sql 6384a56d553e36aa1c54cdb61a147bb2806e3e9d
-F source/ToDo.txt da65b2e849e8d979b478e0f5c0718cff5f6d6048
+F source/ToDo.txt 20d426f2aadc84615ad67970a2e6c86e31123a6d
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm 913cd36916b2934e526e0351d05cf093e9afc230
 F source/attachments.asm bf4b82333c52c2f1750ef2266170cddd37af0f5f
@@ -28,19 +28,18 @@ F source/categories.asm 87830583d32bdf406d7a0a0615cff0b23fda9283
 F source/categories.sql b1fa5a2cca7204372b3ca3714edbbc669103b1cf
 F source/chat.asm c0469c0067c6361d0894e18d9f32e01562a3c94c
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
-F source/commands.asm c86ad6ad9946b5437f545bcae7e25ba0283dc7c6
-F source/create.sql b0c585175efa8daffcc586537555fb2905f80234
+F source/commands.asm fe5183ed65d115315b3f64457b9630c50b748270
+F source/create.sql bc90396d81a0bee8aa4d48fc4e628a982491463a
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 7df442dc9dedf5ab1da3bca63bb91813e1fa068a
 F source/engine.asm 800b7fc92233337f68fbf9868222b34d408162bb
-F source/engine.fpr 5ea0c23acd7fa9673a0c5f2d423d2b520c6bd0e9
+F source/engine.fpr 70c9d2b004080dc41b57b77612baca1b1171a444
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm c1dfb0297685352865a7bb7eacff90d173f3d919
 F source/history.asm 60954615a27c21a67e1a20a82a636370ee55a9b7
 F source/http.asm 83348746eac5c0c9052144f61b626a3d9f0f53c0
 F source/images_png.asm cb69d9eafb85f6e61c526a3dcff4c7f2c3f4ebd6
-F source/keywords.txt 8e374a274b6a178e582656652edb52e65fbebfb2
 F source/messages.asm f1f350f40073680e2ed26e007312987ef9eb327f
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
@@ -60,7 +59,7 @@ F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm 9a8764ade01648787f11d6dfbce4edd07414fb4e
 F source/settings.sql a288c4c62dec4c713f22542109589b010c2da1bf
-F source/showthread.asm 48b99f49512ed12134736a58549a8a6604edf39f
+F source/showthread.asm debecaced96ceeca14461ce5ca6d31f705c3a056
 F source/showthread.sql e574b7b1e489cae2efb3d86181a0f3ee7d9eeb20
 F source/sqlite3.asm 8f0f4ac4450cc9de82d34850afe823501f00cb7b
 F source/sqlite_console.asm 4f2cc615e52780075f5b485e8f886a2180147386
@@ -426,7 +425,7 @@ F www/templates/Terminal/help_new_thread.tpl 579ed6559a0a3aee0fe3be3a2c841c1dd7b
 F www/templates/Terminal/login.less 9bfb1ccb94f4b4e8354ff9ed6944c89924063a3b
 F www/templates/Terminal/main_html_end.tpl 98d81369839da6e3445df49e6af62545ce9705d4
 F www/templates/Terminal/main_html_start.tpl b61b794eb3df558d07b10574591d0b80c3509543
-F www/templates/Terminal/markdown.less 3f41aeb9e230ac732bcc6f28b5726f35e2904fa9
+F www/templates/Terminal/markdown.less d478bd464cd01eba806eb3a5fa76e943410b7f5b
 F www/templates/Terminal/minimag_suffix.tpl f3a1414972a13590a7c984b53b6fd2ddd3a47f3a l
 F www/templates/Terminal/nav_categories.tpl 8a9010133716cb745f4ed027c96c7b9348e4b18a
 F www/templates/Terminal/nav_history.tpl bebfd24b9db5592d5222ad8cf2df125f258ec6bc
@@ -532,7 +531,7 @@ F www/templates/Wasp/activity9.tpl 0a11b94859bcfc5708393da94ee934fd4361ecb4
 F www/templates/Wasp/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
 F www/templates/Wasp/chat.less e57b611bba245767e3924f761c37393ee3bb53d2
 F www/templates/Wasp/chat.tpl 32d13cec3ff9bc2439ad4bd6b29867ca33f492b2
-F www/templates/Wasp/common.less 173319c801bbd83d43674feab9a2148da1894509
+F www/templates/Wasp/common.less b12d47f60d794b7c22bdd674b2c696c55b410867
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 27678b543c744bd64421b50b66d3e60253bb4d3e
 F www/templates/Wasp/delete.less f77246e7f9fd0680ddb1ef2351b2b4ec5cef54f2
@@ -559,7 +558,7 @@ F www/templates/Wasp/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991e
 F www/templates/Wasp/login.less b8467882b426bdd8949171fa410c3cb71ced6cdd
 F www/templates/Wasp/main_html_end.tpl f1e4b1ef234a14345fb8a2d7348944d5eb6abfab
 F www/templates/Wasp/main_html_start.tpl 0b6660caa2b332c98f7ed939b9c463f5c0f0a19a
-F www/templates/Wasp/markdown.less 728b194c01331eb110fd5de38efde71dfd78b9c0
+F www/templates/Wasp/markdown.less 6a4ff357b65caa9a906f9895f3a51258c035d53c
 F www/templates/Wasp/minimag_suffix.tpl ea20e08377b7ccdd55a2d7792071bb2734622813
 F www/templates/Wasp/nav_categories.tpl 80053896a6a06ee87351b1e586eaefd329a84109
 F www/templates/Wasp/nav_history.tpl ec672e45848f639e46cd390f9058ed0672d5289b
@@ -574,7 +573,7 @@ F www/templates/Wasp/post_history.tpl cc8b0ededf762aa5dcc8f54e54cc2671b412ac37
 F www/templates/Wasp/post_view.tpl 3964e7912cbfb5f16d28fdc6e3a3a536d6c4cacd
 F www/templates/Wasp/posteditor.less ca7bc69c7343690776ccc50c9b95f3864efe29c0
 F www/templates/Wasp/postnew.less baa6d6d872f7d4bd97a4283a84194b38e044a796
-F www/templates/Wasp/posts.less 4ed601865e9a70e407e43450263e864c29ec8b14
+F www/templates/Wasp/posts.less 90d9b437e4267d4842d8ec355904892f4e651a98
 F www/templates/Wasp/preview.tpl 3e341c8a5624a3669a13b82247c924863d9a8d06
 F www/templates/Wasp/restore_confirm.tpl c101e4ccda03878c89c22aa70b96db20c33ce063
 F www/templates/Wasp/search.less 17bfdc636da1019916443febbb2073b791ed79d1
@@ -646,7 +645,7 @@ F www/templates/mobile/help_new_thread.tpl 579ed6559a0a3aee0fe3be3a2c841c1dd7b8b
 F www/templates/mobile/login.less 4af417eb9ae51e7d5691cba96a93ef5a9fd79dd2 l
 F www/templates/mobile/main_html_end.tpl d8b3ec3c2cdc952fcab6638d4147ee7e9cd2ba96 l
 F www/templates/mobile/main_html_start.tpl b93c0043a09f7ef6614707de05a8b45f8af6b33f l
-F www/templates/mobile/markdown.less 7b690ba50cd9f2e9ec8b0ec039765f211b2a7c9f
+F www/templates/mobile/markdown.less 56e08a5779e9c67fd405d3036150b7c52816d419
 F www/templates/mobile/minimag_suffix.tpl f3a1414972a13590a7c984b53b6fd2ddd3a47f3a l
 F www/templates/mobile/nav_categories.tpl f7d6f653d7de3ea424b62ebae575e3c5c1f4d98b l
 F www/templates/mobile/nav_history.tpl ac180ed4422e7ee62e4421a19c1ee7d69a72e503 l
@@ -661,7 +660,7 @@ F www/templates/mobile/post_history.tpl 252f022e564844721c84b264f05f527742108a19
 F www/templates/mobile/post_view.tpl 4e4b1a73db2462b1954e92ec092c71c438b63e85 l
 F www/templates/mobile/posteditor.less af013f51fda1a0a8710d4aa2be99f1a4481abcd1
 F www/templates/mobile/postnew.less 3df1b56984c0e0268104a69862782120a40f06be l
-F www/templates/mobile/posts.less 0ce5f8c3b77e2c93c1245601c4acec4b710d7fc8
+F www/templates/mobile/posts.less 1c62bbcf1f3b1faaa11c69c38606f4bd8b13c1c2
 F www/templates/mobile/preview.tpl 6bd29d06a6720e51db6d4d73b7572f9fcc1ff32f l
 F www/templates/mobile/restore_confirm.tpl c59340b4b594a629285efa18802ea6d542442afb l
 F www/templates/mobile/search.less 4aae680b0042d04f27b06a36469268d5dfec7e89
@@ -679,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P f0131082d790247a2ac596e45d37ba31276fee46
-R 3df53d66f5f8553ed9a33e7a751e3154
+P d0e04d89f93bfa289981af15cd2930d5ddf09924 b74072b7160a2823cc730bc4b6d7de97060b4b66
+R c0640098c847a4aaed494b205de68caa
 U johnfound
-Z 6a7d98e09425140bfc6d3b4119334cee
+Z 6014a8b740096034bda6680cec242f24
