@@ -33,7 +33,7 @@ left join LimitedAccessThreads LT on LT.threadid = T.id
 |]
 
 group by T.id, Pinned, LastChanged
-having ?4 is null or TT.tag = ?4
+having ?4 is null or max(TT.tag = ?4)
 
 limit  ?1
 offset ?2;
