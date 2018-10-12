@@ -1,5 +1,5 @@
-C Removed\sobsolete\sand\sforgotten\stable\sin\screate.sql;\sMore\ssimple\scode\sfor\ssetup\smode\sdetection.\s\n\nSome\snotes\sabout\sDB\swrites\sper\srequest\sin\sToDo.txt\sfile.
-D 2018-10-02T08:58:54.646
+C Experiments\swith\sdirect\srendering.
+D 2018-10-12T05:10:25.741
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -31,12 +31,12 @@ F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm fe5183ed65d115315b3f64457b9630c50b748270
 F source/create.sql bc90396d81a0bee8aa4d48fc4e628a982491463a
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
-F source/edit.asm 7df442dc9dedf5ab1da3bca63bb91813e1fa068a
-F source/engine.asm 800b7fc92233337f68fbf9868222b34d408162bb
+F source/edit.asm 0ecdfe0402647fa64a1cee8046736d7fdb772ab2
+F source/engine.asm 52d4cd5da88a1b56a9f5c7ec64694acb3ca67975
 F source/engine.fpr 70c9d2b004080dc41b57b77612baca1b1171a444
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
-F source/fcgi.asm c1dfb0297685352865a7bb7eacff90d173f3d919
+F source/fcgi.asm 1afa7a44e7094a0579e47b21fddbc7c13fd97c18
 F source/history.asm 60954615a27c21a67e1a20a82a636370ee55a9b7
 F source/http.asm 83348746eac5c0c9052144f61b626a3d9f0f53c0
 F source/images_png.asm cb69d9eafb85f6e61c526a3dcff4c7f2c3f4ebd6
@@ -52,7 +52,7 @@ F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql c15286f32455df88ebd14168a10195e0c098545d
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
-F source/render2.asm 8c7ddd9e187a98b9a87f7e6b43ae7f4339e195b6
+F source/render2.asm 4984aea8b5332f5477850b7dd35f4f3f4d0a91a9
 F source/restore.sql 14a8f13466ced19e05502d41ffcfddeecbc6954b
 F source/search.asm 4a2bfd137375606dc7a0da5d8f7ebc242a6ec6ac
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -60,7 +60,7 @@ F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm 9a8764ade01648787f11d6dfbce4edd07414fb4e
 F source/settings.sql a288c4c62dec4c713f22542109589b010c2da1bf
 F source/showthread.asm debecaced96ceeca14461ce5ca6d31f705c3a056
-F source/showthread.sql e574b7b1e489cae2efb3d86181a0f3ee7d9eeb20
+F source/showthread.sql 7980db189427dfba3174c6cd21f5e723fd9b0da8
 F source/sqlite3.asm 8f0f4ac4450cc9de82d34850afe823501f00cb7b
 F source/sqlite_console.asm 4f2cc615e52780075f5b485e8f886a2180147386
 F source/sse_service.asm 68a6bf1d96e6c2fb0b02d87a0c67d2387075ab01
@@ -437,7 +437,7 @@ F www/templates/Terminal/navigation.less d9244dc553c663c0d4df87245e612cbd56b2057
 F www/templates/Terminal/one_category.tpl 0a104ef1000580e594a26c60e550cea3c403484c
 F www/templates/Terminal/one_user.tpl f1e1aacad832e82f4b446f755387efe7f6d815b1 l
 F www/templates/Terminal/post_history.tpl 252f022e564844721c84b264f05f527742108a19 l
-F www/templates/Terminal/post_view.tpl eb3845f9db3863509d9adc0b72bd8609c9567edc
+F www/templates/Terminal/post_view.tpl ff4da263b816a4273253ba5f59c5cc94b123c70a
 F www/templates/Terminal/posteditor.less 9008ab729f4908a9f3971dd5abc6ec02f691b01b
 F www/templates/Terminal/postnew.less 0019f1af77582a801e810ae59b6d034ff18515b8
 F www/templates/Terminal/posts.less 893eb4f1f9cf66e4def3ced9cfa0e08ac11cc3fa
@@ -535,13 +535,13 @@ F www/templates/Wasp/common.less b12d47f60d794b7c22bdd674b2c696c55b410867
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 27678b543c744bd64421b50b66d3e60253bb4d3e
 F www/templates/Wasp/delete.less f77246e7f9fd0680ddb1ef2351b2b4ec5cef54f2
-F www/templates/Wasp/edit.json 8eab35c75a88cfcf9a3f0b53a7fd80610ed30286
+F www/templates/Wasp/edit.json c7a0e2200458f718dd1793d635feb3efcddf10c8
 F www/templates/Wasp/edit_toolbar.tpl 0a84d91c9190f6338a09f281067cff9e0f838100
 F www/templates/Wasp/editor.less 31a9c1af85110a4e9dce3fcf00ab16bbda9ce50a
 F www/templates/Wasp/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Wasp/error_html_end.tpl 3729362af2738a816684e06dd05bbfff10a39d02
 F www/templates/Wasp/error_html_start.tpl bb9719e341078e7b101f39c8ff92b54e403915c6
-F www/templates/Wasp/form_edit.tpl 7a6d3b2d0807fc327bdc0c480bbd32be224f0b93
+F www/templates/Wasp/form_edit.tpl 7337b5dc96aada761bb227f2e182a7f613295f82
 F www/templates/Wasp/form_edit_thread.tpl a07f24d40f0bca454ce1fd6feab498ecf62ff69d
 F www/templates/Wasp/form_editinfo.tpl 9c9b8107864d1c9a23e7ec1c57e57616edf84e2c
 F www/templates/Wasp/form_login.tpl cdddb5dad351d6b0545df008607b9485892c99a4
@@ -570,11 +570,11 @@ F www/templates/Wasp/navigation.less 25ad252c4ecb5c4bc3e2034e90aed8fca4aa375d
 F www/templates/Wasp/one_category.tpl b6a45167d23af803a4107d015451d762f51fe402
 F www/templates/Wasp/one_user.tpl 6bf8fc5739971116473d7dd78425514f13bf6c4a
 F www/templates/Wasp/post_history.tpl cc8b0ededf762aa5dcc8f54e54cc2671b412ac37
-F www/templates/Wasp/post_view.tpl 3964e7912cbfb5f16d28fdc6e3a3a536d6c4cacd
+F www/templates/Wasp/post_view.tpl 2a49630e7724ee4607f868f3ba6af7c3f53063f7
 F www/templates/Wasp/posteditor.less ca7bc69c7343690776ccc50c9b95f3864efe29c0
 F www/templates/Wasp/postnew.less baa6d6d872f7d4bd97a4283a84194b38e044a796
 F www/templates/Wasp/posts.less 90d9b437e4267d4842d8ec355904892f4e651a98
-F www/templates/Wasp/preview.tpl 3e341c8a5624a3669a13b82247c924863d9a8d06
+F www/templates/Wasp/preview.tpl 0eeeab4868329076be5576fb5dc8e55addca3c52
 F www/templates/Wasp/restore_confirm.tpl c101e4ccda03878c89c22aa70b96db20c33ce063
 F www/templates/Wasp/search.less 17bfdc636da1019916443febbb2073b791ed79d1
 F www/templates/Wasp/search_result.tpl 6c5a46b179308b9b7b4f272c7f543fa8f526dd36
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 603b18707e50e039edfa2a5addff4c5449718848
-R 3e0de5928c97dfadbf61427b463a4119
+P b74072b7160a2823cc730bc4b6d7de97060b4b66
+R 71b4da1da18cf0284b7be74d76bfe7bb
 U johnfound
-Z 11048934ab603123ef7b4fdc4cec5fd3
+Z 10840a7d2ce874263fd213dea8c2b6f8

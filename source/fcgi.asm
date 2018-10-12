@@ -174,6 +174,8 @@ begin
         cmp     [fOwnSocket], 0
         jne     .finish
 
+        stdcall FileDelete, pathMySocket
+
         stdcall SocketCreate, PF_UNIX, SOCK_STREAM, 0
         jc      .finish
 

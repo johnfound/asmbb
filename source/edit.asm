@@ -1,8 +1,8 @@
 
-sqlReadPost    text "select P.id, T.caption, P.content as source, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
-sqlEditedPost  text "select P.id, T.caption, ?3 as source, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
+sqlReadPost    text "select P.id, T.caption, P.content as source, format, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
+sqlEditedPost  text "select P.id, T.caption, ?3 as source, ?5 as format, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
 
-sqlSavePost    text "update Posts set content = ?1, rendered = ?2, editUserID = ?4, editTime = strftime('%s','now') where id = ?3"
+sqlSavePost    text "update Posts set content = ?1, rendered = ?2, format = ?5, editUserID = ?4, editTime = strftime('%s','now') where id = ?3"
 sqlGetPostUser text "select userID, threadID from Posts where id = ?"
 
 
@@ -12,6 +12,7 @@ proc EditUserMessage, .pSpecial
 .source   dd ?
 .rendered dd ?
 .ticket   dd ?
+.format   dd ?
 
 .res      dd ?
 .threadID dd ?
@@ -28,6 +29,7 @@ begin
         mov     [.source], ebx
         mov     [.rendered], ebx
         mov     [.ticket], ebx
+        mov     [.format], ebx
         mov     [.softPreview], ebx
 
         mov     esi, [.pSpecial]
@@ -94,6 +96,17 @@ begin
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "source", 0
         mov     [.source], eax
 
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "format", 0
+        test    eax, eax
+        jz      .format_ok
+
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack
+
+.format_ok:
+        mov     [.format], eax
+
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "submit", 0
         stdcall StrDel, eax
         test    eax, eax
@@ -147,6 +160,7 @@ begin
 
         stdcall StrPtr, [.source]
         cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteBindInt, [.stmt], 5, [.format]
 
 .source_ok:
         cinvoke sqliteStep, [.stmt]
@@ -230,6 +244,7 @@ begin
 
         cinvoke sqliteBindInt, [.stmt], 3, [esi+TSpecialParams.page_num]
         cinvoke sqliteBindInt, [.stmt], 4, [esi+TSpecialParams.userID]
+        cinvoke sqliteBindInt, [.stmt], 5, [.format]
 
         stdcall StrByteUtf8, [.source], LIMIT_POST_LENGTH
         stdcall StrTrim, [.source], eax

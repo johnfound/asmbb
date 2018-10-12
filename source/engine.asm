@@ -15,6 +15,7 @@
 include "%lib%/freshlib.inc"
 
 LINUX_INTERPRETER equ './ld-musl-i386.so'
+EMOTICONS_PATH equ '/~/_images/emoticons/'
 
 @BinaryType console, compact
 
@@ -29,7 +30,7 @@ options.DebugWeb = 0
 options.DebugSQLite = 1
 
 options.DebugWebSSE = 0         ; debug server sent events - creates a command "!echo_events" for debugging SSE.
-options.Benchmark = 0
+options.Benchmark = 1
 
 ;HeapManager  equ ASM
 ;LinuxThreads equ native
@@ -94,7 +95,7 @@ uglobal
 endg
 
 
-;rb 373
+rb 373
 
 
 start:

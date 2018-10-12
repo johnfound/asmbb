@@ -27,6 +27,7 @@ PHashTable tableRenderCmd, tpl_func,                    \
         'raw:',         RenderTemplate.cmd_raw,           \
         'include:',     RenderTemplate.cmd_include,       \
         'minimag:',     RenderTemplate.cmd_minimag,       \   ; HTML, no encoding.
+        'bbcode:',      RenderTemplate.cmd_bbcode,        \   ; HTML, no encoding.
         'html:',        RenderTemplate.cmd_html,          \   ; HTML, disables the encoding.
         'attachments:', RenderTemplate.cmd_attachments,   \   ; HTML, no encoding.
         'attach_edit:', RenderTemplate.cmd_attachedit,    \   ; HTML, no encoding.
@@ -461,6 +462,12 @@ begin
 ; ...................................................................
 
 .cmd_minimag:
+locals
+  BenchVar .minimag_time
+endl
+
+        BenchmarkStart .minimag_time
+
 ; here esi points to ":" of the "minimag:" command. edi points to the start "[" and ecx points to the end "]"
 
         stdcall TextMoveGap, edx, ecx
@@ -515,6 +522,43 @@ begin
         stdcall StrDel ; from the stack
 
         add     ecx, eax
+
+
+        Benchmark "MiniMag markup rendering: "
+        BenchmarkEnd
+        jmp     .loop
+
+
+; ...................................................................
+.cmd_bbcode:
+; here esi points to ":" of the "bbcode:" command. edi points to the start "[" and ecx points to the end "]"
+
+locals
+  BenchVar .bbcode_time
+endl
+
+        BenchmarkStart .bbcode_time
+
+        stdcall TextMoveGap, edx, ecx
+        stdcall TextSetGapSize, edx, 4
+        mov     dword [edx+ecx], 0
+        add     [edx+TText.GapBegin], 4
+        inc     [edx+TText.GapEnd]              ; delete the end "]"
+
+        inc     esi  ; start of the source
+
+        stdcall TextMoveGap, edx, edi
+        add     [edx+TText.GapEnd], 8
+
+        stdcall TranslateBBCode, edx, edi
+
+        add     [edx+TText.GapEnd], 4
+        mov     ecx, [edx+TText.GapBegin]
+        dec     ecx
+
+        Benchmark "BBCode markup rendering: "
+        BenchmarkEnd
+
         jmp     .loop
 
 ; ...................................................................
@@ -957,7 +1001,7 @@ endl
 
 
 .cmd_case:
-; here esi points to ":" of the "special:" command. edi points to the start "[" and ecx points to the end "]"
+; here esi points to ":" of the "case:" command. edi points to the start "[" and ecx points to the end "]"
 
         xor     ebx, ebx
 
@@ -1035,8 +1079,6 @@ endl
         stdcall TextMoveGap, edx, ecx
         inc     [edx+TText.GapEnd]
         dec     ecx
-
-;        stdcall TextMoveGap, edx, -1
         jmp     .loop
 
 ; ...................................................................

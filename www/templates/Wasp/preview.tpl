@@ -9,7 +9,7 @@
   </div>
     <div class="post_text" style="margin:0px;">
       <article>
-        [html:[minimag:[source]]]
+        [html:[[case:[format]|minimag|bbcode]:[source]]]
         <div class="attachments">
           [attachments:[id]]
         </div>

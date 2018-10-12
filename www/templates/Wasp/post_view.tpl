@@ -23,7 +23,7 @@
       </div>
     </div>
     <article>
-      [html:[Rendered]]
+      [html:[[case:[format]|minimag|bbcode]:[Content]]]
       <div class="attachments">
         [attachments:[id]]
       </div>
