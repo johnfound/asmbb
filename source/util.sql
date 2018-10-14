@@ -191,3 +191,18 @@ CREATE VIRTUAL TABLE PostFTS using fts5( Content, ThreadID, UserID, PostTime, Re
 insert into PostFTS(rowid, Content, ThreadID, UserID, PostTime, ReadCount, Tags)
 select P.id, P.Content, P.ThreadID, P.UserID, P.PostTime, P.ReadCount, (select group_concat(Tag, ' ') from ThreadTags TT where TT.ThreadID = P.ThreadID ) as Tags from Posts P;
 
+
+
+-- Rebuild the threadposters cache table:
+
+delete from threadposters;
+insert into threadposters(firstPost,threadid, userid)
+select
+  min(id),
+  threadid,
+  userid
+from
+  posts
+group by
+  threadid,
+  userid;

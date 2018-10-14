@@ -1,5 +1,5 @@
-C Don't\sshow\sthe\spermissions\sset\sdialog\sin\sthe\suser\sprofile\sfor\snon-admins.\sKeep\sprofile\sforms\stight\sin\sthe\sgrid.
-D 2018-10-12T19:39:57.769
+C Update\sthe\sThreadTags\stable\son\sposts\sdelete.
+D 2018-10-14T07:51:57.065
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -29,7 +29,7 @@ F source/categories.sql b1fa5a2cca7204372b3ca3714edbbc669103b1cf
 F source/chat.asm c0469c0067c6361d0894e18d9f32e01562a3c94c
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm fe5183ed65d115315b3f64457b9630c50b748270
-F source/create.sql bc90396d81a0bee8aa4d48fc4e628a982491463a
+F source/create.sql 0fe7db69628aa428a80bc4c5002b1373ffc00649
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 7df442dc9dedf5ab1da3bca63bb91813e1fa068a
 F source/engine.asm 800b7fc92233337f68fbf9868222b34d408162bb
@@ -82,7 +82,7 @@ F source/users_online.asm fbcb75d5e0ed20a45fbef96b1840446b080b1e3b
 F source/users_online.sql 419ecd742f570ce4c34354c917d9dc06d33115a0
 F source/userslist.asm e2a2ee4735143fbf7d05ad0fc8243b28fe1c7104
 F source/userslist.sql a671e06a5beecc94edd3bb87cf0a4357b2554686
-F source/util.sql 9b7d8d9b0a6655a7abf427158c8368cfcf20d249
+F source/util.sql 9a28fa983067026d3f84a96c8272faa12612387e
 F source/version.asm 5429dfb0ca6d328d47bf95435903f1b961358c17
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 3ccf67b951d46739b5d0033993dba15f55557f33
-R 5619a9823ddc94b7b185ca3a618e9577
+P 79f320bede7f83917e3ea488262b746081451814
+R 952e78c2f01cf654417475cfb4626bc8
 U johnfound
-Z 23e898602781c7f6453ed42b03b83306
+Z 232877b392fa6b64ac101f2d959f0d9b

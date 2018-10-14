@@ -208,6 +208,8 @@ CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
   delete from PostFTS where rowid = old.id;
   update Users set PostCount = PostCount - 1 where Users.id = old.UserID;
   update Threads set PostCount = PostCount - 1 where id = old.threadID;
+  delete from ThreadPosters where threadid = old.threadid and userid = old.userid;
+  insert into ThreadPosters(firstPost, threadID, userID) select min(id), threadid, userid from posts where threadid = old.threadid and userid = old.userid;
 
   insert or ignore into PostsHistory(postID, threadID, userID, postTime, editUserID, editTime, format, Content) values (
     old.id,
