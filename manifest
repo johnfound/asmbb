@@ -1,5 +1,5 @@
-C ThreadPosters\stable\sdoes\snot\sneed\sprimary\skey.
-D 2018-10-14T08:06:03.148
+C This\sbranch\simplements\ssending\semails\sby\sexecuting\sexternal\sprogram,\ssuch\sas\ssendmail\sor\ssimilar.
+D 2018-10-19T13:55:16.655
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -28,11 +28,11 @@ F source/categories.asm 87830583d32bdf406d7a0a0615cff0b23fda9283
 F source/categories.sql b1fa5a2cca7204372b3ca3714edbbc669103b1cf
 F source/chat.asm c0469c0067c6361d0894e18d9f32e01562a3c94c
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
-F source/commands.asm fe5183ed65d115315b3f64457b9630c50b748270
+F source/commands.asm 2361c768b4bf9eb39711a0697854282104e8b520
 F source/create.sql d09cb86f19d1865463265963220d39f79136c1a8
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 7df442dc9dedf5ab1da3bca63bb91813e1fa068a
-F source/engine.asm 800b7fc92233337f68fbf9868222b34d408162bb
+F source/engine.asm 804e37a487a4f26a3b54ad8f3456659f3b8904ad
 F source/engine.fpr 70c9d2b004080dc41b57b77612baca1b1171a444
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -57,8 +57,8 @@ F source/restore.sql 14a8f13466ced19e05502d41ffcfddeecbc6954b
 F source/search.asm 4a2bfd137375606dc7a0da5d8f7ebc242a6ec6ac
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
-F source/settings.asm 9a8764ade01648787f11d6dfbce4edd07414fb4e
-F source/settings.sql a288c4c62dec4c713f22542109589b010c2da1bf
+F source/settings.asm 0af1280c0bcb33586ecfa3102b8f827a0f409044
+F source/settings.sql 3e6b8c30b73016c4912cf38c931662f1e966f2e9
 F source/showthread.asm bedfb905dcc70f707be0bed170e401d41bf5a0c9
 F source/showthread.sql e574b7b1e489cae2efb3d86181a0f3ee7d9eeb20
 F source/sqlite3.asm 8f0f4ac4450cc9de82d34850afe823501f00cb7b
@@ -551,7 +551,7 @@ F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e44992
 F www/templates/Wasp/form_register.tpl 18c0fa0a762d78dc4c34f6c8bdcb11140f4b1e36
 F www/templates/Wasp/form_reset_password.tpl 0602acb7aaa6528a16ddc2b16d7ac7b05e24f09a
 F www/templates/Wasp/form_reset_request.tpl d2130d1b896ef0ae18a02d962914bcd9b9b7e594
-F www/templates/Wasp/form_settings.tpl 70381822ce03289c0486bd4d407b995e110dbe0c
+F www/templates/Wasp/form_settings.tpl 8f2e352cb3fe986dc9f11fc06bdd08df7d022a35
 F www/templates/Wasp/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Wasp/form_sqlite_console.tpl 7efc4c110f2baaab4cb601c2eb68c0f65cc532fb
 F www/templates/Wasp/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
@@ -678,7 +678,10 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P aabef9bb8c9ae2dd4a258c2f58ed0de1a96f4749
-R cad94c654e8afbaef5fec6cf40299bfe
+P e2d583b3840a6e0604809f40a39da7a07fe92df0
+R c8806a4b08b976fedd73054bcf79927c
+T *branch * with_sendmail
+T *sym-with_sendmail *
+T -sym-sql_hacks *
 U johnfound
-Z 670a354c9711da15c50e9c7e0217c64d
+Z 9ad4de3b43da29b6f96be6cf4954c604
