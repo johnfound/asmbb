@@ -1217,9 +1217,6 @@ begin
         cmp     [.exec], 0
         je      .send_by_tcp
 
-
-        stdcall FileWriteString, [STDERR], <txt "Email sent by external program:", 13, 10, 13, 10>
-
 ; send by external program.
 
 ;        stdcall FileOpenAccess, "onemail.txt", faCreateAlways or faReadWrite

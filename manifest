@@ -1,5 +1,5 @@
-C This\sbranch\simplements\ssending\semails\sby\sexecuting\sexternal\sprogram,\ssuch\sas\ssendmail\sor\ssimilar.
-D 2018-10-19T13:55:16.655
+C Removed\sforgotten\sdebug\scode.
+D 2018-10-19T14:29:16.687
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -28,11 +28,11 @@ F source/categories.asm 87830583d32bdf406d7a0a0615cff0b23fda9283
 F source/categories.sql b1fa5a2cca7204372b3ca3714edbbc669103b1cf
 F source/chat.asm c0469c0067c6361d0894e18d9f32e01562a3c94c
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
-F source/commands.asm 2361c768b4bf9eb39711a0697854282104e8b520
+F source/commands.asm 423babcf8779a8e80617416a9d8c2eeecc35eecc
 F source/create.sql d09cb86f19d1865463265963220d39f79136c1a8
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 7df442dc9dedf5ab1da3bca63bb91813e1fa068a
-F source/engine.asm 804e37a487a4f26a3b54ad8f3456659f3b8904ad
+F source/engine.asm 800b7fc92233337f68fbf9868222b34d408162bb
 F source/engine.fpr 70c9d2b004080dc41b57b77612baca1b1171a444
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -678,10 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P e2d583b3840a6e0604809f40a39da7a07fe92df0
-R c8806a4b08b976fedd73054bcf79927c
-T *branch * with_sendmail
-T *sym-with_sendmail *
-T -sym-sql_hacks *
+P 9085f528dde85c1dd81e049b77c89969ef5a8423
+R 602a5cc5211de6d7e8b32715fb0888fe
 U johnfound
-Z 9ad4de3b43da29b6f96be6cf4954c604
+Z 8863b2b05c48b82383057153f9540620
