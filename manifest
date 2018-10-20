@@ -1,5 +1,5 @@
-C Removed\scommented\sout\scode.
-D 2018-10-20T16:24:13.745
+C Mark\sposts\sas\sread\seven\swith\sCache-control:\smax-age=0;\sStop\scounting\sreads\son\shard\srefresh\s(with\sCache-control:\sno-cache);
+D 2018-10-20T19:07:44.997
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -59,7 +59,7 @@ F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm 0af1280c0bcb33586ecfa3102b8f827a0f409044
 F source/settings.sql 3e6b8c30b73016c4912cf38c931662f1e966f2e9
-F source/showthread.asm bedfb905dcc70f707be0bed170e401d41bf5a0c9
+F source/showthread.asm 9bf95e48e47764b816467d4c0d0a6f193b093443
 F source/showthread.sql e574b7b1e489cae2efb3d86181a0f3ee7d9eeb20
 F source/sqlite3.asm 8f0f4ac4450cc9de82d34850afe823501f00cb7b
 F source/sqlite_console.asm 4f2cc615e52780075f5b485e8f886a2180147386
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P b0646e05a40d68434bf3ba824bb66d6ab8178c59
-R 53e9eceec00bba50ad0b4a0f996b2fc2
+P d770f181b17a80d04d8dd1af0adc746972174a54
+R 6533e3f998beb492b6b01ca9452c01c0
 U johnfound
-Z a60fae92259e798c217a7514c6188e96
+Z 7e34b586fb84b9eef865e1338b00f6ae
