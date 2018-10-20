@@ -1219,9 +1219,6 @@ begin
 
 ; send by external program.
 
-;        stdcall FileOpenAccess, "onemail.txt", faCreateAlways or faReadWrite
-;        mov     edx, eax
-
         stdcall CreatePipe
         mov     ebx, eax
 
