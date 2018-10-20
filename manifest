@@ -1,5 +1,5 @@
-C Mark\sposts\sas\sread\seven\swith\sCache-control:\smax-age=0;\sStop\scounting\sreads\son\shard\srefresh\s(with\sCache-control:\sno-cache);
-D 2018-10-20T19:07:44.997
+C More\sinformative\serror\smessage\son\sregistration\swith\sthe\ssame\semail/nickname.
+D 2018-10-20T19:24:46.308
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -29,7 +29,7 @@ F source/categories.sql b1fa5a2cca7204372b3ca3714edbbc669103b1cf
 F source/chat.asm c0469c0067c6361d0894e18d9f32e01562a3c94c
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm 4f53b1f63fa9dbcb5f6e66681fa926dc3948f5f0
-F source/create.sql d09cb86f19d1865463265963220d39f79136c1a8
+F source/create.sql 3beb304f3e2b781ab0fb5005ffe48aeee0d7153e
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 7df442dc9dedf5ab1da3bca63bb91813e1fa068a
 F source/engine.asm 800b7fc92233337f68fbf9868222b34d408162bb
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P d770f181b17a80d04d8dd1af0adc746972174a54
-R 6533e3f998beb492b6b01ca9452c01c0
+P f7f6d66b7d8dd76394b1acb1ec0b72c17fc808e1
+R f839f01ce09640e268bfa438de7da1d0
 U johnfound
-Z 7e34b586fb84b9eef865e1338b00f6ae
+Z ba1002c1f9620cae8105418ac6b4c35a

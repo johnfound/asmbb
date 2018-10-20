@@ -366,9 +366,9 @@ you have to fill.
 Missed some.','Empty field!',NULL);
 
 
-insert into Messages VALUES ('register_user_exists','With this nickname
-you will never succeed!
-It is taken.','Not available nickname!',NULL);
+insert into Messages VALUES ('register_user_exists','Maybe the nickname,
+or maybe the email,
+is already taken.','Not available nickname or email!',NULL);
 
 
 insert into Messages VALUES ('register_short_name','Short nick is not an
