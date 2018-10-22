@@ -19,7 +19,7 @@
         [case:[special:canpost]| |<a title="Quote this post" href="[id]/!post"><img src="[special:skin]/_images/quote.svg" alt="Quote"></a>]
         [case:[special:canedit]| |<a title="Edit this post" href="[id]/!edit"><img src="[special:skin]/_images/edit.svg" alt="Edit"></a>]
         [case:[special:candel] | |<a title="Delete this post" href="[id]/!del"><img src="[special:skin]/_images/del.svg" alt="Del"></a>]
-        [case:[HistoryCount]||[case:[special:isadmin]| |<a title="Show the post history" href="/[id]/!history"><img src="[special:skin]/_images/history.svg" alt="History"></a>]]
+        [case:[HistoryFlag]||[case:[special:isadmin]| |<a title="Show the post history" href="/[id]/!history"><img src="[special:skin]/_images/history.svg" alt="History"></a>]]
       </div>
     </div>
     <article>

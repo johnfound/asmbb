@@ -52,10 +52,13 @@ div.sql_exec {
   p {
     margin-bottom: 0px;
   }
+
   pre {
     padding: 4px;
-    margin-bottom: 4px;
+    margin: 8px 0 4px 0;
     overflow: auto;
+    font-family: @FontMonospace;
+    font-size: 12px;
   }
 }
 
@@ -67,15 +70,16 @@ table.sql_rows {
 
   th {
     border: 2px solid black;
-    padding: 8px;
-    max-width: 300px;
+    padding: 4px;
+//    max-width: 300px;
     text-align: center;
   }
 
   td {
     font-family: @FontMonospace;
+    font-size: 12px;
     border: 2px solid gray;
-    padding: 8px;
+    padding: 4px;
     max-width: 400px;
     max-height: 400px;
     text-align: left;
@@ -133,4 +137,9 @@ input.title {
     height: 24px;
     vertical-align: top;
   }
+}
+
+h5 {
+  margin: 32px 0 0 0;
+  font-size: 13px;
 }

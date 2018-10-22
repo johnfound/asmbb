@@ -2,7 +2,6 @@
 ; Pearsons hash function table:
 
 if used tpl_func
-
 tpl_func:
           db 148,  24,  71,  46, 179,   0, 106, 157,  70,   1, 102, 126, 120, 134, 151, 183
           db  47, 103,  92, 201,  62, 156,  13,  10, 254, 218, 248,  28,  85, 185, 245, 112
@@ -20,149 +19,63 @@ tpl_func:
           db 252, 199, 141,  56, 105,  11, 117, 163, 220,  27, 222, 234, 178,  52,  64, 221
           db  18, 232, 164,  53, 206, 153, 118,  48, 158, 162, 159, 191, 242, 125, 144,  94
           db 108,  91, 197, 111,  30,   7,  81, 181, 149,  45, 217, 208,  86, 238,   8, 228
-
-
 end if
 
 
-struct TPHashItem
-  .pKeyname    dd ?
-  .procCommand dd ?
-ends
+PHashTable tableRenderCmd, tpl_func,                    \
+        'special:',     RenderTemplate.cmd_special,       \
+        'raw:',         RenderTemplate.cmd_raw,           \
+        'include:',     RenderTemplate.cmd_include,       \
+        'minimag:',     RenderTemplate.cmd_minimag,       \   ; HTML, no encoding.
+        'html:',        RenderTemplate.cmd_html,          \   ; HTML, disables the encoding.
+        'attachments:', RenderTemplate.cmd_attachments,   \   ; HTML, no encoding.
+        'attach_edit:', RenderTemplate.cmd_attachedit,    \   ; HTML, no encoding.
+        'url:',         RenderTemplate.cmd_url,           \   ; Needs encoding!
+        'json:',        RenderTemplate.cmd_json,          \   ; No encoding.
+        'css:',         RenderTemplate.cmd_css,           \   ; No output, no encoding.
+        'case:',        RenderTemplate.cmd_case,          \   ; No encoding.
+        'sql:',         RenderTemplate.cmd_sql            ; Needs encoding!
 
-; builds static Pearsons hash table.
-
-macro PList table, Pfunc, [key, proc] {
-common
-  local ..error
-  ..error = 0
-
-  if defined options.ShowSizes & options.ShowSizes
-    disp 3, 'Hash table "', `table, '"', 9
-  end if
-
-  table dd 256 dup(0,0)
-
-forward
-local ..keynm, ..len, ..hash, ..char, ..prev
-  ..keynm db key
-  ..len = $ - ..keynm
-         db 0
-
-  if proc
-    ..hash = 0
-    repeat ..len
-      load ..char byte from ..keynm + % - 1
-      if ..char and $40
-        ..char = ..char or $20
-      end if
-      ..hash = ..hash xor ..char
-      load ..hash byte from Pfunc + ..hash
-    end repeat
-
-    if defined options.ShowSizes & options.ShowSizes
-      disp 3,'Keyword hash : ', <..hash, 10>, ' on "', key, '"', 10
-    end if
-
-    load ..prev dword from table + ..hash * 8
-
-    if ..prev = 0
-      store dword ..keynm at table + ..hash * 8
-      store dword proc at table + ..hash * 8 + 4
-    else
-      disp 2,'Hash collision: ', <..hash, 10>, ' on "', key, '"', 10
-      ..error = 1
-    end if
-  end if
-
-common
-  if defined options.ShowSizes & options.ShowSizes
-    disp 6, '---', 13
-  end if
-  assert ~..error
-}
-
-struc phash Pfunc, key {
-local ..keynm, ..len, ..hash, ..char
-
-  virtual at 0
-    ..keynm::
-      db key
-    ..len = $
-  end virtual
-
-  ..hash = 0
-  repeat ..len
-    load ..char byte from ..keynm:(% - 1)
-    if ..char and $40
-      ..char = ..char or $20
-    end if
-    ..hash = ..hash xor ..char
-    load ..hash byte from Pfunc + ..hash
-  end repeat
-
-;  disp 3,'Keyword hash : ', <..hash, 10>, ' on "', key, '"', 10
-
-  . = ..hash
-}
-
-
-if used RenderTemplate
-        PList tableRenderCmd, tpl_func,                         \
-              'special:',     RenderTemplate.cmd_special,       \
-              'raw:',         RenderTemplate.cmd_raw,           \
-              'include:',     RenderTemplate.cmd_include,       \
-              'minimag:',     RenderTemplate.cmd_minimag,       \   ; HTML, no encoding.
-              'html:',        RenderTemplate.cmd_html,          \   ; HTML, disables the encoding.
-              'attachments:', RenderTemplate.cmd_attachments,   \   ; HTML, no encoding.
-              'attach_edit:', RenderTemplate.cmd_attachedit,    \   ; HTML, no encoding.
-              'url:',         RenderTemplate.cmd_url,           \   ; Needs encoding!
-              'json:',        RenderTemplate.cmd_json,          \   ; No encoding.
-              'css:',         RenderTemplate.cmd_css,           \   ; No output, no encoding.
-              'case:',        RenderTemplate.cmd_case,          \   ; No encoding.
-              'sql:',         RenderTemplate.cmd_sql            ; Needs encoding!
-
-
-        PList tableSpecial, tpl_func,                                 \
-              "visitors",    RenderTemplate.sp_visitors,              \ ; HTML no encoding
-              "version",     RenderTemplate.sp_version,               \ ; no encoding
-              "cmdtype",     RenderTemplate.sp_cmdtype,               \ ; 0/1/2 no encoding
-              "stats",       RenderTemplate.sp_stats,                 \ ; HTML no encoding
-              "timestamp",   RenderTemplate.sp_timestamp,             \ ; NUMBER no encoding
-              "title",       RenderTemplate.sp_title,                 \ ; Controlled source, no encoding
-              "header",      RenderTemplate.sp_header,                \ ; Controlled source, no encoding
-              "allstyles",   RenderTemplate.sp_allstyles,             \ ; CSS, from controlled source, no encoding.
-              "description", RenderTemplate.sp_description,           \ ; Controlled source, no encoding
-              "keywords",    RenderTemplate.sp_keywords,              \ ; Controlled source, no encoding
-              "username",    RenderTemplate.sp_username,              \ ; Needs encoding!
-              "userid",      RenderTemplate.sp_userid,                \ ; NUMBER, no encoding.
-              "skin",        RenderTemplate.sp_skin,                  \ ; Controlled source, no encoding???
-              "skincookie",  RenderTemplate.sp_skincookie,            \
-              "page",        RenderTemplate.sp_page,                  \ ; Number, no encoding.
-              "dir",         RenderTemplate.sp_dir,                   \ ; Needs encoding!
-              "thread",      RenderTemplate.sp_thread,                \ ; Needs encoding!
-              "permissions", RenderTemplate.sp_permissions,           \ ; NUMBER, no encoding
-              "isadmin",     RenderTemplate.sp_isadmin,               \ ; 1/0 no encoding
-              "canregister", RenderTemplate.sp_canregister,           \ ; 1/0 no encoding
-              "canpost",     RenderTemplate.sp_canpost,               \ ; 1/0 no encoding
-              "canstart",    RenderTemplate.sp_canstart,              \ ; 1/0 no encoding
-              "canedit",     RenderTemplate.sp_canedit,               \ ; 1/0 no encoding
-              "candel",      RenderTemplate.sp_candelete,             \ ; 1/0 no encoding
-              "canchat",     RenderTemplate.sp_canchat,               \ ; 1/0 no encoding
-              "canupload",   RenderTemplate.sp_canupload,             \ ; 1/0 no encoding
-              "referer",     RenderTemplate.sp_referer,               \ ; 1/0 no encoding
-              "alltags",     RenderTemplate.sp_alltags,               \ ; HTML no encoding
-              "allusers",    RenderTemplate.sp_allusers,              \ ; returns JSON array.
-              "setupmode",   RenderTemplate.sp_setupmode,             \ ; no encoding
-              "search",      RenderTemplate.sp_search,                \ ; Needs encoding!
-              "order",       RenderTemplate.sp_sort,                  \ ; Needs encoding!
-              "usearch",     RenderTemplate.sp_usearch,               \ ; Needs encoding!
-              "skins=",      RenderTemplate.sp_skins,                 \ ; HTML no encoding
-              "posters=",    RenderTemplate.sp_posters,               \
-              "invited=",    RenderTemplate.sp_invited,               \
-              "threadtags=", RenderTemplate.sp_threadtags,            \
-              "environment", RenderTemplate.sp_environment              ; optional, depends on options.DebugWeb
-end if
+PHashTable tableSpecial, tpl_func,                              \
+        "visitors",    RenderTemplate.sp_visitors,              \ ; HTML no encoding
+        "version",     RenderTemplate.sp_version,               \ ; no encoding
+        "sqliteversion", RenderTemplate.sp_sqlite_version,      \ ; no encoding
+        "cmdtype",     RenderTemplate.sp_cmdtype,               \ ; 0/1/2 no encoding
+        "stats",       RenderTemplate.sp_stats,                 \ ; HTML no encoding
+        "timestamp",   RenderTemplate.sp_timestamp,             \ ; NUMBER no encoding
+        "title",       RenderTemplate.sp_title,                 \ ; Controlled source, no encoding
+        "header",      RenderTemplate.sp_header,                \ ; Controlled source, no encoding
+        "allstyles",   RenderTemplate.sp_allstyles,             \ ; CSS, from controlled source, no encoding.
+        "description", RenderTemplate.sp_description,           \ ; Controlled source, no encoding
+        "keywords",    RenderTemplate.sp_keywords,              \ ; Controlled source, no encoding
+        "username",    RenderTemplate.sp_username,              \ ; Needs encoding!
+        "userid",      RenderTemplate.sp_userid,                \ ; NUMBER, no encoding.
+        "skin",        RenderTemplate.sp_skin,                  \ ; Controlled source, no encoding???
+        "skincookie",  RenderTemplate.sp_skincookie,            \
+        "page",        RenderTemplate.sp_page,                  \ ; Number, no encoding.
+        "dir",         RenderTemplate.sp_dir,                   \ ; Needs encoding!
+        "thread",      RenderTemplate.sp_thread,                \ ; Needs encoding!
+        "permissions", RenderTemplate.sp_permissions,           \ ; NUMBER, no encoding
+        "isadmin",     RenderTemplate.sp_isadmin,               \ ; 1/0 no encoding
+        "canregister", RenderTemplate.sp_canregister,           \ ; 1/0 no encoding
+        "canpost",     RenderTemplate.sp_canpost,               \ ; 1/0 no encoding
+        "canstart",    RenderTemplate.sp_canstart,              \ ; 1/0 no encoding
+        "canedit",     RenderTemplate.sp_canedit,               \ ; 1/0 no encoding
+        "candel",      RenderTemplate.sp_candelete,             \ ; 1/0 no encoding
+        "canchat",     RenderTemplate.sp_canchat,               \ ; 1/0 no encoding
+        "canupload",   RenderTemplate.sp_canupload,             \ ; 1/0 no encoding
+        "referer",     RenderTemplate.sp_referer,               \ ; 1/0 no encoding
+        "alltags",     RenderTemplate.sp_alltags,               \ ; HTML no encoding
+        "allusers",    RenderTemplate.sp_allusers,              \ ; returns JSON array.
+        "setupmode",   RenderTemplate.sp_setupmode,             \ ; no encoding
+        "search",      RenderTemplate.sp_search,                \ ; Needs encoding!
+        "order",       RenderTemplate.sp_sort,                  \ ; Needs encoding!
+        "usearch",     RenderTemplate.sp_usearch,               \ ; Needs encoding!
+        "skins=",      RenderTemplate.sp_skins,                 \ ; HTML no encoding
+        "posters=",    RenderTemplate.sp_posters,               \
+        "invited=",    RenderTemplate.sp_invited,               \
+        "threadtags=", RenderTemplate.sp_threadtags,            \
+        "environment", RenderTemplate.sp_environment              ; optional, depends on options.DebugWeb
 
 useridHash phash tpl_func, "userid"
 
@@ -538,7 +451,7 @@ begin
 
 
 .command:
-        mov     eax, [tableRenderCmd + sizeof.TPHashItem * ebx + TPHashItem.procCommand]
+        mov     eax, [tableRenderCmd + sizeof.TPHashItem * ebx + TPHashItem.Value]
         test    eax, eax
         jz      .loop
 
@@ -1165,7 +1078,7 @@ endl
 
 .what_special:
 
-        mov     eax, [tableSpecial + sizeof.TPHashItem * ebx + TPHashItem.procCommand]
+        mov     eax, [tableSpecial + sizeof.TPHashItem * ebx + TPHashItem.Value]
         test    eax, eax
         jz      .unknown_special
 
@@ -1256,6 +1169,25 @@ end if
 .sp_version:
         mov     eax, cVersion
         jmp     .special_string
+
+.sp_sqlite_version:
+        push    ebx esi
+
+        stdcall StrDupMem, txt '<b>SQLite v'
+        mov     ebx, eax
+
+        stdcall StrCat, ebx, [sqliteVersion]
+        stdcall StrCat, ebx, txt '</b> (check-in: <a href="http://sqlite.org/cgi/src/info/'
+
+        cinvoke sqliteSourceID
+        lea     esi, [eax+20]                   ; skip the date/time of the string.
+        stdcall StrCatMem, ebx, esi, 16
+        stdcall StrCat, ebx, txt '">'
+        stdcall StrCatMem, ebx, esi, 16
+        stdcall StrCat, ebx, txt '</a>)'
+        mov     eax, ebx
+        pop     esi ebx
+        jmp     .special_string_free
 
 ; ...................................................................
 
@@ -1757,16 +1689,10 @@ begin
 endp
 
 
-;sqlGetMaxTagUsed text "select max(cnt) from (select count(*) as cnt from ThreadTags group by tag)"
-;sqlGetAllTags    text "select TT.tag, count(TT.tag) as cnt, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag group by TT.tag order by TT.tag"
-sqlGetMaxTagUsed text "select max(cnt) from (select (select count() from ThreadTags TT where TT.tag = T.tag) as cnt from tags T where importance > -1)"
-
-;sqlGetAllTags    text "select TT.tag, count(TT.tag) as cnt, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag where T.Importance >= 0 group by TT.tag order by TT.tag"
 sqlGetAllTags    text "select T.Tag, (select count() from threadtags where Tag = T.tag) as cnt, T.Description from Tags T where T.Importance > -1 order by T.Tag"
 
 proc GetAllTags, .pSpecial
   .max   dd ?
-  .cnt   dd ?
   .stmt  dd ?
 begin
         pushad
@@ -1776,49 +1702,33 @@ begin
         stdcall TextCreate, sizeof.TText
         mov     ebx, eax
 
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetMaxTagUsed, sqlGetMaxTagUsed.length, eax, 0
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        jne     .end_tags
-
-        cinvoke sqliteColumnInt, [.stmt], 0
-        test    eax, eax
-        jz      .end_tags
-
-        mov     [.max], eax
-
-        cinvoke sqliteFinalize, [.stmt]
+        mov     [.max], 1
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetAllTags, sqlGetAllTags.length, eax, 0
 
+        push    0       ; end marker
+
 .tag_loop:
         cinvoke sqliteStep, [.stmt]
-
         cmp     eax, SQLITE_ROW
-        jne     .end_tags
+        jne     .fix_loop
 
         cinvoke sqliteColumnInt, [.stmt], 1     ; the count used
-        mov     [.cnt], eax
-        mov     ecx, 32
-        mul     ecx
-        div     [.max]
         test    eax, eax
         jz      .tag_loop
 
-        cmp     eax, ecx          ;
-        cmova   eax, ecx          ; should never happen!
-        push    eax     ; from 1 to 32
+        push    eax
 
-        stdcall TextCat, ebx, txt  '<a class="taglink tagsize'
+        mov     ecx, [.max]
+        cmp     ecx, eax
+        cmovb   ecx, eax
+        mov     [.max], ecx
+
+        stdcall TextCat, ebx, txt  '<a class="taglink tagsize32'
         mov     ebx, edx
 
-        pop     eax
-        stdcall NumToStr, eax, ntsDec or ntsUnsigned
-        stdcall TextCat, ebx, eax
-        stdcall StrDel, eax
-        mov     ebx, edx
+        push    [ebx+TText.GapBegin]    ; points at the end of "tagsize32" word
 
         cmp     [esi+TSpecialParams.dir], 0
         je      .current_ok
@@ -1856,12 +1766,13 @@ begin
 
 .title_ok:
 
-        stdcall NumToStr, [.cnt], ntsDec or ntsUnsigned
+        mov     eax, [esp+4]    ; the current count
+        stdcall NumToStr, eax, ntsDec or ntsUnsigned
         stdcall TextCat, ebx, eax
         stdcall StrDel, eax
 
         stdcall TextCat, edx, txt ' thread'
-        cmp     [.cnt], 1
+        cmp     dword [esp+4], 1               ; the current count pushed!
         je      .plural_ok
 
         stdcall TextCat, edx, txt 's'
@@ -1877,9 +1788,32 @@ begin
         stdcall StrDel, edi
         jmp     .tag_loop
 
+.fix_loop:
+        pop     esi
+        test    esi, esi
+        jz      .end_fix
 
-.end_tags:
+        pop     eax
+
+        mov     ecx, 32
+        mul     ecx
+        div     [.max]
+        mov     ecx, 10
+
+        xor     edx,edx
+        div     ecx
+        add     dl, '0'
+        mov     [ebx+esi-1], dl
+
+        xor     edx,edx
+        div     ecx
+        add     dl, '0'
+        mov     [ebx+esi-2], dl
+        jmp     .fix_loop
+
+.end_fix:
         cinvoke sqliteFinalize, [.stmt]
+
         mov     [esp+4*regEAX], ebx
         popad
         return

@@ -39,6 +39,9 @@
       <input type="text" value="[smtp_addr]" name="smtp_addr" class="settings" maxlength="256">
       <input type="text" value="[smtp_port]" name="smtp_port" class="settings" maxlength="5">
 
+      <h3>Pipe the emails through:</h3>
+      <input type="text" value="[smtp_exec]" name="smtp_exec" class="settings" maxlength="256">
+
       <h3>SMTP account:</h3>
       <input type="text" value="[smtp_user]" name="smtp_user" class="settings" maxlength="256">
 

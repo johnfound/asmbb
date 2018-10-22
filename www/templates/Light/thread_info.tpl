@@ -1,7 +1,7 @@
 <div class="thread_summary">
   [case:[Pinned]||<img class="pinned" src="[special:skin]/_images/pinned.png" alt="!" title="Pinned thread">]
   [case:[limited]||<img width="32" height="32" class="unread" src="[special:skin]/_images/limited.svg" alt="#" title="Limited access thread">]
-  [case:[Unread]||<a href="[Slug]/#[FirstUnread]">]
+  [case:[Unread]||<a href="[FirstUnread]/!by_id/">]
   <img  height="32" width="32" class="unread" src="[special:skin]/_images/posts[case:[Unread]|_gray|].svg" alt="[case:[Unread]||&gt;]" title="[case:[Unread]|No unread messages|Go to first unread]">
   [case:[Unread]||</a>]
   <div class="thread_link">

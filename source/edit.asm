@@ -225,9 +225,8 @@ begin
         cmp     ebx, SQLITE_DONE
         jne     .end_save               ; the transaction does not begin.
 
-
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSavePost, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSavePost, sqlSavePost.length, eax, 0
 
         cinvoke sqliteBindInt, [.stmt], 3, [esi+TSpecialParams.page_num]
         cinvoke sqliteBindInt, [.stmt], 4, [esi+TSpecialParams.userID]
@@ -260,7 +259,6 @@ begin
 
         cinvoke sqliteBindText, [.stmt], 2, eax, ecx, SQLITE_STATIC
 
-
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_DONE
         jne     .error_write            ; strange write fault.
@@ -281,11 +279,9 @@ begin
         cmp     eax, SQLITE_DONE
         jne     .error_write
 
-        stdcall RegisterUnreadPost, [esi+TSpecialParams.page_num]
-        cmp     eax, SQLITE_DONE
-        jne     .error_write
-
         cinvoke sqliteFinalize, [.stmt]
+
+        stdcall RegisterUnreadPost, [esi+TSpecialParams.page_num], [.threadID]
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCommit, -1, eax, 0
@@ -342,6 +338,8 @@ begin
 
 
 .error_write:
+        OutputValue "Post edit write fault: ", eax, 10, -1
+
         cinvoke sqliteFinalize, [.stmt]
         cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
         stdcall TextMakeRedirect, edi, "/!message/error_cant_write/"

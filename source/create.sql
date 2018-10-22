@@ -98,14 +98,16 @@ create table Threads (
   Caption     text,
   LastChanged integer,
   UserID      integer references Users(id),
-  Pinned      integer default 0
+  Pinned      integer default 0,
+  PostCount   integer default 0,
+  ReadCount   integer default 0
 );
 
 create index idxThreadsPinnedLastChanged on Threads (Pinned desc, LastChanged desc);
 create index idxThreadsSlug on Threads (Slug);
 
 create table ThreadPosters (
-  firstPost   integer primary key references Posts(id) on delete cascade on update cascade,
+  firstPost   integer references Posts(id) on delete cascade on update cascade,
   threadID    integer references Threads(id) on delete cascade on update cascade,
   userID      integer references Users(id) on delete cascade on update cascade
 );
@@ -154,6 +156,7 @@ create table Posts (
   postTime    integer,
   editUserID  integer default NULL references Users(id) on delete cascade,
   editTime    integer default NULL,
+  format      integer,
   Content     text,
   Rendered    text
 );
@@ -178,6 +181,7 @@ create table PostsHistory (
   postTime   integer,
   editUserID integer,
   editTime   integer,
+  format     integer,
   Content  text
 );
 
@@ -197,24 +201,29 @@ CREATE TRIGGER PostsAI AFTER INSERT ON Posts BEGIN
   insert into PostCNT(postid,count) VALUES (new.id, 0);
   insert or ignore into ThreadPosters(firstPost, threadID, userID) values (new.id, new.threadID, new.userID);
   update Users set PostCount = PostCount + 1 where Users.id = new.UserID;
+  update Threads set PostCount = PostCount + 1 where id = new.threadID;
 END;
 
 CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
   delete from PostFTS where rowid = old.id;
   update Users set PostCount = PostCount - 1 where Users.id = old.UserID;
+  update Threads set PostCount = PostCount - 1 where id = old.threadID;
+  delete from ThreadPosters where threadid = old.threadid and userid = old.userid;
+  insert into ThreadPosters(firstPost, threadID, userID) select min(id), threadid, userid from posts where threadid = old.threadid and userid = old.userid;
 
-  insert or ignore into PostsHistory(postID, threadID, userID, postTime, editUserID, editTime, Content) values (
+  insert or ignore into PostsHistory(postID, threadID, userID, postTime, editUserID, editTime, format, Content) values (
     old.id,
     old.threadID,
     old.userID,
     old.postTime,
     old.editUserID,
     old.editTime,
+    old.format,
     old.Content
   );
 END;
 
-CREATE TRIGGER PostsAU AFTER UPDATE OF Content, editTime, editUserID, threadID ON Posts BEGIN
+CREATE TRIGGER PostsAU AFTER UPDATE OF Content, editTime, editUserID, threadID, format ON Posts BEGIN
   update PostFTS set
     rowid = new.id,
     Content = new.Content,
@@ -223,15 +232,18 @@ CREATE TRIGGER PostsAU AFTER UPDATE OF Content, editTime, editUserID, threadID O
     user = (select nick from users where id = new.userid),
     tags = (select group_concat(TT.Tag, ", ") from ThreadTags TT where TT.threadID = new.threadid)
   where rowid = old.id;
-  insert or ignore into PostsHistory(postID, threadID, userID, postTime, editUserID, editTime, Content) values (
+  insert or ignore into PostsHistory(postID, threadID, userID, postTime, editUserID, editTime, format, Content) values (
     old.id,
     old.threadID,
     old.userID,
     old.postTime,
     old.editUserID,
     old.editTime,
+    old.format,
     old.Content
   );
+  update Threads set PostCount = PostCount - 1 where id = old.threadID;
+  update Threads set PostCount = PostCount + 1 where id = new.threadID;
 END;
 
 
@@ -267,13 +279,14 @@ create index idxThreadsTagsTags on ThreadTags (Tag);
 create table UnreadPosts (
   UserID integer references Users(id) on delete cascade,
   PostID integer references Posts(id) on delete cascade,
+  ThreadID integer references Threads(id) on delete cascade on update cascade,
   Time   integer
 );
 
 
 create unique index idxUnreadPosts on UnreadPosts(UserID, PostID);
+create index idxThreadUnread on UnreadPosts(userID, threadID);
 create index idxUnreadPostsPostID on UnreadPosts(PostID);
-
 
 create table Attachments (
   id       integer primary key autoincrement,
@@ -353,9 +366,9 @@ you have to fill.
 Missed some.','Empty field!',NULL);
 
 
-insert into Messages VALUES ('register_user_exists','With this nickname
-you will never succeed!
-It is taken.','Not available nickname!',NULL);
+insert into Messages VALUES ('register_user_exists','Maybe the nickname,
+or maybe the email,
+is already taken.','Not available nickname or email!',NULL);
 
 
 insert into Messages VALUES ('register_short_name','Short nick is not an
@@ -512,13 +525,6 @@ create table ProcessID (
 create table ScratchPad (
   name   text primary key not null,
   source text
-);
-
-
-create table BadCookies (
-  cookie text,
-  agent  text,
-  remote text
 );
 
 

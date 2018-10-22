@@ -63,51 +63,46 @@ struct TSpecialParams
 ends
 
 
-if used tablePreCommands
+PHashTable tablePreCommands, tpl_func,                  \
+        "!avatar",          UserAvatar,                 \
+        "!attached",        GetAttachedFile,            \
+        "!login",           UserLogin,                  \
+        "!logout",          UserLogout,                 \
+        "!register",        RegisterNewUser,            \
+        "!resetpassword",   ResetPassword,              \
+        "!changepassword",  ChangePassword,             \
+        "!changemail",      ChangeEmail,                \
+        "!sqlite",          SQLiteConsole,              \
+        "!settings",        BoardSettings,              \
+        "!message",         ShowForumMessage,           \
+        "!activate",        ActivateAccount,            \
+        "!userinfo",        ShowUserInfo,               \
+        "!avatar_upload",   UpdateUserAvatar,           \
+        "!setskin",         UpdateUserSkin,             \
+        "!render_all",      RenderAll,                  \
+        "!users_online",    UserActivityTable,          \
+        "!chat",            ChatPage,                   \
+        "!chat_events",     ChatRealTime,               \
+        "!postdebug",       PostDebug,                  \    ; optional, depending on the options.DebugWeb
+        "!debuginfo",       DebugInfo,                  \    ; optional, depending on the options.DebugSQLite
+        "!users",           UsersList,                  \
+        "!usersmatch",      UsersMatch,                 \
+        "!tagmatch",        TagsMatch,                  \
+        "!skincookie",      SkinCookie,                 \
+        "!categories",      Categories
 
-PList tablePreCommands, tpl_func,                  \
-      "!avatar",          UserAvatar,              \
-      "!attached",        GetAttachedFile,         \
-      "!login",           UserLogin,               \
-      "!logout",          UserLogout,              \
-      "!register",        RegisterNewUser,         \
-      "!resetpassword",   ResetPassword,           \
-      "!changepassword",  ChangePassword,          \
-      "!changemail",      ChangeEmail,             \
-      "!sqlite",          SQLiteConsole,           \
-      "!settings",        BoardSettings,           \
-      "!message",         ShowForumMessage,        \
-      "!activate",        ActivateAccount,         \
-      "!userinfo",        ShowUserInfo,            \
-      "!avatar_upload",   UpdateUserAvatar,        \
-      "!setskin",         UpdateUserSkin,          \
-      "!render_all",      RenderAll,               \
-      "!users_online",    UserActivityTable,       \
-      "!chat",            ChatPage,                \
-      "!chat_events",     ChatRealTime,            \
-      "!postdebug",       PostDebug,               \    ; optional, depending on the options.DebugWeb
-      "!debuginfo",       DebugInfo,               \    ; optional, depending on the options.DebugSQLite
-      "!users",           UsersList,               \
-      "!usersmatch",      UsersMatch,              \
-      "!tagmatch",        TagsMatch,               \
-      "!skincookie",      SkinCookie,              \
-      "!categories",      Categories
-end if
 
-if used tablePostCommands
-
-PList tablePostCommands, tpl_func,                 \
-      "!markread",        MarkThreadRead,          \
-      "!post",            PostUserMessage,         \
-      "!edit",            EditUserMessage,         \
-      "!edit_thread",     EditThreadAttr,          \
-      "!del",             DeletePost,              \
-      "!by_id",           PostByID,                \
-      "!history",         ShowHistory,             \
-      "!restore",         RestorePost,             \
-      "!echoevents",      EchoRealTime,            \    ; optional, depending on the options.DebugWebSSE
-      "!search",          ShowSearchResults2
-end if
+PHashTable tablePostCommands, tpl_func,                 \
+        "!markread",        MarkThreadRead,             \
+        "!post",            PostUserMessage,            \
+        "!edit",            EditUserMessage,            \
+        "!edit_thread",     EditThreadAttr,             \
+        "!del",             DeletePost,                 \
+        "!by_id",           PostByID,                   \
+        "!history",         ShowHistory,                \
+        "!restore",         RestorePost,                \
+        "!echoevents",      EchoRealTime,               \    ; optional, depending on the options.DebugWebSSE
+        "!search",          ShowSearchResults2
 
 
 cHeadersJSON text 'Content-Type: application/json', 13, 10, 13, 10
@@ -852,22 +847,14 @@ begin
 
 
 .port_ok:
-
-        xor     ebx, ebx
-
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetUserExists, sqlGetUserExists.length, eax, 0
         cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        je      .setupmode_ok
-
-        inc     ebx
-
-.setupmode_ok:
+        mov     ebx, eax
         cinvoke sqliteFinalize, [.stmt]
-        mov     [edi+TSpecialParams.setupmode], ebx
 
-        test    ebx, ebx
+        sub     ebx, SQLITE_ROW                         ; 0 if at least one user exists.
+        mov     [edi+TSpecialParams.setupmode], ebx
         jnz     .finish
 
         stdcall GetCookieValue, [edi+TSpecialParams.params], txt 'sid'
@@ -1155,6 +1142,7 @@ proc SendActivationEmail, .stmt
 .to        dd ?
 .smtp_addr dd ?
 .smtp_port dd ?
+.exec      dd ?
 
 begin
         pushad
@@ -1184,18 +1172,23 @@ begin
 
         mov     [.to], eax
 
+        xor     eax, eax
+        stdcall GetParam, txt "smtp_exec", gpString
+        mov     [.exec], eax
+        test    eax, eax
+        jnz     .addresses_ok
 
-        stdcall GetParam, "smtp_addr", gpString
+        stdcall GetParam, txt "smtp_addr", gpString
         jc      .finish
 
         mov     [.smtp_addr], eax
-
 
         stdcall GetParam, "smtp_port", gpInteger
         jc      .finish
 
         mov     [.smtp_port], eax
 
+.addresses_ok:
         stdcall RenderTemplate, 0, "activation_email_subject.tpl", [.stmt], 0
         mov     [.subj], eax
 
@@ -1221,10 +1214,48 @@ begin
         stdcall TextCompact, [.subj]
         stdcall TextCompact, [.body]
 
+        cmp     [.exec], 0
+        je      .send_by_tcp
+
+; send by external program.
+
+        stdcall CreatePipe
+        mov     ebx, eax
+
+        stdcall FileWriteString, edx, txt "From: "
+        stdcall FileWriteString, edx, [.from]
+        stdcall FileWriteString, edx, txt "@"
+        stdcall FileWriteString, edx, [.host]
+        stdcall FileWriteString, edx, <txt 13, 10>
+
+        stdcall FileWriteString, edx, txt "To: "
+        stdcall FileWriteString, edx, [.to]
+        stdcall FileWriteString, edx, <txt 13, 10>
+
+        stdcall FileWriteString, edx, txt "Subject: "
+        stdcall FileWriteString, edx, [.subj]
+        stdcall FileWriteString, edx, <txt 13, 10>
+
+        stdcall FileWriteString, edx, [.body]
+        stdcall FileWriteString, edx, <txt 13, 10>
+
+        stdcall FileClose, edx
+        stdcall Exec2, [.exec], ebx, [STDOUT], [STDERR]
+        stdcall WaitProcessExit, eax, -1
+
+        stdcall FileClose, ebx
+        clc
+        jmp     .email_sent_ok
+
+
+.send_by_tcp:
+
         stdcall SendEmail, [.smtp_addr], [.smtp_port], [.host], [.from], [.to], [.subj], [.body], 0
+
+.email_sent_ok:
+
         stdcall LogEvent, "EmailSent", logText, eax, 0
         stdcall StrDel, eax
-
         clc
 
 .finish:
@@ -1441,11 +1472,11 @@ endp
 
 
 
-sqlSetUnread text "insert or replace into UnreadPosts (UserID, PostID, `Time`) values (?2, ?1, strftime('%s','now'))"
-sqlSelectInvited text "select userid from LimitedAccessThreads where threadid = (select threadid from Posts where id = ?1)"
+sqlSetUnread text "insert or replace into UnreadPosts (UserID, PostID, ThreadID, `Time`) values (?2, ?1, ?3, strftime('%s','now'))"
+sqlSelectInvited text "select userid from LimitedAccessThreads where threadid = ?1"
 sqlSelectAllActive text "select id from users where strftime('%s','now') - LastSeen < 2592000"
 
-proc RegisterUnreadPost, .postID
+proc RegisterUnreadPost, .postID, .threadID
 .stmt  dd ?
 .users dd ?
 begin
@@ -1453,7 +1484,7 @@ begin
 
         lea     eax, [.users]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectInvited, sqlSelectInvited.length, eax, 0
-        cinvoke sqliteBindInt, [.users], 1, [.postID]
+        cinvoke sqliteBindInt, [.users], 1, [.threadID]
         cinvoke sqliteStep, [.users]
         cmp     eax, SQLITE_ROW
         je      .users_ok
@@ -1470,6 +1501,7 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetUnread, -1, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [.postID]
+        cinvoke sqliteBindInt, [.stmt], 3, [.threadID]
 
 .set_loop:
         cinvoke sqliteColumnInt, [.users], 0
@@ -1497,6 +1529,8 @@ sqlInsertTicket text "insert into Tickets (ssn, time, ticket) values ((select id
 proc SetUniqueTicket, .session
 .stmt dd ?
 begin
+        DebugMsg "Set unique ticket."
+
         pushad
         stdcall GetRandomString, 32
         mov     ebx, eax
@@ -1539,6 +1573,8 @@ begin
         pushf
         pushad
 
+        DebugMsg "Clear unique ticket."
+
         cmp     [.ticket], 0
         je      .cleanup_old
 
@@ -1575,10 +1611,10 @@ begin
         pushad
 
         cmp     [.ticket], 0
-        je      .error
+        je      .error1
 
         cmp     [.session], 0
-        je      .error
+        je      .error1
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckTicket, sqlCheckTicket.length, eax, 0
@@ -1598,11 +1634,18 @@ begin
         cmp     ebx, SQLITE_ROW
         jne     .error
 
+        DebugMsg "Ticket found!"
+
         clc
         popad
         return
 
+.error1:
+        DebugMsg "Check ticket wrong parameters."
+
+
 .error:
+        DebugMsg "Ticket not found!"
         stc
         popad
         return
@@ -1795,23 +1838,32 @@ begin
 
 .end_hash:
         mov     edx, [.pTable]
-        mov     eax, esi
 
 .get_key_name:
         mov     edi, [edx + sizeof.TPHashItem*ebx + TPHashItem.pKeyname]
         test    edi, edi
         jz      .not_found
 
-        mov     esi, eax
-        mov     ecx, [esi+string.len]
-        repe cmpsb
-        je      .found
+        movzx   ecx, byte [edi - 1]
+        cmp     ecx, [esi+string.len]
+        jne     .not_found
 
-        inc     bl
-        jmp     .get_key_name   ; collisions resolving. Do we need it if the table is created without collisions.
+        jecxz   .found          ; the key is an empty string.
+
+.cmp_loop:
+        lodsb
+
+        mov     ah, al
+        and     ah, $40
+        shr     ah, 1
+        or      al, ah
+
+        scasb
+        loope   .cmp_loop
+        jne     .not_found
 
 .found:
-        mov     ecx, [edx + sizeof.TPHashItem*ebx + TPHashItem.procCommand]
+        mov     ecx, [edx + sizeof.TPHashItem*ebx + TPHashItem.Value]
         mov     [esp+4*regECX], ecx
         stc
         popad

@@ -9,7 +9,7 @@
         [case:[special:canpost]| |<a title="Quote this post" href="[id]/!post">Quote</a>]
         [case:[special:canedit]| |<a title="Edit this post" href="[id]/!edit">Edit</a>]
         [case:[special:candel] | |<a title="Delete this post" href="[id]/!del">Del</a>]
-        [case:[HistoryCount]||[case:[special:isadmin]| |<a title="Show the post history" href="/[id]/!history">History</a>]]
+        [case:[HistoryFlag]||[case:[special:isadmin]| |<a title="Show the post history" href="/[id]/!history">History</a>]]
       </div>
     </div>
     <div class="user_info">

@@ -5,10 +5,15 @@ sqlSelectPosts StripText "showthread.sql", SQL
 sqlCheckAccess   text "select not count() or sum(userID = ?2) from LimitedAccessThreads where threadID = ?1;"
 
 
-sqlGetPostCount  text "select count(1) from Posts where ThreadID = ?"
-sqlGetThreadInfo text "select T.id, T.caption, T.slug, (select userID from Posts P where P.threadID=T.id order by P.id limit 1) as UserID from Threads T where T.slug = ?1"
+sqlGetPostCount  text "select PostCount from threads where id = ?1"
+
+; IMPORTANT: userID is needed because of [special:canedit] template statement!
+sqlGetThreadInfo text "select T.id, T.caption, (select userID from Posts where threadID=T.id order by id limit 1) as UserID from Threads T where T.slug = ?1"
+
 sqlIncReadCount  text "update PostCNT set Count = Count + 1 where postid in ("
 sqlSetPostsRead  text "delete from UnreadPosts where UserID = ?1 and PostID in ("
+
+sqlIncThreadReadCount text "update Threads set ReadCount = ReadCount + 1 where id = ?1"
 
 ; Checks the permissions of the thread, towards some user.
 ;
@@ -49,8 +54,6 @@ proc ShowThread, .pSpecial
 .cnt  dd ?
 
 .rendered dd ?
-
- BenchVar .temp
 
 begin
         pushad
@@ -117,7 +120,6 @@ begin
         jz      .limited_not_for_you
 
 .have_access:
-
         stdcall TextCat, edi, txt '<div class="thread">'
         stdcall RenderTemplate, edx, "nav_thread.tpl", [.stmt2], esi
         mov     edi, eax
@@ -182,10 +184,10 @@ begin
 .finish:
         cinvoke sqliteFinalize, [.stmt]
 
-        BenchmarkStart .temp
-
 ;        jmp     .skip_writes           ; not write the posts read count and clearing the unread posts.
                                         ; this is acceptable on very high loads for boosting performance.
+
+; Mark rendered posts as read. If the user is logged-in
 
         mov     ebx, [esi+TSpecialParams.userID]
         test    ebx, ebx
@@ -206,28 +208,54 @@ begin
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 
-        Benchmark  "Posts set unread [us]: "
-
 .posts_read_ok:
 
-        stdcall StrDupMem, sqlIncReadCount
-        xchg    eax, [.rendered]
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_CACHE_CONTROL"
+        jc      .do_increments
 
-        stdcall StrCat, [.rendered], eax
-        stdcall StrDel, eax
-        stdcall StrCat, [.rendered], txt ")"
+        stdcall StrCompCase, eax, "max-age=0"
+        jc      .skip_writes                           ; soft refresh
 
-        lea     ecx, [.stmt]
-        stdcall StrPtr, [.rendered]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], eax, [eax+string.len], ecx, 0
+        stdcall StrCompCase, eax, "no-cache"           ; hard refresh
+        jc      .skip_writes
+
+.do_increments:
+
+; Increment thread read counter
+
+        stdcall ValueByName, [esi+TSpecialParams.params], "HTTP_REFERER"
+        jc      .thread_counter_ok
+
+        stdcall StrPos, eax, [esi+TSpecialParams.thread]        ; don't increment on browsing thread pages.
+        test    eax, eax
+        jnz     .thread_counter_ok
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlIncThreadReadCount, sqlThreadsCount.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 
-;.skip_writes:
-        stdcall StrDel, [.rendered]
+.thread_counter_ok:
 
-        Benchmark  "Posts increment count and set unread [us]: "
-        BenchmarkEnd
+; Increment posts read counters
+
+        stdcall StrDupMem, sqlIncReadCount
+        stdcall StrCat, eax, [.rendered]
+        stdcall StrCat, eax, txt ")"
+        push    eax
+
+        lea     ecx, [.stmt]
+        stdcall StrPtr, eax
+        cinvoke sqlitePrepare_v2, [hMainDatabase], eax, [eax+string.len], ecx, 0
+        stdcall StrDel ; from the stack
+
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+.skip_writes:
+
+        stdcall StrDel, [.rendered]
 
         cmp     [.cnt], 5
         jbe     .back_navigation_ok
