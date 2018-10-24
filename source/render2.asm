@@ -686,8 +686,9 @@ endl
         stdcall TextIns, edx, txt '">'
 
         stdcall StrEncodeHTML, [.filename]
+        push    eax
         stdcall TextAddStr2, edx, [edx+TText.GapBegin], eax, 0
-        stdcall StrDel, eax
+        stdcall StrDel ; from the stack
         stdcall TextIns, edx, txt '</a></td><td class="filesize">'
 
         stdcall FormatFileSize, [.filesize]

@@ -1,5 +1,5 @@
-C Merge\swith\sthe\srecent\simprovements\sfrom\sseveral\sbranches\s-\ssql_hacks,\swith_sendmail\sand\spartially\sbbcode.
-D 2018-10-22T06:31:32.824
+C Memory\sleak\sfixed\son\sposts\swith\sattachments.
+D 2018-10-24T14:57:23.132
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 7ccd461f4dda0e91da3fc4e11a2fb6b49a2e216a
@@ -52,7 +52,7 @@ F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql c15286f32455df88ebd14168a10195e0c098545d
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
-F source/render2.asm 8c7ddd9e187a98b9a87f7e6b43ae7f4339e195b6
+F source/render2.asm 7e5597ff906d9a8c843101988c87e41edcd6b870
 F source/restore.sql 14a8f13466ced19e05502d41ffcfddeecbc6954b
 F source/search.asm 4a2bfd137375606dc7a0da5d8f7ebc242a6ec6ac
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 5d905e7776d39925be0f8ed83a9fc2c7bc736080 9675258dfc3934f4b44db064b78716f205fe64ae
-R f839f01ce09640e268bfa438de7da1d0
+P a482a37ea8a6aa50a1aa8b7e70ac207dcbe58d53
+R 60203b3681501c47c9bb97a5870d4572
 U johnfound
-Z 1964e5c483bfc06074d4d9d8f6046363
+Z 5a641088265df00bcf03e5a2e227f3c0
