@@ -26,12 +26,8 @@ left join (select count() as Unread, min(UP7.PostID) as FirstUnread, UP7.threadi
 
 [case:[special:isadmin]|
 left join LimitedAccessThreads LT on LT.threadid = T.id
+where LT.userid is null or LT.userid = ?3
 |]
-
-[case:[special:isadmin]|
- where (LT.userid is null or LT.userid = ?3)
-|]
-
 group by T.id, Pinned, LastChanged
 having ?4 is null or max(TT.tag = ?4)
 
