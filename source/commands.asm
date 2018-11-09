@@ -155,7 +155,7 @@ begin
         je      .post_ok
 
         stdcall DecodePostData, [.pPost2], [.special.params]
-        jc      .error400
+        jc      .bad_post_data
 
         mov     [.special.post_array], eax
 
@@ -351,11 +351,13 @@ begin
         jmp     .send_simple_result
 
 
-;.error500:
-;        lea     eax, [.special]
-;        stdcall AppendError, edx, "500 Unexpected server error", eax
-;        jmp     .send_simple_result
+.bad_post_data:
 
+        stdcall CreateArray, 4
+        mov     [.special.pStyles], eax
+
+        stdcall TextCreate, sizeof.TText
+        mov     edx, eax
 
 .error400:
         lea     eax, [.special]

@@ -50,6 +50,12 @@ begin
         mov     eax, [esi+TByteStream.size]
         lea     esi, [esi+TByteStream.data]
 
+if defined options.DebugPost & options.DebugPost
+        pushad
+        stdcall FileWrite, [STDERR], esi, eax
+        popad
+end if
+
         add     eax, esi
         mov     [.end_data],eax
 
@@ -78,6 +84,11 @@ end if
 
         stdcall StrMatchPatternNoCase, 'application/x-www-form-urlencoded*', ebx
         jc      .url_encoded_post
+
+        stdcall StrMatchPatternNoCase, 'multipart/form-data*', ebx
+        jnc     .bad_request
+
+;.multipart_data_post:
 
         stdcall GetQueryItem, ebx, 'multipart/form-data; boundary=', 0
         test    eax, eax
