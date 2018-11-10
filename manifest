@@ -1,5 +1,5 @@
-C More\sprecise\scheck\sfor\sthe\sform\sdata\sencoding.\sFixed\sbug\sin\serror\s400\shandling\sin\scommands.asm;\soptions.DebugPost\soption\sfor\sprinting\spost\sdata\sto\sthe\sstderr.
-D 2018-11-09T08:48:13.024
+C Save\sthe\spost\sdata\sto\sa\sfile\s("post_data.txt")\sinstead\sof\sSTDERR.\sWill\sbe\smove\suseful\son\sengine\scrashes.
+D 2018-11-10T17:24:53.490
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz d315e3f891c86dfec9a3fc955b6d186a03617c85
@@ -32,7 +32,7 @@ F source/commands.asm 75feb18b502e2a11c698e1e656b8f48a8c136b71
 F source/create.sql 3beb304f3e2b781ab0fb5005ffe48aeee0d7153e
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 7df442dc9dedf5ab1da3bca63bb91813e1fa068a
-F source/engine.asm 24b9a99d74a5ae3967177cb974a10425534a99d9
+F source/engine.asm 06e8f00f39a4f8aafc0807f03725cc4ec78a8602
 F source/engine.fpr 70c9d2b004080dc41b57b77612baca1b1171a444
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -47,7 +47,7 @@ F source/migration1.sql fe97ef3b5046a916f0215336a8a56ea4c8a3b98a
 F source/migration2.sql fe978700e39265c6680b69ea8cbfb5444cfdce63
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
 F source/post.asm 04927d8016a732f743c26a8485791a966d844b98
-F source/post_data.asm 2649ad51a9cdb8e9d1abdcb278afe26a88f41fad
+F source/post_data.asm 74fd4e02f9c983cea6942a02a8526f1c4f1c7857
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql c15286f32455df88ebd14168a10195e0c098545d
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 9515f776f3bfd887ac3662c0623c0a3b158211a3
-R 020564f9439585574a7a4e2ea14c7b40
+P d6b814d210a49df844b50fc903a88d06d764cd4e
+R 5f30925f13fa5ff05618232bbf2f6561
 U johnfound
-Z 931580fd6d49b2319833862ff452dd46
+Z ca38b29e81a121c3a8f2bfbc36abd25e

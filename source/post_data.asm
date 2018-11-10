@@ -52,7 +52,7 @@ begin
 
 if defined options.DebugPost & options.DebugPost
         pushad
-        stdcall FileWrite, [STDERR], esi, eax
+        stdcall SaveBinaryFile, "./post_data.txt", esi, eax
         popad
 end if
 
