@@ -415,6 +415,7 @@ end if
         mov     edi, eax
 
         xor     eax, eax
+        mov     [edi+TPostDataItem.data], eax
         xchg    eax, [.name]
 
         mov     [edi+TPostDataItem.name], eax

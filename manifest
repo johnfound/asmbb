@@ -1,5 +1,5 @@
-C Save\sthe\spost\sdata\sto\sa\sfile\s("post_data.txt")\sinstead\sof\sSTDERR.\sWill\sbe\smove\suseful\son\sengine\scrashes.
-D 2018-11-10T17:24:53.490
+C Fixed\sa\sbug\sin\sthe\spost\sdata\sdecoding.
+D 2018-11-11T18:01:31.124
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz d315e3f891c86dfec9a3fc955b6d186a03617c85
@@ -47,7 +47,7 @@ F source/migration1.sql fe97ef3b5046a916f0215336a8a56ea4c8a3b98a
 F source/migration2.sql fe978700e39265c6680b69ea8cbfb5444cfdce63
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
 F source/post.asm 04927d8016a732f743c26a8485791a966d844b98
-F source/post_data.asm 74fd4e02f9c983cea6942a02a8526f1c4f1c7857
+F source/post_data.asm af4b81ca1c74d54bbcd7a15b57f9c0cbd8622f01
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql c15286f32455df88ebd14168a10195e0c098545d
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P d6b814d210a49df844b50fc903a88d06d764cd4e
-R 5f30925f13fa5ff05618232bbf2f6561
+P d3d03db7003b54e31b4f0788ad7ef053b529cf83
+R 031ce4eea9dd7af823800be84a868953
 U johnfound
-Z ca38b29e81a121c3a8f2bfbc36abd25e
+Z 8ea88cada363764004b2b1c23bad5ea1
