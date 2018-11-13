@@ -1,5 +1,5 @@
-C Mobile\sfriendly\sgroups\sof\scheckboxes.
-D 2018-11-13T17:55:37.047
+C The\sskin\sselection\sstyle\sfixed.
+D 2018-11-13T18:16:16.310
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz d315e3f891c86dfec9a3fc955b6d186a03617c85
@@ -672,13 +672,13 @@ F www/templates/mobile/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
 F www/templates/mobile/thread_info.tpl 65200d66f17830130538c90657ee620e36cbfdf0
 F www/templates/mobile/thread_list.less 8724eec6f8e947a0b8b332edddf14f3a581372d0
 F www/templates/mobile/threadnew.less c2af3d158e2e03851692576dce99f5287e50b0c6 l
-F www/templates/mobile/userinfo.less a25b03b200d98fb91b0f063b7883b62d84744499
+F www/templates/mobile/userinfo.less b1372ec6bfe2edede336dfcf10e8b25f9910bccb
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d2 l
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 8bc9b47fcf53ebbdcb0aad2f38cf1babe14b35a0
-R 7603268d002bc203f0b22ca550957271
+P f97318e4c3a6499ade110f6020903e689ec4b3a5
+R 0aa70dc010ca58d4972755e343ec88bb
 U johnfound
-Z c889ad8e6199edafb396289dd5904e76
+Z 62fb81bb71b4b378c383dbc402d3d60c
