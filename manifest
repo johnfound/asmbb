@@ -1,5 +1,5 @@
-C Make\sthe\sunix\ssocket\s(if\screated\sby\sthe\sengine)\swritable\sfor\severyone.
-D 2018-11-17T06:22:18.311
+C Try\sto\sremove\sthe\ssocket\sfile,\sremained\sfrom\sa\sprevious\scrash.
+D 2018-11-17T07:05:27.062
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b2faf02e21f7e34df0a3225eb335ef6a6db87e66
@@ -32,11 +32,11 @@ F source/commands.asm 75feb18b502e2a11c698e1e656b8f48a8c136b71
 F source/create.sql 3beb304f3e2b781ab0fb5005ffe48aeee0d7153e
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 7df442dc9dedf5ab1da3bca63bb91813e1fa068a
-F source/engine.asm 06e8f00f39a4f8aafc0807f03725cc4ec78a8602
+F source/engine.asm de81d912e0e21da2ad9fd68e4d94140b9b843043
 F source/engine.fpr 70c9d2b004080dc41b57b77612baca1b1171a444
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
-F source/fcgi.asm da427d4228947ca15154ddec143c18d80b28d89a
+F source/fcgi.asm 3f2f16c5201e953e72b500f8f7f50a92094345e6
 F source/history.asm 60954615a27c21a67e1a20a82a636370ee55a9b7
 F source/http.asm ced15edb5f16a61e2e48b39ab983735aac2f637c
 F source/images_png.asm cb69d9eafb85f6e61c526a3dcff4c7f2c3f4ebd6
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P cbae15c3b0bd5ff94efa5643de45093d4cb2a4c2
-R 712b25523134814619c020497a503be7
+P 5e732b3401545cd11d8272bd2922ec5bc0b46b49
+R 7b2b58060838dedadd5e14afe8a68c37
 U johnfound
-Z e5776d861c9dba5985fdbcf24bd3a6dd
+Z 43e993ceee42d1a7d9207470a28f5585

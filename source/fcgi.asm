@@ -174,6 +174,9 @@ begin
         cmp     [fOwnSocket], 0
         jne     .finish
 
+; delete the socket file, if remaining from the previous crash.
+        stdcall FileDelete, pathMySocket
+
         stdcall SocketCreate, PF_UNIX, SOCK_STREAM, 0
         jc      .finish
 
