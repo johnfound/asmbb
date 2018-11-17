@@ -1,5 +1,5 @@
-C Binary\spack\supdate.
-D 2018-11-13T20:38:51.475
+C Make\sthe\sunix\ssocket\s(if\screated\sby\sthe\sengine)\swritable\sfor\severyone.
+D 2018-11-17T06:22:18.311
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b2faf02e21f7e34df0a3225eb335ef6a6db87e66
@@ -36,7 +36,7 @@ F source/engine.asm 06e8f00f39a4f8aafc0807f03725cc4ec78a8602
 F source/engine.fpr 70c9d2b004080dc41b57b77612baca1b1171a444
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
-F source/fcgi.asm c1dfb0297685352865a7bb7eacff90d173f3d919
+F source/fcgi.asm da427d4228947ca15154ddec143c18d80b28d89a
 F source/history.asm 60954615a27c21a67e1a20a82a636370ee55a9b7
 F source/http.asm ced15edb5f16a61e2e48b39ab983735aac2f637c
 F source/images_png.asm cb69d9eafb85f6e61c526a3dcff4c7f2c3f4ebd6
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 27b3b0ce31386d3381c49a42562287c586c690f3
-R 8c2b0c546439ae77aa1ffea7643c7b1f
+P cbae15c3b0bd5ff94efa5643de45093d4cb2a4c2
+R 712b25523134814619c020497a503be7
 U johnfound
-Z fcc247187004cc6378aecc858de60cc6
+Z e5776d861c9dba5985fdbcf24bd3a6dd

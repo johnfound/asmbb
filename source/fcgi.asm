@@ -195,6 +195,14 @@ begin
         stdcall SocketBind, [STDIN], eax
         jc      .finish
 
+; Make the socket writable for everyone. This allows the web server and
+; the AsmBB engine run with different users.
+
+        mov     eax, sys_chmod
+        mov     ebx, pathMySocket
+        mov     ecx, 666o
+        int     80h
+
         stdcall SocketListen, [STDIN], -1       ; maximum allowed by the system.
         jnc     .loop
 
