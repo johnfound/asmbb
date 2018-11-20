@@ -1,8 +1,8 @@
-C Special\sprocessing\son\sthe\scases\sof\sdisabled\semail\sconfirmations.\sAdditional\sbot\sprotection\son\sregistering\sand\slogin\sforms.
-D 2018-11-20T20:28:26.099
+C Binary\spack\supdated\swith\sthe\slatest\sversion\sof\sthe\sbot\sprotection.\sNotice,\sthat\sthe\sskins\sare\supdated\sas\swell.
+D 2018-11-20T20:50:20.216
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
-F install/asmbb.tar.gz 890d96a6b9967346a38c64ef9452863ab7cfef10
+F install/asmbb.tar.gz 78ec086c3d5a2730d9cd1f8561dabfa75f688f7f
 F install/create_release.sh 396f452f7c1af50c844fbd0f37a37d58e8bc662d x
 F install/exclude.txt 7678178e332c0c4a1a7d1ac8705ae6e2e2e57e74
 F install/install.txt 64615f21455976e432bda238c6d4282fc561e340
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P ac0e89748dbbb66b262b360349439cd282f79c37
-R f48d260324ead7b8a2a0fc6f5c65af29
+P 9cea86855573c5beb9fdbe6e646fb302da8a922f
+R c8775b79fe5bc75bd7842d7e72cccd18
 U johnfound
-Z f20c708a21790d1d245d5ea0f6d12771
+Z ed7335e5f2402847b103a077ad9b2c6f
