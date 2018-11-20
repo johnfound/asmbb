@@ -1290,7 +1290,7 @@ gpString  = 0
 gpInteger = 1
 
 
-sqlGetParam      text "select val from params where id = ?"
+sqlGetParam text "select val from params where id = ?"
 
 proc GetParam, .key, .type
 .stmt dd ?
@@ -1298,7 +1298,7 @@ begin
         pushad
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetParam, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetParam, sqlGetParam.length, eax, 0
 
         stdcall StrPtr, [.key]
         cinvoke sqliteBindText, [.stmt], 1, eax, -1, SQLITE_STATIC

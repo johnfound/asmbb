@@ -21,7 +21,7 @@ sqlUpdateSession text "update Sessions set userID = ?1, FromIP = ?3, last_seen =
 sqlCheckSession  text "select sid from sessions where userID = ? and fromIP = ?"
 sqlCleanSessions text "delete from sessions where last_seen < (strftime('%s','now') - 2592000)"
 
-sqlLoginTicket text "select ?1 as ticket"
+sqlLoginTicket text "select ?1 as ticket, ?2 as email_flag"
 sqlCheckLoginTicket text "select 1 from userlog where remoteIP=?1 and Client = ?2 and Param = ?3 and Activity = ?4"
 sqlClearLoginTicket text "update userlog set Param = NULL where remoteIP=?1 and Activity in (1, 3, 14, 15, 16, 17)"
 
@@ -37,6 +37,7 @@ proc UserLogin, .pSpecial
 .status   dd ?
 
 .ticket   dd ?
+.email_flag dd ?
 
 begin
         pushad
@@ -48,6 +49,10 @@ begin
         mov     [.ticket], eax
 
         cinvoke sqliteExec, [hMainDatabase], sqlCleanSessions, sqlCleanSessions.length, eax, eax
+
+        xor     eax, eax                                ; default no?
+        stdcall GetParam, "email_confirm", gpInteger
+        mov     [.email_flag], eax
 
 ; check the information
 
@@ -68,6 +73,7 @@ begin
 
         stdcall StrPtr, ebx
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len],  SQLITE_STATIC
+        cinvoke sqliteBindInt, [.stmt], 2, [.email_flag]
         cinvoke sqliteStep, [.stmt]
 
         stdcall RenderTemplate, 0, "form_login.tpl", [.stmt], esi
@@ -82,6 +88,13 @@ begin
 
 
 .do_login_user:
+
+        stdcall ValueByName, [esi+TSpecialParams.post_array], txt "submit.x"
+        jc      .redirect_back_bad_permissions
+
+        stdcall ValueByName, [esi+TSpecialParams.post_array], txt "submit.y"
+        jc      .redirect_back_bad_permissions
+
 
         stdcall GetPostString, ebx, "username", 0
         mov     [.user], eax
@@ -381,7 +394,7 @@ proc RegisterNewUser, .pSpecial
 .secret    dd ?
 .ticket    dd ?
 
-.email_text dd ?
+.email_flag dd ?
 
 begin
         pushad
@@ -396,11 +409,15 @@ begin
 
 ; check the information
 
+        xor     eax, eax                                ; default no?
+        stdcall GetParam, "email_confirm", gpInteger
+        mov     [.email_flag], eax
+
         mov     esi, [.pSpecial]
         cmp     [esi+TSpecialParams.userID], 0
         jne     .error_trick
 
-        test    [esi+TSpecialParams.userStatus], permLogin
+        test    [esi+TSpecialParams.userStatus], permLogin      ; For the guests, permLogin == permRegister
         jz      .error_closed_registration
 
         mov     ebx, [esi+TSpecialParams.post_array]
@@ -417,6 +434,9 @@ begin
 
         stdcall StrPtr, ebx
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len],  SQLITE_STATIC
+
+        cinvoke sqliteBindInt, [.stmt], 2, [.email_flag]
+
         cinvoke sqliteStep, [.stmt]
 
         stdcall RenderTemplate, 0, "form_register.tpl", [.stmt], esi
@@ -432,6 +452,12 @@ begin
 
 .do_register_user:
 
+        stdcall ValueByName, [esi+TSpecialParams.post_array], txt "submit.x"
+        jc      .error_trick
+
+        stdcall ValueByName, [esi+TSpecialParams.post_array], txt "submit.y"
+        jc      .error_trick
+
         stdcall GetPostString, ebx, "username", 0
         mov     [.user], eax
 
@@ -439,7 +465,7 @@ begin
         jz      .error_short_name
 
         stdcall ValidateUserName, [.user]
-        jnc     .error_short_name
+        jnc     .error_short_name         ; the name contains special characters actually!
 
         stdcall StrLen, eax
         cmp     eax, 3
@@ -451,11 +477,30 @@ begin
         stdcall GetPostString, ebx, "email", 0
         mov     [.email], eax
 
+        cmp     [.email_flag], 0
+        jne     .check_email
+
+; Use the email field as a honeypot, if the activation emails are disabled.
+; Some kind of bot protection...
+
+        test    eax, eax
+        jz      .check_password
+
+        stdcall StrLen, eax
+        test    eax, eax
+        jz      .check_password
+
+        jmp     .error_trick
+
+; Check the email in case the activation email will be sent
+.check_email:
         test    eax, eax
         jz      .error_bad_email
 
         stdcall CheckEmail, eax
         jc      .error_bad_email
+
+.check_password:
 
         stdcall GetPostString, ebx, txt "password", 0
         mov     [.password], eax
@@ -490,7 +535,7 @@ begin
 
 ; check the ticket
 
-        DebugMsg "Check the tcket."
+        DebugMsg "Check the ticket."
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckLoginTicket, sqlCheckLoginTicket.length, eax, 0
@@ -543,8 +588,16 @@ begin
         stdcall StrPtr, [.user]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
+        cmp     [.email], 0
+        je      .email_ok2
+
         stdcall StrPtr, [.email]
+        cmp     [eax+string.len], 0
+        je      .email_ok2
+
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
+.email_ok2:
 
         cinvoke sqliteStep, [.stmt]
         mov     ebx, eax
@@ -566,8 +619,16 @@ begin
         stdcall StrPtr, [.password2]
         cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
 
+        cmp     [.email], 0
+        je      .email_ok
+
         stdcall StrPtr, [.email]
+        cmp     [eax+string.len], 0
+        je      .email_ok
+
         cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
+
+.email_ok:
 
         cinvoke sqliteBindInt, [.stmt], 5, [esi+TSpecialParams.remoteIP]
 
@@ -584,15 +645,11 @@ begin
         cmp     ebx, SQLITE_DONE
         jne     .error_exists
 
-        stdcall GetParam, "email_confirm", gpInteger
-        jc      .send_emails
-
-        test    eax, eax
-        jz      .no_confirm
+        cmp     [.email_flag], 0
+        je      .no_confirm
 
 ; now send the activation email for all registered user, where the email was not sent.
 
-.send_emails:
         stdcall ProcessActivationEmails
 
 ; the user has been created and now is waiting for email activation.

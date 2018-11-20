@@ -6,15 +6,15 @@
   </div>
   <form class="login-block" method="post" target="_self" action="/!login">
     <h1>Login</h1>
-    <input type="text" value="" placeholder="Username" name="username" class="username" autofocus maxlength="256">
-    <input type="password" value="" placeholder="Password" name="password" class="password" maxlength="1024" autocomplete="off">
-    <input type="hidden" value="[special:referer]" name="backlink" id="backlink">
-    <input type="checkbox" name="persistent" id="pr" value="1"><label for="pr">Persistent login</label>
-    <input type="hidden" value="[ticket]" name="ticket" id="ticket">
-    <input type="submit" name="submit" class="ui left" value="Submit">
+    <p class="pi_nick"><input type="text" value="" placeholder="Username" name="username" class="username" autofocus maxlength="256"></p>
+    <p class="pi_pass"><input type="password" value="" placeholder="Password" name="password" class="password" maxlength="1024" autocomplete="off"></p>
+    <p class="pi_tick"><input type="text" value="[special:referer]" name="backlink" id="backlink"></p>
+    <p class="pi_nick"><input type="checkbox" name="persistent" id="pr" value="1"><label for="pr">Persistent login</label></p>
+    <p class="pi_tick"><input type="text" value="[ticket]" name="ticket" id="ticket"></p>
+    <input type="image" name="submit" id="submit" value="Submit"><label class="submit" for="submit">Submit</label>
   </form>
   <article>
-    <p>If you forgot your password, <b><a href="/!resetpassword">click here</a></b>. You have limited reset attempts.</p>
+    [case:[email_flag]||<p>If you forgot your password, <b><a href="/!resetpassword">click here</a></b>. You have limited reset attempts.</p>]
     [case:[special:canregister]||<p>If you don't have an account, you should <b><a href="/!register">register one</a></b>.</p>]
     <p></p>
     <p>The login process uses cookies. If the "Persistent login" checkbox is checked, the cookie will be stored persistently in your browser.</p>

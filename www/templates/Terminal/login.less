@@ -42,3 +42,25 @@ input[type=checkbox] + label {
     color: @clFormFG;
     margin: 0 0 @LineH 0;
 }
+
+.pi_nick, .pi_pass, .pi_tick, .pi_email {
+  margin: 0px;
+  padding: 0px;
+}
+
+.pi_tick, .pi_email {
+  display: none;
+}
+
+#submit {
+  position: absolute;
+  z-index: -1;
+  left: -10000px;
+
+  &:focus + label {
+    background: @clButtonActiveBG;
+    color: @clButtonActiveFG;
+    outline: 2px dotted @clSeparator;
+    outline-offset: -2px;
+  }
+}
