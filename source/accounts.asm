@@ -340,10 +340,16 @@ proc UserLogout, .pspecial
 begin
         pushad
 
+        mov     esi, [.pspecial]
+
+        OutputValue "Logout POST parameters: ", [esi+TSpecialParams.post_array], 16, 8
+
+        cmp     [esi+TSpecialParams.post_array], 0      ; this function must be invoked only by POST request!
+        je      .error_trick
+
         stdcall TextCreate, sizeof.TText
         mov     edi, eax
 
-        mov     esi, [.pspecial]
         stdcall LogUserActivity, esi, uaLoggingOut, 0
 
         cmp     [esi+TSpecialParams.session], 0
@@ -371,6 +377,14 @@ begin
         stc
         popad
         return
+
+.error_trick:
+        xor     eax, eax
+        mov     [esp+4*regEAX], eax
+        clc
+        popad
+        return
+
 endp
 
 
