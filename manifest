@@ -1,8 +1,8 @@
-C Fixed\sminor,\sbut\sannoying\sCSRF\svulnerability\swith\sthe\slogout\sfunction.
-D 2018-11-21T09:11:07.872
+C Binary\spack\supdated.
+D 2018-11-21T09:50:43.815
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
-F install/asmbb.tar.gz 78ec086c3d5a2730d9cd1f8561dabfa75f688f7f
+F install/asmbb.tar.gz cfb6c1bdf581b5ec17b3287a0b1dc31d3c10a1fe
 F install/create_release.sh 396f452f7c1af50c844fbd0f37a37d58e8bc662d x
 F install/exclude.txt 7678178e332c0c4a1a7d1ac8705ae6e2e2e57e74
 F install/install.txt 64615f21455976e432bda238c6d4282fc561e340
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 943c49adf9e48c53c0f1fcd0e44cf26adbca1f88
-R 1000420d2f946765a0039b9b83f9818d
+P 42032b0a862fccd3cacae1caeb175d58c3f75120
+R 3607837111c4f8451f086e948e158d36
 U johnfound
-Z 1c3ce77344957b7dfc4a575eaa6b2395
+Z 55be3e12b855a07b48e01d971fdca2e4
