@@ -2,17 +2,30 @@ MAX_ATTACHMENT_COUNT = 10
 MAX_ATTACHMENT_SIZE = 1024*1024
 
 sqlGetAttachedFile text "select filename, file, key from Attachments where id = ?1"
+sqlGetFileDate     text "select changed from Attachments where id = ?1"
 
 proc GetAttachedFile, .pSpecial
 .stmt      dd ?
 .fileid    dd ?
 .pKey      dd ?
 .pKeyLen   dd ?
+
+.date     TDateTime
+.timelo    dd ?
+.timehi    dd ?
+.timeRetLo dd ?
+.timeRetHi dd ?
+
 BenchVar .attachit
 begin
         pushad
 
         BenchmarkStart .attachit
+
+        xor     eax, eax
+        mov     [.stmt], eax
+        mov     [.timelo], eax
+        mov     [.timehi], eax
 
         mov     esi, [.pSpecial]
         stdcall TextCreate, sizeof.TText
@@ -23,11 +36,6 @@ begin
         test    [esi+TSpecialParams.userStatus], permDownload or permAdmin
         jz      .error_403
 
-; extract the file from the database
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetAttachedFile, sqlGetAttachedFile.length, eax, 0
-
         mov     edx, [esi+TSpecialParams.cmd_list]
         cmp     [edx+TArray.count], 0
         je      .error_404
@@ -37,14 +45,73 @@ begin
 
         mov     [.fileid], eax
 
-        cinvoke sqliteBindInt, [.stmt], 1, eax
+; Check the caching.
+
+        stdcall ValueByName, [esi + TSpecialParams.params], "HTTP_IF_MODIFIED_SINCE"
+        jc      .file_time
+
+        push    eax
+        stdcall FileWriteString, [STDERR], eax
+        stdcall FileWriteString, [STDERR], <txt 13, 10>
+        pop     eax
+
+        lea     edx, [.date]
+        stdcall DecodeHTTPDate, eax, edx
+        jc      .file_time
+
+        stdcall DateTimeToTime, edx
+        mov     [.timelo], eax
+        mov     [.timehi], edx
+
+.file_time:
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetFileDate, sqlGetFileDate.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.fileid]
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
         jne     .error_404
 
-; First the headers. Only for download.
+        cinvoke sqliteColumnInt64, [.stmt], 0
+        mov     [.timeRetLo], eax
+        mov     [.timeRetHi], edx
 
-        stdcall TextCat, edi, <"Content-type: application/octet-stream", 13, 10, "Content-Disposition: attachment; filename*=utf-8''">
+        cinvoke sqliteFinalize, [.stmt]
+        and     [.stmt], 0
+
+        mov     edx, [.timeRetHi]
+        mov     eax, [.timeRetLo]
+
+        cmp     edx, [.timehi]
+        jg      .extract_the_file       ; the file is newer than in the client.
+        jl      .return_304
+
+        cmp     eax, [.timelo]
+        jg      .extract_the_file       ; the file is newer than in the client.
+
+.return_304:
+        stdcall TextCat, edi, <"Status: 304 Not Modified", 13, 10, 13, 10>
+        mov     edi, edx
+        jmp     .finish
+
+; extract the file from the database
+
+.extract_the_file:
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetAttachedFile, sqlGetAttachedFile.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.fileid]
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .error_404
+
+; Generate the headers. Only for download.
+
+        stdcall TextCat, edi, <"Cache-control: max-age=1000000", 13, 10>
+        stdcall FormatHTTPTime, [.timeRetLo], [.timeRetHi]
+        stdcall TextCat, edx, "Last-modified: "
+        stdcall TextCat, edx, eax
+        stdcall StrDel, eax
+
+        stdcall TextCat, edx, <13, 10, "Content-type: application/octet-stream", 13, 10, "Content-Disposition: attachment; filename*=utf-8''">
         mov     edi, edx
 
         cinvoke sqliteColumnText, [.stmt], 0            ; the filename.
@@ -98,7 +165,7 @@ begin
 .error_403:
         stdcall AppendError, edi, "403 Forbidden", esi
         mov     edi, edx
-        jmp     .finish
+        jmp     .finalize
 
 endp
 
