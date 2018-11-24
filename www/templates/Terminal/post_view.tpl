@@ -3,7 +3,7 @@
     <div class="post_info">
       <div class="last_edit">
         <a href="#[id]">#[id]</a>
-        [case:[EditUser]|Created: [PostTime]|Edited: [EditTime] by <a href="/!userinfo/[EditUser]">[EditUser]</a>], read: [ReadCount] [case:[ReadCount]|times|time|times]
+        [case:[EditUser]|Created: [PostTime]|Edited: [EditTime] by <a href="/!userinfo/[url:[EditUser]]">[EditUser]</a>], read: [ReadCount] [case:[ReadCount]|times|time|times]
       </div>
       <div class="edit_tools">
         [case:[special:canpost]| |<a title="Quote this post" href="[id]/!post">Quote</a>]
@@ -13,8 +13,8 @@
       </div>
     </div>
     <div class="user_info">
-      <a class="username" href="/!userinfo/[UserName]">[UserName]
-      <img class="avatar" alt="(ツ)" src="/!avatar/[UserName]?v=[AVer]"></a>
+      <a class="username" href="/!userinfo/[url:[UserName]]">[UserName]
+      <img class="avatar" alt="(ツ)" src="/!avatar/[url:[UserName]]?v=[AVer]"></a>
     </div>
     <article>
       [html:[Rendered]]

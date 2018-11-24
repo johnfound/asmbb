@@ -1,1 +1,1 @@
-Viewing the profile of <a href="/!userinfo/[Param]">[Param]</a>.
+Viewing the profile of <a href="/!userinfo/[url:[Param]]">[Param]</a>.

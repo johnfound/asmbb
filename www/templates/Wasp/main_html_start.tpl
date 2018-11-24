@@ -48,7 +48,7 @@
     </div>
     <div>
       [case:[special:userid]|<a href="/!login/">Login</a><br>[case:[special:canregister]||<a href="/!register/">Register</a>]|
-      <form method="POST" action="/!logout"><input class="logout" type="submit" name="logout" value="Logout ([special:username])"></form><a href="/!userinfo/[special:username]">User profile</a>
+      <form method="POST" action="/!logout"><input class="logout" type="submit" name="logout" value="Logout ([special:username])"></form><a href="/!userinfo/[url:[special:username]]">User profile</a>
       ]
     </div>
   </div>

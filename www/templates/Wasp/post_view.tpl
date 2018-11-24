@@ -2,10 +2,10 @@
   <div class="user_info">
     <div class="username">
       <img width="32" height="32" class="unread" [case:[Unread]|src="[special:skin]/_images/onepost_gray.svg" alt="">|src="[special:skin]/_images/onepost.svg" alt="&gt;">]
-      <a class="user_name" href="/!userinfo/[UserName]">[UserName]</a>
+      <a class="user_name" href="/!userinfo/[url:[UserName]]">[UserName]</a>
     </div>
     <div class="avatar">
-      <img class="avatar" alt="(ツ)" src="/!avatar/[UserName]?v=[AVer]">
+      <img class="avatar" alt="(ツ)" src="/!avatar/[url:[UserName]]?v=[AVer]">
       <div class="user_pcnt">Posts: [UserPostCount]</div>
     </div>
   </div>
@@ -13,7 +13,7 @@
     <div class="post_info">
       <div class="last_edit">
         <a href="#[id]">#[id]</a>
-        [case:[EditUser]|Created: [PostTime]|Last edited: [EditTime] by <a href="/!userinfo/[EditUser]">[EditUser]</a>], read: [ReadCount] [case:[ReadCount]|times|time|times]
+        [case:[EditUser]|Created: [PostTime]|Last edited: [EditTime] by <a href="/!userinfo/[url:[EditUser]]">[EditUser]</a>], read: [ReadCount] [case:[ReadCount]|times|time|times]
       </div>
       <div class="edit_tools">
         [case:[special:canpost]| |<a title="Quote this post" href="[id]/!post"><img src="[special:skin]/_images/quote.svg" alt="Quote"></a>]

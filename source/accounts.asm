@@ -478,7 +478,10 @@ begin
         test    eax, eax
         jz      .error_short_name
 
-        stdcall ValidateUserName, [.user]
+        stdcall StrClipSpacesR, eax
+        stdcall StrClipSpacesL, eax
+
+        stdcall ValidateUserName, eax
         jnc     .error_short_name         ; the name contains special characters actually!
 
         stdcall StrLen, eax
@@ -510,6 +513,9 @@ begin
 .check_email:
         test    eax, eax
         jz      .error_bad_email
+
+        stdcall StrClipSpacesR, eax
+        stdcall StrClipSpacesL, eax
 
         stdcall CheckEmail, eax
         jc      .error_bad_email

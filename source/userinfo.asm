@@ -195,9 +195,12 @@ endl
         cinvoke sqliteFinalize, [.stmt]
 
 .user_perm_ok:
+        stdcall StrURLEncode, ebx
+        push    eax eax
 
         stdcall StrDupMem, "/!userinfo/"
-        stdcall StrCat, eax, ebx
+        stdcall StrCat, eax ; from the stack
+        stdcall StrDel ; from the stack
 
         stdcall TextMakeRedirect, 0, eax
         stdcall StrDel, eax
@@ -487,8 +490,12 @@ begin
         cinvoke sqliteStep, [.stmt]
 
 .update_end:
+        stdcall StrURLEncode, [.username]
+        push    eax eax
+
         stdcall StrDupMem, "/!userinfo/"
-        stdcall StrCat, eax, [.username]
+        stdcall StrCat, eax ; from the stack
+        stdcall StrDel ; from the stack
 
         stdcall TextMakeRedirect, edi, eax
         stdcall StrDel, eax
@@ -593,12 +600,15 @@ begin
 .update_end:
         cinvoke sqliteFinalize, [.stmt]
 
+        stdcall StrURLEncode, [.username]
+        push    eax eax
+
         stdcall StrDupMem, "/!userinfo/"
-        stdcall StrCat, eax, [.username]
-        push    eax
+        stdcall StrCat, eax ; from the stack
+        stdcall StrDel ; from the stack
 
         stdcall TextMakeRedirect, 0, eax
-        stdcall StrDel ; from the stack
+        stdcall StrDel, eax
         jmp     .finish
 
 .permissions_fail:

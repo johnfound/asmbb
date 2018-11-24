@@ -1,4 +1,4 @@
-<form class="user_edit_info settings" method="post" action="/!userinfo/[username]">
+<form class="user_edit_info settings" method="post" action="/!userinfo/[url:[username]]">
   <h2>User description:<span class="small"> (Formatted text)</span></h2>
   <textarea class="user_desc" name="user_desc">[user_desc]</textarea>
   [case:[special:isadmin]||
@@ -22,14 +22,14 @@
   <input type="submit" name="save" class="submit" value="Save">
 </form>
 
-<form class="user_edit_info settings" method="post" enctype="multipart/form-data" action="/!avatar_upload/[username]">
+<form class="user_edit_info settings" method="post" enctype="multipart/form-data" action="/!avatar_upload/[url:[username]]">
   <h2>Avatar:<span class="small">(.png only; Maximal size: 10KB; Size: 128x128px)</span></h2>
   <input type="file" class="browse" name="avatar">
   <input type="hidden" name="ticket" value="[Ticket]">
   <input type="submit" name="submit" class="submit" value="Upload">
 </form>
 
-<form class="user_edit_info settings" method="post" action="/!setskin/[username]">
+<form class="user_edit_info settings" method="post" action="/!setskin/[url:[username]]">
   <h2>Forum skin:</h2>
   <select class="userskin" name="skin">
     <option value="0">(Default)</option>

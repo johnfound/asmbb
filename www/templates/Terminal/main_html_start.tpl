@@ -62,7 +62,7 @@
   <div class="header">
     <div id="userlinks">
       [case:[special:userid]|<a href="/!login/">Login</a>[case:[special:canregister]||<br><a href="/!register/">Register</a>]|
-      <form method="POST" action="/!logout"><input class="logout" name="logout" type="submit" value="Logout ([special:username])"></form><a href="/!userinfo/[special:username]">User profile</a>
+      <form method="POST" action="/!logout"><input class="logout" name="logout" type="submit" value="Logout ([special:username])"></form><a href="/!userinfo/[url:[special:username]]">User profile</a>
       ]
     </div>
     <form id="skinform" method="POST" action="/!skincookie">
