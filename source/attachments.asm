@@ -50,11 +50,6 @@ begin
         stdcall ValueByName, [esi + TSpecialParams.params], "HTTP_IF_MODIFIED_SINCE"
         jc      .file_time
 
-        push    eax
-        stdcall FileWriteString, [STDERR], eax
-        stdcall FileWriteString, [STDERR], <txt 13, 10>
-        pop     eax
-
         lea     edx, [.date]
         stdcall DecodeHTTPDate, eax, edx
         jc      .file_time

@@ -1,5 +1,5 @@
-C Proper\sbrowser\scache\shandling\sfor\sattachments.
-D 2018-11-24T19:59:05.521
+C Forgotten\sdebug\scode\sremoved.
+D 2018-11-26T06:27:39.133
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -22,7 +22,7 @@ F source/TestsWithTags.sql 6384a56d553e36aa1c54cdb61a147bb2806e3e9d
 F source/ToDo.txt 78c2a566e37fc37db78b799f5ac100bed383c182
 F source/Win32/sqlite3.inc 890fc03113f42acaae3837f19d56032cb5e49747
 F source/accounts.asm 5f5f2b7fe52d30553548ca0727be564c918bd220
-F source/attachments.asm 6edd38669173557554b702f52286819d28243986
+F source/attachments.asm 6843dd5b449b1394ae9c6f2b6bc44ed561f9a913
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm 87830583d32bdf406d7a0a0615cff0b23fda9283
 F source/categories.sql b1fa5a2cca7204372b3ca3714edbbc669103b1cf
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 6e2b406dacd71a9f262abbbf55b4766233f4a918
-R 1afc619800446765049aea7ca81200fa
+P 86befb7be1a83807d522b2b07226d6be83e71eae
+R a9d4dfa174725881446b3c1bbdc969ab
 U johnfound
-Z 2ed0d2289529980a3e3fb80be395b1ca
+Z 850bf63832e7cc63d1d8465f27bc4277
