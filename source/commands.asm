@@ -155,7 +155,7 @@ begin
         je      .post_ok
 
         stdcall DecodePostData, [.pPost2], [.special.params]
-        jc      .error400
+        jc      .bad_post_data
 
         mov     [.special.post_array], eax
 
@@ -351,11 +351,13 @@ begin
         jmp     .send_simple_result
 
 
-;.error500:
-;        lea     eax, [.special]
-;        stdcall AppendError, edx, "500 Unexpected server error", eax
-;        jmp     .send_simple_result
+.bad_post_data:
 
+        stdcall CreateArray, 4
+        mov     [.special.pStyles], eax
+
+        stdcall TextCreate, sizeof.TText
+        mov     edx, eax
 
 .error400:
         lea     eax, [.special]
@@ -1142,6 +1144,7 @@ proc SendActivationEmail, .stmt
 .to        dd ?
 .smtp_addr dd ?
 .smtp_port dd ?
+.exec      dd ?
 
 begin
         pushad
@@ -1171,18 +1174,23 @@ begin
 
         mov     [.to], eax
 
+        xor     eax, eax
+        stdcall GetParam, txt "smtp_exec", gpString
+        mov     [.exec], eax
+        test    eax, eax
+        jnz     .addresses_ok
 
-        stdcall GetParam, "smtp_addr", gpString
+        stdcall GetParam, txt "smtp_addr", gpString
         jc      .finish
 
         mov     [.smtp_addr], eax
-
 
         stdcall GetParam, "smtp_port", gpInteger
         jc      .finish
 
         mov     [.smtp_port], eax
 
+.addresses_ok:
         stdcall RenderTemplate, 0, "activation_email_subject.tpl", [.stmt], 0
         mov     [.subj], eax
 
@@ -1208,10 +1216,48 @@ begin
         stdcall TextCompact, [.subj]
         stdcall TextCompact, [.body]
 
+        cmp     [.exec], 0
+        je      .send_by_tcp
+
+; send by external program.
+
+        stdcall CreatePipe
+        mov     ebx, eax
+
+        stdcall FileWriteString, edx, txt "From: "
+        stdcall FileWriteString, edx, [.from]
+        stdcall FileWriteString, edx, txt "@"
+        stdcall FileWriteString, edx, [.host]
+        stdcall FileWriteString, edx, <txt 13, 10>
+
+        stdcall FileWriteString, edx, txt "To: "
+        stdcall FileWriteString, edx, [.to]
+        stdcall FileWriteString, edx, <txt 13, 10>
+
+        stdcall FileWriteString, edx, txt "Subject: "
+        stdcall FileWriteString, edx, [.subj]
+        stdcall FileWriteString, edx, <txt 13, 10>
+
+        stdcall FileWriteString, edx, [.body]
+        stdcall FileWriteString, edx, <txt 13, 10>
+
+        stdcall FileClose, edx
+        stdcall Exec2, [.exec], ebx, [STDOUT], [STDERR]
+        stdcall WaitProcessExit, eax, -1
+
+        stdcall FileClose, ebx
+        clc
+        jmp     .email_sent_ok
+
+
+.send_by_tcp:
+
         stdcall SendEmail, [.smtp_addr], [.smtp_port], [.host], [.from], [.to], [.subj], [.body], 0
+
+.email_sent_ok:
+
         stdcall LogEvent, "EmailSent", logText, eax, 0
         stdcall StrDel, eax
-
         clc
 
 .finish:
@@ -1244,7 +1290,7 @@ gpString  = 0
 gpInteger = 1
 
 
-sqlGetParam      text "select val from params where id = ?"
+sqlGetParam text "select val from params where id = ?"
 
 proc GetParam, .key, .type
 .stmt dd ?
@@ -1252,7 +1298,7 @@ begin
         pushad
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetParam, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetParam, sqlGetParam.length, eax, 0
 
         stdcall StrPtr, [.key]
         cinvoke sqliteBindText, [.stmt], 1, eax, -1, SQLITE_STATIC

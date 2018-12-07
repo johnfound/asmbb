@@ -107,7 +107,7 @@ create index idxThreadsPinnedLastChanged on Threads (Pinned desc, LastChanged de
 create index idxThreadsSlug on Threads (Slug);
 
 create table ThreadPosters (
-  firstPost   integer primary key references Posts(id) on delete cascade on update cascade,
+  firstPost   integer references Posts(id) on delete cascade on update cascade,
   threadID    integer references Threads(id) on delete cascade on update cascade,
   userID      integer references Users(id) on delete cascade on update cascade
 );
@@ -208,6 +208,8 @@ CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
   delete from PostFTS where rowid = old.id;
   update Users set PostCount = PostCount - 1 where Users.id = old.UserID;
   update Threads set PostCount = PostCount - 1 where id = old.threadID;
+  delete from ThreadPosters where threadid = old.threadid and userid = old.userid;
+  insert into ThreadPosters(firstPost, threadID, userID) select min(id), threadid, userid from posts where threadid = old.threadid and userid = old.userid;
 
   insert or ignore into PostsHistory(postID, threadID, userID, postTime, editUserID, editTime, format, Content) values (
     old.id,
@@ -364,9 +366,9 @@ you have to fill.
 Missed some.','Empty field!',NULL);
 
 
-insert into Messages VALUES ('register_user_exists','With this nickname
-you will never succeed!
-It is taken.','Not available nickname!',NULL);
+insert into Messages VALUES ('register_user_exists','Maybe the nickname,
+or maybe the email,
+is already taken.','Not available nickname or email!',NULL);
 
 
 insert into Messages VALUES ('register_short_name','Short nick is not an

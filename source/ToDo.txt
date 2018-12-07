@@ -6,7 +6,7 @@
 
 On logout, all sessions for this IP are deleted. Should be more relaxed...
 
----DONE: The attached files must be encripted in the database in order to not allow them to the file system in original form.
+---DONE: The attached files must be encrypted in the database in order to not allow them to the file system in original form.
 
 
 The tabs still working weird, because the absolute positioning.

@@ -260,7 +260,6 @@ begin
         stdcall StrDel, ecx
 
         stdcall SocketClose, ebx
-        clc
 
 .finish:
         stdcall StrDel, [.time]

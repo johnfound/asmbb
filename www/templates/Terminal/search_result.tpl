@@ -1,8 +1,8 @@
 <table class="post [case:[Unread]||unread]">
   <tr>
   <td class="search_info">
-    <a class="user_name" href="/!userinfo/[UserName]">[UserName]</a>
-    <img class="smallavatar" src="/!avatar/[UserName]?v=[AVer]" alt="(ツ)">
+    <a class="user_name" href="/!userinfo/[url:[UserName]]">[UserName]</a>
+    <img class="smallavatar" src="/!avatar/[url:[UserName]]?v=[AVer]" alt="(ツ)">
     <div class="changed">[PostTime]</div>
   </td>
   <td>

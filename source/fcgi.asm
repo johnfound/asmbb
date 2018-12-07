@@ -174,6 +174,7 @@ begin
         cmp     [fOwnSocket], 0
         jne     .finish
 
+; delete the socket file, if remaining from the previous crash.
         stdcall FileDelete, pathMySocket
 
         stdcall SocketCreate, PF_UNIX, SOCK_STREAM, 0
@@ -196,6 +197,14 @@ begin
         lea     eax, [.addr]
         stdcall SocketBind, [STDIN], eax
         jc      .finish
+
+; Make the socket writable for everyone. This allows the web server and
+; the AsmBB engine run with different users.
+
+        mov     eax, sys_chmod
+        mov     ebx, pathMySocket
+        mov     ecx, 666o
+        int     80h
 
         stdcall SocketListen, [STDIN], -1       ; maximum allowed by the system.
         jnc     .loop

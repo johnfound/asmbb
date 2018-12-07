@@ -29,10 +29,16 @@ begin
         stdcall StrCat, edi, txt ", "
 
 .comma_ok:
+        stdcall StrEncodeHTML, eax
+        mov     ecx, eax
+        stdcall StrURLEncode, eax
+
         stdcall StrCat, edi, '<a href="/!userinfo/'
         stdcall StrCat, edi, eax
+        stdcall StrDel, eax
         stdcall StrCat, edi, txt '">'
-        stdcall StrCat, edi, eax
+        stdcall StrCat, edi, ecx
+        stdcall StrDel, ecx
         stdcall StrCat, edi, txt "</a>"
 
         inc     ebx
@@ -308,10 +314,17 @@ begin
         jmp     .end_user
 
 .make_user:
+        stdcall StrEncodeHTML, eax
+        mov     ecx, eax
+        stdcall StrURLEncode, eax
+
         stdcall TextCat, edi, '<a href="/!userinfo/'
         stdcall TextCat, edx, eax
+        stdcall StrDel, eax
+
         stdcall TextCat, edx, txt '">'
-        stdcall TextCat, edx, eax
+        stdcall TextCat, edx, ecx
+        stdcall StrDel, ecx
         stdcall TextCat, edx, txt '</a>'
 
 .end_user:

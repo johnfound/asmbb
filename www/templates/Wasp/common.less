@@ -63,12 +63,16 @@ div.header {
     text-align: right;
     margin-left: 16px;
 
-    a {
+    a, .logout {
+      background-color: transparent;
+      border: none;
       font-weight: bold;
       text-align: right;
       display: inline;
       line-height: 1.5em;
       text-shadow: 2px 2px @clColor1, -2px -2px @clColor1, 2px -2px @clColor1, -2px 2px @clColor1;
+      text-decoration: underline;
+      cursor: pointer;
     }
   }
 }

@@ -77,14 +77,19 @@ begin
 
 .smtp_addr_ok:
 
-        stdcall GetParam, txt "smtp_port", gpInteger
-        jnc     .smtp_port_ok
-
         mov     eax, 25
-
-.smtp_port_ok:
-
+        stdcall GetParam, txt "smtp_port", gpInteger
         cinvoke sqliteBindInt, [.stmt], 3, eax
+
+        stdcall GetParam, txt "smtp_exec", gpString
+        jc      .smtp_exec_ok
+
+        push    eax
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 22, eax, [eax+string.len], SQLITE_TRANSIENT
+        stdcall StrDel ; from the stack
+
+.smtp_exec_ok:
 
         stdcall GetParam, txt "smtp_user", gpString
         jc      .email_ok
@@ -271,15 +276,19 @@ begin
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "smtp_port", 0
         stdcall SetParamInt, txt "smtp_port", eax
-        jnc     .save_smtp_user
+        jnc     .save_smtp_exec
 
         test    eax, eax
         jz      .error_invalid_number
         jmp     .error_write
 
+.save_smtp_exec:
 
-.save_smtp_user:
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "smtp_exec", 0
+        stdcall SetParamStr, txt "smtp_exec", eax
+        jc      .error_write
 
+;.save_smpt_exec:
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "smtp_user", 0
         stdcall SetParamStr, txt "smtp_user", eax
         jc      .error_write

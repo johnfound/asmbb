@@ -5,7 +5,7 @@
 </div>
   <div class="thread_right">
     <div class="thread_header">
-      [case:[Unread]||<a class="ui left" href="[Slug]/#[FirstUnread]">&gt;</a> ]<a class="thread_link" href="[Slug]/">[Caption]</a>
+      [case:[Unread]||<a class="ui left" href="[FirstUnread]/!by_id">&gt;</a> ]<a class="thread_link" href="[Slug]/">[Caption]</a>
     </div>
     <label><input type="checkbox" class="collapseit"><ul class="comma posters">[html:[Posters]]</ul></label>
     <label><input type="checkbox" class="collapseit"><ul class="comma invited">[html:[Invited]]</ul></label>

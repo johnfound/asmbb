@@ -65,7 +65,6 @@ input.username, input.email, input.password {
 }
 
 
-
 input.username {
     background-image: url('[special:skin]/_images/user.png') !important;
 }
@@ -82,8 +81,10 @@ input.username:focus, input.email:focus, input.password:focus {
     background: @bgEditorFocus;
 }
 
-input.submit {
+
+label.submit {
   height: 38px;
+  line-height: 38px;
   width: 100%;
   background: @clButtonBG;
   color: @clButtonFG;
@@ -102,11 +103,26 @@ input.submit {
     background: @clButtonActiveBG;
     color: @clButtonActiveFG;
   }
+}
 
-  &:focus {
+#submit {
+  position: absolute;
+  z-index: -1;
+  left: -10000px;
+
+  &:focus + label {
     background: @clButtonActiveBG;
     color: @clButtonActiveFG;
     outline: 2px dotted @clSeparator;
     outline-offset: -2px;
   }
+}
+
+.pi_nick, .pi_pass, .pi_tick, .pi_email {
+  margin: 0px;
+  padding: 0px;
+}
+
+.pi_tick, .pi_email {
+  display: none;
 }
