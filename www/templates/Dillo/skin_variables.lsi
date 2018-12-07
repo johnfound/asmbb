@@ -1,0 +1,115 @@
+@globWidth: 95%;
+@globMaxWidth: 1280px;
+@globMargin: 8px auto 8px auto;
+@LineH: 1.1875em;
+
+@marginItems: 8px;
+
+@msgBoxWidth: 640px;
+
+@clColor1: #ffcc40;
+@clColor1FG: #ffcc40;
+
+@clHeaderBG: #ffcc40;
+@clHeaderFG: black;
+@paddingHeader: 8px;
+
+@clSearchBG: #404040;
+@clSearchFG: white;
+
+
+@clTagsBG: #404040;
+@clTagsFG: #ffcc40;
+@clCurrentTagBG: #ffcc40;
+@clCurrentTagFG: black;
+@paddingTags: 4px;
+
+
+@clThreadInfoBG: #404040;
+@clThreadInfoFG: white;
+
+@marginThreads: 16px 0px;
+
+
+
+
+
+
+
+@paddingFooter: 8px;
+
+@clThreadLink: black;
+
+@clFakeUser: #ff80FF;
+@clBodyBG: #d0d0d0;
+@clBodyFG: black;
+@clDarkBG: #404040;
+@clDarkFG: white;
+
+@borderEdit: none;
+
+@clArticleBG: white;
+@clArticleFG: black;
+
+@clFormBG: #808080;
+@clFormFG: white;
+@clDisabledBG: #e0e0e0;
+@clDisabledFG: #404040;
+
+@clEditorBG: white;
+@clEditorFG: black;
+@clReadOnlyBG: #e0e0e0;
+@clReadOnlyFG: black;
+
+@bgEditor: @clEditorBG 12px -10px ~"/" 24px 120px no-repeat;
+@bgEditorFocus: @clEditorBG 12px -70px ~"/" 24px 120px no-repeat;
+
+@clButtonBG: #e05050;
+@clButtonFG: white;
+@buttonWidth: 128px;
+@buttonHeight: 28px;
+
+@clButtonActiveBG: #ff656c;
+@clButtonActiveFG: white;
+@borderButton: none;
+@borderButtonActive: none;
+@borderNavRad: 0px;
+@paddingNav: 0px 8px;
+
+@clSeparator: #404040;
+@borderQuote: 2px solid @clSeparator;
+@clQuoteTitle: #808080;
+
+@clAvatarBG: #ffcc40;
+@clAvatarFG: #606060;
+
+@clPostInfoBG: #ffcc40;
+@clPostInfoFG: black;
+
+@FontMain:      "Verdana", sans-serif;
+@FontSize:      16px;
+
+@FontMonospace: "Liberation Mono", "Courier New", monospaced;
+@FontSizeMono: 16px;
+
+
+@clMsgInfoBG: green;
+@clMsgInfoFG: white;
+
+@clMsgErrorBG: red;
+@clMsgErrorFG: white;
+
+@clMsgWarningBG: yellow;
+@clMsgWarningFG: red;
+
+@pinnedWidth: 16px;
+@pinnedHeight: 16px;
+
+@clPinnedTxt: #e05050;
+
+// Tabbed pages styles:
+
+@clTabBG: #404040;
+@clTabFG: #ffffff;
+@clTabHover: #d8d8d8;
+@clTabFocus: #e05050;

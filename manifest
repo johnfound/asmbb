@@ -1,5 +1,5 @@
-C Forgotten\sdebug\scode\sremoved.
-D 2018-11-26T06:27:39.133
+C Create\sskin\scompatible\swith\sDillo\sbrowser.
+D 2018-12-07T16:39:32.082
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -33,8 +33,8 @@ F source/create.sql 3beb304f3e2b781ab0fb5005ffe48aeee0d7153e
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 7df442dc9dedf5ab1da3bca63bb91813e1fa068a
 F source/engine.asm 69016b422f50760833739321f19f8ca4f84334f3
-F source/engine.fpr 70c9d2b004080dc41b57b77612baca1b1171a444
-F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
+F source/engine.fpr 7e9954b6b2a91eaa3f46624b61746071f3dbd762
+F source/exponential_scaling.ods 601c6d615c7206c197c1af95fdfacbc8122a3552
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 3f2f16c5201e953e72b500f8f7f50a92094345e6
 F source/history.asm 60954615a27c21a67e1a20a82a636370ee55a9b7
@@ -170,6 +170,123 @@ F www/images/title.svg cfda872f2467a82c172f6e309ae7a385fdaabff5
 F www/lighttpd.conf cebee97b8e632682bfa9c02f2858d2675e6b15c6
 F www/robots.txt bed60589d6ab1cc0470f3ba582444612d1c4109a
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
+F www/templates/Dillo/_images/alltags.png f777003295bb34e5aec24d4294f7bbae2d526070
+F www/templates/Dillo/_images/alltags_gray.png 843fd1d0cbc755615dc68f20f80a3ec36b4edc39
+F www/templates/Dillo/_images/anon.png f1150ae9c16cb5dd89c7f9f6c502bb6128783519
+F www/templates/Dillo/_images/ban.png c642adc8dbdb04b477652688fd80fc884e966e03
+F www/templates/Dillo/_images/chatemoticons 92b583a5a5e7d203c807f62b3733d6e731355681 l
+F www/templates/Dillo/_images/close.png 45e1ca0d2e8a6cb6bbc6df360b694bdaa340c35e
+F www/templates/Dillo/_images/del.png e29c2c22adccaaa2f9f9fa54a62a4aaa29e76246
+F www/templates/Dillo/_images/del_white.png bba9e93a97ea7f7bd44785ee22da425b16b4153f
+F www/templates/Dillo/_images/edit.png f4d97b3391b431ff227f2109b0db10910adc4df5
+F www/templates/Dillo/_images/edit_white.png 877d68c3a05eeb9c578f36a96045b6e168297a2f
+F www/templates/Dillo/_images/edited.png 5f194e231bbcc54e95e30de63209dc97124fad4d
+F www/templates/Dillo/_images/email.png 24f356bd043c4d2c9ab64314a341690d6e71bf94
+F www/templates/Dillo/_images/emoticons 6f2fb8dfd71252d2cdbe7b9b1d330c5859872e31 l
+F www/templates/Dillo/_images/help.png cc14aecf50d39cb98d9c5d222ab01a22ab98adb6
+F www/templates/Dillo/_images/history.png 0b5a01ef742f96518bf95a9b4a3299949f15cc1e
+F www/templates/Dillo/_images/limited.png faa641177b091b984b347b33d382fa3a17687788
+F www/templates/Dillo/_images/markread.png 642edd75242a1d639ad8b5749292d7bee62a834d
+F www/templates/Dillo/_images/onepost.png 4a4503fd28d82ffb8872af1889ede26f6022387a
+F www/templates/Dillo/_images/onepost_gray.png 715f3a3289aaf15a1e6fe6d148e0ff77d2b7ff82
+F www/templates/Dillo/_images/pass.png 53421227820c5bd598095a41606845d13e23155f
+F www/templates/Dillo/_images/pinned.png ff02233406ffbb2e38f7d88e79d1c9c10c3153cd
+F www/templates/Dillo/_images/pinned0.png 066a3c6e31fb2da342f34602eff8b35cb18f3fc3
+F www/templates/Dillo/_images/posts.png 167611004140480d65293565789735b6e7f4ab57
+F www/templates/Dillo/_images/posts_gray.png 6e111c9214458875a60eba97ac1e56e068a68f0f
+F www/templates/Dillo/_images/quote.png f53be1cdd05784c5af11689e962d03b1312f0a41
+F www/templates/Dillo/_images/restore.png 0b2f9141f6ab757e6e95750cd88301fb3b2c1057
+F www/templates/Dillo/_images/save_white.png 2a6013daa333b25ba57405719dd03486d2937d2d
+F www/templates/Dillo/_images/search.png 7316d6f47b742bd5da9671c22f004bd0985114fe
+F www/templates/Dillo/_images/tag.png 5aef1e343a022bc56a7a3207b2efeb91b4f2e81d
+F www/templates/Dillo/_images/tag_gray.png 2d285d9d74ebf4fccdf2b3c28ea09ec3edc803cd
+F www/templates/Dillo/_images/toolbar.png 5bf72ea96d63d99758bf5172e8014ae1b5ebf36c
+F www/templates/Dillo/_images/user.png bf7f849ee8f09b959965aa984f2a5ce7f972ce07
+F www/templates/Dillo/_images/yellow_back.png 5e6ab56d8245a36b59995f22c411989be636e99b
+F www/templates/Dillo/activation_email_subject.tpl 27c437378a3a327a35e5c31b49d500a80be996be
+F www/templates/Dillo/activation_email_text.tpl d37a8550c1d0c74778cd7cdce9057b13c4644533
+F www/templates/Dillo/activity0.tpl 604635d7badaffb337aa5419b32e8bb70b3f658a
+F www/templates/Dillo/activity1.tpl 08c17b90d0740eaf1350f8cf039f9de9778bc7a1
+F www/templates/Dillo/activity10.tpl 2ff361dad8ba2fc41916f34ade27f5b1bdd9f905
+F www/templates/Dillo/activity11.tpl adfc421bd8d000c52a7b03eddde3e72193f61d69
+F www/templates/Dillo/activity12.tpl 89d4944ead68405f9371433a4281fb712b8d926b
+F www/templates/Dillo/activity13.tpl 42bb013fa5dd6cabcffd18a683ab02680ac7f7c5
+F www/templates/Dillo/activity14.tpl 8d46d831d6839fec9b7e24a168a5b36f0b424070
+F www/templates/Dillo/activity15.tpl ba75c6d1c3591ffecc8d72745c98a6836800d23b
+F www/templates/Dillo/activity16.tpl a74885cd31f3f68746d0bef134ce7f5d2f1378dc
+F www/templates/Dillo/activity17.tpl cf42ce77db0a0e6413a6a8b8240cc2df48e10c2a
+F www/templates/Dillo/activity18.tpl 87fc4a416760e5e7f5c37b121720c7ce45d53975
+F www/templates/Dillo/activity19.tpl aa944616337ce0ee0216b3c90e22fb137a51ba78
+F www/templates/Dillo/activity2.tpl 56e2d424b3fa2d47dfb3e39c84dc979e02783ef4
+F www/templates/Dillo/activity3.tpl 151d90f8a6ac52cfd53a32d38786496bb7c12d11
+F www/templates/Dillo/activity4.tpl eee15696527fd153d221b2437bf586c339f707bc
+F www/templates/Dillo/activity5.tpl fee6ba5112822d9f9553abcb7cbab63232cee8bb
+F www/templates/Dillo/activity6.tpl 588b1dde51b134d63d350f7d99c73f787c6dcbeb
+F www/templates/Dillo/activity7.tpl e70f718958e02b182296e7fcfe10198063635afc
+F www/templates/Dillo/activity8.tpl 8b278b55e079f903dfe96bbb8d2d0adae835841f
+F www/templates/Dillo/activity9.tpl ad97f8b1f6c427f3466c847c36da13daed981694
+F www/templates/Dillo/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
+F www/templates/Dillo/chat.less 7214f68fb912391ced2879ca2e657fbe65b8c8d6
+F www/templates/Dillo/chat.tpl 32d13cec3ff9bc2439ad4bd6b29867ca33f492b2
+F www/templates/Dillo/common.less 37bec58a5d52c913884000fbe9b2a507e128d913
+F www/templates/Dillo/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
+F www/templates/Dillo/del_confirm.tpl 27678b543c744bd64421b50b66d3e60253bb4d3e
+F www/templates/Dillo/delete.less 799fbdd24e97e1b843b391bbae407eba2ce6778e
+F www/templates/Dillo/edit.json 18644da2f6f5dc68ca75b990c366125d2a3b537f
+F www/templates/Dillo/edit_toolbar.tpl 0a84d91c9190f6338a09f281067cff9e0f838100
+F www/templates/Dillo/editor.less 7214f68fb912391ced2879ca2e657fbe65b8c8d6
+F www/templates/Dillo/error.less 7214f68fb912391ced2879ca2e657fbe65b8c8d6
+F www/templates/Dillo/error_html_end.tpl 3729362af2738a816684e06dd05bbfff10a39d02
+F www/templates/Dillo/error_html_start.tpl bb9719e341078e7b101f39c8ff92b54e403915c6
+F www/templates/Dillo/form_edit.tpl 7a6d3b2d0807fc327bdc0c480bbd32be224f0b93
+F www/templates/Dillo/form_edit_thread.tpl a07f24d40f0bca454ce1fd6feab498ecf62ff69d
+F www/templates/Dillo/form_editinfo.tpl b960459e3b7099ffb7a6724c5d5cda17f2021f68
+F www/templates/Dillo/form_login.tpl af044a2660ca56806c1a96976108d4b80da48212
+F www/templates/Dillo/form_new_post.tpl f9371d72de177afaa11b8f4172a3633e1d7cc571
+F www/templates/Dillo/form_new_thread.tpl ca33fb6fbd9f7118d94ea1bd418808753261c017
+F www/templates/Dillo/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
+F www/templates/Dillo/form_register.tpl 5b6b36c6398192a9da2a6a4a0643dced8b70ffeb
+F www/templates/Dillo/form_reset_password.tpl 0602acb7aaa6528a16ddc2b16d7ac7b05e24f09a
+F www/templates/Dillo/form_reset_request.tpl d2130d1b896ef0ae18a02d962914bcd9b9b7e594
+F www/templates/Dillo/form_settings.tpl fb2d8359472c82752d3e16113ab6da6d6de6d850
+F www/templates/Dillo/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
+F www/templates/Dillo/form_sqlite_console.tpl 7efc4c110f2baaab4cb601c2eb68c0f65cc532fb
+F www/templates/Dillo/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
+F www/templates/Dillo/login.less 7214f68fb912391ced2879ca2e657fbe65b8c8d6
+F www/templates/Dillo/main_html_end.tpl f1e4b1ef234a14345fb8a2d7348944d5eb6abfab
+F www/templates/Dillo/main_html_start.tpl 12aa4d77d9afabb9259523153b9672bbdd6d5f55
+F www/templates/Dillo/markdown.less 7214f68fb912391ced2879ca2e657fbe65b8c8d6
+F www/templates/Dillo/minimag_suffix.tpl ea20e08377b7ccdd55a2d7792071bb2734622813
+F www/templates/Dillo/nav_categories.tpl 80053896a6a06ee87351b1e586eaefd329a84109
+F www/templates/Dillo/nav_history.tpl ec672e45848f639e46cd390f9058ed0672d5289b
+F www/templates/Dillo/nav_list.tpl 8aadf6bbd69f485cf082adeb610345f6bafde38f
+F www/templates/Dillo/nav_search.tpl 4713a709b1a400d292db0a3f20b94183b6659df5
+F www/templates/Dillo/nav_thread.tpl 4c1f87db4794efa2e03f9721747f8649f8ca88cb
+F www/templates/Dillo/nav_userslist.tpl 6ef44e0325d1b57df7789021ec146acddf90c72d
+F www/templates/Dillo/navigation.less 7214f68fb912391ced2879ca2e657fbe65b8c8d6
+F www/templates/Dillo/one_category.tpl b6a45167d23af803a4107d015451d762f51fe402
+F www/templates/Dillo/one_user.tpl 5bac0daf998cb553e2e7319e4e585bdb2c0059e6
+F www/templates/Dillo/post_history.tpl 161dcbb0e477daad528cc23b74dd6430d06f292d
+F www/templates/Dillo/post_view.tpl d884f186ea3ca724d987de16d029bb67bbe9c365
+F www/templates/Dillo/posteditor.less 7214f68fb912391ced2879ca2e657fbe65b8c8d6
+F www/templates/Dillo/postnew.less 7214f68fb912391ced2879ca2e657fbe65b8c8d6
+F www/templates/Dillo/posts.less 7214f68fb912391ced2879ca2e657fbe65b8c8d6
+F www/templates/Dillo/preview.tpl 775d6a5d5586cccec5633c8f843d04eaee356e80
+F www/templates/Dillo/restore_confirm.tpl c101e4ccda03878c89c22aa70b96db20c33ce063
+F www/templates/Dillo/search.less 7214f68fb912391ced2879ca2e657fbe65b8c8d6
+F www/templates/Dillo/search_result.tpl edac3d3193e862ea8139b4a02bca9df788074cfd
+F www/templates/Dillo/settings.less 7214f68fb912391ced2879ca2e657fbe65b8c8d6
+F www/templates/Dillo/skin_variables.lsi ac18e49da3b04f03bc5159324831fed03b6884ef
+F www/templates/Dillo/sqlite.less 7214f68fb912391ced2879ca2e657fbe65b8c8d6
+F www/templates/Dillo/statistics.tpl c0dd59a240e07c246fe9c0841eb1532b93f3f1ae
+F www/templates/Dillo/thread_info.tpl 00e938d09bc8373b3f7770c8d425e8e990f3e457
+F www/templates/Dillo/thread_list.less be67d9afb8eff212aba2dae3ed2bf8e3d0ad0e54
+F www/templates/Dillo/threadnew.less 7214f68fb912391ced2879ca2e657fbe65b8c8d6
+F www/templates/Dillo/userinfo.less 7214f68fb912391ced2879ca2e657fbe65b8c8d6
+F www/templates/Dillo/userinfo.tpl 65b6ace891dd723f2a7ee96266afca09ae702427
+F www/templates/Dillo/users_online.less 7214f68fb912391ced2879ca2e657fbe65b8c8d6
+F www/templates/Dillo/userslist.less 7214f68fb912391ced2879ca2e657fbe65b8c8d6
+F www/templates/Dillo/userslist_hdr.tpl aa1d0bbe31f3624bc75cdec179d471ac496fd990
 F www/templates/Light/_images/alltags.svg 6e092a166d06e309a3a681fb940def7cff1785f3
 F www/templates/Light/_images/alltags_gray.svg ade5d990159c9f0b211b5eb2148d2f054e6ba98c
 F www/templates/Light/_images/anon.png 9184b9fe4cf4632fd4dc7baf7db2eeccd8c57334 l
@@ -678,7 +795,10 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 86befb7be1a83807d522b2b07226d6be83e71eae
-R a9d4dfa174725881446b3c1bbdc969ab
+P 035a2f7d2509f5e1f2228e49d8a00d8233fb4ada
+R f30f720f383663819095e683f15bb500
+T *branch * DilloSkin
+T *sym-DilloSkin *
+T -sym-trunk *
 U johnfound
-Z 850bf63832e7cc63d1d8465f27bc4277
+Z 9d703466bac51811ad9cebf1dc03d0ec
