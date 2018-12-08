@@ -26,5 +26,4 @@
 
 [>:(]   [special:skin]/_images/emoticons/angry.gif
 [>:-(] [special:skin]/_images/emoticons/angry.gif
-
 [angry] [special:skin]/_images/emoticons/angry.gif

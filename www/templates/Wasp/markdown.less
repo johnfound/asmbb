@@ -95,15 +95,15 @@ div.post_text article {
 /* article tables */
 
   table {
-    border-right-width: 2px;
-    border-bottom-width: 2px;
+//    border-right-width: 2px;
+//    border-bottom-width: 2px;
     border-style: solid;
     border-color: @clSeparator;
     margin: 0.2em;
     background-color: white;
     border-collapse: collapse;
 
-    td {
+    td, th {
       font-size: 1em;
       border-left-width: 2px;
       border-top-width: 2px;
@@ -144,7 +144,8 @@ div.post_text article {
       float: left;
       clear: both;
 
-      max-width: 150px;
+      white-space: nowrap;
+      max-width: 100%;
       overflow: hidden;
     }
   }
