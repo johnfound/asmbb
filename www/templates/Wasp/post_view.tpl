@@ -23,7 +23,9 @@
       </div>
     </div>
     <article>
-      [html:[[case:[format]|minimag|bbcode]:[Content]]]
+      [html:[[case:[format]|minimag|bbcode]:[Content][case:[format]|[include:minimag_suffix.tpl]|]]]
+
+
       <div class="attachments">
         [attachments:[id]]
       </div>
