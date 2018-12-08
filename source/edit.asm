@@ -2,7 +2,7 @@
 sqlReadPost    text "select P.id, T.caption, P.content as source, format, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
 sqlEditedPost  text "select P.id, T.caption, ?3 as source, ?5 as format, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
 
-sqlSavePost    text "update Posts set content = ?1, rendered = ?2, format = ?5, editUserID = ?4, editTime = strftime('%s','now') where id = ?3"
+sqlSavePost    text "update Posts set content = ?1, format = ?5, editUserID = ?4, editTime = strftime('%s','now') where id = ?3"
 sqlGetPostUser text "select userID, threadID from Posts where id = ?"
 
 
@@ -10,7 +10,6 @@ proc EditUserMessage, .pSpecial
 .stmt dd ?
 
 .source   dd ?
-.rendered dd ?
 .ticket   dd ?
 .format   dd ?
 
@@ -27,7 +26,6 @@ begin
 
         xor     ebx, ebx
         mov     [.source], ebx
-        mov     [.rendered], ebx
         mov     [.ticket], ebx
         mov     [.format], ebx
         mov     [.softPreview], ebx
@@ -249,30 +247,12 @@ begin
         stdcall StrByteUtf8, [.source], LIMIT_POST_LENGTH
         stdcall StrTrim, [.source], eax
 
-; render the source
-
-        stdcall FormatPostText2, [.source], esi
-        mov     [.rendered], eax
-
-; bind the source
-
         stdcall StrPtr, [.source]
-
         mov     ecx, [eax+string.len]
         test    ecx, ecx
         jz      .error_write
 
         cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
-
-; bind the html
-
-        stdcall StrPtr, [.rendered]
-
-        mov     ecx, [eax+string.len]
-        test    ecx, ecx
-        jz      .error_write
-
-        cinvoke sqliteBindText, [.stmt], 2, eax, ecx, SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_DONE
@@ -318,7 +298,6 @@ begin
 
 .finish:
         stdcall StrDel, [.source]
-        stdcall StrDel, [.rendered]
         stdcall StrDel, [.ticket]
         mov     [esp+4*regEAX], edi
         popad

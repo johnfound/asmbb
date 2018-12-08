@@ -6,10 +6,9 @@ cNewPostForm   text "form_new_post.tpl"
 cNewThreadForm text "form_new_thread.tpl"
 
 sqlSelectConst text "select ?1 as slug, ?2 as caption, ?3 as source, ?4 as ticket, ?5 as tags, ?6 as limited, ?7 as invited, ?8 as UserName"
-
 sqlGetQuote   text "select U.nick, P.content from Posts P left join Users U on U.id = P.userID where P.id = ?"
 
-sqlInsertPost text "insert into Posts ( ThreadID, UserID, PostTime, Content, Rendered) values (?, ?, strftime('%s','now'), ?, ?)"
+sqlInsertPost text "insert into Posts ( ThreadID, UserID, PostTime, Content) values (?, ?, strftime('%s','now'), ?)"
 sqlUpdateThreads text "update Threads set LastChanged = strftime('%s','now') where id = ?"
 sqlInsertThread  text "insert into Threads ( Caption ) values ( ? )"
 sqlSetThreadSlug text "update Threads set slug = ? where id = ?"
@@ -30,7 +29,6 @@ proc PostUserMessage, .pSpecial
 .count    dd ?
 
 .source   dd ?
-.rendered dd ?
 .ticket   dd ?
 
 begin
@@ -40,7 +38,6 @@ begin
         mov     [.fPreview], eax  ; preview by default when handling GET requests.
         mov     [.slug], eax
         mov     [.source], eax
-        mov     [.rendered], eax
         mov     [.caption], eax
         mov     [.tags], eax
         mov     [.fLimited], eax
@@ -430,12 +427,6 @@ endl
         cmp     [.source], 0
         je      .error_invalid_content
 
-; render the source
-
-        stdcall FormatPostText2, [.source], esi
-        mov     [.rendered], eax
-
-
 ; bind the source
 
         stdcall StrPtr, [.source]
@@ -445,16 +436,6 @@ endl
         jz      .error_invalid_content
 
         cinvoke sqliteBindText, [.stmt], 3, eax, ecx, SQLITE_STATIC
-
-; bind the rendered html
-
-        stdcall StrPtr, [.rendered]
-        mov     ecx, [eax+string.len]
-        test    ecx, ecx
-        jz      .error_invalid_content
-
-        cinvoke sqliteBindText, [.stmt], 4, eax, ecx, SQLITE_STATIC
-
 
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_DONE
@@ -512,7 +493,6 @@ endl
 .finish:
         stdcall StrDel, [.slug]
         stdcall StrDel, [.source]
-        stdcall StrDel, [.rendered]
         stdcall StrDel, [.caption]
         stdcall StrDel, [.tags]
         stdcall StrDel, [.invited]

@@ -195,7 +195,7 @@ begin
 
         cinvoke sqliteColumnInt, [.stmt], 0     ; postID
         mov     [.postid], eax
-        cinvoke sqliteBindInt, [.stmt2], 8, eax
+        cinvoke sqliteBindInt, [.stmt2], 7, eax
 
         cinvoke sqliteColumnInt, [.stmt], 1     ; threadID
         cinvoke sqliteBindInt, [.stmt2], 1, eax
@@ -236,17 +236,10 @@ begin
         mov     esi, eax
         cinvoke sqliteBindText, [.stmt2], 6, esi, ebx, SQLITE_STATIC
 
-        stdcall FormatPostText2, esi, [.pSpecial]
-        mov     edi, eax
-
-        stdcall StrPtr, edi
-        cinvoke sqliteBindText, [.stmt2], 7, eax, [eax+string.len], SQLITE_STATIC
-
         cinvoke sqliteStep, [.stmt2]
         push    eax
 
         cinvoke sqliteFinalize, [.stmt2]
-        stdcall StrDel, edi
 
         pop     eax ebx edi esi
         cmp     eax, SQLITE_DONE
@@ -285,7 +278,3 @@ begin
 
 
 endp
-
-
-
-

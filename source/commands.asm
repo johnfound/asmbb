@@ -79,7 +79,6 @@ PHashTable tablePreCommands, tpl_func,                  \
         "!userinfo",        ShowUserInfo,               \
         "!avatar_upload",   UpdateUserAvatar,           \
         "!setskin",         UpdateUserSkin,             \
-        "!render_all",      RenderAll,                  \
         "!users_online",    UserActivityTable,          \
         "!chat",            ChatPage,                   \
         "!chat_events",     ChatRealTime,               \

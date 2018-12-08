@@ -473,55 +473,72 @@ endl
         stdcall TextMoveGap, edx, ecx
         stdcall TextSetGapSize, edx, 4
         mov     dword [edx+ecx], 0
+        add     [edx+TText.GapBegin], 4
+        inc     [edx+TText.GapEnd]              ; delete the end "]"
 
-        inc     [edx+TText.GapEnd]
-        lea     ecx, [edi-1]
+        inc     esi  ; start of the source
 
-        push    ecx
+        stdcall TextMoveGap, edx, edi
+        add     [edx+TText.GapEnd], 9
 
-        mov     ebx, [.pSpecial]
-        stdcall StrDup, [hCurrentDir]
-        stdcall StrCat, eax, [ebx+TSpecialParams.userSkin]
-        stdcall StrCat, eax, "/minimag_suffix.tpl"
-        push    eax
+        stdcall TranslateMiniMag, edx, edi
 
-        stdcall FileOpenAccess, eax, faReadOnly
-        stdcall StrDel ; from the stack.
-        jc      .suffix_ok
-        mov     ebx, eax
+        add     [edx+TText.GapEnd], 4
+        mov     ecx, [edx+TText.GapBegin]
+        dec     ecx
 
-        stdcall FileSize, ebx
-        jc      .suffix_close
-
-        mov     ecx, eax
-        add     eax, 4
-
-        stdcall TextSetGapSize, edx, eax
-        jc      .suffix_close
-
-        mov     esi, [edx+TText.GapBegin]
-        add     esi, edx
-
-        stdcall FileRead, ebx, esi, ecx
-        add     esi, eax
-        mov     dword [esi], 0
-
-.suffix_close:
-
-        stdcall FileClose, ebx
-
-.suffix_ok:
-        pop     ecx
-
-        lea     esi, [edx + edi + 9]    ; the start of the minimag source.
-        stdcall FormatPostText, esi
-        push    eax
-
-        mov     [edx+TText.GapBegin], edi
-        stdcall TextAddString, edx, edi, eax
-        stdcall StrDel ; from the stack
-
-        add     ecx, eax
+;        stdcall TextMoveGap, edx, ecx
+;        stdcall TextSetGapSize, edx, 4
+;        mov     dword [edx+ecx], 0
+;
+;        inc     [edx+TText.GapEnd]
+;        lea     ecx, [edi-1]
+;
+;        push    ecx
+;
+;        mov     ebx, [.pSpecial]
+;        stdcall StrDup, [hCurrentDir]
+;        stdcall StrCat, eax, [ebx+TSpecialParams.userSkin]
+;        stdcall StrCat, eax, "/minimag_suffix.tpl"
+;        push    eax
+;
+;        stdcall FileOpenAccess, eax, faReadOnly
+;        stdcall StrDel ; from the stack.
+;        jc      .suffix_ok
+;        mov     ebx, eax
+;
+;        stdcall FileSize, ebx
+;        jc      .suffix_close
+;
+;        mov     ecx, eax
+;        add     eax, 4
+;
+;        stdcall TextSetGapSize, edx, eax
+;        jc      .suffix_close
+;
+;        mov     esi, [edx+TText.GapBegin]
+;        add     esi, edx
+;
+;        stdcall FileRead, ebx, esi, ecx
+;        add     esi, eax
+;        mov     dword [esi], 0
+;
+;.suffix_close:
+;
+;        stdcall FileClose, ebx
+;
+;.suffix_ok:
+;        pop     ecx
+;
+;        lea     esi, [edx + edi + 9]    ; the start of the minimag source.
+;        stdcall FormatPostText, esi
+;        push    eax
+;
+;        mov     [edx+TText.GapBegin], edi
+;        stdcall TextAddString, edx, edi, eax
+;        stdcall StrDel ; from the stack
+;
+;        add     ecx, eax
 
 
         Benchmark "MiniMag markup rendering: "
@@ -1883,126 +1900,80 @@ begin
 endp
 
 
-proc FormatPostText, .ptrMinimag
-
-.result TMarkdownResults
-
-begin
-        lea     eax, [.result]
-        stdcall TranslateMarkdown2, [.ptrMinimag], FixMiniMagLink, 0, eax, 0
-
-        stdcall StrDel, [.result.hIndex]
-        stdcall StrDel, [.result.hKeywords]
-        stdcall StrDel, [.result.hDescription]
-
-        mov     eax, [.result.hContent]
-        return
-endp
 
 
-proc FormatPostText2, .hMinimag, .pSpecial
-begin
-        pushad
-        mov     edi, [.pSpecial]
-
-        stdcall StrDup, [.hMinimag]
-        mov     ebx, eax
-
-        stdcall StrDup, [hCurrentDir]
-        stdcall StrCat, eax, [edi+TSpecialParams.userSkin]
-        stdcall StrCat, eax, "/minimag_suffix.tpl"
-        push    eax
-        stdcall LoadBinaryFile, eax
-        stdcall StrDel ; from the stack
-        jc      .suffix_ok
-
-        push    eax
-        stdcall StrCat, ebx, eax
-        stdcall FreeMem ; from the stack
-
-.suffix_ok:
-        stdcall FormatPostText, ebx
-        mov     [esp+4*regEAX], eax
-
-        stdcall StrDel, ebx
-        popad
-        return
-endp
-
-
-
-proc FixMiniMagLink, .ptrLink, .ptrBuffer, .lParam
-begin
-        pushad
-
-        mov     edi, [.ptrBuffer]
-        mov     esi, [.ptrLink]
-
-        cmp     byte [esi], '#'
-        je      .finish         ; it is internal link
-
-.start_loop:
-        lodsb
-        cmp     al, $0d
-        je      .not_absolute
-        cmp     al, $0a
-        je      .not_absolute
-        cmp     al, ']'
-        je      .not_absolute
-        test    al,al
-        jz      .not_absolute
-
-        cmp     al, 'A'
-        jb      .found
-        cmp     al, 'Z'
-        jbe     .start_loop
-
-        cmp     al, 'a'
-        jb      .found
-        cmp     al, 'z'
-        jb      .start_loop
-
-.found:
-        cmp     al, ':'
-        jne     .not_absolute
-
-        mov     ecx, [.ptrLink]
-        sub     ecx, esi
-
-        cmp     ecx, -11
-        jne     .not_js
-
-        cmp     dword [esi+ecx], "java"
-        jne     .not_js
-
-        cmp     dword [esi+ecx+4], "scri"
-        jne     .not_js
-
-        cmp     word [esi+ecx+8], "pt"
-        jne     .not_js
-
-.add_https:
-        mov     dword [edi], "http"
-        mov     dword [edi+4], "s://"
-        lea     edi, [edi+8]
-        jmp     .protocol_ok
-
-.not_js:
-        cmp     dword [esi+ecx], "http"         ; ECX < 0 here!!!
-        jne     .add_https
-
-.not_absolute:
-.protocol_ok:
-        mov     esi, [.ptrLink]
-
-; it is absolute URL, exit
-.finish:
-        mov     [esp+4*regEAX], edi     ; return where to copy the remaining of the address. Destination!
-        mov     [esp+4*regEDX], esi     ; return from where to copy the remaining of the address. Source!
-
-        popad
-        return
-endp
+;proc FixMiniMagLink, .ptrLink, .ptrBuffer, .lParam
+;begin
+;        pushad
+;
+;        mov     edi, [.ptrBuffer]
+;        mov     esi, [.ptrLink]
+;
+;        cmp     byte [esi], '#'
+;        je      .finish         ; it is internal link
+;
+;.start_loop:
+;        lodsb
+;        cmp     al, $0d
+;        je      .not_absolute
+;        cmp     al, $0a
+;        je      .not_absolute
+;        cmp     al, ']'
+;        je      .not_absolute
+;        test    al,al
+;        jz      .not_absolute
+;
+;        cmp     al, 'A'
+;        jb      .found
+;        cmp     al, 'Z'
+;        jbe     .start_loop
+;
+;        cmp     al, 'a'
+;        jb      .found
+;        cmp     al, 'z'
+;        jb      .start_loop
+;
+;.found:
+;        cmp     al, ':'
+;        jne     .not_absolute
+;
+;        mov     ecx, [.ptrLink]
+;        sub     ecx, esi
+;
+;        cmp     ecx, -11
+;        jne     .not_js
+;
+;        cmp     dword [esi+ecx], "java"
+;        jne     .not_js
+;
+;        cmp     dword [esi+ecx+4], "scri"
+;        jne     .not_js
+;
+;        cmp     word [esi+ecx+8], "pt"
+;        jne     .not_js
+;
+;.add_https:
+;        mov     dword [edi], "http"
+;        mov     dword [edi+4], "s://"
+;        lea     edi, [edi+8]
+;        jmp     .protocol_ok
+;
+;.not_js:
+;        cmp     dword [esi+ecx], "http"         ; ECX < 0 here!!!
+;        jne     .add_https
+;
+;.not_absolute:
+;.protocol_ok:
+;        mov     esi, [.ptrLink]
+;
+;; it is absolute URL, exit
+;.finish:
+;        mov     [esp+4*regEAX], edi     ; return where to copy the remaining of the address. Destination!
+;        mov     [esp+4*regEDX], esi     ; return from where to copy the remaining of the address. Source!
+;
+;        popad
+;        return
+;endp
 
 
 
@@ -2613,74 +2584,6 @@ endp
 
 
 
-sqlSelectAllPosts text "select id, content from Posts where rendered is null limit 1000"
-sqlUpdateHTML     text "update Posts set Rendered = ?1 where id = ?2"
-
-proc RenderAll, .pSpecial
-.stmt dd ?
-.stmt2 dd ?
-begin
-        pushad
-
-        mov     esi, [.pSpecial]
-
-        test    [esi+TSpecialParams.userStatus], permAdmin
-        jz      .for_admins_only
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectAllPosts, -1, eax, 0
-
-        lea     eax, [.stmt2]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateHTML, -1, eax, 0
-
-.loop:
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        jne     .finish
-
-        cinvoke sqliteColumnInt, [.stmt], 0
-        mov     ebx, eax
-
-        cinvoke sqliteColumnText, [.stmt], 1
-
-        stdcall FormatPostText2, eax, esi
-        mov     edi, eax
-
-        cinvoke sqliteBindInt, [.stmt2], 2, ebx
-
-        stdcall StrPtr, edi
-        cinvoke sqliteBindText, [.stmt2], 1, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteStep, [.stmt2]
-        cinvoke sqliteReset, [.stmt2]
-
-        stdcall StrDel, edi
-
-        jmp     .loop
-
-.finish:
-        cinvoke sqliteFinalize, [.stmt2]
-        cinvoke sqliteFinalize, [.stmt]
-
-.finish2:
-        stdcall GetBackLink, esi
-        push    eax
-
-        stdcall TextMakeRedirect, 0, eax
-        stdcall StrDel ; from the stack
-
-.exit:
-        mov     [esp+4*regEAX], edi
-        stc
-        popad
-        return
-
-.for_admins_only:
-
-        stdcall TextMakeRedirect, 0, "/!message/only_for_admins"
-        stc
-        jmp     .exit
-endp
 
 
 

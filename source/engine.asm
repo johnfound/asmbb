@@ -40,6 +40,7 @@ options.Benchmark = 1
 include "%lib%/freshlib.asm"
 include "%lib%/data/markdown.asm"
 include "%lib%/data/bbcode.asm"
+include "%lib%/data/minimag.asm"
 
 include "benchmark.asm"
 

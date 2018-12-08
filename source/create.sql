@@ -157,8 +157,7 @@ create table Posts (
   editUserID  integer default NULL references Users(id) on delete cascade,
   editTime    integer default NULL,
   format      integer,
-  Content     text,
-  Rendered    text
+  Content     text
 );
 
 
