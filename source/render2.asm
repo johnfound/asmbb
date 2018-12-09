@@ -100,10 +100,14 @@ proc RenderTemplate, .pText, .hTemplate, .sqlite_statement, .pSpecial
 .sepcnt     dd ?
 .seplvl     dd ?
 
+.esp        dd ?
+
 .tblFields TFieldSlot
            rb 255 * sizeof.TFieldSlot       ; a hash table of the statement field names.
 begin
         pushad
+
+        mov     [.esp], esp
 
         xor     eax, eax
         mov     [.sepcnt], eax
@@ -476,8 +480,6 @@ endl
         add     [edx+TText.GapBegin], 4
         inc     [edx+TText.GapEnd]              ; delete the end "]"
 
-        inc     esi  ; start of the source
-
         stdcall TextMoveGap, edx, edi
         add     [edx+TText.GapEnd], 9
 
@@ -561,8 +563,6 @@ endl
         mov     dword [edx+ecx], 0
         add     [edx+TText.GapBegin], 4
         inc     [edx+TText.GapEnd]              ; delete the end "]"
-
-        inc     esi  ; start of the source
 
         stdcall TextMoveGap, edx, edi
         add     [edx+TText.GapEnd], 8
@@ -1542,12 +1542,14 @@ endl
 
 
 .finish:
-        cmp     dword [esp], -1
-        jne     .exit
-        add     esp, 4
-        jmp     .finish
+;        cmp     dword [esp], -1
+;        jne     .exit
+;        add     esp, 4
+;        jmp     .finish
+
 
 .exit:
+        mov     esp, [.esp]
         mov     [esp+4*regEAX], edx
         popad
         return

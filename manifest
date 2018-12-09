@@ -1,5 +1,5 @@
-C Faster\sminimag_suffix.tpl\sinclude\sand\smore\ssimple\stemplates.
-D 2018-12-08T17:34:58.092
+C Better\shandling\sof\sthe\sstack\spointer\sin\sthe\srender.
+D 2018-12-09T14:15:33.895
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -52,7 +52,7 @@ F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql c15286f32455df88ebd14168a10195e0c098545d
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
-F source/render2.asm 9f163822a5ef307b5c5f0ceb596ace30841eac32
+F source/render2.asm b095d061e9cdef4f651eeef5e9f7d162da61baef
 F source/restore.sql 8e2d558381f90333f00c0cf3943e4fdc0ff835a2
 F source/search.asm 4a2bfd137375606dc7a0da5d8f7ebc242a6ec6ac
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 8875763227cfe6461cb83b08b7c6218e3928a88f
-R e376bb9c33dc0f22681a59dcfb5041b4
+P 94492da9ef753f50c0429c273ca9be381a04d18d
+R ad4aabbd40dab9f78cd7a51440cec9e1
 U johnfound
-Z afd9f01a48a1902436b125e5fb2e8ff7
+Z daa2ff878fd15a6b2cc3e29030098040
