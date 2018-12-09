@@ -489,60 +489,6 @@ endl
         mov     ecx, [edx+TText.GapBegin]
         dec     ecx
 
-;        stdcall TextMoveGap, edx, ecx
-;        stdcall TextSetGapSize, edx, 4
-;        mov     dword [edx+ecx], 0
-;
-;        inc     [edx+TText.GapEnd]
-;        lea     ecx, [edi-1]
-;
-;        push    ecx
-;
-;        mov     ebx, [.pSpecial]
-;        stdcall StrDup, [hCurrentDir]
-;        stdcall StrCat, eax, [ebx+TSpecialParams.userSkin]
-;        stdcall StrCat, eax, "/minimag_suffix.tpl"
-;        push    eax
-;
-;        stdcall FileOpenAccess, eax, faReadOnly
-;        stdcall StrDel ; from the stack.
-;        jc      .suffix_ok
-;        mov     ebx, eax
-;
-;        stdcall FileSize, ebx
-;        jc      .suffix_close
-;
-;        mov     ecx, eax
-;        add     eax, 4
-;
-;        stdcall TextSetGapSize, edx, eax
-;        jc      .suffix_close
-;
-;        mov     esi, [edx+TText.GapBegin]
-;        add     esi, edx
-;
-;        stdcall FileRead, ebx, esi, ecx
-;        add     esi, eax
-;        mov     dword [esi], 0
-;
-;.suffix_close:
-;
-;        stdcall FileClose, ebx
-;
-;.suffix_ok:
-;        pop     ecx
-;
-;        lea     esi, [edx + edi + 9]    ; the start of the minimag source.
-;        stdcall FormatPostText, esi
-;        push    eax
-;
-;        mov     [edx+TText.GapBegin], edi
-;        stdcall TextAddString, edx, edi, eax
-;        stdcall StrDel ; from the stack
-;
-;        add     ecx, eax
-
-
         Benchmark "MiniMag markup rendering: "
         BenchmarkEnd
         jmp     .loop
