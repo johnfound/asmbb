@@ -5,26 +5,26 @@
 </noscript>
 
 
-<div class="jsonly">
-  <a class="editbtn" onclick="insertTag('source', '*', '*',   1)" title="Bold"                    ><img class="icon_bold"      src="[special:skin]/_images/toolbar.svg" alt="B"></a>
-  <a class="editbtn" onclick="insertTag('source', '/', '/',   1)" title="Italic"                  ><img class="icon_italic"    src="[special:skin]/_images/toolbar.svg" alt="I"></a>
-  <a class="editbtn" onclick="insertTag('source', '_', '_',   1)" title="Underlined"              ><img class="icon_underline" src="[special:skin]/_images/toolbar.svg" alt="U"></a>
-  <a class="editbtn" onclick="insertTag('source', '-', '-',   1)" title="Strikethrough"           ><img class="icon_strike"    src="[special:skin]/_images/toolbar.svg" alt="S"></a>
-  <a class="editbtn" onclick="insertTag('source', '`', '`',   1)" title="Inline code"             ><img class="icon_code"      src="[special:skin]/_images/toolbar.svg" alt="Mono"></a>
-  <a class="editbtn" onclick="insertTag('source', '^[', '^]^[My link^]', 1)" title="Link ^[url^]^[description^]" ><img class="icon_link"      src="[special:skin]/_images/toolbar.svg" alt="Link"></a>
-  <a class="editbtn" onclick="insertTag('source', '^[!','^]^[My picture^]', 1)" title="Picture ^[!url^]^[alt text^]"><img class="icon_picture"   src="[special:skin]/_images/toolbar.svg" alt="Image"></a>
+<div><a class="jsonly"></a>
+  <a class="editbtn" onclick="insertTag('source', '*', '*',   1)" title="Bold"                    ><img class="icon_bold"      src="/images/empty.png" alt="B"></a>
+  <a class="editbtn" onclick="insertTag('source', '/', '/',   1)" title="Italic"                  ><img class="icon_italic"    src="/images/empty.png" alt="I"></a>
+  <a class="editbtn" onclick="insertTag('source', '_', '_',   1)" title="Underlined"              ><img class="icon_underline" src="/images/empty.png" alt="U"></a>
+  <a class="editbtn" onclick="insertTag('source', '-', '-',   1)" title="Strikethrough"           ><img class="icon_strike"    src="/images/empty.png" alt="S"></a>
+  <a class="editbtn" onclick="insertTag('source', '`', '`',   1)" title="Inline code"             ><img class="icon_code"      src="/images/empty.png" alt="Mono"></a>
+  <a class="editbtn" onclick="insertTag('source', '^[', '^]^[My link^]', 1)" title="Link ^[url^]^[description^]" ><img class="icon_link"      src="/images/empty.png" alt="Link"></a>
+  <a class="editbtn" onclick="insertTag('source', '^[!','^]^[My picture^]', 1)" title="Picture ^[!url^]^[alt text^]"><img class="icon_picture"   src="/images/empty.png" alt="Image"></a>
 
-  <a class="editbtn" onclick="insertTag('source', ';quote', ';end', 0)" title="Block quote"       ><img class="icon_quote" src="[special:skin]/_images/toolbar.svg" alt="Quote"></a>
-  <a class="editbtn" onclick="insertTag('source', ';begin', ';end', 0)" title="Code block"        ><img class="icon_blockcode" src="[special:skin]/_images/toolbar.svg" alt="Code"></a>
+  <a class="editbtn" onclick="insertTag('source', ';quote', ';end', 0)" title="Block quote"       ><img class="icon_quote" src="/images/empty.png" alt="Quote"></a>
+  <a class="editbtn" onclick="insertTag('source', ';begin', ';end', 0)" title="Code block"        ><img class="icon_blockcode" src="/images/empty.png" alt="Code"></a>
 
-  <a class="editbtn" onclick="insertTag('source', '^[?:-)^]', '', 1)" title="Emoticon smile"        ><img class="icon_smile" src="[special:skin]/_images/toolbar.svg" alt="Smile"></a>
-  <a class="editbtn" onclick="insertTag('source', '^[?:-D^]', '', 1)" title="Emoticon LOL"          ><img class="icon_lol" src="[special:skin]/_images/toolbar.svg" alt="LOL"></a>
-  <a class="editbtn" onclick="insertTag('source', '^[?rofl^]', '', 1)" title="Emoticon ROFL"        ><img class="icon_rofl" src="[special:skin]/_images/toolbar.svg" alt="ROFL"></a>
-  <a class="editbtn" onclick="insertTag('source', '^[?;-)^]', '', 1)" title="Emoticon wink"         ><img class="icon_wink" src="[special:skin]/_images/toolbar.svg" alt="Wink"></a>
-  <a class="editbtn" onclick="insertTag('source', '^[?:-P^]', '', 1)" title="Emoticon tongue"       ><img class="icon_tongue" src="[special:skin]/_images/toolbar.svg" alt="Tongue"></a>
-  <a class="editbtn" onclick="insertTag('source', '^[?:-(^]', '', 1)" title="Emoticon sad"          ><img class="icon_sad" src="[special:skin]/_images/toolbar.svg" alt="Sad"></a>
-  <a class="editbtn" onclick="insertTag('source', '^[?:\'-(^]', '', 1)" title="Emoticon cry"        ><img class="icon_cry" src="[special:skin]/_images/toolbar.svg" alt="Cry"></a>
-  <a class="editbtn" onclick="insertTag('source', '^[?>:-(^]', '', 1)" title="Emoticon angry"       ><img class="icon_angry" src="[special:skin]/_images/toolbar.svg" alt="Angry"></a>
+  <a class="editbtn" onclick="insertTag('source', '^[?:-)^]', '', 1)" title="Emoticon smile"        ><img class="icon_smile" src="/images/empty.png" alt="Smile"></a>
+  <a class="editbtn" onclick="insertTag('source', '^[?:-D^]', '', 1)" title="Emoticon LOL"          ><img class="icon_lol" src="/images/empty.png" alt="LOL"></a>
+  <a class="editbtn" onclick="insertTag('source', '^[?rofl^]', '', 1)" title="Emoticon ROFL"        ><img class="icon_rofl" src="/images/empty.png" alt="ROFL"></a>
+  <a class="editbtn" onclick="insertTag('source', '^[?;-)^]', '', 1)" title="Emoticon wink"         ><img class="icon_wink" src="/images/empty.png" alt="Wink"></a>
+  <a class="editbtn" onclick="insertTag('source', '^[?:-P^]', '', 1)" title="Emoticon tongue"       ><img class="icon_tongue" src="/images/empty.png" alt="Tongue"></a>
+  <a class="editbtn" onclick="insertTag('source', '^[?:-(^]', '', 1)" title="Emoticon sad"          ><img class="icon_sad" src="/images/empty.png" alt="Sad"></a>
+  <a class="editbtn" onclick="insertTag('source', '^[?:\'-(^]', '', 1)" title="Emoticon cry"        ><img class="icon_cry" src="/images/empty.png" alt="Cry"></a>
+  <a class="editbtn" onclick="insertTag('source', '^[?>:-(^]', '', 1)" title="Emoticon angry"       ><img class="icon_angry" src="/images/empty.png" alt="Angry"></a>
 </div>
 
 <script>

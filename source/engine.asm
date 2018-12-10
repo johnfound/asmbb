@@ -27,7 +27,7 @@ options.AlignCode = 0
 options.ShowImported = 0
 
 options.DebugWeb = 0
-options.DebugPost = 0           ; save the latest POST request data in the file "post_data.txt"
+options.DebugPost = 1           ; save the latest POST request data in the file "post_data.txt"
 options.DebugSQLite = 1
 
 options.DebugWebSSE = 0         ; debug server sent events - creates a command "!echo_events" for debugging SSE.

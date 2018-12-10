@@ -14,12 +14,12 @@
       <input id="rad1" name="tabselector" type="radio" checked>
       <label for="rad1">Text</label>
       <section>
-        <p>Post content:</p>
         [include:edit_toolbar.tpl]
         <select name="format">
           <option value="0" [case:[format]|selected|]>MiniMag</option>
           <option value="1" [case:[format]||selected]>BBCode</option>
         </select>
+        <p>Post content:</p>
         <textarea class="editor" name="source" id="source">[source]</textarea>
       </section>
 

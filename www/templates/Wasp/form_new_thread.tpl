@@ -21,8 +21,8 @@
         <p>Invited users (comma separated list):</p>
         <input id="invited" type="edit" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
       </div>
-      <p>Post content:</p>
       [include:edit_toolbar.tpl]
+      <p>Post content:</p>
       <textarea class="editor" name="source" id="source" placeholder="Share your thoughts here">[source]</textarea>
       [case:[special:canupload]||<p class="panel">Attach file(s):</p><div class="attach"><input type="file" placeholder="Select file to attach" name="attach" multiple="multiple" tabindex="-1"></div>]
       <div class="attachments">

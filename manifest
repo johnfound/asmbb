@@ -1,5 +1,5 @@
-C The\seditor\stoolbar\sshould\sbe\svisible\sonly\sif\sJS\sis\senabled.\sAdditional\sbenchmark\scode\sin\srender2.asm
-D 2018-12-10T11:39:56.650
+C Fine\stuning\sof\sthe\sskins\sand\sespecially\son\sthe\ssprites\sof\sthe\sediting\stoolbar.
+D 2018-12-10T17:31:23.572
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -32,7 +32,7 @@ F source/commands.asm fbb9e16b194abe3df7ce9e4a6a563b7811d2eb38
 F source/create.sql 3304ec79174f12f515784660e8d09c9cdc27e92d
 F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
 F source/edit.asm 1365109bec5b08da9ed679e6097b0f5cb0829338
-F source/engine.asm 6328263f3fb90c58b9e8186f60f5ab979ba154f7
+F source/engine.asm 707ca71d3e8f64dca9e54f25ecfcab10955c3a5b
 F source/engine.fpr 70c9d2b004080dc41b57b77612baca1b1171a444
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -164,7 +164,7 @@ F www/images/sources/search.svg 50eb2717ab41f19d5a617f6189290fca02470b6b
 F www/images/sources/tag.svg 56e72ebfb7feff28831b4c3922cf431e32e4a3d5
 F www/images/sources/title.svg b55073be362e7f268cd2c2626ee25cf457fa9376
 F www/images/sources/title2.svg 38a1b994139b4814b00b4cfda84577a31467d7ad
-F www/images/sources/toolbar.svg b2a8e653d8f7360888db706887a6344ee23b96e4
+F www/images/sources/toolbar.svg 44706bddfbfc0d92bc2c0889c92e772060a691d3
 F www/images/sources/yellow_back.png d7aed4145104dc3224a3fb46f03c14cf6d386167
 F www/images/title.svg cfda872f2467a82c172f6e309ae7a385fdaabff5
 F www/lighttpd.conf cebee97b8e632682bfa9c02f2858d2675e6b15c6
@@ -503,7 +503,7 @@ F www/templates/Wasp/_images/save_white.svg af0ea2e281c54c48c36dd963f446272ce0f9
 F www/templates/Wasp/_images/search.svg 9da761054c10deb9ab4b363eb5c891e145156dd2
 F www/templates/Wasp/_images/tag.svg 2f3a0d76f36c983a6a5d1c55d507ce403e616257
 F www/templates/Wasp/_images/tag_gray.svg 48d4f93adf1bc6e94f76236ea3497492c1b9c94e
-F www/templates/Wasp/_images/toolbar.svg 0e5b5dfb249454ad45d1d1298e499e03ff41571c
+F www/templates/Wasp/_images/toolbar.svg 2390a07684cc33627c41f0afd3edb6c8dce671b3
 F www/templates/Wasp/_images/user.png bf7f849ee8f09b959965aa984f2a5ce7f972ce07
 F www/templates/Wasp/_images/yellow_back.png 5e6ab56d8245a36b59995f22c411989be636e99b
 F www/templates/Wasp/activation_email_subject.tpl 27c437378a3a327a35e5c31b49d500a80be996be
@@ -536,17 +536,17 @@ F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 
 F www/templates/Wasp/del_confirm.tpl 27678b543c744bd64421b50b66d3e60253bb4d3e
 F www/templates/Wasp/delete.less f77246e7f9fd0680ddb1ef2351b2b4ec5cef54f2
 F www/templates/Wasp/edit.json a2aaf0ee51695178d59b589c95b0d9bc63cd5c02
-F www/templates/Wasp/edit_toolbar.tpl ac4f2d75bd8f3b1fa97cc7ffe9796193f0135a0e
-F www/templates/Wasp/editor.less 31a9c1af85110a4e9dce3fcf00ab16bbda9ce50a
+F www/templates/Wasp/edit_toolbar.tpl fb4ef0e27e818b7fe82030ea2d04f77f01a76380
+F www/templates/Wasp/editor.less 6801a469c6f4923cdd75765cca4627bf708ba83e
 F www/templates/Wasp/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Wasp/error_html_end.tpl 3729362af2738a816684e06dd05bbfff10a39d02
 F www/templates/Wasp/error_html_start.tpl bb9719e341078e7b101f39c8ff92b54e403915c6
-F www/templates/Wasp/form_edit.tpl 7337b5dc96aada761bb227f2e182a7f613295f82
+F www/templates/Wasp/form_edit.tpl 0839632a3d7fe1d777ee13cffdd28dd91c35d2bf
 F www/templates/Wasp/form_edit_thread.tpl a07f24d40f0bca454ce1fd6feab498ecf62ff69d
 F www/templates/Wasp/form_editinfo.tpl b960459e3b7099ffb7a6724c5d5cda17f2021f68
-F www/templates/Wasp/form_login.tpl 767f04cab06d346dd451d93b34bb287fc8184071
-F www/templates/Wasp/form_new_post.tpl f9371d72de177afaa11b8f4172a3633e1d7cc571
-F www/templates/Wasp/form_new_thread.tpl ca33fb6fbd9f7118d94ea1bd418808753261c017
+F www/templates/Wasp/form_login.tpl c2474fb9cae4348fb5f84cb0e753495da5d95bf1
+F www/templates/Wasp/form_new_post.tpl e4394817da56e18a0ca13539acef57dc98c34079
+F www/templates/Wasp/form_new_thread.tpl ffe2821af4b016747d1ef3f8566f1e100d3191e1
 F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/Wasp/form_register.tpl 5b6b36c6398192a9da2a6a4a0643dced8b70ffeb
 F www/templates/Wasp/form_reset_password.tpl 0602acb7aaa6528a16ddc2b16d7ac7b05e24f09a
@@ -571,7 +571,7 @@ F www/templates/Wasp/one_category.tpl b6a45167d23af803a4107d015451d762f51fe402
 F www/templates/Wasp/one_user.tpl 5bac0daf998cb553e2e7319e4e585bdb2c0059e6
 F www/templates/Wasp/post_history.tpl 161dcbb0e477daad528cc23b74dd6430d06f292d
 F www/templates/Wasp/post_view.tpl 2c1bdc2d29d722a53e8153aa6750397290e08097
-F www/templates/Wasp/posteditor.less ca7bc69c7343690776ccc50c9b95f3864efe29c0
+F www/templates/Wasp/posteditor.less f990d5a9034599e43c3e72471622db9b89f62c43
 F www/templates/Wasp/postnew.less baa6d6d872f7d4bd97a4283a84194b38e044a796
 F www/templates/Wasp/posts.less 90d9b437e4267d4842d8ec355904892f4e651a98
 F www/templates/Wasp/preview.tpl 7762cf404ea93817b3121932c29a7cac0502c135
@@ -584,7 +584,7 @@ F www/templates/Wasp/sqlite.less f4a2edc06c2c1410f5d78ad1ea298439251482af
 F www/templates/Wasp/statistics.tpl c0dd59a240e07c246fe9c0841eb1532b93f3f1ae
 F www/templates/Wasp/thread_info.tpl f29ae867d14ec65c2c69a8d38856710f71ffc4f0
 F www/templates/Wasp/thread_list.less a0ac773e053714a3576eaa80a87a436f835b769c
-F www/templates/Wasp/threadnew.less 3576cacff07ebd24a7f587c1d7bec5a1fae2561e
+F www/templates/Wasp/threadnew.less edfa421addbc85ccc765c47e70e6a2cb395c7733
 F www/templates/Wasp/userinfo.less 19048398c5cf99ef6abbd5d576bafa8f3d0eb89e
 F www/templates/Wasp/userinfo.tpl 65b6ace891dd723f2a7ee96266afca09ae702427
 F www/templates/Wasp/users_online.less bd646392254c955b3c70def99c358ed1df2bf298
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 6d92baa3eb07438885de2214025695fc6af419b1
-R 3aa63b12b8998d7d1e9bbc93c9c6452b
+P 912515e49443e18e7d4822fd56b96aca0db29487
+R 6167b81f31b9d0dcd252e372aa3b7142
 U johnfound
-Z 6033c4ad9b9c20c713716a500f0eb19f
+Z 64416d68cad628cb14328a8c407121b9

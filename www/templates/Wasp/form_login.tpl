@@ -12,6 +12,12 @@
     <p class="pi_tick"><input type="text" value="[special:referer]" name="backlink" id="backlink"></p>
     <p class="pi_nick"><input type="checkbox" name="persistent" id="pr" value="1"><label for="pr">Persistent login</label></p>
     <p class="pi_tick"><input type="text" value="[ticket]" name="ticket" id="ticket"></p>
+    <noscript>
+       <p class="pi_tick">
+       <input type="text" name="submit.x" value="0">
+       <input type="text" name="submit.y" value="0">
+       </p>
+    </noscript>
     <input type="image" name="submit" id="submit" value="Submit"><label class="submit" for="submit">Submit</label>
   </form>
   <article>
