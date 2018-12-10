@@ -102,12 +102,15 @@ proc RenderTemplate, .pText, .hTemplate, .sqlite_statement, .pSpecial
 
 .esp        dd ?
 
+  BenchVar .render2
+
 .tblFields TFieldSlot
            rb 255 * sizeof.TFieldSlot       ; a hash table of the statement field names.
 begin
         pushad
-
         mov     [.esp], esp
+
+        BenchmarkStart .render2
 
         xor     eax, eax
         mov     [.sepcnt], eax
@@ -1497,6 +1500,16 @@ endl
 .exit:
         mov     esp, [.esp]
         mov     [esp+4*regEAX], edx
+
+if defined options.Benchmark & options.Benchmark
+        cmp     [.hTemplate], 0
+        je      @f
+        stdcall FileWriteString, [STDERR], [.hTemplate]
+@@:
+end if
+        Benchmark " rendering time: "
+        BenchmarkEnd
+
         popad
         return
 

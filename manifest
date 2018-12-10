@@ -1,5 +1,5 @@
-C Removed\ssome\scommented\sout\ssource.
-D 2018-12-09T19:56:00.670
+C The\seditor\stoolbar\sshould\sbe\svisible\sonly\sif\sJS\sis\senabled.\sAdditional\sbenchmark\scode\sin\srender2.asm
+D 2018-12-10T11:39:56.650
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -52,7 +52,7 @@ F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql c15286f32455df88ebd14168a10195e0c098545d
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
-F source/render2.asm 06dfd4955e8ff017acff8e0817d75b6d1b7373f4
+F source/render2.asm fe386a545d0a52e6f79aa5b13ca69c993eb6de7b
 F source/restore.sql 8e2d558381f90333f00c0cf3943e4fdc0ff835a2
 F source/search.asm 4a2bfd137375606dc7a0da5d8f7ebc242a6ec6ac
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -536,7 +536,7 @@ F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 
 F www/templates/Wasp/del_confirm.tpl 27678b543c744bd64421b50b66d3e60253bb4d3e
 F www/templates/Wasp/delete.less f77246e7f9fd0680ddb1ef2351b2b4ec5cef54f2
 F www/templates/Wasp/edit.json a2aaf0ee51695178d59b589c95b0d9bc63cd5c02
-F www/templates/Wasp/edit_toolbar.tpl 0a84d91c9190f6338a09f281067cff9e0f838100
+F www/templates/Wasp/edit_toolbar.tpl ac4f2d75bd8f3b1fa97cc7ffe9796193f0135a0e
 F www/templates/Wasp/editor.less 31a9c1af85110a4e9dce3fcf00ab16bbda9ce50a
 F www/templates/Wasp/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Wasp/error_html_end.tpl 3729362af2738a816684e06dd05bbfff10a39d02
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 07ace888c076259528fbf104f881baffd026718b
-R 8c655322b1dc623739aade27b004e6c9
+P 6d92baa3eb07438885de2214025695fc6af419b1
+R 3aa63b12b8998d7d1e9bbc93c9c6452b
 U johnfound
-Z ac5ca1bea59cb1f4344e1cf0cf492786
+Z 6033c4ad9b9c20c713716a500f0eb19f

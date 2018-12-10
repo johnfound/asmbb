@@ -1,6 +1,11 @@
 [css:editor.css]
 
-<div>
+<noscript>
+  <style> .jsonly { display: none } </style>
+</noscript>
+
+
+<div class="jsonly">
   <a class="editbtn" onclick="insertTag('source', '*', '*',   1)" title="Bold"                    ><img class="icon_bold"      src="[special:skin]/_images/toolbar.svg" alt="B"></a>
   <a class="editbtn" onclick="insertTag('source', '/', '/',   1)" title="Italic"                  ><img class="icon_italic"    src="[special:skin]/_images/toolbar.svg" alt="I"></a>
   <a class="editbtn" onclick="insertTag('source', '_', '_',   1)" title="Underlined"              ><img class="icon_underline" src="[special:skin]/_images/toolbar.svg" alt="U"></a>
