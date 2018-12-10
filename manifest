@@ -1,5 +1,5 @@
-C Fine\stuning\sof\sthe\sskins\sand\sespecially\son\sthe\ssprites\sof\sthe\sediting\stoolbar.
-D 2018-12-10T17:31:23.572
+C Remove\sthe\stoolbar\sif\sJS\sis\sdisabled.
+D 2018-12-10T17:32:11.607
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -536,7 +536,7 @@ F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 
 F www/templates/Wasp/del_confirm.tpl 27678b543c744bd64421b50b66d3e60253bb4d3e
 F www/templates/Wasp/delete.less f77246e7f9fd0680ddb1ef2351b2b4ec5cef54f2
 F www/templates/Wasp/edit.json a2aaf0ee51695178d59b589c95b0d9bc63cd5c02
-F www/templates/Wasp/edit_toolbar.tpl fb4ef0e27e818b7fe82030ea2d04f77f01a76380
+F www/templates/Wasp/edit_toolbar.tpl e97ce89afec721301d513dcb344339a96eddc75e
 F www/templates/Wasp/editor.less 6801a469c6f4923cdd75765cca4627bf708ba83e
 F www/templates/Wasp/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Wasp/error_html_end.tpl 3729362af2738a816684e06dd05bbfff10a39d02
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 912515e49443e18e7d4822fd56b96aca0db29487
-R 6167b81f31b9d0dcd252e372aa3b7142
+P 4368c77b1da99b057c9901c1eb730ae306f67fb7
+R ff40f7a5d132f2e7527837815ecb4f9b
 U johnfound
-Z 64416d68cad628cb14328a8c407121b9
+Z 6d7da7ba4bf97a6801786ba19380c032

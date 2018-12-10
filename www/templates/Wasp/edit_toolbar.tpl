@@ -5,7 +5,7 @@
 </noscript>
 
 
-<div><a class="jsonly"></a>
+<div class="jsonly">
   <a class="editbtn" onclick="insertTag('source', '*', '*',   1)" title="Bold"                    ><img class="icon_bold"      src="/images/empty.png" alt="B"></a>
   <a class="editbtn" onclick="insertTag('source', '/', '/',   1)" title="Italic"                  ><img class="icon_italic"    src="/images/empty.png" alt="I"></a>
   <a class="editbtn" onclick="insertTag('source', '_', '_',   1)" title="Underlined"              ><img class="icon_underline" src="/images/empty.png" alt="U"></a>
