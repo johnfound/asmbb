@@ -1,5 +1,5 @@
-C The\sdelete\sand\srestore\schanges,\saccording\sto\sthe\sdouble-format\ssupport.
-D 2018-12-10T18:24:41.493
+C Terminal\sskin\sfixed\swith\sthe\snew\sformatting.
+D 2018-12-10T18:54:07.614
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -402,7 +402,7 @@ F www/templates/Terminal/common.less 54ab1ba5cc55c0a8cbe5ff93e449bd9621b96765
 F www/templates/Terminal/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Terminal/del_confirm.tpl cdcb838e2e3a339de5408643fd2c2f3c447ab916 l
 F www/templates/Terminal/delete.less 4b875c5b69bdd522eb8b7f7e8c9a98c670fef7ad
-F www/templates/Terminal/edit.json 793f235c59994645e2ba980c232b060fb3bf09c4
+F www/templates/Terminal/edit.json 887379b46f5111fa73b94d4085e3ca5723a4dfb2
 F www/templates/Terminal/edit_toolbar.tpl acbb6599675164c5a695bc9d4276ecc380b51808
 F www/templates/Terminal/editor.less eb9cdf49f02a0910b8fe0d2dae78fdf846ecb583
 F www/templates/Terminal/error.less 8fbd13bfa0b6d82d1c3cbdcbb9e11af5588271dd
@@ -437,11 +437,11 @@ F www/templates/Terminal/navigation.less d9244dc553c663c0d4df87245e612cbd56b2057
 F www/templates/Terminal/one_category.tpl 0a104ef1000580e594a26c60e550cea3c403484c
 F www/templates/Terminal/one_user.tpl f1e1aacad832e82f4b446f755387efe7f6d815b1 l
 F www/templates/Terminal/post_history.tpl 252f022e564844721c84b264f05f527742108a19 l
-F www/templates/Terminal/post_view.tpl 739ac059d99613d271961b590fee3f052838af49
+F www/templates/Terminal/post_view.tpl 02327a04f1f23f63a01a8f98438626c51f29a0b0
 F www/templates/Terminal/posteditor.less 9008ab729f4908a9f3971dd5abc6ec02f691b01b
 F www/templates/Terminal/postnew.less 0019f1af77582a801e810ae59b6d034ff18515b8
 F www/templates/Terminal/posts.less 893eb4f1f9cf66e4def3ced9cfa0e08ac11cc3fa
-F www/templates/Terminal/preview.tpl f6032917651c0055ed2e082e0b40d81f51c0ee62
+F www/templates/Terminal/preview.tpl 357a2e0f71535157fbe3193bbbf177e333f827c9
 F www/templates/Terminal/restore_confirm.tpl c59340b4b594a629285efa18802ea6d542442afb l
 F www/templates/Terminal/search.less 0945b7c80d74e44ee3c658746428cb30797d3f46
 F www/templates/Terminal/search_result.tpl 14a244471c17be8bf2775942941634ddacfa365b
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P a645ff4a7082ead91ba5bf0ce7860b3ef3fa26e6
-R 37a0733319f1b395cb654ba701130c06
+P c7e9157950f40604cce205868b2d17a5c80a8d91
+R 6c68ff512fbbdcab2b7324744966a7e6
 U johnfound
-Z b3212940d38f7f7108ad9fd3e06cab36
+Z 78c221d877700100a481d37c9629cbda
