@@ -1,10 +1,5 @@
 [css:editor.css]
 
-<noscript>
-  <style> .jsonly { display: none } </style>
-</noscript>
-
-
 <div class="jsonly">
   <a class="editbtn" onclick="insertTag('source', '*', '*',   1)" title="Bold"                    ><img class="icon_bold"      src="/images/empty.png" alt="B"></a>
   <a class="editbtn" onclick="insertTag('source', '/', '/',   1)" title="Italic"                  ><img class="icon_italic"    src="/images/empty.png" alt="I"></a>

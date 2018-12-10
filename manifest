@@ -1,5 +1,5 @@
-C Remove\sthe\stoolbar\sif\sJS\sis\sdisabled.
-D 2018-12-10T17:32:11.607
+C Make\s.jsonly\scss\sclass\sglobal.
+D 2018-12-10T17:44:37.796
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -536,7 +536,7 @@ F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 
 F www/templates/Wasp/del_confirm.tpl 27678b543c744bd64421b50b66d3e60253bb4d3e
 F www/templates/Wasp/delete.less f77246e7f9fd0680ddb1ef2351b2b4ec5cef54f2
 F www/templates/Wasp/edit.json a2aaf0ee51695178d59b589c95b0d9bc63cd5c02
-F www/templates/Wasp/edit_toolbar.tpl e97ce89afec721301d513dcb344339a96eddc75e
+F www/templates/Wasp/edit_toolbar.tpl 0815aba67deeab86244b964a254dedd5086a87ba
 F www/templates/Wasp/editor.less 6801a469c6f4923cdd75765cca4627bf708ba83e
 F www/templates/Wasp/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Wasp/error_html_end.tpl 3729362af2738a816684e06dd05bbfff10a39d02
@@ -557,7 +557,7 @@ F www/templates/Wasp/form_sqlite_console.tpl 7efc4c110f2baaab4cb601c2eb68c0f65cc
 F www/templates/Wasp/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
 F www/templates/Wasp/login.less 85f8c636e9c15adffb68d098f557d3efbdbc4e5a
 F www/templates/Wasp/main_html_end.tpl f1e4b1ef234a14345fb8a2d7348944d5eb6abfab
-F www/templates/Wasp/main_html_start.tpl 1f5535e1545a60e1fdce4b02c6321442ef31feee
+F www/templates/Wasp/main_html_start.tpl bf83423e9c97ff773a43243f246fe0d0d1b91a52
 F www/templates/Wasp/markdown.less cf2c606518d665ff3120ee97c9d611bed62d1845
 F www/templates/Wasp/minimag_suffix.tpl 7051407fe8722bb0a32cc68e05109ec539c2ac27
 F www/templates/Wasp/nav_categories.tpl b5e3ab9bf0e8ffc35b70e76bc6aab39cce819bfa
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 4368c77b1da99b057c9901c1eb730ae306f67fb7
-R ff40f7a5d132f2e7527837815ecb4f9b
+P 332cc639fbcb55a24b3304a7c2655b3cd6ea4161
+R 1f77ca9b89b5e7921d48a2bec8791b48
 U johnfound
-Z 6d7da7ba4bf97a6801786ba19380c032
+Z be931daec70b938a2f5b37cc772b8528

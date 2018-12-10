@@ -29,6 +29,11 @@
   <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
   <meta name="msapplication-config" content="/images/favicons/browserconfig.xml">
   <meta name="theme-color" content="#ffcc40">
+
+  <noscript>
+    <style> .jsonly { display: none !important } </style>
+  </noscript>
+
 </head>
 
 <body>
