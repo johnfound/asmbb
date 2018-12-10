@@ -15,7 +15,7 @@
       </div>
     </div>
     <article>
-      [html:[minimag:[Content]]]
+      [html:[[case:[format]|minimag:[include:minimag_suffix.tpl]|bbcode:][Content]]]
     </article>
   </div>
 </div>

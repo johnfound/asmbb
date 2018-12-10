@@ -1,5 +1,5 @@
-C Make\s.jsonly\scss\sclass\sglobal.
-D 2018-12-10T17:44:37.796
+C The\sdelete\sand\srestore\schanges,\saccording\sto\sthe\sdouble-format\ssupport.
+D 2018-12-10T18:24:41.493
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -30,14 +30,14 @@ F source/chat.asm c0469c0067c6361d0894e18d9f32e01562a3c94c
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm fbb9e16b194abe3df7ce9e4a6a563b7811d2eb38
 F source/create.sql 3304ec79174f12f515784660e8d09c9cdc27e92d
-F source/delete.asm b2e021d5ee5fea3a6d1442f5cca5e7069b08ff5b
+F source/delete.asm 622f6c614754f5c7ca7fc7cec5c23931e29e57ec
 F source/edit.asm 1365109bec5b08da9ed679e6097b0f5cb0829338
 F source/engine.asm 707ca71d3e8f64dca9e54f25ecfcab10955c3a5b
 F source/engine.fpr 70c9d2b004080dc41b57b77612baca1b1171a444
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 3f2f16c5201e953e72b500f8f7f50a92094345e6
-F source/history.asm 8d6b1336e3f00cb1ace0668760db844798901797
+F source/history.asm 0d6f548542ad90d7d07424e5c821dd17f42c4e29
 F source/http.asm ced15edb5f16a61e2e48b39ab983735aac2f637c
 F source/images_png.asm cb69d9eafb85f6e61c526a3dcff4c7f2c3f4ebd6
 F source/messages.asm f1f350f40073680e2ed26e007312987ef9eb327f
@@ -49,11 +49,11 @@ F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
 F source/post.asm bd3b0e7aae4c7607177d71d98ddcb88a13db887d
 F source/post_data.asm af4b81ca1c74d54bbcd7a15b57f9c0cbd8622f01
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
-F source/posthistory.sql c15286f32455df88ebd14168a10195e0c098545d
+F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/render2.asm fe386a545d0a52e6f79aa5b13ca69c993eb6de7b
-F source/restore.sql 8e2d558381f90333f00c0cf3943e4fdc0ff835a2
+F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 4a2bfd137375606dc7a0da5d8f7ebc242a6ec6ac
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
@@ -533,8 +533,8 @@ F www/templates/Wasp/chat.less e57b611bba245767e3924f761c37393ee3bb53d2
 F www/templates/Wasp/chat.tpl 32d13cec3ff9bc2439ad4bd6b29867ca33f492b2
 F www/templates/Wasp/common.less 5b68147dec24452656922693763747c2a45e3a39
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
-F www/templates/Wasp/del_confirm.tpl 27678b543c744bd64421b50b66d3e60253bb4d3e
-F www/templates/Wasp/delete.less f77246e7f9fd0680ddb1ef2351b2b4ec5cef54f2
+F www/templates/Wasp/del_confirm.tpl 196e0885327eb39ee563c6fa11d270d7e25c234b
+F www/templates/Wasp/delete.less 253a0f549e132a9d55ae56fe399a8929eabb4a29
 F www/templates/Wasp/edit.json a2aaf0ee51695178d59b589c95b0d9bc63cd5c02
 F www/templates/Wasp/edit_toolbar.tpl 0815aba67deeab86244b964a254dedd5086a87ba
 F www/templates/Wasp/editor.less 6801a469c6f4923cdd75765cca4627bf708ba83e
@@ -558,7 +558,7 @@ F www/templates/Wasp/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991e
 F www/templates/Wasp/login.less 85f8c636e9c15adffb68d098f557d3efbdbc4e5a
 F www/templates/Wasp/main_html_end.tpl f1e4b1ef234a14345fb8a2d7348944d5eb6abfab
 F www/templates/Wasp/main_html_start.tpl bf83423e9c97ff773a43243f246fe0d0d1b91a52
-F www/templates/Wasp/markdown.less cf2c606518d665ff3120ee97c9d611bed62d1845
+F www/templates/Wasp/markdown.less f8eb4e37e2f170530911059f5a0504a9880ab9a3
 F www/templates/Wasp/minimag_suffix.tpl 7051407fe8722bb0a32cc68e05109ec539c2ac27
 F www/templates/Wasp/nav_categories.tpl b5e3ab9bf0e8ffc35b70e76bc6aab39cce819bfa
 F www/templates/Wasp/nav_history.tpl ec672e45848f639e46cd390f9058ed0672d5289b
@@ -569,13 +569,13 @@ F www/templates/Wasp/nav_userslist.tpl 6ef44e0325d1b57df7789021ec146acddf90c72d
 F www/templates/Wasp/navigation.less 25ad252c4ecb5c4bc3e2034e90aed8fca4aa375d
 F www/templates/Wasp/one_category.tpl b6a45167d23af803a4107d015451d762f51fe402
 F www/templates/Wasp/one_user.tpl 5bac0daf998cb553e2e7319e4e585bdb2c0059e6
-F www/templates/Wasp/post_history.tpl 161dcbb0e477daad528cc23b74dd6430d06f292d
+F www/templates/Wasp/post_history.tpl f6f9365f25087a1ff1daced716b0a49bfcb67ae2
 F www/templates/Wasp/post_view.tpl 2c1bdc2d29d722a53e8153aa6750397290e08097
 F www/templates/Wasp/posteditor.less f990d5a9034599e43c3e72471622db9b89f62c43
 F www/templates/Wasp/postnew.less baa6d6d872f7d4bd97a4283a84194b38e044a796
 F www/templates/Wasp/posts.less 90d9b437e4267d4842d8ec355904892f4e651a98
 F www/templates/Wasp/preview.tpl 7762cf404ea93817b3121932c29a7cac0502c135
-F www/templates/Wasp/restore_confirm.tpl c101e4ccda03878c89c22aa70b96db20c33ce063
+F www/templates/Wasp/restore_confirm.tpl 65a7c2ebc8a8c3215a7c2af13138747c4bc159c6
 F www/templates/Wasp/search.less 17bfdc636da1019916443febbb2073b791ed79d1
 F www/templates/Wasp/search_result.tpl edac3d3193e862ea8139b4a02bca9df788074cfd
 F www/templates/Wasp/settings.less 6ccedb81d9556db74aa22d251f4d6e4c7745b627
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 332cc639fbcb55a24b3304a7c2655b3cd6ea4161
-R 1f77ca9b89b5e7921d48a2bec8791b48
+P a645ff4a7082ead91ba5bf0ce7860b3ef3fa26e6
+R 37a0733319f1b395cb654ba701130c06
 U johnfound
-Z be931daec70b938a2f5b37cc772b8528
+Z b3212940d38f7f7108ad9fd3e06cab36

@@ -92,8 +92,8 @@ endp
 
 
 
-sqlRestoreConfirmInfo text "select rowid as version, postID, Content, ?2 as Ticket from PostsHistory where rowid = ?1"
-sqlGetPostVersion     text "select postID, threadID, userID, postTime, editUserID, editTime, Content from PostsHistory where rowid = ?1"
+sqlRestoreConfirmInfo text "select rowid as version, postID, Content, format, ?2 as Ticket from PostsHistory where rowid = ?1"
+sqlGetPostVersion     text "select postID, threadID, userID, postTime, editUserID, editTime, Content, format from PostsHistory where rowid = ?1"
 sqlRestorePost StripText "restore.sql", SQL
 
 proc RestorePost, .pSpecial
@@ -195,7 +195,7 @@ begin
 
         cinvoke sqliteColumnInt, [.stmt], 0     ; postID
         mov     [.postid], eax
-        cinvoke sqliteBindInt, [.stmt2], 7, eax
+        cinvoke sqliteBindInt, [.stmt2], 8, eax
 
         cinvoke sqliteColumnInt, [.stmt], 1     ; threadID
         cinvoke sqliteBindInt, [.stmt2], 1, eax
@@ -235,6 +235,9 @@ begin
         cinvoke sqliteColumnText, [.stmt], 6
         mov     esi, eax
         cinvoke sqliteBindText, [.stmt2], 6, esi, ebx, SQLITE_STATIC
+
+        cinvoke sqliteColumnInt, [.stmt], 7     ; format
+        cinvoke sqliteBindInt, [.stmt2], 7, eax
 
         cinvoke sqliteStep, [.stmt2]
         push    eax

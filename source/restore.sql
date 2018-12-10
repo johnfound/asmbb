@@ -6,6 +6,7 @@ set
   postTime = ?3,
   editUserID = ?4,
   editTime = ?5,
-  Content = ?6
+  Content = ?6,
+  format = ?7
 where
-  id = ?7;
+  id = ?8;
