@@ -1,5 +1,5 @@
-C Terminal\sskin\sfixed\swith\sthe\snew\sformatting.
-D 2018-12-10T18:54:07.614
+C Post\seditor\stoolbar\ssupport\sfor\sboth\sMiniMag\sand\sBBCode.\sFixed\sa\sbug\sin\sthe\seditor\sjs\scode.
+D 2018-12-13T20:22:49.577
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -32,7 +32,7 @@ F source/commands.asm fbb9e16b194abe3df7ce9e4a6a563b7811d2eb38
 F source/create.sql 3304ec79174f12f515784660e8d09c9cdc27e92d
 F source/delete.asm 622f6c614754f5c7ca7fc7cec5c23931e29e57ec
 F source/edit.asm 1365109bec5b08da9ed679e6097b0f5cb0829338
-F source/engine.asm 707ca71d3e8f64dca9e54f25ecfcab10955c3a5b
+F source/engine.asm 091dba4b76b7130b1dd3db7728b2749e6b8e8c6c
 F source/engine.fpr 70c9d2b004080dc41b57b77612baca1b1171a444
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -46,7 +46,7 @@ F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
 F source/migration1.sql fe97ef3b5046a916f0215336a8a56ea4c8a3b98a
 F source/migration2.sql fe978700e39265c6680b69ea8cbfb5444cfdce63
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
-F source/post.asm bd3b0e7aae4c7607177d71d98ddcb88a13db887d
+F source/post.asm ba3f3128a215f308375d1d86771dc589b5db829f
 F source/post_data.asm af4b81ca1c74d54bbcd7a15b57f9c0cbd8622f01
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
@@ -536,17 +536,17 @@ F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 
 F www/templates/Wasp/del_confirm.tpl 196e0885327eb39ee563c6fa11d270d7e25c234b
 F www/templates/Wasp/delete.less 253a0f549e132a9d55ae56fe399a8929eabb4a29
 F www/templates/Wasp/edit.json a2aaf0ee51695178d59b589c95b0d9bc63cd5c02
-F www/templates/Wasp/edit_toolbar.tpl 0815aba67deeab86244b964a254dedd5086a87ba
-F www/templates/Wasp/editor.less 6801a469c6f4923cdd75765cca4627bf708ba83e
+F www/templates/Wasp/edit_toolbar.tpl 62137826c59362a704653f57bde910a35d8c58f6
+F www/templates/Wasp/editor.less 6a8353df504cd4e9d22fc687c7a62b5fdb3e318c
 F www/templates/Wasp/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Wasp/error_html_end.tpl 3729362af2738a816684e06dd05bbfff10a39d02
 F www/templates/Wasp/error_html_start.tpl bb9719e341078e7b101f39c8ff92b54e403915c6
-F www/templates/Wasp/form_edit.tpl 0839632a3d7fe1d777ee13cffdd28dd91c35d2bf
+F www/templates/Wasp/form_edit.tpl f53053aadff071a3909798a04c36aa65d55cccda
 F www/templates/Wasp/form_edit_thread.tpl a07f24d40f0bca454ce1fd6feab498ecf62ff69d
 F www/templates/Wasp/form_editinfo.tpl b960459e3b7099ffb7a6724c5d5cda17f2021f68
 F www/templates/Wasp/form_login.tpl c2474fb9cae4348fb5f84cb0e753495da5d95bf1
 F www/templates/Wasp/form_new_post.tpl e4394817da56e18a0ca13539acef57dc98c34079
-F www/templates/Wasp/form_new_thread.tpl ffe2821af4b016747d1ef3f8566f1e100d3191e1
+F www/templates/Wasp/form_new_thread.tpl a0595f1295bed65833b917562c48c7cd846c27d3
 F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/Wasp/form_register.tpl 5b6b36c6398192a9da2a6a4a0643dced8b70ffeb
 F www/templates/Wasp/form_reset_password.tpl 0602acb7aaa6528a16ddc2b16d7ac7b05e24f09a
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P c7e9157950f40604cce205868b2d17a5c80a8d91
-R 6c68ff512fbbdcab2b7324744966a7e6
+P d41ccb81d837b2b176e986c4a1cdc0ddd3a594bf
+R 1f164ccb488e8c6be9be78c7733b7791
 U johnfound
-Z 78c221d877700100a481d37c9629cbda
+Z 0da3318d173a939c19f4baed7a00eaf9

@@ -5,10 +5,10 @@ LIMIT_TAG_DESCRIPTION = 1024
 cNewPostForm   text "form_new_post.tpl"
 cNewThreadForm text "form_new_thread.tpl"
 
-sqlSelectConst text "select ?1 as slug, ?2 as caption, ?3 as source, ?4 as ticket, ?5 as tags, ?6 as limited, ?7 as invited, ?8 as UserName"
+sqlSelectConst text "select ?1 as slug, ?2 as caption, ?3 as source, ?4 as ticket, ?5 as tags, ?6 as limited, ?7 as invited, ?8 as UserName, ?9 as format"
 sqlGetQuote   text "select U.nick, P.content from Posts P left join Users U on U.id = P.userID where P.id = ?"
 
-sqlInsertPost text "insert into Posts ( ThreadID, UserID, PostTime, Content) values (?, ?, strftime('%s','now'), ?)"
+sqlInsertPost text "insert into Posts ( ThreadID, UserID, PostTime, Content, format) values (?, ?, strftime('%s','now'), ?, ?)"
 sqlUpdateThreads text "update Threads set LastChanged = strftime('%s','now') where id = ?"
 sqlInsertThread  text "insert into Threads ( Caption ) values ( ? )"
 sqlSetThreadSlug text "update Threads set slug = ? where id = ?"
@@ -25,6 +25,7 @@ proc PostUserMessage, .pSpecial
 .caption  dd ?
 .tags     dd ?
 .fLimited dd ?
+.iFormat  dd ?
 .invited  dd ?
 .count    dd ?
 
@@ -45,6 +46,9 @@ begin
         mov     [.ticket], eax
         mov     [.stmt], eax
         mov     [.stmt2], eax
+
+        stdcall GetParam, txt "default_format", gpInteger       ; eax must == 0 before this call.
+        mov     [.iFormat], eax
 
         mov     esi, [.pSpecial]
 
@@ -140,6 +144,17 @@ begin
         stdcall StrTrim, [.source], eax
 
 .source_ok2:
+
+; get the format.
+
+        stdcall NumToStr, [.iFormat], ntsUnsigned or ntsDec
+        push    eax
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "format", eax
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack
+        stdcall StrDel ; from the stack
+        mov     [.iFormat], eax
 
 ; ok, get the action then:
 
@@ -266,6 +281,8 @@ begin
         cinvoke sqliteBindText, [.stmt], 8, eax, [eax+string.len], SQLITE_STATIC
 
 .username_ok:
+
+        cinvoke sqliteBindInt, [.stmt], 9, [.iFormat]
 
         cinvoke sqliteStep, [.stmt]
 
@@ -436,6 +453,8 @@ endl
         jz      .error_invalid_content
 
         cinvoke sqliteBindText, [.stmt], 3, eax, ecx, SQLITE_STATIC
+
+        cinvoke sqliteBindInt, [.stmt], 4, [.iFormat]
 
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_DONE

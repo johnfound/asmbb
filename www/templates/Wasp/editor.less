@@ -5,7 +5,7 @@
 .editbtn {
   display: inline-block;
   min-width: @buttonHeight;
-  margin-bottom: 4px;
+  margin: 4px;
   color: @clButtonFG;
   text-align: center;
 
@@ -47,3 +47,75 @@
 .icon_sad       { background-position: -14 * @toolIconHeight 0;}
 .icon_cry       { background-position: -15 * @toolIconHeight 0;}
 .icon_angry     { background-position: -16 * @toolIconHeight 0;}
+
+
+.toolbar {
+  flex-grow: 1;
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+
+  & > input {
+    position: absolute;
+    opacity: 0;
+    & + label {
+      -webkit-user-select: none; /* Safari 3.1+ */
+      -moz-user-select: none; /* Firefox 2+ */
+      -ms-user-select: none; /* IE 10+ */
+      user-select: none; /* Standard syntax */
+
+      display: flex;
+
+      padding: 0px 8px;
+      margin: 0px;
+      font-size: @FontSize;
+      border-left: 2px solid transparent;
+      cursor: pointer;
+      font-weight: bold;
+      color: black;
+
+      position: absolute;
+      left: 0px;
+      height: 50%;
+      width: 80px;
+
+      span {
+        align-self: center;
+      }
+
+      &:hover {
+        background: @clTabHover;
+      }
+
+      & + section {
+        display: none;
+        padding: 4px;
+        background: @clTabBG;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin: 0px 0px 0px 78px;
+        border: 2px solid white;
+      }
+    }
+
+    &:focus + label {
+      border-left: 2px solid @clTabFocus;
+      z-index: 1;
+    }
+
+    &:checked + label {
+      background: @clTabBG;
+      color: @clTabFG;
+      border: 2px solid white;
+      border-right: none;
+
+      & + section {
+        display: flex;
+      }
+    }
+  }
+}
