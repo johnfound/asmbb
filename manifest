@@ -1,5 +1,5 @@
-C The\snew\scombined\seditor\stoolbar\sfor\sthe\sTerminal\sand\smobile\sskins.
-D 2018-12-14T07:39:42.292
+C More\sreadable\ssource.
+D 2018-12-14T19:04:32.528
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -32,7 +32,7 @@ F source/commands.asm fbb9e16b194abe3df7ce9e4a6a563b7811d2eb38
 F source/create.sql 3304ec79174f12f515784660e8d09c9cdc27e92d
 F source/delete.asm 622f6c614754f5c7ca7fc7cec5c23931e29e57ec
 F source/edit.asm 1365109bec5b08da9ed679e6097b0f5cb0829338
-F source/engine.asm 091dba4b76b7130b1dd3db7728b2749e6b8e8c6c
+F source/engine.asm e65e31dc6267ccd9e9cff4d958d1a6eb92cbdfe3
 F source/engine.fpr 70c9d2b004080dc41b57b77612baca1b1171a444
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 33207c0eb56c55087ae214937bb3087a3c2e2d92
-R 6b05dd4ba4b5af9ad794f521f35f6f9a
+P 0337a952dc631435f53be9557cfcc7183f4b03ec
+R 426046fbe728f4bbf76b2d4d0b443341
 U johnfound
-Z ee3567d7e28fb2a99a2be8a3055a33fb
+Z 9811d445b59e1dacb0cd6c92d9bd3ebd

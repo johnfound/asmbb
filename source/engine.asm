@@ -15,7 +15,6 @@
 include "%lib%/freshlib.inc"
 
 LINUX_INTERPRETER equ './ld-musl-i386.so'
-EMOTICONS_PATH equ '/~/_images/emoticons/'
 
 @BinaryType console, compact
 
@@ -38,8 +37,10 @@ options.Benchmark = 0
 
 
 include "%lib%/freshlib.asm"
-include "%lib%/data/markdown.asm"
+
+EMOTICONS_PATH equ '/~/_images/emoticons/'      ; defines the emoticons path for the bbcode translator.
 include "%lib%/data/bbcode.asm"
+
 include "%lib%/data/minimag.asm"
 
 include "benchmark.asm"
