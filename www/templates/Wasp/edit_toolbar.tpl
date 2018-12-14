@@ -1,55 +1,53 @@
 [css:editor.css]
 
-
 <div class="jsonly">
-
   <div class="toolbar">
     <input id="mark0" name="format" type="radio" [case:[format]|checked|] value="0">
     <label for="mark0" style="top: 0px;"><span>MiniMag</span></label>
     <section>
-      <a class="editbtn" onclick="insertTag('source', '*', '*',   1)" title="Bold"                    ><img class="icon_bold"      src="/images/empty.png" alt="B"></a>
-      <a class="editbtn" onclick="insertTag('source', '/', '/',   1)" title="Italic"                  ><img class="icon_italic"    src="/images/empty.png" alt="I"></a>
-      <a class="editbtn" onclick="insertTag('source', '_', '_',   1)" title="Underlined"              ><img class="icon_underline" src="/images/empty.png" alt="U"></a>
-      <a class="editbtn" onclick="insertTag('source', '-', '-',   1)" title="Strikethrough"           ><img class="icon_strike"    src="/images/empty.png" alt="S"></a>
-      <a class="editbtn" onclick="insertTag('source', '`', '`',   1)" title="Inline code"             ><img class="icon_code"      src="/images/empty.png" alt="Mono"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[', '^]^[My link^]', 1)" title="Link ^[url^]^[description^]" ><img class="icon_link"      src="/images/empty.png" alt="Link"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[!','^]^[My picture^]', 1)" title="Picture ^[!url^]^[alt text^]"><img class="icon_picture"   src="/images/empty.png" alt="Image"></a>
+      <a class="editbtn" onclick="insertTag('source', '*', '*', 1)" title="Bold"><img class="icon_bold" src="/images/empty.png" alt="B"></a>
+      <a class="editbtn" onclick="insertTag('source', '/', '/', 1)" title="Italic"><img class="icon_italic" src="/images/empty.png" alt="I"></a>
+      <a class="editbtn" onclick="insertTag('source', '_', '_', 1)" title="Underlined"><img class="icon_underline" src="/images/empty.png" alt="U"></a>
+      <a class="editbtn" onclick="insertTag('source', '-', '-', 1)" title="Strikethrough"><img class="icon_strike" src="/images/empty.png" alt="S"></a>
+      <a class="editbtn" onclick="insertTag('source', '`', '`', 1)" title="Inline code"><img class="icon_code" src="/images/empty.png" alt="Mono"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[', '^]^[My link^]', 1)" title="Link ^[url^]^[description^]"><img class="icon_link" src="/images/empty.png" alt="Link"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[!','^]^[My picture^]', 1)" title="Picture ^[!url^]^[alt text^]"><img class="icon_picture" src="/images/empty.png" alt="Image"></a>
 
-      <a class="editbtn" onclick="insertTag('source', ';quote', ';end', 0)" title="Block quote"       ><img class="icon_quote" src="/images/empty.png" alt="Quote"></a>
-      <a class="editbtn" onclick="insertTag('source', ';begin', ';end', 0)" title="Code block"        ><img class="icon_blockcode" src="/images/empty.png" alt="Code"></a>
+      <a class="editbtn" onclick="insertTag('source', ';quote', ';end', 0)" title="Block quote"><img class="icon_quote" src="/images/empty.png" alt="Quote"></a>
+      <a class="editbtn" onclick="insertTag('source', ';begin', ';end', 0)" title="Code block"><img class="icon_blockcode" src="/images/empty.png" alt="Code"></a>
 
-      <a class="editbtn" onclick="insertTag('source', '^[?:-)^]', '', 1)" title="Emoticon smile"        ><img class="icon_smile" src="/images/empty.png" alt="Smile"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[?:-D^]', '', 1)" title="Emoticon LOL"          ><img class="icon_lol" src="/images/empty.png" alt="LOL"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[?rofl^]', '', 1)" title="Emoticon ROFL"        ><img class="icon_rofl" src="/images/empty.png" alt="ROFL"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[?;-)^]', '', 1)" title="Emoticon wink"         ><img class="icon_wink" src="/images/empty.png" alt="Wink"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[?:-P^]', '', 1)" title="Emoticon tongue"       ><img class="icon_tongue" src="/images/empty.png" alt="Tongue"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[?:-(^]', '', 1)" title="Emoticon sad"          ><img class="icon_sad" src="/images/empty.png" alt="Sad"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[?:\'-(^]', '', 1)" title="Emoticon cry"        ><img class="icon_cry" src="/images/empty.png" alt="Cry"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[?>:-(^]', '', 1)" title="Emoticon angry"       ><img class="icon_angry" src="/images/empty.png" alt="Angry"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[?:-)^]', '', 1)" title="Emoticon smile"><img class="icon_smile" src="/images/empty.png" alt="Smile"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[?:-D^]', '', 1)" title="Emoticon LOL"><img class="icon_lol" src="/images/empty.png" alt="LOL"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[?rofl^]', '', 1)" title="Emoticon ROFL"><img class="icon_rofl" src="/images/empty.png" alt="ROFL"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[?;-)^]', '', 1)" title="Emoticon wink"><img class="icon_wink" src="/images/empty.png" alt="Wink"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[?:-P^]', '', 1)" title="Emoticon tongue"><img class="icon_tongue" src="/images/empty.png" alt="Tongue"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[?:-(^]', '', 1)" title="Emoticon sad"><img class="icon_sad" src="/images/empty.png" alt="Sad"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[?:\'-(^]', '', 1)" title="Emoticon cry"><img class="icon_cry" src="/images/empty.png" alt="Cry"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[?>:-(^]', '', 1)" title="Emoticon angry"><img class="icon_angry" src="/images/empty.png" alt="Angry"></a>
     </section>
 
     <input id="mark1" name="format" type="radio" [case:[format]||checked] value="1">
     <label for="mark1" style="top: 50%;"><span>BBcode</span></label>
     <section class="bbcode">
-      <a class="editbtn" onclick="insertTag('source', '^[b^]', '^[/b^]',   1)" title="Bold"                    ><img class="icon_bold"      src="/images/empty.png" alt="B"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[i^]', '^[/i^]',   1)" title="Italic"                  ><img class="icon_italic"    src="/images/empty.png" alt="I"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[u^]', '^[/u^]',   1)" title="Underlined"              ><img class="icon_underline" src="/images/empty.png" alt="U"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[s^]', '^[/s^]',   1)" title="Strikethrough"           ><img class="icon_strike"    src="/images/empty.png" alt="S"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[c^]', '^[/c^]',   1)" title="Inline code"             ><img class="icon_code"      src="/images/empty.png" alt="Mono"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[url=^]', '^[/url^]', 1)" title="Link"                 ><img class="icon_link" src="/images/empty.png" alt="Link"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[img=^]', '^[/img^]', 1)" title="Image"                ><img class="icon_picture"   src="/images/empty.png" alt="Image"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[b^]', '^[/b^]', 1)" title="Bold"><img class="icon_bold" src="/images/empty.png" alt="B"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[i^]', '^[/i^]', 1)" title="Italic"><img class="icon_italic" src="/images/empty.png" alt="I"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[u^]', '^[/u^]', 1)" title="Underlined"><img class="icon_underline" src="/images/empty.png" alt="U"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[s^]', '^[/s^]', 1)" title="Strikethrough"><img class="icon_strike" src="/images/empty.png" alt="S"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[c^]', '^[/c^]', 1)" title="Inline code"><img class="icon_code" src="/images/empty.png" alt="Mono"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[url=^]', '^[/url^]', 1)" title="Link"><img class="icon_link" src="/images/empty.png" alt="Link"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[img=^]', '^[/img^]', 1)" title="Image"><img class="icon_picture" src="/images/empty.png" alt="Image"></a>
 
-      <a class="editbtn" onclick="insertTag('source', '^[quote=^]', '^[/quote^]', 0)" title="Block quote"      ><img class="icon_quote" src="/images/empty.png" alt="Quote"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[code^]', '^[/code^]', 0)"    title="Code block"       ><img class="icon_blockcode" src="/images/empty.png" alt="Code"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[quote=^]', '^[/quote^]', 0)" title="Block quote"><img class="icon_quote" src="/images/empty.png" alt="Quote"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[code^]', '^[/code^]', 0)" title="Code block"><img class="icon_blockcode" src="/images/empty.png" alt="Code"></a>
 
-      <a class="editbtn" onclick="insertTag('source', '^[:)^]', '', 1)" title="Emoticon smile"        ><img class="icon_smile" src="/images/empty.png" alt="Smile"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[:D^]', '', 1)" title="Emoticon LOL"          ><img class="icon_lol" src="/images/empty.png" alt="LOL"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[:lol:^]', '', 1)" title="Emoticon ROFL"        ><img class="icon_rofl" src="/images/empty.png" alt="ROFL"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[;)^]', '', 1)" title="Emoticon wink"         ><img class="icon_wink" src="/images/empty.png" alt="Wink"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[:P^]', '', 1)" title="Emoticon tongue"       ><img class="icon_tongue" src="/images/empty.png" alt="Tongue"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[:(^]', '', 1)" title="Emoticon sad"          ><img class="icon_sad" src="/images/empty.png" alt="Sad"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[:`(^]', '', 1)" title="Emoticon cry"        ><img class="icon_cry" src="/images/empty.png" alt="Cry"></a>
-      <a class="editbtn" onclick="insertTag('source', '^[>:(^]', '', 1)" title="Emoticon angry"       ><img class="icon_angry" src="/images/empty.png" alt="Angry"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[:)^]', '', 1)" title="Emoticon smile"><img class="icon_smile" src="/images/empty.png" alt="Smile"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[:D^]', '', 1)" title="Emoticon LOL"><img class="icon_lol" src="/images/empty.png" alt="LOL"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[:rofl:^]', '', 1)" title="Emoticon ROFL"><img class="icon_rofl" src="/images/empty.png" alt="ROFL"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[;)^]', '', 1)" title="Emoticon wink"><img class="icon_wink" src="/images/empty.png" alt="Wink"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[:P^]', '', 1)" title="Emoticon tongue"><img class="icon_tongue" src="/images/empty.png" alt="Tongue"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[:(^]', '', 1)" title="Emoticon sad"><img class="icon_sad" src="/images/empty.png" alt="Sad"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[:`(^]', '', 1)" title="Emoticon cry"><img class="icon_cry" src="/images/empty.png" alt="Cry"></a>
+      <a class="editbtn" onclick="insertTag('source', '^[>:(^]', '', 1)" title="Emoticon angry"><img class="icon_angry" src="/images/empty.png" alt="Angry"></a>
     </section>
   </div>
 </div>

@@ -1,5 +1,5 @@
-C More\sreadable\ssource.
-D 2018-12-14T19:04:32.528
+C Editors\stoolbar\s:rofl:\sfix.
+D 2018-12-14T19:59:03.326
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -403,7 +403,7 @@ F www/templates/Terminal/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52
 F www/templates/Terminal/del_confirm.tpl cdcb838e2e3a339de5408643fd2c2f3c447ab916 l
 F www/templates/Terminal/delete.less 4b875c5b69bdd522eb8b7f7e8c9a98c670fef7ad
 F www/templates/Terminal/edit.json 887379b46f5111fa73b94d4085e3ca5723a4dfb2
-F www/templates/Terminal/edit_toolbar.tpl 0a58a03168b8905726bea6cc4c391f7248679522
+F www/templates/Terminal/edit_toolbar.tpl 748cc55cf00898fa55d1e3675d859ba1495c6dd8
 F www/templates/Terminal/editor.less 3d8735c52e8bd20236df09090867078070bc95aa
 F www/templates/Terminal/error.less 8fbd13bfa0b6d82d1c3cbdcbb9e11af5588271dd
 F www/templates/Terminal/error_html_end.tpl d8eb4bb97157c6894bd89059559f0666aa60709a
@@ -536,7 +536,7 @@ F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 
 F www/templates/Wasp/del_confirm.tpl 196e0885327eb39ee563c6fa11d270d7e25c234b
 F www/templates/Wasp/delete.less 253a0f549e132a9d55ae56fe399a8929eabb4a29
 F www/templates/Wasp/edit.json a2aaf0ee51695178d59b589c95b0d9bc63cd5c02
-F www/templates/Wasp/edit_toolbar.tpl 62137826c59362a704653f57bde910a35d8c58f6
+F www/templates/Wasp/edit_toolbar.tpl 0958c6292787be2f2ee20613e45504a406f70844
 F www/templates/Wasp/editor.less a10e7a93ebc53c9612c385f149e70e7fe2683327
 F www/templates/Wasp/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Wasp/error_html_end.tpl 3729362af2738a816684e06dd05bbfff10a39d02
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 0337a952dc631435f53be9557cfcc7183f4b03ec
-R 426046fbe728f4bbf76b2d4d0b443341
+P a7d587449c0c58b6a6d0409e69493803deaa44a7
+R 33b44a2a9dd8bc4272a0cacd69a50041
 U johnfound
-Z 9811d445b59e1dacb0cd6c92d9bd3ebd
+Z 8c75a7c98052ea62b3b920f7686a5348
