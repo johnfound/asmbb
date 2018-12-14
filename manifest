@@ -1,5 +1,5 @@
-C Post\seditor\stoolbar\ssupport\sfor\sboth\sMiniMag\sand\sBBCode.\sFixed\sa\sbug\sin\sthe\seditor\sjs\scode.
-D 2018-12-13T20:22:49.577
+C The\snew\scombined\seditor\stoolbar\sfor\sthe\sTerminal\sand\smobile\sskins.
+D 2018-12-14T07:39:42.292
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -403,8 +403,8 @@ F www/templates/Terminal/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52
 F www/templates/Terminal/del_confirm.tpl cdcb838e2e3a339de5408643fd2c2f3c447ab916 l
 F www/templates/Terminal/delete.less 4b875c5b69bdd522eb8b7f7e8c9a98c670fef7ad
 F www/templates/Terminal/edit.json 887379b46f5111fa73b94d4085e3ca5723a4dfb2
-F www/templates/Terminal/edit_toolbar.tpl acbb6599675164c5a695bc9d4276ecc380b51808
-F www/templates/Terminal/editor.less eb9cdf49f02a0910b8fe0d2dae78fdf846ecb583
+F www/templates/Terminal/edit_toolbar.tpl 0a58a03168b8905726bea6cc4c391f7248679522
+F www/templates/Terminal/editor.less 3d8735c52e8bd20236df09090867078070bc95aa
 F www/templates/Terminal/error.less 8fbd13bfa0b6d82d1c3cbdcbb9e11af5588271dd
 F www/templates/Terminal/error_html_end.tpl d8eb4bb97157c6894bd89059559f0666aa60709a
 F www/templates/Terminal/error_html_start.tpl a1bc27205b6552aaf2b9ddfa1dc91e16d741e758
@@ -537,7 +537,7 @@ F www/templates/Wasp/del_confirm.tpl 196e0885327eb39ee563c6fa11d270d7e25c234b
 F www/templates/Wasp/delete.less 253a0f549e132a9d55ae56fe399a8929eabb4a29
 F www/templates/Wasp/edit.json a2aaf0ee51695178d59b589c95b0d9bc63cd5c02
 F www/templates/Wasp/edit_toolbar.tpl 62137826c59362a704653f57bde910a35d8c58f6
-F www/templates/Wasp/editor.less 6a8353df504cd4e9d22fc687c7a62b5fdb3e318c
+F www/templates/Wasp/editor.less a10e7a93ebc53c9612c385f149e70e7fe2683327
 F www/templates/Wasp/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Wasp/error_html_end.tpl 3729362af2738a816684e06dd05bbfff10a39d02
 F www/templates/Wasp/error_html_start.tpl bb9719e341078e7b101f39c8ff92b54e403915c6
@@ -628,7 +628,7 @@ F www/templates/mobile/editor.less 01d0be8c4eaa0f91139b00b7bedaa3fb66dc4450 l
 F www/templates/mobile/error.less 83cd53cf80eb467b611ebe7865c41c96694c293f l
 F www/templates/mobile/error_html_end.tpl 62173b764a79089fff2cfe7be9428adcd13046da l
 F www/templates/mobile/error_html_start.tpl 0e59043bca2eece87606b5085e216f22a529eb77 l
-F www/templates/mobile/form_edit.tpl 003377d6256a7f32ba69d3825a7a002045fbf8c9
+F www/templates/mobile/form_edit.tpl dd462abc8d8a6ee527b3bd467b4d309cad799b05
 F www/templates/mobile/form_edit_thread.tpl 9ba48416deb4498a8dcad61198289fb396592980 l
 F www/templates/mobile/form_editinfo.tpl 91a3644fb4b1021bffa2356f7291f6e457eebe1e l
 F www/templates/mobile/form_login.tpl 1ca5a25baff036f4b5a655b72d25c18c987a8ed7 l
@@ -658,7 +658,7 @@ F www/templates/mobile/one_category.tpl a708fe0d344a3b684ed7228e7f32486237f90b28
 F www/templates/mobile/one_user.tpl f1e1aacad832e82f4b446f755387efe7f6d815b1 l
 F www/templates/mobile/post_history.tpl 252f022e564844721c84b264f05f527742108a19 l
 F www/templates/mobile/post_view.tpl 4e4b1a73db2462b1954e92ec092c71c438b63e85 l
-F www/templates/mobile/posteditor.less af013f51fda1a0a8710d4aa2be99f1a4481abcd1
+F www/templates/mobile/posteditor.less 1bb2f0e3fb95b067a649f4be16815370ee3bef51
 F www/templates/mobile/postnew.less 3df1b56984c0e0268104a69862782120a40f06be l
 F www/templates/mobile/posts.less 1c62bbcf1f3b1faaa11c69c38606f4bd8b13c1c2
 F www/templates/mobile/preview.tpl 6bd29d06a6720e51db6d4d73b7572f9fcc1ff32f l
@@ -678,7 +678,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P d41ccb81d837b2b176e986c4a1cdc0ddd3a594bf
-R 1f164ccb488e8c6be9be78c7733b7791
+P 33207c0eb56c55087ae214937bb3087a3c2e2d92
+R 6b05dd4ba4b5af9ad794f521f35f6f9a
 U johnfound
-Z 0da3318d173a939c19f4baed7a00eaf9
+Z ee3567d7e28fb2a99a2be8a3055a33fb
