@@ -153,6 +153,7 @@ create table Posts (
   id          integer primary key autoincrement,
   threadID    integer references Threads(id) on delete cascade,
   userID      integer references Users(id) on delete cascade,
+  anon        text,
   postTime    integer,
   editUserID  integer default NULL references Users(id) on delete cascade,
   editTime    integer default NULL,
@@ -177,6 +178,7 @@ create table PostsHistory (
   postID     integer,
   threadID   integer,
   userID     integer,
+  anon       text,
   postTime   integer,
   editUserID integer,
   editTime   integer,
@@ -194,7 +196,7 @@ CREATE TRIGGER PostsAI AFTER INSERT ON Posts BEGIN
     new.Content,
     (select Caption from Threads where id=new.threadid),
     (select slug from Threads where id = new.threadid),
-    (select nick from users where id = new.userid),
+    ifnull((select nick from users where id = new.userid), new.anon),
     (select group_concat(TT.Tag, ", ") from ThreadTags TT where TT.threadID = new.threadid)
   );
   insert into PostCNT(postid,count) VALUES (new.id, 0);
@@ -210,10 +212,11 @@ CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
   delete from ThreadPosters where threadid = old.threadid and userid = old.userid;
   insert into ThreadPosters(firstPost, threadID, userID) select min(id), threadid, userid from posts where threadid = old.threadid and userid = old.userid;
 
-  insert or ignore into PostsHistory(postID, threadID, userID, postTime, editUserID, editTime, format, Content) values (
+  insert or ignore into PostsHistory(postID, threadID, userID, anon, postTime, editUserID, editTime, format, Content) values (
     old.id,
     old.threadID,
     old.userID,
+    old.anon,
     old.postTime,
     old.editUserID,
     old.editTime,
@@ -228,13 +231,14 @@ CREATE TRIGGER PostsAU AFTER UPDATE OF Content, editTime, editUserID, threadID, 
     Content = new.Content,
     Caption = (select Caption from Threads where id=new.threadid),
     slug = (select slug from Threads where id = new.threadid),
-    user = (select nick from users where id = new.userid),
+    user = ifnull((select nick from users where id = new.userid), new.anon),
     tags = (select group_concat(TT.Tag, ", ") from ThreadTags TT where TT.threadID = new.threadid)
   where rowid = old.id;
-  insert or ignore into PostsHistory(postID, threadID, userID, postTime, editUserID, editTime, format, Content) values (
+  insert or ignore into PostsHistory(postID, threadID, userID, anon, postTime, editUserID, editTime, format, Content) values (
     old.id,
     old.threadID,
     old.userID,
+    old.anon,
     old.postTime,
     old.editUserID,
     old.editTime,

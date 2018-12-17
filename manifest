@@ -1,5 +1,5 @@
-C Editors\stoolbar\s:rofl:\sfix.
-D 2018-12-14T19:59:03.326
+C Added\snew\sfield\s"anon"\sto\sthe\sPosts\sand\sPostsHistory\stables\sin\sorder\sto\sbe\sused\sfor\sthe\sfuture\simplementation\sof\sanonimous\sposting\s(it\swill\sbe\sneeded\sfor\susing\sAsmBB\sfor\scms/blog\sengine\swith\suser\scomments);\n\nAdded\smigration\sscript\sfrom\sremoving\sthe\s"Rendered"\sfield\sand\stransition\sto\sreal-time\srendering\sof\sthe\sposts.\n\nAdapted\sthe\sutility\sscript\sthat\srebuilds\sthe\sPostFTS\stable\sto\sthe\srecent\stable\sscheme.
+D 2018-12-17T20:08:27.096
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -29,11 +29,11 @@ F source/categories.sql b1fa5a2cca7204372b3ca3714edbbc669103b1cf
 F source/chat.asm c0469c0067c6361d0894e18d9f32e01562a3c94c
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm fbb9e16b194abe3df7ce9e4a6a563b7811d2eb38
-F source/create.sql 3304ec79174f12f515784660e8d09c9cdc27e92d
+F source/create.sql d6eff68a7b13a9f16c7f1c2726c72084d1cb016c
 F source/delete.asm 622f6c614754f5c7ca7fc7cec5c23931e29e57ec
 F source/edit.asm 1365109bec5b08da9ed679e6097b0f5cb0829338
 F source/engine.asm e65e31dc6267ccd9e9cff4d958d1a6eb92cbdfe3
-F source/engine.fpr 70c9d2b004080dc41b57b77612baca1b1171a444
+F source/engine.fpr 3bb2ac58350155bccab5cd01d6875a8dbf6aa95f
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 3f2f16c5201e953e72b500f8f7f50a92094345e6
@@ -43,6 +43,7 @@ F source/images_png.asm cb69d9eafb85f6e61c526a3dcff4c7f2c3f4ebd6
 F source/messages.asm f1f350f40073680e2ed26e007312987ef9eb327f
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
+F source/migratePosts.sql 92b037bfd56c741fe1cf1d992f383cde22346fc1
 F source/migration1.sql fe97ef3b5046a916f0215336a8a56ea4c8a3b98a
 F source/migration2.sql fe978700e39265c6680b69ea8cbfb5444cfdce63
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
@@ -82,7 +83,7 @@ F source/users_online.asm 6e64ed25254d4ca6d1ac411d7fe92536f9bf17f6
 F source/users_online.sql 419ecd742f570ce4c34354c917d9dc06d33115a0
 F source/userslist.asm e2a2ee4735143fbf7d05ad0fc8243b28fe1c7104
 F source/userslist.sql a671e06a5beecc94edd3bb87cf0a4357b2554686
-F source/util.sql 9a28fa983067026d3f84a96c8272faa12612387e
+F source/util.sql f99946ee679b132d77228384692cd816f1c54631
 F source/version.asm 5429dfb0ca6d328d47bf95435903f1b961358c17
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
@@ -678,7 +679,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P a7d587449c0c58b6a6d0409e69493803deaa44a7
-R 33b44a2a9dd8bc4272a0cacd69a50041
+P f11a7d3eb04f7eab4835923c6156dd1183704648
+R 299e0649d0916f481b704bb9a631584f
 U johnfound
-Z 8c75a7c98052ea62b3b920f7686a5348
+Z efe540f9caf53ab396b0503624700191
