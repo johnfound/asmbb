@@ -2,7 +2,7 @@
   <div class="user_info">
     <div class="username">
       <img width="32" height="32" class="unread" [case:[Unread]|src="[special:skin]/_images/onepost_gray.svg" alt="">|src="[special:skin]/_images/onepost.svg" alt="&gt;">]
-      <a class="user_name" href="/!userinfo/[url:[UserName]]">[UserName]</a>
+      [case:[UserID]||<a class="user_name" href="/!userinfo/[url:[UserName]]">][UserName][case:[UserID]||</a>]
     </div>
     <div class="avatar">
       <img class="avatar" alt="(ツ)" src="/!avatar/[url:[UserName]]?v=[AVer]">

@@ -76,6 +76,7 @@ PHashTable tableSpecial, tpl_func,                              \
         "posters=",    RenderTemplate.sp_posters,               \
         "invited=",    RenderTemplate.sp_invited,               \
         "threadtags=", RenderTemplate.sp_threadtags,            \
+        "markup=",     RenderTemplate.sp_markups,               \
         "environment", RenderTemplate.sp_environment              ; optional, depends on options.DebugWeb
 
 useridHash phash tpl_func, "userid"
@@ -1489,6 +1490,28 @@ endl
         stdcall GetThreadTags, ebx
         jmp     .special_string_free
 
+.sp_markups:
+; here esi points to the "=" char, ecx at the end "]" and edi at the start "["
+        call    .get_number
+        and     ebx, $1f
+
+        push    ecx
+
+        xor     ecx, ecx
+        inc     ecx
+        mov     eax, ecx        ; the default value if there is no parameter in the database!
+        xchg    ebx, ecx
+        shl     ebx, cl
+
+        pop     ecx
+
+; eax == 1 here!!!
+        stdcall GetParam, txt "markup_languages", gpInteger
+        and     eax, ebx
+
+        cmovz   eax, [.cBoolean]
+        cmovnz  eax, [.cBoolean+4]
+        jmp     .special_string
 
 .finish:
 ;        cmp     dword [esp], -1

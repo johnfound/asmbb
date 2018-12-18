@@ -7,13 +7,16 @@ proc BoardSettings, .pSpecial
 .message dd ?
 .error   dd ?
 .ticket  dd ?
+.tab     dd ?
 
 begin
         pushad
 
-        and     [.message], 0
-        and     [.ticket], 0
-        and     [.error], 0
+        xor     eax, eax
+        mov     [.message], eax
+        mov     [.ticket], eax
+        mov     [.error], eax
+        mov     [.tab], eax
 
         mov     esi, [.pSpecial]
 
@@ -45,9 +48,22 @@ begin
 .error_ok:
         stdcall GetQueryItem, ebx, txt "msg=", 0
         test    eax, eax
-        jz      .show_settings_form
+        jz      .msg_ok
 
         mov     [.message], eax
+
+.msg_ok:
+        stdcall GetQueryItem, ebx, txt "tab=", 0
+        test    eax, eax
+        jz      .show_settings_form
+
+        push    eax
+        stdcall StrToNumEx, eax
+        jc      .tab_ok
+        mov     [.tab], eax
+.tab_ok:
+        stdcall StrDel ; from the stack
+
 
 .show_settings_form:
 
@@ -183,6 +199,13 @@ begin
 
 .chat_enabled_ok:
 
+        xor     eax, eax
+        inc     eax
+        stdcall GetParam, txt "markup_languages", gpInteger
+        stdcall BindSQLBits, [.stmt], eax, 400, txt "checked"
+
+; email confirmations.
+
         stdcall GetParam, txt "email_confirm", gpInteger
         jc      .email_confirm_ok
         test    eax, eax
@@ -220,6 +243,9 @@ begin
         stdcall StrDel ; from the stack
 
 .mob_skin_ok:
+
+        cinvoke sqliteBindInt, [.stmt], 29, [.tab]
+
 
         cinvoke sqliteStep, [.stmt]
 
@@ -374,6 +400,21 @@ begin
         stdcall SetParamInt, txt "chat_enabled", ebx
         jc      .error_write
 
+; save markup languages.
+
+        stdcall GetPostBitmask, txt "markups", esi
+        jc      .error_invalid_markup
+
+        and     eax, 3
+        jnz     .save_markups
+
+        inc     eax  ; MiniMag is the default markup.
+
+.save_markups:
+
+        stdcall SetParamInt, txt "markup_languages", eax
+        jc      .error_write
+
 ; save page_length
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "page_length", 0
@@ -386,16 +427,16 @@ begin
 
 .save_perm:
 
-        stdcall GetPostPermissions, 'user_perm', esi
+        stdcall GetPostBitmask, 'user_perm', esi
         jc      .error_invalid_permissions
 
         stdcall SetParamInt, txt "user_perm", eax
         jc      .error_write
 
-        stdcall GetPostPermissions, 'anon_perm', esi
+        stdcall GetPostBitmask, 'anon_perm', esi
         jc      .error_invalid_permissions
 
-        and     eax, permLogin or permRead or permChat or permDownload
+        and     eax, permLogin or permRead or permChat or permDownload          ; For implementing anonymous posting, here should be added permPost and maybe permThreadStart
 
         stdcall SetParamInt, txt "anon_perm", eax
         jc      .error_write
@@ -417,17 +458,24 @@ begin
         mov     ebx, eax
 
         stdcall StrDupMem, "/!settings?msg="
-        push    eax
-
         stdcall StrCat, eax, ebx
         stdcall StrDel, ebx
+        mov     ebx, eax
 
         cmp     [.error], 0
         je      .errok
-        stdcall StrCat, eax, "&err=1"
+        stdcall StrCat, ebx, "&err=1"
 .errok:
-        stdcall TextMakeRedirect, 0, eax
-        stdcall StrDel ; from the stack
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "tabselector", 0
+        jc      .tabok
+
+        stdcall StrCat, ebx, txt "&tab="
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+
+.tabok:
+        stdcall TextMakeRedirect, 0, ebx
+        stdcall StrDel, ebx
 
 .exit:
         mov     [esp+4*regEAX], edi
@@ -440,6 +488,12 @@ begin
 
         stdcall TextMakeRedirect, 0, "/!message/only_for_admins"
         jmp     .exit
+
+
+.error_invalid_markup:
+
+        stdcall StrDupMem, "Error: Invalid code for markup language."
+        jmp     .error_write
 
 
 .error_invalid_number:
@@ -776,7 +830,7 @@ endp
 ; Notice, that the checkboxes in the group should have numeric values, according to the
 ; permXXXX values, defined in 'commands.asm' file!
 
-proc GetPostPermissions, .hGroupName, .pSpecial
+proc GetPostBitmask, .hGroupName, .pSpecial
 begin
         pushad
         mov     esi, [.pSpecial]

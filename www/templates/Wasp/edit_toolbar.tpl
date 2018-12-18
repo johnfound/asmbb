@@ -2,8 +2,11 @@
 
 <div class="jsonly">
   <div class="toolbar">
+    [case:[special:markup=0]|<section><input name="format" value="1" type="hidden"></section>|
+    [case:[special:markup=0]||[case:[special:markup=1]||
     <input id="mark0" name="format" type="radio" [case:[format]|checked|] value="0">
     <label for="mark0" style="top: 0px;"><span>MiniMag</span></label>
+    ]]
     <section>
       <a class="editbtn" onclick="insertTag('source', '*', '*', 1)" title="Bold"><img class="icon_bold" src="/images/empty.png" alt="B"></a>
       <a class="editbtn" onclick="insertTag('source', '/', '/', 1)" title="Italic"><img class="icon_italic" src="/images/empty.png" alt="I"></a>
@@ -25,9 +28,13 @@
       <a class="editbtn" onclick="insertTag('source', '^[?:\'-(^]', '', 1)" title="Emoticon cry"><img class="icon_cry" src="/images/empty.png" alt="Cry"></a>
       <a class="editbtn" onclick="insertTag('source', '^[?>:-(^]', '', 1)" title="Emoticon angry"><img class="icon_angry" src="/images/empty.png" alt="Angry"></a>
     </section>
+    ]
 
+    [case:[special:markup=1]|<section><input name="format" value="0" type="hidden"></section>|
+    [case:[special:markup=1]||[case:[special:markup=0]||
     <input id="mark1" name="format" type="radio" [case:[format]||checked] value="1">
     <label for="mark1" style="top: 50%;"><span>BBcode</span></label>
+    ]]
     <section class="bbcode">
       <a class="editbtn" onclick="insertTag('source', '^[b^]', '^[/b^]', 1)" title="Bold"><img class="icon_bold" src="/images/empty.png" alt="B"></a>
       <a class="editbtn" onclick="insertTag('source', '^[i^]', '^[/i^]', 1)" title="Italic"><img class="icon_italic" src="/images/empty.png" alt="I"></a>
@@ -49,6 +56,7 @@
       <a class="editbtn" onclick="insertTag('source', '^[:`(^]', '', 1)" title="Emoticon cry"><img class="icon_cry" src="/images/empty.png" alt="Cry"></a>
       <a class="editbtn" onclick="insertTag('source', '^[>:(^]', '', 1)" title="Emoticon angry"><img class="icon_angry" src="/images/empty.png" alt="Angry"></a>
     </section>
+    ]
   </div>
 </div>
 

@@ -179,7 +179,7 @@ endl
         test    [esi+TSpecialParams.userStatus], permAdmin
         jz      .user_perm_ok
 
-        stdcall GetPostPermissions, txt 'user_perm', esi
+        stdcall GetPostBitmask, txt 'user_perm', esi
         jc      .user_perm_ok
 
         mov     edi, eax

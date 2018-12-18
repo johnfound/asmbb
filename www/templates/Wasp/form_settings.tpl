@@ -9,7 +9,7 @@
 
   <div class="tabbed">
 
-    <input id="tab1" name="tabselector" type="radio" checked>
+    <input id="tab1" name="tabselector" type="radio" value="0" [case:[tabselector]|checked|]>
     <label for="tab1">HTML/CSS</label>
     <section>
       <h3>Forum title:</h3>
@@ -29,7 +29,7 @@
       </td></tr></table>
     </section>
 
-    <input id="tab2" name="tabselector" type="radio">
+    <input id="tab2" name="tabselector" type="radio" value="1" [case:[tabselector]||checked|]>
     <label for="tab2">Server</label>
     <section>
       <h3>Host:</h3>
@@ -50,7 +50,7 @@
       </td></tr></table>
     </section>
 
-    <input id="tab3" name="tabselector" type="radio">
+    <input id="tab3" name="tabselector" type="radio" value="2" [case:[tabselector]|||checked|]>
     <label for="tab3">Permissions</label>
     <section>
       <h3>For new users:</h3>
@@ -77,7 +77,7 @@
       </ul>
     </section>
 
-    <input id="tab4" name="tabselector" type="radio">
+    <input id="tab4" name="tabselector" type="radio" value="3" [case:[tabselector]||||checked|]>
     <label for="tab4">Features</label>
     <section>
       <h3>Page length:</h3>
@@ -92,6 +92,11 @@
       <table><tr>
         <td><input type="checkbox" [chat_enabled] name="chat_enabled" id="chat_enabled"><label for="chat_enabled">Enable chat</label></td>
       </tr></table>
+
+      <h3>Available markup languages: <small>(at least one must be selected)</small></h3>
+      <input type="checkbox" [markup0]  name="markups" id="mu0"  value="1"><label for="mu0">MiniMag (like markdown)</label>
+      <input type="checkbox" [markup1]  name="markups" id="mu1"  value="2"><label for="mu1">BBCode</label>
+      </ul>
     </section>
   </div>
 
