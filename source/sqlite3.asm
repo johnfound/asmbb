@@ -60,6 +60,8 @@ proc SQliteRegisterFunctions, .ptrDatabase
 begin
         cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "url_encode", 1, SQLITE_UTF8, 0, sqliteURLEncode, 0, 0, 0
         cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "html_encode", 1, SQLITE_UTF8, 0, sqliteHTMLEncode, 0, 0, 0
+        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "slugify", 1, SQLITE_UTF8, 0, sqliteSlugify, 0, 0, 0
+        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "tagify", 1, SQLITE_UTF8, 0, sqliteTagify, 0, 0, 0
         return
 endp
 
@@ -109,3 +111,82 @@ begin
         cret
 endp
 
+
+proc sqliteSlugify, .context, .num, .pValue
+begin
+        mov     eax, [.pValue]
+        cinvoke sqliteValueText, [eax]
+        test    eax, eax
+        jz      .null
+
+        stdcall StrSlugify, eax
+        push    eax
+        stdcall StrPtr, eax
+
+.result:
+        cinvoke sqliteResultText, [.context], eax, [eax+string.len], SQLITE_TRANSIENT
+        stdcall StrDel ; from the stack
+        cret
+
+.null:
+        cinvoke sqliteResultNULL, [.context]
+        cret
+endp
+
+
+proc sqliteTagify, .context, .num, .pValue
+begin
+        mov     eax, [.pValue]
+        cinvoke sqliteValueText, [eax]
+        test    eax, eax
+        jz      .null
+
+        stdcall StrDupMem, eax
+        stdcall StrTagify, eax
+        push    eax
+        stdcall StrPtr, eax
+
+        cinvoke sqliteResultText, [.context], eax, [eax+string.len], SQLITE_TRANSIENT
+        stdcall StrDel ; from the stack
+        cret
+
+.null:
+        cinvoke sqliteResultNULL, [.context]
+        cret
+endp
+
+
+
+proc sqliteConvertPHPBBText, .context, .num, .pValue
+begin
+        push    edi
+
+        stdcall TextCreate, sizeof.TText
+        mov     edi, eax
+
+        mov     eax, [.pValue]
+        cinvoke sqliteValueText, [eax]
+        test    eax, eax
+        jz      .null
+
+        stdcall TextAddString, edi, 0, eax
+        stdcall ConvertPhpBBText, edx
+        stdcall TextCompact, edx
+        push    edx
+
+        cinvoke sqliteResultText, [.context], edx, [edx+TText.GapBegin], SQLITE_TRANSIENT
+        stdcall TextFree ; from the stack
+        cret
+
+.null:
+        cinvoke sqliteResultNULL, [.context]
+        cret
+endp
+
+
+
+proc ConvertPhpBB, .pText
+begin
+
+        return
+endp

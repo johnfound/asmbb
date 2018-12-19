@@ -9,7 +9,7 @@ select
   P.userID,
   P.editUserID,
   (select nick from users u2 where u2.id = P.editUserID) as EditUser,
-  ifnull(U.nick, P.anon) as UserName,
+  ifnull(U.nick, P.anon||'🔴') as UserName,
   U.PostCount as UserPostCount,
   U.av_time as AVer,
   ?4 as Slug,
