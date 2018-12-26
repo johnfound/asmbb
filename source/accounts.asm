@@ -175,6 +175,53 @@ begin
 .user_ok:
 
         cinvoke sqliteColumnText, [.stmt], 1    ; the salt
+        test    eax, eax
+        jnz     .asmbb_standard
+
+; It is phpbb type password.
+
+        cinvoke sqliteColumnText, [.stmt], 2
+        test    eax, eax
+        jz      .redirect_back_bad_permissions
+
+        push    ebx
+
+        stdcall StrSplitList, eax, '|', FALSE
+        mov     ebx, eax
+
+        stdcall StrDup, [.password]
+        mov     edi, eax
+
+        stdcall StrPtr, [ebx+TArray.array]
+        cmp     byte [eax], '$'
+        je      .pass_ok
+
+        stdcall StrMD5, edi
+        stdcall StrDel, edi
+        mov     edi, eax
+
+.pass_ok:
+
+        stdcall StrPtr, edi
+        mov     edx, eax
+
+        stdcall StrPtr, [ebx+TArray.array]
+
+        cinvoke crypt,  edx, eax
+
+        stdcall StrCompCase, eax, [ebx+TArray.array]
+        pushf
+
+        stdcall ListFree, ebx, StrDel
+        stdcall StrDel, edi
+
+        popf
+        pop     ebx
+        jc      .password_match
+        jmp     .bad_user
+
+
+.asmbb_standard:
         stdcall StrDupMem, eax
         push    eax
 
@@ -192,6 +239,8 @@ begin
 
 
 ; here the password matches this from the database.
+
+.password_match:
 
         cinvoke sqliteColumnInt, [.stmt], 0
         mov     [.userID], eax

@@ -62,6 +62,9 @@ begin
         cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "html_encode", 1, SQLITE_UTF8, 0, sqliteHTMLEncode, 0, 0, 0
         cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "slugify", 1, SQLITE_UTF8, 0, sqliteSlugify, 0, 0, 0
         cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "tagify", 1, SQLITE_UTF8, 0, sqliteTagify, 0, 0, 0
+        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "phpbb", 1, SQLITE_UTF8, 0, sqliteConvertPhpBBText, 0, 0, 0
+        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "xorblob", 2, SQLITE_ANY, 0, sqliteXorBlob, 0, 0, 0
+        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "md5", 1, SQLITE_ANY, 0, sqliteMD5Blob, 0, 0, 0
         return
 endp
 
@@ -88,6 +91,37 @@ begin
         cret
 endp
 
+
+proc sqliteMD5Blob, .context, .num, .pValue
+begin
+        push    ebx esi
+
+        mov     esi, [.pValue]
+
+        cinvoke sqliteValueBytes, [esi]
+        test    eax, eax
+        jz      .null
+
+        mov     ebx, eax
+
+        cinvoke sqliteValueBlob, [esi]
+        test    eax, eax
+        jz      .null
+
+        stdcall DataMD5, eax, ebx
+        push    eax
+        stdcall StrPtr, eax
+
+        cinvoke sqliteResultText, [.context], eax, [eax+string.len], SQLITE_TRANSIENT
+        stdcall StrDel ; from the stack
+        pop     esi ebx
+        cret
+
+.null:
+        cinvoke sqliteResultNULL, [.context]
+        pop     esi ebx
+        cret
+endp
 
 
 proc sqliteHTMLEncode, .context, .num, .pValue
@@ -157,7 +191,7 @@ endp
 
 
 
-proc sqliteConvertPHPBBText, .context, .num, .pValue
+proc sqliteConvertPhpBBText, .context, .num, .pValue
 begin
         push    edi
 
@@ -170,16 +204,18 @@ begin
         jz      .null
 
         stdcall TextAddString, edi, 0, eax
-        stdcall ConvertPhpBBText, edx
+        stdcall ConvertPhpBB, edx
         stdcall TextCompact, edx
         push    edx
 
         cinvoke sqliteResultText, [.context], edx, [edx+TText.GapBegin], SQLITE_TRANSIENT
         stdcall TextFree ; from the stack
+        pop     edi
         cret
 
 .null:
         cinvoke sqliteResultNULL, [.context]
+        pop     edi
         cret
 endp
 
@@ -187,6 +223,280 @@ endp
 
 proc ConvertPhpBB, .pText
 begin
+        pushad
 
+        mov     edx, [.pText]
+
+        stdcall TextMoveGap, edx, 0
+        mov     ebx, [edx+TText.GapEnd]
+        dec     ebx
+
+.loop:
+        inc     ebx
+        cmp     ebx, [edx+TText.Length]
+        jae     .end_of_text
+
+        mov     al, [edx+ebx]
+        cmp     al, "["
+        je      .tag_loop
+
+        cmp     al, "&"
+        jne     .loop
+
+        call    .decode_html
+        jmp     .loop
+
+; tag start here:
+
+.tag_loop:
+        inc     ebx
+        cmp     ebx, [edx+TText.Length]
+        jae     .end_of_text
+
+        mov     al, [edx+ebx]
+
+        cmp     al, ":"
+        je      .del_from_here
+
+        cmp     al, "]"
+        je      .loop   ; tag ended here
+
+        cmp     al, "&"
+        jne     .tag_loop
+
+        call    .decode_html
+        jmp     .tag_loop
+
+
+.del_from_here:
+        mov     al, [edx+ebx+1]
+        cmp     al, '/'
+        je      .tag_loop
+
+        mov     eax, ebx
+        sub     eax, [edx+TText.GapEnd]
+        add     eax, [edx+TText.GapBegin]
+
+        stdcall TextMoveGap, edx, eax
+
+.del_loop:
+        inc     ebx
+        cmp     ebx, [edx+TText.Length]
+        jae     .end_of_text
+
+        mov     al, [edx+ebx]
+
+        cmp     al, "]"
+        je      .del_end_tag
+
+        cmp     al, "="
+        jne     .del_loop
+
+        mov     [edx+TText.GapEnd], ebx
+        jmp     .tag_loop
+
+.del_end_tag:
+        mov     [edx+TText.GapEnd], ebx
+        jmp     .loop
+
+
+.end_of_text:
+        mov     [esp+4*regEDX], edx
+        popad
         return
+
+
+.decode_html:
+
+        mov     eax, ebx
+        sub     eax, [edx+TText.GapEnd]
+        add     eax, [edx+TText.GapBegin]
+
+        stdcall TextSetGapSize, edx, 8
+        stdcall TextMoveGap, edx, eax
+        mov     ebx, [edx+TText.GapEnd]
+
+;        int3
+;        lea     eax, [edx+ebx]          ; for debug only!!!
+
+        inc     ebx
+
+        mov     ecx, [edx+TText.Length]
+        sub     ecx, ebx
+        cmp     ecx, 5
+        jb      .skip5
+
+        mov     eax, $a0
+        mov     edi, 6
+        cmp     dword [edx+ebx], 'nbsp'
+        jne     .no_nbsp
+        cmp     byte [edx+ebx+4], ';'
+        je      .replace
+
+.no_nbsp:
+        mov     eax, '"'
+        cmp     dword [edx+ebx], 'quot'
+        jne     .no_quot
+        cmp     byte [edx+ebx+4], ';'
+        je      .replace
+
+.no_quot:
+        mov     eax, "'"
+        cmp     dword [edx+ebx], 'apos'
+        jne     .skip5
+        cmp     byte [edx+ebx+4], ';'
+        je      .replace
+
+.skip5:
+        cmp     ecx, 4
+        jb      .skip4
+
+        mov     eax, '&'
+        mov     edi, 5
+        cmp     dword [edx+ebx], 'amp;'
+        je      .replace
+
+.skip4:
+        cmp     ecx, 3
+        jb      .skip3
+
+        mov     eax, '<'
+        mov     edi, 4
+        cmp     dword [edx+ebx-1], '&lt;'
+        je      .replace
+
+        mov     eax, '>'
+        cmp     dword [edx+ebx-1], '&gt;'
+        je      .replace
+
+.skip3:
+        cmp     ecx, 2
+        jb      .ignore
+
+        mov     edi, 3
+        cmp     byte [edx+ebx], '#'
+        jne     .ignore
+
+        xor     esi, esi
+        mov     ecx, $10
+        inc     ebx
+
+        cmp     byte [edx+ebx], 'x'
+        je      .get_num
+        cmp     byte [edx+ebx], 'X'
+        je      .get_num
+
+        mov     ecx, $0a
+        dec     ebx
+        dec     edi
+
+.get_num:
+        inc     ebx
+        cmp     ebx, [edx+TText.Length]
+        jae     .ignore
+
+        inc     edi
+        movzx   eax, byte [edx+ebx]
+        cmp     al, ';'
+        je      .num_end
+
+        sub     al, '0'
+        js      .ignore
+
+        cmp     al, 10
+        jb      .mulit
+
+        cmp     ecx, 10
+        ja      .ignore
+
+        or      al, $20 ; lower case.
+        cmp     al, $31
+        jb      .ignore
+        cmp     al, $36
+        ja      .ignore
+
+        sub     al, $27
+
+.mulit:
+        imul    esi, ecx
+        add     esi, eax
+        jmp     .get_num
+
+.num_end:
+        mov     eax, esi
+
+.replace:
+        push    edx
+        stdcall EncodeUtf8, eax
+        mov     ecx, edx
+        pop     edx
+
+        add     [edx+TText.GapEnd], edi ; remove the encoded entity.
+        mov     ebx, [edx+TText.GapBegin]
+        mov     [edx+ebx], eax
+        add     [edx+TText.GapBegin], ecx
+        mov     ebx, [edx+TText.GapEnd]
+        dec     ebx
+
+.ignore:
+        retn
+
+endp
+
+
+
+proc sqliteXorBlob, .context, .num, .pValues
+.pfile dd ?
+.lfile dd ?
+.pkey dd ?
+.lkey dd ?
+begin
+        push    ebx esi edi
+
+        mov     esi, [.pValues]
+
+        cinvoke sqliteValueBytes, [esi]
+        test    eax, eax
+        jz      .null
+
+        mov     [.lfile], eax
+
+        cinvoke sqliteValueBlob, [esi]
+        test    eax, eax
+        jz      .null
+
+        mov     esi, eax
+        stdcall GetMem, [.lfile]
+
+        mov     edi, eax
+        mov     [.pfile], eax
+
+        mov     ecx, [.lfile]
+        rep movsb
+
+        mov     esi, [.pValues]
+        cinvoke sqliteValueBytes, [esi+4]
+        test    eax, eax
+        jz      .null
+
+        mov     [.lkey], eax
+
+        cinvoke sqliteValueBlob, [esi+4]
+        test    eax, eax
+        jz      .null
+
+        mov     [.pkey], eax
+
+        stdcall XorMemory, [.pfile], [.lfile], [.pkey], [.lkey]
+
+        cinvoke sqliteResultBlob, [.context], [.pfile], [.lfile], SQLITE_TRANSIENT
+
+        stdcall FreeMem, [.pfile]
+        pop     edi esi ebx
+        cret
+
+.null:
+        cinvoke sqliteResultNULL, [.context]
+        pop     edi esi ebx
+        cret
 endp

@@ -2,8 +2,8 @@ select
   id,
   Slug,
   Caption,
-  Pinned,
-  strftime('%d.%m.%Y %H:%M:%S', LastChanged, 'unixepoch') as TimeChanged,
+  T.Pinned,
+  strftime('%d.%m.%Y %H:%M:%S', T.LastChanged, 'unixepoch') as TimeChanged,
   T.PostCount,
   Unread,
   FirstUnread,
@@ -18,7 +18,7 @@ select
 ] as limited
 
 from
-  Threads T
+  Threads T indexed by idxThreadsPinnedLastChanged
 
 left join ThreadTags TT on T.id = TT.ThreadID
 left join Tags TG on TG.tag = TT.tag
@@ -28,7 +28,7 @@ left join (select count() as Unread, min(UP7.PostID) as FirstUnread, UP7.threadi
 left join LimitedAccessThreads LT on LT.threadid = T.id
 where LT.userid is null or LT.userid = ?3
 |]
-group by T.id, Pinned, LastChanged
+group by T.id, T.Pinned, T.LastChanged
 having ?4 is null or max(TT.tag = ?4)
 
 limit  ?1

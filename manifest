@@ -1,5 +1,5 @@
-C The\sfirst\s(not\sfinished)\sattempt\sto\screate\sa\smigration\sscript\sfor\sphpbb.\sThis\sscript\sneeds\ssome\scustom\ssqlite\sfunctions.
-D 2018-12-19T14:36:06.397
+C A\slog\sof\schanged,\srelated\sto\sexperiments\swith\spretty\sbig\sreal\sworld\sdatabase,\sported\sfrom\sphpbb\sforum.\n\nAdded\sfall-back\suser\sautentication\sthrough\scrypt()\sfunction\sphpbb\suses.\s\n\nSome\sattempt\sto\saccelerate\sthe\sthread\slistings\s-\sadded\sPinned\sand\sLastChanged\sfields\sto\sThreadTags\stable\sand\na\strigger\sto\supdate\sthen\son\sthread\schanges.\sThis\schange\sis\snot\sused\sin\sthe\squeries\sright\snow.\n\nAdded\sa\sfield\sCnt\sin\sthe\sTags\stable\sin\sorder\sto\scount\sthe\sthreads\swith\sgiven\stag\sassigned.\s\nAlso,\sthe\sneeded\striggers\sto\shandle\sthis\scounted.\n\nWork\son\sthe\sscript\sto\sconvert\sphpbb\sdatabase\sinto\sasmbb\sdatabase.\sIt\sworks\swith\sphpbb\sv2.something\sand\sneed\s\nthe\sphpbb\sdatabase\sto\sbe\sfirst\sconverted\sto\ssqlite.\sLater\sthis\sscript\sshould\sbe\scombined\swith\sother\sconverting\s\ntools\sas\sa\sseparate\sproject\sfor\sAsmBB\sconverters.\n\nFixed\sold\sbug\sin\srender2\sin\sthe\ssqlGetThreadTags\squery\suse.\s\n\nAdded\s3\smore\ssqlite\suser\sfunctions,\srelated\sto\sthe\sphpbb\sporting:\sphpbb(),\sxorblob()\sand\smd5()\nphpbb()\sdecodes\sthe\shtml\sencoded\scharacters\sand\sfixes\ssome\sBBCode\stag\soddities\sfrom\sphpbb.\sxorblob()\sencripts/decripts\sa\sblob\swith\s\nsome\skey\sby\sxoring\sthe\sdata\s-\sthis\sis\sthe\sway\sAsmBB\sstores\sthe\sattachment\sfiles\sin\sthe\sdatabase.\smd5()\scomputes\smd5\shash\sof\ssome\sdata.
+D 2018-12-26T11:22:30.271
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -21,7 +21,7 @@ F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/TestsWithTags.sql 6384a56d553e36aa1c54cdb61a147bb2806e3e9d
 F source/ToDo.txt 78c2a566e37fc37db78b799f5ac100bed383c182
 F source/Win32/sqlite3.inc 83b0ebab85f7359c5b99c281b1eae5cce0877b9a
-F source/accounts.asm 5f5f2b7fe52d30553548ca0727be564c918bd220
+F source/accounts.asm 4ea043a82e30125d981ac425c59623f657a53e22
 F source/attachments.asm 6843dd5b449b1394ae9c6f2b6bc44ed561f9a913
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm 87830583d32bdf406d7a0a0615cff0b23fda9283
@@ -29,11 +29,11 @@ F source/categories.sql b1fa5a2cca7204372b3ca3714edbbc669103b1cf
 F source/chat.asm c0469c0067c6361d0894e18d9f32e01562a3c94c
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm fbb9e16b194abe3df7ce9e4a6a563b7811d2eb38
-F source/create.sql d6eff68a7b13a9f16c7f1c2726c72084d1cb016c
+F source/create.sql bfc8433efe55fd2dfa8bd1f484074189409e0c9c
 F source/delete.asm 622f6c614754f5c7ca7fc7cec5c23931e29e57ec
 F source/edit.asm 1365109bec5b08da9ed679e6097b0f5cb0829338
-F source/engine.asm 67faf3f3321cc87f89c074f046c43cf2a4eefbcc
-F source/engine.fpr 99a7ae2a465ce1655b8812027959fcb3ebed3707
+F source/engine.asm 26182274741949a6321a4dcdfe84b16a2236006e
+F source/engine.fpr c62c1a5001712f08a789ea2e013b9365b28b7acc
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 3f2f16c5201e953e72b500f8f7f50a92094345e6
@@ -47,14 +47,16 @@ F source/migratePosts.sql 92b037bfd56c741fe1cf1d992f383cde22346fc1
 F source/migration1.sql fe97ef3b5046a916f0215336a8a56ea4c8a3b98a
 F source/migration2.sql fe978700e39265c6680b69ea8cbfb5444cfdce63
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
-F source/phpbb.sql a002a11187ac0d36effbb6abc69d937338e9bf0d
+F source/phpbb.sql 437fb48f2dd57e48c1718fd2e407029fa31dfc41
 F source/post.asm ba3f3128a215f308375d1d86771dc589b5db829f
 F source/post_data.asm af4b81ca1c74d54bbcd7a15b57f9c0cbd8622f01
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
+F source/rebuildTags.sql 967dee20d686031c112bc14cb1811f663924c5df
+F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
-F source/render2.asm d215a7c9ed9b564ec70ed5f004d87b2533f0a566
+F source/render2.asm f3a2831f336e519e21a9a91248d715e12d41c8eb
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 4a2bfd137375606dc7a0da5d8f7ebc242a6ec6ac
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -63,8 +65,8 @@ F source/settings.asm 54a91f24a7847e85f5169b93ad6faccb486cb232
 F source/settings.sql 7d9caa86d6c4ad03914a7c754a9805b3a402ea07
 F source/showthread.asm 9bf95e48e47764b816467d4c0d0a6f193b093443
 F source/showthread.sql 88e6f49dae477c7b96a4ca0722f4885f754b0bb0
-F source/sqlite3.asm 49c52878b3992de407b76304291e879d50afb047
-F source/sqlite_console.asm 4f2cc615e52780075f5b485e8f886a2180147386
+F source/sqlite3.asm e97f1870f200d8e89252849a6da8d99956bf5fd3
+F source/sqlite_console.asm 03de81bf3c040ccdcc2df85b79d42aeadc0c0c6b
 F source/sse_service.asm 68a6bf1d96e6c2fb0b02d87a0c67d2387075ab01
 F source/statistics.asm 8574bead31291bdaf459a032659cb41bc34883d3
 F source/statistics.sql adf6bec52c32dba0b780cd7422e2de395ca19f7e
@@ -75,7 +77,8 @@ F source/text_constants.asm c736bdb4840fc1218bdea8ddbd2f573dbd69d2de
 F source/thread_attr.sql 96f479d9e4ab2a93221b81be1bbb8a8ba6e277f3
 F source/threadcount.sql 86f4cf8623b00ca9ed81d648eb95ab8f77d544f3
 F source/threadlist.asm 7100f2160b33b2382b6dd5a050df1291d2527019
-F source/threadlist.sql 79801525ad72a78914c8ff4cfa8e6b12b1d88ea5
+F source/threadlist.sql bbf2381e1b1f13d6f89c6253702f843b1aefa9e1
+F source/threadlist_tag.sql 8dd7d0969cb18bb8d3f97afa4e5db072a631ab90
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
 F source/userinfo.asm 68c4d64242aec9731afef1432e04988c90f206d1
@@ -84,7 +87,7 @@ F source/users_online.asm 6e64ed25254d4ca6d1ac411d7fe92536f9bf17f6
 F source/users_online.sql 419ecd742f570ce4c34354c917d9dc06d33115a0
 F source/userslist.asm e2a2ee4735143fbf7d05ad0fc8243b28fe1c7104
 F source/userslist.sql a671e06a5beecc94edd3bb87cf0a4357b2554686
-F source/util.sql f99946ee679b132d77228384692cd816f1c54631
+F source/util.sql 9ce0feeb2289045d42fe1af683beb89d9e1ad4d3
 F source/version.asm 5429dfb0ca6d328d47bf95435903f1b961358c17
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
@@ -680,7 +683,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 909ea0dac55fc766c2a347a09b0a2580a7f4fff7
-R 40bdf2bd8d2b630a0dccdaea010154df
+P f91be8e9a9179e5edd55cb9c88c22dc3ce7683a4
+R 2d02978f5074b19d06152dc6158aa492
 U johnfound
-Z dda3e88213d15ff59e8a67e6e8b8d919
+Z 17b22ef73755930414c9689fcb9c2e53

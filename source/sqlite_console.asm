@@ -116,6 +116,12 @@ begin
         stdcall StrClipSpacesR, eax
         stdcall StrClipSpacesL, eax
 
+;; Debug ONLY!!!
+;        pushad
+;        stdcall FileWriteString, [STDERR], eax
+;        stdcall FileWriteString, [STDERR], <txt 13, 10, 13, 10>
+;        popad
+
         stdcall TextCat, edi, "<h5>Statement executed:</h5><pre>"
         stdcall TextCat, edx, eax
         stdcall StrDel, eax

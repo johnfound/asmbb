@@ -1733,7 +1733,7 @@ begin
 endp
 
 
-sqlGetAllTags    text "select T.Tag, (select count() from threadtags where Tag = T.tag) as cnt, T.Description from Tags T where T.Importance > -1 order by T.Tag"
+sqlGetAllTags    text "select Tag, cnt, Description from Tags where Importance > -1 order by Tag"
 
 proc GetAllTags, .pSpecial
   .max   dd ?
@@ -2184,7 +2184,7 @@ endp
 
 
 
-sqlGetThreadTags    text "select TT.tag, (select T.description from Tags T where T.tag = TT.tag) from ThreadTags TT where TT.threadID=?1"
+sqlGetThreadTags    text "select TT.tag, (select T.description from Tags T where T.tag = TT.tag) from ThreadTags TT where TT.threadID=?1;"
 ;sqlGetThreadTags    text "select TT.tag, T.Description from ThreadTags TT left join Tags T on TT.tag=T.tag where TT.threadID=? order by TT.tag"
 
 proc GetThreadTags, .threadID
@@ -2196,7 +2196,7 @@ begin
         mov     ebx, eax
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadTags, sqlGetAllTags.length, eax, 0
+        cinvoke _sqlitePrepare_v2, [hMainDatabase], sqlGetThreadTags, sqlGetThreadTags.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
 
 .thread_tag_loop:
@@ -2257,7 +2257,7 @@ begin
         stdcall StrDel ; from the stack
 
         stdcall StrMaskBytes, eax, $0, $7f
-        stdcall StrLCase2, eax
+        stdcall StrLCase, eax
 
         stdcall StrConvertWhiteSpace, eax, " "
         stdcall StrConvertPunctuation, eax
@@ -2278,6 +2278,8 @@ begin
         pushad
 
         mov     ebx, [.hString]
+
+        stdcall StrLCase, ebx
 
         stdcall StrConvertWhiteSpace, ebx, " "
         stdcall StrConvertPunctuation, ebx

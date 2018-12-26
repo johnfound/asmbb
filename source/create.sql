@@ -7,7 +7,6 @@ create table Params (
   val text
 );
 
-
 insert into Params values ('user_perm', 1887);  -- permLogin + permRead + permPost + permThreadStart + permEditOwn + permDelOwn + permChat + permDownload + permAttach
 insert into Params values ('anon_perm', 3);     -- permLogin + permRead
 insert into Params values ('log_events', 0);
@@ -61,10 +60,10 @@ create table Users (
   PostCount integer default 0  -- Speed optimization in order to not count the posts every time. Need automatic count.
 );
 
--- create index idxUsers_nick on Users (nick collate nocase); - not needed because of the UNIQUE clause.
 create index idxUsers_email on Users (email);
 create index idxUsersX on Users(id, nick, avatar);
 create index idxUsers_LastSeen on Users(LastSeen);
+create index idxUsersBack on Users(id desc);
 
 CREATE TABLE UserLog (
   userID integer,
@@ -256,11 +255,12 @@ create table LimitedAccessThreads (
 );
 
 create unique index idxLimitedAccessThreads on LimitedAccessThreads(threadID, userID);
-
+--create index idxLimitedAccessThreadsUser on LimitedAccessThreads(userID);
 
 create table Tags (
   Tag         text primary key,
   Importance  integer not null default 0,
+  cnt         integer not null default 0,
   Description text
 );
 
@@ -272,11 +272,32 @@ create index idxTagsTagImp on Tags(tag, importance desc);
 
 create table ThreadTags (
   ThreadID integer references Threads(id) on delete cascade,
-  Tag      text references Tags(Tag) on delete cascade on update cascade
+  Tag      text references Tags(Tag) on delete cascade on update cascade,
+  pinned   integer default 0,
+  LastChanged integer default 0
 );
 
 create unique index idxThreadTagsUnique on ThreadTags ( ThreadID, Tag );
 create index idxThreadsTagsTags on ThreadTags (Tag);
+create index idxThreadTagsTagPinnedLastChanged on ThreadTags(tag, pinned desc, lastchanged desc);
+
+CREATE TRIGGER ThreadTagsAI AFTER INSERT ON ThreadTags BEGIN
+  update tags set cnt = cnt + 1 where tag = new.tag;
+END;
+
+CREATE TRIGGER ThreadTagsAD AFTER DELETE ON ThreadTags BEGIN
+  update tags set cnt = cnt - 1 where tag = old.tag;
+END;
+
+CREATE TRIGGER ThreadTagsAU AFTER UPDATE OF tag ON ThreadTags BEGIN
+  update tags set cnt = cnt - 1 where tag = old.tag;
+  update tags set cnt = cnt + 1 where tag = new.tag;
+END;
+
+CREATE TRIGGER ThreadsAUtt AFTER UPDATE OF LastChanged, Pinned ON Threads BEGIN
+  update threadtags set LastChanged = new.LastChanged, Pinned = new.Pinned where threadid = new.id;
+END;
+
 
 
 create table UnreadPosts (
@@ -558,7 +579,6 @@ create table EventQueue (
   event      text,
   receiver   text    -- the sessionID of the receiver. If NULL then broadcast to all subscribed.
 );
-
 
 
 COMMIT;

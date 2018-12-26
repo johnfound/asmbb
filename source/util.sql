@@ -4,6 +4,12 @@
 
 insert into UnreadPosts(UserID, PostID, Time) values (1, 6, strftime('%s', 'now'));
 
+-- make all posts unread for everyone. !!! WARNING !!! extremly slow and heavy operation !!!
+insert or ignore into unreadposts(userid, postid, threadid, time)
+select U.id, P.id, P.threadid, strftime('%s', 'now')
+from
+  users u, posts p;
+
 -- selects all threads with unread posts for some userID:
 
 select
