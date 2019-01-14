@@ -11,7 +11,7 @@ sqlGetQuote   text "select U.nick, P.content from Posts P left join Users U on U
 sqlInsertPost text "insert into Posts ( ThreadID, UserID, PostTime, Content, format) values (?, ?, strftime('%s','now'), ?, ?)"
 sqlUpdateThreads text "update Threads set LastChanged = strftime('%s','now') where id = ?"
 sqlInsertThread  text "insert into Threads ( Caption ) values ( ? )"
-sqlSetThreadSlug text "update Threads set slug = ? where id = ?"
+sqlSetThreadSlug text "update Threads set slug = ?1, Limited=?3 where id = ?2"
 
 
 proc PostUserMessage, .pSpecial
@@ -393,6 +393,8 @@ endl
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetThreadSlug, sqlSetThreadSlug.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 2, [.threadID]
+
+        cinvoke sqliteBindInt, [.stmt], 3, [.fLimited]
 
         stdcall StrPtr, [.slug]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC

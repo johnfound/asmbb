@@ -55,6 +55,8 @@ PHashTable tableSpecial, tpl_func,                              \
         "skincookie",  RenderTemplate.sp_skincookie,            \
         "page",        RenderTemplate.sp_page,                  \ ; Number, no encoding.
         "dir",         RenderTemplate.sp_dir,                   \ ; Needs encoding!
+        "limited",     RenderTemplate.sp_limited,               \ ; 0 = the user is in the regular threads path; 1 = the user is in the limited access path.
+        "variant",     RenderTemplate.sp_variant,               \ ; 0 = "/"; 1 = "/(o)/"; 2 = "/some_tag/"; 3 = "/(o)/some_tag/"
         "thread",      RenderTemplate.sp_thread,                \ ; Needs encoding!
         "permissions", RenderTemplate.sp_permissions,           \ ; NUMBER, no encoding
         "isadmin",     RenderTemplate.sp_isadmin,               \ ; 1/0 no encoding
@@ -291,6 +293,8 @@ begin
 
 
 .delete_escape:
+        cmp     byte [edx+eax+1], "|"
+        je      .escape
         cmp     byte [edx+eax+1], "["
         je      .escape
         cmp     byte [edx+eax+1], "]"
@@ -1201,6 +1205,29 @@ end if
 
 ; ...................................................................
 
+.sp_limited:
+        mov     eax, [ebx+TSpecialParams.Limited]
+
+        OutputValue "[special:limited] = ", eax, 10, -1
+        jmp     .special_int
+
+.sp_variant:
+        push    ecx
+
+        xor     eax, eax
+        xor     ecx, ecx
+        cmp     [ebx+TSpecialParams.dir], eax
+        setnz   al
+        cmp     [ebx+TSpecialParams.Limited], ecx
+        setnz   cl
+
+        lea     eax, [2*eax+ecx]
+
+        OutputValue "[special:variant] = ", eax, 10, -1
+        pop     ecx
+        jmp     .special_int
+
+
 .sp_userid:
 
         mov     eax, [ebx+TSpecialParams.userID]
@@ -1733,7 +1760,7 @@ begin
 endp
 
 
-sqlGetAllTags    text "select Tag, cnt, Description from Tags where Importance > -1 order by Tag"
+sqlGetAllTags StripText "alltags.sql", SQL
 
 proc GetAllTags, .pSpecial
   .max   dd ?
@@ -1749,7 +1776,9 @@ begin
         mov     [.max], 1
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetAllTags, sqlGetAllTags.length, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetAllTags , sqlGetAllTags.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.userID]
+        cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.Limited]
 
         push    0       ; end marker
 
@@ -1823,10 +1852,30 @@ begin
 
 .plural_ok:
         stdcall TextCat, edx, txt '." href="/'
+        cmp     [esi+TSpecialParams.Limited], 0
+        je      .limited_ok
+
+        stdcall TextCat, edx, txt "(o)/"
+
+.limited_ok:
         stdcall TextCat, edx, edi
         stdcall TextCat, edx, txt '/">'
         stdcall TextCat, edx, edi
-        stdcall TextCat, edx, <txt '</a>', 13, 10>
+        mov     ebx, edx
+
+        cinvoke sqliteColumnInt, [.stmt], 3
+        test    eax, eax
+        jz      .unread_ok
+
+        stdcall TextCat, ebx, txt '<span>'
+        stdcall NumToStr, eax, ntsDec or ntsUnsigned
+        stdcall TextCat, edx, eax
+        stdcall StrDel, eax
+        stdcall TextCat, edx, txt '</span>'
+        mov     ebx, edx
+
+.unread_ok:
+        stdcall TextCat, ebx, <txt '</a>', 13, 10>
         mov     ebx, edx
 
         stdcall StrDel, edi

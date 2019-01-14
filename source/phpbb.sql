@@ -52,6 +52,10 @@ drop trigger PostsAI;
 drop trigger PostsAD;
 drop trigger PostsAU;
 drop trigger AttachmentsAI;
+drop trigger ThreadTagsAI;
+drop trigger ThreadTagsAU;
+drop trigger ThreadTagsAD;
+drop trigger ThreadsAUtt;
 
 
 -- Start copy data
@@ -234,6 +238,7 @@ end;
 -- PRIVMSGS_SAVED_OUT_MAIL = 4
 -- PRIVMSGS_UNREAD_MAIL = 5
 
+CREATE INDEX phpbb.phpbb_privmsgs_idx_fbae154c ON phpbb_privmsgs(privmsgs_type);
 
 insert or ignore into threads(slug, caption, lastchanged, userid)
 select
@@ -261,7 +266,7 @@ drop table privmsgs;
 
 -- Attachments:
 
-create index phpbb.idxAttachments on attached_files(id);
+create index idxAttachments on attached_files(id);
 
 delete from attachments;
 
@@ -291,7 +296,7 @@ select
   a.id,
   d.download_count
 from
-  attachments a left join phpbb_attachments_desc d on a.id = d.attach_id
+  attachments a left join phpbb_attachments_desc d on a.id = d.attach_id;
 
 
 
@@ -374,8 +379,22 @@ group by
   userid;
 
 update Users set PostCount = (select count() from Posts P where P.userid = Users.id);
-update Threads set PostCount = (select count() from Posts P where P.threadid = Threads.id);
-update threads set LastChanged = (select ifnull(editTime, postTime) from posts p where p.threadID = threads.id order by p.id desc limit 1);
+
+update Threads set
+  PostCount = (select count() from Posts P where P.threadid = Threads.id),
+  Limited = exists (select 1 from LimitedAccessThreads LA where LA.threadid = id),
+  LastChanged = (select ifnull(editTime, postTime) from posts p where p.threadID = threads.id order by p.id desc limit 1);
+
+update ThreadTags set
+  Pinned = (select Pinned from threads where id = threadid),
+  LastChanged = (select LastChanged from threads where id = threadid),
+  Limited = (select Limited from threads where id = threadid);
+
+update Tags set
+  TCnt = (select count() from threadtags tt where tt.tag = tags.tag and tt.limited = 0)
+, LCnt = (select count() from threadtags tt where tt.tag = tags.tag and tt.limited <> 0)
+, PTCnt = (select count() from posts P left join threadtags tt on tt.threadid = P.threadid where tt.tag = tags.tag and tt.limited = 0)
+, PLCnt = (select count() from posts P left join threadtags tt on tt.threadid = P.threadid where tt.tag = tags.tag and tt.limited <> 0);
 
 
 -- recreate the triggers
@@ -414,6 +433,9 @@ CREATE TRIGGER PostsAI AFTER INSERT ON Posts BEGIN
   insert or ignore into ThreadPosters(firstPost, threadID, userID) values (new.id, new.threadID, new.userID);
   update Users set PostCount = PostCount + 1 where Users.id = new.UserID;
   update Threads set PostCount = PostCount + 1 where id = new.threadID;
+  update Counters set val = val + 1 where id = 'posts';
+  update Tags set PTCnt = PTCnt + 1 where tags.tag in (select tag from threadtags where threadid = new.threadid and limited = 0);
+  update Tags set PLCnt = PLCnt + 1 where tags.tag in (select tag from threadtags where threadid = new.threadid and limited <> 0);
 END;
 
 CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
@@ -434,6 +456,9 @@ CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
     old.format,
     old.Content
   );
+  update Counters set val = val - 1 where id = 'posts';
+  update Tags set PTCnt = PTCnt - 1 where tags.tag in (select tag from threadtags where threadid = old.threadid and limited = 0);
+  update Tags set PLCnt = PLCnt - 1 where tags.tag in (select tag from threadtags where threadid = old.threadid and limited <> 0);
 END;
 
 CREATE TRIGGER PostsAU AFTER UPDATE OF Content, editTime, editUserID, threadID, format ON Posts BEGIN
@@ -458,6 +483,35 @@ CREATE TRIGGER PostsAU AFTER UPDATE OF Content, editTime, editUserID, threadID, 
   );
   update Threads set PostCount = PostCount - 1 where id = old.threadID;
   update Threads set PostCount = PostCount + 1 where id = new.threadID;
+
+  update Tags set PTCnt = PTCnt - 1 where tags.tag in (select tag from threadtags where threadid = old.threadid and limited = 0);
+  update Tags set PLCnt = PLCnt - 1 where tags.tag in (select tag from threadtags where threadid = old.threadid and limited <> 0);
+  update Tags set PTCnt = PTCnt + 1 where tags.tag in (select tag from threadtags where threadid = new.threadid and limited = 0);
+  update Tags set PLCnt = PLCnt + 1 where tags.tag in (select tag from threadtags where threadid = new.threadid and limited <> 0);
+END;
+
+CREATE TRIGGER ThreadTagsAI AFTER INSERT ON ThreadTags BEGIN
+  update Tags set TCnt = TCnt + (new.Limited = 0), LCnt = LCnt + (new.Limited <> 0) where tag = new.tag;
+END;
+
+CREATE TRIGGER ThreadTagsAD AFTER DELETE ON ThreadTags BEGIN
+  update Tags set TCnt = TCnt - (old.Limited = 0), LCnt = LCnt - (old.Limited <> 0) where tag = old.tag;
+END;
+
+CREATE TRIGGER ThreadTagsAU AFTER UPDATE OF Tag, Limited ON ThreadTags BEGIN
+  update Tags set TCnt = TCnt - (old.Limited = 0), LCnt = LCnt - (old.Limited <> 0) where tag = old.tag;
+  update Tags set TCnt = TCnt + (new.Limited = 0), LCnt = LCnt + (new.Limited <> 0) where tag = new.tag;
+END;
+
+CREATE TRIGGER ThreadsAUtt AFTER UPDATE OF LastChanged, Pinned, Limited ON Threads BEGIN
+  update threadtags set LastChanged = new.LastChanged, Pinned = new.Pinned, Limited = new.Limited where threadid = new.id;
+  update LimitedAccessThreads set LastChanged = new.LastChanged where threadid = new.id;
+
+  update Tags set PTCnt = PTCnt - (old.limited = 0)*(select count() from posts where threadid = old.id) where tag in (select tag from threadtags tt where tt.threadid = old.id);
+  update Tags set PTCnt = PTCnt + (new.limited = 0)*(select count() from posts where threadid = new.id) where tag in (select tag from threadtags tt where tt.threadid = new.id);
+
+  update Tags set PLCnt = PLCnt - (old.limited <> 0)*(select count() from posts where threadid = old.id) where tag in (select tag from threadtags tt where tt.threadid = old.id);
+  update Tags set PLCnt = PLCnt + (new.limited <> 0)*(select count() from posts where threadid = new.id) where tag in (select tag from threadtags tt where tt.threadid = new.id);
 END;
 
 

@@ -65,8 +65,7 @@
   </form>
 
   <div class="tags">
-    <a href="/">
-      <img class="tagicon" src="[special:skin]/_images/alltags[case:[special:dir]||_gray].svg" alt="/" title="Show all threads">
-    </a>
+    <a href="/[case:[special:limited]||(o)/]"><img class="tagicon" src="[special:skin]/_images/alltags[case:[special:variant]|||_gray].svg" alt="/" title="Show all threads"></a>
+    <a href="/[case:[special:limited]|(o)/|][case:[special:dir]||[special:dir]/]"><img class="tagicon" src="[special:skin]/_images/limited[case:[special:limited]|_gray|].svg" alt="/" title="Show all LATs"></a>
     [special:alltags]
   </div>

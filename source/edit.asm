@@ -346,7 +346,7 @@ iglobal
   sqlGetAllThreadAttr StripText "thread_attr.sql", SQL
 endg
 
-sqlSavePostTitle text "update threads set slug = ?1, Caption = ?2, LastChanged = strftime('%s','now') where id = ?3"
+sqlSavePostTitle text "update threads set slug = ?1, Caption = ?2, LastChanged = strftime('%s','now'), Limited = ?4 where id = ?3"
 sqlUpdatePinned  text "update threads set pinned = ?1 where id = ?2"
 
 proc EditThreadAttr, .pSpecial
@@ -556,6 +556,8 @@ begin
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSavePostTitle, -1, eax, 0
+
+        cinvoke sqliteBindInt, [.stmt], 4, [.fLimited]
 
         cinvoke sqliteBindInt, [.stmt], 3, [.threadID]
 

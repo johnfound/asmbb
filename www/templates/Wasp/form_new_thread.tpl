@@ -16,7 +16,7 @@
       <p>Tags: <span class="small">(max 3, comma delimited, no spaces)</span> [case:[special:dir]| |+ "[special:dir]"]</p>
       <input type="edit" value="[tags]" name="tags" id="tags" placeholder="some tags here" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
     </div>
-    <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]><label for="limited">Limited access thread</label>
+    <input type="checkbox" id="limited" name="limited" value="1" [case:[special:limited]||checked]><label for="limited">Limited access thread</label>
     <div id="users_invited">
       <p>Invited users (comma separated list):</p>
       <input id="invited" type="edit" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">

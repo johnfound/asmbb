@@ -204,15 +204,31 @@ div.tags {
 
 a.taglink {
   display:inline-block;
-  max-width: 150px;
+//  max-width: 150px;
   min-width: 16px;
-  overflow: hidden;
+  overflow: show;
   text-overflow: ellipsis;
   border-radius: @borderRadTags;
   border: @borderTags;
   text-align: center;
   white-space: nowrap;
   text-decoration: none;
+  position: relative;
+  span {
+    position: absolute;
+    right:-8px;
+    top: -8px;
+
+    border-radius: 50rem;
+
+    background-color: @clNotifyBG;
+    color: @clNotifyFG;
+
+    font-size: 12px;
+    font-weight: bold;
+    padding: 0px 1ch;
+    z-index: 1000;
+  }
 }
 
 a.current_tag {

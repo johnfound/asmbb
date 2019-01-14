@@ -32,6 +32,7 @@ struct TSpecialParams
   .params          dd ?
   .post_array      dd ?
 
+  .Limited         dd ?                 ; Flag that the URL contains symbol for LimitedAccessThreads
   .dir             dd ?                 ; /tag_name/
   .thread          dd ?                 ; /thread_slug/
   .page_num        dd ?                 ; /1234 - can be the number of the page, or the ID of a post.
@@ -479,6 +480,17 @@ begin
 
 ;.is_it_root_command:
 
+        push    eax
+        stdcall StrPtr, eax
+        cmp     dword [eax], '(o)'
+        pop     eax
+        jne     .check_for_command
+
+        inc     [.special.Limited]
+        call    .pop_array_item
+        jz      .show_thread_list
+
+.check_for_command:
         push    eax
         stdcall StrPtr, eax
         cmp     byte [eax], '!'

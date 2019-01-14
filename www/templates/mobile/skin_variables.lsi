@@ -95,3 +95,8 @@
 @clTabFG: #ffffff;
 @clTabHover: #d8d8d8;
 @clTabFocus: #e05050;
+
+// User notifications
+
+@clNotifyBG: white;
+@clNotifyFG: red;
