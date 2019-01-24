@@ -159,13 +159,12 @@ where t.topic_status <> 2;
 
 create unique index idxLimitedAccessThreads on LimitedAccessThreads(threadID, userID);
 
-insert or ignore into tags(tag) values ('limited');
-
 create index phpbb.idx3 on phpbb_privmsgs(privmsgs_id);
 create index phpbb.idx4 on phpbb_privmsgs_text(privmsgs_text_id);
 
 create table privmsgs(
   id integer primary key autoincrement,
+  type integer,
   subject text,
   fromid integer,
   toid integer,
@@ -200,7 +199,6 @@ end;
 
 create trigger lat_threads after insert on threads begin
   update threads set slug = new.slug || '.' || new.id where id = new.id;
-  insert into threadtags(tag, threadid) values ('limited', new.id);
 end;
 
 create trigger lat_threads2 after update on threads begin

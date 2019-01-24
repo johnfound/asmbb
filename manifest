@@ -1,5 +1,5 @@
-C The\slimited\saccess\sthreads\sare\snow\sseparated\sto\sa\sspecial\spath\sand\snot\smixed\swith\sthe\sregular\sthreads.\sSome\stime\sconsuming\ssql\squeries\swas\soptimized\sby\sseparate\scounters.\s\nThe\sdatabase\sschema\sis\schanged\sbecause\sof\sthis.\sUnread\sposts\snotification\slabels\sare\splaced\sin\sthe\stags\slist.\sNew\s[special:limited]\sand\s[special:variant]\stemplate\scommands\sare\sintroduced.\nThe\stemplates\sand\sstyles\sare\sedited\sto\srespect\sthe\sabove\schanges.
-D 2019-01-14T12:38:40.096
+C Another\sapproach\sto\sthe\sphpbb\spersonal\smessages\smigration.
+D 2019-01-24T11:10:38.758
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -34,7 +34,7 @@ F source/create.sql 9f8b53d4a99368fc50eec8bae56f7929b54ea696
 F source/delete.asm 622f6c614754f5c7ca7fc7cec5c23931e29e57ec
 F source/edit.asm 670b8d4932e6e294af36d1000b6c5d2d74203dcc
 F source/engine.asm 26182274741949a6321a4dcdfe84b16a2236006e
-F source/engine.fpr 4329ae07acfe07c8a3f8dd0a62f5582f456d58ce
+F source/engine.fpr fe6e2e8c7cf7551a6dbf46eefe9543100bd0f853
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 3f2f16c5201e953e72b500f8f7f50a92094345e6
@@ -48,7 +48,7 @@ F source/migratePosts.sql 92b037bfd56c741fe1cf1d992f383cde22346fc1
 F source/migration1.sql fe97ef3b5046a916f0215336a8a56ea4c8a3b98a
 F source/migration2.sql fe978700e39265c6680b69ea8cbfb5444cfdce63
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
-F source/phpbb.sql d7d65c8cba66297010cce147f3b6fab1f960e6db
+F source/phpbb.sql 6820a2092cc30a774c44d770055b37b66bdbfaf0
 F source/post.asm 7d36ac2ec5a25b62fa58ca8be5563b7f09ffd7f2
 F source/post_data.asm af4b81ca1c74d54bbcd7a15b57f9c0cbd8622f01
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
@@ -433,7 +433,7 @@ F www/templates/Terminal/help_new_thread.tpl 579ed6559a0a3aee0fe3be3a2c841c1dd7b
 F www/templates/Terminal/login.less f01dc8278d383d5753987a8a85a95c0499460147
 F www/templates/Terminal/main_html_end.tpl 98d81369839da6e3445df49e6af62545ce9705d4
 F www/templates/Terminal/main_html_start.tpl 76ebcd2eb53f162b1ff3dbe03c7d25d3f747e078
-F www/templates/Terminal/markdown.less d478bd464cd01eba806eb3a5fa76e943410b7f5b
+F www/templates/Terminal/markdown.less c7a066022bae7a77236eb49d013e354fee2869ce
 F www/templates/Terminal/minimag_suffix.tpl f3a1414972a13590a7c984b53b6fd2ddd3a47f3a l
 F www/templates/Terminal/nav_categories.tpl b5b4873b8c055a255914855cbc7d2fd0ee061dd8
 F www/templates/Terminal/nav_history.tpl bebfd24b9db5592d5222ad8cf2df125f258ec6bc
@@ -567,7 +567,7 @@ F www/templates/Wasp/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991e
 F www/templates/Wasp/login.less 85f8c636e9c15adffb68d098f557d3efbdbc4e5a
 F www/templates/Wasp/main_html_end.tpl f1e4b1ef234a14345fb8a2d7348944d5eb6abfab
 F www/templates/Wasp/main_html_start.tpl 81a43987f858ecf86f03f17399eaaaaffcc2ce46
-F www/templates/Wasp/markdown.less 135e5815cc956de4d2bad9695de98a030eb0def3
+F www/templates/Wasp/markdown.less 120c3455a2dbcbfa22451929c9841e3e8e0a2528
 F www/templates/Wasp/minimag_suffix.tpl 7051407fe8722bb0a32cc68e05109ec539c2ac27
 F www/templates/Wasp/nav_categories.tpl b5e3ab9bf0e8ffc35b70e76bc6aab39cce819bfa
 F www/templates/Wasp/nav_history.tpl ec672e45848f639e46cd390f9058ed0672d5289b
@@ -654,7 +654,7 @@ F www/templates/mobile/help_new_thread.tpl 579ed6559a0a3aee0fe3be3a2c841c1dd7b8b
 F www/templates/mobile/login.less 4af417eb9ae51e7d5691cba96a93ef5a9fd79dd2 l
 F www/templates/mobile/main_html_end.tpl d8b3ec3c2cdc952fcab6638d4147ee7e9cd2ba96 l
 F www/templates/mobile/main_html_start.tpl b93c0043a09f7ef6614707de05a8b45f8af6b33f l
-F www/templates/mobile/markdown.less 56e08a5779e9c67fd405d3036150b7c52816d419
+F www/templates/mobile/markdown.less 740819bce1b5546d1deea8957b2dc2a5147b22c6
 F www/templates/mobile/minimag_suffix.tpl f3a1414972a13590a7c984b53b6fd2ddd3a47f3a l
 F www/templates/mobile/nav_categories.tpl f7d6f653d7de3ea424b62ebae575e3c5c1f4d98b l
 F www/templates/mobile/nav_history.tpl ac180ed4422e7ee62e4421a19c1ee7d69a72e503 l
@@ -687,7 +687,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 5134ca15e7e32a1f81044e288a9a99dd899ae7a2
-R 386da84a244e519cac93f1334038bd87
+P 475487867787ccd4596056cd4e26217cdc6594b1
+R a565147dc34a068f6d315f317646478c
 U johnfound
-Z 3f7dd4bc5d8d15ed1f97c9e07559cc76
+Z 6db82ffec19737eadcc468b43f3115db
