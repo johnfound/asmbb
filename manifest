@@ -1,5 +1,5 @@
-C Another\sapproach\sto\sthe\sphpbb\spersonal\smessages\smigration.
-D 2019-01-24T11:10:38.758
+C Added\sfrench\stranslations\sto\sthe\stext\sstrings,\sthanks\sto\suser\smacadoum\sfrom\sthe\sforum.
+D 2019-02-11T15:15:30.220
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -74,7 +74,7 @@ F source/statistics.sql b854e249807878dcd87c5e16dde801114639308c
 F source/tests/Test1.tpl 3787fb082cb7f6404ff4631fd6ca67ed14c7beac
 F source/tests/test_templates.asm 9fbe778c983448663d18c9cc2cc3cd9d0107e93b
 F source/tests/test_templates.fpr 0b6d692c0d55f91a6e310f622a6fe2c49c06ddf9
-F source/text_constants.asm c736bdb4840fc1218bdea8ddbd2f573dbd69d2de
+F source/text_constants.asm ac13d108097d9c7cafd288608e545fd5a6460787
 F source/thread_attr.sql 96f479d9e4ab2a93221b81be1bbb8a8ba6e277f3
 F source/threadcount.sql 897aa66b52dbe48ed09391442d3b288c36cbabff
 F source/threadlist.asm db182b32a1e1b6a48b5120e9c428edec6b6dee55
@@ -687,7 +687,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 475487867787ccd4596056cd4e26217cdc6594b1
-R a565147dc34a068f6d315f317646478c
+P 4bf81daa74f3aa26010f3dd4a91cd8b4c72b8eff
+R 37cd4dc6ff6851d4a2a9a58efacc3e48
 U johnfound
-Z 6db82ffec19737eadcc468b43f3115db
+Z 6140e637e76bd313ba21a298b9475328
