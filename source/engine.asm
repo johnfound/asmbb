@@ -30,7 +30,7 @@ options.DebugPost = 0           ; save the latest POST request data in the file 
 options.DebugSQLite = 1
 
 options.DebugWebSSE = 0         ; debug server sent events - creates a command "!echo_events" for debugging SSE.
-options.Benchmark = 1
+options.Benchmark = 0
 
 ;HeapManager  equ ASM
 ;LinuxThreads equ native

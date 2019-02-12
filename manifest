@@ -1,5 +1,5 @@
-C Dynamic\sload\sof\sthe\slanguage\sfor\sthe\stext\sconstants\sduring\sthe\sscript\sstartup,\saccording\sto\sthe\s"lang"\sparameter\sfrom\sthe\sdatabase.\s\nNotice,\sthat\sthe\schange\sof\sthe\slanguage\srequires\sfull\srestart\sof\sall\sengine\sinstances.
-D 2019-02-12T09:15:57.645
+C This\sis\sa\stest\sversion\suploaded\sto\sthe\sthe\sforum.
+D 2019-02-12T14:30:32.235
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -33,8 +33,8 @@ F source/commands.asm 4053dde885472495f660c65d0676152ee6027e16
 F source/create.sql cfa776f29649199ef5a2f7969e7d4b9f1d5f781c
 F source/delete.asm 622f6c614754f5c7ca7fc7cec5c23931e29e57ec
 F source/edit.asm 670b8d4932e6e294af36d1000b6c5d2d74203dcc
-F source/engine.asm 6f18d8f0a0f80dd626aaa90d56e8ceb718e95260
-F source/engine.fpr fe6e2e8c7cf7551a6dbf46eefe9543100bd0f853
+F source/engine.asm ea803009b9b2453d2d3ff584a5258615cc5981bc
+F source/engine.fpr e5847fafebd17efa095050d7a905e25e8a679ac4
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 3f2f16c5201e953e72b500f8f7f50a92094345e6
@@ -54,9 +54,10 @@ F source/post_data.asm af4b81ca1c74d54bbcd7a15b57f9c0cbd8622f01
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
-F source/rebuildTags.sql 6bbf040a1c25538b1f516ceeba6a59323ac2b42d
+F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
+F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
 F source/render2.asm 9e24576920d23e4cdc36a45d96b8c15fe0dccca6
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 4a2bfd137375606dc7a0da5d8f7ebc242a6ec6ac
@@ -687,7 +688,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P bf982b92ddd7eea8784730fe0223402783c7f460
-R 95daaa683ea39b66dcd6b35d2230005b
+P 46fdd5bae1a724d2fcdead480880a84a45a1eded
+R 2526b07649ee6711e5df26fa7683e683
 U johnfound
-Z 8609a4ae592f98234c9d5e5be79eb386
+Z b8d5fd48bc5bfd15184e3aee373ffc30

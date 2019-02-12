@@ -1,62 +1,40 @@
-PRAGMA foreign_keys;
-PRAGMA foreign_keys = OFF;
-PRAGMA foreign_keys;
-begin transaction;
+drop trigger if exists ThreadsAI;
+drop trigger if exists ThreadsAU;
+drop trigger if exists ThreadsAD;
+drop trigger if exists PostsAI;
+drop trigger if exists PostsAD;
+drop trigger if exists PostsAU;
+drop trigger if exists LimitedAccessThreadsAI;
+drop trigger if exists ThreadTagsAI;
+drop trigger if exists ThreadTagsAD;
+drop trigger if exists ThreadTagsAU;
+drop trigger if exists ThreadsAUtt;
+drop trigger if exists AttachmentsAI;
 
-drop trigger ThreadTagsAI;
-drop trigger ThreadTagsAD;
-drop trigger ThreadTagsAU;
-drop trigger ThreadsAUtt;
+create trigger ThreadsAI after insert on Threads begin
+  update Counters set val = val + 1 where id = 'threads';
+end;
 
-drop trigger PostsAI;
-drop trigger PostsAD;
-drop trigger PostsAU;
+create trigger ThreadsAU after update of Slug, Caption, UserID, Pinned on Threads begin
+  insert or ignore into ThreadsHistory(threadid, Slug, Caption, LastChanged, Pinned) values (
+    old.id,
+    old.Slug,
+    old.Caption,
+    old.LastChanged,
+    old.Pinned
+  );
+end;
 
-
-create table Tags2 (
-  Tag         text primary key,
-  Importance  integer default 0,
-  ThreadCnt   integer default 0,
-  PostCnt     integer default 0,
-  Description text
-) without rowid;
-
-
-insert into Tags2(tag, importance, ThreadCnt, PostCnt, Description)
-select
-  tag,
-  importance,
-  (select count() from threadtags tt where tt.tag = tags.tag),
-  (select count() from posts P where P.threadid in (select threadid from threadtags tt where tt.tag = tags.tag)),
-  Description
-from
-  tags;
-
-drop table Tags;
-
-alter table Tags2 rename to Tags;
-
-create index idxTagImportance on Tags(Importance desc);
-create index idxTagsTagImp on Tags(tag, importance desc);
-
-
-CREATE TRIGGER ThreadTagsAI AFTER INSERT ON ThreadTags BEGIN
-  update Tags set ThreadCnt = ThreadCnt + 1 where tag = new.tag;
-END;
-
-CREATE TRIGGER ThreadTagsAD AFTER DELETE ON ThreadTags BEGIN
-  update Tags set ThreadCnt = ThreadCnt - 1 where tag = old.tag;
-END;
-
-CREATE TRIGGER ThreadTagsAU AFTER UPDATE OF Tag, Limited ON ThreadTags BEGIN
-  update Tags set ThreadCnt = ThreadCnt - 1 where tag = old.tag;
-  update Tags set ThreadCnt = ThreadCnt + 1 where tag = new.tag;
-END;
-
-CREATE TRIGGER ThreadsAUtt AFTER UPDATE OF LastChanged, Pinned, Limited ON Threads BEGIN
-  update threadtags set LastChanged = new.LastChanged, Pinned = new.Pinned, Limited = new.Limited where threadid = new.id;
-  update LimitedAccessThreads set LastChanged = new.LastChanged where threadid = new.id;
-END;
+create trigger ThreadsAD after delete on Threads begin
+  insert or ignore into ThreadsHistory(threadid, Slug, Caption, LastChanged, Pinned) values (
+    old.id,
+    old.Slug,
+    old.Caption,
+    old.LastChanged,
+    old.Pinned
+  );
+  update Counters set val = val - 1 where id = 'threads';
+end;
 
 CREATE TRIGGER PostsAI AFTER INSERT ON Posts BEGIN
   insert into PostFTS(rowid, Content, Caption, slug, user, tags) VALUES (
@@ -126,13 +104,29 @@ CREATE TRIGGER PostsAU AFTER UPDATE OF Content, editTime, editUserID, threadID, 
   update Tags set PostCnt = PostCnt + 1 where tags.tag in (select tag from threadtags where threadid = new.threadid);
 END;
 
+create trigger LimitedAccessThreadsAI after insert on LimitedAccessThreads begin
+  update LimitedAccessThreads set LastChanged = (select LastChanged from threads where id = new.threadid);
+end;
+
+CREATE TRIGGER ThreadTagsAI AFTER INSERT ON ThreadTags BEGIN
+  update Tags set ThreadCnt = ThreadCnt + 1 where tag = new.tag;
+END;
+
+CREATE TRIGGER ThreadTagsAD AFTER DELETE ON ThreadTags BEGIN
+  update Tags set ThreadCnt = ThreadCnt - 1 where tag = old.tag;
+END;
+
+CREATE TRIGGER ThreadTagsAU AFTER UPDATE OF Tag, Limited ON ThreadTags BEGIN
+  update Tags set ThreadCnt = ThreadCnt - 1 where tag = old.tag;
+  update Tags set ThreadCnt = ThreadCnt + 1 where tag = new.tag;
+END;
+
+CREATE TRIGGER ThreadsAUtt AFTER UPDATE OF LastChanged, Pinned, Limited ON Threads BEGIN
+  update threadtags set LastChanged = new.LastChanged, Pinned = new.Pinned, Limited = new.Limited where threadid = new.id;
+  update LimitedAccessThreads set LastChanged = new.LastChanged where threadid = new.id;
+END;
 
 
-
-
-PRAGMA foreign_key_check;
-
-commit;
-
-PRAGMA foreign_keys = ON;
-PRAGMA foreign_keys;
+create trigger AttachmentsAI after insert on Attachments begin
+  insert into AttachCnt(fileid, count) VALUES (new.id, 0);
+end;
