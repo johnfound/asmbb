@@ -1,5 +1,5 @@
-C Added\sfrench\stranslations\sto\sthe\stext\sstrings,\sthanks\sto\suser\smacadoum\sfrom\sthe\sforum.
-D 2019-02-11T15:15:30.220
+C Dynamic\sload\sof\sthe\slanguage\sfor\sthe\stext\sconstants\sduring\sthe\sscript\sstartup,\saccording\sto\sthe\s"lang"\sparameter\sfrom\sthe\sdatabase.\s\nNotice,\sthat\sthe\schange\sof\sthe\slanguage\srequires\sfull\srestart\sof\sall\sengine\sinstances.
+D 2019-02-12T09:15:57.645
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -30,10 +30,10 @@ F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm c0469c0067c6361d0894e18d9f32e01562a3c94c
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm 4053dde885472495f660c65d0676152ee6027e16
-F source/create.sql 9f8b53d4a99368fc50eec8bae56f7929b54ea696
+F source/create.sql cfa776f29649199ef5a2f7969e7d4b9f1d5f781c
 F source/delete.asm 622f6c614754f5c7ca7fc7cec5c23931e29e57ec
 F source/edit.asm 670b8d4932e6e294af36d1000b6c5d2d74203dcc
-F source/engine.asm 26182274741949a6321a4dcdfe84b16a2236006e
+F source/engine.asm 6f18d8f0a0f80dd626aaa90d56e8ceb718e95260
 F source/engine.fpr fe6e2e8c7cf7551a6dbf46eefe9543100bd0f853
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -74,7 +74,7 @@ F source/statistics.sql b854e249807878dcd87c5e16dde801114639308c
 F source/tests/Test1.tpl 3787fb082cb7f6404ff4631fd6ca67ed14c7beac
 F source/tests/test_templates.asm 9fbe778c983448663d18c9cc2cc3cd9d0107e93b
 F source/tests/test_templates.fpr 0b6d692c0d55f91a6e310f622a6fe2c49c06ddf9
-F source/text_constants.asm ac13d108097d9c7cafd288608e545fd5a6460787
+F source/text_constants.asm 01428e0ea02f594e79a03dff026054171a9e9376
 F source/thread_attr.sql 96f479d9e4ab2a93221b81be1bbb8a8ba6e277f3
 F source/threadcount.sql 897aa66b52dbe48ed09391442d3b288c36cbabff
 F source/threadlist.asm db182b32a1e1b6a48b5120e9c428edec6b6dee55
@@ -687,7 +687,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 4bf81daa74f3aa26010f3dd4a91cd8b4c72b8eff
-R 37cd4dc6ff6851d4a2a9a58efacc3e48
+P bf982b92ddd7eea8784730fe0223402783c7f460
+R 95daaa683ea39b66dcd6b35d2230005b
 U johnfound
-Z 6140e637e76bd313ba21a298b9475328
+Z 8609a4ae592f98234c9d5e5be79eb386

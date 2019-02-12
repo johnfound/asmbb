@@ -48,7 +48,7 @@ cLoginDialogTitle       itext   EN: "Login",                    \
 
 cUserProfileTitle       itext   EN: "Profile for: ",            \
                                 RU: "Профиль потребителя: ",    \
-                                BG: "Потребителски профил: "    \
+                                BG: "Потребителски профил: ",   \
                                 FR: "Profil de :"
 
 cEditingPageTitle       itext   EN: "Editing page: ",           \
