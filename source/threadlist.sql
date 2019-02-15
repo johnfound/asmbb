@@ -2,7 +2,7 @@ select
   t.Id,
   t.Slug,
   t.Caption,
-  t.Pinned,
+  [case:[special:variant]|0 as Pinned|t.Pinned],
   strftime('%d.%m.%Y %H:%M:%S', t.LastChanged, 'unixepoch') as TimeChanged,
   t.PostCount,
   t.ReadCount,

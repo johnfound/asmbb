@@ -87,4 +87,5 @@ select
   ?26 as forum_header,
   ?27 as embeded_css,
   ?28 as Ticket,
-  ?29 as tabselector
+  ?29 as tabselector,
+  ?30 as default_lang

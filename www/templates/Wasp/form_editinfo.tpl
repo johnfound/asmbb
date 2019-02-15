@@ -30,6 +30,13 @@
 </form>
 
 <form class="user_edit_info settings" method="post" action="/!setskin/[url:[username]]">
+  <h2>Interface language:</h2>
+  <select class="settings" name="user_lang">
+    <option value="0" [case:[Lang]|selected="selected"||||selected="selected"]>English</option>
+    <option value="1" [case:[Lang]||selected="selected"|||]>Български</option>
+    <option value="2" [case:[Lang]|||selected="selected"||]>Русский</option>
+    <option value="3" [case:[Lang]||||selected="selected"|]>Français</option>
+  </select>
   <h2>Forum skin:</h2>
   <select class="userskin" name="skin">
     <option value="0">(Default)</option>

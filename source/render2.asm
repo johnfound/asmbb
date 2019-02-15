@@ -52,6 +52,7 @@ PHashTable tableSpecial, tpl_func,                              \
         "username",    RenderTemplate.sp_username,              \ ; Needs encoding!
         "userid",      RenderTemplate.sp_userid,                \ ; NUMBER, no encoding.
         "skin",        RenderTemplate.sp_skin,                  \ ; Controlled source, no encoding???
+        "lang",        RenderTemplate.sp_lang,                  \
         "skincookie",  RenderTemplate.sp_skincookie,            \
         "page",        RenderTemplate.sp_page,                  \ ; Number, no encoding.
         "dir",         RenderTemplate.sp_dir,                   \ ; Needs encoding!
@@ -1174,6 +1175,10 @@ end if
 .sp_skin:
         mov     eax, [ebx+TSpecialParams.userSkin]
         jmp     .special_string
+
+.sp_lang:
+        mov     eax, [ebx+TSpecialParams.userLang]
+        jmp     .special_int
 
 .sp_skincookie:
         xor     eax, eax

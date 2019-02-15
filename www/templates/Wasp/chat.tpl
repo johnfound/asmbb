@@ -331,15 +331,15 @@
 
   <div class="chat">
     <div class="ui">
-      <a class="ui" href="/">Forum</a>
+      <a class="ui" href="/">[case:[special:lang]|Forum|Форум|Форум|Forum]</a>
     </div>
     <div class="chatflex">
       <div id="chatlog"></div>
       <div id="syslog"></div>
     </div>
     <div id="chat_form">
-      <input class="chat_input" type="edit" placeholder="Username" id="chat_user" onkeypress="KeyPress(event, UserRename)" onChange="UserRename()">
-      <input class="chat_input" type="edit" placeholder="Type here" id="chat_message" autofocus onkeypress="KeyPress(event, SendMessage)">
+      <input class="chat_input" type="edit" placeholder="[case:[special:lang]|Nickname|Ник|Ник|Surnom]" id="chat_user" onkeypress="KeyPress(event, UserRename)" onChange="UserRename()">
+      <input class="chat_input" type="edit" placeholder="[case:[special:lang]|Type here|Пиши тук|Напиши здесь|Écrivez ici]" id="chat_message" autofocus onkeypress="KeyPress(event, SendMessage)">
       <a class="icon_btn" onclick="SendMessage()"><img class="img_btn" src="[special:skin]/_images/edit_white.svg" alt="&nbsp;Post&nbsp;"></a>
     </div>
   </div>

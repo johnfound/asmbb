@@ -168,13 +168,17 @@ begin
         cinvoke sqliteBindInt, [.stmt], 8, [.error]
 
 
-        stdcall GetParam, "page_length", gpInteger
-        jnc     .page_size_ok
+; Page length
 
         mov     eax, DEFAULT_PAGE_LENGTH
-
-.page_size_ok:
+        stdcall GetParam, "page_length", gpInteger
         cinvoke sqliteBindInt, [.stmt], 9, eax
+
+; Default UI language
+
+        mov     eax, DEFAULT_UI_LANG
+        stdcall GetParam, txt "default_lang", gpInteger
+        cinvoke sqliteBindInt, [.stmt], 30, eax
 
 ; Default users permissions:
 
@@ -413,6 +417,12 @@ begin
 .save_markups:
 
         stdcall SetParamInt, txt "markup_languages", eax
+        jc      .error_write
+
+; save default language
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "default_lang", 0
+        stdcall SetParamInt, txt "default_lang", eax
         jc      .error_write
 
 ; save page_length

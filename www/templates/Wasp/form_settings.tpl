@@ -80,6 +80,14 @@
     <input id="tab4" name="tabselector" type="radio" value="3" [case:[tabselector]||||checked|]>
     <label for="tab4">Features</label>
     <section>
+      <h3>Default UI language:</h3>
+      <select class="settings" name="default_lang">
+        <option value="0" [case:[default_lang]|selected="selected"||||selected="selected"]>English</option>
+        <option value="1" [case:[default_lang]||selected="selected"|||]>Български</option>
+        <option value="2" [case:[default_lang]|||selected="selected"||]>Русский</option>
+        <option value="3" [case:[default_lang]||||selected="selected"|]>Français</option>
+      </select>
+
       <h3>Page length:</h3>
       <input type="text" value="[page_length]" name="page_length" class="settings" maxlength="256">
 

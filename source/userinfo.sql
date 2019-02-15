@@ -4,6 +4,7 @@ select
   av_time as AVer,
   status,
   user_desc,
+  Lang,
   skin,
   strftime('%d.%m.%Y %H:%M:%S', LastSeen, 'unixepoch') as LastSeen,
   email,

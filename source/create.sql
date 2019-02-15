@@ -15,7 +15,7 @@ create table Params (
   val text
 ) without rowid;
 
-insert into Params values ('lang', 'EN');
+insert into Params values ('default_lang', 0);
 insert into Params values ('user_perm', 1887);  -- permLogin + permRead + permPost + permThreadStart + permEditOwn + permDelOwn + permChat + permDownload + permAttach
 insert into Params values ('anon_perm', 3);     -- permLogin + permRead
 insert into Params values ('log_events', 0);
