@@ -276,7 +276,8 @@ begin
 .empty_search:
 
         stdcall TextCat, edi, txt '<h3>'
-        stdcall TextCat, edx, cEmptySearch
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall TextCat, edx, [cEmptySearch+8*eax]
         stdcall TextCat, edx, txt '</h3>'
         mov     edi, edx
         jmp     .search_ok

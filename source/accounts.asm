@@ -61,7 +61,8 @@ begin
         test    ebx, ebx
         jnz     .do_login_user
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cLoginDialogTitle
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cLoginDialogTitle+8*eax]
 
         stdcall GetRandomString, 32
         mov     ebx, eax

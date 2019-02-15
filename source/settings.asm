@@ -28,7 +28,8 @@ begin
         cmp     [esi+TSpecialParams.post_array], 0
         jne     .save_settings
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cForumSettingsTitle
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cForumSettingsTitle+8*eax]
 
         stdcall SetUniqueTicket, [esi+TSpecialParams.session]
         jc      .for_admins_only
@@ -656,7 +657,8 @@ begin
 
 ; show the admin creation dialog.
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cCreateAdminTitle
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cCreateAdminTitle+8*eax]
 
         stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
         mov     ebx, eax

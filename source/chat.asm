@@ -138,7 +138,8 @@ begin
         cmp     [esi+TSpecialParams.post_array], 0
         jne     .post_new_message
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cChatTitle
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cChatTitle+8*eax]
         stdcall LogUserActivity, esi, uaChatting, 0
 
         stdcall RenderTemplate, 0, txt "chat.tpl", 0, [.pSpecial]

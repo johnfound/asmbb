@@ -148,23 +148,6 @@ start:
         stdcall GetTimestamp
         mov     [ProcessStart], eax
 
-        mov     eax, 'EN'
-        stdcall GetParam, txt 'lang', gpString
-        jc      .lang_ok
-
-        mov     ebx, eax
-        stdcall StrPtr, ebx
-        mov     eax, [eax]
-        stdcall StrDel, ebx
-
-.lang_ok:
-        stdcall SetLanguage, eax
-        jnc     .lang_set
-
-        stdcall SetLanguage, 'EN'
-
-.lang_set:
-
         stdcall GetParam, "log_events", gpInteger
         mov     [fLogEvents], eax
 

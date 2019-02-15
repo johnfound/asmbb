@@ -165,7 +165,8 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .error_missing_post
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cEditingPageTitle
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cEditingPageTitle+8*eax]
 
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
@@ -462,7 +463,8 @@ begin
 
 ; show edit form.
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cEditingThreadTitle
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cEditingThreadTitle+8*eax]
 
         cinvoke sqliteColumnText, [.stmt], 1    ; Thread caption.
         stdcall StrCat, [esi+TSpecialParams.page_title], eax

@@ -36,7 +36,8 @@ begin
 
         mov     [.ticket], eax
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cSQLiteConsoleTitle
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cSQLiteConsoleTitle+8*eax]
 
 ; first output the form
 

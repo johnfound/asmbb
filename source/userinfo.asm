@@ -75,7 +75,8 @@ begin
 
         stdcall LogUserActivity, esi, uaUserProfile, ebx
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cUserProfileTitle
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cUserProfileTitle+8*eax]
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
 

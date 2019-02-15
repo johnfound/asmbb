@@ -80,7 +80,9 @@ begin
 .perm_ok:
 
         stdcall LogUserActivity, esi, uaDeletingPost, 0
-        stdcall StrCat, [esi+TSpecialParams.page_title], cPostDeleteTitle
+
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cPostDeleteTitle+8*eax]
 
         cmp     [esi+TSpecialParams.post_array], edi    ; edi is 0 here
         jne     .do_delete

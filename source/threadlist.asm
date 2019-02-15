@@ -25,7 +25,8 @@ begin
 ; make the title
 
         mov     ebx, [esi+TSpecialParams.page_title]
-        stdcall StrCat, ebx, cThreadListTitle
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrCat, ebx, [cThreadListTitle+8*eax]
 
         cmp     [esi+TSpecialParams.dir], 0
         je      .no_tag
@@ -44,8 +45,6 @@ begin
         stdcall StrDel, eax
 
 .page_ok:
-        mov     [esi+TSpecialParams.page_title], ebx
-
         stdcall TextCat, edi, <txt '<div class="threads_list">', 13, 10>
         stdcall RenderTemplate, edx, "nav_list.tpl", 0, esi   ; navigation tool bar
         mov     edi, eax

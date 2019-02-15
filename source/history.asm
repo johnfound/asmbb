@@ -18,7 +18,8 @@ begin
         test    [esi+TSpecialParams.userStatus], permAdmin
         jz      .perm_error
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cHistoryTitle
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cHistoryTitle+8*eax]
 
         stdcall TextCreate, sizeof.TText
         mov     edi, eax
@@ -129,7 +130,8 @@ begin
 
         mov     ebx, eax
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cPostRestoreTitle
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cPostRestoreTitle+8*eax]
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRestoreConfirmInfo, sqlDelConfirmInfo.length, eax, 0

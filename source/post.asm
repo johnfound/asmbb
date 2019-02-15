@@ -204,16 +204,18 @@ begin
 
 
 .show_edit_form:
+        mov     eax, [esi+TSpecialParams.userLang]
 
         cmp     [.caption], 0
         je      .title_new_thread
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cPostingInTitle
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cPostingInTitle+8*eax]
         stdcall StrCat, [esi+TSpecialParams.page_title], [.caption]
         jmp     .title_set
 
 .title_new_thread:
-        stdcall StrCat, [esi+TSpecialParams.page_title], cNewThreadTitle
+
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cNewThreadTitle+8*eax]
 
 .title_set:
 

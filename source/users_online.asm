@@ -246,7 +246,8 @@ begin
         test    [esi+TSpecialParams.userStatus], permRead or permAdmin
         jz      .error_cant_read
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cUsersOnlineTitle
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cUsersOnlineTitle+8*eax]
         stdcall LogUserActivity, esi, uaTrackingUsers, 0
         stdcall ListAddDistinct, [esi+TSpecialParams.pStyles], "users_online.css"
         mov     [esi+TSpecialParams.pStyles], edx
