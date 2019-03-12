@@ -92,12 +92,12 @@ begin
         stdcall TextCompact, eax
         push    edx
 
-;; DEBUG ONLY!!!
-;        pushad
-;        stdcall FileWrite, [STDERR], edx, eax
-;        stdcall FileWriteString, [STDERR], <txt 13, 10, 13, 10>
-;        popad
-;; END OF DEBUG SECTION!
+; DEBUG ONLY!!!
+        pushad
+        stdcall FileWrite, [STDERR], edx, eax
+        stdcall FileWriteString, [STDERR], <txt 13, 10, 13, 10>
+        popad
+; END OF DEBUG SECTION!
 
         lea     ecx, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], edx, eax, ecx, 0

@@ -34,8 +34,8 @@ PHashTable tableRenderCmd, tpl_func,                    \
         'url:',         RenderTemplate.cmd_url,           \   ; Needs encoding!
         'json:',        RenderTemplate.cmd_json,          \   ; No encoding.
         'css:',         RenderTemplate.cmd_css,           \   ; No output, no encoding.
-        'case:',        RenderTemplate.cmd_case,          \   ; No encoding.
-        'sql:',         RenderTemplate.cmd_sql            ; Needs encoding!
+        'equ:',         RenderTemplate.cmd_equ,           \
+        'const:',       RenderTemplate.cmd_const
 
 PHashTable tableSpecial, tpl_func,                              \
         "visitors",    RenderTemplate.sp_visitors,              \ ; HTML no encoding
@@ -89,6 +89,11 @@ struct TFieldSlot
   .Index dd ?
 ends
 
+struct TConstSlot
+  .hName  dd ?
+  .hValue dd ?
+ends
+
 
 ESCAPE_CHAR = "^"
 
@@ -99,14 +104,17 @@ proc RenderTemplate, .pText, .hTemplate, .sqlite_statement, .pSpecial
 
 .stmt dd ?
 
-.separators rd 256
-.sepindex   rd 16
-.sepcnt     dd ?
-.seplvl     dd ?
+;.separators rd 256
+;.sepindex   rd 16
+;.sepcnt     dd ?
+;.seplvl     dd ?
 
 .esp        dd ?
 
   BenchVar .render2
+
+.tblConst   TConstSlot
+            rb 255 * sizeof.TConstSlot  ; hash table of the constants...
 
 .tblFields TFieldSlot
            rb 255 * sizeof.TFieldSlot       ; a hash table of the statement field names.
@@ -117,15 +125,17 @@ begin
         BenchmarkStart .render2
 
         xor     eax, eax
-        mov     [.sepcnt], eax
-        mov     [.seplvl], eax
-
-        cmp     [.sqlite_statement], eax
-        je      .hash_ok
 
         lea     edi, [.tblFields]
         mov     ecx, 256 * sizeof.TFieldSlot / 4
         rep stosd
+
+        lea     edi, [.tblConst]
+        mov     ecx, 256 * sizeof.TConstSlot / 4
+        rep stosd
+
+        cmp     [.sqlite_statement], eax
+        je      .hash_ok
 
         call    .build_hash_table       ; creates a hash table for the SQL statement field names.
 
@@ -192,6 +202,7 @@ begin
         or      eax, -1
         push    eax
 
+.loop_dec:
         dec     ecx
 
 .loop:
@@ -227,41 +238,172 @@ begin
         mov     [.fEncode], 0         ; special processing for html: command.
 
 .not_html:
-        mov     eax, [.sepcnt]
-        mov     esi, [.seplvl]
-        mov     [.sepindex + 4*esi], eax
-        inc     esi
-        and     esi, $0f
-        mov     [.seplvl], esi
-
         push    ecx             ; one level up...
         jmp     .loop
 
+.delete_escape:
+        cmp     byte [edx+eax+1], "|"
+        je      .escape
+        cmp     byte [edx+eax+1], "["
+        je      .escape
+        cmp     byte [edx+eax+1], "]"
+        je      .escape
+        cmp     byte [edx+eax+1], ESCAPE_CHAR
+        jne     .loop
+
+.escape:
+        stdcall TextMoveGap, edx, ecx
+        inc     [edx+TText.GapEnd]
+        jmp     .loop   ; Don't decrease ecx here, because the next char after the escape should be skipped.
+
 .separator:
-        mov     eax, [.sepcnt]
-        mov     [.separators+4*eax], ecx
-        inc     al
-        mov     [.sepcnt], eax
-        jmp     .loop
 
+        DebugMsg "Separator - maybe case"
+
+; here check for [case:] command:
+        mov     ebx, [esp]
+        test    ebx, ebx
+        js      .loop   ; [esp] == -1
+
+        stdcall TextMoveGap, edx, ebx           ; the gap is just before "[case:"
+        add     ebx, [edx+TText.GapEnd]
+        sub     ebx, [edx+TText.GapBegin]
+
+;        lea     eax, [edx+ebx]
+;        OutputMemoryByte eax, 32
+
+        mov     eax, [edx+TText.Length]
+        sub     eax, ebx
+        cmp     eax, 6                          ; at least "[case:|"
+        jl      .loop
+
+        cmp     dword [edx+ebx], '[cas'
+        jne     .loop
+
+        cmp     word [edx+ebx+4], 'e:'
+        jne     .loop
+
+; here we have case operator with already computed value:
+
+        add     esp, 4  ; pop the last "[" from the stack this case operator will be fully processed here.
+        add     ebx, 6
+        xor     esi, esi
+        xor     eax, eax
+
+; get the case value:
+.get_case_val:
+        cmp     ebx, [edx+TText.Length]
+        jae     .loop
+
+        mov     al, [edx+ebx]
+
+        cmp     al, '|'
+        je      .end_case_val
+
+        cmp     al, ' '
+        jbe     .next_case_val          ; the white space characters are simply ignored.
+
+        sub     al, '0'
+        jl      .inc_val
+
+        cmp     al, 9
+        ja      .inc_val
+
+        lea     esi, [5*esi]
+        shl     esi, 1
+
+        add     esi, eax
+
+.next_case_val:
+        inc     ebx
+        jmp     .get_case_val
+
+.inc_val:               ; the non digit characters simply increment the case value.
+        inc     esi
+        inc     ebx
+        jmp     .get_case_val
+
+
+.end_case_val:
+
+        OutputValue "Case value: ", esi, 10, -1
+
+        xor     ah, ah     ; the nesting level
+
+.loop_ext:
+        mov     ecx, [edx+TText.GapBegin] ; from where to scan the text, after processing of case operator.
+        mov     [edx+TText.GapEnd], ebx   ; the previous separator.
+        inc     [edx+TText.GapEnd]
+
+.loop_int:
+        inc     ebx
+        cmp     ebx, [edx+TText.Length]
+        jae     .case_result
+
+        mov     al, [edx+ebx]
+
+        cmp     al, ESCAPE_CHAR
+        je      .escape2
+
+        cmp     al, ']'
+        je      .level
+
+        cmp     al, '['
+        je      .level
+
+        test    ah, ah
+        jnz     .loop_int
+
+        test    esi, esi
+        js      .loop_int
+
+        cmp     al, '|'
+        jne     .loop_int
+
+        dec     esi
+        jns     .loop_ext
+
+; here [TText.GapEnd] is the offset of result start, ebx is the offset of the result end
+
+        mov     eax, ebx
+        sub     eax, [edx+TText.GapEnd]
+        add     eax, [edx+TText.GapBegin]
+        stdcall TextMoveGap, edx, eax
+        mov     ebx, [edx+TText.GapEnd]
+        inc     [edx+TText.GapEnd]
+        jmp     .loop_int
+
+.escape2:
+        cmp     byte [edx+ebx+1], "|"
+        je      .doescape2
+        cmp     byte [edx+ebx+1], "["
+        je      .doescape2
+        cmp     byte [edx+ebx+1], "]"
+        je      .doescape2
+        cmp     byte [edx+ebx+1], ESCAPE_CHAR
+        jne     .loop_int
+
+.doescape2:
+        inc     ebx             ; ignore the next character.
+        jmp     .loop_int
+
+.level:
+        sub     al, '\'         ; +1 or -1
+        sub     ah, al
+        jns     .loop_int
+
+; this "]" end the case, so delete to here...
+
+.case_result:
+        inc     ebx
+        mov     [edx+TText.GapEnd], ebx
+        jmp     .loop_dec
+
+
+; The closing "]" of a parameter or command here:
 .end_param:
-
         cmp     dword [esp], -1
         je      .loop          ; wrong nesting parameters. Ignore this.
-
-        mov     eax, [.sepcnt]
-        or      [.separators + 4*eax], -1
-        or      [.separators + 4*eax + 4], -1
-
-        mov     eax, [.seplvl]
-        dec     eax
-        and     eax, $0f
-        mov     [.seplvl], eax
-        mov     eax, [.sepindex + 4*eax]
-        mov     [.sepcnt], eax
-
-; here, [.sepcnt] points in [.separators] array to the start of the current parameter separators.
-; the end is an item -1 in the array.
 
         pop     esi            ; points to "[" - the start of the parameter name. ECX is the end of the parameter name and points to "]".
         mov     edi, esi       ; where to replace.
@@ -285,32 +427,16 @@ begin
         or      al, ah  ; case insensitive hash function.
 
         xor     bl, al
-        mov     bl, [ tpl_func + ebx]
+        mov     bl, [tpl_func + ebx]
 
         cmp     al, ":"
-        je      .command
+        je      .command        ; it is a command, not query field.
 
         jmp     .hash
 
 
-.delete_escape:
-        cmp     byte [edx+eax+1], "|"
-        je      .escape
-        cmp     byte [edx+eax+1], "["
-        je      .escape
-        cmp     byte [edx+eax+1], "]"
-        je      .escape
-        cmp     byte [edx+eax+1], ESCAPE_CHAR
-        jne     .loop
-
-.escape:
-        stdcall TextMoveGap, edx, ecx
-        inc     [edx+TText.GapEnd]
-        jmp     .loop   ; Don't decrease ecx here, because the next char after the escate should be skipped.
-
-
+; It is a sql query field. Check for the name...
 .check_fields:
-
         cmp     [.sqlite_statement], 0
         je      .loop
 
@@ -463,7 +589,7 @@ begin
 
 ; ...................................................................
 
-
+; it is a command with syntax: [command:parameters]
 .command:
         mov     eax, [tableRenderCmd + sizeof.TPHashItem * ebx + TPHashItem.Value]
         test    eax, eax
@@ -496,11 +622,10 @@ endl
 
         add     [edx+TText.GapEnd], 4
         mov     ecx, [edx+TText.GapBegin]
-        dec     ecx
 
         Benchmark "MiniMag markup rendering: "
         BenchmarkEnd
-        jmp     .loop
+        jmp     .loop_dec
 
 
 ; ...................................................................
@@ -526,12 +651,11 @@ endl
 
         add     [edx+TText.GapEnd], 4
         mov     ecx, [edx+TText.GapBegin]
-        dec     ecx
 
         Benchmark "BBCode markup rendering: "
         BenchmarkEnd
 
-        jmp     .loop
+        jmp     .loop_dec
 
 ; ...................................................................
 
@@ -740,8 +864,7 @@ endl
 
         mov     edx, edi
         mov     ecx, [edx+TText.GapBegin]
-        dec     ecx
-        jmp     .loop
+        jmp     .loop_dec
 
 
 .cmd_attachedit:
@@ -832,8 +955,7 @@ endl
         inc     esi
         mov     [edx+TText.GapBegin], edi
         mov     [edx+TText.GapEnd], esi
-        dec     ecx
-        jmp     .loop
+        jmp     .loop_dec
 
 
 .cmd_json:
@@ -893,166 +1015,146 @@ endl
         inc     esi
         mov     [edx+TText.GapBegin], edi
         mov     [edx+TText.GapEnd], esi
-
-        dec     ecx
-        jmp     .loop
+        jmp     .loop_dec
 
 .json_ctrl db ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '
            db 'b', 't', 'n', ' ', 'f', 'r', ' ', ' '
            db ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '
            db ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '
 
-.cmd_sql:
-; here esi points to ":" of the "[sql:" command. edi points to the start "[" and ecx points to the end "]"
+
+; command "equ" defined named constants. Syntax: [equ:name=value]
+.cmd_equ:
+; here esi points to ":" of the "[equ:" command. edi points to the start "[" and ecx points to the end "]"
         pushad
 
         stdcall TextMoveGap, edx, ecx
 
-        mov     ebx, [.sepcnt]
-        mov     ecx, [.separators + 4*ebx]
-        test    ecx, ecx
-        cmovs   ecx, [esp+4*regECX]
-        inc     esi
-
-        sub     ecx, esi
-        jle     .end_sql
-
-        lea     esi, [edx+esi]
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2,[hMainDatabase], esi, ecx, eax, 0
-        cmp     eax, SQLITE_OK
-        jne     .end_sql
-
-        xor     edi, edi
-        mov     [esp+4*regESI], edi
-
-.bind_loop:
-        inc     ebx
-        inc     edi
-        mov     ecx, [.separators + 4*ebx - 4]
-        mov     eax, [.separators + 4*ebx]
-        test    eax, eax
-        cmovs   eax, [esp+4*regECX]
-
-        inc     ecx
-        jz      .end_bind
-
-        sub     eax, ecx
-        jle     .bind_loop
-
-        add     ecx, [esp+4*regEDX]
-        cinvoke sqliteBindText, [.stmt], edi, ecx, eax, SQLITE_STATIC
-        cmp     eax, SQLITE_OK
-        je      .bind_loop
-
-.end_bind:
-        cinvoke sqliteStep, [.stmt]
-        cmp     eax, SQLITE_ROW
-        jne     .finalize_sql
-
-        cinvoke sqliteColumnText, [.stmt], 0
-        stdcall StrEncodeHTML, eax
-        mov     [esp+4*regESI], eax
-
-.finalize_sql:
-        cinvoke sqliteFinalize, [.stmt]
-
-.end_sql:
-        popad
-
-        mov     [edx+TText.GapBegin], edi
-        inc     [edx+TText.GapEnd]
-        lea     ecx, [edi-1]
-
-        test    esi, esi
-        jz      .loop
-
-        stdcall TextAddString, edx, edi, esi
-        stdcall StrDel, esi
-        add     ecx, eax
-        jmp     .loop
-
-
-.cmd_case:
-; here esi points to ":" of the "case:" command. edi points to the start "[" and ecx points to the end "]"
-
         xor     ebx, ebx
 
-.get_case_int:
+.hash_name:
         inc     esi
+        cmp     esi, ecx
+        je      .end_equ        ; simply ignore this command and delete it from the text.
 
+        mov     al, [edx+esi]
+        cmp     al, '='
+        je      .name_ok
+
+        xor     bl, al
+        mov     bl, [tpl_func + ebx]
+        jmp     .hash_name
+
+.name_ok:
+        mov     ecx, ebx
         mov     eax, esi
-        cmp     esi, [edx+TText.GapBegin]
-        jb      @f
-        add     eax, [edx+TText.GapEnd]
-        sub     eax, [edx+TText.GapBegin]
-@@:
-        mov     al, [edx+eax]
+        mov     esi, [esp+4*regESI]
 
-        cmp     al, ' '
-        jbe     .get_case_int
-
-        cmp     al, "0"
-        jb      .end_case_int
-        cmp     al, "9"
-        ja      .end_case_int
-
-        and     eax, $0f
-        shl     ebx, 1
-        lea     ebx, [4*ebx+ebx]
-        add     ebx, eax
-        jmp     .get_case_int
-
-.end_case_int:
-        cmp     al, '|'
-        je      .int_ok
-
-        mov     ebx, [.sepcnt]
-        mov     ebx, [.separators+4*ebx]
-        sub     ebx, edi
-        sub     ebx, 6          ; the length of the value string.
-
-.int_ok:
-        mov     eax, [.sepcnt]
+        sub     eax, esi
         dec     eax
-        mov     esi, ecx
+        jz      .end_equ
 
-.search_sep:
-        inc     eax
-        cmp     [.separators + 4*eax], -1
-        je      .found_sep
-
-        mov     esi, [.separators + 4*eax]
+        push    eax     ; name length
         inc     esi
+        push    esi     ; name start.
 
-        dec     ebx
-        jns     .search_sep
+        lea     esi, [esi+eax+2]        ; points at the start of the value
 
-.found_sep:
-        stdcall TextMoveGap, edx, esi
-        sub     esi, edi
-        sub     [edx+TText.GapBegin], esi
-        sub     ecx, esi
+        stdcall StrExtract, edx ; remaining arguments from the stack
+        mov     ebx, eax
 
-; next separator
-        push    esi
-        mov     esi, [.separators + 4*eax + 4]
-        pop     eax
-        test    esi, esi
-        js      .clean_the_end
+        mov     eax, ecx        ; the hash value.
 
-        sub     esi, eax
-        stdcall TextMoveGap, edx, esi
-        sub     esi, ecx
-        neg     esi
-        add     [edx+TText.GapEnd], esi
-        sub     ecx, esi
+.search_slot:
+        cmp     dword [.tblConst.hName + sizeof.TConstSlot*eax], 0
+        je      .store_const
 
-.clean_the_end:
-        stdcall TextMoveGap, edx, ecx
+        stdcall StrCompCase, ebx, [.tblConst.hName + sizeof.TConstSlot*eax]
+        jc      .store_const                                    ; the constant redefinition here!!!
+
+        inc     al
+        cmp     eax, ecx
+        jne     .search_slot
+
+; no free slot...
+
+        stdcall StrDel, ebx
+        jmp     .end_equ
+
+.store_const:
+
+        lea     edi, [.tblConst + sizeof.TConstSlot*eax]
+        xchg    ebx, [edi + TConstSlot.hName]
+        test    ebx, ebx
+        jz      .slot_ok
+
+        stdcall StrDel, ebx
+        xor     eax, eax
+        xchg    eax, [edi+TConstSlot.hValue]
+        stdcall StrDel, eax
+
+.slot_ok:
+        mov     eax, [esp+4*regECX]
+        sub     eax, esi
+        stdcall StrExtract, edx, esi, eax
+        mov     [edi + TConstSlot.hValue], eax
+
+.end_equ:
+        popad
+        mov     [edx+TText.GapBegin], edi
         inc     [edx+TText.GapEnd]
+        mov     ecx, edi
+        jmp     .loop_dec
+
+
+.cmd_const:
+; here esi points to ":" of the "[equ:" command. edi points to the start "[" and ecx points to the end "]"
+        pushad
+
+        stdcall TextMoveGap, edx, ecx
+
+; delete the label...
+        mov     [edx+TText.GapBegin], edi
+        inc     [edx+TText.GapEnd]
+
+        inc     esi
+        sub     ecx, esi
+        jle     .end_const
+
+        stdcall StrExtract, edx, esi, ecx       ; the name
+        mov     ebx, eax
+
+        stdcall StrPearsonHash, ebx, tpl_func
+        mov     ecx, eax
+
+.loop_const:
+        cmp     [.tblConst.hName + sizeof.TConstSlot*eax], 0
+        je      .end_const_free
+
+        stdcall StrCompCase, ebx, [.tblConst.hName + sizeof.TConstSlot*eax]
+        jc      .slot_found
+
+        inc     al
+        cmp     eax, ecx
+        jne     .loop_const
+
+.end_const_free:
+
+        stdcall StrDel, ebx
+
+.end_const:
+        popad
+        mov     ecx, [edx+TText.GapBegin]
         dec     ecx
         jmp     .loop
+
+.slot_found:
+        cmp     [.tblConst.hValue + sizeof.TConstSlot*eax], 0
+        je      .end_const_free
+
+        stdcall TextAddString, edx, [edx+TText.GapBegin], [.tblConst.hValue + sizeof.TConstSlot*eax]
+        mov     [esp+4*regEDX], edx
+        jmp     .end_const_free
 
 ; ...................................................................
 ; here esi points to ":" of the "special:" command. edi points to the start "[" and ecx points to the end "]"
@@ -1104,8 +1206,8 @@ endl
         lea     eax, [ecx+1]
         stdcall TextMoveGap, edx, eax
         mov     [edx+TText.GapBegin], edi
-        lea     ecx, [edi-1]
-        jmp     .loop
+        mov     ecx, edi
+        jmp     .loop_dec
 
 ; ...................................................................
 ; here edi points to the start "[" and ecx = esi points to the end "]"
@@ -1117,8 +1219,8 @@ if defined options.DebugWeb & options.DebugWeb
         lea     eax, [ecx+1]
         stdcall TextMoveGap, edx, eax
         mov     [edx+TText.GapBegin], edi
-        lea     ecx, [edi-1]
-        jmp     .loop
+        mov     ecx, edi
+        jmp     .loop_dec
 else
   .sp_environment = 0
 end if
@@ -1553,6 +1655,14 @@ endl
 
 
 .exit:
+        mov     ecx, 256
+
+.free_const:
+        stdcall StrDel, [.tblConst.hName + sizeof.TConstSlot*ecx - sizeof.TConstSlot]
+        stdcall StrDel, [.tblConst.hValue + sizeof.TConstSlot*ecx - sizeof.TConstSlot]
+        loop    .free_const
+
+.end_free_const:
         mov     esp, [.esp]
         mov     [esp+4*regEAX], edx
 
