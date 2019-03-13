@@ -1,5 +1,5 @@
-C Work\son\sthe\scorrect\sprocessing\sof\s[case:]\stemplate\scommand.\sNot\sworking\sin\sthis\scheck-in!!!
-D 2019-03-12T14:05:28.506
+C One\sbug\sfixed.\sStill\snot\sworking...
+D 2019-03-13T10:01:51.135
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -58,7 +58,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm ad1da9133c0ef0b0c40fffbb32f91835b47851b3
+F source/render2.asm 810a6f9ecf1ac90183a1cdd07428bf5a8bbe5f3b
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 720c86042dde68b950cd01059234b50c0dd9f891
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -688,7 +688,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 1966abd793653a8f92c6c6217a845bad8933c95c
-R 494c401220da8ea6799274150e14595b
+P adde3f892b6f30f99e8e5852d1422f8590fb5383
+R a480b5dd3e14ce31ceeb6c07ab4e38e5
 U johnfound
-Z e5001877fc219aa9f34088a1e2ab140b
+Z 304a34f8d147ead91ab108350ff8ad0c

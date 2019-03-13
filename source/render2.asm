@@ -257,9 +257,6 @@ begin
         jmp     .loop   ; Don't decrease ecx here, because the next char after the escape should be skipped.
 
 .separator:
-
-        DebugMsg "Separator - maybe case"
-
 ; here check for [case:] command:
         mov     ebx, [esp]
         test    ebx, ebx
@@ -268,9 +265,6 @@ begin
         stdcall TextMoveGap, edx, ebx           ; the gap is just before "[case:"
         add     ebx, [edx+TText.GapEnd]
         sub     ebx, [edx+TText.GapBegin]
-
-;        lea     eax, [edx+ebx]
-;        OutputMemoryByte eax, 32
 
         mov     eax, [edx+TText.Length]
         sub     eax, ebx
@@ -326,8 +320,6 @@ begin
 
 .end_case_val:
 
-        OutputValue "Case value: ", esi, 10, -1
-
         xor     ah, ah     ; the nesting level
 
 .loop_ext:
@@ -365,12 +357,14 @@ begin
 
 ; here [TText.GapEnd] is the offset of result start, ebx is the offset of the result end
 
+        push    eax
         mov     eax, ebx
         sub     eax, [edx+TText.GapEnd]
         add     eax, [edx+TText.GapBegin]
         stdcall TextMoveGap, edx, eax
         mov     ebx, [edx+TText.GapEnd]
         inc     [edx+TText.GapEnd]
+        pop     eax
         jmp     .loop_int
 
 .escape2:
