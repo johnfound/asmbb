@@ -93,10 +93,10 @@ begin
         push    edx
 
 ; DEBUG ONLY!!!
-        pushad
-        stdcall FileWrite, [STDERR], edx, eax
-        stdcall FileWriteString, [STDERR], <txt 13, 10, 13, 10>
-        popad
+;        pushad
+;        stdcall FileWrite, [STDERR], edx, eax
+;        stdcall FileWriteString, [STDERR], <txt 13, 10, 13, 10>
+;        popad
 ; END OF DEBUG SECTION!
 
         lea     ecx, [.stmt]

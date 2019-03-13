@@ -1,5 +1,5 @@
-C One\sbug\sfixed.\sStill\snot\sworking...
-D 2019-03-13T10:01:51.135
+C Seems\sthe\snew\s[case]\simplementation\sworks\snow.\sBut\smore\stests\sare\sneeded,\sof\scourse.
+D 2019-03-13T11:31:38.670
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -33,7 +33,7 @@ F source/commands.asm 411050932d49c192d75e3fdb9c63f8e75c725967
 F source/create.sql 4f1205e0ffc659aae368684dcfed86e98ce3b970
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm dddd1b6b89eef295ab5a65cb7302aefe0d948399
-F source/engine.asm ffe4142635182a15f2ed28eb028e2116e327eef6
+F source/engine.asm c4ade957d3e53a9e18dd482109254a1544c24764
 F source/engine.fpr e5847fafebd17efa095050d7a905e25e8a679ac4
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -58,7 +58,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm 810a6f9ecf1ac90183a1cdd07428bf5a8bbe5f3b
+F source/render2.asm 05c3a0b8652bef52d0fae3e31c9829d8295a644a
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 720c86042dde68b950cd01059234b50c0dd9f891
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -78,7 +78,7 @@ F source/tests/test_templates.fpr 0b6d692c0d55f91a6e310f622a6fe2c49c06ddf9
 F source/text_constants.asm 11639ba5fbb0f88fa48f77b0bd176e17d77f5763
 F source/thread_attr.sql 96f479d9e4ab2a93221b81be1bbb8a8ba6e277f3
 F source/threadcount.sql 897aa66b52dbe48ed09391442d3b288c36cbabff
-F source/threadlist.asm 2c07a7a2a925d1904e63bbc358dbfbd0d9fc8a35
+F source/threadlist.asm e77271a8732edd532bd2d3361add1d515fb07653
 F source/threadlist.sql 1959b0c381dbafe364367a5b05c7574eb9ee20b2
 F source/threadlist_tag.sql 7f289b2761912544af1f27876874d059091f4bed
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
@@ -577,7 +577,7 @@ F www/templates/Wasp/nav_search.tpl 36088a597a02fc8550452ffedaf23f397c79ff8a
 F www/templates/Wasp/nav_thread.tpl 13dce5b3a7ce2e9572e37dc0649893a82774be0b
 F www/templates/Wasp/nav_userslist.tpl e981e0a486f477251d112b3a783b64933725a09c
 F www/templates/Wasp/navigation.less 25ad252c4ecb5c4bc3e2034e90aed8fca4aa375d
-F www/templates/Wasp/one_category.tpl 2e601295b780ec940d1b8d832c3eb28f7666765e
+F www/templates/Wasp/one_category.tpl 92d1de5ac38684112dda4f0f0a67b7a4a181b6ed
 F www/templates/Wasp/one_user.tpl 5bac0daf998cb553e2e7319e4e585bdb2c0059e6
 F www/templates/Wasp/post_history.tpl f6f9365f25087a1ff1daced716b0a49bfcb67ae2
 F www/templates/Wasp/post_view.tpl 13a3df0c6c289b8df657e9abcfbe00d69bc8553b
@@ -688,7 +688,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P adde3f892b6f30f99e8e5852d1422f8590fb5383
-R a480b5dd3e14ce31ceeb6c07ab4e38e5
+P 9c2e9a1dc157350ec9407a4a8cf42da51a8ccddb
+R 1436c0d4b6e24ce195d9f8fa62698b4d
 U johnfound
-Z 304a34f8d147ead91ab108350ff8ad0c
+Z 935b0e96c3625ec293b8aca7d1f6e95a

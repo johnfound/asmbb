@@ -389,8 +389,19 @@ begin
 ; this "]" end the case, so delete to here...
 
 .case_result:
+        test    esi, esi
+        jns     .last_result
+
         inc     ebx
         mov     [edx+TText.GapEnd], ebx
+        jmp     .loop_dec
+
+.last_result:   ; delete only the closing bracket.
+        mov     eax, ebx
+        sub     eax, [edx+TText.GapEnd]
+        add     eax, [edx+TText.GapBegin]
+        stdcall TextMoveGap, edx, eax
+        inc     [edx+TText.GapEnd]
         jmp     .loop_dec
 
 
