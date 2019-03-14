@@ -1,1 +1,5 @@
-Logging in.
+[case:[special:lang]|
+Logging in.|
+Включване.|
+Вход в систему.|
+Connecté.]

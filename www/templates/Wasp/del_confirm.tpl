@@ -8,12 +8,12 @@
 Delete [case:[cnt_thread]| |post and thread|post]|
 Изтриване на [case:[cnt_thread]| |мнението и темата|мнението]|
 Удалить [case:[cnt_thread]| |мнение и темы|мнение]|
-Delete [case:[cnt_thread]| |post and thread|post]] ?</h1>
+Supprimer le [case:[cnt_thread]| |sujet et le message|message]]?</h1>
     [case:[special:lang]|
 <p>Do you <b>really</b> want to delete the post written by <b>"[UserName]"</b>?</p>|
 <p><b>Наистина</b> ли искате да изтриете мнението на <b>"[UserName]"</b>?</p>|
 <p>Вы <b>действительно</b> хотите удалить мнение <b>"[UserName]"</b>?</p>|
-<p>Do you <b>really</b> want to delete the post written by <b>"[UserName]"</b>?</p>]
+<p>Voulez-vous <b>vraiment</b> supprimer le message écrit par <b>"[UserName]"</b>?</p>]
     <div class="post_preview">
       <div class="post_text">
         <article>
@@ -27,7 +27,7 @@ Delete [case:[cnt_thread]| |post and thread|post]] ?</h1>
     Notice that this is the <b>last post</b> in the thread and the <b>thread will be deleted</b> as well!|
     Това е <b>последното</b> мнение в темата и изтриването му ще <b>изтрие също и темата</b>!|
     Это <b>последний</b> пост в ветке, удаление которого также приведет к <b>удалению темы</b>!|
-    Notice that this is the <b>last post</b> in the thread and the <b>thread will be deleted</b> as well!]
+    Remarquez que ceci est le <b>dernier message</b> dans ce sujet et que <b>le sujet sera supprimé</b> également!]
 |
   [case:[special:lang]|
     Notice, that deletion can break the thread!|
@@ -36,8 +36,8 @@ Delete [case:[cnt_thread]| |post and thread|post]] ?</h1>
     Notice, that deletion can break the thread!]
 ]</p>
     <div class="panel">
-      <input type="submit" value="[case:[special:lang]|Delete|Изтрий|Удалить|Delete]" >
-      <a class="button" href="!by_id">[case:[special:lang]|Cancel|Връщане|Отменить|Cancel]</a>
+      <input type="submit" value="[case:[special:lang]|Delete|Изтрий|Удалить|Supprimer]" >
+      <a class="button" href="!by_id">[case:[special:lang]|Cancel|Връщане|Отменить|Annuler]</a>
       <input type="hidden" name="ticket" value="[Ticket]" >
     </div>
   </form>

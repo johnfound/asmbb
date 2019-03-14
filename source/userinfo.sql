@@ -1,5 +1,6 @@
 select
   id as userid,
+  (id = ?3) as ItIsMe,
   nick as username,
   av_time as AVer,
   status,

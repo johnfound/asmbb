@@ -338,8 +338,8 @@
       <div id="syslog"></div>
     </div>
     <div id="chat_form">
-      <input class="chat_input" type="edit" placeholder="[case:[special:lang]|Nickname|Ник|Ник|Surnom]" id="chat_user" onkeypress="KeyPress(event, UserRename)" onChange="UserRename()">
-      <input class="chat_input" type="edit" placeholder="[case:[special:lang]|Type here|Пиши тук|Напиши здесь|Écrivez ici]" id="chat_message" autofocus onkeypress="KeyPress(event, SendMessage)">
+      <input class="chat_input" type="edit" placeholder="[case:[special:lang]|Nickname|Ник|Ник|Nom d'utilisateur]" id="chat_user" onkeypress="KeyPress(event, UserRename)" onChange="UserRename()">
+      <input class="chat_input" type="edit" placeholder="[case:[special:lang]|Type here|Пиши тук|Напиши здесь|Taper ici]" id="chat_message" autofocus onkeypress="KeyPress(event, SendMessage)">
       <a class="icon_btn" onclick="SendMessage()"><img class="img_btn" src="[special:skin]/_images/edit_white.svg" alt="&nbsp;Post&nbsp;"></a>
     </div>
   </div>

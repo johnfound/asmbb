@@ -2,27 +2,69 @@
 [css:posts.css]
 [css:posteditor.css]
 
+[case:[special:lang]|
+  [equ:Caption=Thread title]
+  [equ:Content=Post content]
+  [equ:btnPreview=Preview]
+  [equ:hintPreview=Ctrl+Enter for preview]
+  [equ:btnSubmit=Submit]
+  [equ:hintSubmit=Ctrl+S for submit]
+  [equ:Attach=Attach file(s)]
+  [equ:tabText=Text]
+  [equ:tabAttach=Attachments]
+|
+  [equ:Caption=Заглавие на темата]
+  [equ:Content=Съдържание на поста]
+  [equ:btnPreview=Преглед]
+  [equ:hintPreview=Ctrl+Enter за преглед]
+  [equ:btnSubmit=Публикувай]
+  [equ:hintSubmit=Ctrl+S за публикуване]
+  [equ:Attach=Прикачи файл(ове)]
+  [equ:tabText=Текст]
+  [equ:tabAttach=Файлове]
+|
+  [equ:Caption=Название темы]
+  [equ:Content=Содержание поста]
+  [equ:btnPreview=Просмотр]
+  [equ:hintPreview=Ctrl+Enter для предварительного просмотра]
+  [equ:btnSubmit=Отправить]
+  [equ:hintSubmit=Ctrl+S чтобы отправить]
+  [equ:Attach=Прикрепить файл(ы)]
+  [equ:tabText=Текст]
+  [equ:tabAttach=Вложения]
+|
+  [equ:Caption=Titre du sujet]
+  [equ:Content=Contenu du message]
+  [equ:btnPreview=Prévisualiser]
+  [equ:hintPreview=Ctrl+Entrée pour prévisualiser]
+  [equ:btnSubmit=Soumettre]
+  [equ:hintSubmit=Ctrl+S pour soumettre]
+  [equ:Attach=Pièce(s) jointe(s)]
+  [equ:tabText=Texte]
+  [equ:tabAttach=Pièces jointes]
+]
+
 <div class="editor" id="editor">
   <div class="ui" id="draghere">
     <span class="spacer"></span>
     <a class="ui right" href="!by_id"><img src="[special:skin]/_images/close.svg" alt="Close" height="16"></a>
   </div>
   <form id="editform" action="!edit" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
-    <p>Thread title:</p>
+    <p>[const:Caption]:</p>
     <h1 class="fakeedit">[caption]</h1>
     <div class="tabbed">
       <input id="rad1" name="tabselector" type="radio" checked>
-      <label for="rad1">Text</label>
+      <label for="rad1">[const:tabText]</label>
       <section>
         [include:edit_toolbar.tpl]
-        <p>Post content:</p>
+        <p>[const:Content]</p>
         <textarea class="editor" name="source" id="source">[source]</textarea>
       </section>
 
       <input id="rad2" name="tabselector" type="radio">
-      <label for="rad2">Attachments</label>
+      <label for="rad2">[const:tabAttach]</label>
       <section>
-        [case:[special:canupload]||<p>Attach file(s): <span class="small">(count&le;10, size&le;1MB)</span></p><input id="browse" type="file" placeholder="Select file to attach" name="attach" multiple="multiple">]
+        [case:[special:canupload]||<p>[const:Attach]: <span class="small">(count&le;10, size&le;1MB)</span></p><input id="browse" type="file" placeholder="Select file to attach" name="attach" multiple="multiple">]
         <div id="attachments" class="attach_del">
           [attach_edit:[id]]
         </div>
@@ -30,8 +72,8 @@
     </div>
 
     <div class="panel">
-      <input type="submit" name="preview" value="Preview" onclick="this.form.cmd='preview'" title="Ctrl+Enter for preview">
-      <input type="submit" name="submit" value="Submit" onclick="this.form.cmd='submit'" title="Ctrl+S for submit" >
+      <input type="submit" name="preview" value="[const:btnPreview]" onclick="this.form.cmd='preview'" title="[const:hintPreview]">
+      <input type="submit" name="submit" value="[const:btnSubmit]" onclick="this.form.cmd='submit'" title="[const:hintSubmit]" >
       <input type="hidden" name="ticket" value="[Ticket]" >
     </div>
   </form>
