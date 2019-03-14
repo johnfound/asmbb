@@ -1063,7 +1063,7 @@ endl
         inc     esi
         push    esi     ; name start.
 
-        lea     esi, [esi+eax+2]        ; points at the start of the value
+        lea     esi, [esi+eax+1]        ; points at the start of the value
 
         stdcall StrExtract, edx ; remaining arguments from the stack
         mov     ebx, eax
