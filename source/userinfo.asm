@@ -77,7 +77,7 @@ begin
 
         mov     eax, [esi+TSpecialParams.userLang]
         stdcall StrCat, [esi+TSpecialParams.page_title], [cUserProfileTitle+8*eax]
-        cinvoke sqliteColumnText, [.stmt], 1
+        cinvoke sqliteColumnText, [.stmt], 2
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
 
         stdcall TextCat, edi, txt '<div class="user_profile">'
@@ -87,12 +87,11 @@ begin
         test    [esi+TSpecialParams.userStatus], permAdmin
         jnz     .put_edit_form
 
-        cinvoke sqliteColumnInt, [.stmt], 0
-        cmp     eax, [esi+TSpecialParams.userID]
-        jne     .edit_form_ok
+        cinvoke sqliteColumnInt, [.stmt], 1     ; ItIsMe field!
+        test    eax, eax
+        jz      .edit_form_ok
 
 .put_edit_form:
-
         stdcall RenderTemplate, edi, "form_editinfo.tpl", [.stmt], esi
         mov     edi, eax
 

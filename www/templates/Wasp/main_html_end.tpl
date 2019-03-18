@@ -1,8 +1,3 @@
-[case:[special:lang]|
-  [equ:hintRecent=]
-  [equ:btnOnline=Online
-]
-
 <div class="footer">
 <p>[case:[special:lang]|
   <a href="/!users_online" title="Recent activities of the visitors.">Online</a> now: [special:visitors]

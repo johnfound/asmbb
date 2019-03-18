@@ -97,14 +97,14 @@ endp
  uaLoggingOut    = 2
  uaRegistering   = 3
  uaThreadList    = 4     ; The tag ID or NULL.
- uaReadingThread = 5     ; ThreadID.
- uaWritingPost   = 6     ; ThreadID where.
+ uaReadingThread = 5     ; Thread slug.
+ uaWritingPost   = 6     ; Thread slug where.
  uaEditingPost   = 7     ; PostID editting.
  uaDeletingPost  = 8
  uaUserProfile   = 9     ; UserName reading.
  uaAdminThings   = 10
  uaTrackingUsers = 11
- uaEditingThread = 12    ; ThreadID
+ uaEditingThread = 12    ; Thread slug
  uaChatting      = 13
  uaResetingRequest   = 14       ; the page with reset request.
  uaResetRequestSent  = 15       ; the POST with reset request.
@@ -346,14 +346,21 @@ begin
 
         stdcall TextCat, edx, txt '<td>'
 
-        stdcall GetActivityArgs, [.stmt]
-        push    eax
+        push    edx
 
-        stdcall RenderTemplate, edx, eax, ebx, esi
+        stdcall StrDupMem, 'activity'
+        mov     ebx, eax
+        cinvoke sqliteColumnInt, [.stmt], 1
+        stdcall NumToStr, eax, ntsDec or ntsUnsigned
+        stdcall StrCat, ebx, eax
+        stdcall StrCat, ebx, txt '.tpl'
+        stdcall StrDel, eax
+
+        pop     edx
+        stdcall RenderTemplate, edx, ebx, [.stmt], esi
         mov     edi, eax
 
-        stdcall StrDel ; from the stack
-        cinvoke sqliteFinalize, ebx
+        stdcall StrDel, ebx
 
         stdcall TextCat, edi, txt '</td>'
         mov     edi, edx
@@ -433,44 +440,3 @@ begin
         return
 endp
 
-
-
-
-
-; returns:
-;
-;   name of the template in eax
-;   SQLite statement in ebx
-;
-
-
-  sqlOnlineParam text "select ?1 as Param"
-
-
-proc GetActivityArgs, .sqlStatement
-.stmt dd ?
-begin
-        pushad
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlOnlineParam, sqlOnlineParam.length, eax, 0
-
-        stdcall StrDupMem, "activity"
-        mov     [esp+4*regEAX], eax
-        mov     ebx, eax
-
-        cinvoke sqliteColumnText, [.sqlStatement], 1
-        stdcall StrCat, ebx, eax
-        stdcall StrCat, ebx, txt ".tpl"
-
-        cinvoke sqliteColumnText, [.sqlStatement], 2
-        cinvoke sqliteBindText, [.stmt], 1, eax, -1, SQLITE_TRANSIENT
-
-        cinvoke sqliteStep, [.stmt]
-
-        mov     ebx, [.stmt]
-        mov     [esp+4*regEBX], ebx
-
-        popad
-        return
-endp
