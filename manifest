@@ -1,5 +1,5 @@
-C Fixed\ssmall\smistake\sin\sthe\schat\stemplate.
-D 2019-03-18T13:17:34.900
+C Removed\snot\sneedded\ssource.
+D 2019-03-18T13:29:31.349
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -58,7 +58,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm 69b9cd8e6554d98a83cb329f1390275f8f67cde3
+F source/render2.asm ce76252d31cc2e0dc06109fb8be063f09131986a
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 720c86042dde68b950cd01059234b50c0dd9f891
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -601,7 +601,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 67199b3d4fc93cccde3d460ac434bcce6a0123f1
-R b53563e181d818b8ad1dcd05c8f710a7
+P 2ef062bae70f0cf66b3fd67e6ac522c352bd980f
+R d7c65cdbf9fc6b87baedd3417dad2c5a
 U johnfound
-Z 5dcd316a61a7835aca209ae030be5c9c
+Z a24d278f71e68eae0e1a842c6f55890d

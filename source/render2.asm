@@ -103,12 +103,6 @@ proc RenderTemplate, .pText, .hTemplate, .sqlite_statement, .pSpecial
 .fEncode dd ?
 
 .stmt dd ?
-
-;.separators rd 256
-;.sepindex   rd 16
-;.sepcnt     dd ?
-;.seplvl     dd ?
-
 .esp        dd ?
 
   BenchVar .render2
