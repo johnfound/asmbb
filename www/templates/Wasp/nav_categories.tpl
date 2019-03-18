@@ -29,7 +29,7 @@
 
 <div class="ui">
   <a class="ui left" href="/">[const:btnAll]</a>
-  [case:[special:userid]  | |<a class="ui left" href="!markread">[const:btnMarkAll]</a>]
+  [case:[special:userid]  | |<a class="ui left" href="!markread">[const:btnMarkRead]</a>]
   [case:[special:canchat] | |<a class="ui left" href="/!chat">[const:btnChat]</a>]
   <span class="spacer"></span>
   [case:[special:isadmin] | |

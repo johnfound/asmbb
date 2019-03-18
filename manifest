@@ -1,5 +1,5 @@
-C Removed\snot\sneedded\ssource.
-D 2019-03-18T13:29:31.349
+C Texts\scheck,\smistakes\sfixed...
+D 2019-03-18T13:44:19.808
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -483,7 +483,7 @@ F www/templates/Wasp/main_html_end.tpl 9047aa0d8df141a6511bf32ed3ee64c2782b2648
 F www/templates/Wasp/main_html_start.tpl b886b82876200c8628d1e72b95ad3facf027e13c
 F www/templates/Wasp/markdown.less 120c3455a2dbcbfa22451929c9841e3e8e0a2528
 F www/templates/Wasp/minimag_suffix.tpl 7051407fe8722bb0a32cc68e05109ec539c2ac27
-F www/templates/Wasp/nav_categories.tpl d256df84afc87679263c0a205e276a3c17d7ec68
+F www/templates/Wasp/nav_categories.tpl 9c51e8cf14dfa29e04b5e65c304562b680e1e640
 F www/templates/Wasp/nav_history.tpl f578ad8ce32c4c8aaee9f93dee502658c248804b
 F www/templates/Wasp/nav_list.tpl 409e494e85caa2bd56c565abaa04acff61b67c90
 F www/templates/Wasp/nav_search.tpl f278b726c9fe2e29a3331c07126468b1c2017003
@@ -601,7 +601,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 2ef062bae70f0cf66b3fd67e6ac522c352bd980f
-R d7c65cdbf9fc6b87baedd3417dad2c5a
+P fec7903f0b7a32748a8fbeae2069a2350fa5fad1
+R c5baf6bc2d8c9a07569ad2f55b805083
 U johnfound
-Z a24d278f71e68eae0e1a842c6f55890d
+Z 931280c9a9225ee6fe153447634a038e
