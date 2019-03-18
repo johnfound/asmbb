@@ -2,10 +2,32 @@
 [css:delete.css]
 [css:markdown.css]
 
+[case:[special:lang]|
+  [equ:hRestore=Restore post?]
+  [equ:pQuestion=Do you <b>really</b> want to restore this post to the previous version?]
+  [equ:btnRestore=Restore]
+  [equ:btnCancel=Cancel]
+|
+  [equ:hRestore=Възстановяване?]
+  [equ:pQuestion=<b>Наистина ли</b> желаете да възстановите това съобщение до предишна версия?]
+  [equ:btnRestore=Възстанови]
+  [equ:btnCancel=Отказ]
+|
+  [equ:hRestore=Восстановить пост?]
+  [equ:pQuestion=Вы <b>действительно</b> хотите восстановить это сообщение в предыдущей версии?]
+  [equ:btnRestore=Восстановить]
+  [equ:btnCancel=Отменить]
+|
+  [equ:hRestore=Restaurer le message?]
+  [equ:pQuestion=Voulez-vous <b>vraiment</b> restaurer ce message dans sa précédente version?]
+  [equ:btnRestore=Restore]
+  [equ:btnCancel=Annuler]
+]
+
 <div class="confirm">
   <form id="editform" method="post">
-    <h1 class="msg warning">Restore post?</h1>
-    <p>Do you <b>really</b> want to restore this post to the previous version?</p>
+    <h1 class="msg warning">[const:hRestore]</h1>
+    <p>[const:pQuestion]</p>
     <div class="post_preview">
       <div class="post_text">
         <article>
@@ -14,8 +36,8 @@
       </div>
     </div>
     <div class="panel">
-      <input type="submit" value="Restore" >
-      <a class="button" href="/[postID]/!history#[version]">Cancel</a>
+      <input type="submit" value="[const:btnRestore]" >
+      <a class="button" href="/[postID]/!history#[version]">[const:btnCancel]</a>
       <input type="hidden" name="version" value="[version]" >
       <input type="hidden" name="ticket" value="[Ticket]" >
     </div>

@@ -1,3 +1,8 @@
+[case:[special:lang]|
+  [equ:hintRecent=]
+  [equ:btnOnline=Online
+]
+
 <div class="footer">
 <p>[case:[special:lang]|
   <a href="/!users_online" title="Recent activities of the visitors.">Online</a> now: [special:visitors]
@@ -12,7 +17,7 @@
 <br>
 [special:stats]
 <br>
-<p>[case:[special:lang]|Page processing time|Време за обработка на страницата|Время обработки страницы|Temps de traitement de la page]: [special:timestamp] ms</p>
+<p>[case:[special:lang]|Page processing time|Време за обработка на страницата|Время обработки страницы|Page chargée en]: [special:timestamp] ms</p>
 </div>
 <div class="attribution">
   [special:version]; [special:sqliteversion];<br><br>

@@ -1,6 +1,5 @@
 
 [case:[special:lang]|
-
   [equ:hdrDesc=User description: <span class="small">(Formatted text)</span>]
   [equ:hdrPermissions= User permissions:]
   [equ:pLogin=Login]
@@ -35,12 +34,12 @@
   [equ:hdrPermissions=Права на потребителяя:]
   [equ:pLogin=Включване]
   [equ:pRead=Четене]
-  [equ:pPost=Публикуване на мнения]
-  [equ:pStart=Нови теми]
-  [equ:pEditOwn=Редакция на своите постове]
-  [equ:pEditAll=Редакция на всички постове]
-  [equ:pDelOwn=Изтриване на своите постове]
-  [equ:pDelAll=Изтриване на всички постове]
+  [equ:pPost=Писане на мнения]
+  [equ:pStart=Създаване на теми]
+  [equ:pEditOwn=Промяна на своите]
+  [equ:pEditAll=Промяна на всички]
+  [equ:pDelOwn=Изтриване на своите]
+  [equ:pDelAll=Изтриване на всички]
   [equ:pChat=Използване на чата]
   [equ:pDownload=Сваляне на файлове]
   [equ:pAttach=Прикачане на файлове]
@@ -66,7 +65,7 @@
   [equ:pLogin=Вход]
   [equ:pRead=Читать]
   [equ:pPost=Публиковать мнения]
-  [equ:pStart=Начинать темы]
+  [equ:pStart=Создавать темы]
   [equ:pEditOwn=Редакция своих постов]
   [equ:pEditAll=Редакция всех постов]
   [equ:pDelOwn=Удалять своих постов]
@@ -143,19 +142,19 @@
   </ul>
   ]
   <input type="hidden" name="ticket" value="[Ticket]">
-  <input type="submit" name="save" class="submit" value="[const:btnSave]">
+  <input type="submit" name="save" class="button" value="[const:btnSave]">
 </form>
 
 <form class="user_edit_info settings" method="post" enctype="multipart/form-data" action="/!avatar_upload/[url:[username]]">
   <h2>[const:hdrAvatar]</h2>
   <input type="file" class="browse" name="avatar">
   <input type="hidden" name="ticket" value="[Ticket]">
-  <input type="submit" name="submit" class="submit" value="[const:btnUpload]">
+  <input type="submit" name="submit" class="button" value="[const:btnUpload]">
 </form>
 
 <form class="user_edit_info settings" method="post" action="/!setskin/[url:[username]]">
   <h2>[const:hdrLang]</h2>
-  <select class="settings" name="user_lang">
+  <select class="userskin" name="user_lang">
     <option value="0" [case:[Lang]|selected="selected"|||]>English</option>
     <option value="1" [case:[Lang]||selected="selected"||]>Български</option>
     <option value="2" [case:[Lang]|||selected="selected"|]>Русский</option>
@@ -167,7 +166,7 @@
     [special:skins=[skin]]
   </select>
   <input type="hidden" name="ticket" value="[Ticket]">
-  <input type="submit" name="save" class="submit" value="[const:btnSave]">
+  <input type="submit" name="save" class="button" value="[const:btnSave]">
 </form>
 
 
@@ -178,7 +177,7 @@
   <input type="password" value="" placeholder="[const:passNew]" name="newpass" class="password" maxlength="1024" autocomplete="off">
   <input type="password" value="" placeholder="[const:passNew2]" name="newpass2" class="password" maxlength="1024" autocomplete="off">
   <input type="hidden" name="ticket" value="[Ticket]">
-  <input type="submit" name="changepass" class="submit" value="[const:btnChangePass]">
+  <input type="submit" name="changepass" class="button" value="[const:btnChangePass]">
 </form>
 
 <form class="user_edit_pass settings" method="post" action="/!changemail">
@@ -186,6 +185,6 @@
   <input type="password" value="" placeholder="[const:passPass]" name="password" class="password" maxlength="1024" autocomplete="off">
   <input type="text" value="[email]" placeholder="[const:emailNew]" name="email" class="email" maxlength="320">
   <input type="hidden" name="ticket" value="[Ticket]">
-  <input type="submit" name="changeemail" class="submit" value="[const:btnChangeEmail]">
+  <input type="submit" name="changeemail" class="button" value="[const:btnChangeEmail]">
 </form>
 ]

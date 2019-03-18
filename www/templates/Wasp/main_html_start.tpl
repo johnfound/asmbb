@@ -1,6 +1,6 @@
 [css:common.css]
 <!DOCTYPE html>
-<html lang="en">
+<html lang="[case:[special:lang]|en|bg|ru|fr]">
 <head>
   <meta charset="utf-8">
   <title>[special:title]</title>
@@ -52,9 +52,9 @@
       </form>
     </div>
     <div>
-      [case:[special:userid]|<a href="/!login/">[case:[special:lang]|Login|Вход|Aвторизоваться|S'identifier]</a><br>[case:[special:canregister]||<a href="/!register/">[case:[special:lang]|Register|Регистрация|Зарегестрироваться|S'inscrire]</a>]|
-      <form method="POST" action="/!logout"><input class="logout" type="submit" name="logout" value="[case:[special:lang]|Logout|Изход|Выйти|Sortie] ([special:username])"></form><a href="/!userinfo/[url:[special:username]]">[case:[special:lang]|User profile|Профил|Профиль|Profil]</a>
-      ]
+      [case:[special:userid]|<a href="/!login/">[case:[special:lang]|Login|Вход|Вход|Connexion]</a><br>[case:[special:canregister]||<a href="/!register/">[case:[special:lang]|Register|Регистрация|Зарегестрироваться|Inscription]</a>]|
+      <form method="POST" action="/!logout"><input class="logout" type="submit" name="logout" value="[case:[special:lang]|Logout|Изход|Выйти|De déconnecter] ([special:username])"></form>
+      <a href="/!userinfo/[url:[special:username]]">[case:[special:lang]|User profile|Профил|Профиль|Profil]</a>]
     </div>
   </div>
 
@@ -65,7 +65,9 @@
   </form>
 
   <div class="tags">
-    <a href="/[case:[special:limited]||(o)/]"><img class="tagicon" src="[special:skin]/_images/alltags[case:[special:variant]|||_gray].svg" alt="/" title="[case:[special:lang]|Show all threads|Покажи всички теми|Показать все темы|Montrer tous les sujets]"></a>
-    <a href="/[case:[special:limited]|(o)/|][case:[special:dir]||[special:dir]/]"><img class="tagicon" src="[special:skin]/_images/limited[case:[special:limited]|_gray|].svg" alt="/" title="[case:[special:lang]|Limited access threads|Теми с ограничен достъп|Темы с ограниченным доступом|Discussions d'accès limité]"></a>
+    <a href="/[case:[special:limited]||(o)/]"><img class="tagicon" src="[special:skin]/_images/alltags[case:[special:variant]|||_gray].svg" alt="/" title="[case:[special:lang]|Show all threads|Покажи всички теми|Показать все темы|Montrer tous les sujets]">
+</a>
+    <a href="/[case:[special:limited]|(o)/|][case:[special:dir]||[special:dir]/]"><img class="tagicon" src="[special:skin]/_images/limited[case:[special:limited]|_gray|].svg" alt="/" title="[case:[special:lang]|Limited access threads|Теми с ограничен достъ
+п|Темы с ограниченным доступом|Discussions d'accès limité]"></a>
     [special:alltags]
   </div>

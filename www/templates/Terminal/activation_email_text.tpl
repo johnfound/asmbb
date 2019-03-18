@@ -1,1 +1,0 @@
-../Wasp/activation_email_text.tpl

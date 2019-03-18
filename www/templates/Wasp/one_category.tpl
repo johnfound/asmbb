@@ -1,12 +1,34 @@
+[case:[special:lang]|
+  [equ:altNew=New]
+  [equ:ttlThreads=Threads]
+  [equ:ttlPosts=Posts]
+  [equ:ttlUnread=Unread]
+|
+  [equ:altNew=Нови]
+  [equ:ttlThreads=Теми]
+  [equ:ttlPosts=Мнения]
+  [equ:ttlUnread=Нови]
+|
+  [equ:altNew=Новые]
+  [equ:ttlThreads=Темы]
+  [equ:ttlPosts=Мнения]
+  [equ:ttlUnread=Новые]
+|
+  [equ:altNew=Nouveau]
+  [equ:ttlThreads=Sujets]
+  [equ:ttlPosts=Messages]
+  [equ:ttlUnread=Non-lus]
+]
+
 <div class="category">
  <div>
  [case:[Unread]|
    <img src="[special:skin]/_images/tag_gray.svg" alt="">|
-   <img src="[special:skin]/_images/tag.svg" alt="[case:[special:lang]|New|Нови|Новые|New]">
+   <img src="[special:skin]/_images/tag.svg" alt="[const:altNew]">
  ]
  </div>
  <a href="/[Tag]/"><span>[Tag]: </span>[Description]</a>
- <div>[case:[special:lang]|Threads|Теми|Темы|Threads]<br><span>[ThreadCnt]</span></div>
- <div>[case:[special:lang]|Posts|Мнения|Мнения|Posts]<br><span>[PostCnt]</span></div>
- [case:[special:userid]||<div>[case:[special:lang]|Unread|Нови|Новые|Unread]<br><span>[unread]</span></div>]
+ <div>[const:ttlThreads]<br><span>[ThreadCnt]</span></div>
+ <div>[const:ttlPosts]<br><span>[PostCnt]</span></div>
+ [case:[special:userid]||<div>[const:ttlUnread]<br><span>[unread]</span></div>]
 </div>

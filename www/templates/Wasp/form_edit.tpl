@@ -57,7 +57,7 @@
       <label for="rad1">[const:tabText]</label>
       <section>
         [include:edit_toolbar.tpl]
-        <p>[const:Content]</p>
+        <p>[const:Content]:</p>
         <textarea class="editor" name="source" id="source">[source]</textarea>
       </section>
 

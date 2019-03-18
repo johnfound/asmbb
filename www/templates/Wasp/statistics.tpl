@@ -9,13 +9,13 @@
 <p>Последно се е регистрирал: <a href="/!userinfo/[url:[lastuser]]">[lastuser]</a></p>
 <p>В последните 24 часа имаме [guests24] посетител[case:[guests24]|я||и] на форума.</p>
 |
-<p>This forum contains [posts] post[case:[posts]|s||s] in [threads] thread[case:[thread]|s||s].</p>
-<p>We have <a href="/!users/">[users] registered user[case:[users]|s||s]</a>.</p>
-<p>The latest registered user is: <a href="/!userinfo/[url:[lastuser]]">[lastuser]</a></p>
-<p>In the last 24h there was [guests24] visitor[case:[guests24]|s||s] on the forum.</p>
+<p>Этот форум содержит [posts] сообщений в [threads] темах.</p>
+<p>У нас <a href="/!users/">[users] зарегистрированных пользователей</a>.</p>
+<p>Последний зарегистрированный пользователь: <a href="/!userinfo/[url:[lastuser]]">[lastuser]</a></p>
+<p>За последние 24 часа на форуме было [guests24] посетителей.</p>
 |
-<p>This forum contains [posts] post[case:[posts]|s||s] in [threads] thread[case:[thread]|s||s].</p>
-<p>We have <a href="/!users/">[users] registered user[case:[users]|s||s]</a>.</p>
-<p>The latest registered user is: <a href="/!userinfo/[url:[lastuser]]">[lastuser]</a></p>
-<p>In the last 24h there was [guests24] visitor[case:[guests24]|s||s] on the forum.</p>
+<p>Ce forum contient [posts] message[case:[posts]|s||s] dans [thread] sujet[case:[thread]|s||s].</p>
+<p>Nous avons <a href="/!users/">[users] utilisateur[case:[users]|s||s] enregistré[case:[users]|s||s]</a>.</p>
+<p>Le dernier utilisateur enregistré est: <a href="/!userinfo/[url:[lastuser]]">[lastuser]</a></p>
+<p>Ces dernières 24 heures, il y a eu [guests24] visiteur[case:[guests24]|s||s] sur le forum.</p>
 ]

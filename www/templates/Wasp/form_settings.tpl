@@ -1,86 +1,245 @@
 [css:common.css]
 [css:settings.css]
 
+[case:[special:lang]|
+  [equ:pLogin=Login]
+  [equ:pRegister=Register]
+  [equ:pRead=Read]
+  [equ:pPost=Post]
+  [equ:pStart=Start threads]
+  [equ:pEditOwn=Edit own posts]
+  [equ:pEditAll=Edit all posts]
+  [equ:pDelOwn=Delete own posts]
+  [equ:pDelAll=Delete all posts]
+  [equ:pChat=Chat]
+  [equ:pDownload=Download files]
+  [equ:pAttach=Attach files]
+  [equ:pAdmin=Administrator]
+
+  [equ:ttlSettings=Forum engine settings]
+  [equ:btnSave=Save]
+  [equ:tabHTML=HTML/CSS]
+  [equ:ttlTitle=Forum title]
+  [equ:ttlHeader=Forum header]
+  [equ:ttlDesc=Description]
+  [equ:ttlKeywords=Keywords]
+  [equ:ttlEmbeded=Embedded CSS]
+  [equ:tabServer=Server]
+  [equ:ttlHost=Host]
+  [equ:ttlSMTP=SMTP server/port]
+  [equ:ttlPipe=Pipe the emails through]
+  [equ:ttlAccount=SMTP account]
+  [equ:ttlConfirm=Confirm by email]
+  [equ:tabPermissions=Permissions]
+  [equ:ttlPermNew=For new users]
+  [equ:ttlPermGuests=For guests]
+  [equ:tabFeatures=Features]
+  [equ:ttlLang=Default UI language]
+  [equ:ttlPgLen=Page length]
+  [equ:ttlSkin=Default skin]
+  [equ:ttlMobile=Default mobile skin]
+  [equ:ttlChat=Enable chat]
+  [equ:ttlMarkup=Available markup languages: <small>(at least one must be selected)</small>]
+|
+  [equ:pLogin=Включване]
+  [equ:pRegister=Регистриране]
+  [equ:pRead=Четене]
+  [equ:pPost=Писане на мнения]
+  [equ:pStart=Създаване на теми]
+  [equ:pEditOwn=Промяна на своите]
+  [equ:pEditAll=Промяна на всички]
+  [equ:pDelOwn=Изтриване на своите]
+  [equ:pDelAll=Изтриване на всички]
+  [equ:pChat=Използване на чата]
+  [equ:pDownload=Сваляне на файлове]
+  [equ:pAttach=Прикачане на файлове]
+  [equ:pAdmin=Администратор]
+
+  [equ:ttlSettings=Настройки на форума]
+  [equ:btnSave=Запиши]
+  [equ:tabHTML=HTML/CSS]
+  [equ:ttlTitle=Заглавие]
+  [equ:ttlHeader=Шапка на форум]
+  [equ:ttlDesc=Описание]
+  [equ:ttlKeywords=Ключови думи]
+  [equ:ttlEmbeded=Вграден CSS]
+  [equ:tabServer=Сървър]
+  [equ:ttlHost=Хост]
+  [equ:ttlSMTP=SMTP сървър/порт]
+  [equ:ttlPipe=Изпращане на писмата през]
+  [equ:ttlAccount=SMTP акаунт]
+  [equ:ttlConfirm=Потвърждения през имейл]
+  [equ:tabPermissions=Права за достъп]
+  [equ:ttlPermNew=За нови потребители]
+  [equ:ttlPermGuests=За гости]
+  [equ:tabFeatures=Опции]
+  [equ:ttlLang=Език по подразбиране]
+  [equ:ttlPgLen=Дължина на страниците]
+  [equ:ttlSkin=Оформление по подразбиране]
+  [equ:ttlMobile=Оформление за мобилни устройства]
+  [equ:ttlChat=Чат в реално време]
+  [equ:ttlMarkup=Езици за форматиране: <small>(поне един трябва да е избран)</small>]
+|
+  [equ:pLogin=Вход]
+  [equ:pRegister=Регистрироваться]
+  [equ:pRead=Читать]
+  [equ:pPost=Публиковать мнения]
+  [equ:pStart=Создавать темы]
+  [equ:pEditOwn=Редакция своих постов]
+  [equ:pEditAll=Редакция всех постов]
+  [equ:pDelOwn=Удалять своих постов]
+  [equ:pDelAll=Удалять всех постов]
+  [equ:pChat=Чат]
+  [equ:pDownload=Скачивать файлы]
+  [equ:pAttach=Прикреплять файлы]
+  [equ:pAdmin=Администратор]
+
+  [equ:ttlSettings=Настройки форума]
+  [equ:btnSave=Запись]
+  [equ:tabHTML=HTML/CSS]
+  [equ:ttlTitle=Название форума]
+  [equ:ttlHeader=Заголовок форума]
+  [equ:ttlDesc=Описание]
+  [equ:ttlKeywords=Ключевые слова]
+  [equ:ttlEmbeded=Встроенный CSS]
+  [equ:tabServer=Сервер]
+  [equ:ttlHost=Хост]
+  [equ:ttlSMTP=SMTP сервер/порт]
+  [equ:ttlPipe=Качать письма через]
+  [equ:ttlAccount=SMTP акаунт]
+  [equ:ttlConfirm=Потверждения через имейл]
+  [equ:tabPermissions=Права доступа]
+  [equ:ttlPermNew=Для новых пользователей]
+  [equ:ttlPermGuests=Для гостей]
+  [equ:tabFeatures=Функции]
+  [equ:ttlLang=Язык интерфейса]
+  [equ:ttlPgLen=Длина страницы]
+  [equ:ttlSkin=Оформление по умолчанию]
+  [equ:ttlMobile=Оформление для мобильных устройств]
+  [equ:ttlChat=Включить чат]
+  [equ:ttlMarkup=Языки разметки: <small>(должен быть выбран хотя бы один)</small>]
+|
+  [equ:pLogin=Connexion]
+  [equ:pRegister=S'enegistrer]
+  [equ:pRead=Lecture]
+  [equ:pPost=Poster]
+  [equ:pStart=Créer un sujet]
+  [equ:pEditOwn=Éditer ses messages]
+  [equ:pEditAll=Éditer tous les messages]
+  [equ:pDelOwn=Supprimer ses messages]
+  [equ:pDelAll=Supprimer tous les messages]
+  [equ:pChat=Tchat]
+  [equ:pDownload=Télécharger des fichiers]
+  [equ:pAttach=Joindre des fichiers]
+  [equ:pAdmin=Administrateur]
+
+  [equ:ttlSettings=Paramètres du forum]
+  [equ:btnSave=Écrire]
+  [equ:tabHTML=HTML/CSS]
+  [equ:ttlTitle=Titre du forum]
+  [equ:ttlHeader=En-tête de forum]
+  [equ:ttlDesc=Description]
+  [equ:ttlKeywords=Mots clés]
+  [equ:ttlEmbeded=CSS intégré]
+  [equ:tabServer=Serveur]
+  [equ:ttlHost=Host]
+  [equ:ttlSMTP=SMTP serveur/port]
+  [equ:ttlPipe=Pipe les emails à travers]
+  [equ:ttlAccount=SMTP account]
+  [equ:ttlConfirm=Confirmer par email]
+  [equ:tabPermissions=Permissions]
+  [equ:ttlPermNew=Pour les nouveaux utilisateurs]
+  [equ:ttlPermGuests=Pour les invités]
+  [equ:tabFeatures=Fonctionnalités]
+  [equ:ttlLang=Langue de l'interface par défaut]
+  [equ:ttlPgLen=Longueur de page]
+  [equ:ttlSkin=Thème par défaut]
+  [equ:ttlMobile=Thème mobile par défaut]
+  [equ:ttlChat=Activer le tchat]
+  [equ:ttlMarkup=Langages de marquage disponibles: <small>(au moins un doit être sélectionné)</small>]
+]
+
+
 <div class="set_page">
 [case:[message]||<h1 id="message" class="msg [case:[error]|info|error]">[message]</h1>]
 <form class="settings msgbox" method="post" action="/!settings">
-  <h1>Forum engine settings</h1>
-  <input type="submit" name="save" class="button" value="Save">
+  <h1>[const:ttlSettings]</h1>
+  <input type="submit" name="save" class="button" value="[const:btnSave]">
 
   <div class="tabbed">
 
     <input id="tab1" name="tabselector" type="radio" value="0" [case:[tabselector]|checked|]>
-    <label for="tab1">HTML/CSS</label>
+    <label for="tab1">[const:tabHTML]</label>
     <section>
-      <h3>Forum title:</h3>
+      <h3>[const:ttlTitle]:</h3>
       <input type="text" value="[forum_title]" name="forum_title" class="settings" maxlength="512">
 
-      <h3>Forum header:</h3>
+      <h3>[const:ttlHeader]:</h3>
       <textarea rows="6" class="settings" name="forum_header">[forum_header]</textarea>
 
-      <h3>Description:</h3>
+      <h3>[const:ttlDesc]:</h3>
       <input type="text" value="[description]" name="description" class="settings" maxlength="256">
 
-      <h3>Keywords:</h3>
+      <h3>[const:ttlKeywords]:</h3>
       <input type="text" value="[keywords]" name="keywords" class="settings" maxlength="256">
 
       <table><tr><td>
-        <input type="checkbox" [embeded_css] name="embeded_css" id="embeded_css"><label for="embeded_css">Embeded CSS</label>
+        <input type="checkbox" [embeded_css] name="embeded_css" id="embeded_css"><label for="embeded_css">[const:ttlEmbeded]</label>
       </td></tr></table>
     </section>
 
     <input id="tab2" name="tabselector" type="radio" value="1" [case:[tabselector]||checked|]>
-    <label for="tab2">Server</label>
+    <label for="tab2">[const:tabServer]</label>
     <section>
-      <h3>Host:</h3>
+      <h3>[const:ttlHost]:</h3>
       <input type="text" value="[host]" name="host" class="settings" maxlength="320">
 
-      <h3>SMTP server/port:</h3>
+      <h3>[const:ttlSMTP]:</h3>
       <input type="text" value="[smtp_addr]" name="smtp_addr" class="settings" maxlength="256">
       <input type="text" value="[smtp_port]" name="smtp_port" class="settings" maxlength="5">
 
-      <h3>Pipe the emails through:</h3>
+      <h3>[const:ttlPipe]:</h3>
       <input type="text" value="[smtp_exec]" name="smtp_exec" class="settings" maxlength="256">
 
-      <h3>SMTP account:</h3>
+      <h3>[const:ttlAccount]:</h3>
       <input type="text" value="[smtp_user]" name="smtp_user" class="settings" maxlength="256">
 
       <table><tr><td>
-        <input type="checkbox" [email_confirm] name="email_confirm" id="email_confirm" class="checkbox"><label for="email_confirm">Confirm by email</label>
+        <input type="checkbox" [email_confirm] name="email_confirm" id="email_confirm" class="checkbox"><label for="email_confirm">[const:ttlConfirm]</label>
       </td></tr></table>
     </section>
 
     <input id="tab3" name="tabselector" type="radio" value="2" [case:[tabselector]|||checked|]>
-    <label for="tab3">Permissions</label>
+    <label for="tab3">[const:tabPermissions]</label>
     <section>
-      <h3>For new users:</h3>
+      <h3>[const:ttlPermNew]:</h3>
       <ul class="checkboxes">
-        <li><input type="checkbox" [user_perm0]  name="user_perm" id="up0"  value="1"><label for="up0">Login</label></li>
-        <li><input type="checkbox" [user_perm1]  name="user_perm" id="up1"  value="2"><label for="up1">Read</label></li>
-        <li><input type="checkbox" [user_perm2]  name="user_perm" id="up2"  value="4"><label for="up2">Post</label></li>
-        <li><input type="checkbox" [user_perm3]  name="user_perm" id="up3"  value="8"><label for="up3">Start threads</label></li>
-        <li><input type="checkbox" [user_perm4]  name="user_perm" id="up4"  value="16"><label for="up4">Edit own posts</label></li>
-        <li><input type="checkbox" [user_perm5]  name="user_perm" id="up5"  value="32"><label for="up5">Edit all posts</label></li>
-        <li><input type="checkbox" [user_perm6]  name="user_perm" id="up6"  value="64"><label for="up6">Delete own posts</label></li>
-        <li><input type="checkbox" [user_perm7]  name="user_perm" id="up7"  value="128"><label for="up7">Delete all posts</label></li>
-        <li><input type="checkbox" [user_perm8]  name="user_perm" id="up8"  value="256"><label for="up8">Chat</label></li>
-        <li><input type="checkbox" [user_perm9]  name="user_perm" id="up9"  value="512"><label for="up9">Download files</label></li>
-        <li><input type="checkbox" [user_perm10] name="user_perm" id="up10" value="1024"><label for="up10">Attach files</label></li>
-        <li><input type="checkbox" [user_perm31] name="user_perm" id="up31" value="$80000000"><label for="up31">Administrator</label></li>
+        <li><input type="checkbox" [user_perm0]  name="user_perm" id="up0"  value="1"><label for="up0">[const:pLogin]</label></li>
+        <li><input type="checkbox" [user_perm1]  name="user_perm" id="up1"  value="2"><label for="up1">[const:pRead]</label></li>
+        <li><input type="checkbox" [user_perm2]  name="user_perm" id="up2"  value="4"><label for="up2">[const:pPost]</label></li>
+        <li><input type="checkbox" [user_perm3]  name="user_perm" id="up3"  value="8"><label for="up3">[const:pStart]</label></li>
+        <li><input type="checkbox" [user_perm4]  name="user_perm" id="up4"  value="16"><label for="up4">[const:pEditOwn]</label></li>
+        <li><input type="checkbox" [user_perm5]  name="user_perm" id="up5"  value="32"><label for="up5">[const:pEditAll]</label></li>
+        <li><input type="checkbox" [user_perm6]  name="user_perm" id="up6"  value="64"><label for="up6">[const:pDelOwn]</label></li>
+        <li><input type="checkbox" [user_perm7]  name="user_perm" id="up7"  value="128"><label for="up7">[const:pDelAll]</label></li>
+        <li><input type="checkbox" [user_perm8]  name="user_perm" id="up8"  value="256"><label for="up8">[const:pChat]</label></li>
+        <li><input type="checkbox" [user_perm9]  name="user_perm" id="up9"  value="512"><label for="up9">[const:pDownload]</label></li>
+        <li><input type="checkbox" [user_perm10] name="user_perm" id="up10" value="1024"><label for="up10">[const:pAttach]</label></li>
+        <li><input type="checkbox" [user_perm31] name="user_perm" id="up31" value="$80000000"><label for="up31">[const:pAdmin]</label></li>
       </ul>
-      <h3>For guests:</h3>
+      <h3>[const:ttlPermGuests]:</h3>
       <ul class="checkboxes">
-        <li><input type="checkbox" [anon_perm0]  name="anon_perm" id="ap0"  value="1"><label for="ap0">Register</label></li>
-        <li><input type="checkbox" [anon_perm1]  name="anon_perm" id="ap1"  value="2"><label for="ap1">Read</label></li>
-        <li><input type="checkbox" [anon_perm8]  name="anon_perm" id="ap8"  value="256"><label for="ap8">Chat</label></li>
-        <li><input type="checkbox" [anon_perm9]  name="anon_perm" id="ap9"  value="512"><label for="ap9">Download files</label></li>
+        <li><input type="checkbox" [anon_perm0]  name="anon_perm" id="ap0"  value="1"><label for="ap0">[const:pRegister]</label></li>
+        <li><input type="checkbox" [anon_perm1]  name="anon_perm" id="ap1"  value="2"><label for="ap1">[const:pRead]</label></li>
+        <li><input type="checkbox" [anon_perm8]  name="anon_perm" id="ap8"  value="256"><label for="ap8">[const:pChat]</label></li>
+        <li><input type="checkbox" [anon_perm9]  name="anon_perm" id="ap9"  value="512"><label for="ap9">[const:pDownload]</label></li>
       </ul>
     </section>
 
     <input id="tab4" name="tabselector" type="radio" value="3" [case:[tabselector]||||checked|]>
-    <label for="tab4">Features</label>
+    <label for="tab4">[const:tabFeatures]</label>
     <section>
-      <h3>Default UI language:</h3>
+      <h3>[const:ttlLang]:</h3>
       <select class="settings" name="default_lang">
         <option value="0" [case:[default_lang]|selected="selected"||||selected="selected"]>English</option>
         <option value="1" [case:[default_lang]||selected="selected"|||]>Български</option>
@@ -88,20 +247,20 @@
         <option value="3" [case:[default_lang]||||selected="selected"|]>Français</option>
       </select>
 
-      <h3>Page length:</h3>
+      <h3>[const:ttlPgLen]:</h3>
       <input type="text" value="[page_length]" name="page_length" class="settings" maxlength="256">
 
-      <h3>Default skin:</h3>
+      <h3>[const:ttlSkin]:</h3>
       <select class="settings" name="default_skin" >[special:skins=[default_skin]]</select>
 
-      <h3>Default mobile skin:</h3>
+      <h3>[const:ttlMobile]:</h3>
       <select class="settings" name="default_mobile_skin">[special:skins=[default_mobile_skin]]</select>
 
       <table><tr>
-        <td><input type="checkbox" [chat_enabled] name="chat_enabled" id="chat_enabled"><label for="chat_enabled">Enable chat</label></td>
+        <td><input type="checkbox" [chat_enabled] name="chat_enabled" id="chat_enabled"><label for="chat_enabled">[const:ttlChat]</label></td>
       </tr></table>
 
-      <h3>Available markup languages: <small>(at least one must be selected)</small></h3>
+      <h3>[const:ttlMarkup]</h3>
       <input type="checkbox" [markup0]  name="markups" id="mu0"  value="1"><label for="mu0">MiniMag (like markdown)</label>
       <input type="checkbox" [markup1]  name="markups" id="mu1"  value="2"><label for="mu1">BBCode</label>
       </ul>
@@ -109,7 +268,7 @@
   </div>
 
   <input type="hidden" name="ticket" value="[Ticket]" >
-  <input type="submit" name="save" class="button" value="Save">
+  <input type="submit" name="save" class="button" value="[const:btnSave]">
 </form>
 </div>
 
