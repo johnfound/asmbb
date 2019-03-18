@@ -1,5 +1,5 @@
-C The\stranslation\sis\sfinished\s(more\sor\sless).\sRemoved\sthe\s"terminal"\sskin,\sbecause\sit\sis\snot\susefull\sand\sis\sinteresting\sonly\sas\san\sexperiment.\s\nIf\ssomeone\sneeds\sit\sit\scan\sbe\sinstalled\sseparately.
-D 2019-03-18T12:55:40.147
+C Removed\s"terminal"\sskin\sfrom\sthe\sbuild\sscripts.
+D 2019-03-18T13:03:49.243
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -513,8 +513,8 @@ F www/templates/Wasp/userinfo.tpl 946e85e5ca1e6e08308db1ac0d56abcf0e3743c8
 F www/templates/Wasp/users_online.less 910547b8d9853b50a4a1aca66e2e5995ed78c5b4
 F www/templates/Wasp/userslist.less 9dae27c4e52c68f3351549034bdd7f9754bce069
 F www/templates/Wasp/userslist_hdr.tpl 6eb44f927a3bf641358495bcfff6f66051e2b661
-F www/templates/build_styles.sh e96b1a637d443bfb023ed56033d35a329dd100c5 x
-F www/templates/create_tar.sh fb0382fd6113451aac332d6472909817ca34e258 x
+F www/templates/build_styles.sh 6af167e4a80b6028ae8f8bc4cfcb209c3ab712eb x
+F www/templates/create_tar.sh 0620f0e0ff86fc5b47c6ea49c04198f94f534069 x
 F www/templates/mobile/_images 70c26c9bd422a7e59f2dca80d02ec99f39b390fb l
 F www/templates/mobile/activation_email_subject.tpl e0bd685144e72197dd0034b068e82d7604f926d2 l
 F www/templates/mobile/activation_email_text.tpl 50d1d6b7fe42736e334ab6870d7cc72e9085889d l
@@ -600,8 +600,8 @@ F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d2 l
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
-F www/templates/untar.sh 9208c2e984ba291d6c7959757f4f67ccc4aab64d x
-P 4e2171e0587da72c0111cf9acbe3664b56c457bb
-R 18a4bbbb50f8efd20b821a32d22d1f15
+F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
+P 1a37e5106bdf8ca76ef3155931b30bedf7844c4f
+R 4bd0e6ccd626aee861093f0db6cedd07
 U johnfound
-Z c590681dd530b6af34157d36ec7e730f
+Z 91e2f9b7e1f2cf088754e55274f11bad
