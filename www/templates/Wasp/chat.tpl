@@ -349,7 +349,7 @@
 
   <div class="chat">
     <div class="ui">
-      <a class="ui" href="/">[const:btnForum][case:[special:lang]|Forum|Форум|Форум|Forum]</a>
+      <a class="ui" href="/">[const:btnForum]</a>
     </div>
     <div class="chatflex">
       <div id="chatlog"></div>

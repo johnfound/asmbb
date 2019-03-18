@@ -1,5 +1,5 @@
-C Removed\s"terminal"\sskin\sfrom\sthe\sbuild\sscripts.
-D 2019-03-18T13:03:49.243
+C Fixed\ssmall\smistake\sin\sthe\schat\stemplate.
+D 2019-03-18T13:17:34.900
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -453,7 +453,7 @@ F www/templates/Wasp/activity8.tpl cd6af83e55b185062844e0e77c09f4ff29c7679f
 F www/templates/Wasp/activity9.tpl b26061b53754f1122b9e534928b4045f7b804ecb
 F www/templates/Wasp/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
 F www/templates/Wasp/chat.less e57b611bba245767e3924f761c37393ee3bb53d2
-F www/templates/Wasp/chat.tpl fb568135d3dc121483b35d88f74feb46e3521edc
+F www/templates/Wasp/chat.tpl e296ff783f34495d49e64ead09298460ceb37a62
 F www/templates/Wasp/common.less d81365e4ac07ecd9a14f71ec15646dea936aef3c
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 1a5398db758901acfb5acd156be08e4da0f5be72
@@ -601,7 +601,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 1a37e5106bdf8ca76ef3155931b30bedf7844c4f
-R 4bd0e6ccd626aee861093f0db6cedd07
+P 67199b3d4fc93cccde3d460ac434bcce6a0123f1
+R b53563e181d818b8ad1dcd05c8f710a7
 U johnfound
-Z 91e2f9b7e1f2cf088754e55274f11bad
+Z 5dcd316a61a7835aca209ae030be5c9c
