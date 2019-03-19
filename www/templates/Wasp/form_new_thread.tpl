@@ -78,7 +78,7 @@
       <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</p>
       <input type="edit" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
     </div>
-    <input type="checkbox" id="limited" name="limited" value="1" [case:[special:limited]||checked]><label for="limited">[const:ttlLimited]</label>
+    <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]><label for="limited">[const:ttlLimited]</label>
     <div id="users_invited">
       <p>[const:ttlInvited]:</p>
       <input id="invited" type="edit" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">

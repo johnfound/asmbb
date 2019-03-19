@@ -1,5 +1,5 @@
-C Memory\sleak\sfixed\son\ssaving\slimited\saccess\sthread.
-D 2019-03-19T12:13:47.782
+C Fixed\sa\slittle\smisbehaviour\son\sposting\sLATs.
+D 2019-03-19T13:25:42.312
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -49,7 +49,7 @@ F source/migration1.sql fe97ef3b5046a916f0215336a8a56ea4c8a3b98a
 F source/migration2.sql fe978700e39265c6680b69ea8cbfb5444cfdce63
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
 F source/phpbb.sql 6820a2092cc30a774c44d770055b37b66bdbfaf0
-F source/post.asm 1acc91424acf027395ebbda9ef88faae623a7966
+F source/post.asm 72a0f1de51352612597fe8e55c629dfe01bffc5b
 F source/post_data.asm af4b81ca1c74d54bbcd7a15b57f9c0cbd8622f01
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
@@ -469,7 +469,7 @@ F www/templates/Wasp/form_edit_thread.tpl 7cdc81b91ac1526fffeed1994d2394a819e27d
 F www/templates/Wasp/form_editinfo.tpl b258d41dca312eed9de77ead966fa9a9fa376af8
 F www/templates/Wasp/form_login.tpl 793a824894bd02bfe6ce53dd40ce817571fa7039
 F www/templates/Wasp/form_new_post.tpl 02dcb454813bb501b5051f6b99cba42c975df3f1
-F www/templates/Wasp/form_new_thread.tpl 821bfbec2971b716e9f6d8b0150717557ef68399
+F www/templates/Wasp/form_new_thread.tpl 85f7522740a01511b693f2c8b0d58b30debd47d1
 F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/Wasp/form_register.tpl f3bdfd79ecb0aa04bee38c7889ba7d79a27efd67
 F www/templates/Wasp/form_reset_password.tpl 606aff83522a593ddcbc45745dfddc06e7e219c3
@@ -601,7 +601,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P c5dc48a18826d0d50f2037d39e28fd526b96037e
-R 40eddda3a5a501746097664a928c6ba4
+P fa35b5cb51007f7efcccd8030894d56cee6b8664
+R 2a5afb18f0ed705cb43104a4e2162340
 U johnfound
-Z c073a7e566b55b859aefa88d937df629
+Z 02a4f451cf2c65513af942345842db18

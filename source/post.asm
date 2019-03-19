@@ -35,13 +35,17 @@ proc PostUserMessage, .pSpecial
 begin
         pushad
 
+        mov     esi, [.pSpecial]
+
+        mov     eax, [esi+TSpecialParams.Limited]
+        mov     [.fLimited], eax
+
         xor     eax, eax
         mov     [.fPreview], eax  ; preview by default when handling GET requests.
         mov     [.slug], eax
         mov     [.source], eax
         mov     [.caption], eax
         mov     [.tags], eax
-        mov     [.fLimited], eax
         mov     [.invited], eax
         mov     [.ticket], eax
         mov     [.stmt], eax
@@ -50,7 +54,6 @@ begin
         stdcall GetParam, txt "default_format", gpInteger       ; eax must == 0 before this call.
         mov     [.iFormat], eax
 
-        mov     esi, [.pSpecial]
 
         stdcall TextCreate, sizeof.TText
         mov     edi, eax
