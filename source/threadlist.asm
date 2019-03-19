@@ -25,7 +25,8 @@ begin
 ; make the title
 
         mov     ebx, [esi+TSpecialParams.page_title]
-        stdcall StrCat, ebx, cThreadListTitle
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrCat, ebx, [cThreadListTitle+8*eax]
 
         cmp     [esi+TSpecialParams.dir], 0
         je      .no_tag
@@ -44,8 +45,6 @@ begin
         stdcall StrDel, eax
 
 .page_ok:
-        mov     [esi+TSpecialParams.page_title], ebx
-
         stdcall TextCat, edi, <txt '<div class="threads_list">', 13, 10>
         stdcall RenderTemplate, edx, "nav_list.tpl", 0, esi   ; navigation tool bar
         mov     edi, eax
@@ -93,9 +92,18 @@ begin
         stdcall TextCompact, eax
         push    edx
 
+; DEBUG ONLY!!!
+;        pushad
+;        stdcall FileWrite, [STDERR], edx, eax
+;        stdcall FileWriteString, [STDERR], <txt 13, 10, 13, 10>
+;        popad
+; END OF DEBUG SECTION!
+
         lea     ecx, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], edx, eax, ecx, 0
         stdcall TextFree ; from the stack.
+
+        OutputValue "Thread list sql prepared return: ", eax, 10, -1
 
         cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.page_length]
 
@@ -117,6 +125,9 @@ begin
 
 .loop:
         cinvoke sqliteStep, [.stmt]
+
+        OutputValue "Thread list sql step() return: ", eax, 10, -1
+
         cmp     eax, SQLITE_ROW
         jne     .finish
 

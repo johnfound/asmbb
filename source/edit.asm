@@ -1,8 +1,8 @@
 
-sqlReadPost    text "select P.id, T.caption, P.content as source, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
-sqlEditedPost  text "select P.id, T.caption, ?3 as source, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
+sqlReadPost    text "select P.id, T.caption, P.content as source, format, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
+sqlEditedPost  text "select P.id, T.caption, ?3 as source, ?5 as format, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
 
-sqlSavePost    text "update Posts set content = ?1, rendered = ?2, editUserID = ?4, editTime = strftime('%s','now') where id = ?3"
+sqlSavePost    text "update Posts set content = ?1, format = ?5, editUserID = ?4, editTime = strftime('%s','now') where id = ?3"
 sqlGetPostUser text "select userID, threadID from Posts where id = ?"
 
 
@@ -10,8 +10,8 @@ proc EditUserMessage, .pSpecial
 .stmt dd ?
 
 .source   dd ?
-.rendered dd ?
 .ticket   dd ?
+.format   dd ?
 
 .res      dd ?
 .threadID dd ?
@@ -26,8 +26,8 @@ begin
 
         xor     ebx, ebx
         mov     [.source], ebx
-        mov     [.rendered], ebx
         mov     [.ticket], ebx
+        mov     [.format], ebx
         mov     [.softPreview], ebx
 
         mov     esi, [.pSpecial]
@@ -94,6 +94,17 @@ begin
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "source", 0
         mov     [.source], eax
 
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "format", 0
+        test    eax, eax
+        jz      .format_ok
+
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack
+
+.format_ok:
+        mov     [.format], eax
+
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "submit", 0
         stdcall StrDel, eax
         test    eax, eax
@@ -147,13 +158,15 @@ begin
 
         stdcall StrPtr, [.source]
         cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteBindInt, [.stmt], 5, [.format]
 
 .source_ok:
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
         jne     .error_missing_post
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cEditingPageTitle
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cEditingPageTitle+8*eax]
 
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
@@ -230,34 +243,17 @@ begin
 
         cinvoke sqliteBindInt, [.stmt], 3, [esi+TSpecialParams.page_num]
         cinvoke sqliteBindInt, [.stmt], 4, [esi+TSpecialParams.userID]
+        cinvoke sqliteBindInt, [.stmt], 5, [.format]
 
         stdcall StrByteUtf8, [.source], LIMIT_POST_LENGTH
         stdcall StrTrim, [.source], eax
 
-; render the source
-
-        stdcall FormatPostText2, [.source], esi
-        mov     [.rendered], eax
-
-; bind the source
-
         stdcall StrPtr, [.source]
-
         mov     ecx, [eax+string.len]
         test    ecx, ecx
         jz      .error_write
 
         cinvoke sqliteBindText, [.stmt], 1, eax, ecx, SQLITE_STATIC
-
-; bind the html
-
-        stdcall StrPtr, [.rendered]
-
-        mov     ecx, [eax+string.len]
-        test    ecx, ecx
-        jz      .error_write
-
-        cinvoke sqliteBindText, [.stmt], 2, eax, ecx, SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_DONE
@@ -303,7 +299,6 @@ begin
 
 .finish:
         stdcall StrDel, [.source]
-        stdcall StrDel, [.rendered]
         stdcall StrDel, [.ticket]
         mov     [esp+4*regEAX], edi
         popad
@@ -352,7 +347,7 @@ iglobal
   sqlGetAllThreadAttr StripText "thread_attr.sql", SQL
 endg
 
-sqlSavePostTitle text "update threads set slug = ?1, Caption = ?2, LastChanged = strftime('%s','now') where id = ?3"
+sqlSavePostTitle text "update threads set slug = ?1, Caption = ?2, LastChanged = strftime('%s','now'), Limited = ?4 where id = ?3"
 sqlUpdatePinned  text "update threads set pinned = ?1 where id = ?2"
 
 proc EditThreadAttr, .pSpecial
@@ -468,7 +463,8 @@ begin
 
 ; show edit form.
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cEditingThreadTitle
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cEditingThreadTitle+8*eax]
 
         cinvoke sqliteColumnText, [.stmt], 1    ; Thread caption.
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
@@ -562,6 +558,8 @@ begin
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSavePostTitle, -1, eax, 0
+
+        cinvoke sqliteBindInt, [.stmt], 4, [.fLimited]
 
         cinvoke sqliteBindInt, [.stmt], 3, [.threadID]
 

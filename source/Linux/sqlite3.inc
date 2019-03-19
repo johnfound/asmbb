@@ -78,8 +78,7 @@ import_proto './libsqlite3.so',  \
     sqliteCreateCollation_v2, <.ptrDB, .ptrName, .eTextRep, .lparam, .procCompare, .ptrDestroy>,  'sqlite3_create_collation_v2',  \
     sqliteCreateFunction, <.ptrDB, .ptrFunctionName, .nArg, .eTextRep, .lparam, .procFunc, .procStep, .procFinal>,  'sqlite3_create_function',  \
     sqliteCreateFunction16, <.ptrDB, .ptrFunctionName, .nArg, .eTextRep, .lparam, .procFunc, .procStep, .procFinal>,  'sqlite3_create_function16',  \
-    sqliteCreateFunction_v2, <.ptrDB, .ptrFunctionName, .nArg, .eTextRep, .lparam, .procFunc, .procStep, .procFinal, .procDestroy,  \
-      >,  'sqlite3_create_function_v2',  \
+    sqliteCreateFunction_v2, <.ptrDB, .ptrFunctionName, .nArg, .eTextRep, .lparam, .procFunc, .procStep, .procFinal, .procDestroy>,  'sqlite3_create_function_v2',  \
     sqliteCreateModule, <.ptrDB, .ptrModuleName, .ptrVTableModule, .lparam>,  'sqlite3_create_module',  \
     sqliteCreateModule_v2, <.ptrDB, .ptrModuleName, .ptrVTableModule, .lparam, .procDestroy>,  'sqlite3_create_module_v2',  \
     sqliteDBConfig, <.ptrDB, .index, ...>,  'sqlite3_db_config',  \

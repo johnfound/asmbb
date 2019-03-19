@@ -667,7 +667,8 @@ begin
         test    edx, edx
         jnz     .real_name
 
-        stdcall StrDupMem, cAnonName
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrDupMem, [cAnonName+8*eax]
         mov     edx, eax
 
         movzx   eax, byte [esi+TSpecialParams.remoteIP]

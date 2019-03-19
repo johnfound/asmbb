@@ -75,8 +75,9 @@ begin
 
         stdcall LogUserActivity, esi, uaUserProfile, ebx
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cUserProfileTitle
-        cinvoke sqliteColumnText, [.stmt], 1
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cUserProfileTitle+8*eax]
+        cinvoke sqliteColumnText, [.stmt], 2
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
 
         stdcall TextCat, edi, txt '<div class="user_profile">'
@@ -86,12 +87,11 @@ begin
         test    [esi+TSpecialParams.userStatus], permAdmin
         jnz     .put_edit_form
 
-        cinvoke sqliteColumnInt, [.stmt], 0
-        cmp     eax, [esi+TSpecialParams.userID]
-        jne     .edit_form_ok
+        cinvoke sqliteColumnInt, [.stmt], 1     ; ItIsMe field!
+        test    eax, eax
+        jz      .edit_form_ok
 
 .put_edit_form:
-
         stdcall RenderTemplate, edi, "form_editinfo.tpl", [.stmt], esi
         mov     edi, eax
 
@@ -179,7 +179,7 @@ endl
         test    [esi+TSpecialParams.userStatus], permAdmin
         jz      .user_perm_ok
 
-        stdcall GetPostPermissions, txt 'user_perm', esi
+        stdcall GetPostBitmask, txt 'user_perm', esi
         jc      .user_perm_ok
 
         mov     edi, eax
@@ -522,7 +522,7 @@ endp
 
 
 
-sqlUpdateUserSkin text "update Users set skin = ? where nick = ?"
+sqlUpdateUserSkin text "update Users set skin = ?1, Lang = ?3 where nick = ?2"
 
 
 proc UpdateUserSkin, .pSpecial
@@ -569,6 +569,30 @@ begin
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateUserSkin, sqlUpdateUserSkin.length, eax, 0
+
+
+; save user language
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_lang", 0
+        test    eax, eax
+        jz      .lang_ok
+
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack
+
+.lang_ok:
+        xor     ecx, ecx
+        mov     edx, MAX_UI_LANG
+
+        cmp     eax, ecx
+        cmovl   eax, ecx
+        cmp     eax, edx
+        cmovg   eax, edx
+        cinvoke sqliteBindInt, [.stmt], 3, eax
+
+
+; save skin name
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "skin", 0
         mov     ebx, eax

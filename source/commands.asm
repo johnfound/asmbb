@@ -1,3 +1,6 @@
+DEFAULT_UI_LANG = 0
+MAX_UI_LANG = 3         ; 0 = EN, 1 = BG, 2 = RU, 3 = FR
+
 DEFAULT_PAGE_LENGTH = 20
 
 ; User permissions status flags:
@@ -32,6 +35,7 @@ struct TSpecialParams
   .params          dd ?
   .post_array      dd ?
 
+  .Limited         dd ?                 ; Flag that the URL contains symbol for LimitedAccessThreads
   .dir             dd ?                 ; /tag_name/
   .thread          dd ?                 ; /thread_slug/
   .page_num        dd ?                 ; /1234 - can be the number of the page, or the ID of a post.
@@ -79,7 +83,6 @@ PHashTable tablePreCommands, tpl_func,                  \
         "!userinfo",        ShowUserInfo,               \
         "!avatar_upload",   UpdateUserAvatar,           \
         "!setskin",         UpdateUserSkin,             \
-        "!render_all",      RenderAll,                  \
         "!users_online",    UserActivityTable,          \
         "!chat",            ChatPage,                   \
         "!chat_events",     ChatRealTime,               \
@@ -482,6 +485,19 @@ begin
 
         push    eax
         stdcall StrPtr, eax
+        cmp     dword [eax], '(o)'
+        pop     eax
+        jne     .check_for_command
+
+        inc     [.special.Limited]
+        stdcall StrDel, eax
+
+        call    .pop_array_item
+        jz      .show_thread_list
+
+.check_for_command:
+        push    eax
+        stdcall StrPtr, eax
         cmp     byte [eax], '!'
         pop     eax
         jne     .is_it_tag
@@ -806,7 +822,7 @@ endp
 
 
 
-sqlGetSession    text "select S.userID, U.nick, U.status, S.last_seen, U.Skin from sessions S left join users U on U.id = S.userID where S.sid = ?"
+sqlGetSession    text "select S.userID, U.nick, U.status, S.last_seen, U.Skin, U.Lang from sessions S left join users U on U.id = S.userID where S.sid = ?"
 sqlGetUserExists text "select 1 from users limit 1"
 SKIN_CHECK_FILE  text "/main_html_start.tpl"
 
@@ -823,6 +839,9 @@ begin
         mov     [edi+TSpecialParams.userStatus], eax
         mov     [edi+TSpecialParams.session], eax
         mov     [edi+TSpecialParams.remoteIP], eax
+
+        stdcall GetParam, "default_lang", gpInteger
+        mov     [edi+TSpecialParams.userLang], eax
 
         stdcall GetParam, "anon_perm", gpInteger
         jc      .anon_ok
@@ -884,6 +903,11 @@ begin
 
         cinvoke sqliteColumnInt, [.stmt], 2
         mov     [edi+TSpecialParams.userStatus], eax
+
+; user lang
+
+        cinvoke sqliteColumnInt, [.stmt], 5
+        mov     [edi+TSpecialParams.userLang], eax
 
 ; user skin
 

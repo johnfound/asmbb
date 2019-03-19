@@ -1,1 +1,0 @@
-../Wasp/form_register.tpl

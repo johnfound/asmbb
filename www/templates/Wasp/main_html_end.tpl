@@ -1,9 +1,18 @@
 <div class="footer">
-<p><a href="/!users_online" title="Detailed list of user activities.">Online</a> now: [special:visitors]</p>
+<p>[case:[special:lang]|
+  <a href="/!users_online" title="Recent activities of the visitors.">Online</a> now: [special:visitors]
+|
+  <a href="/!users_online" title="Последни действия на посетителите.">Онлайн</a> в момента: [special:visitors]
+|
+  <a href="/!users_online" title="Последние действия потребителей.">Сейчас</a> в сети: [special:visitors]
+|
+  <a href="/!users_online" title="Activités récentes des visiteurs.">En ligne</a> maintenant: [special:visitors]
+]
+</p>
 <br>
 [special:stats]
 <br>
-<p>Page rendering time: [special:timestamp] ms</p>
+<p>[case:[special:lang]|Page processing time|Време за обработка на страницата|Время обработки страницы|Page chargée en]: [special:timestamp] ms</p>
 </div>
 <div class="attribution">
   [special:version]; [special:sqliteversion];<br><br>

@@ -1,9 +1,11 @@
 select
   id as userid,
+  (id = ?3) as ItIsMe,
   nick as username,
   av_time as AVer,
   status,
   user_desc,
+  Lang,
   skin,
   strftime('%d.%m.%Y %H:%M:%S', LastSeen, 'unixepoch') as LastSeen,
   email,

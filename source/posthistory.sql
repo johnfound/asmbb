@@ -11,6 +11,7 @@ select * from
   (select av_time from Users U where U.id = userID) as AVerP,
   strftime('%d.%m.%Y %H:%M:%S', postTime, 'unixepoch') as PostTime,
   strftime('%d.%m.%Y %H:%M:%S', editTime, 'unixepoch') as EditTime,
+  format,
   Content,
   editTime as EditTimeNum
 from
@@ -30,6 +31,7 @@ select
   (select av_time from Users U where U.id = userID) as AVerP,
   strftime('%d.%m.%Y %H:%M:%S', postTime, 'unixepoch') as PostTime,
   strftime('%d.%m.%Y %H:%M:%S', editTime, 'unixepoch') as EditTime,
+  format,
   Content,
   editTime as EditTimeNum
 from

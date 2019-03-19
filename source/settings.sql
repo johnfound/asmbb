@@ -77,10 +77,15 @@ select
   ?330 as anon_perm30,
   ?331 as anon_perm31,
 
+  ?400 as markup0,
+  ?401 as markup1,
+
   ?21 as chat_enabled,
   ?23 as email_confirm,
   ?24 as default_skin,
   ?25 as default_mobile_skin,
   ?26 as forum_header,
   ?27 as embeded_css,
-  ?28 as Ticket
+  ?28 as Ticket,
+  ?29 as tabselector,
+  ?30 as default_lang

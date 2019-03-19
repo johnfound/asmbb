@@ -2,12 +2,20 @@ BEGIN TRANSACTION;
 
 /* Data tables */
 
+create table Counters (
+  id text primary key,
+  val integer default 0
+) without rowid;
+
+insert into Counters(id) values ('posts'), ('threads');
+
+
 create table Params (
   id  text primary key,
   val text
-);
+) without rowid;
 
-
+insert into Params values ('default_lang', 0);
 insert into Params values ('user_perm', 1887);  -- permLogin + permRead + permPost + permThreadStart + permEditOwn + permDelOwn + permChat + permDownload + permAttach
 insert into Params values ('anon_perm', 3);     -- permLogin + permRead
 insert into Params values ('log_events', 0);
@@ -61,10 +69,10 @@ create table Users (
   PostCount integer default 0  -- Speed optimization in order to not count the posts every time. Need automatic count.
 );
 
--- create index idxUsers_nick on Users (nick collate nocase); - not needed because of the UNIQUE clause.
 create index idxUsers_email on Users (email);
 create index idxUsersX on Users(id, nick, avatar);
 create index idxUsers_LastSeen on Users(LastSeen);
+create index idxUsersBack on Users(id desc);
 
 CREATE TABLE UserLog (
   userID integer,
@@ -100,10 +108,13 @@ create table Threads (
   UserID      integer references Users(id),
   Pinned      integer default 0,
   PostCount   integer default 0,
-  ReadCount   integer default 0
+  ReadCount   integer default 0,
+  Limited     integer default 0
 );
 
-create index idxThreadsPinnedLastChanged on Threads (Pinned desc, LastChanged desc);
+create index idxThreadsPinnedLastChangedLimited on threads (Limited, Pinned desc, Lastchanged desc);
+create index idxThreadsPinnedLastChanged on Threads (Pinned desc, Lastchanged desc);  -- needed for the old threadlist sql!
+create index idxThreadsLimitedLastChanged on Threads(Limited, LastChanged desc);
 create index idxThreadsSlug on Threads (Slug);
 
 create table ThreadPosters (
@@ -128,6 +139,10 @@ create table ThreadsHistory (
 -- in order to avoid duplicated information in the history.
 create unique index idxThreadsHistory on ThreadsHistory(Slug, Caption, Pinned);
 
+create trigger ThreadsAI after insert on Threads begin
+  update Counters set val = val + 1 where id = 'threads';
+end;
+
 create trigger ThreadsAU after update of Slug, Caption, UserID, Pinned on Threads begin
   insert or ignore into ThreadsHistory(threadid, Slug, Caption, LastChanged, Pinned) values (
     old.id,
@@ -146,6 +161,7 @@ create trigger ThreadsAD after delete on Threads begin
     old.LastChanged,
     old.Pinned
   );
+  update Counters set val = val - 1 where id = 'threads';
 end;
 
 
@@ -153,12 +169,12 @@ create table Posts (
   id          integer primary key autoincrement,
   threadID    integer references Threads(id) on delete cascade,
   userID      integer references Users(id) on delete cascade,
+  anon        text,
   postTime    integer,
   editUserID  integer default NULL references Users(id) on delete cascade,
   editTime    integer default NULL,
   format      integer,
-  Content     text,
-  Rendered    text
+  Content     text
 );
 
 
@@ -178,6 +194,7 @@ create table PostsHistory (
   postID     integer,
   threadID   integer,
   userID     integer,
+  anon       text,
   postTime   integer,
   editUserID integer,
   editTime   integer,
@@ -195,26 +212,33 @@ CREATE TRIGGER PostsAI AFTER INSERT ON Posts BEGIN
     new.Content,
     (select Caption from Threads where id=new.threadid),
     (select slug from Threads where id = new.threadid),
-    (select nick from users where id = new.userid),
+    ifnull((select nick from users where id = new.userid), new.anon),
     (select group_concat(TT.Tag, ", ") from ThreadTags TT where TT.threadID = new.threadid)
   );
   insert into PostCNT(postid,count) VALUES (new.id, 0);
   insert or ignore into ThreadPosters(firstPost, threadID, userID) values (new.id, new.threadID, new.userID);
+
   update Users set PostCount = PostCount + 1 where Users.id = new.UserID;
   update Threads set PostCount = PostCount + 1 where id = new.threadID;
+  update Counters set val = val + 1 where id = 'posts';
+  update Tags set PostCnt = PostCnt + 1 where Tags.tag in (select tag from ThreadTags where ThreadID = new.ThreadID);
 END;
 
 CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
   delete from PostFTS where rowid = old.id;
+  delete from ThreadPosters where threadid = old.threadid and userid = old.userid;
+  insert or ignore into ThreadPosters(firstPost, threadID, userID) select min(id), threadid, userid from posts where threadid = old.threadid and userid = old.userid;
+
   update Users set PostCount = PostCount - 1 where Users.id = old.UserID;
   update Threads set PostCount = PostCount - 1 where id = old.threadID;
-  delete from ThreadPosters where threadid = old.threadid and userid = old.userid;
-  insert into ThreadPosters(firstPost, threadID, userID) select min(id), threadid, userid from posts where threadid = old.threadid and userid = old.userid;
+  update Counters set val = val - 1 where id = 'posts';
+  update Tags set PostCnt = PostCnt - 1 where Tags.tag in (select tag from threadtags where threadid = old.threadid);
 
-  insert or ignore into PostsHistory(postID, threadID, userID, postTime, editUserID, editTime, format, Content) values (
+  insert or ignore into PostsHistory(postID, threadID, userID, anon, postTime, editUserID, editTime, format, Content) values (
     old.id,
     old.threadID,
     old.userID,
+    old.anon,
     old.postTime,
     old.editUserID,
     old.editTime,
@@ -229,13 +253,14 @@ CREATE TRIGGER PostsAU AFTER UPDATE OF Content, editTime, editUserID, threadID, 
     Content = new.Content,
     Caption = (select Caption from Threads where id=new.threadid),
     slug = (select slug from Threads where id = new.threadid),
-    user = (select nick from users where id = new.userid),
+    user = ifnull((select nick from users where id = new.userid), new.anon),
     tags = (select group_concat(TT.Tag, ", ") from ThreadTags TT where TT.threadID = new.threadid)
   where rowid = old.id;
-  insert or ignore into PostsHistory(postID, threadID, userID, postTime, editUserID, editTime, format, Content) values (
+  insert or ignore into PostsHistory(postID, threadID, userID, anon, postTime, editUserID, editTime, format, Content) values (
     old.id,
     old.threadID,
     old.userID,
+    old.anon,
     old.postTime,
     old.editUserID,
     old.editTime,
@@ -244,22 +269,35 @@ CREATE TRIGGER PostsAU AFTER UPDATE OF Content, editTime, editUserID, threadID, 
   );
   update Threads set PostCount = PostCount - 1 where id = old.threadID;
   update Threads set PostCount = PostCount + 1 where id = new.threadID;
+
+  update Tags set PostCnt = PostCnt - 1 where tags.tag in (select tag from threadtags where threadid = old.threadid);
+  update Tags set PostCnt = PostCnt + 1 where tags.tag in (select tag from threadtags where threadid = new.threadid);
 END;
 
 
 create table LimitedAccessThreads (
   threadID integer references Threads(id) on delete cascade,
-  userID   integer references Users(id) on delete cascade
+  userID   integer references Users(id) on delete cascade,
+  LastChanged integer default 0
 );
 
 create unique index idxLimitedAccessThreads on LimitedAccessThreads(threadID, userID);
+create index idxLimitedAccessThreadsLastChanged on LimitedAccessThreads(LastChanged desc);
+create index idxLimitedAccessThreadsUserLastChanged on LimitedAccessThreads(userID, LastChanged desc);
+
+
+create trigger LimitedAccessThreadsAI after insert on LimitedAccessThreads begin
+  update LimitedAccessThreads set LastChanged = (select LastChanged from threads where id = new.threadid);
+end;
 
 
 create table Tags (
   Tag         text primary key,
-  Importance  integer not null default 0,
+  Importance  integer default 0,
+  ThreadCnt   integer default 0,
+  PostCnt     integer default 0,
   Description text
-);
+) without rowid;
 
 create index idxTagImportance on Tags(Importance desc);
 create index idxTagsTagImp on Tags(tag, importance desc);
@@ -269,11 +307,38 @@ create index idxTagsTagImp on Tags(tag, importance desc);
 
 create table ThreadTags (
   ThreadID integer references Threads(id) on delete cascade,
-  Tag      text references Tags(Tag) on delete cascade on update cascade
+  Tag      text references Tags(Tag) on delete cascade on update cascade,
+  Pinned   integer default 0,
+  LastChanged integer default 0,
+  Limited     integer default 0
 );
 
 create unique index idxThreadTagsUnique on ThreadTags ( ThreadID, Tag );
+
+-- no need for so many indixes!!!???
 create index idxThreadsTagsTags on ThreadTags (Tag);
+create index idxThreadTagsTagLimitedPinnedLastChanged ON ThreadTags(Tag, Limited, Pinned desc, LastChanged desc);
+create index idxThreadTagsTagPinnedLastChanged on ThreadTags(tag, pinned desc, lastchanged desc);
+create index idxThreadTagsLimitedTag on ThreadTags(Limited, tag);
+create index idxThreadTagsLimitedTagThread on ThreadTags (Limited, tag, threadid);
+
+CREATE TRIGGER ThreadTagsAI AFTER INSERT ON ThreadTags BEGIN
+  update Tags set ThreadCnt = ThreadCnt + 1 where tag = new.tag;
+END;
+
+CREATE TRIGGER ThreadTagsAD AFTER DELETE ON ThreadTags BEGIN
+  update Tags set ThreadCnt = ThreadCnt - 1 where tag = old.tag;
+END;
+
+CREATE TRIGGER ThreadTagsAU AFTER UPDATE OF Tag, Limited ON ThreadTags BEGIN
+  update Tags set ThreadCnt = ThreadCnt - 1 where tag = old.tag;
+  update Tags set ThreadCnt = ThreadCnt + 1 where tag = new.tag;
+END;
+
+CREATE TRIGGER ThreadsAUtt AFTER UPDATE OF LastChanged, Pinned, Limited ON Threads BEGIN
+  update threadtags set LastChanged = new.LastChanged, Pinned = new.Pinned, Limited = new.Limited where threadid = new.id;
+  update LimitedAccessThreads set LastChanged = new.LastChanged where threadid = new.id;
+END;
 
 
 create table UnreadPosts (
@@ -555,7 +620,6 @@ create table EventQueue (
   event      text,
   receiver   text    -- the sessionID of the receiver. If NULL then broadcast to all subscribed.
 );
-
 
 
 COMMIT;

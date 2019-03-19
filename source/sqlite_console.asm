@@ -36,7 +36,8 @@ begin
 
         mov     [.ticket], eax
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cSQLiteConsoleTitle
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cSQLiteConsoleTitle+8*eax]
 
 ; first output the form
 
@@ -115,6 +116,12 @@ begin
         stdcall StrDel ; from the stack
         stdcall StrClipSpacesR, eax
         stdcall StrClipSpacesL, eax
+
+;; Debug ONLY!!!
+;        pushad
+;        stdcall FileWriteString, [STDERR], eax
+;        stdcall FileWriteString, [STDERR], <txt 13, 10, 13, 10>
+;        popad
 
         stdcall TextCat, edi, "<h5>Statement executed:</h5><pre>"
         stdcall TextCat, edx, eax

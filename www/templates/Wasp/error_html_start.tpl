@@ -1,9 +1,9 @@
 [css:error.css]
 <!DOCTYPE html>
-<html lang="en">
+<html lang="[case:[special:lang]|en|bg|ru|fr]">
   <head>
     <meta charset="utf-8">
-    <title>Error!</title>
+    <title>[case:[special:lang]|Error|Грешка|Ошибка|Erreur]!</title>
     [special:allstyles]
   </head>
   <body><div>

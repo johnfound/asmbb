@@ -5,7 +5,9 @@ select
   strftime('%d.%m.%Y %H:%M:%S', Register, 'unixepoch') as RegisterStr,
   strftime('%d.%m.%Y %H:%M:%S', LastSeen, 'unixepoch') as LastSeenStr,
   Skin,
-  PostCount
+  PostCount,
+  (Register is not null) as fRegister,
+  (LastSeen is not null) as fLast
 from
   users
 [case:[special:order]|

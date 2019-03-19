@@ -5,14 +5,13 @@ LIMIT_TAG_DESCRIPTION = 1024
 cNewPostForm   text "form_new_post.tpl"
 cNewThreadForm text "form_new_thread.tpl"
 
-sqlSelectConst text "select ?1 as slug, ?2 as caption, ?3 as source, ?4 as ticket, ?5 as tags, ?6 as limited, ?7 as invited, ?8 as UserName"
-
+sqlSelectConst text "select ?1 as slug, ?2 as caption, ?3 as source, ?4 as ticket, ?5 as tags, ?6 as limited, ?7 as invited, ?8 as UserName, ?9 as format"
 sqlGetQuote   text "select U.nick, P.content from Posts P left join Users U on U.id = P.userID where P.id = ?"
 
-sqlInsertPost text "insert into Posts ( ThreadID, UserID, PostTime, Content, Rendered) values (?, ?, strftime('%s','now'), ?, ?)"
+sqlInsertPost text "insert into Posts ( ThreadID, UserID, PostTime, Content, format) values (?, ?, strftime('%s','now'), ?, ?)"
 sqlUpdateThreads text "update Threads set LastChanged = strftime('%s','now') where id = ?"
 sqlInsertThread  text "insert into Threads ( Caption ) values ( ? )"
-sqlSetThreadSlug text "update Threads set slug = ? where id = ?"
+sqlSetThreadSlug text "update Threads set slug = ?1, Limited=?3 where id = ?2"
 
 
 proc PostUserMessage, .pSpecial
@@ -26,30 +25,35 @@ proc PostUserMessage, .pSpecial
 .caption  dd ?
 .tags     dd ?
 .fLimited dd ?
+.iFormat  dd ?
 .invited  dd ?
 .count    dd ?
 
 .source   dd ?
-.rendered dd ?
 .ticket   dd ?
 
 begin
         pushad
 
+        mov     esi, [.pSpecial]
+
+        mov     eax, [esi+TSpecialParams.Limited]
+        mov     [.fLimited], eax
+
         xor     eax, eax
         mov     [.fPreview], eax  ; preview by default when handling GET requests.
         mov     [.slug], eax
         mov     [.source], eax
-        mov     [.rendered], eax
         mov     [.caption], eax
         mov     [.tags], eax
-        mov     [.fLimited], eax
         mov     [.invited], eax
         mov     [.ticket], eax
         mov     [.stmt], eax
         mov     [.stmt2], eax
 
-        mov     esi, [.pSpecial]
+        stdcall GetParam, txt "default_format", gpInteger       ; eax must == 0 before this call.
+        mov     [.iFormat], eax
+
 
         stdcall TextCreate, sizeof.TText
         mov     edi, eax
@@ -144,6 +148,17 @@ begin
 
 .source_ok2:
 
+; get the format.
+
+        stdcall NumToStr, [.iFormat], ntsUnsigned or ntsDec
+        push    eax
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "format", eax
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack
+        stdcall StrDel ; from the stack
+        mov     [.iFormat], eax
+
 ; ok, get the action then:
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "submit", 0
@@ -192,16 +207,18 @@ begin
 
 
 .show_edit_form:
+        mov     eax, [esi+TSpecialParams.userLang]
 
         cmp     [.caption], 0
         je      .title_new_thread
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cPostingInTitle
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cPostingInTitle+8*eax]
         stdcall StrCat, [esi+TSpecialParams.page_title], [.caption]
         jmp     .title_set
 
 .title_new_thread:
-        stdcall StrCat, [esi+TSpecialParams.page_title], cNewThreadTitle
+
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cNewThreadTitle+8*eax]
 
 .title_set:
 
@@ -269,6 +286,8 @@ begin
         cinvoke sqliteBindText, [.stmt], 8, eax, [eax+string.len], SQLITE_STATIC
 
 .username_ok:
+
+        cinvoke sqliteBindInt, [.stmt], 9, [.iFormat]
 
         cinvoke sqliteStep, [.stmt]
 
@@ -380,6 +399,8 @@ endl
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetThreadSlug, sqlSetThreadSlug.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 2, [.threadID]
 
+        cinvoke sqliteBindInt, [.stmt], 3, [.fLimited]
+
         stdcall StrPtr, [.slug]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
@@ -430,12 +451,6 @@ endl
         cmp     [.source], 0
         je      .error_invalid_content
 
-; render the source
-
-        stdcall FormatPostText2, [.source], esi
-        mov     [.rendered], eax
-
-
 ; bind the source
 
         stdcall StrPtr, [.source]
@@ -446,15 +461,7 @@ endl
 
         cinvoke sqliteBindText, [.stmt], 3, eax, ecx, SQLITE_STATIC
 
-; bind the rendered html
-
-        stdcall StrPtr, [.rendered]
-        mov     ecx, [eax+string.len]
-        test    ecx, ecx
-        jz      .error_invalid_content
-
-        cinvoke sqliteBindText, [.stmt], 4, eax, ecx, SQLITE_STATIC
-
+        cinvoke sqliteBindInt, [.stmt], 4, [.iFormat]
 
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_DONE
@@ -512,7 +519,6 @@ endl
 .finish:
         stdcall StrDel, [.slug]
         stdcall StrDel, [.source]
-        stdcall StrDel, [.rendered]
         stdcall StrDel, [.caption]
         stdcall StrDel, [.tags]
         stdcall StrDel, [.invited]
@@ -933,9 +939,6 @@ begin
         mov     edi, [.hSelf]
         test    edi, edi
         jz      .outer
-
-        stdcall StrDup, edi
-        mov     edi, eax
 
         mov     ecx, [edx+TArray.count]
 

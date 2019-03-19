@@ -18,7 +18,8 @@ begin
         test    [esi+TSpecialParams.userStatus], permAdmin
         jz      .perm_error
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cHistoryTitle
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cHistoryTitle+8*eax]
 
         stdcall TextCreate, sizeof.TText
         mov     edi, eax
@@ -92,8 +93,8 @@ endp
 
 
 
-sqlRestoreConfirmInfo text "select rowid as version, postID, Content, ?2 as Ticket from PostsHistory where rowid = ?1"
-sqlGetPostVersion     text "select postID, threadID, userID, postTime, editUserID, editTime, Content from PostsHistory where rowid = ?1"
+sqlRestoreConfirmInfo text "select rowid as version, postID, Content, format, ?2 as Ticket from PostsHistory where rowid = ?1"
+sqlGetPostVersion     text "select postID, threadID, userID, postTime, editUserID, editTime, Content, format from PostsHistory where rowid = ?1"
 sqlRestorePost StripText "restore.sql", SQL
 
 proc RestorePost, .pSpecial
@@ -129,7 +130,8 @@ begin
 
         mov     ebx, eax
 
-        stdcall StrCat, [esi+TSpecialParams.page_title], cPostRestoreTitle
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cPostRestoreTitle+8*eax]
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRestoreConfirmInfo, sqlDelConfirmInfo.length, eax, 0
@@ -236,17 +238,13 @@ begin
         mov     esi, eax
         cinvoke sqliteBindText, [.stmt2], 6, esi, ebx, SQLITE_STATIC
 
-        stdcall FormatPostText2, esi, [.pSpecial]
-        mov     edi, eax
-
-        stdcall StrPtr, edi
-        cinvoke sqliteBindText, [.stmt2], 7, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteColumnInt, [.stmt], 7     ; format
+        cinvoke sqliteBindInt, [.stmt2], 7, eax
 
         cinvoke sqliteStep, [.stmt2]
         push    eax
 
         cinvoke sqliteFinalize, [.stmt2]
-        stdcall StrDel, edi
 
         pop     eax ebx edi esi
         cmp     eax, SQLITE_DONE
@@ -285,7 +283,3 @@ begin
 
 
 endp
-
-
-
-

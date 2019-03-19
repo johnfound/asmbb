@@ -4,6 +4,12 @@
 
 insert into UnreadPosts(UserID, PostID, Time) values (1, 6, strftime('%s', 'now'));
 
+-- make all posts unread for everyone. !!! WARNING !!! extremly slow and heavy operation !!!
+insert or ignore into unreadposts(userid, postid, threadid, time)
+select U.id, P.id, P.threadid, strftime('%s', 'now')
+from
+  users u, posts p;
+
 -- selects all threads with unread posts for some userID:
 
 select
@@ -174,22 +180,31 @@ where
 /* Rebuilds the full text search table */
 
 drop table PostFTS;
-CREATE VIRTUAL TABLE PostFTS using fts5( Content, content=Posts, content_rowid=id, tokenize='porter unicode61 remove_diacritics 1');
-insert into PostFTS(rowid, Content) select id, Content from Posts;
+CREATE VIRTUAL TABLE PostFTS using fts5(
+  Content,
+  Caption,
+  slug,
+  User,
+  Tags, prefix="1 2 3", tokenize='porter unicode61 remove_diacritics 1'
+);
 
-
-
-create View PostsView as select P.id, P.Content, P.ThreadID, (select group_concat(Tag, ' ') from ThreadTags TT where TT.ThreadID = P.ThreadID ) as Tags from Posts P;
-drop table PostFTS;
-CREATE VIRTUAL TABLE PostFTS using fts5( Content, ThreadID, Tags, content=PostsView, content_rowid=id, tokenize='porter unicode61 remove_diacritics 1');
-insert into PostFTS(rowid, Content, ThreadID, Tags) select id, Content, ThreadID, Tags from PostsView;
-
-
-drop table PostFTS;
-CREATE VIRTUAL TABLE PostFTS using fts5( Content, ThreadID, UserID, PostTime, ReadCount, Tags, content=Posts, content_rowid=id, tokenize='porter unicode61 remove_diacritics 1');
-
-insert into PostFTS(rowid, Content, ThreadID, UserID, PostTime, ReadCount, Tags)
-select P.id, P.Content, P.ThreadID, P.UserID, P.PostTime, P.ReadCount, (select group_concat(Tag, ' ') from ThreadTags TT where TT.ThreadID = P.ThreadID ) as Tags from Posts P;
+insert into PostFTS (
+  rowid,
+  Content,
+  Caption,
+  slug,
+  User,
+  Tags
+)
+select
+  P.id,
+  P.Content,
+  (select Caption from Threads T where T.id = P.ThreadID) as Caption,
+  (select slug from Threads T where T.id = P.ThreadID) as Slug,
+  (select nick from Users U where U.id = P.UserID) as User,
+  (select group_concat(Tag, ' ') from ThreadTags TT where TT.ThreadID = P.ThreadID ) as Tags
+from
+  Posts P;
 
 
 

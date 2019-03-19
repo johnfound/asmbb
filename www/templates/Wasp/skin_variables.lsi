@@ -50,7 +50,7 @@
 
 @clButtonBG: #e05050;
 @clButtonFG: white;
-@buttonWidth: 128px;
+@buttonWidth: 160px;
 @buttonHeight: 28px;
 
 @clButtonActiveBG: #ff656c;
@@ -98,3 +98,8 @@
 @clTabFG: #ffffff;
 @clTabHover: #d8d8d8;
 @clTabFocus: #e05050;
+
+// User notifications
+
+@clNotifyBG: white;
+@clNotifyFG: red;

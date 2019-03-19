@@ -7,6 +7,6 @@ set
   editUserID = ?4,
   editTime = ?5,
   Content = ?6,
-  Rendered = ?7
+  format = ?7
 where
   id = ?8;

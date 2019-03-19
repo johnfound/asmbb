@@ -1,9 +1,22 @@
 select
   count()
 from
-  Threads T
-left join ThreadTags TT on T.id = TT.threadid and TT.tag = ?1
-[case:[special:isadmin]|left join LimitedAccessThreads LT on LT.threadid = T.id|]
-where
-  (?1 is null or ?1 = TT.Tag)
-  [case:[special:isadmin]|and (LT.userid is null or LT.userid = ?2)|]
+[case:[special:variant]|
+    threads
+  where
+    limited = 0
+|
+    LimitedAccessThreads
+  where
+    userid = ?2
+|
+    threadtags tt
+  where
+    tag = ?1 and limited = 0
+|
+    LimitedAccessThreads LA
+  left join
+    ThreadTags TT on TT.threadid = LA.threadid
+  where
+    userid = ?2 and TT.tag = ?1
+]

@@ -2,7 +2,7 @@
 
 ;                               |       0      |      1    |        2          |      3        |     4    |                                      5                                       |    6
 
-sqlDelConfirmInfo  text  "select P.id as PostID, P.threadID, U.nick as UserName, U.id as UserID, P.Content, (select count(1) from Posts P2 where P2.threadID = P.threadID ) as cnt_thread, T.Slug, ?2 as Ticket ",    \
+sqlDelConfirmInfo  text  "select P.id as PostID, P.threadID, U.nick as UserName, U.id as UserID, P.Content, (select count(1) from Posts P2 where P2.threadID = P.threadID ) as cnt_thread, T.Slug, ?2 as Ticket, format ",    \
                          "from Posts P left join Users U on U.id = P.userID left join Threads T on T.id = P.threadID where P.id = ?1"
 
 sqlDelPost text "delete from Posts where id = ?"
@@ -80,7 +80,9 @@ begin
 .perm_ok:
 
         stdcall LogUserActivity, esi, uaDeletingPost, 0
-        stdcall StrCat, [esi+TSpecialParams.page_title], cPostDeleteTitle
+
+        mov     eax, [esi+TSpecialParams.userLang]
+        stdcall StrCat, [esi+TSpecialParams.page_title], [cPostDeleteTitle+8*eax]
 
         cmp     [esi+TSpecialParams.post_array], edi    ; edi is 0 here
         jne     .do_delete

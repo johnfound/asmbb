@@ -38,6 +38,11 @@ options.Benchmark = 0
 
 include "%lib%/freshlib.asm"
 
+EMOTICONS_PATH equ '/~/_images/emoticons/'      ; defines the emoticons path for the bbcode translator.
+include "%lib%/data/bbcode.asm"
+
+include "%lib%/data/minimag.asm"
+
 include "benchmark.asm"
 
 uses sqlite3:"%TargetOS%/sqlite3.inc"
@@ -95,7 +100,7 @@ uglobal
 endg
 
 
-rb 373
+;rb 373
 
 
 start:
@@ -103,8 +108,6 @@ start:
 
         stdcall InitEventsIPC
         jc      .finish
-
-        stdcall SetLanguage, 'EN'       ; It should be elsewhere!
 
         if ~( defined options.DebugSQLite & options.DebugSQLite )
           mov   eax, [_sqlitePrepare_v2]

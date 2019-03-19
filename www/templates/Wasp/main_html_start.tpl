@@ -1,6 +1,6 @@
 [css:common.css]
 <!DOCTYPE html>
-<html lang="en">
+<html lang="[case:[special:lang]|en|bg|ru|fr]">
 <head>
   <meta charset="utf-8">
   <title>[special:title]</title>
@@ -29,6 +29,11 @@
   <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
   <meta name="msapplication-config" content="/images/favicons/browserconfig.xml">
   <meta name="theme-color" content="#ffcc40">
+
+  <noscript>
+    <style> .jsonly { display: none !important } </style>
+  </noscript>
+
 </head>
 
 <body>
@@ -47,21 +52,24 @@
       </form>
     </div>
     <div>
-      [case:[special:userid]|<a href="/!login/">Login</a><br>[case:[special:canregister]||<a href="/!register/">Register</a>]|
-      <form method="POST" action="/!logout"><input class="logout" type="submit" name="logout" value="Logout ([special:username])"></form><a href="/!userinfo/[url:[special:username]]">User profile</a>
-      ]
+      [case:[special:userid]|<a href="/!login/">[case:[special:lang]|Login|Вход|Вход|Connexion]</a><br>[case:[special:canregister]||<a href="/!register/">[case:[special:lang]|Register|Регистрация|Регистрация|Inscription]</a>]|
+      <form method="POST" action="/!logout"><input class="logout" type="submit" name="logout" value="[case:[special:lang]|Logout|Изход|Выйти|De déconnecter] ([special:username])"></form>
+      <a href="/!userinfo/[url:[special:username]]">[case:[special:lang]|User profile|Профил|Профиль|Profil]</a>]
     </div>
   </div>
 
   <form class="tags" id="search_form" action="[case:[special:cmdtype]||/|../]!search/" method="get" >
-    <input class="search_line" type="search" name="s" placeholder="text search" value="[special:search]">
-    <input class="search_line" type="search" name="u" placeholder="user search" value="[special:usearch]">
-    <a class="icon_btn"><input class="img_input" type="image" width="32" height="32" src="[special:skin]/_images/search.svg" alt="&nbsp;Search&nbsp;" title="Search"></a>
+    <input class="search_line" type="search" name="s" placeholder="[case:[special:lang]|text search|търсене на текст|поиск текста|rechercher du texte]" value="[special:search]">
+    <input class="search_line" type="search" name="u" placeholder="[case:[special:lang]|user search|потребител|потребитель|recherche d'utilisateur]" value="[special:usearch]">
+    <a class="icon_btn"><input class="img_input" type="image" width="32" height="32" src="[special:skin]/_images/search.svg" alt="&nbsp;Search&nbsp;" title="[case:[special:lang]|Search|Търсене|Поиск|Rechercher]"></a>
   </form>
 
   <div class="tags">
-    <a href="/">
-      <img class="tagicon" src="[special:skin]/_images/alltags[case:[special:dir]||_gray].svg" alt="/" title="Show all threads">
-    </a>
+    <a href="/[case:[special:limited]||(o)/]"><img class="tagicon" src="[special:skin]/_images/alltags[case:[special:variant]|||_gray].svg" alt="/" title="[case:[special:lang]|Show all threads|Покажи всички теми|Показать все темы|Montrer tous les sujets]">
+
+</a>
+    <a href="/[case:[special:limited]|(o)/|][case:[special:dir]||[special:dir]/]"><img class="tagicon" src="[special:skin]/_images/limited[case:[special:limited]|_gray|].svg" alt="/" title="[case:[special:lang]|Limited access threads|Теми с ограничен достъ
+
+п|Темы с ограниченным доступом|Discussions d'accès limité]"></a>
     [special:alltags]
   </div>
