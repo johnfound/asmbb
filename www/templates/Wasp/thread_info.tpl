@@ -5,6 +5,8 @@
   [equ:tPosts=post[case:[PostCount]|s||s]]
   [equ:ttlMark=Mark thread read]
   [equ:tViews=[case:[ReadCount]|views|view|views]]
+  [equ:Posters=Participants: ]
+  [equ:Invited=Invited: ]
 |
   [equ:ttlPinned=Забодена отгоре]
   [equ:ttlLimited=Тема с ограничен достъп]
@@ -12,6 +14,8 @@
   [equ:tPosts=съобщени[case:[PostCount]|я|е|я]]
   [equ:ttlMark=Маркирай темата като прочетена]
   [equ:tViews=преглед[case:[ReadCount]|а||а]]
+  [equ:Posters=Участници: ]
+  [equ:Invited=Поканени: ]
 |
   [equ:ttlPinned=Прикрепленная на верху]
   [equ:ttlLimited=Тема ограниченным доступом]
@@ -19,6 +23,8 @@
   [equ:tPosts=сообщени[case:[PostCount]|й|е|й]]
   [equ:ttlMark=Отметить тему прочитанной]
   [equ:tViews=просмотр[case:[ReadCount]|ов||ов]]
+  [equ:Posters=Участники: ]
+  [equ:Invited=Приглашенные: ]
 |
   [equ:ttlPinned=Sujet épinglé]
   [equ:ttlLimited=Sujet à accès limité]
@@ -26,6 +32,8 @@
   [equ:tPosts=post[case:[PostCount]|s||s]]
   [equ:ttlMark=Maruqer le sujet comme lu]
   [equ:tViews=vue[case:[ReadCount]|s||s]]
+  [equ:Posters=Participants: ]
+  [equ:Invited=Invités: ]
 ]
 
 <div class="thread_summary">
@@ -43,8 +51,8 @@
   <div class="thread_right">
     <div class="thread_link">
       <a class="thread_link" href="[Slug]/">[Caption]</a><br>
-      <label><input type="checkbox" class="collapseit"><ul class="small comma posters">[html:[Posters]]</ul></label>
-      <label><input type="checkbox" class="collapseit"><ul class="small comma invited">[html:[Invited]]</ul></label>
+      <label><input type="checkbox" class="collapseit"><ul class="small comma posters">[const:Posters][html:[Posters]]</ul></label>
+      [case:[limited]||<label><input type="checkbox" class="collapseit"><ul class="small comma invited">[const:Invited][html:[Invited]]</ul></label>]
     </div>
     <ul class="small comma thread_tags">[html:[ThreadTags]]</ul>
   </div>

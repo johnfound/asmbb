@@ -1,5 +1,5 @@
-C Fixed\smemory\sleak\son\sLATs\sprocessing.
-D 2019-03-19T07:11:13.212
+C Some\sminor\snon\stranslated\sissues\sfixed...
+D 2019-03-19T10:58:14.471
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -88,7 +88,7 @@ F source/userinfo.sql 322de32027e1220df31ba000cbf05b1e1d5cc908
 F source/users_online.asm 765d535f0290448e12befd3059ce985d509b8c96
 F source/users_online.sql 615346c705099d4fed2fe5ea985efa429156075c
 F source/userslist.asm e2a2ee4735143fbf7d05ad0fc8243b28fe1c7104
-F source/userslist.sql a671e06a5beecc94edd3bb87cf0a4357b2554686
+F source/userslist.sql c937c8c7d69dbe6762303ecb47625d9f9e78d702
 F source/util.sql 9ce0feeb2289045d42fe1af683beb89d9e1ad4d3
 F source/version.asm 5429dfb0ca6d328d47bf95435903f1b961358c17
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
@@ -491,7 +491,7 @@ F www/templates/Wasp/nav_thread.tpl a60c755cbe11101a3ba06a30d3d535c0672c7a7f
 F www/templates/Wasp/nav_userslist.tpl 27f9f4998481cab74a20711a5e4e2d7b55a8ae1e
 F www/templates/Wasp/navigation.less 25ad252c4ecb5c4bc3e2034e90aed8fca4aa375d
 F www/templates/Wasp/one_category.tpl b1c0e4f84e84b5454d00f3cd1e6ba8d856b635d7
-F www/templates/Wasp/one_user.tpl ea765ac0cb70f54c9c360af004c9ff75c673dd4f
+F www/templates/Wasp/one_user.tpl 8af4d99d2d63a4e2caf8c1f67b714a84a250588d
 F www/templates/Wasp/post_history.tpl d953ab19ce7bd997a128873c09f2f22e116aaa6b
 F www/templates/Wasp/post_view.tpl ecf5570ca2a680468927b6b359efc4b9d1bcf802
 F www/templates/Wasp/posteditor.less f990d5a9034599e43c3e72471622db9b89f62c43
@@ -505,8 +505,8 @@ F www/templates/Wasp/settings.less 6ccedb81d9556db74aa22d251f4d6e4c7745b627
 F www/templates/Wasp/skin_variables.lsi 2bff6579869a860d6c47e76b46b84b8e4e22816b
 F www/templates/Wasp/sqlite.less f4a2edc06c2c1410f5d78ad1ea298439251482af
 F www/templates/Wasp/statistics.tpl 070aa3dbff713cfea04775fc62509c34254398f2
-F www/templates/Wasp/thread_info.tpl b086f16c7d77073d644af1619cbb0ff7da10f509
-F www/templates/Wasp/thread_list.less a0ac773e053714a3576eaa80a87a436f835b769c
+F www/templates/Wasp/thread_info.tpl 2b36deaaac7a09acdf8408407ab296b536b0faf1
+F www/templates/Wasp/thread_list.less 9dde2498a206b3a476b121496003e79dcf6dcdb5
 F www/templates/Wasp/threadnew.less edfa421addbc85ccc765c47e70e6a2cb395c7733
 F www/templates/Wasp/userinfo.less 19048398c5cf99ef6abbd5d576bafa8f3d0eb89e
 F www/templates/Wasp/userinfo.tpl 946e85e5ca1e6e08308db1ac0d56abcf0e3743c8
@@ -601,7 +601,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P c8b68c076a617044a889b1ed4b0a60b6b68d2988
-R dfb7565639a69ebe272600c4b5bdac0f
+P fd1f5961aa42b6564eb3727d83d697d46721dab8
+R 7f018e8e1832214f4f97381e21a8c76a
 U johnfound
-Z 1abb40c9904b42d8a6fcf498e6073645
+Z 80824bd7867df26b225d18a58619fee8

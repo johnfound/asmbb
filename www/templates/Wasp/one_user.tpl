@@ -17,6 +17,6 @@
   <td class="avatar"><img src="/!avatar/[url:[nick]]?v=[av_time]" alt=":)"></td>
   <td>[case:[Skin]|default|[Skin]]</td>
   <td>[PostCount]</td>
-  <td>[case:[RegisterStr]|[const:ttlLong]|[RegisterStr]]</td>
-  <td>[case:[LastSeenStr]|[const:ttlNever]|[LastSeenStr]]</td>
+  <td>[case:[fRegister]|[const:ttlLong]|[RegisterStr]]</td>
+  <td>[case:[fLast]|[const:ttlNever]|[LastSeenStr]]</td>
 </tr>

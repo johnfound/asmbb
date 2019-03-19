@@ -23,9 +23,14 @@ div.threads_list {
   }
 }
 
-
 .posters {
   margin: 0;
+  font-weight: bold !important;
+  * {
+    font-weight: normal;
+  }
+
+/*
   & > * {
 
     &:first-child::before {
@@ -49,10 +54,16 @@ div.threads_list {
       content: 'Joined: ';
     }
   }
+*/
 }
 
 .invited {
   margin: 0;
+  font-weight: bold !important;
+  * {
+    font-weight: normal;
+  }
+/*
   & > *:first-child::before {
     display: inline-block;
     color: @clArticleFG;
@@ -60,8 +71,8 @@ div.threads_list {
     margin-right: 4px;
     content: 'Invited: ';
   }
+*/
 }
-
 
 .thread_tags {
   background-color: @clColor1FG;
