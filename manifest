@@ -1,5 +1,5 @@
-C Some\sminor\snon\stranslated\sissues\sfixed...
-D 2019-03-19T10:58:14.471
+C Memory\sleak\sfixed\son\ssaving\slimited\saccess\sthread.
+D 2019-03-19T12:13:47.782
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -49,7 +49,7 @@ F source/migration1.sql fe97ef3b5046a916f0215336a8a56ea4c8a3b98a
 F source/migration2.sql fe978700e39265c6680b69ea8cbfb5444cfdce63
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
 F source/phpbb.sql 6820a2092cc30a774c44d770055b37b66bdbfaf0
-F source/post.asm c8babc4f22ca77eb40c5f2ddec11fe6f10545bb4
+F source/post.asm 1acc91424acf027395ebbda9ef88faae623a7966
 F source/post_data.asm af4b81ca1c74d54bbcd7a15b57f9c0cbd8622f01
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
@@ -601,7 +601,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P fd1f5961aa42b6564eb3727d83d697d46721dab8
-R 7f018e8e1832214f4f97381e21a8c76a
+P c5dc48a18826d0d50f2037d39e28fd526b96037e
+R 40eddda3a5a501746097664a928c6ba4
 U johnfound
-Z 80824bd7867df26b225d18a58619fee8
+Z c073a7e566b55b859aefa88d937df629

@@ -937,9 +937,6 @@ begin
         test    edi, edi
         jz      .outer
 
-        stdcall StrDup, edi
-        mov     edi, eax
-
         mov     ecx, [edx+TArray.count]
 
 .loop_remove_self:
