@@ -1,5 +1,5 @@
-C Bugfixes.\sCode\scleanup.
-D 2019-03-18T22:15:34.517
+C Fixed\smemory\sleak\son\sLATs\sprocessing.
+D 2019-03-19T07:11:13.212
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -29,7 +29,7 @@ F source/categories.asm 87830583d32bdf406d7a0a0615cff0b23fda9283
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm d2b4824ec926ddf7fc4c6492f2ebb75acf5e20a3
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
-F source/commands.asm 411050932d49c192d75e3fdb9c63f8e75c725967
+F source/commands.asm ad2a90c5861e2ee00804e4d800925cbeb44accd2
 F source/create.sql 4f1205e0ffc659aae368684dcfed86e98ce3b970
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm dddd1b6b89eef295ab5a65cb7302aefe0d948399
@@ -601,7 +601,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 15d4c7aad452cb132a380320fb25b682a1b4d8a5
-R 7da74503699cfba69372d5f60ab06232
+P c8b68c076a617044a889b1ed4b0a60b6b68d2988
+R dfb7565639a69ebe272600c4b5bdac0f
 U johnfound
-Z e63519512468c0b01a966b39341f61ac
+Z 1abb40c9904b42d8a6fcf498e6073645

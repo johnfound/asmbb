@@ -490,6 +490,8 @@ begin
         jne     .check_for_command
 
         inc     [.special.Limited]
+        stdcall StrDel, eax
+
         call    .pop_array_item
         jz      .show_thread_list
 
