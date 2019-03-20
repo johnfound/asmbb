@@ -1,5 +1,5 @@
-C Merged\swith\si18n\sbranch\sas\sa\spreparation\sfor\srelease.
-D 2019-03-19T15:10:11.109
+C Increased\sthe\swidth\sof\sthe\scheckboxes\sand\sdialog\spanels\sbecause\sof\sincreased\stext\swidths\sin\sthe\stranslations.\s\n\nVersion\snumber\sset\sto\sv2.5;\sThe\slatest\schecks\sfor\srelease.
+D 2019-03-20T06:50:20.527
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 769cf0632c106ebd44d2051f09fd746417ba3553
@@ -90,7 +90,7 @@ F source/users_online.sql 615346c705099d4fed2fe5ea985efa429156075c
 F source/userslist.asm e2a2ee4735143fbf7d05ad0fc8243b28fe1c7104
 F source/userslist.sql c937c8c7d69dbe6762303ecb47625d9f9e78d702
 F source/util.sql 9ce0feeb2289045d42fe1af683beb89d9e1ad4d3
-F source/version.asm 5429dfb0ca6d328d47bf95435903f1b961358c17
+F source/version.asm 8bd0878df9bb5dbc45c508aaaa59b2b2ae8b1667
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
 F www/images/chat_menu.svg d8485817c3e745dcb8b981bb80d264f18365e377
@@ -283,7 +283,7 @@ F www/templates/Light/restore_confirm.tpl c59340b4b594a629285efa18802ea6d542442a
 F www/templates/Light/search.less 673002a86d7aedc24bb456eb9aaf0842cc437fcf l
 F www/templates/Light/search_result.tpl a51b831f28a3d1ee546b097caa4f78ddd023ca70 l
 F www/templates/Light/settings.less ceddd6b5948701659f883fd99ed0b9a31067df6e l
-F www/templates/Light/skin_variables.lsi 4194f5bd7002f8cf16849657ab940770360e8ad0
+F www/templates/Light/skin_variables.lsi bbb9231a5b7b9200656b2c351274c2f88c1cdd86
 F www/templates/Light/sqlite.less d6c705801f27dd30658b51803f0638ded21bb45c l
 F www/templates/Light/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
 F www/templates/Light/thread_info.tpl c3ff0f5bad96b6a9b307779c97cb9888f372c0a9
@@ -466,7 +466,7 @@ F www/templates/Wasp/error_html_end.tpl 8bc8fadf707977f68346bcf6bbe47e1ef0db2a1a
 F www/templates/Wasp/error_html_start.tpl dc6b402b462cbf1ae5ae9d079c2d63d6181dd943
 F www/templates/Wasp/form_edit.tpl a736aff4a2df4f5effae1a313baa8f1113d3b7b5
 F www/templates/Wasp/form_edit_thread.tpl 7cdc81b91ac1526fffeed1994d2394a819e27db8
-F www/templates/Wasp/form_editinfo.tpl b258d41dca312eed9de77ead966fa9a9fa376af8
+F www/templates/Wasp/form_editinfo.tpl aa7b7ebb0a276baa1bae23fc2b44574b4f4fb49f
 F www/templates/Wasp/form_login.tpl 793a824894bd02bfe6ce53dd40ce817571fa7039
 F www/templates/Wasp/form_new_post.tpl 02dcb454813bb501b5051f6b99cba42c975df3f1
 F www/templates/Wasp/form_new_thread.tpl 85f7522740a01511b693f2c8b0d58b30debd47d1
@@ -474,7 +474,7 @@ F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e44992
 F www/templates/Wasp/form_register.tpl f3bdfd79ecb0aa04bee38c7889ba7d79a27efd67
 F www/templates/Wasp/form_reset_password.tpl 606aff83522a593ddcbc45745dfddc06e7e219c3
 F www/templates/Wasp/form_reset_request.tpl ec60cb5b94c3a15788aeb0e8bb2e2abb7005dde6
-F www/templates/Wasp/form_settings.tpl 5358c4f4697665c7af0a7d13a9c3128595e5b410
+F www/templates/Wasp/form_settings.tpl 4ca698f27656f9fe5f9b4f603b4b376762e5b167
 F www/templates/Wasp/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Wasp/form_sqlite_console.tpl b3f75e7e3a8218179c8c9b1d3516ced7e0307850
 F www/templates/Wasp/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
@@ -501,8 +501,8 @@ F www/templates/Wasp/preview.tpl 7762cf404ea93817b3121932c29a7cac0502c135
 F www/templates/Wasp/restore_confirm.tpl 85e48fdd316369f85169559be460468aae7ae58d
 F www/templates/Wasp/search.less 17bfdc636da1019916443febbb2073b791ed79d1
 F www/templates/Wasp/search_result.tpl bb52e480132afbca6fe43b648532f5f928a5eaaf
-F www/templates/Wasp/settings.less 6ccedb81d9556db74aa22d251f4d6e4c7745b627
-F www/templates/Wasp/skin_variables.lsi 2bff6579869a860d6c47e76b46b84b8e4e22816b
+F www/templates/Wasp/settings.less c4404fddbc73fdaede5643beffe536b5bca9339a
+F www/templates/Wasp/skin_variables.lsi b8a03380d72614d5d21917a8383088d80a14b66b
 F www/templates/Wasp/sqlite.less f4a2edc06c2c1410f5d78ad1ea298439251482af
 F www/templates/Wasp/statistics.tpl 070aa3dbff713cfea04775fc62509c34254398f2
 F www/templates/Wasp/thread_info.tpl 2b36deaaac7a09acdf8408407ab296b536b0faf1
@@ -601,7 +601,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 035a2f7d2509f5e1f2228e49d8a00d8233fb4ada 710bd531b1e95c98cfc331e3d126c369f30be900
-R 2a5afb18f0ed705cb43104a4e2162340
+P d32a88231e3383bc49f935340a34cc8376d2a31c
+R 3f909cc339e08d82cfb7a7b2f10900ba
 U johnfound
-Z 2c3f2158f12a26983f0fc9d9201464a6
+Z 545d0981c5a50cfcee0196ab3be62472

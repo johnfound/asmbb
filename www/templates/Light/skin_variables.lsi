@@ -3,7 +3,7 @@
 @globMargin: 8px auto 8px auto;
 @LineH: 1.1875em;
 
-@msgBoxWidth: 640px;
+@msgBoxWidth: 850px;
 
 @clColor1: white;
 @clColor1FG: #105289;
