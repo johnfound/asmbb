@@ -104,4 +104,28 @@
       <li>À écrit [case:[totalposts]||<a href="/!search/?u=[url:[username]]" >]<b>[totalposts]</b> post[case:[totalposts]|s||s][case:[totalposts]||</a>] sur le forum.</li>
     </ul>
   </div>
+|
+  <div class="user_stat">
+    <h1>Statistiken für [username]:</h1>
+    <ul>
+      <li>Zuletzt gesehen am <b>[LastSeen]</b></li>
+      <br>
+      [case:[user_perm31]||<li>Ist ein <b>Administrator</b></li>]
+      <li>Kann [case:[user_perm0]|<b>nicht</b> |]<b>sich anmelden</b></li>
+      <li>Kann [case:[user_perm1]|<b>nicht</b> |]Beiträge <b>lesen</b></li>
+      <li>Kann [case:[user_perm9]|<b>nicht</b> |]angehängte Dateien <b>herunterladen</b></li>
+
+      <li>Kann [case:[user_perm2]|<b>nicht</b> |]auf Themen <b>antworten</b></li>
+      <li>Kann [case:[user_perm3]|<b>nicht</b> |]neue Themen <b>eröffnen</b></li>
+      <li>Kann [case:[user_perm10]|<b>nicht</b> |]Dateien <b>anhängen</b></li>
+      <li>Kann [case:[user_perm4]|<b>nicht</b> |]seine eigenen Beiträge <b>ändern</b></li>
+      <li>Kann [case:[user_perm6]|<b>nicht</b> |]seine eigenen Beiträge <b>löschen</b></li>
+
+      <li>Kann [case:[user_perm5]|<b>nicht</b> |]fremde Beiträge <b>ändern</b></li>
+      <li>Kann [case:[user_perm7]|<b>nicht</b> |]fremde Beiträge <b>löschen</b></li>
+      <li>Kann [case:[user_perm8]|<b>nicht</b> |]<b>chatten</b></li>
+      <br>
+      <li>Hat [case:[totalposts]||<a href="/!search/?u=[url:[username]]" >]<b>[totalposts]</b> Beitr[case:[totalposts]|äge|ag|äge][case:[totalposts]||</a>] im Forum verfasst.</li>
+    </ul>
+  </div>
 ]

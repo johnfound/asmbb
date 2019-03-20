@@ -21,6 +21,11 @@
   [equ:btnList=Liste des sujets]
   [equ:btnSettings=Paramètres]
   [equ:btnConsole=Console SQL]
+|
+  [equ:btnCats=Kategorien]
+  [equ:btnList=Themen]
+  [equ:btnSettings=Einstellungen]
+  [equ:btnConsole=SQL-Konsole]
 ]
 
 <div class="ui">

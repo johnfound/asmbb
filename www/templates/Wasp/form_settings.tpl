@@ -157,6 +157,45 @@
   [equ:ttlMobile=Thème mobile par défaut]
   [equ:ttlChat=Activer le tchat]
   [equ:ttlMarkup=Langages de marquage disponibles: <small>(au moins un doit être sélectionné)</small>]
+|
+  [equ:pLogin=Anmelden]
+  [equ:pRegister=Registrieren]
+  [equ:pRead=Lesen]
+  [equ:pPost=Schreiben]
+  [equ:pStart=Themen eröffnen]
+  [equ:pEditOwn=Eigene Beiträge ändern]
+  [equ:pEditAll=Alle Beiträge ändern]
+  [equ:pDelOwn=Eigene Beiträge löschen]
+  [equ:pDelAll=Alle Beiträge löschen]
+  [equ:pChat=Chatten]
+  [equ:pDownload=Dateien herunterladen]
+  [equ:pAttach=Dateien anhängen]
+  [equ:pAdmin=Administrator]
+
+  [equ:ttlSettings=Einstellungen der Forenengine]
+  [equ:btnSave=Speichern]
+  [equ:tabHTML=HTML/CSS]
+  [equ:ttlTitle=Titel des Forums]
+  [equ:ttlHeader=Kopfzeile des Forums]
+  [equ:ttlDesc=Beschreibung]
+  [equ:ttlKeywords=Schlüsselwörter]
+  [equ:ttlEmbeded=Eingebettetes CSS]
+  [equ:tabServer=Server]
+  [equ:ttlHost=Host]
+  [equ:ttlSMTP=SMTP-Server/Port]
+  [equ:ttlPipe=E-Mails in folgendem Programm verarbeiten]
+  [equ:ttlAccount=SMTP-Konto]
+  [equ:ttlConfirm=E-Mail-Bestätigung]
+  [equ:tabPermissions=Befugnisse]
+  [equ:ttlPermNew=Für neue Mitglieder]
+  [equ:ttlPermGuests=Für Gäste]
+  [equ:tabFeatures=Funktionen]
+  [equ:ttlLang=Standard-UI-Sprache]
+  [equ:ttlPgLen=Seitenlänge]
+  [equ:ttlSkin=Standardskin]
+  [equ:ttlMobile=Mobiler Standardskin]
+  [equ:ttlChat=Chat aktivieren]
+  [equ:ttlMarkup=Verfügbare Formatierungssprachen: <small>(mindestens eine muss ausgewählt werden)</small>]
 ]
 
 
@@ -241,10 +280,11 @@
     <section>
       <h3>[const:ttlLang]:</h3>
       <select class="settings" name="default_lang">
-        <option value="0" [case:[default_lang]|selected="selected"||||selected="selected"]>English</option>
-        <option value="1" [case:[default_lang]||selected="selected"|||]>Български</option>
-        <option value="2" [case:[default_lang]|||selected="selected"||]>Русский</option>
+        <option value="0" [case:[default_lang]|selected="selected"|]>English</option>
+        <option value="1" [case:[default_lang]||selected="selected"|]>Български</option>
+        <option value="2" [case:[default_lang]|||selected="selected"|]>Русский</option>
         <option value="3" [case:[default_lang]||||selected="selected"|]>Français</option>
+        <option value="4" [case:[default_lang]|||||selected="selected"|]>Deutsch</option>
       </select>
 
       <h3>[const:ttlPgLen]:</h3>

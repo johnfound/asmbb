@@ -50,6 +50,18 @@
     <p>Si vous avez fourni un email invalide lors de votre inscription, cela ne fonctionnera pas.</p>
     <p>Dans ce cas, la seule solution est de recréer un compte.</p>
   ]
+|
+  [equ:ttlRequest=Anforderung der Passwortzurücksetzung]
+  [equ:phUser=Benutzername]
+  [equ:phEmail=E-Mail-Adresse]
+  [equ:btnSubmit=Absenden]
+  [equ:helpRegister=
+    <p>Ihnen steht eine Zurücksetzung je 24 Stunden zur Verfügung.</p>
+    <p>Geben Sie Ihren Benutzernamen und die E-Mail-Adresse Ihres Benutzerkontos an.</p>
+    <p>Wenn Sie auf "Absenden" klicken, wird eine E-Mail mit einem Link zur Zurücksetzung des Passworts an Ihre E-Mail-Adresse gesendet.</p>
+    <p>Beachten Sie, dass, falls Sie bei der Registrierung eine ungültige E-Mail-Adresse angegeben haben, dieser Vorgang fehlschlagen wird.</p>
+    <p>In diesem Fall ist Ihre einzige Option die Registrierung eines neuen Kontos.</p>
+  ]
 ]
 
 <div class="login">

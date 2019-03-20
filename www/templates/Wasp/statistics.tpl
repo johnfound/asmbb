@@ -18,4 +18,9 @@
 <p>Nous avons <a href="/!users/">[users] utilisateur[case:[users]|s||s] enregistré[case:[users]|s||s]</a>.</p>
 <p>Le dernier utilisateur enregistré est: <a href="/!userinfo/[url:[lastuser]]">[lastuser]</a></p>
 <p>Ces dernières 24 heures, il y a eu [guests24] visiteur[case:[guests24]|s||s] sur le forum.</p>
+|
+<p>Dieses Forum enthält [posts] Beitr[case:[posts]|äge|ag|äge] in [threads] Them[case:[thread]|en|a|en].</p>
+<p>Wir haben <a href="/!users/">[users] registrierte[case:[users]||n|] Mitglied[case:[users]|er||er]</a>.</p>
+<p>Das neueste Mitglied ist: <a href="/!userinfo/[url:[lastuser]]">[lastuser]</a></p>
+<p>In den letzten 24 Stunden hatte das Forum [guests24] Besucher.</p>
 ]

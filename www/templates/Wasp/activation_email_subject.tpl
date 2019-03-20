@@ -14,6 +14,10 @@
 [equ:subjActivation=Activation de compte pour]
 [equ:subjEmail=Confirmation de changement d’email pour]
 [equ:subjPassword=Modification du mot de passe pour]
+|
+[equ:subjActivation=Kontoaktivierungslink für]
+[equ:subjEmail=E-Mail-Änderungsbestätigung für]
+[equ:subjPassword=Passwortzurücksetzung für]
 ]
 
 [case:[operation]|[const:subjActivation]|[const:subjEmail]|[const:subjPassword]] http://[host]

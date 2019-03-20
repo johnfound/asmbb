@@ -2,4 +2,5 @@
 Viewing online list.|
 Гледа кой е онлайн.|
 Смотрит кто онлайн.|
-Regarde la liste des connectés.]
+Regarde la liste des connectés.|
+Betrachtet die Onlineliste.]

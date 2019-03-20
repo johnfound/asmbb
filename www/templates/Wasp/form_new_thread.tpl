@@ -63,6 +63,21 @@
   [equ:btnPreview=Prévisualiser]
   [equ:btnSubmit=Poster]
   [equ:btnRevert=Annuler]
+|
+  [equ:btnList=Liste der Themen]
+  [equ:ttlTitle=Titel]
+  [equ:phTitle=Titel des Themas]
+  [equ:ttlTags=Tags: <span class="small">(max. 3, durch Kommas getrennt, keine Leerzeichen)</span>]
+  [equ:phTags=hier einige Tags]
+  [equ:ttlLimited=Thema mit beschränktem Zugriff]
+  [equ:ttlInvited=Eingeladene Mitglieder (durch Kommas getrennt)]
+  [equ:ttlPost=Inhalt des Beitrags]
+  [equ:phText=Teilen Sie hier Ihre Gedanken mit]
+  [equ:ttlAttach=Datei(en) anhängen]
+  [equ:phSelect=Wählen Sie eine Datei als Anhang aus]
+  [equ:btnPreview=Vorschau]
+  [equ:btnSubmit=Absenden]
+  [equ:btnRevert=Zurücksetzen]
 ]
 
 <div class="new_editor">

@@ -62,6 +62,21 @@
     <p>Mais ne les collez pas sur votre écran. Gardez-les plutôt dans une pochette ...</p>
     <p>... ou utiliser un gestionnaire de mots de passe.</p>
   ]
+|
+  [equ:pDirections=Überprüfen Sie Ihr Postfach - Sie sollten eine Bestätigungs-E-Mail erhalten haben. Kopieren Sie den <b>geheimen Code</b> aus der E-Mail in das Feld für den geheimen Code. Füllen Sie <b>alle</b> weiteren Felder aus. Dann schicken Sie das Formular ab.]
+  [equ:ttlTitle=Passwort zurücksetzen]
+  [equ:phUser=Benutzername]
+  [equ:phEmail=E-Mail-Adresse]
+  [equ:phSecret=Geheimer Code]
+  [equ:phPass=Passwort]
+  [equ:phPass2=Passwort (noch mal)]
+  [equ:btnSubmit=Absenden]
+  [equ:helpRegister=
+    <p>Ein starkes Passwort zu wählen und es aufzuschreiben ist besser als eines zu verwenden, das Sie sich leicht merken können.</p>
+    <p>Weil Menschen nicht besonders gut darin sind, sich zufällige Zeichenfolgen zu merken, aber ziemlich gut darin, kleine Stücke Papier aufzubewahren.</p>
+    <p>Aber kleben Sie es nicht an Ihren Bildschirm. Stecken Sie es einfach in Ihr Portemonnaie...</p>
+    <p>... oder benutzen Sie irgendein Programm zur Passwortverwaltung-</p>
+  ]
 ]
 
 <div class="login">

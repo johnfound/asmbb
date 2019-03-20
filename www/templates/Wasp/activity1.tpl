@@ -2,4 +2,5 @@
 Logging in.|
 Включване.|
 Вход в систему.|
-Connecté.]
+Connecté.|
+Meldet sich an.]

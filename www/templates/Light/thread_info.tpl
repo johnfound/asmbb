@@ -26,6 +26,13 @@
   [equ:tPosts=post[case:[PostCount]|s||s]]
   [equ:ttlMark=Maruqer le sujet comme lu]
   [equ:tViews=vue[case:[ReadCount]|s||s]]
+|
+  [equ:ttlPinned=Angeheftetes Thema]
+  [equ:ttlLimited=Beschränktes Thema]
+  [equ:ttlUnread=[case:[Unread]|Keine ungelesenen Beiträge|Springe zum ersten ungelesenen Beitrag]]
+  [equ:tPosts=Beitr[case:[PostCount]|äge|ag|äge]]
+  [equ:ttlMark=Thema als gelesen kennzeichnen]
+  [equ:tViews=[case:[ReadCount]|Ansichten|Ansicht|Ansichten]]
 ]
 
 <div class="thread_summary">

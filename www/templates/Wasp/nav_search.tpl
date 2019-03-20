@@ -17,6 +17,10 @@
   [equ:btnBack=Retour]
   [equ:btnSettings=Paramètres]
   [equ:btnConsole=Console SQL]
+|
+  [equ:btnBack=Zurück]
+  [equ:btnSettings=Einstellungen]
+  [equ:btnConsole=SQL-Konsole]
 ]
 
 <div class="ui">

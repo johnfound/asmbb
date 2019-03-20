@@ -7,12 +7,14 @@
   <a href="/!users_online" title="Последние действия потребителей.">Сейчас</a> в сети: [special:visitors]
 |
   <a href="/!users_online" title="Activités récentes des visiteurs.">En ligne</a> maintenant: [special:visitors]
+|
+  Jetzt <a href="/!users_online" title="Letzte Aktivitäten der Besucher.">online</a>: [special:visitors]
 ]
 </p>
 <br>
 [special:stats]
 <br>
-<p>[case:[special:lang]|Page processing time|Време за обработка на страницата|Время обработки страницы|Page chargée en]: [special:timestamp] ms</p>
+<p>[case:[special:lang]|Page processing time|Време за обработка на страницата|Время обработки страницы|Page chargée en|Seite verarbeitet in]: [special:timestamp] ms</p>
 </div>
 <div class="attribution">
   [special:version]; [special:sqliteversion];<br><br>

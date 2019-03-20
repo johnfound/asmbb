@@ -1,5 +1,5 @@
 DEFAULT_UI_LANG = 0
-MAX_UI_LANG = 3         ; 0 = EN, 1 = BG, 2 = RU, 3 = FR
+MAX_UI_LANG = 4         ; 0 = EN, 1 = BG, 2 = RU, 3 = FR 4 = DE
 
 DEFAULT_PAGE_LENGTH = 20
 

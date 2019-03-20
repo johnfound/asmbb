@@ -14,6 +14,10 @@
   [equ:tThread=Sujet]
   [equ:tPost=Message]
   [equ:tMore=lire la suite...]
+|
+  [equ:tThread=Thema]
+  [equ:tPost=Beitrag]
+  [equ:tMore=weiterlesen...]
 ]
 
 <div class="post">

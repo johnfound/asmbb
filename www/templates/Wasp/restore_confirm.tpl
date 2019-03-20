@@ -22,6 +22,11 @@
   [equ:pQuestion=Voulez-vous <b>vraiment</b> restaurer ce message dans sa précédente version?]
   [equ:btnRestore=Restore]
   [equ:btnCancel=Annuler]
+|
+  [equ:hRestore=Beitrag wiederherstellen?]
+  [equ:pQuestion=Möchten Sie diesen Beitrag <b>wirklich</b> auf die vorherige Version zurücksetzen?]
+  [equ:btnRestore=Wiederherstellen]
+  [equ:btnCancel=Abbrechen]
 ]
 
 <div class="confirm">

@@ -34,6 +34,14 @@
   [equ:btnConsole=Console SQL]
   [equ:ttlEditThread=Éditer le titre du sujet et les mots-clés.]
   [equ:altEdit=Éditer]
+|
+  [equ:btnCats=Kategorien]
+  [equ:btnList=Themen]
+  [equ:btnNewPost=Antworten]
+  [equ:btnSettings=Einstellungen]
+  [equ:btnConsole=SQL-Konsole]
+  [equ:ttlEditThread=Themenoptionen ändern.]
+  [equ:altEdit=Ändern]
 ]
 
 <div class="ui">

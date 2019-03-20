@@ -61,6 +61,21 @@
     <p>Si la case "Resté connecté" n'est pas cochée, AsmBB utilisera un cookie de sessions qui sera automatiquement détruit lorsque vous quitterez le site.</p>
     <p>Lorsque vous vous déconnectez, tous les cookies seront également détruits.</p>
   ]
+|
+  [equ:btnThreads=Themen]
+  [equ:ttlLogin=Anmelden]
+  [equ:phUser=Benutzername]
+  [equ:phPass=Passwort]
+  [equ:lblPers=Dauerhaft anmelden]
+  [equ:btnSubmit=Absenden]
+  [equ:helpLogin=
+    [case:[email_flag]||<p>Falls Sie Ihr Passwort vergessen haben, <b><a href="/!resetpassword">klicken Sie hier</a></b>. Ihre Versuche zur Zurücksetzung sind begrenzt.</p>]
+    [case:[special:canregister]||<p>Falls Sie noch kein Konto haben, sollten Sie <b><a href="/!register">sich registrieren</a></b>.</p>]
+    <p></p>
+    <p>Der Anmeldevorgang verwendet Cookies. Falls Sie das Häkchen für die dauerhafte Anmeldung gesetzt haben, so wird es in Ihrem Browser aufbewahrt.</p>
+    <p>Ist es nicht gesetzt (das ist der Standard), so verwendet AsmBB so genannte "Sitzungscookies", die automatisch gelöscht werden, wenn Sie Ihren Browser schließen.</p>
+    <p>Wenn Sie sich im Forum abmelden, werden ebenfalls alle Cookies entfernt.</p>
+  ]
 ]
 
 <div class="login">

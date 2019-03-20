@@ -46,6 +46,17 @@
   [equ:btnPreview=Prévisualiser]
   [equ:btnSubmit=Poster]
   [equ:btnRevert=Annuler]
+|
+  [equ:btnList=Liste der Themen]
+  [equ:btnThread=Thema]
+  [equ:ttlTitle=Titel des Themas]
+  [equ:ttlPost=Inhalt des Beitrags]
+  [equ:phText=Jemand hat Unrecht im Internet]
+  [equ:ttlAttach=Datei(en) anhängen]
+  [equ:phSelect=Wählen Sie eine Datei als Anhang aus]
+  [equ:btnPreview=Vorschau]
+  [equ:btnSubmit=Absenden]
+  [equ:btnRevert=Zurücksetzen]
 ]
 
 <div class="new_editor">

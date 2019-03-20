@@ -2,4 +2,5 @@
 Registering account.|
 Регистрация на акаунт.|
 Регистрация аккаунта.|
-Enregistrement d'un compte.]
+Enregistrement d'un compte.|
+Registriert ein Konto.]
