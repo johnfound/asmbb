@@ -42,6 +42,16 @@
   [equ:Attach=Pièce(s) jointe(s)]
   [equ:tabText=Texte]
   [equ:tabAttach=Pièces jointes]
+|
+  [equ:Caption=Titel des Themas]
+  [equ:Content=Inhalt des Beitrags]
+  [equ:btnPreview=Vorschau]
+  [equ:hintPreview=Strg+Eingabe für eine Vorschau]
+  [equ:btnSubmit=Absenden]
+  [equ:hintSubmit=Strg+S zum Absenden]
+  [equ:Attach=Datei(en) anhängen]
+  [equ:tabText=Text]
+  [equ:tabAttach=Anhänge]
 ]
 
 <div class="editor" id="editor">

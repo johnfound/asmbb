@@ -34,6 +34,15 @@
   [equ:tViews=vue[case:[ReadCount]|s||s]]
   [equ:Posters=Participants: ]
   [equ:Invited=Invités: ]
+|
+  [equ:ttlPinned=Angeheftetes Thema]
+  [equ:ttlLimited=Beschränktes Thema]
+  [equ:ttlUnread=[case:[Unread]|Keine ungelesenen Beiträge|Springe zum ersten ungelesenen Beitrag]]
+  [equ:tPosts=Beitr[case:[PostCount]|äge|ag|äge]]
+  [equ:ttlMark=Thema als gelesen kennzeichnen]
+  [equ:tViews=[case:[ReadCount]|Ansichten|Ansicht|Ansichten]]
+  [equ:Posters=Teilnehmer: ]
+  [equ:Invited=Eingeladen: ]
 ]
 
 <div class="thread_summary">

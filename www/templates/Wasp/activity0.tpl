@@ -2,4 +2,5 @@
 Unknown activity.|
 Неизвестни действие.|
 Неизвестное действие.|
-Activité inconnue.]
+Activité inconnue.|
+Unbekannte Aktivität.]

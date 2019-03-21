@@ -43,6 +43,16 @@
   [equ:ttlInvited=Inviter des utilisateurs (séparés par une virgule)]
   [equ:btnSubmit=Soumettre]
   [equ:btnRevert=Annuler]
+|
+  [equ:ttlTitle=Titel]
+  [equ:phTitle=Titel des Themas]
+  [equ:ttlTags=Tags: <span class="small">(max. 3, durch Kommas getrennt, keine Leerzeichen)</span>]
+  [equ:phTags=hier einige Tags]
+  [equ:ttlPin=Das Thema oben anheften]
+  [equ:ttlLimited=Thema mit beschränktem Zugang]
+  [equ:ttlInvited=Eingeladene Mitglieder (durch Kommas getrennt)]
+  [equ:btnSubmit=Absenden]
+  [equ:btnRevert=Zurücksetzen]
 ]
 
 <div class="new_editor">

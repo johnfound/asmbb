@@ -49,6 +49,18 @@
   [equ:ttlStmt=SQL statement]
   [equ:btnExec=Exec]
   [equ:btnRevert=Revert]
+|
+  [equ:btnList=Liste der Themen]
+  [equ:btnSettings=Einstellungen]
+  [equ:btnSQL=SQL-Konsole]
+  [equ:ttlName=Scriptname]
+  [equ:phScript=Scriptname]
+  [equ:altEdit=Ändern]
+  [equ:altSave=Speichern]
+  [equ:altDel=Löschen]
+  [equ:ttlStmt=SQL-Statement]
+  [equ:btnExec=Ausführen]
+  [equ:btnRevert=Zurücksetzen]
 ]
 
 <div class="console">

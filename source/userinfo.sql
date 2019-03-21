@@ -5,7 +5,7 @@ select
   av_time as AVer,
   status,
   user_desc,
-  Lang,
+  case when (Lang is NULL) then 0 else Lang+1 end as Lang,
   skin,
   strftime('%d.%m.%Y %H:%M:%S', LastSeen, 'unixepoch') as LastSeen,
   email,

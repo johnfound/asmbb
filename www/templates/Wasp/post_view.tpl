@@ -50,6 +50,19 @@
   [equ:altEdit=Éditer]
   [equ:altDel=Supprimer]
   [equ:altHist=Historique]
+|
+  [equ:tPosts=Posts]
+  [equ:tCreated=Erstellt am [PostTime]]
+  [equ:tEdited=Zuletzt geändert: [EditTime] von]
+  [equ:tRead=gelesen: [ReadCount]-mal]
+  [equ:ttlQuote=Diesen Beitrag zitieren]
+  [equ:ttlEdit=Diesen Beitrag ändern]
+  [equ:ttlDel=Diesen Beitrag löschen]
+  [equ:ttlHist=Beitragsverlauf anzeigen]
+  [equ:altQuote=Zitat]
+  [equ:altEdit=Ändern]
+  [equ:altDel=Löschen]
+  [equ:altHist=Verlauf]
 ]
 
 <div class="post" id="[id]">

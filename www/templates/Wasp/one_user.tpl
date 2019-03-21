@@ -10,6 +10,9 @@
 |
   [equ:ttlLong=il y a longtemps]
   [equ:ttlNever=jamais]
+|
+  [equ:ttlLong=vor langer Zeit]
+  [equ:ttlNever=niemals]
 ]
 
 <tr>

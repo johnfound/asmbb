@@ -76,6 +76,25 @@
   [equ:EmoSad=Emoticone triste]
   [equ:EmoCry=Emoticone pleure]
   [equ:EmoAngry=Emoticone fâché]
+|
+  [equ:Bold=Fett]
+  [equ:Italic=Kursiv]
+  [equ:Underlined=Unterstrichen]
+  [equ:Strikethrough=Durchgestrichen]
+  [equ:CodeBlock=Codeblock]
+  [equ:InlineCode=Feste Breite]
+  [equ:BlockQuote=Zitat]
+  [equ:Link=Link ^[url^]^[description^]]
+  [equ:Image=Bild ^[!url^]^[alt text^]]
+
+  [equ:EmoSmile=Emoticon Lächeln]
+  [equ:EmoLOL=Emoticon LOL]
+  [equ:EmoROFL=Emoticon ROFL]
+  [equ:EmoWink=Emoticon Zwinkern]
+  [equ:EmoTongue=Emoticon Zunge raus]
+  [equ:EmoSad=Emoticon traurig]
+  [equ:EmoCry=Emoticon weinen]
+  [equ:EmoAngry=Emoticon wütend]
 ]
 
 <div class="jsonly">

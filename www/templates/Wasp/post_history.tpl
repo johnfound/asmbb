@@ -14,6 +14,10 @@
   [equ:tCreated=Crée le: [PostTime] par]
   [equ:tEdited=Édité le: [EditTime] par]
   [equ:ttlRestore=Restaurer le post sur ce contenu.]
+|
+  [equ:tCreated=Erstellt: [PostTime] von]
+  [equ:tEdited=Geändert: [EditTime] von]
+  [equ:ttlRestore=Beitrag auf diese Version zurücksetzen.]
 ]
 
 

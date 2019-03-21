@@ -574,24 +574,23 @@ begin
 ; save user language
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_lang", 0
-        test    eax, eax
-        jz      .lang_ok
 
         push    eax
         stdcall StrToNumEx, eax
         stdcall StrDel ; from the stack
 
-.lang_ok:
-        xor     ecx, ecx
-        mov     edx, MAX_UI_LANG
+        dec     eax
+        js      .def_lang        ; set default language as NULL!
+        cmp     eax, MAX_UI_LANG
+        ja      .def_lang
 
-        cmp     eax, ecx
-        cmovl   eax, ecx
-        cmp     eax, edx
-        cmovg   eax, edx
         cinvoke sqliteBindInt, [.stmt], 3, eax
+        jmp     .lang_ok
 
+.def_lang:
+        cinvoke sqliteBindNull, [.stmt], 3
 
+.lang_ok:
 ; save skin name
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "skin", 0
@@ -648,8 +647,6 @@ begin
         popad
         return
 endp
-
-
 
 
 

@@ -29,6 +29,13 @@
   [equ:btnChat=Тchat]
   [equ:btnSettings=Paramètres]
   [equ:btnConsole=Console SQL]
+|
+  [equ:btnCats=Kategorien]
+  [equ:btnNewThread=Neues Thema]
+  [equ:btnMarkRead=Alle als gelesen kennzeichnen]
+  [equ:btnChat=Chat]
+  [equ:btnSettings=Einstellungen]
+  [equ:btnConsole=SQL-Konsole]
 ]
 
 

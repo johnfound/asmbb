@@ -18,6 +18,11 @@
   [equ:ttlThreads=Sujets]
   [equ:ttlPosts=Messages]
   [equ:ttlUnread=Non-lus]
+|
+  [equ:altNew=Neu]
+  [equ:ttlThreads=Themen]
+  [equ:ttlPosts=Beiträge]
+  [equ:ttlUnread=Ungelesen]
 ]
 
 <div class="category">

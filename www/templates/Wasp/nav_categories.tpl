@@ -25,6 +25,12 @@
   [equ:btnChat=Тchat]
   [equ:btnSettings=Paramètres]
   [equ:btnConsole=Console SQL]
+|
+  [equ:btnAll=Alle Themen]
+  [equ:btnMarkRead=Alle als gelesen kennzeichnen]
+  [equ:btnChat=Chat]
+  [equ:btnSettings=Einstellungen]
+  [equ:btnConsole=SQL-Konsole]
 ]
 
 <div class="ui">

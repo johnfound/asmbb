@@ -118,4 +118,34 @@ Pour réinitialiser votre mot de passe, copiez ce code dans le frmulaire de réi
 ]
 
 Cordialement.
+
+|Hallo, [nick].
+
+[case:[operation]
+|Diese E-Mail wurde Ihnen gesendet, weil Sie ein Konto auf https://[host] registriert haben.
+
+Falls das nicht zutrifft, ignorieren Sie diese E-Mail einfach und Sie werden nie wieder von uns hören.
+
+Um Ihr Konto zu aktivieren, rufen Sie folgenden Link in Ihrem Webbrowser auf:
+
+https://[host]/!activate/[secret]/
+
+|Diese E-Mail wurde Ihnen gesendet, um die Gültigkeit Ihrer neuen E-Mail-Adresse zu überprüfen.
+
+Falls Sie sich entschlossen haben, Ihre E-Mail-Adresse nicht zu ändern, ignorieren Sie diese Nachricht einfach.
+
+Um Ihre neue E-Mail-Adresse zu aktivieren, rufen Sie folgenden Link in Ihrem Webbrowser auf:
+
+https://[host]/!activate/[secret]/
+
+|Diese E-Mail-Adresse wurde Ihnen gesendet, um Ihren Wunsch nach einer Passwortzurücksetzung zu bestätigen.
+
+Falls Sie diese nicht angefordert haben, ignorieren Sie diese E-Mail einfach.
+
+Um das Passwort zurückzusetzen, kopieren Sie den unten stehenden Code in das Formular zur Passwortzurücksetzung:
+
+[secret]
+]
+
+Mit freundlichen Grüßen.
 ]

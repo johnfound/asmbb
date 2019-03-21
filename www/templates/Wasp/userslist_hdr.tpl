@@ -26,6 +26,13 @@
   [equ:hCnt=Nombre de messages]
   [equ:hReg=Date d'inscription]
   [equ:hSeen=Dernière connexion]
+|
+  [equ:hUser=Benutzer]
+  [equ:hAvatar=Avatar]
+  [equ:hTheme=Theme]
+  [equ:hCnt=Beiträge]
+  [equ:hReg=Registriert]
+  [equ:hSeen=Zuletzt gesehen]
 ]
 
 <table>

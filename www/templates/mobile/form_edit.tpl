@@ -34,6 +34,14 @@
   [equ:btnSubmit=Soumettre]
   [equ:hintSubmit=Ctrl+S pour soumettre]
   [equ:Attach=Pièce(s) jointe(s)]
+|
+  [equ:Caption=Titel des Themas]
+  [equ:Content=Beitragsinhalt]
+  [equ:btnPreview=Vorschau]
+  [equ:hintPreview=Strg+Eingabe für eine Vorschau]
+  [equ:btnSubmit=Absenden]
+  [equ:hintSubmit=Strg+S zum Absenden]
+  [equ:Attach=Datei(en) anhängen]
 ]
 
 <div class="ui">

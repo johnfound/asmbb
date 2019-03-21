@@ -1,5 +1,5 @@
 DEFAULT_UI_LANG = 0
-MAX_UI_LANG = 3         ; 0 = EN, 1 = BG, 2 = RU, 3 = FR
+MAX_UI_LANG = 4         ; 0 = EN, 1 = BG, 2 = RU, 3 = FR 4 = DE
 
 DEFAULT_PAGE_LENGTH = 20
 
@@ -841,6 +841,9 @@ begin
         mov     [edi+TSpecialParams.remoteIP], eax
 
         stdcall GetParam, "default_lang", gpInteger
+        xor     ecx, ecx
+        cmp     eax, MAX_UI_LANG
+        cmova   eax, ecx
         mov     [edi+TSpecialParams.userLang], eax
 
         stdcall GetParam, "anon_perm", gpInteger
@@ -906,11 +909,18 @@ begin
 
 ; user lang
 
+        cinvoke sqliteColumnType, [.stmt], 5
+        cmp     eax, SQLITE_NULL
+        je      .user_lang_ok
+
         cinvoke sqliteColumnInt, [.stmt], 5
+        cmp     eax, MAX_UI_LANG
+        ja      .user_lang_ok
+
         mov     [edi+TSpecialParams.userLang], eax
 
+.user_lang_ok:
 ; user skin
-
         cinvoke sqliteColumnText, [.stmt], 4
         test    eax, eax
         jz      .skin_ok

@@ -18,6 +18,10 @@
   [equ:btnBack=Retour au fil]
   [equ:btnSettings=Paramètres]
   [equ:btnConsole=Console SQL]
+|
+  [equ:btnBack=Zurück zum Thema]
+  [equ:btnSettings=Einstellungen]
+  [equ:btnConsole=SQL-Konsole]
 ]
 
 <div class="ui">

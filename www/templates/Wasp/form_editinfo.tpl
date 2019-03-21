@@ -104,7 +104,7 @@
   [equ:pDownload=Télécharger des fichiers]
   [equ:pAttach=Joindre des fichiers]
   [equ:pAdmin=Administrateur]
-  [equ:hdrAvatar=Avatar:<span class="small">(.png only; Maximal size: 10KB; Size: 128x128px)]
+  [equ:hdrAvatar=Avatar:<span class="small">(.png only; Maximal size: 10KB; Size: 128x128px)</span>]
   [equ:hdrLang=Interface language:]
   [equ:hdrSkin=Thème:]
   [equ:hdrChangePass=Changement de mot de passe:]
@@ -119,6 +119,36 @@
   [equ:btnUpload=Upload]
   [equ:btnChangePass=Change password]
   [equ:btnChangeEmail=Change email]
+|
+  [equ:hdrDesc=Benutzerbeschreibung: <span class="small">(Formatierter Text)</span>]
+  [equ:hdrPermissions= Benutzerbefugnisse:]
+  [equ:pLogin=Anmelden]
+  [equ:pRead=Lesen]
+  [equ:pPost=Schreiben]
+  [equ:pStart=Themen eröffnen]
+  [equ:pEditOwn=Eigene Beiträge ändern]
+  [equ:pEditAll=Alle Beiträge ändern]
+  [equ:pDelOwn=Eigene Beiträge löschen]
+  [equ:pDelAll=Alle Beiträge löschen]
+  [equ:pChat=Chatten]
+  [equ:pDownload=Dateien herunterladen]
+  [equ:pAttach=Dateien anhängen]
+  [equ:pAdmin=Administrator]
+  [equ:hdrAvatar=Avatar: <span class="small">(nur .png; Größe höchstens: 10KB; Abmessungen: 128x128px)</span>]
+  [equ:hdrLang=Sprache der Oberfläche:]
+  [equ:hdrSkin=Skin des Forums:]
+  [equ:hdrChangePass=Passwort ändern:]
+  [equ:sDefault=(Standard)]
+  [equ:passNow=Aktuelles Passwort]
+  [equ:passNew=Neues Passwort]
+  [equ:passNew2=Neues Passwort (noch mal)]
+  [equ:hdrChangeEmail=E-Mail-Adresse ändern:]
+  [equ:passPass=Passwort]
+  [equ:emailNew=Neue E-Mail-Adresse]
+  [equ:btnSave=Speichern]
+  [equ:btnUpload=Hochladen]
+  [equ:btnChangePass=Passwort ändern]
+  [equ:btnChangeEmail=E-Mail-Adresse ändern]
 ]
 
 <form class="user_edit_info settings" method="post" action="/!userinfo/[url:[username]]">
@@ -155,10 +185,12 @@
 <form class="user_edit_info settings" method="post" action="/!setskin/[url:[username]]">
   <h2>[const:hdrLang]</h2>
   <select class="userskin" name="user_lang">
-    <option value="0" [case:[Lang]|selected="selected"|||]>English</option>
-    <option value="1" [case:[Lang]||selected="selected"||]>Български</option>
-    <option value="2" [case:[Lang]|||selected="selected"|]>Русский</option>
-    <option value="3" [case:[Lang]||||selected="selected"]>Français</option>
+    <option value="0" [case:[Lang]|selected="selected"|]>[const:sDefault]</option>
+    <option value="1" [case:[Lang]||selected="selected"|]>English</option>
+    <option value="2" [case:[Lang]|||selected="selected"|]>Български</option>
+    <option value="3" [case:[Lang]||||selected="selected"|]>Русский</option>
+    <option value="4" [case:[Lang]|||||selected="selected"|]>Français</option>
+    <option value="5" [case:[Lang]||||||selected="selected"|]>Deutsch</option>
   </select>
   <h2>[const:hdrSkin]</h2>
   <select class="userskin" name="skin">
