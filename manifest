@@ -1,8 +1,8 @@
-C Merged\swith\sthe\si18n_DE\sbranch.\sImproved\shandling\sof\sthe\sdefault\sUI\slanguage.
-D 2019-03-21T10:04:30.115
+C Update\sof\sthe\sbinary\spack\swith\sthe\sGerman\stranslation.
+D 2019-03-21T11:35:01.680
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
-F install/asmbb.tar.gz 7f8490f929634242059352165fbd708c023925eb
+F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
 F install/create_release.sh 396f452f7c1af50c844fbd0f37a37d58e8bc662d x
 F install/exclude.txt 7678178e332c0c4a1a7d1ac8705ae6e2e2e57e74
 F install/install.txt 64615f21455976e432bda238c6d4282fc561e340
@@ -601,7 +601,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 3f1c58bd4d5f394b4607434b8d7ca43b8f40168d c9c9ffc89d92ac094880bedbedb740438e24533f
-R 8894ed01c64a298ba2cf1097d0303a8f
+P 97ceb202897848d88a77ac04dbed87b6689d4e9c
+R 57ad8115abc03515fe97c00d7af5a84f
 U johnfound
-Z 7df4d3264f8a43cc7efad0e1c75c0880
+Z 366fbe8aecbc0ee85870456eebb09276
