@@ -1,5 +1,5 @@
-C An\sattempt\sto\simplement\sAtom\s(syndication).
-D 2019-03-26T07:46:46.732
+C The\satom\sfeed\sfeature\scode\sstructure\sdrafted...
+D 2019-03-26T15:04:04.939
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -23,7 +23,10 @@ F source/ToDo.txt 78c2a566e37fc37db78b799f5ac100bed383c182
 F source/Win32/sqlite3.inc 83b0ebab85f7359c5b99c281b1eae5cce0877b9a
 F source/accounts.asm da51e58f8ab2fc4bd2bd694c502f25a2cf8ab1c0
 F source/alltags.sql e4a0d5084be7a45f5e30ab46b7985f49c797f86a
-F source/atomfeed.asm da39a3ee5e6b4b0d3255bfef95601890afd80709
+F source/atom_list.sql c432fd823a04ec9f344265d0db07890545c20091
+F source/atom_one_thread.sql 0e5e0a6bf50ee5b2d81446a09bb7b0c2f4b2a307
+F source/atom_tag_list.sql f9e2805f308aa4a79b782bc10cae4cc04b087ea9
+F source/atomfeed.asm 73ac14869aeb5867454135018a0267ca76941c4b
 F source/attachments.asm 6843dd5b449b1394ae9c6f2b6bc44ed561f9a913
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm 87830583d32bdf406d7a0a0615cff0b23fda9283
@@ -35,7 +38,7 @@ F source/create.sql 4f1205e0ffc659aae368684dcfed86e98ce3b970
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm dddd1b6b89eef295ab5a65cb7302aefe0d948399
 F source/engine.asm 360234e68f6fe932c7edd0c50a47a740f632ae2d
-F source/engine.fpr 8492143359f5cabf760be6008106cf1b16ca6eff
+F source/engine.fpr c01e56a5cd87d8e80d9baacf0d9e7b896a21c40c
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 3f2f16c5201e953e72b500f8f7f50a92094345e6
@@ -452,6 +455,9 @@ F www/templates/Wasp/activity6.tpl 8183551cc7d489d3fef5f42dba5d275ce1120278
 F www/templates/Wasp/activity7.tpl e25bb04eb0b2e06619095bc1f2165d989fb93460
 F www/templates/Wasp/activity8.tpl 083618b79fce3c609927c15a018038cdc92c6edd
 F www/templates/Wasp/activity9.tpl 9f354c2dd3b3a9d3c171e7230a88aaf3b074b848
+F www/templates/Wasp/atom_entry_post.tpl a6738f89bcc71fc3ca73b825820e45d6c6260dc7
+F www/templates/Wasp/atom_entry_thread.tpl 4b0aefd86082f13fd2294ab0de836866a9f4e223
+F www/templates/Wasp/atom_start.tpl 620ff2426b1750cbc51a6c04f1b32142bfb0e607
 F www/templates/Wasp/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
 F www/templates/Wasp/chat.less e57b611bba245767e3924f761c37393ee3bb53d2
 F www/templates/Wasp/chat.tpl e296ff783f34495d49e64ead09298460ceb37a62
@@ -602,10 +608,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 44c78a9e5b2b27f9c09c5c18f1dfed2f2ce552fc
-R d73a98c073178c8f0401169e97df9861
-T *branch * atomfeed
-T *sym-atomfeed *
-T -sym-trunk *
+P ab95d86b23f1912d8cd6274ce850e2193fc8b5da
+R ac2495e35f5555bf40335cb0e062002d
 U johnfound
-Z 8ee002cb4f32f854ac20823ff32efae8
+Z 6d48c103ca4455e90f47cba894cef08e
