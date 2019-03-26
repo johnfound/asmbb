@@ -82,6 +82,8 @@ include "chat_ipc.asm"
 include "postdebug.asm"
 include "attachments.asm"
 
+include "atomfeed.asm"
+
 
 iglobal
   sqlCreateDB StripText 'create.sql', SQL

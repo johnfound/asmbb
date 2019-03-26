@@ -1,5 +1,5 @@
-C Update\sof\sthe\sbinary\spack\swith\sthe\sGerman\stranslation.
-D 2019-03-21T11:35:01.680
+C An\sattempt\sto\simplement\sAtom\s(syndication).
+D 2019-03-26T07:46:46.732
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -23,18 +23,19 @@ F source/ToDo.txt 78c2a566e37fc37db78b799f5ac100bed383c182
 F source/Win32/sqlite3.inc 83b0ebab85f7359c5b99c281b1eae5cce0877b9a
 F source/accounts.asm da51e58f8ab2fc4bd2bd694c502f25a2cf8ab1c0
 F source/alltags.sql e4a0d5084be7a45f5e30ab46b7985f49c797f86a
+F source/atomfeed.asm da39a3ee5e6b4b0d3255bfef95601890afd80709
 F source/attachments.asm 6843dd5b449b1394ae9c6f2b6bc44ed561f9a913
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm 87830583d32bdf406d7a0a0615cff0b23fda9283
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm d2b4824ec926ddf7fc4c6492f2ebb75acf5e20a3
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
-F source/commands.asm 94b7c3f8e578ebc5049d65037b863d3a5224657c
+F source/commands.asm 0749b9feb22e50faecd3d0b22a367604fa5c6a00
 F source/create.sql 4f1205e0ffc659aae368684dcfed86e98ce3b970
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm dddd1b6b89eef295ab5a65cb7302aefe0d948399
-F source/engine.asm c4ade957d3e53a9e18dd482109254a1544c24764
-F source/engine.fpr 5630481e8a64f6b8861226345c549dbd8140c82c
+F source/engine.asm 360234e68f6fe932c7edd0c50a47a740f632ae2d
+F source/engine.fpr 8492143359f5cabf760be6008106cf1b16ca6eff
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 3f2f16c5201e953e72b500f8f7f50a92094345e6
@@ -601,7 +602,10 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 97ceb202897848d88a77ac04dbed87b6689d4e9c
-R 57ad8115abc03515fe97c00d7af5a84f
+P 44c78a9e5b2b27f9c09c5c18f1dfed2f2ce552fc
+R d73a98c073178c8f0401169e97df9861
+T *branch * atomfeed
+T *sym-atomfeed *
+T -sym-trunk *
 U johnfound
-Z 366fbe8aecbc0ee85870456eebb09276
+Z 8ee002cb4f32f854ac20823ff32efae8

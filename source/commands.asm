@@ -102,6 +102,7 @@ PHashTable tablePostCommands, tpl_func,                 \
         "!edit_thread",     EditThreadAttr,             \
         "!del",             DeletePost,                 \
         "!by_id",           PostByID,                   \
+        "!feed",            CreateAtomFeed,             \
         "!history",         ShowHistory,                \
         "!restore",         RestorePost,                \
         "!echoevents",      EchoRealTime,               \    ; optional, depending on the options.DebugWebSSE
