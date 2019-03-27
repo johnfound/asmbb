@@ -1,5 +1,5 @@
-C Proper\sfeeds\sfor\sall\sthemes.\sSome\swork\son\sthe\sfeed\svalues.
-D 2019-03-27T11:41:28.039
+C More\sprecise\satom\stemplates.
+D 2019-03-27T13:19:56.590
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -462,8 +462,8 @@ F www/templates/Wasp/activity7.tpl e25bb04eb0b2e06619095bc1f2165d989fb93460
 F www/templates/Wasp/activity8.tpl 083618b79fce3c609927c15a018038cdc92c6edd
 F www/templates/Wasp/activity9.tpl 9f354c2dd3b3a9d3c171e7230a88aaf3b074b848
 F www/templates/Wasp/atom_entry_post.tpl 77163a35ed9b0439e2f7944031b687dab32f83b1
-F www/templates/Wasp/atom_entry_thread.tpl 5dbc6d24d9a9da9e88dbd3c0c4f11c265119b1d8
-F www/templates/Wasp/atom_start.tpl 5b476043e0574276d161c7b3e62628a7ac9e2cd2
+F www/templates/Wasp/atom_entry_thread.tpl 5bcc7f00c95a94759338dc438063379c418218e7
+F www/templates/Wasp/atom_start.tpl 9a24db4682e0662dd310fc20183314de41d16159
 F www/templates/Wasp/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
 F www/templates/Wasp/chat.less e57b611bba245767e3924f761c37393ee3bb53d2
 F www/templates/Wasp/chat.tpl e296ff783f34495d49e64ead09298460ceb37a62
@@ -617,7 +617,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 85b18d2b4c13e3ba83a3f6a486cb595470cbacfb
-R 1be3b611eb0b42d5e173385b9ec8d85f
+P 8ca76a22114f090a805e899132ae84bb58503955
+R a5b0c27928fe32b2f4c7d77de886893c
 U johnfound
-Z 57bd101694ba069e2fdf534c20256f81
+Z 6bc93939d151d7401f573fc8434e3797
