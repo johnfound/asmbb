@@ -1,9 +1,12 @@
 select
   S.threadid,
+  T.LastChanged,
   T.Caption,
   T.Slug,
   strftime('%Y-%m-%dT%H:%M:%SZ', T.LastChanged, 'unixepoch') as TimeChanged,
-  nick as UserName
+  nick as UserName,
+  'AllThreads' as FeedID,
+  '' as tag
 from
   (select
     id as threadid

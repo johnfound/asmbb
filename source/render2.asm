@@ -46,6 +46,7 @@ PHashTable tableSpecial, tpl_func,                              \
         "timestamp",   RenderTemplate.sp_timestamp,             \ ; NUMBER no encoding
         "title",       RenderTemplate.sp_title,                 \ ; Controlled source, no encoding
         "header",      RenderTemplate.sp_header,                \ ; Controlled source, no encoding
+        "tagprefix",   RenderTemplate.sp_tagprefix,             \ ; for the Atom feed ID use
         "allstyles",   RenderTemplate.sp_allstyles,             \ ; CSS, from controlled source, no encoding.
         "description", RenderTemplate.sp_description,           \ ; Controlled source, no encoding
         "keywords",    RenderTemplate.sp_keywords,              \ ; Controlled source, no encoding
@@ -1256,6 +1257,40 @@ end if
 .sp_header:
         mov     eax, [ebx+TSpecialParams.page_header]
         jmp     .special_string
+
+
+sqlGetFirstDate text "select strftime('%Y-%m-%d:', Register, 'unixepoch') from Users where Register is not null order by register limit 1;"
+sLocalHost      text "localhost"
+locals
+  .stmt2 dd ?
+endl
+
+.sp_tagprefix:
+        push    edx edi
+
+        stdcall StrDupMem, txt "tag:"
+        mov     edi, eax
+
+        mov     eax, sLocalHost
+        stdcall ValueByName, [ebx+TSpecialParams.params], txt "HTTP_HOST"
+        stdcall StrCat, edi, eax
+        stdcall StrCat, edi, txt ","
+
+        lea     eax, [.stmt2]
+        cinvoke _sqlitePrepare_v2, [hMainDatabase], sqlGetFirstDate, sqlGetFirstDate.length, eax, 0
+        cinvoke sqliteStep, [.stmt2]
+        cmp     eax, SQLITE_ROW
+        jne     .end_tag
+
+        cinvoke sqliteColumnText, [.stmt2], 0
+        stdcall StrCat, edi, eax
+
+.end_tag:
+        cinvoke sqliteFinalize, [.stmt2]
+
+        mov     eax, edi
+        pop     edi edx
+        jmp     .special_string_free
 
 .sp_description:
         mov     eax, [ebx+TSpecialParams.description]

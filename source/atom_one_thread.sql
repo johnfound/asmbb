@@ -1,10 +1,12 @@
 select
-  P.id as PostID,
+  P.id as postid,
+  P.postTime,
   T.Caption,
   U.nick as UserName,
-  strftime('%Y-%m-%dT%H:%M:%SZ', P.postTime, 'unixepoch') as PostTime,
+  strftime('%Y-%m-%dT%H:%M:%SZ', P.postTime, 'unixepoch') as TimeChanged,
   P.Content,
-  P.format
+  P.format,
+  'Thread' || P.threadID as FeedID
 from
   Posts P
   left join Users U on U.id = P.userID
