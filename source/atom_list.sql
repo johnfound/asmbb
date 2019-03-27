@@ -6,7 +6,9 @@ select
   strftime('%Y-%m-%dT%H:%M:%SZ', T.LastChanged, 'unixepoch') as TimeChanged,
   nick as UserName,
   'AllThreads' as FeedID,
-  '' as tag
+  '' as tag,
+  'All threads' as FeedTitle,
+  '' as URL
 from
   (select
     id as threadid

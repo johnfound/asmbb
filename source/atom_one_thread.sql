@@ -6,7 +6,9 @@ select
   strftime('%Y-%m-%dT%H:%M:%SZ', P.postTime, 'unixepoch') as TimeChanged,
   P.Content,
   P.format,
-  'Thread' || P.threadID as FeedID
+  'Thread' || P.threadID as FeedID,
+  T.Caption as FeedTitle,
+  ?2 || '/' as URL
 from
   Posts P
   left join Users U on U.id = P.userID

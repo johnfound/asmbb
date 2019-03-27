@@ -47,6 +47,7 @@ PHashTable tableSpecial, tpl_func,                              \
         "title",       RenderTemplate.sp_title,                 \ ; Controlled source, no encoding
         "header",      RenderTemplate.sp_header,                \ ; Controlled source, no encoding
         "tagprefix",   RenderTemplate.sp_tagprefix,             \ ; for the Atom feed ID use
+        "hostroot",    RenderTemplate.sp_hostroot,              \
         "allstyles",   RenderTemplate.sp_allstyles,             \ ; CSS, from controlled source, no encoding.
         "description", RenderTemplate.sp_description,           \ ; Controlled source, no encoding
         "keywords",    RenderTemplate.sp_keywords,              \ ; Controlled source, no encoding
@@ -1291,6 +1292,22 @@ endl
         mov     eax, edi
         pop     edi edx
         jmp     .special_string_free
+
+.sp_hostroot:
+        push    edi
+
+        stdcall ValueByName, [ebx+TSpecialParams.params], txt "REQUEST_SCHEME"
+        stdcall StrDup, eax
+        mov     edi, eax
+
+        stdcall StrCat, edi, txt "://"
+        stdcall ValueByName, [ebx+TSpecialParams.params], txt "HTTP_HOST"
+        stdcall StrCat, edi, eax
+
+        mov     eax, edi
+        pop     edi
+        jmp     .special_string_free
+
 
 .sp_description:
         mov     eax, [ebx+TSpecialParams.description]
