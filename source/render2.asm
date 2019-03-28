@@ -22,7 +22,7 @@ tpl_func:
 end if
 
 
-PHashTable tableRenderCmd, tpl_func,                    \
+PHashTable tableRenderCmd, tpl_func,                      \
         'special:',     RenderTemplate.cmd_special,       \
         'raw:',         RenderTemplate.cmd_raw,           \
         'include:',     RenderTemplate.cmd_include,       \
@@ -35,7 +35,8 @@ PHashTable tableRenderCmd, tpl_func,                    \
         'json:',        RenderTemplate.cmd_json,          \   ; No encoding.
         'css:',         RenderTemplate.cmd_css,           \   ; No output, no encoding.
         'equ:',         RenderTemplate.cmd_equ,           \
-        'const:',       RenderTemplate.cmd_const
+        'const:',       RenderTemplate.cmd_const,         \
+        'enc:',         RenderTemplate.cmd_encode             ; encode the content in html encoding.
 
 PHashTable tableSpecial, tpl_func,                              \
         "visitors",    RenderTemplate.sp_visitors,              \ ; HTML no encoding
@@ -523,9 +524,9 @@ begin
         lodsb
 
         cmp     al, '<'
-        je      .char_less_then
+        je      .char_less_than
         cmp     al, '>'
-        je      .char_greater_then
+        je      .char_greater_than
         cmp     al, '"'
         je      .char_quote
         cmp     al, '&'
@@ -545,13 +546,13 @@ begin
         jmp     .loop
 
 
-.char_less_then:
+.char_less_than:
         mov     dword [edi], '&lt;'
         add     edi, 4
         add     ebx, 4
         jmp     .next_encode
 
-.char_greater_then:
+.char_greater_than:
         mov     dword [edi], '&gt;'
         add     edi, 4
         add     ebx, 4
@@ -731,6 +732,95 @@ endl
 
         mov     [.fEncode], 1
         jmp     .loop
+
+; ...................................................................
+
+.cmd_encode:
+; here esi points to ":" of the "enc:" command. edi points to the start "[" and ecx points to the end "]"
+        pushad
+
+        stdcall TextMoveGap, edx, ecx
+        inc     [edx+TText.GapEnd]
+        mov     ebx, [edx+TText.GapEnd]         ; where to stop scanning
+
+        stdcall TextMoveGap, edx, edi
+        add     [edx+TText.GapEnd], 5
+
+        mov     esi, [edx+TText.GapEnd]
+        mov     edi, [edx+TText.GapBegin]
+
+        lea     eax, [edx+esi]
+
+.enc_loop:
+        cmp     esi, ebx
+        jae     .end_scan
+
+        mov     al, [edx+esi]
+        inc     esi
+
+        cmp     al, '<'
+        je      .enc_less_than
+        cmp     al, '>'
+        je      .enc_greater_than
+        cmp     al, '"'
+        je      .enc_quote
+        cmp     al, '&'
+        je      .enc_amp
+
+        mov     [edx+edi], al
+        inc     edi
+        jmp     .enc_loop
+
+
+.enc_less_than:
+        call    .space_for_enc
+        mov     dword [edx+edi], '&lt;'
+        add     edi, 4
+        jmp     .enc_loop
+
+.enc_greater_than:
+        call    .space_for_enc
+        mov     dword [edx+edi], '&gt;'
+        add     edi, 4
+        jmp     .enc_loop
+
+
+.enc_quote:
+        call    .space_for_enc
+        mov     dword [edx+edi], '&quo'
+        mov     word [edx+edi+4],'t;'
+        add     edi, 6
+        jmp     .enc_loop
+
+.enc_amp:
+        call    .space_for_enc
+        mov     dword [edx+edi], '&amp'
+        mov     byte [edx+edi+4], ';'
+        add     edi, 5
+        jmp     .enc_loop
+
+.end_scan:
+        mov     [edx+TText.GapEnd], esi
+        mov     [edx+TText.GapBegin], edi
+        popad
+
+        mov     ecx, [edx+TText.GapBegin]
+        jmp     .loop_dec
+
+
+.space_for_enc:
+        mov     [edx+TText.GapEnd], esi
+        mov     [edx+TText.GapBegin], edi
+
+        sub     ebx, [edx+TText.GapEnd]
+        add     ebx, [edx+TText.GapBegin]
+
+        stdcall TextSetGapSize, edx, 16
+
+        add     ebx, [edx+TText.GapEnd]
+        sub     ebx, [edx+TText.GapBegin]
+        mov     esi, [edx+TText.GapEnd]
+        retn
 
 ; ...................................................................
 

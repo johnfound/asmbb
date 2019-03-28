@@ -90,7 +90,7 @@ begin
 ; Create the XML file of the feed...
 .do_create:
 
-        stdcall TextCat, edi, <txt "Content-Type: application/atom+xml", 13, 10, "Cache-control: max-age=1000000", 13, 10, "Last-modified: ">
+        stdcall TextCat, edi, <txt "Content-Type: application/atom+xml; charset=UTF-8", 13, 10, "Cache-control: max-age=3600", 13, 10, "Last-modified: ">
         mov     edi, edx
 
         cinvoke sqliteColumnInt64, [.stmt], 1   ; the time is always column 1 in the queries!!!

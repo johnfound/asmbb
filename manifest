@@ -1,5 +1,5 @@
-C More\sprecise\satom\stemplates.
-D 2019-03-27T13:19:56.590
+C New\s[enc:]\scommand\sin\sthe\srender\sneeded\sfor\sthe\sAtom\sfeed\sXML\stemplates.\sBecause\sthe\sembeded\sHTML\scode\sis\srequired\sto\sbe\sHTML\sencoded,\seven\sthe\stags.
+D 2019-03-28T10:07:48.676
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -26,7 +26,7 @@ F source/alltags.sql e4a0d5084be7a45f5e30ab46b7985f49c797f86a
 F source/atom_list.sql 50a4e58930e22be24b5589d95e454cb8a19f14c3
 F source/atom_one_thread.sql 8c0c2490e5e7329120d017493ad7b21176d8031f
 F source/atom_tag_list.sql ac2aff28ea9fa597ff3c17d1042b7f987de0fd95
-F source/atomfeed.asm c5ab59c2503e7721e0be05a1bb05a04deed540c4
+F source/atomfeed.asm f47c6d9f7d31496703efc65fe151052333d2d22a
 F source/attachments.asm 6843dd5b449b1394ae9c6f2b6bc44ed561f9a913
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm 87830583d32bdf406d7a0a0615cff0b23fda9283
@@ -62,7 +62,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm 9ef9dcca6745771be8d967682afea731e1e85798
+F source/render2.asm 875d3b87df9c76a95e04697628de59561a9d2fd1
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 720c86042dde68b950cd01059234b50c0dd9f891
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -461,7 +461,7 @@ F www/templates/Wasp/activity6.tpl 8183551cc7d489d3fef5f42dba5d275ce1120278
 F www/templates/Wasp/activity7.tpl e25bb04eb0b2e06619095bc1f2165d989fb93460
 F www/templates/Wasp/activity8.tpl 083618b79fce3c609927c15a018038cdc92c6edd
 F www/templates/Wasp/activity9.tpl 9f354c2dd3b3a9d3c171e7230a88aaf3b074b848
-F www/templates/Wasp/atom_entry_post.tpl 77163a35ed9b0439e2f7944031b687dab32f83b1
+F www/templates/Wasp/atom_entry_post.tpl 1be85cc3d22be22d65a07ce50ebdcb097bcdc516
 F www/templates/Wasp/atom_entry_thread.tpl 5bcc7f00c95a94759338dc438063379c418218e7
 F www/templates/Wasp/atom_start.tpl 9a24db4682e0662dd310fc20183314de41d16159
 F www/templates/Wasp/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
@@ -617,7 +617,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 8ca76a22114f090a805e899132ae84bb58503955
-R a5b0c27928fe32b2f4c7d77de886893c
+P 114f479ff2220588c57daebaa906e67944e1b441
+R 47b6ae07baffb33d62433394a21f0da0
 U johnfound
-Z 6bc93939d151d7401f573fc8434e3797
+Z 577d3d19ce2aa7b3a78d6edd53823eab

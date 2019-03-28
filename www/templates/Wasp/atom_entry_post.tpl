@@ -4,7 +4,7 @@
    <id>[special:tagprefix]Post[postid]</id>
    <updated>[TimeChanged]</updated>
    <content type="html">
-     [html:[[case:[format]|minimag:[include:minimag_suffix.tpl]|bbcode:][Content]]]
+     [enc:[[case:[format]|minimag:[include:minimag_suffix.tpl]|bbcode:][Content]]]
    </content>
    <author>
       <name>[UserName]</name>
