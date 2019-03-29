@@ -1,5 +1,5 @@
-C Added\sRSS/Atom\sicons.\sRespective\sbuttons\simplemented\sin\sthe\sskins.\sWork\son\sthe\sRSS\ssql\srequests.
-D 2019-03-29T08:13:46.082
+C Almost\sworking\sAtom\sfeed\swith\svirtually\sall\swishes\simplemented...
+D 2019-03-29T13:09:51.211
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -23,9 +23,9 @@ F source/ToDo.txt 78c2a566e37fc37db78b799f5ac100bed383c182
 F source/Win32/sqlite3.inc 83b0ebab85f7359c5b99c281b1eae5cce0877b9a
 F source/accounts.asm da51e58f8ab2fc4bd2bd694c502f25a2cf8ab1c0
 F source/alltags.sql e4a0d5084be7a45f5e30ab46b7985f49c797f86a
-F source/atom_list.sql c735b7acf23015546322e799f41e1c2a4468498c
-F source/atom_one_thread.sql 8c0c2490e5e7329120d017493ad7b21176d8031f
-F source/atom_tag_list.sql 9e32f815f1b3209979b1dfa25a8189237d021658
+F source/atom_list.sql 6a80934c279093592290ca79d0b517e37800badf
+F source/atom_one_thread.sql 32da01bccec3dc4f86463f355a476028bc0632de
+F source/atom_tag_list.sql fe14b8eed99c74d8393c6967cb53c95098af0292
 F source/atomfeed.asm f47c6d9f7d31496703efc65fe151052333d2d22a
 F source/attachments.asm 6843dd5b449b1394ae9c6f2b6bc44ed561f9a913
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
@@ -34,7 +34,7 @@ F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm d2b4824ec926ddf7fc4c6492f2ebb75acf5e20a3
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm 786bb2b5a59ca4ae5a7a6ffbf18237c88ff112ec
-F source/create.sql 1b476321bc7557403d7a87b93f0ac1a57cfa7d55
+F source/create.sql e77d1c1fad7556befaf4e73dabcce102d87ccc0c
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm dddd1b6b89eef295ab5a65cb7302aefe0d948399
 F source/engine.asm 360234e68f6fe932c7edd0c50a47a740f632ae2d
@@ -463,8 +463,8 @@ F www/templates/Wasp/activity6.tpl 8183551cc7d489d3fef5f42dba5d275ce1120278
 F www/templates/Wasp/activity7.tpl e25bb04eb0b2e06619095bc1f2165d989fb93460
 F www/templates/Wasp/activity8.tpl 083618b79fce3c609927c15a018038cdc92c6edd
 F www/templates/Wasp/activity9.tpl 9f354c2dd3b3a9d3c171e7230a88aaf3b074b848
-F www/templates/Wasp/atom_entry_post.tpl 1be85cc3d22be22d65a07ce50ebdcb097bcdc516
-F www/templates/Wasp/atom_entry_thread.tpl 51a5ca3c16fabf71f704965f320c94cd61afa196
+F www/templates/Wasp/atom_entry_post.tpl a36d3dd1e06725015323056b09bdc1492aa6a0cc
+F www/templates/Wasp/atom_entry_thread.tpl 99d7a3016bdeceb49055be0dea4e99d863b1b6ee
 F www/templates/Wasp/atom_start.tpl 9a24db4682e0662dd310fc20183314de41d16159
 F www/templates/Wasp/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
 F www/templates/Wasp/chat.less e57b611bba245767e3924f761c37393ee3bb53d2
@@ -619,7 +619,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 5bbd7bcf0730eed319d6c37594466ccefcb1a18d
-R 9fd06f5affca46748111eb6d6407176b
+P b52dbe594712eafc29385fc5b2dc379d6128e562
+R 7d3d11806be6138cd4064e9475f84843
 U johnfound
-Z 05beb95398dde3c92ac8e8e08e1380df
+Z 7ed74b70c8c178d75c4412fffc5eb7b6

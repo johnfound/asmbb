@@ -181,6 +181,7 @@ create table Posts (
 create index idxPosts_UserID   on Posts (userID);
 create index idxPosts_ThreadID on Posts (threadID);
 create index idxPostsThreadUser on posts(threadid, userid);
+create index idxPosts_ThreadID_ID on Posts(threadID, id);
 
 
 create table PostCnt (

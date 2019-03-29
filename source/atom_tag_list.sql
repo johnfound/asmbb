@@ -12,7 +12,10 @@ select
   ?2 as FeedID,
   'Threads for tag [' || ?2 || ']' as FeedTitle,
   ?2 || '/' as URL,
-  ?2 || '/' as tag
+  ?2 || '/' as tag,
+  (select Content from Posts where threadid = T.id order by id desc limit 1) as Content,
+  (select format  from Posts where threadid = T.id order by id desc limit 1) as format,
+  (select nick from Posts P left join users U on U.id = P.userid where P.threadid = T.id order by P.id desc limit 1) as UserName
 from
   (
   select

@@ -12,7 +12,10 @@ select
   'AllThreads' as FeedID,
   'All threads' as FeedTitle,
   '' as URL,
-  '' as tag
+  '' as tag,
+  (select Content from Posts where threadid = T.id order by id desc limit 1) as Content,
+  (select format  from Posts where threadid = T.id order by id desc limit 1) as format,
+  (select nick from Posts P left join users U on U.id = P.userid where P.threadid = T.id order by P.id desc limit 1) as UserName
 from
   threads T
 where

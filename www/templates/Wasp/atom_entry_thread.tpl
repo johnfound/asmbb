@@ -1,5 +1,5 @@
 <entry>
-  <title>[Caption]</title>
+  <title>[Caption] ([PostCount])</title>
   <link rel="alternate" href="[special:hostroot]/[tag][slug]/" />
   <id>[special:tagprefix]Thread[threadid]</id>
   <updated>[TimeChanged]</updated>
@@ -15,7 +15,9 @@
       <p>Posts in the thread: [PostCount]</p>
       <p>Posters: [html:[Posters]]</p>
     </div>
-    <div>
+    <div><p>Last post by: <b>[UserName]</b></p>
+      [html:[[case:[format]|minimag:[include:minimag_suffix.tpl]|bbcode:][Content]]]
+    </div>
   ]
   </content>
 </entry>
