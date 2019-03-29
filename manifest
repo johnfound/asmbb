@@ -1,5 +1,5 @@
-C Almost\sworking\sAtom\sfeed\swith\svirtually\sall\swishes\simplemented...
-D 2019-03-29T13:09:51.211
+C Better\scode\sfor\sthe\sthread\srepresentation\sin\sthe\sAtom\sfeed.
+D 2019-03-29T16:45:40.579
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -464,7 +464,7 @@ F www/templates/Wasp/activity7.tpl e25bb04eb0b2e06619095bc1f2165d989fb93460
 F www/templates/Wasp/activity8.tpl 083618b79fce3c609927c15a018038cdc92c6edd
 F www/templates/Wasp/activity9.tpl 9f354c2dd3b3a9d3c171e7230a88aaf3b074b848
 F www/templates/Wasp/atom_entry_post.tpl a36d3dd1e06725015323056b09bdc1492aa6a0cc
-F www/templates/Wasp/atom_entry_thread.tpl 99d7a3016bdeceb49055be0dea4e99d863b1b6ee
+F www/templates/Wasp/atom_entry_thread.tpl ab6e308c142262fa4a7ff9bb98d03a67168ffe39
 F www/templates/Wasp/atom_start.tpl 9a24db4682e0662dd310fc20183314de41d16159
 F www/templates/Wasp/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
 F www/templates/Wasp/chat.less e57b611bba245767e3924f761c37393ee3bb53d2
@@ -619,7 +619,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P b52dbe594712eafc29385fc5b2dc379d6128e562
-R 7d3d11806be6138cd4064e9475f84843
+P 74ea2824dffee986dbef0f987402cad8f85e5a31
+R 4efa2b24480b3267327eb41f0a9f929e
 U johnfound
-Z 7ed74b70c8c178d75c4412fffc5eb7b6
+Z 1e322247fe8b353be7252e206586b1d4
