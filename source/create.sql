@@ -321,6 +321,8 @@ create index idxThreadTagsTagLimitedPinnedLastChanged ON ThreadTags(Tag, Limited
 create index idxThreadTagsTagPinnedLastChanged on ThreadTags(tag, pinned desc, lastchanged desc);
 create index idxThreadTagsLimitedTag on ThreadTags(Limited, tag);
 create index idxThreadTagsLimitedTagThread on ThreadTags (Limited, tag, threadid);
+create index idxThreadTagsTagLimitedLastChanged on ThreadTags (tag, Limited, LastChanged desc);
+
 
 CREATE TRIGGER ThreadTagsAI AFTER INSERT ON ThreadTags BEGIN
   update Tags set ThreadCnt = ThreadCnt + 1 where tag = new.tag;
