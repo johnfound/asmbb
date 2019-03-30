@@ -16,15 +16,20 @@ proc CreateAtomFeed, .pSpecial
 .date TDateTime
 .timeLo dd ?
 .timeHi dd ?
+  BenchVar .rss
 
 begin
         pushad
 
-        xor     edx, edx
+        BenchmarkStart .rss
 
+        xor     edi, edi
         mov     esi, [.pSpecial]
-        cmp     [esi+TSpecialParams.Limited], edx
+
+        cmp     [esi+TSpecialParams.Limited], edi
         jne     .finish                             ; no limited threads in the feed. return 404 not found
+
+        stdcall LogUserActivity, esi, uaAtomFeedUpdate, 0
 
         stdcall TextCreate, sizeof.TText
         mov     edi, eax
@@ -119,6 +124,10 @@ begin
 
 .finish:
         mov     [esp+4*regEAX], edi
+
+        Benchmark "Atom feed processing: "
+        BenchmarkEnd
+
         stc
         popad
         return

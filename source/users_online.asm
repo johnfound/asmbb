@@ -112,6 +112,7 @@ endp
  uaResetingPassword  = 17
  uaReadingUserlist   = 18
  uaCategoriesList    = 19       ; /!categories
+ uaAtomFeedUpdate    = 20
 
 
 

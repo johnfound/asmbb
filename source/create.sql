@@ -69,7 +69,8 @@ create table Users (
   PostCount integer default 0  -- Speed optimization in order to not count the posts every time. Need automatic count.
 );
 
-create index idxUsers_email on Users (email);
+create index idxUsersRegister on Users(Register);
+create index idxUsers_email on Users(email);
 create index idxUsersX on Users(id, nick, avatar);
 create index idxUsers_LastSeen on Users(LastSeen);
 create index idxUsersBack on Users(id desc);
