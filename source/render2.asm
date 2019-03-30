@@ -1357,7 +1357,7 @@ locals
 endl
 
 .sp_tagprefix:
-        push    edx edi
+        pushad
 
         stdcall StrDupMem, txt "tag:"
         mov     edi, eax
@@ -1368,7 +1368,7 @@ endl
         stdcall StrCat, edi, txt ","
 
         lea     eax, [.stmt2]
-        cinvoke _sqlitePrepare_v2, [hMainDatabase], sqlGetFirstDate, sqlGetFirstDate.length, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetFirstDate, sqlGetFirstDate.length, eax, 0
         cinvoke sqliteStep, [.stmt2]
         cmp     eax, SQLITE_ROW
         jne     .end_tag
@@ -1379,8 +1379,8 @@ endl
 .end_tag:
         cinvoke sqliteFinalize, [.stmt2]
 
-        mov     eax, edi
-        pop     edi edx
+        mov     [esp+4*regEAX], edi
+        popad
         jmp     .special_string_free
 
 .sp_hostroot:

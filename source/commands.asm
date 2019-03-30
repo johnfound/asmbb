@@ -181,7 +181,7 @@ begin
 .header_ok:
         mov     [.special.page_header], eax
 
-        stdcall GetParam, "desription", gpString
+        stdcall GetParam, "description", gpString
         jnc     .description_ok
 
         stdcall StrDupMem, txt "AsmBB forum demo installation."

@@ -1,5 +1,5 @@
-C Better\scode\sfor\sthe\sthread\srepresentation\sin\sthe\sAtom\sfeed.
-D 2019-03-29T16:45:40.579
+C Fixed\ssecurity\sbug\sin\sthe\srender.
+D 2019-03-30T07:43:32.920
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -33,7 +33,7 @@ F source/categories.asm 87830583d32bdf406d7a0a0615cff0b23fda9283
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm d2b4824ec926ddf7fc4c6492f2ebb75acf5e20a3
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
-F source/commands.asm 786bb2b5a59ca4ae5a7a6ffbf18237c88ff112ec
+F source/commands.asm a3a7e0c0bb3ae23b7a5023900c7c6ebe55807623
 F source/create.sql e77d1c1fad7556befaf4e73dabcce102d87ccc0c
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm dddd1b6b89eef295ab5a65cb7302aefe0d948399
@@ -62,7 +62,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm 875d3b87df9c76a95e04697628de59561a9d2fd1
+F source/render2.asm 70daa28a46803ff5574bb1c99669cb4588c14bc5
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 720c86042dde68b950cd01059234b50c0dd9f891
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -619,7 +619,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 74ea2824dffee986dbef0f987402cad8f85e5a31
-R 4efa2b24480b3267327eb41f0a9f929e
+P e5bc077e1951651454af3e729c67dec83dff797a
+R 555c74e6ad22579fecb8512e3bdf51cc
 U johnfound
-Z 1e322247fe8b353be7252e206586b1d4
+Z 532f0b8856fbea4c54150466818b6bf6
