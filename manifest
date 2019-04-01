@@ -1,5 +1,5 @@
-C Added\snew\suser\sactivity\sfor\sthe\satom\sfeeds\supdates.\sAdded\snew\sindex\sto\sthe\sdatabase\sfor\saccelerating\s[special:tagprefix]\sgeneration.
-D 2019-03-30T08:36:34.239
+C More\satractive\satom\sfeed\sstart\stemplate.
+D 2019-04-01T19:36:14.872
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -468,7 +468,7 @@ F www/templates/Wasp/activity8.tpl 083618b79fce3c609927c15a018038cdc92c6edd
 F www/templates/Wasp/activity9.tpl 9f354c2dd3b3a9d3c171e7230a88aaf3b074b848
 F www/templates/Wasp/atom_entry_post.tpl a36d3dd1e06725015323056b09bdc1492aa6a0cc
 F www/templates/Wasp/atom_entry_thread.tpl ab6e308c142262fa4a7ff9bb98d03a67168ffe39
-F www/templates/Wasp/atom_start.tpl 9a24db4682e0662dd310fc20183314de41d16159
+F www/templates/Wasp/atom_start.tpl 93d0cec7a6c29045e0e4bd631eace12699a80aa7
 F www/templates/Wasp/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
 F www/templates/Wasp/chat.less e57b611bba245767e3924f761c37393ee3bb53d2
 F www/templates/Wasp/chat.tpl e296ff783f34495d49e64ead09298460ceb37a62
@@ -623,7 +623,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P a5be8ce7beac078f4919d616b193b05959300053
-R 7bfb57b4c70bc6cd878d6ad071fab964
+P 46d9abd9528d14d90c5d2904f75ef9a18ef9bd7d
+R ff4038bac7d36ebcc6851b822481755e
 U johnfound
-Z a2903a534461a417c660265292dd65dd
+Z 6ce760d703bc25716157ac98ff8fb409
