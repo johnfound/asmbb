@@ -260,8 +260,6 @@ begin
         cmp     [fLogEvents], 0
         je      .finish
 
-;        DebugMsg "Event will be logged!"
-
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLogEvent, sqlLogEvent.length, eax, 0
 
@@ -449,7 +447,7 @@ begin
         jne     .mx_disabled
 
         mov     [.requestID], eax
-        or      [.requestFlags], ffcgiExpectParams
+        or      [.requestFlags], ffcgiExpectParams or ffcgiExpectStdIn
 
         movzx   ecx, [esi+FCGI_BeginRequest.body.flags]
         or      [.requestFlags], ecx
@@ -469,7 +467,7 @@ begin
 
 
 .mx_disabled:
-        DebugMsg "Request multiplex refused!"
+
         stdcall FCGI_send_end_request, [.hSocket], eax, FCGI_CANT_MPX_CONN
         jmp     .pack_loop
 
@@ -507,19 +505,9 @@ begin
         and     [.requestFlags], not ffcgiExpectParams
 
         test    [.requestFlags], ffcgiExpectStdIn
-        jnz     .pack_loop
+        jz      .serve_request
 
-        stdcall ValueByName, [.requestParams], "REQUEST_METHOD"
-        jc      .serve_request                                          ; not found method
-
-        stdcall StrCompNoCase, eax, txt "POST"
-        jnc     .serve_request                          ; it is not the POST request, so no need to wait for more data.
-
-; some post data is expected.
-
-        or      [.requestFlags], ffcgiExpectStdIn
         jmp     .pack_loop
-
 
 
 ; Processing FCGI_STDIN data stream on the post requests.
@@ -529,9 +517,6 @@ begin
         xor     eax, eax
         mov     ax, [esi+FCGI_Header.requestId]
         xchg    al, ah
-
-        cmp     eax, [.requestID]
-        jne     .mx_disabled
 
         xor     ecx, ecx
         mov     cx, [esi+FCGI_Header.contentLength]
@@ -570,7 +555,6 @@ begin
 
 
 .stdin_received:
-
         and     [.requestFlags], not ffcgiExpectStdIn
 
         test    [.requestFlags], ffcgiExpectParams
@@ -582,9 +566,9 @@ begin
 .error_request_too_big:         ; this request should not be passed to the ServeOneRequest procedure,
                                 ; because it contains invalid data.
 
-        DebugMsg "The POST data is too big. Send 413"
-
 cError413 text "Status: 413 Payload Too Large", 13, 10, "Content-type: text/html", 13, 10, 13, 10, "<html><head></head><body><h1>Payload Too Large</h1></body></html>", 13, 10
+
+        and     [.requestFlags], not FCGI_KEEP_CONN     ; force the connection close!
 
         stdcall FCGI_output, [.hSocket], [.requestID], cError413, cError413.length, TRUE
         jmp     .request_complete
@@ -630,8 +614,6 @@ cError413 text "Status: 413 Payload Too Large", 13, 10, "Content-type: text/html
         jnz     .main_loop
 
 .finish:
-;        DebugMsg "Don't keep connection"
-
         stdcall SocketClose, [.hSocket]
 
 .exit:
@@ -673,8 +655,6 @@ cError413 text "Status: 413 Payload Too Large", 13, 10, "Content-type: text/html
         mov     [.requestID], eax
 
         retn
-
-
 endp
 
 

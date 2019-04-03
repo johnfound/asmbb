@@ -1455,8 +1455,6 @@ endl
 
 .sp_limited:
         mov     eax, [ebx+TSpecialParams.Limited]
-
-        OutputValue "[special:limited] = ", eax, 10, -1
         jmp     .special_int
 
 .sp_variant:
@@ -1470,8 +1468,6 @@ endl
         setnz   cl
 
         lea     eax, [2*eax+ecx]
-
-        OutputValue "[special:variant] = ", eax, 10, -1
         pop     ecx
         jmp     .special_int
 

@@ -391,8 +391,6 @@ begin
 
 .output_forum_html:     ; Status: 200 OK
 
-        OutputValue "TText address to concatenate: ", eax, 16, 8
-
         push    eax eax ; store for use.
 
         stdcall TextCat, edx, <"Content-type: text/html; charset=utf-8", 13, 10, 13, 10>
