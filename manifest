@@ -1,5 +1,5 @@
-C Fixed\ssome\shacks\sin\sthe\sFastCGI\sprotocol\slibrary.\sFixed\sFCGI_KEEP_CONN\sflag\shandling.\sRemoved\ssome\sobsolete\sdebug\scode.
-D 2019-04-03T16:31:56.759
+C Better\ssorting\sorder\sin\ssearch\sresults.
+D 2019-04-05T06:10:47.032
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -64,7 +64,7 @@ F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
 F source/render2.asm 7d9059ffa999bbd53dffafcd903feaf266976e8b
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
-F source/search.asm 720c86042dde68b950cd01059234b50c0dd9f891
+F source/search.asm bf0cc81ee01e15f731972a6c951101c814f19c19
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm e2833310c23d6354d5457ac397e0bbadcc4244d0
@@ -623,7 +623,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 2ce91a7ffd18935df24128fb42007dedaa4ec317
-R 192db30807d37a152141c5e31834e3a4
+P 653166bfca07de750a28ce61b87ade4d6983d144
+R 4fa1603c1cd5c43bed388f08c07c1810
 U johnfound
-Z 736d948f4a152f61eb512b1794f6aa2c
+Z 2f4f9df11b25363b330285e65377ff25

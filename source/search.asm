@@ -2,7 +2,7 @@
 sqlSearchCntPrefix  StripText "search_cnt.sql", SQL
 sqlSearchPrefix     StripText "search.sql", SQL
 
-sqlSearchWhere text    " where PostFTS match ?1 and ((LT.userid is null or LT.userid = ?4))"
+sqlSearchWhere text    " where PostFTS match ?1 and ((LT.userid is null or LT.userid = ?4)) order by PostFTS.rowid desc"
 sqlSearchLimit text    " limit ?2 offset ?3 "
 
 
@@ -124,13 +124,9 @@ begin
         test    eax, eax
         jnz     .order_ok
 
-        stdcall StrCat, [.order], txt " order by P.postTime desc"
+        stdcall StrCat, [.order], txt " order by PostFTS.rowid desc"    ; it is a kind ot sort "newest first" but much faster.
 
 .order_ok:
-
-;        stdcall FileWriteString, [STDERR], [.order]
-;        stdcall FileWriteString, [STDERR], cCRLF2
-
 ; Create SQL queries depending on the search options.
 
         stdcall StrDupMem, sqlSearchCntPrefix
