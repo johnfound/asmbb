@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title>[special:title]</title>
+  <link href="!feed" type="application/atom+xml" rel="alternate" title="Atom feed">
   <meta name="description" content="[special:description]">
   <meta name="keywords" content="[special:keywords]">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scallable=no">
@@ -65,10 +66,12 @@
   </form>
 
   <div class="tags">
-    <a href="/[case:[special:limited]||(o)/]"><img class="tagicon" src="[special:skin]/_images/alltags[case:[special:variant]|||_gray].svg" alt="/" title="[case:[special:lang]|Show all threads|Покажи всички теми|Показать все темы|Montrer tous les sujets|Alle Themen zeigen]">
+    <a href="/[case:[special:limited]||(o)/]"><img class="tagicon" src="[special:skin]/_images/alltags[case:[special:variant]|||_gray].svg" alt="/" title="[case:[special:lang]|Show all threads|Покажи всички теми|Показать все темы|Montrer tous les sujets|Al
+le Themen zeigen]">
 
 </a>
     <a href="/[case:[special:limited]|(o)/|][case:[special:dir]||[special:dir]/]"><img class="tagicon" src="[special:skin]/_images/limited[case:[special:limited]|_gray|].svg" alt="/" title="[case:[special:lang]|Limited access threads|Теми с ограничен достъ
+
 
 п|Темы с ограниченным доступом|Discussions d'accès limité|Themen mit beschränktem Zugang]"></a>
     [special:alltags]

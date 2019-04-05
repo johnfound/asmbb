@@ -70,11 +70,10 @@
 @clPostInfoBG: #d0d0d0;
 @clPostInfoFG: black;
 
-@FontMain:      "Verdana", sans-serif;
+@FontMain:      Arial,Helvetica,Liberation Sans,sans-serif;
+@FontMonospace: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
 @FontSize:      16px;
-
-@FontMonospace: "Liberation Mono", "Courier New", monospaced;
-@FontSizeMono: 16px;
+@FontSizeMono:  16px;
 
 @HeaderBackground: none;
 

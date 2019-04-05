@@ -1,0 +1,1 @@
+../Wasp/atom_entry_thread.tpl

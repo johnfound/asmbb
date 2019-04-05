@@ -69,7 +69,8 @@ create table Users (
   PostCount integer default 0  -- Speed optimization in order to not count the posts every time. Need automatic count.
 );
 
-create index idxUsers_email on Users (email);
+create index idxUsersRegister on Users(Register);
+create index idxUsers_email on Users(email);
 create index idxUsersX on Users(id, nick, avatar);
 create index idxUsers_LastSeen on Users(LastSeen);
 create index idxUsersBack on Users(id desc);
@@ -181,6 +182,7 @@ create table Posts (
 create index idxPosts_UserID   on Posts (userID);
 create index idxPosts_ThreadID on Posts (threadID);
 create index idxPostsThreadUser on posts(threadid, userid);
+create index idxPosts_ThreadID_ID on Posts(threadID, id);
 
 
 create table PostCnt (
@@ -321,6 +323,8 @@ create index idxThreadTagsTagLimitedPinnedLastChanged ON ThreadTags(Tag, Limited
 create index idxThreadTagsTagPinnedLastChanged on ThreadTags(tag, pinned desc, lastchanged desc);
 create index idxThreadTagsLimitedTag on ThreadTags(Limited, tag);
 create index idxThreadTagsLimitedTagThread on ThreadTags (Limited, tag, threadid);
+create index idxThreadTagsTagLimitedLastChanged on ThreadTags (tag, Limited, LastChanged desc);
+
 
 CREATE TRIGGER ThreadTagsAI AFTER INSERT ON ThreadTags BEGIN
   update Tags set ThreadCnt = ThreadCnt + 1 where tag = new.tag;

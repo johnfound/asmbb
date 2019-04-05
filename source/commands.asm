@@ -102,6 +102,7 @@ PHashTable tablePostCommands, tpl_func,                 \
         "!edit_thread",     EditThreadAttr,             \
         "!del",             DeletePost,                 \
         "!by_id",           PostByID,                   \
+        "!feed",            CreateAtomFeed,             \
         "!history",         ShowHistory,                \
         "!restore",         RestorePost,                \
         "!echoevents",      EchoRealTime,               \    ; optional, depending on the options.DebugWebSSE
@@ -180,7 +181,7 @@ begin
 .header_ok:
         mov     [.special.page_header], eax
 
-        stdcall GetParam, "desription", gpString
+        stdcall GetParam, "description", gpString
         jnc     .description_ok
 
         stdcall StrDupMem, txt "AsmBB forum demo installation."
@@ -390,8 +391,6 @@ begin
 
 .output_forum_html:     ; Status: 200 OK
 
-        OutputValue "TText address to concatenate: ", eax, 16, 8
-
         push    eax eax ; store for use.
 
         stdcall TextCat, edx, <"Content-type: text/html; charset=utf-8", 13, 10, 13, 10>
@@ -582,6 +581,28 @@ begin
 
 .exec_command:
 
+; ECX here contains pointer to the request processing procedure.
+;
+; The most of these procedures are used in the command hash tables: tablePreCommands and tablePostCommands
+; except: CreateAdminAccount, ShowThread and ListThreads.
+;
+; This procedure has one argument - pointer to TSpecialParams structure (here it is [.special] variable)
+; The procedure returns results in CF and EAX:
+;
+; EAX: poiner to TText structure with the resulting HTML code that to be returned to the
+;      client.
+;
+;      If CF=1 this TText contains the whole code that need to be returned to the client
+;      without other processing.
+;
+;      if CF=0 the returned HTML is only the content of the page, that need to be enclosed in
+;      the 'main_html_start.tpl' and 'main_html_end.tpl' templates.
+;
+;      if EAX = 0 and CF=0 it means there is no page created and error 404 have to be returned.
+;
+;      EAX = 0 and CF=1 is invalid result. It will be processed normally but will return
+;      nothing to the client and will finish the request with empty response body.
+;
         lea     eax, [.special]
         stdcall ecx, eax
         jc      .send_simple_replace

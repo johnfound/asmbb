@@ -103,8 +103,6 @@ begin
         cinvoke sqlitePrepare_v2, [hMainDatabase], edx, eax, ecx, 0
         stdcall TextFree ; from the stack.
 
-        OutputValue "Thread list sql prepared return: ", eax, 10, -1
-
         cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.page_length]
 
         mov     eax, [esi+TSpecialParams.page_num]
@@ -125,9 +123,6 @@ begin
 
 .loop:
         cinvoke sqliteStep, [.stmt]
-
-        OutputValue "Thread list sql step() return: ", eax, 10, -1
-
         cmp     eax, SQLITE_ROW
         jne     .finish
 

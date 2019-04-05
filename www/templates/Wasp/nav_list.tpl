@@ -8,13 +8,15 @@
   [equ:btnChat=Chat]
   [equ:btnSettings=Settings]
   [equ:btnConsole=SQL console]
+  [equ:rssfeed=Subscribe]
 |
   [equ:btnCats=Категории]
   [equ:btnNewThread=Нова тема]
   [equ:btnMarkRead=Маркирай всички]
-  [equ:btnChat=Chat]
+  [equ:btnChat=Чат]
   [equ:btnSettings=Настройки]
   [equ:btnConsole=SQL конзола]
+  [equ:rssfeed=Абонирай се]
 |
   [equ:btnCats=Категории]
   [equ:btnNewThread=Новая тема]
@@ -22,6 +24,7 @@
   [equ:btnChat=Чат]
   [equ:btnSettings=Настройки]
   [equ:btnConsole=SQL конзоль]
+  [equ:rssfeed=Подпишитесь]
 |
   [equ:btnCats=Catégories]
   [equ:btnNewThread=Nouveau sujet]
@@ -29,6 +32,7 @@
   [equ:btnChat=Тchat]
   [equ:btnSettings=Paramètres]
   [equ:btnConsole=Console SQL]
+  [equ:rssfeed=Subscribe]
 |
   [equ:btnCats=Kategorien]
   [equ:btnNewThread=Neues Thema]
@@ -36,6 +40,7 @@
   [equ:btnChat=Chat]
   [equ:btnSettings=Einstellungen]
   [equ:btnConsole=SQL-Konsole]
+  [equ:rssfeed=Subscribe]
 ]
 
 
@@ -49,4 +54,5 @@
     <a class="ui right" href="/!settings[special:urltag]">[const:btnSettings]</a>
     <a class="ui right" href="/!sqlite">[const:btnConsole]</a>
   ]
+  <a class="ui2" href="!feed" title="[const:rssfeed]"><img src="[special:skin]/_images/rss.svg" alt="RSS"></a>
 </div>
