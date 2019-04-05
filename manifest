@@ -1,5 +1,5 @@
-C The\s"atomfeed"\sbranch\smerged\sto\sthe\strunk\safter\stests.
-D 2019-04-05T08:39:25.295
+C Styling\sof\sthe\svery\slong\sthread\sheaders\sand\sbetter\sparagraph\sformatting.
+D 2019-04-05T19:21:55.730
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -499,7 +499,7 @@ F www/templates/Wasp/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991e
 F www/templates/Wasp/login.less 85f8c636e9c15adffb68d098f557d3efbdbc4e5a
 F www/templates/Wasp/main_html_end.tpl b42a53ad3999aedac1ef00d2118f5aca0a7ee37a
 F www/templates/Wasp/main_html_start.tpl 2d62d8a4837936b70631914d339856e18bf767e2
-F www/templates/Wasp/markdown.less 120c3455a2dbcbfa22451929c9841e3e8e0a2528
+F www/templates/Wasp/markdown.less e62eac499043788e834f58f022ad46526e8d5629
 F www/templates/Wasp/minimag_suffix.tpl 7051407fe8722bb0a32cc68e05109ec539c2ac27
 F www/templates/Wasp/nav_categories.tpl a132b6d7a2351b6d7fabfdb7c821dfb7228c0ac2
 F www/templates/Wasp/nav_history.tpl 7d7b20a16288e53f745d28fe97cf43244b9bb29d
@@ -513,8 +513,8 @@ F www/templates/Wasp/one_user.tpl 66e01f838cd2fd5ed9d9c623bd68a0bf0e9de135
 F www/templates/Wasp/post_history.tpl 2b467681d5502151d0e4fee49678ae7216009d2f
 F www/templates/Wasp/post_view.tpl 793f932304ac3e92afef33b74261307355b100d3
 F www/templates/Wasp/posteditor.less f990d5a9034599e43c3e72471622db9b89f62c43
-F www/templates/Wasp/postnew.less baa6d6d872f7d4bd97a4283a84194b38e044a796
-F www/templates/Wasp/posts.less 90d9b437e4267d4842d8ec355904892f4e651a98
+F www/templates/Wasp/postnew.less ddc68e487d815f8cd6aa3ebfc23d1f71bffa3daa
+F www/templates/Wasp/posts.less cea5f85c3b61a043bd3e07dca04a28e87e8d616a
 F www/templates/Wasp/preview.tpl 7762cf404ea93817b3121932c29a7cac0502c135
 F www/templates/Wasp/restore_confirm.tpl 173edac9d455ed8b3a1abd129de4c7d02dc2e049
 F www/templates/Wasp/search.less 17bfdc636da1019916443febbb2073b791ed79d1
@@ -590,7 +590,7 @@ F www/templates/mobile/help_new_thread.tpl 579ed6559a0a3aee0fe3be3a2c841c1dd7b8b
 F www/templates/mobile/login.less 4af417eb9ae51e7d5691cba96a93ef5a9fd79dd2 l
 F www/templates/mobile/main_html_end.tpl d8b3ec3c2cdc952fcab6638d4147ee7e9cd2ba96 l
 F www/templates/mobile/main_html_start.tpl b93c0043a09f7ef6614707de05a8b45f8af6b33f l
-F www/templates/mobile/markdown.less 740819bce1b5546d1deea8957b2dc2a5147b22c6
+F www/templates/mobile/markdown.less d38259171bb1e7f611beaf604731356f0d99da52
 F www/templates/mobile/minimag_suffix.tpl f3a1414972a13590a7c984b53b6fd2ddd3a47f3a l
 F www/templates/mobile/nav_categories.tpl f7d6f653d7de3ea424b62ebae575e3c5c1f4d98b l
 F www/templates/mobile/nav_history.tpl ac180ed4422e7ee62e4421a19c1ee7d69a72e503 l
@@ -603,9 +603,9 @@ F www/templates/mobile/one_category.tpl a708fe0d344a3b684ed7228e7f32486237f90b28
 F www/templates/mobile/one_user.tpl f1e1aacad832e82f4b446f755387efe7f6d815b1 l
 F www/templates/mobile/post_history.tpl 252f022e564844721c84b264f05f527742108a19 l
 F www/templates/mobile/post_view.tpl 4e4b1a73db2462b1954e92ec092c71c438b63e85 l
-F www/templates/mobile/posteditor.less 1bb2f0e3fb95b067a649f4be16815370ee3bef51
+F www/templates/mobile/posteditor.less 337d6782415dd8e342caf41d6b4fe77e38ecf898
 F www/templates/mobile/postnew.less 3df1b56984c0e0268104a69862782120a40f06be l
-F www/templates/mobile/posts.less 1c62bbcf1f3b1faaa11c69c38606f4bd8b13c1c2
+F www/templates/mobile/posts.less 3632e245346b8d10ec679b3a894ed59b8736837c
 F www/templates/mobile/preview.tpl 6bd29d06a6720e51db6d4d73b7572f9fcc1ff32f l
 F www/templates/mobile/restore_confirm.tpl c59340b4b594a629285efa18802ea6d542442afb l
 F www/templates/mobile/search.less 4aae680b0042d04f27b06a36469268d5dfec7e89
@@ -623,7 +623,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 44c78a9e5b2b27f9c09c5c18f1dfed2f2ce552fc 4a8de00d7c5b90f620269c73cf779e4504db7b79
-R d1e9e162c634d2f89bb35ea977e5d3ec
+P 01061a3e8b4a99be1c17e36ffd1c4f73f77695d9
+R c25317d583536863a379acef5703bb78
 U johnfound
-Z 9496117cbb21a329b2d848a5d0324d3e
+Z f905aec067011566aebe834ea1fff724
