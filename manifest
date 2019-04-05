@@ -1,5 +1,5 @@
-C Better\ssorting\sorder\sin\ssearch\sresults.
-D 2019-04-05T06:10:47.032
+C Fixed\sthe\sskins\sfonts\sto\slook\salmost\sthe\ssame\son\sdifferent\sOSes.
+D 2019-04-05T07:10:05.527
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -292,7 +292,7 @@ F www/templates/Light/restore_confirm.tpl c59340b4b594a629285efa18802ea6d542442a
 F www/templates/Light/search.less 673002a86d7aedc24bb456eb9aaf0842cc437fcf l
 F www/templates/Light/search_result.tpl a51b831f28a3d1ee546b097caa4f78ddd023ca70 l
 F www/templates/Light/settings.less ceddd6b5948701659f883fd99ed0b9a31067df6e l
-F www/templates/Light/skin_variables.lsi bbb9231a5b7b9200656b2c351274c2f88c1cdd86
+F www/templates/Light/skin_variables.lsi 0c6d2d65d308cd2df50afd6aa513d28b28c61993
 F www/templates/Light/sqlite.less d6c705801f27dd30658b51803f0638ded21bb45c l
 F www/templates/Light/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
 F www/templates/Light/thread_info.tpl c743dcfd11ad67cbb0634f4c1cedb1439753ef4e
@@ -381,7 +381,7 @@ F www/templates/MoLight/restore_confirm.tpl c59340b4b594a629285efa18802ea6d54244
 F www/templates/MoLight/search.less ac6a407921c036e122a86c8bda3ff931c89642e6 l
 F www/templates/MoLight/search_result.tpl 236418544c204ec1a1e6c33791ce4c9c5b2cf2f8 l
 F www/templates/MoLight/settings.less ceddd6b5948701659f883fd99ed0b9a31067df6e l
-F www/templates/MoLight/skin_variables.lsi 66fb5c3bdda72bb45c0ef0d6e9c185968ae9faf6
+F www/templates/MoLight/skin_variables.lsi 1b631b54d2bf54dd58dac7a73de7e477810dcd73
 F www/templates/MoLight/sqlite.less d6c705801f27dd30658b51803f0638ded21bb45c l
 F www/templates/MoLight/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
 F www/templates/MoLight/thread_info.tpl 7cb85ae78a1c9533e82068fed34eeaf9f5b72d30 l
@@ -503,7 +503,7 @@ F www/templates/Wasp/markdown.less 120c3455a2dbcbfa22451929c9841e3e8e0a2528
 F www/templates/Wasp/minimag_suffix.tpl 7051407fe8722bb0a32cc68e05109ec539c2ac27
 F www/templates/Wasp/nav_categories.tpl a132b6d7a2351b6d7fabfdb7c821dfb7228c0ac2
 F www/templates/Wasp/nav_history.tpl 7d7b20a16288e53f745d28fe97cf43244b9bb29d
-F www/templates/Wasp/nav_list.tpl 93ec7652868cd868465251a0ceba710685340381
+F www/templates/Wasp/nav_list.tpl ce33a3a2401d611f9c700d89ef5daf8d2ec8a61b
 F www/templates/Wasp/nav_search.tpl 94348341523bd79e3919d36b9a7072ca1da82e27
 F www/templates/Wasp/nav_thread.tpl becadabf1b0263eff327366d262a6418ee3b84b7
 F www/templates/Wasp/nav_userslist.tpl b25e53dad0dab74e40c295c207593dd929900c06
@@ -520,7 +520,7 @@ F www/templates/Wasp/restore_confirm.tpl 173edac9d455ed8b3a1abd129de4c7d02dc2e04
 F www/templates/Wasp/search.less 17bfdc636da1019916443febbb2073b791ed79d1
 F www/templates/Wasp/search_result.tpl 436d969e5b83d331581f8c0db368cab14d9be8e9
 F www/templates/Wasp/settings.less c4404fddbc73fdaede5643beffe536b5bca9339a
-F www/templates/Wasp/skin_variables.lsi b8a03380d72614d5d21917a8383088d80a14b66b
+F www/templates/Wasp/skin_variables.lsi a7fddb397ad215acb6a60a4d932d6509a59920ed
 F www/templates/Wasp/sqlite.less f4a2edc06c2c1410f5d78ad1ea298439251482af
 F www/templates/Wasp/statistics.tpl bf782dcf58f109634ecb12e45116117031bbb988
 F www/templates/Wasp/thread_info.tpl 662444dff79948b05d67004c59e80da324c67aed
@@ -611,7 +611,7 @@ F www/templates/mobile/restore_confirm.tpl c59340b4b594a629285efa18802ea6d542442
 F www/templates/mobile/search.less 4aae680b0042d04f27b06a36469268d5dfec7e89
 F www/templates/mobile/search_result.tpl 7b0c0d02750c7369f35f8ef7294586090efed19e
 F www/templates/mobile/settings.less ceddd6b5948701659f883fd99ed0b9a31067df6e l
-F www/templates/mobile/skin_variables.lsi 8efd0243447a9f5ff12ffaea3b1eac20eaac8442
+F www/templates/mobile/skin_variables.lsi ac71972550e79f736aed5d01fe0b67dacac9ac71
 F www/templates/mobile/sqlite.less d6c705801f27dd30658b51803f0638ded21bb45c l
 F www/templates/mobile/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
 F www/templates/mobile/thread_info.tpl aee1ed245383a3f0c40b9a03b6d98430ba6f2088
@@ -623,7 +623,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 653166bfca07de750a28ce61b87ade4d6983d144
-R 4fa1603c1cd5c43bed388f08c07c1810
+P aa978e9a314a0a9de61804ae4871a37eb204d0b3
+R d1e9e162c634d2f89bb35ea977e5d3ec
 U johnfound
-Z 2f4f9df11b25363b330285e65377ff25
+Z d06a55ceb84dc1a0b6d7d24b3f651651

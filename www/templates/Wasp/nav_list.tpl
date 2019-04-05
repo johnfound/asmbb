@@ -13,7 +13,7 @@
   [equ:btnCats=Категории]
   [equ:btnNewThread=Нова тема]
   [equ:btnMarkRead=Маркирай всички]
-  [equ:btnChat=Chat]
+  [equ:btnChat=Чат]
   [equ:btnSettings=Настройки]
   [equ:btnConsole=SQL конзола]
   [equ:rssfeed=Абонирай се]
