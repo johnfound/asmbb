@@ -34,10 +34,11 @@
   <noscript>
     <style> .jsonly { display: none !important } </style>
   </noscript>
-
 </head>
 
 <body>
+  [raw:realtime.js]
+
   <div class="header">
     <h1>[special:header]</h1>
     <div class="spacer"></div>
@@ -67,10 +68,12 @@
 
   <div class="tags">
     <a href="/[case:[special:limited]||(o)/]"><img class="tagicon" src="[special:skin]/_images/alltags[case:[special:variant]|||_gray].svg" alt="/" title="[case:[special:lang]|Show all threads|Покажи всички теми|Показать все темы|Montrer tous les sujets|Al
+
 le Themen zeigen]">
 
 </a>
     <a href="/[case:[special:limited]|(o)/|][case:[special:dir]||[special:dir]/]"><img class="tagicon" src="[special:skin]/_images/limited[case:[special:limited]|_gray|].svg" alt="/" title="[case:[special:lang]|Limited access threads|Теми с ограничен достъ
+
 
 
 п|Темы с ограниченным доступом|Discussions d'accès limité|Themen mit beschränktem Zugang]"></a>

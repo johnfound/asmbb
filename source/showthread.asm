@@ -187,6 +187,25 @@ begin
 ;        jmp     .skip_writes           ; not write the posts read count and clearing the unread posts.
                                         ; this is acceptable on very high loads for boosting performance.
 
+; Send activity events...
+
+        stdcall StrDupMem, '<a href="/!userinfo/'
+
+        stdcall UserNameLink, esi
+        mov     ebx, eax
+        stdcall StrCat, ebx, txt ' is reading thread <a href="/'
+        stdcall StrCat, ebx, [esi+TSpecialParams.thread]
+        stdcall StrCat, ebx, txt '">'
+
+        cinvoke sqliteColumnText, [.stmt2], 1
+        stdcall StrEncodeHTML, eax
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+        stdcall StrCat, ebx, txt '</a>'
+
+        stdcall AddActivity, ebx, [esi+TSpecialParams.userID]
+        stdcall StrDel, ebx
+
 ; Mark rendered posts as read. If the user is logged-in
 
         mov     ebx, [esi+TSpecialParams.userID]

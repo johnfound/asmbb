@@ -336,12 +336,12 @@ begin
         jnz     .go_back
 
         stdcall TextMakeRedirect, edi, txt "/"
-        jmp     .finish
+        jmp     .finish_logged
 
 .go_back:
         stdcall TextMakeRedirect, edi, eax
         stdcall StrDel, eax
-        jmp     .finish
+        jmp     .finish_logged
 
 .redirect_back_short:
 
@@ -357,6 +357,14 @@ begin
 .redirect_back_bad_password:
 
         stdcall TextMakeRedirect, 0, "/!message/login_bad_password/"
+        jmp     .finish
+
+.finish_logged:
+
+        stdcall UserNameLink, [.pSpecial]
+        stdcall StrCat, eax, " entered forum."
+        stdcall AddActivity, eax, [.userID]
+        stdcall StrDel, eax
 
 .finish:
         mov     [esp+4*regEAX], edi     ; the result
@@ -415,6 +423,12 @@ begin
 
         stdcall TextCat, edi, <"Set-Cookie: sid=; HttpOnly; Path=/; Max-Age=0", 13, 10>
         mov     edi, edx
+
+        stdcall UserNameLink, esi
+        stdcall StrCat, eax, " leaved."
+
+        stdcall AddActivity, eax, [esi+TSpecialParams.userID]
+        stdcall StrDel, eax
 
 .finish:
         stdcall GetBackLink, esi

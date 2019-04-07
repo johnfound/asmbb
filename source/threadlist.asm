@@ -22,6 +22,12 @@ begin
 
         stdcall LogUserActivity, esi, uaThreadList, 0
 
+; activity realtime event
+        stdcall UserNameLink, esi
+        stdcall StrCat, eax, txt ' is reading thread list.'
+        stdcall AddActivity, eax, [esi+TSpecialParams.userID]
+        stdcall StrDel, eax
+
 ; make the title
 
         mov     ebx, [esi+TSpecialParams.page_title]
