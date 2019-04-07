@@ -1,5 +1,5 @@
-C Fixed\sstring\sleaks.
-D 2019-04-07T13:26:15.056
+C Fixed\sbug\sin\sthe\slogin\sevent\ssending.
+D 2019-04-07T17:28:36.163
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -21,7 +21,7 @@ F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/TestsWithTags.sql 6384a56d553e36aa1c54cdb61a147bb2806e3e9d
 F source/ToDo.txt 78c2a566e37fc37db78b799f5ac100bed383c182
 F source/Win32/sqlite3.inc 83b0ebab85f7359c5b99c281b1eae5cce0877b9a
-F source/accounts.asm 9e01a4d91496d7f969d1e9baa4963c91bef4e556
+F source/accounts.asm 6e7416ebcbaf97acb9407f3d51f2a5e394f7417d
 F source/alltags.sql e4a0d5084be7a45f5e30ab46b7985f49c797f86a
 F source/atom_list.sql 6a80934c279093592290ca79d0b517e37800badf
 F source/atom_one_thread.sql 32da01bccec3dc4f86463f355a476028bc0632de
@@ -628,7 +628,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 4f49684b03e4a060bb663862b20916989ac628f9
-R a1c39b4b4dd018e8ecc5779e967b0890
+P 3805711b4f3f048e2b2dba71d11ee0116e271e4d
+R d9d448b8391dbe4051831d349a76fdfd
 U johnfound
-Z 57777ba44a7ce02c0e73d39a4cd56938
+Z 3f32f84495f8fa6573298db935e8dbdb

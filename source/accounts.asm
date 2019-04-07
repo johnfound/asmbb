@@ -360,8 +360,18 @@ begin
         jmp     .finish
 
 .finish_logged:
+        mov     ecx, [.user]
+        mov     edx, [.userID]
+        xchg    ecx, [esi+TSpecialParams.userName]
+        xchg    edx, [esi+TSpecialParams.userID]
+        push    ecx edx
 
-        stdcall UserNameLink, [.pSpecial]
+        stdcall UserNameLink, esi
+
+        pop     edx ecx
+        xchg    edx, [esi+TSpecialParams.userID]
+        xchg    ecx, [esi+TSpecialParams.userName]
+
         stdcall StrCat, eax, " entered forum."
         stdcall AddActivity, eax, [.userID]
         stdcall StrDel, eax
