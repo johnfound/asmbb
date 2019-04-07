@@ -54,15 +54,18 @@ iglobal
   evUsersOnline        = 0
   evUserChanged        = 1
   evMessage            = 2
+  evUserActivity       = 3
 
   evmUsersOnline       = 1 shl evUsersOnline
   evmUserChanged       = 1 shl evUserChanged
   evmMessage           = 1 shl evMessage
+  evmUserActivity      = 1 shl evUserActivity
 
   EventNames tblEventNames,                     \
     'users_online',                             \
     'user_changed',                             \
-    'message'
+    'message',                                  \
+    'user_activity'
 endg
 
 
@@ -446,6 +449,8 @@ endp
 
 
 
+; Adds an event to the event queue.
+; if [.receiver] == 0 then the event is broadcaseted to all registered listeners.
 
 sqlInsertEvent text "insert into EventQueue(type, event, receiver) values (?1, ?2, ?3);"
 

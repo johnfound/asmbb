@@ -79,6 +79,8 @@ include "history.asm"
 include "chat.asm"
 include "chat_ipc.asm"
 
+include "realtime.asm"
+
 include "postdebug.asm"
 include "attachments.asm"
 
@@ -432,7 +434,37 @@ begin
         stdcall MutexRelease, mxSQLite
 
 .finish_sqlite:
-        stdcall TextCat, edx, txt "</table></article><article><h1>StrLib statistics</h1>"
+        stdcall TextCat, edx, txt "</table></article><article><h1>SSE listeners</h1>"
+
+; SSE listeners
+
+        stdcall WaitForMutex, mxListeners, 1000
+        jc      .finish_sse
+
+        mov     edi, [pFirstListener]
+        xor     ecx, ecx
+
+.listeners_loop:
+        test    edi, edi
+        jz      .finishok
+
+        mov     edi, [edi+TEventsListener.pNext]
+        inc     ecx
+        jmp     .listeners_loop
+
+
+.finishok:
+        stdcall MutexRelease, mxListeners
+
+        stdcall TextCat, edx, txt "<p>SSE listeners: "
+        stdcall NumToStr, ecx, ntsDec or ntsUnsigned
+        stdcall TextCat, edx, eax
+        stdcall TextCat, edx, txt "</p>"
+        stdcall StrDel, eax
+
+.finish_sse:
+
+        stdcall TextCat, edx, txt "</article><article><h1>StrLib statistics</h1>"
 
 ; StrLib statistics
 

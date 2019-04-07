@@ -1,5 +1,5 @@
-C Styling\sof\sthe\svery\slong\sthread\sheaders\sand\sbetter\sparagraph\sformatting.
-D 2019-04-05T19:21:55.730
+C Implementation\sof\suser\sactivity\snotifications\sin\sreal\stime\son\sthe\smain\spages.
+D 2019-04-07T06:08:17.643
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -33,12 +33,12 @@ F source/categories.asm 87830583d32bdf406d7a0a0615cff0b23fda9283
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm d2b4824ec926ddf7fc4c6492f2ebb75acf5e20a3
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
-F source/commands.asm ca106a6896fe1d2ceb8ad8ef468c8e31b473082d
+F source/commands.asm 698b303af1b872809683b36f68daab1640390606
 F source/create.sql 32806969a756406f47e79e609e77250571a2c6db
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm dddd1b6b89eef295ab5a65cb7302aefe0d948399
-F source/engine.asm 360234e68f6fe932c7edd0c50a47a740f632ae2d
-F source/engine.fpr 2b5a7fea376fcc0197fad94833bef0466e326533
+F source/engine.asm 47d6d84a73d740fd149a7af9aa824b4e1817e755
+F source/engine.fpr fd1f6a8084e5cefafe812bfb7fccf73c644fc2b0
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm f3135938fcbe5e5f48a1f5f81622b996a3aebac1
@@ -57,6 +57,7 @@ F source/post.asm 72a0f1de51352612597fe8e55c629dfe01bffc5b
 F source/post_data.asm af4b81ca1c74d54bbcd7a15b57f9c0cbd8622f01
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
+F source/realtime.asm b84ed4c11b1c869f250a230ebfa382be68ef15e6
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
@@ -73,7 +74,7 @@ F source/showthread.asm 9bf95e48e47764b816467d4c0d0a6f193b093443
 F source/showthread.sql 88e6f49dae477c7b96a4ca0722f4885f754b0bb0
 F source/sqlite3.asm e97f1870f200d8e89252849a6da8d99956bf5fd3
 F source/sqlite_console.asm a2ee59e277e906ce259d9bc82602472a17fbd687
-F source/sse_service.asm 4fea23ddb07e64b6e6878d03113baadc07348ac7
+F source/sse_service.asm c77b03cfb5ec133a9cac9167897ddeeda87d9098
 F source/statistics.asm 8574bead31291bdaf459a032659cb41bc34883d3
 F source/statistics.sql b854e249807878dcd87c5e16dde801114639308c
 F source/tests/Test1.tpl 3787fb082cb7f6404ff4631fd6ca67ed14c7beac
@@ -623,7 +624,10 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 01061a3e8b4a99be1c17e36ffd1c4f73f77695d9
-R c25317d583536863a379acef5703bb78
+P 36c0c3704c1e72a512a5f073d03b53b21ff83f7e
+R 18842626bd5d211449546796693ae144
+T *branch * RealTimeEvents
+T *sym-RealTimeEvents *
+T -sym-trunk *
 U johnfound
-Z f905aec067011566aebe834ea1fff724
+Z 09d463097a42ec7f2d37c054b2296204

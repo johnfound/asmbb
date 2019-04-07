@@ -92,7 +92,9 @@ PHashTable tablePreCommands, tpl_func,                  \
         "!usersmatch",      UsersMatch,                 \
         "!tagmatch",        TagsMatch,                  \
         "!skincookie",      SkinCookie,                 \
-        "!categories",      Categories
+        "!categories",      Categories,                 \
+        "!realtime",        RealTimeEvents
+
 
 
 PHashTable tablePostCommands, tpl_func,                 \
