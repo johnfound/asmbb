@@ -189,8 +189,6 @@ begin
 
 ; Send activity events...
 
-        stdcall StrDupMem, '<a href="/!userinfo/'
-
         stdcall UserNameLink, esi
         mov     ebx, eax
         stdcall StrCat, ebx, txt ' is reading thread <a href="/'

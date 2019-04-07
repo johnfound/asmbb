@@ -32,6 +32,7 @@ begin
 
         stdcall StrEncodeJS, [.hHTML]
         stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
         stdcall StrCat, ebx, txt '", "robot": "'
         mov     eax, cTrue
         cmp     [.userID], 0
