@@ -124,13 +124,15 @@
       source.addEventListener('user_changed', OnUserChanged);
     }
 
-    document.body.onload = function () {
-      user_line = document.getElementById("chat_user");
-      edit_line = document.getElementById("chat_message");
-      chat_log  = document.getElementById("chatlog");
-      sys_log   = document.getElementById("syslog");
-      connect();
-    };
+    addLoadEvent(
+      function () {
+        user_line = document.getElementById("chat_user");
+        edit_line = document.getElementById("chat_message");
+        chat_log  = document.getElementById("chatlog");
+        sys_log   = document.getElementById("syslog");
+        connect();
+      }
+    );
 
 //  Leaving the chat.
 

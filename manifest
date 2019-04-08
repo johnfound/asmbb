@@ -1,5 +1,5 @@
-C Fixed\sbug\sin\sthe\slogin\sevent\ssending.
-D 2019-04-07T17:28:36.163
+C Multiple\sJS\sfiles\schain\sinitialization.
+D 2019-04-08T06:44:47.836
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -38,7 +38,7 @@ F source/create.sql 32806969a756406f47e79e609e77250571a2c6db
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm dddd1b6b89eef295ab5a65cb7302aefe0d948399
 F source/engine.asm 47d6d84a73d740fd149a7af9aa824b4e1817e755
-F source/engine.fpr cad8ac8e4cd9524b02221d67aa5d5de3eabc4d4c
+F source/engine.fpr 09dbd1c51166cf9519c1f6934f9eb9684125fafd
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm f3135938fcbe5e5f48a1f5f81622b996a3aebac1
@@ -300,6 +300,7 @@ F www/templates/Light/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
 F www/templates/Light/thread_info.tpl c743dcfd11ad67cbb0634f4c1cedb1439753ef4e
 F www/templates/Light/thread_list.less 2087d7d98dfe7310fc3e086cfc26a451730f595f
 F www/templates/Light/threadnew.less c2af3d158e2e03851692576dce99f5287e50b0c6 l
+F www/templates/Light/toaster.less 0e571446584a37703a12a550d2235c322a604e07 l
 F www/templates/Light/userinfo.less 7ed31b5cc710b5821802771232bbc02db392ebf9 l
 F www/templates/Light/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/Light/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d2 l
@@ -390,6 +391,7 @@ F www/templates/MoLight/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 
 F www/templates/MoLight/thread_info.tpl 7cb85ae78a1c9533e82068fed34eeaf9f5b72d30 l
 F www/templates/MoLight/thread_list.less c522489ce7ce3693f484bed85f2da0851ddcd88f l
 F www/templates/MoLight/threadnew.less c2af3d158e2e03851692576dce99f5287e50b0c6 l
+F www/templates/MoLight/toaster.less 0e571446584a37703a12a550d2235c322a604e07 l
 F www/templates/MoLight/userinfo.less d0d0852a1dfcb7885c34202cd86b595eee0427bf l
 F www/templates/MoLight/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/MoLight/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d2 l
@@ -474,7 +476,7 @@ F www/templates/Wasp/atom_entry_thread.tpl ab6e308c142262fa4a7ff9bb98d03a67168ff
 F www/templates/Wasp/atom_start.tpl 93d0cec7a6c29045e0e4bd631eace12699a80aa7
 F www/templates/Wasp/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
 F www/templates/Wasp/chat.less e57b611bba245767e3924f761c37393ee3bb53d2
-F www/templates/Wasp/chat.tpl e296ff783f34495d49e64ead09298460ceb37a62
+F www/templates/Wasp/chat.tpl bb74706070cd41bab10a43a92a814ea2b283d34a
 F www/templates/Wasp/common.less d81365e4ac07ecd9a14f71ec15646dea936aef3c
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 26b8239d78b69cd5fbe206ea12ccb96890aac030
@@ -501,7 +503,7 @@ F www/templates/Wasp/form_sqlite_console.tpl 419ac0e18ab829bb3a5e0569e8fb7fd0e33
 F www/templates/Wasp/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
 F www/templates/Wasp/login.less 85f8c636e9c15adffb68d098f557d3efbdbc4e5a
 F www/templates/Wasp/main_html_end.tpl b42a53ad3999aedac1ef00d2118f5aca0a7ee37a
-F www/templates/Wasp/main_html_start.tpl 3f7b3ec448c65a8e134d0a7c3b8d1565a9275fb1
+F www/templates/Wasp/main_html_start.tpl d5742b051dd2ea06690ac06d652a4dc66940999c
 F www/templates/Wasp/markdown.less e62eac499043788e834f58f022ad46526e8d5629
 F www/templates/Wasp/minimag_suffix.tpl 7051407fe8722bb0a32cc68e05109ec539c2ac27
 F www/templates/Wasp/nav_categories.tpl a132b6d7a2351b6d7fabfdb7c821dfb7228c0ac2
@@ -519,7 +521,7 @@ F www/templates/Wasp/posteditor.less f990d5a9034599e43c3e72471622db9b89f62c43
 F www/templates/Wasp/postnew.less ddc68e487d815f8cd6aa3ebfc23d1f71bffa3daa
 F www/templates/Wasp/posts.less cea5f85c3b61a043bd3e07dca04a28e87e8d616a
 F www/templates/Wasp/preview.tpl 7762cf404ea93817b3121932c29a7cac0502c135
-F www/templates/Wasp/realtime.js 5e3894d9d7ff893234a8354fc62bbf26f717e256
+F www/templates/Wasp/realtime.js 1f6e24404581161d14ff20418867c2166ee220fe
 F www/templates/Wasp/restore_confirm.tpl 173edac9d455ed8b3a1abd129de4c7d02dc2e049
 F www/templates/Wasp/search.less 17bfdc636da1019916443febbb2073b791ed79d1
 F www/templates/Wasp/search_result.tpl 436d969e5b83d331581f8c0db368cab14d9be8e9
@@ -530,6 +532,7 @@ F www/templates/Wasp/statistics.tpl bf782dcf58f109634ecb12e45116117031bbb988
 F www/templates/Wasp/thread_info.tpl 662444dff79948b05d67004c59e80da324c67aed
 F www/templates/Wasp/thread_list.less 9dde2498a206b3a476b121496003e79dcf6dcdb5
 F www/templates/Wasp/threadnew.less edfa421addbc85ccc765c47e70e6a2cb395c7733
+F www/templates/Wasp/toaster.less ed7ca8618fd333f6b5e337d63757b8c39bff3885
 F www/templates/Wasp/userinfo.less 19048398c5cf99ef6abbd5d576bafa8f3d0eb89e
 F www/templates/Wasp/userinfo.tpl c00af95e7f0ffaf8e7ebdb34ff324f4211889543
 F www/templates/Wasp/users_online.less 910547b8d9853b50a4a1aca66e2e5995ed78c5b4
@@ -622,13 +625,14 @@ F www/templates/mobile/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
 F www/templates/mobile/thread_info.tpl aee1ed245383a3f0c40b9a03b6d98430ba6f2088
 F www/templates/mobile/thread_list.less 8724eec6f8e947a0b8b332edddf14f3a581372d0
 F www/templates/mobile/threadnew.less c2af3d158e2e03851692576dce99f5287e50b0c6 l
+F www/templates/mobile/toaster.less 0e571446584a37703a12a550d2235c322a604e07 l
 F www/templates/mobile/userinfo.less b1372ec6bfe2edede336dfcf10e8b25f9910bccb
 F www/templates/mobile/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d2 l
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 3805711b4f3f048e2b2dba71d11ee0116e271e4d
-R d9d448b8391dbe4051831d349a76fdfd
+P 6c0e7e36949102dfc3966238fe9738c3a3a8533d
+R 53d69a204fe5e9927ad26ff25d1a8c6c
 U johnfound
-Z 3f32f84495f8fa6573298db935e8dbdb
+Z de4aa8ea437fd88a635df8d37057a31f
