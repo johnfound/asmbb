@@ -1,5 +1,5 @@
-C Multiple\sJS\sfiles\schain\sinitialization.
-D 2019-04-08T06:44:47.836
+C Fixed\sbug\sin\sthe\satom\sfeed\sreturning\s502\son\sattempts\sto\sread\sfeeds\sfor\sthe\sLATs.\sNow\sit\sreturn\s404\sand\sthe\sfeed\slinks\sare\sremoved\sfrom\sthe\spage\sHTML.
+D 2019-04-08T07:39:33.631
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -26,7 +26,7 @@ F source/alltags.sql e4a0d5084be7a45f5e30ab46b7985f49c797f86a
 F source/atom_list.sql 6a80934c279093592290ca79d0b517e37800badf
 F source/atom_one_thread.sql 32da01bccec3dc4f86463f355a476028bc0632de
 F source/atom_tag_list.sql fe14b8eed99c74d8393c6967cb53c95098af0292
-F source/atomfeed.asm cade25dfbd5f0eb6fddcc0c0a20278466d55f972
+F source/atomfeed.asm 94b9fe8d4866c99a5d06f00add79b2495b6e75b7
 F source/attachments.asm 6843dd5b449b1394ae9c6f2b6bc44ed561f9a913
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm 87830583d32bdf406d7a0a0615cff0b23fda9283
@@ -503,14 +503,14 @@ F www/templates/Wasp/form_sqlite_console.tpl 419ac0e18ab829bb3a5e0569e8fb7fd0e33
 F www/templates/Wasp/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
 F www/templates/Wasp/login.less 85f8c636e9c15adffb68d098f557d3efbdbc4e5a
 F www/templates/Wasp/main_html_end.tpl b42a53ad3999aedac1ef00d2118f5aca0a7ee37a
-F www/templates/Wasp/main_html_start.tpl d5742b051dd2ea06690ac06d652a4dc66940999c
+F www/templates/Wasp/main_html_start.tpl b606ad6309da26364eaa38086532683ea1308304
 F www/templates/Wasp/markdown.less e62eac499043788e834f58f022ad46526e8d5629
 F www/templates/Wasp/minimag_suffix.tpl 7051407fe8722bb0a32cc68e05109ec539c2ac27
 F www/templates/Wasp/nav_categories.tpl a132b6d7a2351b6d7fabfdb7c821dfb7228c0ac2
 F www/templates/Wasp/nav_history.tpl 7d7b20a16288e53f745d28fe97cf43244b9bb29d
-F www/templates/Wasp/nav_list.tpl ce33a3a2401d611f9c700d89ef5daf8d2ec8a61b
+F www/templates/Wasp/nav_list.tpl 9d5ed6abe044fd49eac52eaa97a648379d915b5b
 F www/templates/Wasp/nav_search.tpl 94348341523bd79e3919d36b9a7072ca1da82e27
-F www/templates/Wasp/nav_thread.tpl becadabf1b0263eff327366d262a6418ee3b84b7
+F www/templates/Wasp/nav_thread.tpl 4cc43c7e79bcac7af72920fadab7c9aada7bb2ba
 F www/templates/Wasp/nav_userslist.tpl b25e53dad0dab74e40c295c207593dd929900c06
 F www/templates/Wasp/navigation.less dc809801e0194931f9ee87c22aad013e84626ffd
 F www/templates/Wasp/one_category.tpl 28da1952be772af4b86dc09161e96927291346de
@@ -632,7 +632,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 6c0e7e36949102dfc3966238fe9738c3a3a8533d
-R 53d69a204fe5e9927ad26ff25d1a8c6c
+P d7057454678306cde1267eb830c818063b023f52
+R 1d8c2673aed77c5767c15e92401682cd
 U johnfound
-Z de4aa8ea437fd88a635df8d37057a31f
+Z b53410ad09e4cfd0ff236a63a2231351

@@ -54,5 +54,5 @@
     <a class="ui right" href="/!settings[special:urltag]">[const:btnSettings]</a>
     <a class="ui right" href="/!sqlite">[const:btnConsole]</a>
   ]
-  <a class="ui2" href="!feed" title="[const:rssfeed]"><img src="[special:skin]/_images/rss.svg" alt="RSS"></a>
+  [case:[special:limited]|<a class="ui2" href="!feed" title="[const:rssfeed]"><img src="[special:skin]/_images/rss.svg" alt="RSS"></a>|]
 </div>

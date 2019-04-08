@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <title>[special:title]</title>
-  <link href="!feed" type="application/atom+xml" rel="alternate" title="Atom feed">
+  [case:[special:limited]|<link href="!feed" type="application/atom+xml" rel="alternate" title="Atom feed">|]
   <meta name="description" content="[special:description]">
   <meta name="keywords" content="[special:keywords]">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scallable=no">
