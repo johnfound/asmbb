@@ -113,7 +113,7 @@
 // Entering the chat.
 
     function connect() {
-      source = new EventSource("/!chat_events");
+      source = new EventSource("/!events?events=7"); // evmChat = 7
 
       source.onmessage = OnMessage;
       source.onopen = OnConnect;

@@ -85,15 +85,15 @@ PHashTable tablePreCommands, tpl_func,                  \
         "!setskin",         UpdateUserSkin,             \
         "!users_online",    UserActivityTable,          \
         "!chat",            ChatPage,                   \
-        "!chat_events",     ChatRealTime,               \
+        "!events",          EventsRealTime,             \
         "!postdebug",       PostDebug,                  \    ; optional, depending on the options.DebugWeb
         "!debuginfo",       DebugInfo,                  \    ; optional, depending on the options.DebugSQLite
         "!users",           UsersList,                  \
         "!usersmatch",      UsersMatch,                 \
         "!tagmatch",        TagsMatch,                  \
         "!skincookie",      SkinCookie,                 \
-        "!categories",      Categories,                 \
-        "!realtime",        RealTimeEvents
+        "!categories",      Categories
+
 
 
 

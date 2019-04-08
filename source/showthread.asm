@@ -192,7 +192,9 @@ begin
         stdcall UserNameLink, esi
         mov     ebx, eax
         stdcall StrCat, ebx, txt ' is reading thread <a href="/'
-        stdcall StrCat, ebx, [esi+TSpecialParams.thread]
+        stdcall StrEncodeHTML, [esi+TSpecialParams.thread]
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
         stdcall StrCat, ebx, txt '">'
 
         cinvoke sqliteColumnText, [.stmt2], 1

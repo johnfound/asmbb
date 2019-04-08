@@ -187,7 +187,7 @@
 
   addLoadEvent(
     function () {
-      source = new EventSource("/!realtime");
+      source = new EventSource("/!events?events=8");    // evmUserActivity
       source.addEventListener('user_activity', OnActivity);
     }
   );
@@ -196,7 +196,7 @@
     var act = JSON.parse(e.data);
     var toast = new Toast(
         {
-          content: decodeHTMLEntities(act.activity),
+          content: decodeURIComponent(act.activity),
           timeout: 10000,
           appent: true,
           position: 'bottom right',

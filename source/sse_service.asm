@@ -61,6 +61,10 @@ iglobal
   evmMessage           = 1 shl evMessage
   evmUserActivity      = 1 shl evUserActivity
 
+  evmAllEventsLo = (evmUsersOnline or evmUserChanged or evmMessage or evmUserActivity) and $ffffffff
+  evmAllEventsHi = ((evmUsersOnline or evmUserChanged or evmMessage or evmUserActivity) shr 32) and $ffffffff
+  evmChat = evmUsersOnline or evmMessage or evmUserChanged
+
   EventNames tblEventNames,                     \
     'users_online',                             \
     'user_changed',                             \

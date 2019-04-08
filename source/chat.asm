@@ -3,19 +3,39 @@ CHAT_MAX_MESSAGE = 1000
 CHAT_BACKLOG_DEFAULT = 100
 
 
-proc ChatRealTime, .pSpecial
+proc EventsRealTime, .pSpecial
 begin
         pushad
 
         mov     esi, [.pSpecial]
+        xor     ebx, ebx
+        xor     edi, edi
+
+        stdcall GetQueryParam, esi, txt 'events='
+        jc      .error_400
+
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack
+        jc      .error_400
+
+        or      edi, eax
+        and     edi, evmAllEventsLo
+        and     ebx, evmAllEventsHi
 
         stdcall ChatPermissions, esi
         jc      .error_no_permissions
 
-        stdcall InitEventSession, esi, evmMessage or evmUsersOnline or evmUserChanged, 0  ; if CF=0 returns session string in EAX
+        stdcall InitEventSession, esi, edi, ebx
         jc      .exit
 
-        stdcall ChatInitialEvents, eax
+        test    edi, evmChat
+        jz      .chat_ok
+
+        stdcall ChatInitialEvents, eax  ; eax is the events session.
+
+.chat_ok:
+
         stdcall StrDel, eax
 
 .exit:
@@ -28,9 +48,16 @@ begin
 
         stdcall TextCreate, sizeof.TText
         stdcall AppendError, eax, "403 Forbidden", esi
+
+.send_error:
         stdcall FCGI_outputText, [esi+TSpecialParams.hSocket], [esi+TSpecialParams.requestID], edx, TRUE
         stdcall TextFree, edx
         jmp     .exit
+
+.error_400:
+        stdcall TextCreate, sizeof.TText
+        stdcall AppendError, eax, "400 Invalid events mask", esi
+
 endp
 
 
