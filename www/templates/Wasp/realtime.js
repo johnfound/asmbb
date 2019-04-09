@@ -164,27 +164,6 @@
 
   })();
 
-  function decodeHTMLEntities(text) {
-      var entities = [
-          ['amp', '&'],
-          ['apos', '\''],
-          ['#x27', '\''],
-          ['#x2F', '/'],
-          ['#39', '\''],
-          ['#47', '/'],
-          ['lt', '<'],
-          ['gt', '>'],
-          ['nbsp', ' '],
-          ['quot', '"']
-      ];
-
-      for (var i = 0, max = entities.length; i < max; ++i)
-          text = text.replace(new RegExp('&'+entities[i][0]+';', 'g'), entities[i][1]);
-
-      return text;
-  }
-
-
   addLoadEvent(
     function () {
       source = new EventSource("/!events?events=8");    // evmUserActivity
@@ -198,7 +177,6 @@
         {
           content: decodeURIComponent(act.activity),
           timeout: 10000,
-          appent: true,
           position: 'bottom right',
           type: 'info'
         }, 0);

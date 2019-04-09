@@ -191,7 +191,12 @@ begin
 
         stdcall UserNameLink, esi
         mov     ebx, eax
-        stdcall StrCat, ebx, txt ' is reading thread <a href="/'
+
+        mov     eax, DEFAULT_UI_LANG
+        stdcall GetParam, "default_lang", gpInteger
+        stdcall StrCat, ebx, [cActivityRead + 8*eax]
+
+        stdcall StrCat, ebx, txt '<a href="/'
         stdcall StrEncodeHTML, [esi+TSpecialParams.thread]
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax

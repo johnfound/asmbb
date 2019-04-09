@@ -56,7 +56,7 @@ begin
 endp
 
 
-proc SQliteRegisterFunctions, .ptrDatabase
+proc SQLiteRegisterFunctions, .ptrDatabase
 begin
         cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "url_encode", 1, SQLITE_UTF8, 0, sqliteURLEncode, 0, 0, 0
         cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "html_encode", 1, SQLITE_UTF8, 0, sqliteHTMLEncode, 0, 0, 0

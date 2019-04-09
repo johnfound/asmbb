@@ -367,14 +367,18 @@ begin
         push    ecx edx
 
         stdcall UserNameLink, esi
+        mov     ebx, eax
 
         pop     edx ecx
         xchg    edx, [esi+TSpecialParams.userID]
         xchg    ecx, [esi+TSpecialParams.userName]
 
-        stdcall StrCat, eax, " entered forum."
-        stdcall AddActivity, eax, [.userID]
-        stdcall StrDel, eax
+        mov     eax, DEFAULT_UI_LANG
+        stdcall GetParam, "default_lang", gpInteger
+
+        stdcall StrCat, ebx, [cActivityLogin + 8*eax]
+        stdcall AddActivity, ebx, [.userID]
+        stdcall StrDel, ebx
 
 .finish:
         mov     [esp+4*regEAX], edi     ; the result
@@ -434,8 +438,12 @@ begin
         stdcall TextCat, edi, <"Set-Cookie: sid=; HttpOnly; Path=/; Max-Age=0", 13, 10>
         mov     edi, edx
 
+        mov     eax, DEFAULT_UI_LANG
+        stdcall GetParam, "default_lang", gpInteger
+        push    [cActivityLogout + 8*eax]
+
         stdcall UserNameLink, esi
-        stdcall StrCat, eax, " leaved."
+        stdcall StrCat, eax ; from the stack!
 
         stdcall AddActivity, eax, [esi+TSpecialParams.userID]
         stdcall StrDel, eax
