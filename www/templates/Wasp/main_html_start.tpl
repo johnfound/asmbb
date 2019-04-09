@@ -38,25 +38,12 @@
   </noscript>
 
   <script type='text/javascript'>
-    function addLoadEvent(func) {
-    var oldonload = window.onload;
-    if (typeof window.onload != 'function') {
-      window.onload = func;
-    } else {
-        window.onload = function() {
-          if (oldonload) oldonload();
-          func();
-        }
-      }
-    }
-
     [raw:realtime.js]
   </script>
 
 </head>
 
 <body>
-
   <div class="header">
     <h1>[special:header]</h1>
     <div class="spacer"></div>

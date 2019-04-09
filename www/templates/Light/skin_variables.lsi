@@ -102,3 +102,7 @@
 
 @clNotifyBG: red;
 @clNotifyFG: white;
+
+@clActivityBG: #105289;
+@clActivityFG: white;
+@clActivityLink: white;

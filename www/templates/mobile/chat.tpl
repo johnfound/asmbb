@@ -91,9 +91,6 @@
 
 // essential code.
 
-    var EventSource = window.EventSource;
-
-    var source;
     var edit_line;
     var chat_log;
     var sys_log;
@@ -102,7 +99,6 @@
     var do_notify = false;
     var cdate;   // current date
 
-
     function ScrollBottom(force) {
       if ( force || ! do_notify ) chat_log.scrollTop = chat_log.scrollHeight - chat_log.clientHeight;
     }
@@ -110,24 +106,32 @@
 
 // Entering the chat.
 
-    function connect() {
-      source = new EventSource("/!chat_events");
+    window.addEventListener('load',
+      function () {
+        edit_line = document.getElementById("chat_message");
+        chat_log  = document.getElementById("chatlog");
+        sys_log   = document.getElementById("syslog");
 
-      source.onmessage = OnMessage;
-      source.onopen = OnConnect;
-      source.onerror = OnError;
+        source.addEventListener('open',
+          function(){
+            edit_line.style.backgroundColor = null;
+            UserStatusChange(1);
+          }
+        );
 
-      source.addEventListener('message', OnMessage);
-      source.addEventListener('users_online', OnUsersOnline);
-      source.addEventListener('user_changed', OnUserChanged);
-    }
+        source.addEventListener('error',
+          function(){
+            edit_line.style.backgroundColor = "#ffa0a0";
+            UserStatusChange(2);
+          }
+        );
 
-    document.body.onload = function () {
-      edit_line = document.getElementById("chat_message");
-      chat_log  = document.getElementById("chatlog");
-      sys_log   = document.getElementById("syslog");
-      connect();
-    };
+        source.addEventListener('message', OnMessage);
+        source.addEventListener('users_online', OnUsersOnline);
+        source.addEventListener('user_changed', OnUserChanged);
+      }
+    );
+
 
 //  Leaving the chat.
 
@@ -326,18 +330,6 @@
     }
 
 
-    function OnConnect(e) {
-      edit_line.style.backgroundColor = null;
-      UserStatusChange(1);
-    }
-
-    function OnError(e) {
-      edit_line.style.backgroundColor = "#ffa0a0";
-      setTimeout( function() {
-        connect();
-      }, 2000 );
-      UserStatusChange(2);
-    }
 
   </script>
 

@@ -92,9 +92,6 @@
 
 // essential code.
 
-    var EventSource = window.EventSource;
-
-    var source;
     var edit_line;
     var user_line;
     var chat_log;
@@ -112,47 +109,55 @@
 
 // Entering the chat.
 
-    function connect() {
-      source = new EventSource("/!events?events=7"); // evmChat = 7
-
-      source.onmessage = OnMessage;
-      source.onopen = OnConnect;
-      source.onerror = OnError;
-
-      source.addEventListener('message', OnMessage);
-      source.addEventListener('users_online', OnUsersOnline);
-      source.addEventListener('user_changed', OnUserChanged);
-    }
-
-    addLoadEvent(
+    window.addEventListener('load',
       function () {
         user_line = document.getElementById("chat_user");
         edit_line = document.getElementById("chat_message");
         chat_log  = document.getElementById("chatlog");
         sys_log   = document.getElementById("syslog");
-        connect();
+
+        source.addEventListener('open',
+          function(){
+            edit_line.style.backgroundColor = null;
+            UserStatusChange(1);
+          }
+        );
+
+        source.addEventListener('error',
+          function(){
+            edit_line.style.backgroundColor = "#ffa0a0";
+            UserStatusChange(2);
+          }
+        );
+
+        source.addEventListener('message', OnMessage);
+        source.addEventListener('users_online', OnUsersOnline);
+        source.addEventListener('user_changed', OnUserChanged);
       }
     );
 
+
 //  Leaving the chat.
 
-    window.onbeforeunload = function (e) {
-      source.close();
-      source = null;
-      UserStatusChange(0);
-      return null;
-    };
-
-    document.addEventListener("visibilitychange", function() {
-      if ( ! document.hidden ) {
-        total_cnt = 0;
-        document.title = title;
-        UserStatusChange(1);
-        ScrollBottom(true);
-      } else {
-        if ( source ) UserStatusChange(2);
+    window.addEventListener('beforeunload',
+      function (e) {
+        UserStatusChange(0);
+        return null;
       }
-    });
+    );
+
+    document.addEventListener("visibilitychange",
+      function() {
+        if ( ! document.hidden ) {
+          total_cnt = 0;
+          document.title = title;
+          UserStatusChange(1);
+          ScrollBottom(true);
+        } else {
+          if ( source ) UserStatusChange(2);
+        }
+      }
+    );
 
     function KeyPress(e, proc) {
       if (e.keyCode == '13') {
@@ -315,20 +320,6 @@
         else sys_log.insertBefore(p, sys_log.firstChild);
       }
     }
-
-    function OnConnect(e) {
-      edit_line.style.backgroundColor = null;
-      UserStatusChange(1);
-    }
-
-    function OnError(e) {
-      edit_line.style.backgroundColor = "#ffa0a0";
-      setTimeout( function() {
-        connect();
-      }, 2000 );
-      UserStatusChange(2);
-    }
-
   </script>
 
 [case:[special:lang]|
