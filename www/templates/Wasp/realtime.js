@@ -167,6 +167,8 @@
 
 var EventSource = window.EventSource;
 var source = 0;
+var ActivityAlign = 'bottom right';
+var ActivityTimeout = 10000;
 
 function connect() {
   source = new EventSource("/!events?events=15");    // evmAllEventsLo
@@ -185,8 +187,8 @@ function OnActivity(e) {
   var toast = new Toast(
       {
         content: decodeURIComponent(act.activity),
-        timeout: 10000,
-        position: 'bottom right',
+        timeout: ActivityTimeout,
+        position: ActivityAlign,
         type: 'info'
       }, 0);
   toast.show();

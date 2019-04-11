@@ -155,6 +155,33 @@ from
 group by refr
 order by cnt desc, refr;
 
+-- The same, but sorted by the time of the last visit from this referer.
+
+select
+  count(refr) as cnt,
+  refr,
+  datetime(max(time), 'unixepoch') as timestr,
+  max(time) as time
+from
+  ( select
+      substr(referer, 1, instr(referer, '?')-1) as refr,
+      time
+    from
+      guestrequests
+    where
+      referer not like '%board.asm32.info%' and instr(referer, '?') > 0
+    union all
+    select
+      referer as refr,
+      time
+    from
+      guestrequests
+    where
+       referer not like '%board.asm32.info%' and instr(referer, '?') = 0
+  )
+group by refr
+order by time desc, cnt desc, refr;
+
 
 
 -- Displays a report about the Guests active from the last 5 minutes.

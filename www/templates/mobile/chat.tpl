@@ -99,6 +99,9 @@
     var do_notify = false;
     var cdate;   // current date
 
+    ActivityAlign = 'center';
+    ActivityTimeout = 5000;
+
     function ScrollBottom(force) {
       if ( force || ! do_notify ) chat_log.scrollTop = chat_log.scrollHeight - chat_log.clientHeight;
     }

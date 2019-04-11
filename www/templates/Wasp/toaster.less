@@ -3,7 +3,12 @@
 .toast-container {
     position: fixed;
     width: 500px;
+    max-width: 90%;
     z-index: 999999;
+    display: block;
+    div {
+      display: block !important;
+    }
 }
 
 .toast-container.top-right {
@@ -26,7 +31,7 @@
     right: 0;
 }
 
-.toast-container.center {
+.toast-container.centered {
     top: 50%;
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
