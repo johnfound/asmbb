@@ -1,5 +1,5 @@
-C Work\son\sthe\snotifications.
-D 2019-04-11T07:38:26.213
+C Proper\sescapement\sof\sa\stemplate\sfile.
+D 2019-04-11T10:15:40.661
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -505,7 +505,7 @@ F www/templates/Wasp/login.less 85f8c636e9c15adffb68d098f557d3efbdbc4e5a
 F www/templates/Wasp/main_html_end.tpl b42a53ad3999aedac1ef00d2118f5aca0a7ee37a
 F www/templates/Wasp/main_html_start.tpl 7e2e0b4c9d09303e14ab52d23f53f31958df789d
 F www/templates/Wasp/markdown.less e62eac499043788e834f58f022ad46526e8d5629
-F www/templates/Wasp/minimag_suffix.tpl 7051407fe8722bb0a32cc68e05109ec539c2ac27
+F www/templates/Wasp/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
 F www/templates/Wasp/nav_categories.tpl a132b6d7a2351b6d7fabfdb7c821dfb7228c0ac2
 F www/templates/Wasp/nav_history.tpl 7d7b20a16288e53f745d28fe97cf43244b9bb29d
 F www/templates/Wasp/nav_list.tpl 9d5ed6abe044fd49eac52eaa97a648379d915b5b
@@ -632,7 +632,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P f37655e4612c46d169ca8da7ea1c6fa6a7f92ae6
-R 71e68ba68f7c921d1b70c221782e0a22
+P ea8a5ef1c08d6cda4726af821bee28f2e617397d
+R e5f55b83f8e3e4c3f75008ca641381e2
 U johnfound
-Z 499ac654b12833da17ddd15dfa14eb63
+Z f30e3501c23783f6de1e49481bf546ef
