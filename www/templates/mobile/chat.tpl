@@ -101,6 +101,7 @@
 
     ActivityAlign = 'center';
     ActivityTimeout = 5000;
+    WantEvents = 15;             // + the chat events.
 
     function ScrollBottom(force) {
       if ( force || ! do_notify ) chat_log.scrollTop = chat_log.scrollHeight - chat_log.clientHeight;

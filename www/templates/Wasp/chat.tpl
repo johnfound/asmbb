@@ -101,6 +101,7 @@
     var do_notify = false;
     var cdate;   // current date
 
+    WantEvents = 15;             // + the chat events.
 
     function ScrollBottom(force) {
       if ( force || ! do_notify ) chat_log.scrollTop = chat_log.scrollHeight - chat_log.clientHeight;
@@ -133,18 +134,19 @@
         source.addEventListener('message', OnMessage);
         source.addEventListener('users_online', OnUsersOnline);
         source.addEventListener('user_changed', OnUserChanged);
+
+        window.addEventListener('beforeunload',
+          function (e) {
+            UserStatusChange(0);
+            return null;
+          }
+        );
       }
     );
 
 
 //  Leaving the chat.
 
-    window.addEventListener('beforeunload',
-      function (e) {
-        UserStatusChange(0);
-        return null;
-      }
-    );
 
     document.addEventListener("visibilitychange",
       function() {

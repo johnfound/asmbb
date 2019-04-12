@@ -5,27 +5,45 @@
 div.ui {
   width: 100%;
   margin: 8px 0px 8px 0px;
-  overflow: hidden;
   display: flex;
   flex-wrap: wrap;
   flex-shrink: 0;
+  align-items: center;
+  overflow: visible;
+}
+
+div.alone {
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: 8px auto 0px auto;
+  overflow: visible;
 }
 
 a.ui {
-  display: block;
+  display: inline-block;
   padding: 4px;
-//  height: @buttonHeight;
-//  line-height: @buttonHeight;
   background-color: @clButtonBG;
   color: @clButtonFG;
   text-decoration: none;
   border-radius: @borderNavRad;
   flex-shrink: 0;
-  margin-bottom: 8px;
+  position: relative;
   img {
     display: block;
     margin: 4px;
   }
+}
+
+
+a.ui3 {
+  display: inline-block;
+  position: relative;
+  padding: 4px;
+  color: @clBodyFG;
+  border: 1px dotted @clButtonBG;
+  text-decoration: none;
+  border-radius: @borderNavRad;
+  flex-shrink: 0;
 }
 
 a.left {
@@ -38,11 +56,11 @@ a.right {
 
 
 a.ui2 {
-  display: block;
+  display: inline-block;
+  position: relative;
   padding-top: 4px;
   color: @clButtonBG;
   flex-shrink: 0;
-  margin-bottom: 8px;
   margin-left: 8px;
   img {
     height: 18px;

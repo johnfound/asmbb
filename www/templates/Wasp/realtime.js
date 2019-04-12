@@ -166,20 +166,29 @@
 
 
 var EventSource = window.EventSource;
-var source = 0;
+var source = null;
 var ActivityAlign = 'bottom right';
 var ActivityTimeout = 10000;
+var WantEvents = 8;
+
+
+function disconnect() {
+  source.close();
+  source = null;
+  return null;
+}
+
 
 function connect() {
-  source = new EventSource("/!events?events=15");    // evmAllEventsLo
+  source = new EventSource("/!events?events=" + WantEvents);    // evmAllEventsLo
   source.addEventListener('error',
     function(e){
       setTimeout(function() { connect(); }, 2000 );
     }
   );
   source.addEventListener('user_activity', OnActivity);
+  window.addEventListener('beforeunload', disconnect);
 }
-
 
 
 function OnActivity(e) {
@@ -194,13 +203,5 @@ function OnActivity(e) {
   toast.show();
 }
 
-
 window.addEventListener('load', connect);
 
-window.addEventListener('beforeunload',
-  function (e) {
-    source.close();
-    source = null;
-    return null;
-  }
-);

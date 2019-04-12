@@ -1,4 +1,5 @@
 [css:common.css]
+[css:navigation.css]
 [css:toaster.css]
 
 <!DOCTYPE html>
@@ -75,10 +76,20 @@
     <a class="icon_btn"><input class="img_input" type="image" width="32" height="32" src="[special:skin]/_images/search.svg" alt="&nbsp;Search&nbsp;" title="[case:[special:lang]|Search|Търсене|Поиск|Rechercher|Suchen]"></a>
   </form>
 
+  [case:[special:userid]||
+  <div class="alone">
+    <a class="[case:[special:limited]|ui|ui3] left" href="/[special:dir]"
+    title="[case:[special:lang]|Public threads|Публични теми|Публичные темы|Discussions publiques|Öffentliche Themen]"
+    >Public[special:unread]</a>
+
+    <a class="[case:[special:limited]|ui3|ui] left" href="/(o)/[special:dir]"
+    title="[case:[special:lang]|Limited access threads|Теми с ограничен достъп|Темы с ограниченным доступом|Discussions d'accès limité|Themen mit beschränktem Zugang]"
+    >Limited[special:unreadLAT]</a>
+  </div>
+  ]
+
   <div class="tags">
     <a href="/[case:[special:limited]||(o)/]"><img class="tagicon" src="[special:skin]/_images/alltags[case:[special:variant]|||_gray].svg" alt="/"
     title="[case:[special:lang]|Show all threads|Покажи всички теми|Показать все темы|Montrer tous les sujets|Alle Themen zeigen]"></a>
-    <a href="/[case:[special:limited]|(o)/|][case:[special:dir]||[special:dir]/]"><img class="tagicon" src="[special:skin]/_images/limited[case:[special:limited]|_gray|].svg" alt="/"
-    title="[case:[special:lang]|Limited access threads|Теми с ограничен достъп|Темы с ограниченным доступом|Discussions d'accès limité|Themen mit beschränktem Zugang]"></a>
     [special:alltags]
   </div>

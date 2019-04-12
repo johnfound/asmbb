@@ -72,6 +72,8 @@ PHashTable tableSpecial, tpl_func,                              \
         "canchat",     RenderTemplate.sp_canchat,               \ ; 1/0 no encoding
         "canupload",   RenderTemplate.sp_canupload,             \ ; 1/0 no encoding
         "referer",     RenderTemplate.sp_referer,               \ ; 1/0 no encoding
+        "unreadLAT",   RenderTemplate.sp_unreadLAT,             \
+        "unread",      RenderTemplate.sp_unread,                \
         "alltags",     RenderTemplate.sp_alltags,               \ ; HTML no encoding
         "allusers",    RenderTemplate.sp_allusers,              \ ; returns JSON array.
         "setupmode",   RenderTemplate.sp_setupmode,             \ ; no encoding
@@ -1453,6 +1455,14 @@ endl
 
 ; ...................................................................
 
+.sp_unread:
+        stdcall GetUnread, [ebx+TSpecialParams.userID], 0
+        jmp     .special_string_free
+
+.sp_unreadLAT:
+        stdcall GetUnread, [ebx+TSpecialParams.userID], 1
+        jmp     .special_string_free
+
 .sp_limited:
         mov     eax, [ebx+TSpecialParams.Limited]
         jmp     .special_int
@@ -2119,7 +2129,7 @@ begin
         test    eax, eax
         jz      .unread_ok
 
-        stdcall TextCat, ebx, txt '<span>'
+        stdcall TextCat, ebx, txt '<span class="ntf">'
         stdcall NumToStr, eax, ntsDec or ntsUnsigned
         stdcall TextCat, edx, eax
         stdcall StrDel, eax
@@ -2964,6 +2974,40 @@ begin
 endp
 
 
+sqlGetUnread text "select count() from unreadposts up left join threads t on t.id = up.threadid where up.userid = ?1 and t.limited = ?2"
+
+proc GetUnread, .UserID, .Limited
+.stmt dd ?
+begin
+        pushad
+
+        stdcall StrNew
+        mov     ebx, eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetUnread, sqlGetUnread.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.UserID]
+        cinvoke sqliteBindInt, [.stmt], 2, [.Limited]
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .finalize
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        test    eax, eax
+        jz      .finalize
+
+        stdcall StrCat, ebx, txt '<span class="ntf">'
+        stdcall NumToStr, eax, ntsDec or ntsUnsigned
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+        stdcall StrCat, ebx, txt "</span>"
+
+.finalize:
+        cinvoke sqliteFinalize, [.stmt]
+        mov     [esp+4*regEAX], ebx
+        popad
+        return
+endp
 
 ; Later can be made to compose KB/MB/GB suffixes.
 
