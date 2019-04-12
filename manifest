@@ -1,5 +1,5 @@
-C Better\snavigation\sbetween\spublic\sand\slimited\sthreads.\sSome\swork\son\sthe\snotifications.
-D 2019-04-12T16:38:17.282
+C !markread\scommand\snow\smarks\sspecific\stags\sif\sselected.\sFixed\sissue\son\sthe\schat\sstyles\s(the\shiden\sellements).
+D 2019-04-12T17:08:35.547
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -33,7 +33,7 @@ F source/categories.asm 87830583d32bdf406d7a0a0615cff0b23fda9283
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm 390eec6ff5746851f54b298b68df249a76f4a35a
 F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
-F source/commands.asm e8c9135e40e156837d883b89ca66f9a37e1cd7d2
+F source/commands.asm e4ac34fe6f3fdb658af1b61b6aeb5e4ae38cc4ac
 F source/create.sql 32806969a756406f47e79e609e77250571a2c6db
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm dddd1b6b89eef295ab5a65cb7302aefe0d948399
@@ -475,7 +475,7 @@ F www/templates/Wasp/atom_entry_post.tpl a36d3dd1e06725015323056b09bdc1492aa6a0c
 F www/templates/Wasp/atom_entry_thread.tpl ab6e308c142262fa4a7ff9bb98d03a67168ffe39
 F www/templates/Wasp/atom_start.tpl 93d0cec7a6c29045e0e4bd631eace12699a80aa7
 F www/templates/Wasp/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
-F www/templates/Wasp/chat.less e57b611bba245767e3924f761c37393ee3bb53d2
+F www/templates/Wasp/chat.less a4c64381f5ef14741bb249a4678573cbea899f83
 F www/templates/Wasp/chat.tpl 80abec6d933a468dceed83c9c12dbcd1fcc2ec3d
 F www/templates/Wasp/common.less 9103b6e9e7958cb4a74fb9ecdd2295cd43fbd292
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
@@ -568,7 +568,7 @@ F www/templates/mobile/atom_entry_post.tpl b909b679b9c4ea1723cf9ca5827c2fba527bf
 F www/templates/mobile/atom_entry_thread.tpl d6f76cb18d5e725a3708a966e9e8720ca643a239 l
 F www/templates/mobile/atom_start.tpl d47f23ad78f9717598c748c2b37f812d56a4ccdb l
 F www/templates/mobile/autocomplete.js a996b9733be61eac1ebe92d8d4382cade7a93a26 l
-F www/templates/mobile/chat.less fe56060d4be896af9b1425781ef86678d3475bde
+F www/templates/mobile/chat.less fb91350c83c46d18fe0ea4a04d83db826c936f7f
 F www/templates/mobile/chat.tpl 843a0d838e01b053172c7647dfcaf18728d6a8af
 F www/templates/mobile/common.less 762e4e8198de87fbcb131462b3476432725a2c65 l
 F www/templates/mobile/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
@@ -632,7 +632,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 403f20fa46a55b05341ba65e2196af99df492b6c
-R 6b128994e9b095a8cbff8e38f07c1c55
+P 303aad14e41b6a1c30f80b8e269cfa9a8810c579
+R 28bac49c5ddd78fc98bf4a89b6c1d011
 U johnfound
-Z 8623b79e383f2f449c5f9888c4eeea24
+Z bc857b59bcb359209f177978dbf88e40
