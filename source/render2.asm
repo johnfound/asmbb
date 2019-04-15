@@ -2590,7 +2590,7 @@ begin
 
         mov     ebx, [.hString]
 
-        stdcall StrLCase, ebx
+        stdcall StrLCaseUtf8, ebx
 
         stdcall StrConvertWhiteSpace, ebx, " "
         stdcall StrConvertPunctuation, ebx
@@ -2612,6 +2612,39 @@ begin
         return
 endp
 
+
+
+proc StrLCaseUtf8, .str
+begin
+        pushad
+
+        stdcall StrPtr, [.str]
+        mov     esi, eax
+        mov     edi, eax
+        mov     ecx, [eax+string.len]
+
+.loop:
+        dec     ecx
+        js      .finish
+
+        stdcall DecodeUtf8, [esi]
+        cmp     edx, 1
+        ja      .skip
+
+        mov     ah, al
+        and     ah, 40h
+        shr     ah, 1
+        or      al, ah
+        mov     [esi], al
+
+.skip:
+        add     esi, edx
+        jmp     .loop
+
+.finish:
+        popad
+        return
+endp
 
 
 proc StrConvertWhiteSpace, .hString, .toChar

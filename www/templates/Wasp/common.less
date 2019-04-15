@@ -179,13 +179,14 @@ div.tags {
   width: @globWidth;
   max-width: @globMaxWidth;
   max-height: 256px;
-  overflow: visible;
+  overflow: auto;
   margin: @globMargin;
   padding: @paddingTags;
 
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: left;
 
   background-color: @clDarkBG;
   font-size: 28px;
@@ -223,9 +224,8 @@ span.ntf {
 
 a.taglink {
   display:inline-block;
-//  max-width: 150px;
   min-width: 16px;
-  overflow: show;
+  overflow: visible;
   text-overflow: ellipsis;
   border-radius: @borderRadTags;
   border: @borderTags;
