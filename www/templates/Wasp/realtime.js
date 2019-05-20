@@ -193,14 +193,16 @@ function connect() {
 
 function OnActivity(e) {
   var act = JSON.parse(e.data);
-  var toast = new Toast(
-      {
-        content: decodeURIComponent(act.activity),
-        timeout: ActivityTimeout,
-        position: ActivityAlign,
-        type: 'info'
-      }, 0);
-  toast.show();
+  if ( ! act.robot ) {
+    var toast = new Toast(
+        {
+          content: decodeURIComponent(act.activity),
+          timeout: ActivityTimeout,
+          position: ActivityAlign,
+          type: 'info'
+        }, 0);
+    toast.show();
+  }
 }
 
 window.addEventListener('load', connect);

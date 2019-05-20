@@ -13,13 +13,14 @@ begin
         stdcall StrURLEncode, [.hHTML]
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax
-        stdcall StrCat, ebx, txt '", "robot": "'
+        stdcall StrCat, ebx, txt '", "robot": '
         mov     eax, cTrue
         cmp     [.userID], 0
         je      @f
         mov     eax, cFalse
 @@:
-        stdcall StrCat, ebx, txt '" }'
+        stdcall StrCat, ebx, eax
+        stdcall StrCat, ebx, txt ' }'
 
         stdcall AddEvent, evUserActivity, ebx, 0
         stdcall StrDel, ebx

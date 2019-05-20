@@ -1,5 +1,5 @@
-C Fixed\sa\sproblem\swith\sthe\stags\sin\sutf-8;\sFixed\sa\sproblem\swith\sthe\sstyles.
-D 2019-04-15T13:46:20.111
+C Generate\scorrect\sboolean\sJSON\svalues\sfor\sreal-time\sevents.\sDon't\sshow\sthe\snotifications\sfor\sthe\srobots.\sThey\sare\sstill\stransmitted,\sbut\snot\sdisplayed.
+D 2019-05-20T06:03:20.127
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -57,7 +57,7 @@ F source/post.asm 72a0f1de51352612597fe8e55c629dfe01bffc5b
 F source/post_data.asm af4b81ca1c74d54bbcd7a15b57f9c0cbd8622f01
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
-F source/realtime.asm 9403d5b3839c4a945447c8073719d80fcc56366d
+F source/realtime.asm 06eebe3a2464267690d91d1f6ca96e3c8de6bc05
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
@@ -521,7 +521,7 @@ F www/templates/Wasp/posteditor.less f990d5a9034599e43c3e72471622db9b89f62c43
 F www/templates/Wasp/postnew.less ddc68e487d815f8cd6aa3ebfc23d1f71bffa3daa
 F www/templates/Wasp/posts.less cea5f85c3b61a043bd3e07dca04a28e87e8d616a
 F www/templates/Wasp/preview.tpl 7762cf404ea93817b3121932c29a7cac0502c135
-F www/templates/Wasp/realtime.js eda0c6551201324ee972cd49f007a16722906228
+F www/templates/Wasp/realtime.js 4226aca74b5ffb535a7c849a56e7527776dc7639
 F www/templates/Wasp/restore_confirm.tpl 173edac9d455ed8b3a1abd129de4c7d02dc2e049
 F www/templates/Wasp/search.less 17bfdc636da1019916443febbb2073b791ed79d1
 F www/templates/Wasp/search_result.tpl 436d969e5b83d331581f8c0db368cab14d9be8e9
@@ -632,7 +632,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P c5e577cd5e0e7e58287580c653571b52f34eb9fd
-R 15ae2f804c69a778b2bb8a235debb201
+P d3a7fac8228a901ecd7856a6303223bf602bd13d
+R 72ff8f67ec9bda4dddc18192d8be51e3
 U johnfound
-Z 47d50d3aeefb6372e8c78b88559a2b92
+Z 496aba6edf0e06fffbd4b27e5b66db24
