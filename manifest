@@ -1,5 +1,5 @@
-C French\stranslation\supdated.\sFixed\ssome\stranslation\sissues\swith\sthe\stexts\sdefined\sin\sthe\sCSS.
-D 2019-06-07T22:25:39.637
+C Another\sfix\sin\sthe\stranslations.
+D 2019-06-07T22:41:49.164
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -487,7 +487,7 @@ F www/templates/Wasp/editor.less a10e7a93ebc53c9612c385f149e70e7fe2683327
 F www/templates/Wasp/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Wasp/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
 F www/templates/Wasp/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
-F www/templates/Wasp/form_edit.tpl 46f050cdd453f79d397ecc3ce864a48d1c53f4cf
+F www/templates/Wasp/form_edit.tpl 501a1c30798bb49c06ea309fbd037a25abf860fd
 F www/templates/Wasp/form_edit_thread.tpl eacb39e161ed4bf47fbe8bb0690a4e01b34f3162
 F www/templates/Wasp/form_editinfo.tpl fa7867c7017da5f81c5424c209a44a1feccf0dd3
 F www/templates/Wasp/form_login.tpl 9d2c28ae6dc5b44de5ca20d9734402b34ce697a4
@@ -580,7 +580,7 @@ F www/templates/mobile/editor.less 01d0be8c4eaa0f91139b00b7bedaa3fb66dc4450 l
 F www/templates/mobile/error.less 83cd53cf80eb467b611ebe7865c41c96694c293f l
 F www/templates/mobile/error_html_end.tpl 62173b764a79089fff2cfe7be9428adcd13046da l
 F www/templates/mobile/error_html_start.tpl 0e59043bca2eece87606b5085e216f22a529eb77 l
-F www/templates/mobile/form_edit.tpl 6f26ef8d762059bb5434fa7fdf45d5bfbea2f486
+F www/templates/mobile/form_edit.tpl 153f529ae16d8ea3e8767c660bbde1339c0105ba
 F www/templates/mobile/form_edit_thread.tpl 9ba48416deb4498a8dcad61198289fb396592980 l
 F www/templates/mobile/form_editinfo.tpl 91a3644fb4b1021bffa2356f7291f6e457eebe1e l
 F www/templates/mobile/form_login.tpl 1ca5a25baff036f4b5a655b72d25c18c987a8ed7 l
@@ -632,7 +632,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 025597d5dd7962ea661fddb20970833241acc33f
-R ad09f9be4314af1d3983b6135c05b901
+P aff36efaf1561e80e911998d7bf64ead7c5880b9
+R 5566f722ff1ee348950e48abbfcae6c8
 U johnfound
-Z afb44eae069e1fb65e42ea8f24b1096b
+Z e7614b2b0a1452c54b2727c5e39870bd
