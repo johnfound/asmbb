@@ -1,5 +1,5 @@
-C Another\sfix\sin\sthe\stranslations.
-D 2019-06-07T22:41:49.164
+C Fixed\stypo.
+D 2019-06-07T22:46:10.702
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -487,7 +487,7 @@ F www/templates/Wasp/editor.less a10e7a93ebc53c9612c385f149e70e7fe2683327
 F www/templates/Wasp/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Wasp/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
 F www/templates/Wasp/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
-F www/templates/Wasp/form_edit.tpl 501a1c30798bb49c06ea309fbd037a25abf860fd
+F www/templates/Wasp/form_edit.tpl 6048e0da8c920ac0f6ec60afa72ecf7efca97913
 F www/templates/Wasp/form_edit_thread.tpl eacb39e161ed4bf47fbe8bb0690a4e01b34f3162
 F www/templates/Wasp/form_editinfo.tpl fa7867c7017da5f81c5424c209a44a1feccf0dd3
 F www/templates/Wasp/form_login.tpl 9d2c28ae6dc5b44de5ca20d9734402b34ce697a4
@@ -632,7 +632,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P aff36efaf1561e80e911998d7bf64ead7c5880b9
-R 5566f722ff1ee348950e48abbfcae6c8
+P ed1b94ece466b1294deefac954bb67385fa601ed
+R 0003d75bbfe1a42c01f8e5ca57eddaf1
 U johnfound
-Z e7614b2b0a1452c54b2727c5e39870bd
+Z f6532eb892860b2a11ab0d2d6a63bb91

@@ -79,7 +79,7 @@
       <input id="rad2" name="tabselector" type="radio">
       <label for="rad2">[const:tabAttach]</label>
       <section>
-        [case:[special:canupload]||<p>[const:Attach]: <span class="small">[const:FileLimits]</span></p><input id="browse" type="file" placeholder="Select file to attach" name="attach" multiple="multiple">]
+        [case:[special:canupload]||<p>[const:Attach]: <span class="small">[const:FileLimit]</span></p><input id="browse" type="file" placeholder="Select file to attach" name="attach" multiple="multiple">]
         <div id="attachments" class="attach_del">
           [attach_edit:[id]]
         </div>
