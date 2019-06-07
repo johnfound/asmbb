@@ -7,6 +7,7 @@
   [equ:tViews=[case:[ReadCount]|views|view|views]]
   [equ:Posters=Participants: ]
   [equ:Invited=Invited: ]
+  [equ:Tags=Tags: ]
 |
   [equ:ttlPinned=Забодена отгоре]
   [equ:ttlLimited=Тема с ограничен достъп]
@@ -16,6 +17,7 @@
   [equ:tViews=преглед[case:[ReadCount]|а||а]]
   [equ:Posters=Участници: ]
   [equ:Invited=Поканени: ]
+  [equ:Tags=Тагове: ]
 |
   [equ:ttlPinned=Прикрепленная на верху]
   [equ:ttlLimited=Тема ограниченным доступом]
@@ -25,15 +27,17 @@
   [equ:tViews=просмотр[case:[ReadCount]|ов||ов]]
   [equ:Posters=Участники: ]
   [equ:Invited=Приглашенные: ]
+  [equ:Tags=Ярлыки: ]
 |
   [equ:ttlPinned=Sujet épinglé]
   [equ:ttlLimited=Sujet à accès limité]
   [equ:ttlUnread=[case:[Unread]|Pas de messages non-lus|Allez au premier non-lu]]
   [equ:tPosts=post[case:[PostCount]|s||s]]
-  [equ:ttlMark=Maruqer le sujet comme lu]
+  [equ:ttlMark=Marquer le sujet comme lu]
   [equ:tViews=vue[case:[ReadCount]|s||s]]
   [equ:Posters=Participants: ]
   [equ:Invited=Invités: ]
+  [equ:Tags=Mots-clés: ]
 |
   [equ:ttlPinned=Angeheftetes Thema]
   [equ:ttlLimited=Beschränktes Thema]
@@ -43,6 +47,7 @@
   [equ:tViews=[case:[ReadCount]|Ansichten|Ansicht|Ansichten]]
   [equ:Posters=Teilnehmer: ]
   [equ:Invited=Eingeladen: ]
+  [equ:Tags=Tags: ]
 ]
 
 <div class="thread_summary">
@@ -63,6 +68,6 @@
       <label><input type="checkbox" class="collapseit"><ul class="small comma posters">[const:Posters][html:[Posters]]</ul></label>
       [case:[limited]||<label><input type="checkbox" class="collapseit"><ul class="small comma invited">[const:Invited][html:[Invited]]</ul></label>]
     </div>
-    <ul class="small comma thread_tags">[html:[ThreadTags]]</ul>
+    [case:[ThreadTags]||<ul class="small comma thread_tags">[const:Tags][html:[ThreadTags]]</ul>]
   </div>
 </div>

@@ -5,6 +5,9 @@
   [equ:tPosts=post[case:[PostCount]|s||s]]
   [equ:ttlMark=Mark thread read]
   [equ:tViews=[case:[ReadCount]|views|view|views]]
+  [equ:Posters=Participants: ]
+  [equ:Invited=Invited: ]
+  [equ:Tags=Tags: ]
 |
   [equ:ttlPinned=Забодена отгоре]
   [equ:ttlLimited=Тема с ограничен достъп]
@@ -12,6 +15,9 @@
   [equ:tPosts=съобщени[case:[PostCount]|я|е|я]]
   [equ:ttlMark=Маркирай темата като прочетена]
   [equ:tViews=преглед[case:[ReadCount]|а||а]]
+  [equ:Posters=Участници: ]
+  [equ:Invited=Поканени: ]
+  [equ:Tags=Тагове: ]
 |
   [equ:ttlPinned=Прикрепленная на верху]
   [equ:ttlLimited=Тема ограниченным доступом]
@@ -19,13 +25,19 @@
   [equ:tPosts=сообщени[case:[PostCount]|й|е|й]]
   [equ:ttlMark=Отметить тему прочитанной]
   [equ:tViews=просмотр[case:[ReadCount]|ов||ов]]
+  [equ:Posters=Участники: ]
+  [equ:Invited=Приглашенные: ]
+  [equ:Tags=Ярлыки: ]
 |
   [equ:ttlPinned=Sujet épinglé]
   [equ:ttlLimited=Sujet à accès limité]
   [equ:ttlUnread=[case:[Unread]|Pas de messages non-lus|Allez au premier non-lu]]
   [equ:tPosts=post[case:[PostCount]|s||s]]
-  [equ:ttlMark=Maruqer le sujet comme lu]
+  [equ:ttlMark=Marquer le sujet comme lu]
   [equ:tViews=vue[case:[ReadCount]|s||s]]
+  [equ:Posters=Participants: ]
+  [equ:Invited=Invités: ]
+  [equ:Tags=Mots-clés: ]
 |
   [equ:ttlPinned=Angeheftetes Thema]
   [equ:ttlLimited=Beschränktes Thema]
@@ -33,6 +45,9 @@
   [equ:tPosts=Beitr[case:[PostCount]|äge|ag|äge]]
   [equ:ttlMark=Thema als gelesen kennzeichnen]
   [equ:tViews=[case:[ReadCount]|Ansichten|Ansicht|Ansichten]]
+  [equ:Posters=Teilnehmer: ]
+  [equ:Invited=Eingeladen: ]
+  [equ:Tags=Tags: ]
 ]
 
 
@@ -45,7 +60,7 @@
       [PostCount] [const:tPosts]
       [case:[Unread]||( [Unread] unread ) <a href="[Slug]/!markread" title="[const:ttlMark]"><img class="markread" width="16" height="16" src="[special:skin]/_images/markread.svg" alt="X"></a>]
   </div>
-  <label><input type="checkbox" class="collapseit"><ul class="comma posters">[html:[Posters]]</ul></label>
-  <label><input type="checkbox" class="collapseit"><ul class="comma invited">[html:[Invited]]</ul></label>
-  <ul class="comma thread_tags" >[html:[ThreadTags]]</ul>
+  <label><input type="checkbox" class="collapseit"><ul class="small comma posters">[const:Posters][html:[Posters]]</ul></label>
+  [case:[limited]||<label><input type="checkbox" class="collapseit"><ul class="small comma invited">[const:Invited][html:[Invited]]</ul></label>]
+  [case:[ThreadTags]||<ul class="comma thread_tags">[const:Tags][html:[ThreadTags]]</ul>]
 </div>

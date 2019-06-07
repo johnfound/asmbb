@@ -101,7 +101,7 @@
       <li>[case:[user_perm7]|<b>Ne</b> peut <b>pas</b>|Peut] <b>supprimer</b> d'autres messages</li>
       <li>[case:[user_perm8]|<b>Ne</b> peut <b>pas</b>|Peut] <b>tchatter</b></li>
       <br>
-      <li>À écrit [case:[totalposts]||<a href="/!search/?u=[url:[username]]" >]<b>[totalposts]</b> post[case:[totalposts]|s||s][case:[totalposts]||</a>] sur le forum.</li>
+      <li>A écrit [case:[totalposts]||<a href="/!search/?u=[url:[username]]" >]<b>[totalposts]</b> message[case:[totalposts]|s||s][case:[totalposts]||</a>] sur le forum.</li>
     </ul>
   </div>
 |

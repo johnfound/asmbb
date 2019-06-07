@@ -32,7 +32,7 @@
   [equ:btnChat=Тchat]
   [equ:btnSettings=Paramètres]
   [equ:btnConsole=Console SQL]
-  [equ:rssfeed=Subscribe]
+  [equ:rssfeed=Suivre]
 |
   [equ:btnCats=Kategorien]
   [equ:btnNewThread=Neues Thema]

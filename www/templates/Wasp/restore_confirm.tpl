@@ -20,7 +20,7 @@
 |
   [equ:hRestore=Restaurer le message?]
   [equ:pQuestion=Voulez-vous <b>vraiment</b> restaurer ce message dans sa précédente version?]
-  [equ:btnRestore=Restore]
+  [equ:btnRestore=Restaurer]
   [equ:btnCancel=Annuler]
 |
   [equ:hRestore=Beitrag wiederherstellen?]

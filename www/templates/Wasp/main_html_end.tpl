@@ -6,7 +6,7 @@
 |
   <a href="/!users_online" title="Последние действия потребителей.">Сейчас</a> в сети: [special:visitors]
 |
-  <a href="/!users_online" title="Activités récentes des visiteurs.">En ligne</a> maintenant: [special:visitors]
+  Actuellement <a href="/!users_online" title="Activités récentes des visiteurs.">en ligne</a>: [special:visitors]
 |
   Jetzt <a href="/!users_online" title="Letzte Aktivitäten der Besucher.">online</a>: [special:visitors]
 ]

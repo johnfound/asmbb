@@ -37,7 +37,7 @@
   [equ:btnConsole=Console SQL]
   [equ:ttlEditThread=Éditer le titre du sujet et les mots-clés.]
   [equ:altEdit=Éditer]
-  [equ:rssfeed=Subscribe to this thread]
+  [equ:rssfeed=Suivre ce sujet]
 |
   [equ:btnCats=Kategorien]
   [equ:btnList=Themen]

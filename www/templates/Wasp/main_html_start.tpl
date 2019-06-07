@@ -2,6 +2,35 @@
 [css:navigation.css]
 [css:toaster.css]
 
+[case:[special:lang]|||||]
+[case:[special:lang]|
+  [equ:ttlPublic=Public threads]
+  [equ:ttlLimited=Limited access threads]
+  [equ:Public=Public]
+  [equ:Limited=Limited]
+|
+  [equ:ttlPublic=Публични теми]
+  [equ:ttlLimited=Теми с ограничен достъп]
+  [equ:Public=Публични]
+  [equ:Limited=Ограничени]
+|
+  [equ:ttlPublic=Публичные темы]
+  [equ:ttlLimited=Темы с ограниченным доступом]
+  [equ:Public=Публичные]
+  [equ:Limited=Ограниченные]
+|
+  [equ:ttlPublic=Discussions publiques]
+  [equ:ttlLimited=Discussions restreintes]
+  [equ:Public=Publiques]
+  [equ:Limited=Restreintes]
+|
+  [equ:ttlPublic=Öffentliche Themen]
+  [equ:ttlLimited=Themen mit beschränktem Zugang]
+  [equ:Public=Öffentliche]
+  [equ:Limited=Beschränkt]
+]
+
+
 <!DOCTYPE html>
 <html lang="[case:[special:lang]|en|bg|ru|fr|de]">
 <head>
@@ -64,27 +93,22 @@
         |<a href="/!login/">[case:[special:lang]|Login|Вход|Вход|Connexion|Anmelden]</a><br>
           [case:[special:canregister]||<a href="/!register/">[case:[special:lang]|Register|Регистрация|Регистрация|Inscription|Registrieren]</a>]
         |<form method="POST" action="/!logout"><input class="logout" type="submit" name="logout"
-         value="[case:[special:lang]|Logout|Изход|Выйти|De déconnecter|Abmelden] ([special:username])"></form>
+         value="[case:[special:lang]|Logout|Изход|Выйти|Se déconnecter|Abmelden] ([special:username])"></form>
          <a href="/!userinfo/[url:[special:username]]">[case:[special:lang]|User profile|Профил|Профиль|Profil|Profil]</a>
       ]
     </div>
   </div>
 
   <form class="tags" id="search_form" action="[case:[special:cmdtype]||/|../]!search/" method="get" >
-    <input class="search_line" type="search" name="s" placeholder="[case:[special:lang]|text search|търсене на текст|поиск текста|rechercher du texte|Textsuche]" value="[special:search]">
-    <input class="search_line" type="search" name="u" placeholder="[case:[special:lang]|user search|потребител|потребитель|recherche d'utilisateur|Benutzersuche]" value="[special:usearch]">
+    <input class="search_line" type="search" name="s" placeholder="[case:[special:lang]|text search|търсене на текст|поиск текста|recherche de texte|Textsuche]" value="[special:search]">
+    <input class="search_line" type="search" name="u" placeholder="[case:[special:lang]|user search|потребител|пользователь|recherche d'utilisateur|Benutzersuche]" value="[special:usearch]">
     <a class="icon_btn"><input class="img_input" type="image" width="32" height="32" src="[special:skin]/_images/search.svg" alt="&nbsp;Search&nbsp;" title="[case:[special:lang]|Search|Търсене|Поиск|Rechercher|Suchen]"></a>
   </form>
 
   [case:[special:userid]||
   <div class="alone">
-    <a class="[case:[special:limited]|ui|ui3] left" href="/[special:dir]"
-    title="[case:[special:lang]|Public threads|Публични теми|Публичные темы|Discussions publiques|Öffentliche Themen]"
-    >Public[special:unread]</a>
-
-    <a class="[case:[special:limited]|ui3|ui] left" href="/(o)/[special:dir]"
-    title="[case:[special:lang]|Limited access threads|Теми с ограничен достъп|Темы с ограниченным доступом|Discussions d'accès limité|Themen mit beschränktem Zugang]"
-    >Limited[special:unreadLAT]</a>
+    <a class="[case:[special:limited]|ui|ui3] left" href="/[special:dir]" title="[const:ttlPublic]">[const:Public][special:unread]</a>
+    <a class="[case:[special:limited]|ui3|ui] left" href="/(o)/[special:dir]" title="[const:ttlLimited]">[const:Limited][special:unreadLAT]</a>
   </div>
   ]
 

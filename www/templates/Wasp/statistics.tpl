@@ -14,7 +14,7 @@
 <p>Последний зарегистрированный пользователь: <a href="/!userinfo/[url:[lastuser]]">[lastuser]</a></p>
 <p>За последние 24 часа на форуме было [guests24] посетителей.</p>
 |
-<p>Ce forum contient [posts] message[case:[posts]|s||s] dans [thread] sujet[case:[thread]|s||s].</p>
+<p>Ce forum contient [posts] message[case:[posts]|s||s] dans [threads] sujet[case:[thread]|s||s].</p>
 <p>Nous avons <a href="/!users/">[users] utilisateur[case:[users]|s||s] enregistré[case:[users]|s||s]</a>.</p>
 <p>Le dernier utilisateur enregistré est: <a href="/!userinfo/[url:[lastuser]]">[lastuser]</a></p>
 <p>Ces dernières 24 heures, il y a eu [guests24] visiteur[case:[guests24]|s||s] sur le forum.</p>

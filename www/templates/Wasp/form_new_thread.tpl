@@ -59,7 +59,7 @@
   [equ:ttlPost=Contenu du message]
   [equ:phText=Partagez vos idées ici]
   [equ:ttlAttach=Pièce(s) jointe(s)]
-  [equ:phSelect=Select file to attach]
+  [equ:phSelect=Sélectionner un fichier à attacher]
   [equ:btnPreview=Prévisualiser]
   [equ:btnSubmit=Poster]
   [equ:btnRevert=Annuler]

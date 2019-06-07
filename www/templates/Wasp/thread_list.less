@@ -29,32 +29,6 @@ div.threads_list {
   * {
     font-weight: normal;
   }
-
-/*
-  & > * {
-
-    &:first-child::before {
-      display: inline-block;
-      color: @clArticleFG;
-      margin-right: 8px;
-      font-weight: bold;
-      content: 'Started by: ';
-    }
-
-    &:first-child::after {
-      margin-right: 8px;
-      content: ' ';
-    }
-
-    &:nth-child(2)::before {
-      display: inline-block;
-      color: @clArticleFG;
-      font-weight: bold;
-      margin-right: 8px;
-      content: 'Joined: ';
-    }
-  }
-*/
 }
 
 .invited {
@@ -63,28 +37,16 @@ div.threads_list {
   * {
     font-weight: normal;
   }
-/*
-  & > *:first-child::before {
-    display: inline-block;
-    color: @clArticleFG;
-    font-weight: bold;
-    margin-right: 4px;
-    content: 'Invited: ';
-  }
-*/
 }
 
 .thread_tags {
   background-color: @clColor1FG;
   padding: 8px;
+  font-weight: bold !important;
   margin: 0;
 
-  & > *:first-child::before {
-    display: inline-block;
-    color: @clArticleFG;
-    font-weight: bold;
-    margin-right: 4px;
-    content: 'Tags: ';
+  * {
+    font-weight: normal;
   }
 }
 

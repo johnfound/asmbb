@@ -304,8 +304,10 @@
       }
 
       for (var i = 0; i < msgset.users.length; i++) {
-        var p = user_node(msgset.users^[i^]);
-        sys_log.appendChild(p);
+        if (msgset.users^[i^].events & 3 !== 0) {          // Chat events mask == 7
+          var p = user_node(msgset.users^[i^]);
+          sys_log.appendChild(p);
+        }
       }
       ScrollBottom(false);
     }
@@ -314,7 +316,7 @@
       var usr = JSON.parse(e.data);
       var pold = document.getElementById('user'+usr.sid);
 
-      if ( usr.status == 0 ) {
+      if ( (usr.status == 0) || (!(usr.events & 3)) )  {
         sys_log.removeChild(pold);
       } else {
         var p = user_node(usr);
