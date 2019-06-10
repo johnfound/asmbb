@@ -55,27 +55,30 @@ iglobal
   evUserChanged        = 1
   evMessage            = 2
   evUserActivity       = 3
+  evSession            = 4      ; sent only once on connection initialization.
 
   evmUsersOnline       = 1 shl evUsersOnline
   evmUserChanged       = 1 shl evUserChanged
   evmMessage           = 1 shl evMessage
   evmUserActivity      = 1 shl evUserActivity
+  evmSession           = 1 shl evSession        ; always received
 
   evmAllEventsLo = (evmUsersOnline or evmUserChanged or evmMessage or evmUserActivity) and $ffffffff
   evmAllEventsHi = ((evmUsersOnline or evmUserChanged or evmMessage or evmUserActivity) shr 32) and $ffffffff
-  evmChat = evmUsersOnline or evmMessage or evmUserChanged
 
   EventNames tblEventNames,                     \
     'users_online',                             \
     'user_changed',                             \
     'message',                                  \
-    'user_activity'
+    'user_activity',                            \
+    'session'
 endg
 
 
 sqlGetInitialId text "select id from EventQueue order by id desc limit 1;"
 sqlGetEvents    text "select id, type, event, receiver from EventQueue where id > ?1;"
 sqlCleanEvents  text "delete from EventQueue where id <= ?1;"
+sqlClearEventSessions text "delete from EventSessions;"
 
 proc sseServiceThread, .lparam
 .stmt  dd ?
@@ -86,6 +89,11 @@ begin
         stdcall MutexRelease, mxListeners
 
         xor     ebx, ebx
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlClearEventSessions, sqlClearEventSessions.length, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetInitialId, sqlGetInitialId.length, eax, 0
@@ -139,17 +147,29 @@ begin
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall UpdateAndCleanSessions
         stdcall WaitForEvents, [.futex]
         jmp     .main_loop
 
 
 .finish_thread:
 
+; close all connections and delete the sessions.
+
+        stdcall WaitForMutex, mxListeners, 10
+
+.loop:
+        mov     ecx, [pFirstListener]
+        jecxz   .cons_closed
+
+        stdcall _RemoveEventListener, ecx
+        jmp     .loop
+
+.cons_closed:
         stdcall MutexDestroy, mxListeners
         stdcall Terminate, 0
         return
 endp
+
 
 
 cHeartbeat text ":", 13, 10, 13, 10
@@ -175,7 +195,7 @@ begin
         jmp     .listeners_loop
 
 .error_send:
-        stdcall RemoveEventListener, edi
+        stdcall _RemoveEventListener, edi
         mov     edi, eax
         jmp     .listeners_loop
 
@@ -189,68 +209,6 @@ begin
 endp
 
 
-sqlUpdateEventSession    text "update EventSessions set time = strftime('%s', 'now') where session = ?1;"
-sqlCloseInactiveSessions text "update EventSessions set status = 0 where status <> 0 and time < strftime('%s', 'now') - 10;"  ; 10 seconds timeout of the chat session.
-sqlDeleteOldSessions     text "delete from EventSessions where status <> 0 and time < strftime('%s', 'now') - 86400;"         ; 24h timeout to delete events session.
-
-proc UpdateAndCleanSessions
-.stmt dd ?
-begin
-        pushad
-
-        stdcall WaitForMutex, mxListeners, 100
-        jc      .finish
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateEventSession, sqlUpdateEventSession.length, eax, 0
-
-        mov     edi, [pFirstListener]
-
-.listeners_loop:
-        test    edi, edi
-        jz      .finishok
-
-        stdcall StrPtr, [edi+TEventsListener.idSession]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteReset, [.stmt]
-
-.next_listener:
-        mov     edi, [edi+TEventsListener.pNext]
-        jmp     .listeners_loop
-
-.error_send:
-        stdcall RemoveEventListener, edi
-        mov     edi, eax
-        jmp     .listeners_loop
-
-.finishok:
-        cinvoke sqliteFinalize, [.stmt]
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCloseInactiveSessions, sqlCloseInactiveSessions.length, eax, 0
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteFinalize, [.stmt]
-
-        cinvoke sqliteChanges, [hMainDatabase]
-        test    eax, eax
-        jz      .changes_ok
-
-        stdcall SendUsersOnline, 0
-
-.changes_ok:
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlDeleteOldSessions, sqlDeleteOldSessions.length, eax, 0
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteFinalize, [.stmt]
-
-        stdcall MutexRelease, mxListeners
-        clc
-
-.finish:
-        popad
-        return
-endp
 
 
 ; The SQL statement [.stmt] points to one row of the table EventQueue
@@ -323,6 +281,9 @@ begin
         jnc     .next_listener
 
 .can_receive:
+        cmp     ecx, evmSession
+        je      .sendit
+
         test    ecx, [edi+TEventsListener.typesLo]
         jnz     .sendit
         test    edx, [edi+TEventsListener.typesHi]
@@ -338,7 +299,7 @@ begin
         jmp     .listeners_loop
 
 .error_send:
-        stdcall RemoveEventListener, edi
+        stdcall _RemoveEventListener, edi
         mov     edi, eax
         jmp     .listeners_loop
 
@@ -360,8 +321,97 @@ endp
 
 
 
+evsClosed    = 0        ; not used ?????
+evsActive    = 1
+evsNonActive = 2
+
+sqlNewEventSession       text "insert into EventSessions(session, time, username, original, status, events) values (?1, strftime('%s', 'now'), ?2, ?2, ?3, ?4);"
+
+proc AddEventListener, .pSpecial, .evTypesLo, .evTypesHi, .session
+.stmt dd ?
+begin
+        pushad
+
+        stdcall WaitForMutex, mxListeners, 1000
+        jc      .finish
+
+        mov     esi, [.pSpecial]
+
+        stdcall GetMem, sizeof.TEventsListener
+        jc      .finish_release
+
+        mov     edi, eax
+
+        stdcall StrDup, [.session]
+        mov     [edi+TEventsListener.idSession], eax
+
+        mov     ebx, [esi+TSpecialParams.hSocket]
+        mov     ecx, [esi+TSpecialParams.requestID]
+        mov     eax, [.evTypesLo]
+        mov     edx, [.evTypesHi]
+        mov     [edi+TEventsListener.hSocket], ebx
+        mov     [edi+TEventsListener.requestID], ecx
+        mov     [edi+TEventsListener.typesLo], eax
+        mov     [edi+TEventsListener.typesHi], edx
+
+        mov     eax, [pFirstListener]
+
+        and     [edi+TEventsListener.pPrev], 0
+        mov     [edi+TEventsListener.pNext], eax
+
+        mov     [pFirstListener], edi
+        test    eax, eax
+        jz      .finish_release
+
+        mov     [eax+TEventsListener.pPrev], edi
+
+.finish_release:
+
+; add session to the EventSessions table
+
+        stdcall EventUserName, [.pSpecial]
+        mov     esi, eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlNewEventSession, sqlNewEventSession.length, eax, 0
+
+        stdcall StrPtr, [.session]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+        stdcall StrPtr, esi
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteBindInt, [.stmt], 3, evsActive
+        cinvoke sqliteBindInt64, [.stmt], 4, [.evTypesLo], [.evTypesHi]
+
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+        stdcall StrDel, esi
+
+; final settings to the socket.
+
+        OutputValue "Listener added: ", edi, 16, 8
+
+        stdcall SocketSetOption, [edi+TEventsListener.hSocket], soSendTimeout, 10
+        stdcall MutexRelease, mxListeners
+
+        stdcall AddEvent, evSession, [.session], [.session]
+        stdcall SendUserChanged, [.session]
+        clc
+
+.finish:
+        popad
+        return
+endp
+
+
+
 ; returns the next listener in the list or 0 if the last listener is removed.
-proc RemoveEventListener, .pListener
+
+sqlDeleteEventSession text "delete from EventSessions where session = ?1"
+
+proc _RemoveEventListener, .pListener
 .stmt dd ?
 begin
         pushad
@@ -394,8 +444,17 @@ begin
 
 ; delete the removed session.
 
-;        stdcall SetEventStatus, [edi+TEventsListener.idSession], evsClosed
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2,[hMainDatabase], sqlDeleteEventSession, sqlDeleteEventSession.length, eax, 0
 
+        stdcall StrPtr, [edi+TEventsListener.idSession]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+        stdcall SendUserClosed, [edi+TEventsListener.idSession]
+
+; free the memory.
         stdcall StrDel, [edi+TEventsListener.idSession]
         stdcall FreeMem, edi
         popad
@@ -403,53 +462,130 @@ begin
 endp
 
 
-proc AddEventListener, .hSocket, .requestID, .evTypesLo, .evTypesHi, .session
+
+proc RemoveSession, .session
 begin
         pushad
-
         stdcall WaitForMutex, mxListeners, 1000
         jc      .finish
 
-        stdcall GetMem, sizeof.TEventsListener
-        jc      .finish_release
+        mov     edi, [pFirstListener]
 
-        mov     edi, eax
+.loop:
+        test    edi, edi
+        jz      .release
 
-        stdcall StrDup, [.session]
-        mov     [edi+TEventsListener.idSession], eax
+        stdcall StrCompCase, [.session], [edi+TEventsListener.idSession]
+        jc      .found
 
-        mov     ebx, [.hSocket]
-        mov     ecx, [.requestID]
-        mov     eax, [.evTypesLo]
-        mov     edx, [.evTypesHi]
-        mov     [edi+TEventsListener.hSocket], ebx
-        mov     [edi+TEventsListener.requestID], ecx
-        mov     [edi+TEventsListener.typesLo], eax
-        mov     [edi+TEventsListener.typesHi], edx
+        mov     edi, [edi+TEventsListener.pNext]
+        jmp     .loop
 
-        mov     eax, [pFirstListener]
+.found:
+        stdcall _RemoveEventListener, edi
 
-        and     [edi+TEventsListener.pPrev], 0
-        mov     [edi+TEventsListener.pNext], eax
-
-        mov     [pFirstListener], edi
-        test    eax, eax
-        jz      .finish_release
-
-        mov     [eax+TEventsListener.pPrev], edi
-
-.finish_release:
-
-        OutputValue "Listener added: ", edi, 16, 8
-
-        stdcall SocketSetOption, [.hSocket], soSendTimeout, 10
+.release:
         stdcall MutexRelease, mxListeners
-        clc
 
 .finish:
         popad
         return
 endp
+
+
+
+
+
+
+sqlRenameEventUser text "update EventSessions set username=?2, original=?3 where session=?1;"
+
+proc RenameEventUser, .session, .newname, .original
+.stmt dd ?
+begin
+        pushad
+
+        DebugMsg "Rename user"
+
+        stdcall StrByteUtf8, [.newname], CHAT_MAX_USER_NAME
+        stdcall StrTrim, [.newname], eax
+
+        stdcall StrClipSpacesR, [.newname]
+        stdcall StrClipSpacesL, [.newname]
+        stdcall StrLen, [.newname]
+        test    eax, eax
+        jnz     .name_ok
+
+        stdcall StrCopy, [.newname], [.original]
+
+.name_ok:
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRenameEventUser, sqlRenameEventUser.length, eax, 0
+
+        stdcall StrPtr, [.session]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+        stdcall StrPtr, [.newname]
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
+        stdcall StrPtr, [.original]
+        cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+        cinvoke sqliteChanges, [hMainDatabase]
+        test    eax, eax
+        jz      .finish
+
+        DebugMsg "Rename user - send changed"
+
+        stdcall SendUserChanged, [.session]
+
+.finish:
+        popad
+        return
+endp
+
+
+
+
+sqlSetStatusEventSession text "update EventSessions set status = ?2 where session = ?1 and (status <> ?2)"
+
+proc SetEventUserStatus, .session, .status
+.stmt dd ?
+begin
+        pushad
+        cmp     [.status], 0
+        je      .delete_session
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetStatusEventSession, sqlSetStatusEventSession.length, eax, 0
+
+        stdcall StrPtr, [.session]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteBindInt, [.stmt], 2, [.status]
+
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+        cinvoke sqliteChanges, [hMainDatabase]
+        test    eax, eax
+        jz      .changes_ok
+
+.send_changed:
+        stdcall SendUserChanged, [.session]
+
+.changes_ok:
+        popad
+        return
+
+.delete_session:
+        stdcall RemoveSession, [.session]
+        jmp     .send_changed
+
+endp
+
+
 
 
 
@@ -490,133 +626,11 @@ begin
 endp
 
 
-evsClosed    = 0
-evsActive    = 1
-evsNonActive = 2
-
-sqlNewEventSession       text "insert into EventSessions(session, time, username, original, status) values (?1, strftime('%s', 'now'), ?2, ?2, ?3);"
-sqlExistsEventSession    text "select 1 from EventSessions where session = ?1"
-
-proc AddEventSession, .pSpecial, .session
-.stmt dd ?
-begin
-        pushad
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlExistsEventSession, sqlExistsEventSession.length, eax, 0
-
-        stdcall StrPtr, [.session]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-        cinvoke sqliteStep, [.stmt]
-        mov     ebx, eax
-        cinvoke sqliteFinalize, [.stmt]
-
-        cmp     ebx, SQLITE_ROW
-        jne     .insertnew
-
-.activate:
-        stdcall SetEventStatus, [.session], evsActive
-
-        popad
-        return
-
-.insertnew:
-
-        stdcall EventUserName, [.pSpecial]
-        mov     esi, eax
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlNewEventSession, sqlNewEventSession.length, eax, 0
-
-        stdcall StrPtr, [.session]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-
-        stdcall StrPtr, esi
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteBindInt, [.stmt], 3, evsClosed
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteFinalize, [.stmt]
-
-        stdcall StrDel, esi
-        jmp     .activate
-endp
 
 
 
-sqlRenameEventUser text "update EventSessions set username=?2, original=?3, time=strftime('%s', 'now') where session=?1;"
-
-proc RenameEventUser, .session, .newname, .original
-.stmt dd ?
-begin
-        pushad
-
-        stdcall StrByteUtf8, [.newname], CHAT_MAX_USER_NAME
-        stdcall StrTrim, [.newname], eax
-
-        stdcall StrClipSpacesR, [.newname]
-        stdcall StrClipSpacesL, [.newname]
-        stdcall StrLen, [.newname]
-        test    eax, eax
-        jnz     .name_ok
-
-        stdcall StrCopy, [.newname], [.original]
-
-.name_ok:
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRenameEventUser, sqlRenameEventUser.length, eax, 0
-
-        stdcall StrPtr, [.session]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-
-        stdcall StrPtr, [.newname]
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
-
-        stdcall StrPtr, [.original]
-        cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteFinalize, [.stmt]
-
-        cinvoke sqliteChanges, [hMainDatabase]
-        test    eax, eax
-        jz      .finish
-
-        stdcall SendUserChanged, [.session]
-
-.finish:
-        popad
-        return
-endp
 
 
-
-sqlSetStatusEventSession text "update EventSessions set status = ?2 where session = ?1 and status <> ?2;"
-
-proc SetEventStatus, .session, .status
-.stmt dd ?
-begin
-        pushad
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetStatusEventSession, sqlSetStatusEventSession.length, eax, 0
-
-        stdcall StrPtr, [.session]
-        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
-        cinvoke sqliteBindInt, [.stmt], 2, [.status]
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteFinalize, [.stmt]
-
-        cinvoke sqliteChanges, [hMainDatabase]
-        test    eax, eax
-        jz      .changes_ok
-
-        stdcall SendUserChanged, [.session]
-
-.changes_ok:
-        popad
-        return
-endp
 
 
 cContentTypeEvent text 'Content-Type: text/event-stream', 13, 10, "X-Accel-Buffering: no", 13, 10, 13, 10, "retry: 1000", 13, 10, 13, 10  ;"X-Accel-Buffering: no", 13, 10, "Transfer-Encoding: chunked", 13, 10, 13, 10
@@ -627,44 +641,28 @@ begin
         pushad
 
         mov     esi, [.pSpecial]
-        or      [esi+TSpecialParams.fDontFree], -1
-
-        stdcall GetCookieValue, [esi+TSpecialParams.params], "eventsid"
-        jnc     .session_ok
-
-        stdcall GetRandomString, 32
-
-.session_ok:
-        mov     [.session], eax
-
-; set cookie.
-        stdcall StrNew
-        stdcall StrCat, eax, "Set-Cookie: eventsid="
-        stdcall StrCat, eax, [.session]
-        stdcall StrCat, eax, <"; Path=/", 13, 10>
-
-        push    eax
-        stdcall StrPtr, eax
-        stdcall FCGI_output, [esi+TSpecialParams.hSocket], [esi+TSpecialParams.requestID], eax, [eax+string.len], FALSE
-        stdcall StrDel ; from the stack
 
         stdcall FCGI_output, [esi+TSpecialParams.hSocket], [esi+TSpecialParams.requestID], cContentTypeEvent, cContentTypeEvent.length, FALSE
         jc      .error
 
-        stdcall AddEventListener, [esi+TSpecialParams.hSocket], [esi+TSpecialParams.requestID], [.evMaskLo], [.evMaskHi], [.session]
-        stdcall AddEventSession, esi, [.session]
+        stdcall GetRandomString, 32
+        mov     [.session], eax
+
+        stdcall AddEventListener, esi, [.evMaskLo], [.evMaskHi], [.session]
+
+        or      [esi+TSpecialParams.fDontFree], -1
         clc
         popad
         mov     eax, [.session]
         return
 
 .error:
-        stdcall SetEventStatus, [.session], evsClosed
-        stdcall StrDel, [.session]
         stc
         popad
         return
 endp
+
+
 
 
 proc EventUserName, .pSpecial
@@ -701,7 +699,7 @@ endp
 
 
 
-sqlSelectUsers text "select time, session, username, original, status from EventSessions where status<>0 order by original;"
+sqlSelectUsers text "select time, session, username, original, status, events from EventSessions"
 
 proc SendUsersOnline, .session
 .stmt dd ?
@@ -756,6 +754,10 @@ begin
         cinvoke sqliteColumnText, [.stmt], 4   ; status
         stdcall StrCat, edi, eax
 
+        stdcall StrCat, edi, txt ', "events": '
+        cinvoke sqliteColumnText, [.stmt], 5   ; events
+        stdcall StrCat, edi, eax
+
         stdcall StrCat, edi, txt ' }'
 
         inc     ebx
@@ -774,14 +776,12 @@ endp
 
 
 
-sqlSelectOneUser text "select session, username, original, status from EventSessions where session = ?1;"
+sqlSelectOneUser text "select session, username, original, status, events from EventSessions where session = ?1;"
 
 proc SendUserChanged, .session
 .stmt dd ?
 begin
         pushad
-
-        xor     ebx, ebx        ; record counter.
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectOneUser, sqlSelectOneUser.length, eax, 0
@@ -821,6 +821,10 @@ begin
         cinvoke sqliteColumnText, [.stmt], 3   ; status
         stdcall StrCat, edi, eax
 
+        stdcall StrCat, edi, txt ', "events": '
+        cinvoke sqliteColumnText, [.stmt], 4   ; events
+        stdcall StrCat, edi, eax
+
         stdcall StrCat, edi, txt '}'
 
         stdcall AddEvent, evUserChanged, edi, 0
@@ -832,6 +836,26 @@ begin
         return
 endp
 
+
+
+proc SendUserClosed, .session
+begin
+        pushad
+        stdcall StrDupMem, txt '{ "sid": "'
+        mov     edi, eax
+
+        stdcall StrDup, [.session]
+        stdcall StrTrim, eax, 8
+        stdcall StrCat, edi, eax
+        stdcall StrDel, eax
+        stdcall StrCat, edi, txt '", "user": "", "originalname": "", "status": 0, "events": 3}'
+
+        stdcall AddEvent, evUserChanged, edi, 0
+        stdcall StrDel, edi
+
+        popad
+        return
+endp
 
 
 

@@ -2,7 +2,6 @@
 [css:navigation.css]
 [css:toaster.css]
 
-[case:[special:lang]|||||]
 [case:[special:lang]|
   [equ:ttlPublic=Public threads]
   [equ:ttlLimited=Limited access threads]

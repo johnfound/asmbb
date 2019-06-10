@@ -3,69 +3,10 @@ CHAT_MAX_MESSAGE = 1000
 CHAT_BACKLOG_DEFAULT = 100
 
 
-proc EventsRealTime, .pSpecial
-begin
-        pushad
-
-        mov     esi, [.pSpecial]
-        xor     ebx, ebx
-        xor     edi, edi
-
-        stdcall GetQueryParam, esi, txt 'events='
-        jc      .error_400
-
-        push    eax
-        stdcall StrToNumEx, eax
-        stdcall StrDel ; from the stack
-        jc      .error_400
-
-        or      edi, eax
-        and     edi, evmAllEventsLo
-        and     ebx, evmAllEventsHi
-
-        stdcall ChatPermissions, esi
-        jc      .error_no_permissions
-
-        stdcall InitEventSession, esi, edi, ebx
-        jc      .exit
-
-        test    edi, evmChat
-        jz      .chat_ok
-
-        stdcall ChatInitialEvents, eax  ; eax is the events session.
-
-.chat_ok:
-
-        stdcall StrDel, eax
-
-.exit:
-        popad
-        xor     eax, eax
-        stc                      ; all communications here are finished: CF=1 and EAX=0.
-        return
-
-.error_no_permissions:
-
-        stdcall TextCreate, sizeof.TText
-        stdcall AppendError, eax, "403 Forbidden", esi
-
-.send_error:
-        stdcall FCGI_outputText, [esi+TSpecialParams.hSocket], [esi+TSpecialParams.requestID], edx, TRUE
-        stdcall TextFree, edx
-        jmp     .exit
-
-.error_400:
-        stdcall TextCreate, sizeof.TText
-        stdcall AppendError, eax, "400 Invalid events mask", esi
-
-endp
-
-
-
 sqlSelectChat  text "select id, time, user, original, message from ChatLog where id in (select id from chatlog order by id desc limit ?1)"
 
-proc ChatInitialEvents, .session
-.stmt             dd ?
+proc SendMessageLog, .session
+.stmt dd ?
 begin
         pushad
 
@@ -138,8 +79,6 @@ begin
         stdcall AddEvent, evMessage, edi, [.session]
 
 .messages_ok:
-
-        stdcall SendUsersOnline, [.session]
         stdcall StrDel, edi
         popad
         return
@@ -185,10 +124,14 @@ begin
 .post_new_message:
 
         xor     edi, edi
-        stdcall GetCookieValue, [esi+TSpecialParams.params], "eventsid"
-        jc      .error_no_permissions
-
+        stdcall GetQueryParam, esi, txt 'session='
         mov     edi, eax
+        test    edi, edi
+        jz      .error_no_permissions
+
+;        stdcall FileWriteString, [STDERR], "Chat request session: "
+;        stdcall FileWriteString, [STDERR], edi
+;        stdcall FileWriteString, [STDERR], <txt "<<<", 13, 10>
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "cmd", 0
         test    eax, eax
@@ -345,7 +288,7 @@ endl
         push    eax
         stdcall StrToNumEx, eax
         stdcall StrDel ; from the stack
-        stdcall SetEventStatus, edi, eax
+        stdcall SetEventUserStatus, edi, eax
         jmp     .finish
 endp
 

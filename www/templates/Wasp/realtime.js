@@ -167,9 +167,12 @@
 
 var EventSource = window.EventSource;
 var source = null;
+var session = '';
 var ActivityAlign = 'bottom right';
 var ActivityTimeout = 10000;
+
 var WantEvents = 8;
+var listSourceEvents = [];
 
 
 function disconnect() {
@@ -180,15 +183,31 @@ function disconnect() {
 
 
 function connect() {
-  source = new EventSource("/!events?events=" + WantEvents);    // evmAllEventsLo
-  source.addEventListener('error',
-    function(e){
-      setTimeout(function() { connect(); }, 2000 );
-    }
-  );
-  source.addEventListener('user_activity', OnActivity);
-  window.addEventListener('beforeunload', disconnect);
+  if (source) disconnect();
+  source = new EventSource("/!events?events=" + WantEvents);
+  listSourceEvents.forEach( function(value) { source.addEventListener(value.event, value.handler) } );
 }
+
+
+listSourceEvents.push(
+  {
+    event: 'session',
+    handler:
+      function(e) {
+        session = e.data
+      }
+  }
+);
+
+listSourceEvents.push(
+  {
+    event: 'error',
+    handler:
+      function(e) {
+        setTimeout(connect, 2000 );
+      }
+  }
+);
 
 
 function OnActivity(e) {
@@ -205,5 +224,15 @@ function OnActivity(e) {
   }
 }
 
+
+listSourceEvents.push(
+  {
+    event: 'user_activity',
+    handler: OnActivity
+  }
+);
+
+
 window.addEventListener('load', connect);
+window.addEventListener('beforeunload', disconnect);
 

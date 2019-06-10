@@ -611,12 +611,13 @@ create table EventSessions (
   time        integer,
   username    text,
   original    text,
-  status      integer
+  status      integer,
+  events      integer default 0
 );
-
 
 create index idxEventSessionsTime on EventSessions(time);
 create index idxEventSessionsOrig on EventSessions(original);
+create index idxEventSessionsMain on EventSessions(status);
 
 create table EventQueue (
   id         integer primary key autoincrement,

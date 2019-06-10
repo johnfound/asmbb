@@ -1,5 +1,76 @@
 
 
+proc EventsRealTime, .pSpecial
+begin
+        pushad
+
+        mov     esi, [.pSpecial]
+        xor     ebx, ebx
+        xor     edi, edi
+
+        stdcall GetQueryParam, esi, txt 'events='
+        jc      .error_400
+
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack
+        jc      .error_400
+
+        or      edi, eax
+        and     edi, evmAllEventsLo
+        and     ebx, evmAllEventsHi
+
+        stdcall ChatPermissions, esi
+        jc      .error_no_permissions
+
+        stdcall InitEventSession, esi, edi, ebx
+        jc      .exit
+
+        test    edi, evmMessage
+        jz      .message_log_ok
+
+        stdcall SendMessageLog, eax  ; eax is the events session.
+
+.message_log_ok:
+
+        test    edi, evmUsersOnline
+        jz      .users_ok
+
+        stdcall SendUsersOnline, eax
+
+.users_ok:
+
+        stdcall StrDel, eax
+
+.exit:
+        popad
+        xor     eax, eax
+        stc                      ; all communications here are finished: CF=1 and EAX=0.
+        return
+
+.error_no_permissions:
+
+        stdcall TextCreate, sizeof.TText
+        stdcall AppendError, eax, "403 Forbidden", esi
+
+.send_error:
+        stdcall FCGI_outputText, [esi+TSpecialParams.hSocket], [esi+TSpecialParams.requestID], edx, TRUE
+        stdcall TextFree, edx
+        jmp     .exit
+
+.error_400:
+        stdcall TextCreate, sizeof.TText
+        stdcall AppendError, eax, "400 Invalid events mask", esi
+        jmp     .exit
+
+endp
+
+
+
+
+
+
+
 cTrue text 'true'
 cFalse text 'false'
 
