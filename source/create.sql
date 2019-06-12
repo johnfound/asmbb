@@ -607,17 +607,13 @@ create table ChatLog (
 
 
 create table EventSessions (
-  session     text unique not null,
-  time        integer,
+  session     text primary key not null,
   username    text,
   original    text,
   status      integer,
   events      integer default 0
-);
+) without rowid;
 
-create index idxEventSessionsTime on EventSessions(time);
-create index idxEventSessionsOrig on EventSessions(original);
-create index idxEventSessionsMain on EventSessions(status);
 
 create table EventQueue (
   id         integer primary key autoincrement,

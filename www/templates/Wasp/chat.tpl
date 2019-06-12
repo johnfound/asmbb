@@ -318,6 +318,7 @@ function user_node(usr) {
   if ( session && session.startsWith(usr.sid) ) {
     user_line.innerHTML = usr.user;
     user_line.value = user_line.textContent;
+    if ( (usr.status !== 2) && document.hidden ) UserStatusChange(2);
   }
 
   return p;

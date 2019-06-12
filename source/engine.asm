@@ -77,7 +77,6 @@ include "categories.asm"
 include "history.asm"
 
 include "chat.asm"
-include "chat_ipc.asm"
 
 include "realtime.asm"
 
@@ -107,11 +106,16 @@ endg
 rb 123
 
 
+; process exit codes:
+
+exitNormal = 0          ; normal exit.
+exitException = 1       ; some exception happened.
+exitSharedMem = 2       ; shared memory allocation fault.
+
+
+
 start:
         InitializeAll
-
-        stdcall InitEventsIPC
-        jc      .finish
 
         if ~( defined options.DebugSQLite & options.DebugSQLite )
           mov   eax, [_sqlitePrepare_v2]
@@ -157,13 +161,17 @@ start:
 
         stdcall LogEvent, "ScriptStart", logNULL, 0, 0
 
+        mov     eax, exitSharedMem
+        stdcall InitEventsIPC
+        jc      .terminate
+
         stdcall ThreadCreate, sseServiceThread, 0       ; the events handling thread.
 
         stdcall Listen
 
 ; close the database
 
-        xor     eax, eax
+        mov     eax, exitNormal
 
 .terminate:
         push    eax
@@ -205,22 +213,11 @@ start:
 
 proc OnForcedTerminate as procForcedTerminateHandler
 begin
-
         DebugMsg "OnForcedTerminate"
 
-        lock inc [fEventsTerminate]
-        stdcall SignalNewEvent        ; should close the connections!
+        call    __ForceTerminate
 
-        stdcall Sleep, 100
-
-        cmp     [fOwnSocket], 0
-        je      .end_error
-
-        stdcall SocketClose, [STDIN]
-        stdcall FileDelete, pathMySocket
-
-.end_error:
-        xor     eax, eax
+        mov     eax, exitNormal
         jmp     start.terminate         ; the stack is not important here!
 endp
 
@@ -228,24 +225,31 @@ endp
 
 proc OnException as procForcedTerminateHandler
 begin
-
         DebugMsg "OnException"
 
+        call    __ForceTerminate
+
+        mov     eax, exitException
+        jmp     start.terminate         ; the stack is not important here!
+endp
+
+
+
+proc __ForceTerminate
+begin
         lock inc [fEventsTerminate]
         stdcall SignalNewEvent        ; should close the connections!
 
         stdcall Sleep, 100
 
         cmp     [fOwnSocket], 0
-        je      .end_error
+        je      .finish
 
         stdcall SocketClose, [STDIN]
         stdcall FileDelete, pathMySocket
 
-.end_error:
-        xor     eax, eax
-        dec     eax
-        jmp     start.terminate         ; the stack is not important here!
+.finish:
+        return
 endp
 
 
@@ -296,8 +300,8 @@ begin
         pop     edx
         return
 
-
 .error_for_admins_only:
+
         push    edi
         stdcall TextMakeRedirect, 0, "/!message/only_for_admins"
         mov     eax, edi
@@ -374,8 +378,6 @@ begin
 
         stdcall DeleteArrayItems, [ptrSQList], ecx, 1
         mov     [ptrSQList], edx
-
-;        OutputValue "Removed $", ebx, 16, 8
 
 .release:
         stdcall MutexRelease, mxSQLite

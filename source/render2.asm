@@ -2442,8 +2442,7 @@ begin
         jc      .finish_skins
 
         mov     edi, eax
-        stdcall SortDirArray, edi, fdsByType
-
+        stdcall SortArray, edi, DirItemCompare, dsByName or fdsDirsFirst
         mov     ecx, [edi+TArray.count]
 
 

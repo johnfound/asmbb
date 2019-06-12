@@ -1,5 +1,5 @@
-C Event\ssessions\swithout\scookies.\sNeeds\ssome\swork\son\sthe\spossible\szombie\srecords\sin\sthe\sEventSessions\stable.\sIt\sis\srare\scase\sif\ssomething\sgoes\sreally\swrong,\sbut\sstill\sneeds\ssome\shandling.
-D 2019-06-10T08:21:56.298
+C Work\son\sthe\sSSE\sservice\scorrect\sprocessing\sin\sthe\scase\sseveral\sinstances\sof\sthe\sengine\sis\srunning\ssimultaneously.\nChanged\sthe\sway\sevents\ssessions\sare\sprocessed.\sNow\sthey\sare\sper\sconnection\sand\suses\sno\scookies.
+D 2019-06-12T20:06:44.994
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -32,13 +32,12 @@ F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm 87830583d32bdf406d7a0a0615cff0b23fda9283
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm a71ffb1766d7ce322a82deaa40f0867feb63f8ba
-F source/chat_ipc.asm dd5c9d92e1f4bdf3821cb2223342d2594bf5c332
 F source/commands.asm e4ac34fe6f3fdb658af1b61b6aeb5e4ae38cc4ac
-F source/create.sql 4b167ad22b2a91377ec1bcde978a818880d7b05b
+F source/create.sql df6533d9e3bb25192cb7c2aaab6a85271fabef39
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm dddd1b6b89eef295ab5a65cb7302aefe0d948399
-F source/engine.asm e0cfb8831d23d9c889f74c863d4d54cd2eedf5f8
-F source/engine.fpr 09dbd1c51166cf9519c1f6934f9eb9684125fafd
+F source/engine.asm c3fed9fd2bcde58e79f5989c9a5e10ffe4fb056e
+F source/engine.fpr bd227ed56866d692fe314ba88b90f98ad8871d7e
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm f3135938fcbe5e5f48a1f5f81622b996a3aebac1
@@ -54,7 +53,7 @@ F source/migration2.sql fe978700e39265c6680b69ea8cbfb5444cfdce63
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
 F source/phpbb.sql 6820a2092cc30a774c44d770055b37b66bdbfaf0
 F source/post.asm 72a0f1de51352612597fe8e55c629dfe01bffc5b
-F source/post_data.asm af4b81ca1c74d54bbcd7a15b57f9c0cbd8622f01
+F source/post_data.asm 79fb813775e3bafe6cb314c50a99484e4f0dc211
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
 F source/realtime.asm 574397b6559ab3f85bf82e7096e7e0348efaffcf
@@ -63,7 +62,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm 6c1ca5656c2ae803849e7919e2f12b7cf93a39a4
+F source/render2.asm 58c62dad95c6790216e3e28b24afb4e5e3471e10
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm bf0cc81ee01e15f731972a6c951101c814f19c19
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -74,7 +73,7 @@ F source/showthread.asm f2a6e1fa9ff9dfc31a31482448d3a60b5e6ffb70
 F source/showthread.sql 88e6f49dae477c7b96a4ca0722f4885f754b0bb0
 F source/sqlite3.asm 96da54af081f5ea9b9756ca72667431e0f05082e
 F source/sqlite_console.asm a2ee59e277e906ce259d9bc82602472a17fbd687
-F source/sse_service.asm fe6eaf95ead601b2ffc1cc02fb96b8450cb3d48c
+F source/sse_service.asm 140cc05597fdb2594f27fc40157acf3f850eb6d8
 F source/statistics.asm 8574bead31291bdaf459a032659cb41bc34883d3
 F source/statistics.sql b854e249807878dcd87c5e16dde801114639308c
 F source/tests/Test1.tpl 3787fb082cb7f6404ff4631fd6ca67ed14c7beac
@@ -180,7 +179,7 @@ F www/images/sources/title2.svg 38a1b994139b4814b00b4cfda84577a31467d7ad
 F www/images/sources/toolbar.svg 44706bddfbfc0d92bc2c0889c92e772060a691d3
 F www/images/sources/yellow_back.png d7aed4145104dc3224a3fb46f03c14cf6d386167
 F www/images/title.svg cfda872f2467a82c172f6e309ae7a385fdaabff5
-F www/lighttpd.conf cebee97b8e632682bfa9c02f2858d2675e6b15c6
+F www/lighttpd.conf c2fcd99a7953c34cf404de01d694ed11388c7f9e
 F www/robots.txt bed60589d6ab1cc0470f3ba582444612d1c4109a
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/Light/_images/alltags.svg 6e092a166d06e309a3a681fb940def7cff1785f3
@@ -476,7 +475,7 @@ F www/templates/Wasp/atom_entry_thread.tpl ab6e308c142262fa4a7ff9bb98d03a67168ff
 F www/templates/Wasp/atom_start.tpl 93d0cec7a6c29045e0e4bd631eace12699a80aa7
 F www/templates/Wasp/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
 F www/templates/Wasp/chat.less a4c64381f5ef14741bb249a4678573cbea899f83
-F www/templates/Wasp/chat.tpl 1ddbede680daac3898a7c39fe337f8cc01a944eb
+F www/templates/Wasp/chat.tpl 0fdb69f656bed8a16d5fbdf3f71f52cfe3f2669f
 F www/templates/Wasp/common.less 9155092000f37d25951941a151e6f28a7fddb687
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 26b8239d78b69cd5fbe206ea12ccb96890aac030
@@ -521,7 +520,7 @@ F www/templates/Wasp/posteditor.less f990d5a9034599e43c3e72471622db9b89f62c43
 F www/templates/Wasp/postnew.less ddc68e487d815f8cd6aa3ebfc23d1f71bffa3daa
 F www/templates/Wasp/posts.less cea5f85c3b61a043bd3e07dca04a28e87e8d616a
 F www/templates/Wasp/preview.tpl 7762cf404ea93817b3121932c29a7cac0502c135
-F www/templates/Wasp/realtime.js 77291f9bc161926064a2c18e90b46e41faa39e68
+F www/templates/Wasp/realtime.js f42157b8f718f14cc560e995c4ff36015fcfb402
 F www/templates/Wasp/restore_confirm.tpl 51628410ec4a3753bc384fd0c733e059aba965c4
 F www/templates/Wasp/search.less 17bfdc636da1019916443febbb2073b791ed79d1
 F www/templates/Wasp/search_result.tpl 436d969e5b83d331581f8c0db368cab14d9be8e9
@@ -632,7 +631,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 7ca025e53e7f712de7a80f6bb62b5a57f1c3fa18
-R 8e59e5f000d5b533dad32e58b62572db
+P 933e5f2711538a3979a0cc07832370331baa9014
+R eaaa6c38123600aaf538a034f102b29b
 U johnfound
-Z 8c003ae9dad60693d6f61cf589275cc5
+Z f5f861069e09742a50123cf43055f186

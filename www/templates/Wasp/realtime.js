@@ -204,6 +204,7 @@ listSourceEvents.push(
     event: 'error',
     handler:
       function(e) {
+        disconnect();
         setTimeout(connect, 2000 );
       }
   }

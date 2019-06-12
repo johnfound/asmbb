@@ -67,17 +67,17 @@ end if
 
         mov     ebx, eax
 
-if defined options.DebugMode & options.DebugMode
-        pushad
-        OutputValue "Content-Type string handle:", ebx, 16, 8
-        stdcall StrPtr, ebx
-
-        OutputValue "Content-type pointer: ", eax, 16, 8
-        OutputValue "Content-type length:", [eax+string.len], 10, -1
-        Output eax
-        DebugMsg
-        popad
-end if
+;if defined options.DebugMode & options.DebugMode
+;        pushad
+;        OutputValue "Content-Type string handle:", ebx, 16, 8
+;        stdcall StrPtr, ebx
+;
+;        OutputValue "Content-type pointer: ", eax, 16, 8
+;        OutputValue "Content-type length:", [eax+string.len], 10, -1
+;        Output eax
+;        DebugMsg
+;        popad
+;end if
 
         test    ebx, ebx
         jz      .bad_request
