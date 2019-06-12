@@ -148,3 +148,10 @@ cActivityList           mtext   EN: " is browsing the threads list.",    \
                                 RU: " просматривает список тем.",    \
                                 FR: " navigue dans la liste des discussions.",    \
                                 DE: " durchsucht die Threads-Liste."
+
+cActivityChat           mtext   EN: " entered the chat.",               \
+                                BG: " влезе в чата.",                   \
+                                RU: " вошол в чат.",                    \
+                                FR: " est entré dans le chat.",         \
+                                DE: " hat den Chat betreten."
+

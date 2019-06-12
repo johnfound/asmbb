@@ -362,23 +362,14 @@ begin
 .finish_logged:
         mov     ecx, [.user]
         mov     edx, [.userID]
+
         xchg    ecx, [esi+TSpecialParams.userName]
         xchg    edx, [esi+TSpecialParams.userID]
-        push    ecx edx
 
-        stdcall UserNameLink, esi
-        mov     ebx, eax
+        stdcall AddActivitySimple, cActivityLogin, esi
 
-        pop     edx ecx
         xchg    edx, [esi+TSpecialParams.userID]
         xchg    ecx, [esi+TSpecialParams.userName]
-
-        mov     eax, DEFAULT_UI_LANG
-        stdcall GetParam, "default_lang", gpInteger
-
-        stdcall StrCat, ebx, [cActivityLogin + 8*eax]
-        stdcall AddActivity, ebx, [.userID]
-        stdcall StrDel, ebx
 
 .finish:
         mov     [esp+4*regEAX], edi     ; the result
@@ -438,15 +429,7 @@ begin
         stdcall TextCat, edi, <"Set-Cookie: sid=; HttpOnly; Path=/; Max-Age=0", 13, 10>
         mov     edi, edx
 
-        mov     eax, DEFAULT_UI_LANG
-        stdcall GetParam, "default_lang", gpInteger
-        push    [cActivityLogout + 8*eax]
-
-        stdcall UserNameLink, esi
-        stdcall StrCat, eax ; from the stack!
-
-        stdcall AddActivity, eax, [esi+TSpecialParams.userID]
-        stdcall StrDel, eax
+        stdcall AddActivitySimple, cActivityLogout, esi
 
 .finish:
         stdcall GetBackLink, esi

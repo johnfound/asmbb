@@ -28,17 +28,7 @@ begin
 
 .read_ok:
         stdcall LogUserActivity, esi, uaThreadList, 0
-
-; activity realtime event
-
-        mov     eax, DEFAULT_UI_LANG
-        stdcall GetParam, "default_lang", gpInteger
-        push    [cActivityList + 8*eax]
-
-        stdcall UserNameLink, esi
-        stdcall StrCat, eax ; from the stack!
-        stdcall AddActivity, eax, [esi+TSpecialParams.userID]
-        stdcall StrDel, eax
+        stdcall AddActivitySimple, cActivityList, esi
 
 ; make the title
 

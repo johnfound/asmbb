@@ -67,7 +67,25 @@ endp
 
 
 
+proc AddActivitySimple, .i18nString, .pSpecial
+begin
+        pushad
 
+        mov     esi, [.pSpecial]
+        mov     edi, [.i18nString]
+
+        mov     eax, DEFAULT_UI_LANG
+        stdcall GetParam, "default_lang", gpInteger
+        lea     edi, [edi+8*eax]
+
+        stdcall UserNameLink, esi
+        stdcall StrCat, eax, [edi]
+        stdcall AddActivity, eax, [esi+TSpecialParams.userID]
+        stdcall StrDel, eax
+
+        popad
+        return
+endp
 
 
 

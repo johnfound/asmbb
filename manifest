@@ -1,5 +1,5 @@
-C Work\son\sthe\sSSE\sservice\scorrect\sprocessing\sin\sthe\scase\sseveral\sinstances\sof\sthe\sengine\sis\srunning\ssimultaneously.\nChanged\sthe\sway\sevents\ssessions\sare\sprocessed.\sNow\sthey\sare\sper\sconnection\sand\suses\sno\scookies.
-D 2019-06-12T20:06:44.994
+C Added\sreal-time\snotification\sfor\sentering\schat.\sNow\sit\sseems\smore-or-less\sready\sfor\srelease.
+D 2019-06-12T20:49:34.655
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -21,7 +21,7 @@ F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/TestsWithTags.sql 6384a56d553e36aa1c54cdb61a147bb2806e3e9d
 F source/ToDo.txt 78c2a566e37fc37db78b799f5ac100bed383c182
 F source/Win32/sqlite3.inc 83b0ebab85f7359c5b99c281b1eae5cce0877b9a
-F source/accounts.asm b71d48c99dbf574f48fcc28e8c65adc46d84a906
+F source/accounts.asm a8fd99724495ab0ca7d3ad7f6af31492304e286b
 F source/alltags.sql e4a0d5084be7a45f5e30ab46b7985f49c797f86a
 F source/atom_list.sql 6a80934c279093592290ca79d0b517e37800badf
 F source/atom_one_thread.sql 32da01bccec3dc4f86463f355a476028bc0632de
@@ -31,7 +31,7 @@ F source/attachments.asm 6843dd5b449b1394ae9c6f2b6bc44ed561f9a913
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm 87830583d32bdf406d7a0a0615cff0b23fda9283
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
-F source/chat.asm a71ffb1766d7ce322a82deaa40f0867feb63f8ba
+F source/chat.asm 026c56d74ba757af50af476857b6d06f043cd079
 F source/commands.asm e4ac34fe6f3fdb658af1b61b6aeb5e4ae38cc4ac
 F source/create.sql df6533d9e3bb25192cb7c2aaab6a85271fabef39
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
@@ -56,7 +56,7 @@ F source/post.asm 72a0f1de51352612597fe8e55c629dfe01bffc5b
 F source/post_data.asm 79fb813775e3bafe6cb314c50a99484e4f0dc211
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
-F source/realtime.asm 574397b6559ab3f85bf82e7096e7e0348efaffcf
+F source/realtime.asm 7b2c59fcfd9da4582f15afb561efda5347393155
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
@@ -79,10 +79,10 @@ F source/statistics.sql b854e249807878dcd87c5e16dde801114639308c
 F source/tests/Test1.tpl 3787fb082cb7f6404ff4631fd6ca67ed14c7beac
 F source/tests/test_templates.asm 9fbe778c983448663d18c9cc2cc3cd9d0107e93b
 F source/tests/test_templates.fpr 0b6d692c0d55f91a6e310f622a6fe2c49c06ddf9
-F source/text_constants.asm bb6d1798a119ef5a9e3268987a19beeaecaece3e
+F source/text_constants.asm ca4fd3868d1fc9ea09f945afc627d23787d48919
 F source/thread_attr.sql 96f479d9e4ab2a93221b81be1bbb8a8ba6e277f3
 F source/threadcount.sql 897aa66b52dbe48ed09391442d3b288c36cbabff
-F source/threadlist.asm 1f077a86f5053f6db4149ff062227f862f16d0c0
+F source/threadlist.asm 7984a91dc9512c8668234c3f24a659f01a36935e
 F source/threadlist.sql 1959b0c381dbafe364367a5b05c7574eb9ee20b2
 F source/threadlist_tag.sql 7f289b2761912544af1f27876874d059091f4bed
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
@@ -631,7 +631,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 933e5f2711538a3979a0cc07832370331baa9014
-R eaaa6c38123600aaf538a034f102b29b
+P 398d9bbdcd36e92e66dd270b4cbb5f1608b29f2c
+R 128c87f61cb98e75d5cc7efb7ef7ac2c
 U johnfound
-Z f5f861069e09742a50123cf43055f186
+Z eeea45be423ab04961d3545ffaddd57e
