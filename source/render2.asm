@@ -2443,17 +2443,18 @@ begin
 
         mov     edi, eax
         stdcall SortArray, edi, DirItemCompare, dsByName or fdsDirsFirst
-        mov     ecx, [edi+TArray.count]
 
+        mov     ecx, [edi+TArray.count]
+        lea     esi, [edi+TArray.array]
 
 .dir_loop:
         dec     ecx
         js      .end_of_dir
 
-        cmp     [edi+TArray.array+8*ecx+TDirItem.Type], ftDirectory
+        cmp     [esi+TDirItem.Type], ftDirectory
         jne     .next_file
 
-        stdcall StrPtr, [edi+TArray.array+8*ecx+TDirItem.hFilename]
+        stdcall StrPtr, [esi+TDirItem.hFilename]
         jc      .next_file
 
         cmp     byte [eax], '_'
@@ -2463,21 +2464,22 @@ begin
         je      .next_file
 
         stdcall TextCat, edx, txt '<option value="'
-        stdcall TextCat, edx, [edi+TArray.array+8*ecx+TDirItem.hFilename]
+        stdcall TextCat, edx, [esi+TDirItem.hFilename]
         stdcall TextCat, edx, txt '" '
 
-        stdcall StrCompCase, [edi+TArray.array+8*ecx+TDirItem.hFilename], [.hCurrent]
+        stdcall StrCompCase, [esi+TDirItem.hFilename], [.hCurrent]
         jnc     .selected_ok
 
         stdcall TextCat, edx, txt ' selected="selected"'
 
 .selected_ok:
         stdcall TextCat, edx, txt '>'
-        stdcall TextCat, edx, [edi+TArray.array+8*ecx+TDirItem.hFilename]
+        stdcall TextCat, edx, [esi+TDirItem.hFilename]
         stdcall TextCat, edx, <txt '</option>', 13, 10>
 
 .next_file:
-        stdcall StrDel, [edi+TArray.array+8*ecx+TDirItem.hFilename]
+        stdcall StrDel, [esi+TDirItem.hFilename]
+        add     esi, sizeof.TDirItem
         jmp     .dir_loop
 
 .end_of_dir:

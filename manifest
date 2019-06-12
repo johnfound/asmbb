@@ -1,5 +1,5 @@
-C Added\sreal-time\snotification\sfor\sentering\schat.\sNow\sit\sseems\smore-or-less\sready\sfor\srelease.
-D 2019-06-12T20:49:34.655
+C Fixed\stypo\sin\sthe\sreal-time\snotifications.\sFixed\sstring\sleak\scaused\sby\sthe\snew\sTDirItem\sstructure\sformat.
+D 2019-06-12T21:25:36.375
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -31,7 +31,7 @@ F source/attachments.asm 6843dd5b449b1394ae9c6f2b6bc44ed561f9a913
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm 87830583d32bdf406d7a0a0615cff0b23fda9283
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
-F source/chat.asm 026c56d74ba757af50af476857b6d06f043cd079
+F source/chat.asm 46e64d22841349e2935e8c62681f2f47cad786a0
 F source/commands.asm e4ac34fe6f3fdb658af1b61b6aeb5e4ae38cc4ac
 F source/create.sql df6533d9e3bb25192cb7c2aaab6a85271fabef39
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
@@ -62,7 +62,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm 58c62dad95c6790216e3e28b24afb4e5e3471e10
+F source/render2.asm fe293a979f30509cc5bfcc1a9a32ce2ac60aba83
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm bf0cc81ee01e15f731972a6c951101c814f19c19
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -631,7 +631,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 398d9bbdcd36e92e66dd270b4cbb5f1608b29f2c
-R 128c87f61cb98e75d5cc7efb7ef7ac2c
+P 7f1d6e7b472c68a796af32513a72f8cebb08e8fe
+R 7f9807fa9041f99cef1effcbd4dad9d5
 U johnfound
-Z eeea45be423ab04961d3545ffaddd57e
+Z cc88efab21f04470a02c4e7cc43b8b0a

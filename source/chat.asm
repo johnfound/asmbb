@@ -108,7 +108,7 @@ begin
         stdcall StrCat, [esi+TSpecialParams.page_title], [cChatTitle+8*eax]
         stdcall LogUserActivity, esi, uaChatting, 0
 
-        stdcall AddActivitySimple, cActivityLogin, esi
+        stdcall AddActivitySimple, cActivityChat, esi
 
         stdcall RenderTemplate, 0, txt "chat.tpl", 0, [.pSpecial]
 
