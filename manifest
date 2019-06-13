@@ -1,5 +1,5 @@
-C Official\ssource\scode\srelease\sv2.6
-D 2019-06-13T10:26:20.533
+C More\sunified\sJS\scode\sfor\sthe\schat.
+D 2019-06-13T12:03:53.668
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -480,7 +480,7 @@ F www/templates/Wasp/atom_entry_thread.tpl ab6e308c142262fa4a7ff9bb98d03a67168ff
 F www/templates/Wasp/atom_start.tpl 93d0cec7a6c29045e0e4bd631eace12699a80aa7
 F www/templates/Wasp/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
 F www/templates/Wasp/chat.less a4c64381f5ef14741bb249a4678573cbea899f83
-F www/templates/Wasp/chat.tpl 0fdb69f656bed8a16d5fbdf3f71f52cfe3f2669f
+F www/templates/Wasp/chat.tpl d1940de543f8eeb6393a98afc97611b13c3aabe2
 F www/templates/Wasp/common.less 9155092000f37d25951941a151e6f28a7fddb687
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 26b8239d78b69cd5fbe206ea12ccb96890aac030
@@ -573,7 +573,7 @@ F www/templates/mobile/atom_entry_thread.tpl d6f76cb18d5e725a3708a966e9e8720ca64
 F www/templates/mobile/atom_start.tpl d47f23ad78f9717598c748c2b37f812d56a4ccdb l
 F www/templates/mobile/autocomplete.js a996b9733be61eac1ebe92d8d4382cade7a93a26 l
 F www/templates/mobile/chat.less fb91350c83c46d18fe0ea4a04d83db826c936f7f
-F www/templates/mobile/chat.tpl 843a0d838e01b053172c7647dfcaf18728d6a8af
+F www/templates/mobile/chat.tpl b1ec52308e45dcef808e3736c764c381272c2b79
 F www/templates/mobile/common.less 762e4e8198de87fbcb131462b3476432725a2c65 l
 F www/templates/mobile/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/mobile/del_confirm.tpl cdcb838e2e3a339de5408643fd2c2f3c447ab916 l
@@ -636,8 +636,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P e4df4cff9e4a9d90e434b9eece992626c7512459
-R 6feaa659c6c3359f541e2cf5259bf9c7
-T +sym-v2.6 *
+P 82a2e40c4cfa898521068b057b9e984e52b61ed6
+R cbb3ef0c54b6dc1216383f3adf2d1094
 U johnfound
-Z ac704c521865056da1881c1d9d628655
+Z 131500f190d5680b2114d06fa39556f1

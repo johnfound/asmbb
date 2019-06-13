@@ -104,7 +104,6 @@ listSourceEvents.push(
   }
 );
 
-
 listSourceEvents.push(
   {
     event: 'error',
@@ -119,7 +118,6 @@ listSourceEvents.push(
       }
   }
 );
-
 
 listSourceEvents.push(
   {
@@ -155,6 +153,7 @@ window.addEventListener('load',
 
 window.addEventListener('beforeunload',
   function (e) {
+    discinect();
     UserStatusChange(0);
     return null;
   }
@@ -214,14 +213,15 @@ function UserStatusChange(status) {
 
 
 function SendMessage() {
-  if (edit_line.value) {
-    var http = new XMLHttpRequest();
+  var txt = edit_line.value;
+  if (txt) {
 
-    http.open("POST", "/!chat?session=" + session, true);
-    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      var http = new XMLHttpRequest();
+      http.open("POST", "/!chat?session=" + session, true);
+      http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-    var p = "cmd=message&chat_message=" + encodeURIComponent(edit_line.value);
-    http.send(p);
+      var p = "cmd=message&chat_message=" + encodeURIComponent(txt);
+      http.send(p);
 
     edit_line.value = "";
     edit_line.focus();
