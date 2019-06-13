@@ -12,6 +12,13 @@
 rm -rf ./muslsrc/
 rm -rf ./musl/
 
+# exit if the files are already compiled:
+
+if [ -f ./libsqlite3.so ] && [ -f ./ld-musl-i386.so ]; then
+  echo "The libraries are already compiled. Delete the binary files for rebuild."
+  exit 0
+fi
+
 # First find sqlite3.c file. As an existing file, existing source archive or download from Internet.
 
 if [ -f ./sqlite3.c ]; then
