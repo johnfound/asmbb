@@ -1,5 +1,5 @@
-C More\sunified\sJS\scode\sfor\sthe\schat.
-D 2019-06-13T12:03:53.668
+C Chat\sstyles\sfix\sfor\sthe\smobile\sskins.
+D 2019-06-13T12:24:06.781
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz b3915e35476774028aa3fa34ad6ce909f581f98f
@@ -572,8 +572,8 @@ F www/templates/mobile/atom_entry_post.tpl b909b679b9c4ea1723cf9ca5827c2fba527bf
 F www/templates/mobile/atom_entry_thread.tpl d6f76cb18d5e725a3708a966e9e8720ca643a239 l
 F www/templates/mobile/atom_start.tpl d47f23ad78f9717598c748c2b37f812d56a4ccdb l
 F www/templates/mobile/autocomplete.js a996b9733be61eac1ebe92d8d4382cade7a93a26 l
-F www/templates/mobile/chat.less fb91350c83c46d18fe0ea4a04d83db826c936f7f
-F www/templates/mobile/chat.tpl b1ec52308e45dcef808e3736c764c381272c2b79
+F www/templates/mobile/chat.less a79e6ed68fe1c2ed2ce8398687a97d762a30b025
+F www/templates/mobile/chat.tpl d6a0a8115dffba304a4c2e079a7ec4517552b8f8
 F www/templates/mobile/common.less 762e4e8198de87fbcb131462b3476432725a2c65 l
 F www/templates/mobile/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/mobile/del_confirm.tpl cdcb838e2e3a339de5408643fd2c2f3c447ab916 l
@@ -636,7 +636,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 82a2e40c4cfa898521068b057b9e984e52b61ed6
-R cbb3ef0c54b6dc1216383f3adf2d1094
+P 5b49b0ac03eef1952018dedef70c221ff2ec0bfa
+R d4d2defb1465d6b380ba943de39002e2
 U johnfound
-Z 131500f190d5680b2114d06fa39556f1
+Z 97697aa659bad5fb2baaaa690a7352c6
