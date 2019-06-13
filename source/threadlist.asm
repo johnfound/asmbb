@@ -20,7 +20,15 @@ begin
         test    [esi+TSpecialParams.userStatus], permRead or permAdmin
         jz      .error_cant_read
 
+        cmp     [esi+TSpecialParams.Limited], 0
+        je      .read_ok
+
+        cmp     [esi+TSpecialParams.userID], 0
+        je      .error_cant_read
+
+.read_ok:
         stdcall LogUserActivity, esi, uaThreadList, 0
+        stdcall AddActivitySimple, cActivityList, esi
 
 ; make the title
 

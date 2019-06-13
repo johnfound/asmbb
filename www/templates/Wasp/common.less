@@ -186,6 +186,7 @@ div.tags {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: left;
 
   background-color: @clDarkBG;
   font-size: 28px;
@@ -199,14 +200,32 @@ div.tags {
     padding: @paddingOneTag;
     margin: @marginOneTag;
     text-decoration: none;
+    position: relative;
   }
 }
 
+span.ntf {
+  position: absolute;
+  right:-11px;
+  top: -11px;
+  line-height: 22px;
+
+  border-radius: 50rem;
+
+  background-color: @clNotifyBG;
+  color: @clNotifyFG;
+
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0px 1ch;
+  z-index: 1000;
+}
+
+
 a.taglink {
   display:inline-block;
-//  max-width: 150px;
   min-width: 16px;
-  overflow: show;
+  overflow: visible;
   text-overflow: ellipsis;
   border-radius: @borderRadTags;
   border: @borderTags;
@@ -214,21 +233,6 @@ a.taglink {
   white-space: nowrap;
   text-decoration: none;
   position: relative;
-  span {
-    position: absolute;
-    right:-8px;
-    top: -8px;
-
-    border-radius: 50rem;
-
-    background-color: @clNotifyBG;
-    color: @clNotifyFG;
-
-    font-size: 12px;
-    font-weight: bold;
-    padding: 0px 1ch;
-    z-index: 1000;
-  }
 }
 
 a.current_tag {

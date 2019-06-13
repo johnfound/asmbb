@@ -37,7 +37,7 @@
   [equ:btnConsole=Console SQL]
   [equ:ttlEditThread=Éditer le titre du sujet et les mots-clés.]
   [equ:altEdit=Éditer]
-  [equ:rssfeed=Subscribe to this thread]
+  [equ:rssfeed=Suivre ce sujet]
 |
   [equ:btnCats=Kategorien]
   [equ:btnList=Themen]
@@ -61,7 +61,7 @@
 </div>
 <h1 class="thread_caption">
 [caption]
-[case:[special:canedit]| |<a href="!edit_thread" title="[const:ttlEditThread]"><img src="[special:skin]/_images/edit.svg" alt="[const:altEdit]"></a>]
-<a href="!feed" title="[const:rssfeed]"><img src="[special:skin]/_images/rss.svg" alt="RSS"></a>
+[case:[special:canedit]||<a href="!edit_thread" title="[const:ttlEditThread]"><img src="[special:skin]/_images/edit.svg" alt="[const:altEdit]"></a>]
+[case:[special:limited]|<a href="!feed" title="[const:rssfeed]"><img src="[special:skin]/_images/rss.svg" alt="RSS"></a>|]
 </h1>
 <ul class="thread_tags">[special:threadtags=[id]]</ul>

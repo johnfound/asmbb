@@ -3,42 +3,10 @@ CHAT_MAX_MESSAGE = 1000
 CHAT_BACKLOG_DEFAULT = 100
 
 
-proc ChatRealTime, .pSpecial
-begin
-        pushad
-
-        mov     esi, [.pSpecial]
-
-        stdcall ChatPermissions, esi
-        jc      .error_no_permissions
-
-        stdcall InitEventSession, esi, evmMessage or evmUsersOnline or evmUserChanged, 0  ; if CF=0 returns session string in EAX
-        jc      .exit
-
-        stdcall ChatInitialEvents, eax
-        stdcall StrDel, eax
-
-.exit:
-        popad
-        xor     eax, eax
-        stc                      ; all communications here are finished: CF=1 and EAX=0.
-        return
-
-.error_no_permissions:
-
-        stdcall TextCreate, sizeof.TText
-        stdcall AppendError, eax, "403 Forbidden", esi
-        stdcall FCGI_outputText, [esi+TSpecialParams.hSocket], [esi+TSpecialParams.requestID], edx, TRUE
-        stdcall TextFree, edx
-        jmp     .exit
-endp
-
-
-
 sqlSelectChat  text "select id, time, user, original, message from ChatLog where id in (select id from chatlog order by id desc limit ?1)"
 
-proc ChatInitialEvents, .session
-.stmt             dd ?
+proc SendMessageLog, .session
+.stmt dd ?
 begin
         pushad
 
@@ -111,8 +79,6 @@ begin
         stdcall AddEvent, evMessage, edi, [.session]
 
 .messages_ok:
-
-        stdcall SendUsersOnline, [.session]
         stdcall StrDel, edi
         popad
         return
@@ -142,6 +108,8 @@ begin
         stdcall StrCat, [esi+TSpecialParams.page_title], [cChatTitle+8*eax]
         stdcall LogUserActivity, esi, uaChatting, 0
 
+        stdcall AddActivitySimple, cActivityChat, esi
+
         stdcall RenderTemplate, 0, txt "chat.tpl", 0, [.pSpecial]
 
         clc
@@ -158,10 +126,14 @@ begin
 .post_new_message:
 
         xor     edi, edi
-        stdcall GetCookieValue, [esi+TSpecialParams.params], "eventsid"
-        jc      .error_no_permissions
-
+        stdcall GetQueryParam, esi, txt 'session='
         mov     edi, eax
+        test    edi, edi
+        jz      .error_no_permissions
+
+;        stdcall FileWriteString, [STDERR], "Chat request session: "
+;        stdcall FileWriteString, [STDERR], edi
+;        stdcall FileWriteString, [STDERR], <txt "<<<", 13, 10>
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "cmd", 0
         test    eax, eax
@@ -318,7 +290,7 @@ endl
         push    eax
         stdcall StrToNumEx, eax
         stdcall StrDel ; from the stack
-        stdcall SetEventStatus, edi, eax
+        stdcall SetEventUserStatus, edi, eax
         jmp     .finish
 endp
 

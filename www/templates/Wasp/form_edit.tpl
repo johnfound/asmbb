@@ -12,6 +12,7 @@
   [equ:Attach=Attach file(s)]
   [equ:tabText=Text]
   [equ:tabAttach=Attachments]
+  [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
 |
   [equ:Caption=Заглавие на темата]
   [equ:Content=Съдържание на поста]
@@ -22,6 +23,7 @@
   [equ:Attach=Прикачи файл(ове)]
   [equ:tabText=Текст]
   [equ:tabAttach=Файлове]
+  [equ:FileLimit=(брой ≤ 10, размер ≤ 1MB)]
 |
   [equ:Caption=Название темы]
   [equ:Content=Содержание поста]
@@ -32,6 +34,7 @@
   [equ:Attach=Прикрепить файл(ы)]
   [equ:tabText=Текст]
   [equ:tabAttach=Вложения]
+  [equ:FileLimit=(количество ≤ 10, размер ≤ 1MB)]
 |
   [equ:Caption=Titre du sujet]
   [equ:Content=Contenu du message]
@@ -42,6 +45,7 @@
   [equ:Attach=Pièce(s) jointe(s)]
   [equ:tabText=Texte]
   [equ:tabAttach=Pièces jointes]
+  [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
 |
   [equ:Caption=Titel des Themas]
   [equ:Content=Inhalt des Beitrags]
@@ -52,6 +56,7 @@
   [equ:Attach=Datei(en) anhängen]
   [equ:tabText=Text]
   [equ:tabAttach=Anhänge]
+  [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
 ]
 
 <div class="editor" id="editor">
@@ -74,7 +79,7 @@
       <input id="rad2" name="tabselector" type="radio">
       <label for="rad2">[const:tabAttach]</label>
       <section>
-        [case:[special:canupload]||<p>[const:Attach]: <span class="small">(count&le;10, size&le;1MB)</span></p><input id="browse" type="file" placeholder="Select file to attach" name="attach" multiple="multiple">]
+        [case:[special:canupload]||<p>[const:Attach]: <span class="small">[const:FileLimit]</span></p><input id="browse" type="file" placeholder="Select file to attach" name="attach" multiple="multiple">]
         <div id="attachments" class="attach_del">
           [attach_edit:[id]]
         </div>

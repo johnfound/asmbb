@@ -131,52 +131,29 @@ a.thread_link {
 }
 
 
+
 .posters {
   margin: 0;
-  & > * {
-
-    &:first-child::before {
-      display: inline-block;
-      color: @clDarkFG;
-      margin-right: 8px;
-      font-weight: bold;
-      content: 'Started by: ';
-    }
-
-    &:first-child::after {
-      margin-right: 8px;
-      content: ' ';
-    }
-
-    &:nth-child(2)::before {
-      display: inline-block;
-      color: @clDarkFG;
-      font-weight: bold;
-      margin-right: 8px;
-      content: 'Joined: ';
-    }
+  font-weight: bold !important;
+  * {
+    font-weight: normal;
   }
 }
 
 .invited {
   margin: 0;
-  & > *:first-child::before {
-    display: inline-block;
-    color: @clDarkFG;
-    font-weight: bold;
-    margin-right: 4px;
-    content: 'Invited: ';
+  font-weight: bold !important;
+  * {
+    font-weight: normal;
   }
 }
 
 
 .thread_tags {
+  font-weight: bold !important;
   margin: 0;
-  & > *:first-child::before {
-    display: inline-block;
-    color: @clDarkFG;
-    margin-right: 8px;
-    font-weight: bold;
-    content: 'Tags: ';
+
+  * {
+    font-weight: normal;
   }
 }

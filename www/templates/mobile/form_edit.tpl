@@ -10,6 +10,7 @@
   [equ:btnSubmit=Submit]
   [equ:hintSubmit=Ctrl+S for submit]
   [equ:Attach=Attach file(s)]
+  [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
 |
   [equ:Caption=Заглавие на темата]
   [equ:Content=Съдържание на поста]
@@ -18,6 +19,7 @@
   [equ:btnSubmit=Публикувай]
   [equ:hintSubmit=Ctrl+S за публикуване]
   [equ:Attach=Прикачи файл(ове)]
+  [equ:FileLimit=(брой ≤ 10, размер ≤ 1MB)]
 |
   [equ:Caption=Название темы]
   [equ:Content=Содержание поста]
@@ -26,6 +28,7 @@
   [equ:btnSubmit=Отправить]
   [equ:hintSubmit=Ctrl+S чтобы отправить]
   [equ:Attach=Прикрепить файл(ы)]
+  [equ:FileLimit=(количество ≤ 10, размер ≤ 1MB)]
 |
   [equ:Caption=Titre du sujet]
   [equ:Content=Contenu du message]
@@ -34,6 +37,7 @@
   [equ:btnSubmit=Soumettre]
   [equ:hintSubmit=Ctrl+S pour soumettre]
   [equ:Attach=Pièce(s) jointe(s)]
+  [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
 |
   [equ:Caption=Titel des Themas]
   [equ:Content=Beitragsinhalt]
@@ -42,6 +46,7 @@
   [equ:btnSubmit=Absenden]
   [equ:hintSubmit=Strg+S zum Absenden]
   [equ:Attach=Datei(en) anhängen]
+  [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
 ]
 
 <div class="ui">
@@ -55,7 +60,7 @@
     [include:edit_toolbar.tpl]
         <p>[const:Content]:</p>
     <textarea class="editor" name="source" id="source">[source]</textarea>
-        [case:[special:canupload]||<p>[const:Attach]: <span class="small">(count&le;10, size&le;1MB)</span></p><input id="browse" type="file" placeholder="Select file to attach" name="attach" multiple="multiple">]
+        [case:[special:canupload]||<p>[const:Attach]: <span class="small">[const:FileLimit]</span></p><input id="browse" type="file" placeholder="Select file to attach" name="attach" multiple="multiple">]
     <div id="attachments" class="attach_del">
       [attach_edit:[id]]
     </div>

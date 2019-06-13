@@ -39,7 +39,7 @@
   [equ:ttlTags=Mots-clés: <span class="small">(3 maximum, séparés par une virgule t sans espace)</span>]
   [equ:phTags=quelques mots-clés]
   [equ:ttlPin=Épingler ce sujet]
-  [equ:ttlLimited=Sujet à accès limité]
+  [equ:ttlLimited=Sujet restreint]
   [equ:ttlInvited=Inviter des utilisateurs (séparés par une virgule)]
   [equ:btnSubmit=Soumettre]
   [equ:btnRevert=Annuler]

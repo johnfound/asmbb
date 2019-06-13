@@ -124,3 +124,34 @@ cEmptySearch            mtext   EN: "The search found nothing. Try other keyword
                                 RU: "Поиск не нашел ничего. Попробуйте другой запрос.",                 \
                                 FR: "La recherche n’a rien renvoyer. Essayer d’autres mots-clés.",      \
                                 DE: "Die Suche lieferte keine Ergebnisse. Versuchen Sie es mit anderen Begriffen."
+
+cActivityLogin          mtext   EN: " entered the forum.",      \
+                                BG: " влезе във форума.",       \
+                                RU: " вошел на форум.",         \
+                                FR: " est entré dans le forum.",\
+                                DE: " trat ins Forum ein."
+
+cActivityLogout         mtext   EN: " logged out.",                     \
+                                BG: " излезе от форума.",               \
+                                RU: " вышел из форума.",                \
+                                FR: " s'est déconnecté du forum.",      \
+                                DE: " hat sich vom Forum abgemeldet."
+
+cActivityRead           mtext   EN: " is reading thread ",      \
+                                BG: " чете темата ",            \
+                                RU: " читает ветку ",           \
+                                FR: " parcours le sujet ",             \
+                                DE: " liest das Thema "
+
+cActivityList           mtext   EN: " is browsing the threads list.",    \
+                                BG: " разглежда темите.",               \
+                                RU: " просматривает список тем.",    \
+                                FR: " navigue dans la liste des discussions.",    \
+                                DE: " durchsucht die Threads-Liste."
+
+cActivityChat           mtext   EN: " entered the chat.",               \
+                                BG: " влезе в чата.",                   \
+                                RU: " вошол в чат.",                    \
+                                FR: " est entré dans le chat.",         \
+                                DE: " hat den Chat betreten."
+

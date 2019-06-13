@@ -16,9 +16,9 @@
 @clCurrentTagBG: #105289;
 @clCurrentTagFG: white;
 
-@paddingTags: 8px 0px;
-@paddingOneTag: 2px 4px;
-@marginOneTag: 0px 4px 0px 0px;
+@paddingTags: 0px 0px;
+@paddingOneTag: 2px;
+@marginOneTag: 0px 4px 4px 0px;
 @borderRadTags: 8px 0px 0px 8px;
 @borderTags: 1px solid @clCurrentTagBG;
 
@@ -102,3 +102,7 @@
 
 @clNotifyBG: red;
 @clNotifyFG: white;
+
+@clActivityBG: #105289;
+@clActivityFG: white;
+@clActivityLink: white;

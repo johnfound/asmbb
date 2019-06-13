@@ -1,10 +1,41 @@
 [css:common.css]
+[css:navigation.css]
+[css:toaster.css]
+
+[case:[special:lang]|
+  [equ:ttlPublic=Public threads]
+  [equ:ttlLimited=Limited access threads]
+  [equ:Public=Public]
+  [equ:Limited=Limited]
+|
+  [equ:ttlPublic=Публични теми]
+  [equ:ttlLimited=Теми с ограничен достъп]
+  [equ:Public=Публични]
+  [equ:Limited=Ограничени]
+|
+  [equ:ttlPublic=Публичные темы]
+  [equ:ttlLimited=Темы с ограниченным доступом]
+  [equ:Public=Публичные]
+  [equ:Limited=Ограниченные]
+|
+  [equ:ttlPublic=Discussions publiques]
+  [equ:ttlLimited=Discussions restreintes]
+  [equ:Public=Publiques]
+  [equ:Limited=Restreintes]
+|
+  [equ:ttlPublic=Öffentliche Themen]
+  [equ:ttlLimited=Themen mit beschränktem Zugang]
+  [equ:Public=Öffentliche]
+  [equ:Limited=Beschränkt]
+]
+
+
 <!DOCTYPE html>
 <html lang="[case:[special:lang]|en|bg|ru|fr|de]">
 <head>
   <meta charset="utf-8">
   <title>[special:title]</title>
-  <link href="!feed" type="application/atom+xml" rel="alternate" title="Atom feed">
+  [case:[special:limited]|<link href="!feed" type="application/atom+xml" rel="alternate" title="Atom feed">|]
   <meta name="description" content="[special:description]">
   <meta name="keywords" content="[special:keywords]">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scallable=no">
@@ -35,6 +66,10 @@
     <style> .jsonly { display: none !important } </style>
   </noscript>
 
+  <script type='text/javascript'>
+    [raw:realtime.js]
+  </script>
+
 </head>
 
 <body>
@@ -53,26 +88,31 @@
       </form>
     </div>
     <div>
-      [case:[special:userid]|<a href="/!login/">[case:[special:lang]|Login|Вход|Вход|Connexion|Anmelden]</a><br>[case:[special:canregister]||<a href="/!register/">[case:[special:lang]|Register|Регистрация|Регистрация|Inscription|Registrieren]</a>]|
-      <form method="POST" action="/!logout"><input class="logout" type="submit" name="logout" value="[case:[special:lang]|Logout|Изход|Выйти|De déconnecter|Abmelden] ([special:username])"></form>
-      <a href="/!userinfo/[url:[special:username]]">[case:[special:lang]|User profile|Профил|Профиль|Profil|Profil]</a>]
+      [case:[special:userid]
+        |<a href="/!login/">[case:[special:lang]|Login|Вход|Вход|Connexion|Anmelden]</a><br>
+          [case:[special:canregister]||<a href="/!register/">[case:[special:lang]|Register|Регистрация|Регистрация|Inscription|Registrieren]</a>]
+        |<form method="POST" action="/!logout"><input class="logout" type="submit" name="logout"
+         value="[case:[special:lang]|Logout|Изход|Выйти|Se déconnecter|Abmelden] ([special:username])"></form>
+         <a href="/!userinfo/[url:[special:username]]">[case:[special:lang]|User profile|Профил|Профиль|Profil|Profil]</a>
+      ]
     </div>
   </div>
 
   <form class="tags" id="search_form" action="[case:[special:cmdtype]||/|../]!search/" method="get" >
-    <input class="search_line" type="search" name="s" placeholder="[case:[special:lang]|text search|търсене на текст|поиск текста|rechercher du texte|Textsuche]" value="[special:search]">
-    <input class="search_line" type="search" name="u" placeholder="[case:[special:lang]|user search|потребител|потребитель|recherche d'utilisateur|Benutzersuche]" value="[special:usearch]">
+    <input class="search_line" type="search" name="s" placeholder="[case:[special:lang]|text search|търсене на текст|поиск текста|recherche de texte|Textsuche]" value="[special:search]">
+    <input class="search_line" type="search" name="u" placeholder="[case:[special:lang]|user search|потребител|пользователь|recherche d'utilisateur|Benutzersuche]" value="[special:usearch]">
     <a class="icon_btn"><input class="img_input" type="image" width="32" height="32" src="[special:skin]/_images/search.svg" alt="&nbsp;Search&nbsp;" title="[case:[special:lang]|Search|Търсене|Поиск|Rechercher|Suchen]"></a>
   </form>
 
+  [case:[special:userid]||
+  <div class="alone">
+    <a class="[case:[special:limited]|ui|ui3] left" href="/[special:dir]" title="[const:ttlPublic]">[const:Public][special:unread]</a>
+    <a class="[case:[special:limited]|ui3|ui] left" href="/(o)/[special:dir]" title="[const:ttlLimited]">[const:Limited][special:unreadLAT]</a>
+  </div>
+  ]
+
   <div class="tags">
-    <a href="/[case:[special:limited]||(o)/]"><img class="tagicon" src="[special:skin]/_images/alltags[case:[special:variant]|||_gray].svg" alt="/" title="[case:[special:lang]|Show all threads|Покажи всички теми|Показать все темы|Montrer tous les sujets|Al
-le Themen zeigen]">
-
-</a>
-    <a href="/[case:[special:limited]|(o)/|][case:[special:dir]||[special:dir]/]"><img class="tagicon" src="[special:skin]/_images/limited[case:[special:limited]|_gray|].svg" alt="/" title="[case:[special:lang]|Limited access threads|Теми с ограничен достъ
-
-
-п|Темы с ограниченным доступом|Discussions d'accès limité|Themen mit beschränktem Zugang]"></a>
+    <a href="/[case:[special:limited]||(o)/]"><img class="tagicon" src="[special:skin]/_images/alltags[case:[special:variant]|||_gray].svg" alt="/"
+    title="[case:[special:lang]|Show all threads|Покажи всички теми|Показать все темы|Montrer tous les sujets|Alle Themen zeigen]"></a>
     [special:alltags]
   </div>

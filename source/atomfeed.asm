@@ -27,7 +27,8 @@ begin
         mov     esi, [.pSpecial]
 
         cmp     [esi+TSpecialParams.Limited], edi
-        jne     .finish                             ; no limited threads in the feed. return 404 not found
+        clc
+        jne     .finish                              ; no limited threads in the feed. return 404 not found
 
         stdcall LogUserActivity, esi, uaAtomFeedUpdate, 0
 
@@ -121,21 +122,26 @@ begin
 .finalize:
 
         cinvoke sqliteFinalize, [.stmt]
+        stc
 
 .finish:
-        mov     [esp+4*regEAX], edi
-
+        pushf
         Benchmark "Atom feed processing: "
         BenchmarkEnd
+        popf
 
-        stc
+        mov     [esp+4*regEAX], edi
         popad
         return
 
 .error_404:
+        cinvoke sqliteFinalize, [.stmt]
+
         stdcall TextFree, edi
         xor     edi, edi
+        clc
         jmp     .finalize
+
 
 .not_changed_304:
         stdcall TextCat, edi, <"Status: 304 Not Modified", 13, 10, 13, 10>

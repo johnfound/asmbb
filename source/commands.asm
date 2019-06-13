@@ -85,7 +85,7 @@ PHashTable tablePreCommands, tpl_func,                  \
         "!setskin",         UpdateUserSkin,             \
         "!users_online",    UserActivityTable,          \
         "!chat",            ChatPage,                   \
-        "!chat_events",     ChatRealTime,               \
+        "!events",          EventsRealTime,             \
         "!postdebug",       PostDebug,                  \    ; optional, depending on the options.DebugWeb
         "!debuginfo",       DebugInfo,                  \    ; optional, depending on the options.DebugSQLite
         "!users",           UsersList,                  \
@@ -93,6 +93,8 @@ PHashTable tablePreCommands, tpl_func,                  \
         "!tagmatch",        TagsMatch,                  \
         "!skincookie",      SkinCookie,                 \
         "!categories",      Categories
+
+
 
 
 PHashTable tablePostCommands, tpl_func,                 \
@@ -643,7 +645,7 @@ endp
 
 
 
-sqlMarkThreadRead text "delete from UnreadPosts where UserID = ?1 and ( ?2 is NULL or PostID in (select P.id from Posts P left join Threads T on P.ThreadID = T.id where T.Slug = ?2))"
+sqlMarkRead text "delete from UnreadPosts where UserID = ?1 and ( ?2 is NULL or ThreadID = (select id from Threads where Slug = ?2)) and (?2 is not null or ?3 is NULL or ThreadID in (select threadid from threadtags where tag = ?3))"
 
 proc MarkThreadRead, .pSpecial
 .stmt dd ?
@@ -656,19 +658,25 @@ begin
         je      .finish
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlMarkThreadRead, sqlMarkThreadRead.length, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlMarkRead, sqlMarkRead.length, eax, 0
 
         cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.userID]
 
         mov     edx, [esi+TSpecialParams.thread]
         test    edx, edx
+        jz      .thread_ok
+
+        stdcall StrPtr, edx
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
+.thread_ok:
+
+        mov     edx, [esi+TSpecialParams.dir]
+        test    edx, edx
         jz      .step_it
 
-        stdcall StrLen, edx
-        mov     ecx, eax
         stdcall StrPtr, edx
-        cinvoke sqliteBindText, [.stmt], 2, eax, ecx, SQLITE_STATIC
-
+        cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
 
 .step_it:
         cinvoke sqliteStep, [.stmt]

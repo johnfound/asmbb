@@ -230,8 +230,6 @@ endp
 
 
 
-
-
 iglobal
   sqlGetUsersActivity StripText 'users_online.sql', SQL
 endg

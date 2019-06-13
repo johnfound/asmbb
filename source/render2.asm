@@ -72,6 +72,8 @@ PHashTable tableSpecial, tpl_func,                              \
         "canchat",     RenderTemplate.sp_canchat,               \ ; 1/0 no encoding
         "canupload",   RenderTemplate.sp_canupload,             \ ; 1/0 no encoding
         "referer",     RenderTemplate.sp_referer,               \ ; 1/0 no encoding
+        "unreadLAT",   RenderTemplate.sp_unreadLAT,             \
+        "unread",      RenderTemplate.sp_unread,                \
         "alltags",     RenderTemplate.sp_alltags,               \ ; HTML no encoding
         "allusers",    RenderTemplate.sp_allusers,              \ ; returns JSON array.
         "setupmode",   RenderTemplate.sp_setupmode,             \ ; no encoding
@@ -1453,6 +1455,14 @@ endl
 
 ; ...................................................................
 
+.sp_unread:
+        stdcall GetUnread, [ebx+TSpecialParams.userID], 0
+        jmp     .special_string_free
+
+.sp_unreadLAT:
+        stdcall GetUnread, [ebx+TSpecialParams.userID], 1
+        jmp     .special_string_free
+
 .sp_limited:
         mov     eax, [ebx+TSpecialParams.Limited]
         jmp     .special_int
@@ -2119,7 +2129,7 @@ begin
         test    eax, eax
         jz      .unread_ok
 
-        stdcall TextCat, ebx, txt '<span>'
+        stdcall TextCat, ebx, txt '<span class="ntf">'
         stdcall NumToStr, eax, ntsDec or ntsUnsigned
         stdcall TextCat, edx, eax
         stdcall StrDel, eax
@@ -2432,19 +2442,19 @@ begin
         jc      .finish_skins
 
         mov     edi, eax
-        stdcall SortDirArray, edi, fdsByType
+        stdcall SortArray, edi, DirItemCompare, dsByName or fdsDirsFirst
 
         mov     ecx, [edi+TArray.count]
-
+        lea     esi, [edi+TArray.array]
 
 .dir_loop:
         dec     ecx
         js      .end_of_dir
 
-        cmp     [edi+TArray.array+8*ecx+TDirItem.Type], ftDirectory
+        cmp     [esi+TDirItem.Type], ftDirectory
         jne     .next_file
 
-        stdcall StrPtr, [edi+TArray.array+8*ecx+TDirItem.hFilename]
+        stdcall StrPtr, [esi+TDirItem.hFilename]
         jc      .next_file
 
         cmp     byte [eax], '_'
@@ -2454,21 +2464,22 @@ begin
         je      .next_file
 
         stdcall TextCat, edx, txt '<option value="'
-        stdcall TextCat, edx, [edi+TArray.array+8*ecx+TDirItem.hFilename]
+        stdcall TextCat, edx, [esi+TDirItem.hFilename]
         stdcall TextCat, edx, txt '" '
 
-        stdcall StrCompCase, [edi+TArray.array+8*ecx+TDirItem.hFilename], [.hCurrent]
+        stdcall StrCompCase, [esi+TDirItem.hFilename], [.hCurrent]
         jnc     .selected_ok
 
         stdcall TextCat, edx, txt ' selected="selected"'
 
 .selected_ok:
         stdcall TextCat, edx, txt '>'
-        stdcall TextCat, edx, [edi+TArray.array+8*ecx+TDirItem.hFilename]
+        stdcall TextCat, edx, [esi+TDirItem.hFilename]
         stdcall TextCat, edx, <txt '</option>', 13, 10>
 
 .next_file:
-        stdcall StrDel, [edi+TArray.array+8*ecx+TDirItem.hFilename]
+        stdcall StrDel, [esi+TDirItem.hFilename]
+        add     esi, sizeof.TDirItem
         jmp     .dir_loop
 
 .end_of_dir:
@@ -2580,7 +2591,7 @@ begin
 
         mov     ebx, [.hString]
 
-        stdcall StrLCase, ebx
+        stdcall StrLCaseUtf8, ebx
 
         stdcall StrConvertWhiteSpace, ebx, " "
         stdcall StrConvertPunctuation, ebx
@@ -2602,6 +2613,39 @@ begin
         return
 endp
 
+
+
+proc StrLCaseUtf8, .str
+begin
+        pushad
+
+        stdcall StrPtr, [.str]
+        mov     esi, eax
+        mov     edi, eax
+        mov     ecx, [eax+string.len]
+
+.loop:
+        dec     ecx
+        js      .finish
+
+        stdcall DecodeUtf8, [esi]
+        cmp     edx, 1
+        ja      .skip
+
+        mov     ah, al
+        and     ah, 40h
+        shr     ah, 1
+        or      al, ah
+        mov     [esi], al
+
+.skip:
+        add     esi, edx
+        jmp     .loop
+
+.finish:
+        popad
+        return
+endp
 
 
 proc StrConvertWhiteSpace, .hString, .toChar
@@ -2964,6 +3008,40 @@ begin
 endp
 
 
+sqlGetUnread text "select count() from unreadposts up left join threads t on t.id = up.threadid where up.userid = ?1 and t.limited = ?2"
+
+proc GetUnread, .UserID, .Limited
+.stmt dd ?
+begin
+        pushad
+
+        stdcall StrNew
+        mov     ebx, eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetUnread, sqlGetUnread.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.UserID]
+        cinvoke sqliteBindInt, [.stmt], 2, [.Limited]
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .finalize
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        test    eax, eax
+        jz      .finalize
+
+        stdcall StrCat, ebx, txt '<span class="ntf">'
+        stdcall NumToStr, eax, ntsDec or ntsUnsigned
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+        stdcall StrCat, ebx, txt "</span>"
+
+.finalize:
+        cinvoke sqliteFinalize, [.stmt]
+        mov     [esp+4*regEAX], ebx
+        popad
+        return
+endp
 
 ; Later can be made to compose KB/MB/GB suffixes.
 

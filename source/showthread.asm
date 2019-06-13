@@ -68,6 +68,13 @@ begin
         test    [esi+TSpecialParams.userStatus], permRead or permAdmin
         jz      .error_cant_read
 
+        cmp     [esi+TSpecialParams.Limited], 0
+        je      .read_ok
+
+        cmp     [esi+TSpecialParams.userID], 0
+        je      .error_cant_read
+
+.read_ok:
         stdcall StrNew
         mov     [.rendered], eax
 
@@ -186,6 +193,30 @@ begin
 
 ;        jmp     .skip_writes           ; not write the posts read count and clearing the unread posts.
                                         ; this is acceptable on very high loads for boosting performance.
+
+; Send activity events...
+
+        stdcall UserNameLink, esi
+        mov     ebx, eax
+
+        mov     eax, DEFAULT_UI_LANG
+        stdcall GetParam, "default_lang", gpInteger
+        stdcall StrCat, ebx, [cActivityRead + 8*eax]
+
+        stdcall StrCat, ebx, txt '<a href="/'
+        stdcall StrEncodeHTML, [esi+TSpecialParams.thread]
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+        stdcall StrCat, ebx, txt '">'
+
+        cinvoke sqliteColumnText, [.stmt2], 1
+        stdcall StrEncodeHTML, eax
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+        stdcall StrCat, ebx, txt '</a>'
+
+        stdcall AddActivity, ebx, [esi+TSpecialParams.userID]
+        stdcall StrDel, ebx
 
 ; Mark rendered posts as read. If the user is logged-in
 
