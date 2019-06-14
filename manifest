@@ -1,5 +1,5 @@
-C Don't\snotify\sothers\sabout\sreading\slimited\saccess\sthreads.
-D 2019-06-14T08:19:57.394
+C Better\sdistinct\sbetween\sbots\sand\sguests\son\sreal-time\snotifications.
+D 2019-06-14T15:31:28.048
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz cd00e258cdc7d01468c7e46170e21569a662bf62
@@ -57,7 +57,7 @@ F source/post.asm 72a0f1de51352612597fe8e55c629dfe01bffc5b
 F source/post_data.asm 79fb813775e3bafe6cb314c50a99484e4f0dc211
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
-F source/realtime.asm 7b2c59fcfd9da4582f15afb561efda5347393155
+F source/realtime.asm d44899a25069fe816b9e617d3f6976c8ff8052bd
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
@@ -70,7 +70,7 @@ F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm e2833310c23d6354d5457ac397e0bbadcc4244d0
 F source/settings.sql 066cc77197d5fae94fb27c2bd72aabb2c4b85d8a
-F source/showthread.asm 414fe4907b4b2275b58577b7b0d85acb2684a113
+F source/showthread.asm 8d8fa3bdf3eb1034cada9f6273d923e9a4bd2bbd
 F source/showthread.sql 88e6f49dae477c7b96a4ca0722f4885f754b0bb0
 F source/sqlite3.asm 96da54af081f5ea9b9756ca72667431e0f05082e
 F source/sqlite_console.asm a2ee59e277e906ce259d9bc82602472a17fbd687
@@ -636,7 +636,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 473082b81affc9935b1c067595eb7150b8a3def3
-R c6627d629dfd1354536d98c8595639b1
+P 91969a3e51f798d2737970acccbc96ca9536d346
+R 8301472cc30d72ad99e395c0548c14a9
 U johnfound
-Z 8564bbce36e3f01f9031ca504229b128
+Z e6449e5fb969efae6a7409a28b0e95b1

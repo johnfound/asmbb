@@ -202,6 +202,7 @@ begin
 
         stdcall UserNameLink, esi
         mov     ebx, eax
+        push    edx             ; see below the AddActivity call
 
         mov     eax, DEFAULT_UI_LANG
         stdcall GetParam, "default_lang", gpInteger
@@ -219,7 +220,7 @@ begin
         stdcall StrDel, eax
         stdcall StrCat, ebx, txt '</a>'
 
-        stdcall AddActivity, ebx, [esi+TSpecialParams.userID]
+        stdcall AddActivity, ebx ; fBot flag from the stack.
         stdcall StrDel, ebx
 
 .notifications_ok:

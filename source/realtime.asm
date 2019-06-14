@@ -80,7 +80,7 @@ begin
 
         stdcall UserNameLink, esi
         stdcall StrCat, eax, [edi]
-        stdcall AddActivity, eax, [esi+TSpecialParams.userID]
+        stdcall AddActivity, eax, edx
         stdcall StrDel, eax
 
         popad
@@ -92,7 +92,7 @@ endp
 cTrue text 'true'
 cFalse text 'false'
 
-proc AddActivity, .hHTML, .userID
+proc AddActivity, .hHTML, .fBot
 begin
         push    eax ebx
 
@@ -104,8 +104,8 @@ begin
         stdcall StrDel, eax
         stdcall StrCat, ebx, txt '", "robot": '
         mov     eax, cTrue
-        cmp     [.userID], 0
-        je      @f
+        cmp     [.fBot], 0
+        jne     @f
         mov     eax, cFalse
 @@:
         stdcall StrCat, ebx, eax
@@ -119,11 +119,16 @@ begin
 endp
 
 
-
+; returns EAX - html with a link to the user
+; profile, or simply the "RobotXX" or "GuestXX"
+; depending on the IsBot procedure guess.
+; EDX: 0 if not robot. 1 if robot.
 
 proc UserNameLink, .pSpecial
 begin
         pushad
+
+        xor     edi, edi
 
         mov     esi, [.pSpecial]
         cmp     [esi+TSpecialParams.userName], 0
@@ -141,6 +146,7 @@ begin
 
 .bot:
         stdcall StrDupMem, '<span class="robot">Robot'
+        inc     edi
 
 .number:
         mov     ebx, eax
@@ -167,6 +173,7 @@ begin
 
 .finish:
         mov     [esp+4*regEAX], ebx
+        mov     [esp+4*regEDX], edi
         popad
         return
 endp
