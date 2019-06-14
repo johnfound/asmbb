@@ -1,5 +1,5 @@
-C Official\sbinary\srelease\sv2.6
-D 2019-06-13T13:36:01.417
+C Minor\sbug\sin\sthe\stemplates\sfixed.
+D 2019-06-14T07:51:05.023
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz cd00e258cdc7d01468c7e46170e21569a662bf62
@@ -507,7 +507,7 @@ F www/templates/Wasp/form_sqlite_console.tpl 419ac0e18ab829bb3a5e0569e8fb7fd0e33
 F www/templates/Wasp/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
 F www/templates/Wasp/login.less 85f8c636e9c15adffb68d098f557d3efbdbc4e5a
 F www/templates/Wasp/main_html_end.tpl 548b3ee45b5efcb5e9c99d55a9423d9a2e317553
-F www/templates/Wasp/main_html_start.tpl 116a2263699588502bfa5647488ce539bd27f190
+F www/templates/Wasp/main_html_start.tpl ef6fd533b0b5885ec8a43ecc5dd25cffb2c4e96b
 F www/templates/Wasp/markdown.less e62eac499043788e834f58f022ad46526e8d5629
 F www/templates/Wasp/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
 F www/templates/Wasp/nav_categories.tpl a132b6d7a2351b6d7fabfdb7c821dfb7228c0ac2
@@ -636,8 +636,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P ae34e1526b6eb2daddc5e92cc654d1d4e3857059
-R 5d54f9b5f8600affefb3b16241bcb3dd
-T +sym-v2.6 *
+P 65d45b2de34ac3ceb2d30ac3c40201daff2d0fb7
+R b49b7994ad85e97e8e57def9326e5aac
 U johnfound
-Z 4e5c4b1731813ce52e29b73053447ba8
+Z df69c08926f7000eed4871db65f48714

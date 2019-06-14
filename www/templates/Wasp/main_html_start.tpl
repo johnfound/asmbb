@@ -106,8 +106,8 @@
 
   [case:[special:userid]||
   <div class="alone">
-    <a class="[case:[special:limited]|ui|ui3] left" href="/[special:dir]" title="[const:ttlPublic]">[const:Public][special:unread]</a>
-    <a class="[case:[special:limited]|ui3|ui] left" href="/(o)/[special:dir]" title="[const:ttlLimited]">[const:Limited][special:unreadLAT]</a>
+    <a class="[case:[special:limited]|ui|ui3] left" href="/[case:[special:dir]||[special:dir]/]" title="[const:ttlPublic]">[const:Public][special:unread]</a>
+    <a class="[case:[special:limited]|ui3|ui] left" href="/(o)/[case:[special:dir]||[special:dir]/]" title="[const:ttlLimited]">[const:Limited][special:unreadLAT]</a>
   </div>
   ]
 
