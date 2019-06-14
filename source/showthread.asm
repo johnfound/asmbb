@@ -8,7 +8,7 @@ sqlCheckAccess   text "select not count() or sum(userID = ?2) from LimitedAccess
 sqlGetPostCount  text "select PostCount from threads where id = ?1"
 
 ; IMPORTANT: userID is needed because of [special:canedit] template statement!
-sqlGetThreadInfo text "select T.id, T.caption, (select userID from Posts where threadID=T.id order by id limit 1) as UserID from Threads T where T.slug = ?1"
+sqlGetThreadInfo text "select T.id, T.caption, (select userID from Posts where threadID=T.id order by id limit 1) as UserID, Limited from Threads T where T.slug = ?1"
 
 sqlIncReadCount  text "update PostCNT set Count = Count + 1 where postid in ("
 sqlSetPostsRead  text "delete from UnreadPosts where UserID = ?1 and PostID in ("
@@ -77,8 +77,6 @@ begin
 .read_ok:
         stdcall StrNew
         mov     [.rendered], eax
-
-        stdcall LogUserActivity, esi, uaReadingThread, 0
 
         cinvoke sqliteExec, [hMainDatabase], sqlBegin, 0, 0, 0
 
@@ -194,7 +192,13 @@ begin
 ;        jmp     .skip_writes           ; not write the posts read count and clearing the unread posts.
                                         ; this is acceptable on very high loads for boosting performance.
 
-; Send activity events...
+; Send activity events... if the thread is not LAT!
+
+        cinvoke sqliteColumnInt, [.stmt2], 3    ; The "Limited" field of the Threads table.
+        test    eax, eax
+        jnz     .notifications_ok
+
+        stdcall LogUserActivity, esi, uaReadingThread, 0
 
         stdcall UserNameLink, esi
         mov     ebx, eax
@@ -217,6 +221,8 @@ begin
 
         stdcall AddActivity, ebx, [esi+TSpecialParams.userID]
         stdcall StrDel, ebx
+
+.notifications_ok:
 
 ; Mark rendered posts as read. If the user is logged-in
 
