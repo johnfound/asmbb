@@ -188,18 +188,35 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .finalize_quote
 
-        stdcall StrDupMem, ";quote "
+        xor     eax, eax
+        inc     eax     ; Default MiniMag
+        stdcall GetParam, txt "markup_languages", gpInteger
+        test    eax, 1
+        jnz     .minimag_quote
+
+        pushx   txt "[/quote]", 13, 10
+        pushx   txt "]"
+        pushx   txt "[quote="
+        jmp     .do_quote
+
+.minimag_quote:
+        pushx   txt 13, 10, ";end quote", 13, 10
+        pushx   txt 13, 10
+        pushx   ";quote "
+
+.do_quote:
+        stdcall StrDupMem       ; argument from the stack
         mov     [.source], eax          ; [.source] should be 0 at this point!!!
 
         cinvoke sqliteColumnText, [.stmt], 0    ; the user nick name.
-
         stdcall StrCat, [.source], eax
-        stdcall StrCat, [.source], <txt 13, 10>
+
+        stdcall StrCat, [.source]       ; the second argument from the stack.
 
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrCat, [.source], eax
 
-        stdcall StrCat, [.source], <13, 10, ";end quote", 13, 10>
+        stdcall StrCat, [.source]       ; the second argument from the stack.
 
 .finalize_quote:
 

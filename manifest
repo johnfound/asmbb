@@ -1,5 +1,5 @@
-C Some\scss\schanged.
-D 2019-09-17T12:59:31.074
+C Use\sBBCode\smarkup\sfor\sthe\squotes,\sin\sthe\scases\sMiniMag\sis\sdisabled.
+D 2019-09-17T13:22:14.586
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz cd00e258cdc7d01468c7e46170e21569a662bf62
@@ -53,7 +53,7 @@ F source/migration2.sql fe978700e39265c6680b69ea8cbfb5444cfdce63
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
 F source/phpbb.sql 6820a2092cc30a774c44d770055b37b66bdbfaf0
 F source/phpbb_pm.sql f88eaf899e72d4e99f367cb654b41695da2231d5
-F source/post.asm 72a0f1de51352612597fe8e55c629dfe01bffc5b
+F source/post.asm d6c3b876048b0cf749f6724da0c8d2eaaadaf76c
 F source/post_data.asm 79fb813775e3bafe6cb314c50a99484e4f0dc211
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
@@ -636,7 +636,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P f15fadce65c1fa6dc4c4ee70d16bcfc50fc2e5e5
-R 3b957189a9485c4e05041d772887e8ea
+P 97b17c352a91a9994d7ca1f945cb16ab225fdf3c
+R 04dab8218e3c2137ca19c83dc0aef90e
 U johnfound
-Z eeaa5e4cd67db742a83c6051566c5b3c
+Z c26b52aa025002c3d0263c62aa2131ea
