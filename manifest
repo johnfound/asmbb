@@ -1,5 +1,5 @@
-C Better\sdistinct\sbetween\sbots\sand\sguests\son\sreal-time\snotifications.
-D 2019-06-14T15:31:28.048
+C Some\scss\schanged.
+D 2019-09-17T12:59:31.074
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz cd00e258cdc7d01468c7e46170e21569a662bf62
@@ -481,7 +481,7 @@ F www/templates/Wasp/atom_start.tpl 93d0cec7a6c29045e0e4bd631eace12699a80aa7
 F www/templates/Wasp/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
 F www/templates/Wasp/chat.less a4c64381f5ef14741bb249a4678573cbea899f83
 F www/templates/Wasp/chat.tpl d1940de543f8eeb6393a98afc97611b13c3aabe2
-F www/templates/Wasp/common.less 9155092000f37d25951941a151e6f28a7fddb687
+F www/templates/Wasp/common.less 76fa4b2a7ccb5e4f5091fa9059925ef854a74974
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/del_confirm.tpl 26b8239d78b69cd5fbe206ea12ccb96890aac030
 F www/templates/Wasp/delete.less 253a0f549e132a9d55ae56fe399a8929eabb4a29
@@ -516,7 +516,7 @@ F www/templates/Wasp/nav_list.tpl 19690c8f004e1e612605e26f4067587d76d52e98
 F www/templates/Wasp/nav_search.tpl 94348341523bd79e3919d36b9a7072ca1da82e27
 F www/templates/Wasp/nav_thread.tpl 72fc2c8044ec1c665f303a43971e7842fd476c75
 F www/templates/Wasp/nav_userslist.tpl b25e53dad0dab74e40c295c207593dd929900c06
-F www/templates/Wasp/navigation.less c94b43b2f28611056deb15e6b1e23f5eeb9c8300
+F www/templates/Wasp/navigation.less 8c28c22cd4f6852b26564921290213a8cd3ad2dc
 F www/templates/Wasp/one_category.tpl 28da1952be772af4b86dc09161e96927291346de
 F www/templates/Wasp/one_user.tpl 66e01f838cd2fd5ed9d9c623bd68a0bf0e9de135
 F www/templates/Wasp/post_history.tpl 2b467681d5502151d0e4fee49678ae7216009d2f
@@ -636,7 +636,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 91969a3e51f798d2737970acccbc96ca9536d346
-R 8301472cc30d72ad99e395c0548c14a9
+P f15fadce65c1fa6dc4c4ee70d16bcfc50fc2e5e5
+R 3b957189a9485c4e05041d772887e8ea
 U johnfound
-Z e6449e5fb969efae6a7409a28b0e95b1
+Z eeaa5e4cd67db742a83c6051566c5b3c

@@ -205,20 +205,34 @@ div.tags {
 }
 
 span.ntf {
-  position: absolute;
-  right:-11px;
-  top: -11px;
-  line-height: 22px;
-
-  border-radius: 50rem;
+  display: inline-block;
+  border-radius: 50%;
 
   background-color: @clNotifyBG;
   color: @clNotifyFG;
 
   font-size: 12px;
+  line-height: 12px;
+  vertical-align: middle;
   font-weight: bold;
-  padding: 0px 1ch;
-  z-index: 1000;
+  margin-left: 0.5ch;
+
+  &::before, &::after {
+    content:'\200B';    // zero width space!
+    display:inline-block;
+    line-height:0px;
+    padding-top:50%;
+    padding-bottom:50%;
+  }
+
+  &::before {
+    padding-left: 8px;
+  }
+
+  &::after {
+    padding-right: 8px;
+  }
+
 }
 
 
