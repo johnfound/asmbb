@@ -166,51 +166,7 @@ begin
         mov     [.special.post_array], eax
 
 .post_ok:
-
-        stdcall GetParam, "forum_title", gpString
-        jnc     .title_ok
-
-        stdcall StrDupMem, "AsmBB: "
-
-.title_ok:
-        mov     [.special.page_title], eax
-
-        stdcall GetParam, "forum_header", gpString
-        jnc     .header_ok
-
-        stdcall StrDupMem, "AsmBB demo"
-
-.header_ok:
-        mov     [.special.page_header], eax
-
-        stdcall GetParam, "description", gpString
-        jnc     .description_ok
-
-        stdcall StrDupMem, txt "AsmBB forum demo installation."
-
-.description_ok:
-        mov     [.special.description], eax
-
-        stdcall GetParam, "keywords", gpString
-        jnc     .keywords_ok
-
-        stdcall StrDupMem, txt "asmbb, asm, assembly, assembler, assembly language, forum, message board, buletin board"
-
-.keywords_ok:
-        mov     [.special.keywords], eax
-
-        stdcall CreateArray, 4
-        mov     [.special.pStyles], eax
-
-        stdcall GetParam, 'page_length', gpInteger
-        jnc     .page_length_ok
-
-        mov     eax, DEFAULT_PAGE_LENGTH
-
-.page_length_ok:
-        mov     [.special.page_length], eax
-
-        stdcall TextCreate, sizeof.TText
+        stdcall TextCreate, sizeof.TText        ; here the result is to be placed.
         mov     edx, eax
 
         stdcall ValueByName, [.special.params], "DOCUMENT_ROOT"
@@ -359,9 +315,6 @@ begin
 
 .bad_post_data:
 
-        stdcall CreateArray, 4
-        mov     [.special.pStyles], eax
-
         stdcall TextCreate, sizeof.TText
         mov     edx, eax
 
@@ -455,10 +408,58 @@ begin
 
 
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+; The request is not for a file, so analyze the URL and render the page HTML.
+
 
 .analize_uri:
 
-;        DebugMsg "Analyze URL"
+; If the database needs a key:
+
+        mov     ecx, DecryptionKey
+        cmp     [fNeedKey], 0
+        jne     .exec_command
+
+
+; Prepare the needed parameters for page rendering.
+
+        stdcall GetParam, "forum_title", gpString
+        jnc     .title_ok
+
+        stdcall StrDupMem, "AsmBB: "
+
+.title_ok:
+        mov     [.special.page_title], eax
+
+        stdcall GetParam, "forum_header", gpString
+        jnc     .header_ok
+
+        stdcall StrDupMem, "AsmBB demo"
+
+.header_ok:
+        mov     [.special.page_header], eax
+
+        stdcall GetParam, "description", gpString
+        jnc     .description_ok
+
+        stdcall StrDupMem, txt "AsmBB forum demo installation."
+
+.description_ok:
+        mov     [.special.description], eax
+
+        stdcall GetParam, "keywords", gpString
+        jnc     .keywords_ok
+
+        stdcall StrDupMem, txt "asmbb, asm, assembly, assembler, assembly language, forum, message board, buletin board"
+
+.keywords_ok:
+        mov     [.special.keywords], eax
+
+        mov     eax, DEFAULT_PAGE_LENGTH
+        stdcall GetParam, 'page_length', gpInteger
+
+        mov     [.special.page_length], eax
+
+; split the URL to elements:
 
         stdcall StrSplitList, [.uri], '/', FALSE        ; split the URI in order to analize it better.
         mov     [.special.cmd_list], eax
@@ -1269,10 +1270,11 @@ begin
         cinvoke sqliteBindText, [.stmt2], 1, eax, -1, SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt2]
+
         push    eax
         cinvoke sqliteFinalize, [.stmt2]
-
         pop     eax
+
         cmp     eax, SQLITE_DONE
         jne     .error_update
 
@@ -1310,16 +1312,12 @@ begin
 
         stdcall FileClose, ebx
         clc
-        jmp     .email_sent_ok
+        jmp     .finish
 
 
 .send_by_tcp:
 
         stdcall SendEmail, [.smtp_addr], [.smtp_port], [.host], [.from], [.to], [.subj], [.body], 0
-
-.email_sent_ok:
-
-        stdcall LogEvent, "EmailSent", logText, eax, 0
         stdcall StrDel, eax
         clc
 

@@ -463,6 +463,51 @@ begin
         cmp     ebx, SQLITE_DONE
         jne     .error_commit
 
+; Check for a new password...
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt 'password', 0
+        test    eax, eax
+        jz      .settings_saved_ok
+
+        push    eax
+        stdcall StrMD5, eax
+        stdcall StrDel ; from the stack
+        push    eax eax
+
+        stdcall StrDupMem, "pragma rekey='"
+        mov     ebx, eax
+
+        stdcall StrCat, ebx ; from the stack
+        stdcall StrDel ; from the stack
+
+        stdcall StrCat, ebx, txt "';"
+
+
+        stdcall StrPtr, ebx
+        lea     ecx, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], eax, [eax+string.len], ecx, 0
+        cinvoke sqliteStep, [.stmt]
+        mov     edi, eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        stdcall StrDel, ebx
+
+        cmp     edi, SQLITE_ROW
+        je      .settings_saved_ok
+
+        cinvoke sqliteErrStr, edi
+        push    eax
+
+        stdcall StrDupMem, 'The database key change failed with the following message: "'
+        stdcall StrCat, eax ; second argument from the stack
+        stdcall StrCat, eax, txt '"'
+
+        inc     [.error]
+        jmp     .end_save
+
+
+.settings_saved_ok:
+
         stdcall StrDupMem, "The settings have been saved"
 
 .end_save:

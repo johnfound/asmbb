@@ -122,8 +122,6 @@ begin
         stdcall ResolveDomainIP, [.smtp_addr]
         bswap   eax
 
-        stdcall LogEvent, "SMTP_IP", logNumber, eax, 0
-
         mov     edx, [.port]
         xchg    dl, dh
 

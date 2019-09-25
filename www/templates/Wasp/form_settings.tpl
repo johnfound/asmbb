@@ -40,6 +40,8 @@
   [equ:ttlMobile=Default mobile skin]
   [equ:ttlChat=Enable chat]
   [equ:ttlMarkup=Available markup languages: <small>(at least one must be selected)</small>]
+  [equ:tabEncryption=Encryption]
+  [equ:ttlNewPassword=New encryption key]
 |
   [equ:pLogin=Включване]
   [equ:pRegister=Регистриране]
@@ -79,6 +81,8 @@
   [equ:ttlMobile=Оформление за мобилни устройства]
   [equ:ttlChat=Чат в реално време]
   [equ:ttlMarkup=Езици за форматиране: <small>(поне един трябва да е избран)</small>]
+  [equ:tabEncryption=Шифроване]
+  [equ:ttlNewPassword=Нов ключ]
 |
   [equ:pLogin=Вход]
   [equ:pRegister=Регистрироваться]
@@ -118,6 +122,8 @@
   [equ:ttlMobile=Оформление для мобильных устройств]
   [equ:ttlChat=Включить чат]
   [equ:ttlMarkup=Языки разметки: <small>(должен быть выбран хотя бы один)</small>]
+  [equ:tabEncryption=Шифрование]
+  [equ:ttlNewPassword=Новый ключ шифрования]
 |
   [equ:pLogin=Connexion]
   [equ:pRegister=S'enegistrer]
@@ -157,6 +163,8 @@
   [equ:ttlMobile=Thème mobile par défaut]
   [equ:ttlChat=Activer le tchat]
   [equ:ttlMarkup=Langages de marquage disponibles: <small>(au moins un doit être sélectionné)</small>]
+  [equ:tabEncryption=Chiffrement]
+  [equ:ttlNewPassword=Nouvelle clé de cryptage]
 |
   [equ:pLogin=Anmelden]
   [equ:pRegister=Registrieren]
@@ -196,6 +204,8 @@
   [equ:ttlMobile=Mobiler Standardskin]
   [equ:ttlChat=Chat aktivieren]
   [equ:ttlMarkup=Verfügbare Formatierungssprachen: <small>(mindestens eine muss ausgewählt werden)</small>]
+  [equ:tabEncryption=Verschlüsselung]
+  [equ:ttlNewPassword=Neuer Verschlüsselungsschlüssel]
 ]
 
 
@@ -305,6 +315,14 @@
       <input type="checkbox" [markup1]  name="markups" id="mu1"  value="2"><label for="mu1">BBCode</label>
       </ul>
     </section>
+
+    <input id="tab5" name="tabselector" type="radio" value="4" [case:[tabselector]|||||checked|]>
+    <label for="tab5">[const:tabEncryption]</label>
+    <section>
+      <h3>[const:ttlNewPassword]:</h3>
+      <input type="password" value="" name="password" class="settings" maxlength="1024">
+    </section>
+
   </div>
 
   <input type="hidden" name="ticket" value="[Ticket]" >

@@ -1,6 +1,5 @@
 sqlCheckEmpty text 'select count() from sqlite_master'
 
-
 ;-------------------------------------------------------------------
 ; If the file in [.ptrFileName] exists, the function opens it.
 ; if the file does not exists, new database is created and the
@@ -9,49 +8,65 @@ sqlCheckEmpty text 'select count() from sqlite_master'
 ; Returns:
 ;    CF: 0 - database was open successfully
 ;      eax = 0 - Existing database was open successfuly.
-;      eax = 1 - New database was created and init script was executed successfully.
-;      eax = 2 - New database was created but init script exits with error.
+;      eax = 1 - Existing database was open, but it is encrypted and needs a key.
+;      eax = 2 - New database was created and init script was executed successfully.
+;      eax = 3 - New database was created, but the init script was executed with errors.
 ;    CF: 1 - the database could not be open. (error)
 ;-------------------------------------------------------------------
 proc OpenOrCreate, .ptrFileName, .ptrDatabase, .ptrInitScript
    .hSQL dd ?
 begin
-        push    edi esi ebx
+        pushad
 
+        xor     edi, edi
         mov     esi, [.ptrDatabase]
-        cinvoke sqliteOpen_v2, [.ptrFileName], esi, SQLITE_OPEN_READWRITE or SQLITE_OPEN_CREATE or SQLITE_OPEN_FULLMUTEX, 0
+
+; try to open
+
+        cinvoke sqliteOpen_v2, [.ptrFileName], esi, SQLITE_OPEN_READWRITE or SQLITE_OPEN_FULLMUTEX, 0
         test    eax, eax
         jz      .openok
 
+; try to create.
+
+        cinvoke sqliteOpen_v2, [.ptrFileName], esi, SQLITE_OPEN_READWRITE or SQLITE_OPEN_CREATE or SQLITE_OPEN_FULLMUTEX, 0
+        test    eax, eax
+        jnz     .error          ; can't create
+
+        inc     edi
+        inc     edi
+
+        cinvoke sqliteExec, [esi], [.ptrInitScript], NULL, NULL, NULL
+        cmp     eax, SQLITE_OK
+        je      .finish
+
+        inc     edi
+        jmp     .finish
+
 .error:
         stc
-        pop     ebx esi edi
+        popad
         return
+
 
 .openok:
         xor     ebx, ebx
+
         lea     eax, [.hSQL]
         cinvoke sqlitePrepare_v2, [esi], sqlCheckEmpty, sqlCheckEmpty.length, eax, 0
-
         cinvoke sqliteStep, [.hSQL]
-        cinvoke sqliteColumnInt, [.hSQL], 0
-        push    eax
+        mov     ebx, eax
         cinvoke sqliteFinalize, [.hSQL]
-        pop     eax
-        test    eax, eax
-        jnz     .finish
 
-        inc     ebx
-        cinvoke sqliteExec, [esi], [.ptrInitScript], NULL, NULL, NULL
-        test    eax, eax
-        jz      .finish
+        cmp     ebx, SQLITE_ROW
+        je      .finish
 
-        inc     ebx
+        inc     edi
 
 .finish:
-        mov     eax, ebx
+        mov     [esp+4*regEAX], edi
         clc
-        pop     ebx esi edi
+        popad
         return
 endp
 
