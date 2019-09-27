@@ -1,5 +1,5 @@
-C Some\sfixes\sto\sthe\sGerman\stranslation,\sthanks\sto\sthe\shttps://theadminzone.com/members/o.107940/\n\nA\sfeature\sabout\sremoving\sencryption\simplemented.\sAdded\sa\shelp\stext\sto\sthe\sEncryption\stab\sof\sthe\ssettings.
-D 2019-09-27T11:23:37.107
+C German\stranslation\sfor\sthe\sencryption\shelp\sand\sform\smessages.
+D 2019-09-27T11:53:19.792
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz cd00e258cdc7d01468c7e46170e21569a662bf62
@@ -505,7 +505,7 @@ F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e44992
 F www/templates/Wasp/form_register.tpl 25cdeffa395f90e248b383ee85390f9395cef8d3
 F www/templates/Wasp/form_reset_password.tpl 4b1ca1f5cdf5bb2ea7f0620722393e8324a97fa0
 F www/templates/Wasp/form_reset_request.tpl 45298eaa3544ec492eb9ca6e4f482fe30378a0e0
-F www/templates/Wasp/form_settings.tpl 8e70d52c3ff35bea04880b7fb0ae45b492bfbc00
+F www/templates/Wasp/form_settings.tpl 2a2c29a80b63b47e8505399f627cd4588498f662
 F www/templates/Wasp/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Wasp/form_sqlite_console.tpl 419ac0e18ab829bb3a5e0569e8fb7fd0e33de1bf
 F www/templates/Wasp/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
@@ -641,7 +641,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 00bdf774168664aef9b51c571e63a8dbbe288f9b
-R 90b78ce847682854180f12e010fb377e
+P 38bb995c517aed2c04346949bd03b2e84fdfeac6
+R 6a261294557028931f35ae76d0205f75
 U johnfound
-Z 1c827130118e81ece9bae057116161b2
+Z 1df904323c60f0bf4f5d294227e0cd8b

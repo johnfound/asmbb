@@ -225,11 +225,11 @@
   [equ:ttlChat=Chat aktivieren]
   [equ:ttlMarkup=Verfügbare Formatierungssprachen: <small>(mindestens eine muss ausgewählt werden)</small>]
   [equ:tabEncryption=Verschlüsselung]
-  [equ:ttlNewPassword=Neuer Verschlüsselungsschlüssel]
+  [equ:ttlNewPassword=Neuer Verschlüsselungspasswort]
   [equ:helpEncryption=
-    <p>The change of the encryption key is relatively long procedure. During it the forum will be not accessible.</p>
-    <p>This procedure is potentially dangerous. Make a backup of the database before encrypting. When encryption finishes successfully delete this backup.</p>
-    <p>If the database is encrypted, you must enter a password on every AsmBB engine restart.</p>
+      <p>Das Ändern des Schlüssels ist ein vergleichsweise langwieriger Vorgang. Währenddessen wird das Forum nicht verfügbar sein.</p>
+      <p>Diese Prozedur ist potenziell gefährlich. Fertigen Sie eine Sicherung der Datenbank vor der Verschlüsselung an. Wenn die Verschlüsselung erfolgreich abgeschlossen ist, löschen Sie diese Sicherung.</p>
+      <p>Sofern die Datenbank verschlüsselt ist, müssen Sie bei jedem Neustart der AsmBB-Engine ein Passwort eingeben.</p>
   ]
 ]
 
