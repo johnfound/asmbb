@@ -465,19 +465,36 @@ begin
 
 ; Check for a new password...
 
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt 'password', 0
+        stdcall ValueByName, [esi+TSpecialParams.post_array], txt "decrypt"
+        jc      .check_key
+
+        xor     eax, eax
+        jmp     .key_prepared
+
+.check_key:
+        stdcall ValueByName, [esi+TSpecialParams.post_array], txt "password"
+        jc      .settings_saved_ok
+
         test    eax, eax
         jz      .settings_saved_ok
 
         push    eax
         stdcall StrMD5, eax
-        stdcall StrDel ; from the stack
-        push    eax eax
+        stdcall StrNull ; from the stack.
+
+.key_prepared:
+        push    eax eax eax
 
         stdcall StrDupMem, "pragma rekey='"
         mov     ebx, eax
 
-        stdcall StrCat, ebx ; from the stack
+        pop     eax
+        test    eax, eax
+        jz      .key_cat_ok
+        stdcall StrCat, ebx, eax
+.key_cat_ok:
+
+        stdcall StrNull ; from the stack
         stdcall StrDel ; from the stack
 
         stdcall StrCat, ebx, txt "';"
@@ -493,6 +510,8 @@ begin
         stdcall StrDel, ebx
 
         cmp     edi, SQLITE_ROW
+        je      .settings_saved_ok
+        cmp     edi, SQLITE_DONE
         je      .settings_saved_ok
 
         cinvoke sqliteErrStr, edi

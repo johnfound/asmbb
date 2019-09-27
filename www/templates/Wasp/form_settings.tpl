@@ -42,6 +42,11 @@
   [equ:ttlMarkup=Available markup languages: <small>(at least one must be selected)</small>]
   [equ:tabEncryption=Encryption]
   [equ:ttlNewPassword=New encryption key]
+  [equ:helpEncryption=
+    <p>The change of the encryption key is relatively long procedure. During it the forum will be not accessible.</p>
+    <p>This procedure is potentially dangerous. Make a backup of the database before encrypting. When encryption finishes successfully delete this backup.</p>
+    <p>If the database is encrypted, you must enter a password on every AsmBB engine restart.</p>
+  ]
 |
   [equ:pLogin=Включване]
   [equ:pRegister=Регистриране]
@@ -83,6 +88,11 @@
   [equ:ttlMarkup=Езици за форматиране: <small>(поне един трябва да е избран)</small>]
   [equ:tabEncryption=Шифроване]
   [equ:ttlNewPassword=Нов ключ]
+  [equ:helpEncryption=
+    <p>Смяната на ключа на шифъра е бавна процедура, по време на която посетителите нямат достъп до сайта.</p>
+    <p>Процедурата по шифроване на базата данни е потенциално опасна. Направете резервно копие и го изтрийте след успешното завършване на процедурата.</p>
+    <p>Шифрованата база данни изисква въвеждане на ключа след всяко рестартиране на AsmBB.</p>
+  ]
 |
   [equ:pLogin=Вход]
   [equ:pRegister=Регистрироваться]
@@ -124,6 +134,11 @@
   [equ:ttlMarkup=Языки разметки: <small>(должен быть выбран хотя бы один)</small>]
   [equ:tabEncryption=Шифрование]
   [equ:ttlNewPassword=Новый ключ шифрования]
+  [equ:helpEncryption=
+    <p>Изменение ключа шифрования является медленной процедурой, во время которой посетители не могут получить доступ к сайту.</p>
+    <p>Процесс шифрования базы данных потенциально опасен. Сделайте резервное копие и удалите его после успешного завершения процедуры.</p>
+    <p>Зашифрованная база данных требует ввода ключа после каждого перезапуска AsmBB.</p>
+  ]
 |
   [equ:pLogin=Connexion]
   [equ:pRegister=S'enegistrer]
@@ -165,6 +180,11 @@
   [equ:ttlMarkup=Langages de marquage disponibles: <small>(au moins un doit être sélectionné)</small>]
   [equ:tabEncryption=Chiffrement]
   [equ:ttlNewPassword=Nouvelle clé de cryptage]
+  [equ:helpEncryption=
+    <p>The change of the encryption key is relatively long procedure. During it the forum will be not accessible.</p>
+    <p>This procedure is potentially dangerous. Make a backup of the database before encrypting. When encryption finishes successfully delete this backup.</p>
+    <p>If the database is encrypted, you must enter a password on every AsmBB engine restart.</p>
+  ]
 |
   [equ:pLogin=Anmelden]
   [equ:pRegister=Registrieren]
@@ -206,6 +226,11 @@
   [equ:ttlMarkup=Verfügbare Formatierungssprachen: <small>(mindestens eine muss ausgewählt werden)</small>]
   [equ:tabEncryption=Verschlüsselung]
   [equ:ttlNewPassword=Neuer Verschlüsselungsschlüssel]
+  [equ:helpEncryption=
+    <p>The change of the encryption key is relatively long procedure. During it the forum will be not accessible.</p>
+    <p>This procedure is potentially dangerous. Make a backup of the database before encrypting. When encryption finishes successfully delete this backup.</p>
+    <p>If the database is encrypted, you must enter a password on every AsmBB engine restart.</p>
+  ]
 ]
 
 
@@ -321,6 +346,12 @@
     <section>
       <h3>[const:ttlNewPassword]:</h3>
       <input type="password" value="" name="password" class="settings" maxlength="1024">
+      <p></p>
+      <input type="checkbox" name="decrypt" id="cbdecr" value="1"><label for="cbdecr">Remove the encryption</label>
+      <p></p>
+      <article>
+        [const:helpEncryption]
+      </article>
     </section>
 
   </div>

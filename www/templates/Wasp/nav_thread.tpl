@@ -46,7 +46,7 @@
   [equ:btnConsole=SQL-Konsole]
   [equ:ttlEditThread=Themenoptionen ändern.]
   [equ:altEdit=Ändern]
-  [equ:rssfeed=Subscribe to this thread]
+  [equ:rssfeed=Dieses Thema abonnieren]
 ]
 
 <div class="ui">

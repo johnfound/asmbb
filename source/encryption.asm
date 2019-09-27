@@ -23,14 +23,15 @@ begin
         stdcall StrDupMem, "pragma key='"
         mov     ebx, eax
 
-        stdcall GetPostString, [esi+TSpecialParams.post_array], 'password', 0
-        test    eax, eax
-        jz      .redirect
+        stdcall ValueByName, [esi+TSpecialParams.post_array], 'initpass'
+        jc      .redirect
 
         push    eax
         stdcall StrMD5, eax
-        stdcall StrDel ; from the stack
+        stdcall StrNull ; from the stack
+
         stdcall StrCat, ebx, eax
+        stdcall StrNull, eax
         stdcall StrDel, eax
 
         stdcall StrCat, ebx, txt "';"
@@ -42,13 +43,8 @@ begin
         mov     esi, eax
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall StrPtr, ebx
-        mov     edi, eax
-        mov     ecx, [eax+string.len]
-        xor     eax, eax
-        mov     [edi+string.len], eax
-        rep stosb
 
+        stdcall StrNull, ebx
         stdcall StrDel, ebx
 
         cmp     esi, SQLITE_ROW
@@ -65,3 +61,24 @@ begin
         return
 endp
 
+
+
+proc StrNull, .hString
+begin
+        cmp     [.hString], 0
+        je      .finish
+
+        pushad
+
+        stdcall StrPtr, [.hString]
+        mov     edi, eax
+        mov     ecx, [eax+string.len]
+        xor     eax, eax
+        mov     [edi+string.len], eax
+        rep stosb
+
+        popad
+
+.finish:
+        return
+endp

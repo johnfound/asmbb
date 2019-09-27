@@ -40,7 +40,7 @@
   [equ:btnChat=Chat]
   [equ:btnSettings=Einstellungen]
   [equ:btnConsole=SQL-Konsole]
-  [equ:rssfeed=Subscribe]
+  [equ:rssfeed=Abonnieren]
 ]
 
 
