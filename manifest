@@ -1,9 +1,9 @@
-C The\sbuild\sscript\sfor\smusl\sand\ssqlite\sis\sreworked\sto\sdownload\sand\sbuild\sSQLeet\sinstead\sof\sthe\soriginal\sSQLite.\sThe\spart\sthat\sdownloads\sthe\soriginal\ssqlite\sis\scommened\sout\sand\scan\sbe\sused\sif\sneeded.
-D 2019-10-02T13:26:01.071
+C Fixed\srelease\screation\sscript.
+D 2019-10-02T16:43:14.757
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz cd00e258cdc7d01468c7e46170e21569a662bf62
-F install/create_release.sh 396f452f7c1af50c844fbd0f37a37d58e8bc662d x
+F install/create_release.sh c16d914d82bb90a8033e0bb1c36a6d4523f59083 x
 F install/exclude.txt 7678178e332c0c4a1a7d1ac8705ae6e2e2e57e74
 F install/install.txt 64615f21455976e432bda238c6d4282fc561e340
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
@@ -11,7 +11,7 @@ F install/unpack.tar.gz 17da32119ae2cc9bb3a57f2ce59dc489e542ca59
 F install/unpack/.htaccess efa046601aad51a87da0946b4eecadcc0d234c15
 F install/unpack/unpack.sh 4443f580fe76faffa7015e6e4b73b22f6290f4a0 x
 F musl_sqlite/README 46ab7567ba9efea4d58e5d8e8c01610155a78c02
-F musl_sqlite/build 2351c3544cb80aa4b70a2f5971a4f2d41c357155 x
+F musl_sqlite/build 29b0bd16b7a3941c89b78add0b0de1987b6776cb x
 F source/Documents/FastCGI\sSpecification.html e2fc06a5abf1b3505c665e108ce3ad28b636095a
 F source/Documents/futex.pdf 3297d3e1739a7b294fa0c96ba6d59bae7170c6b9
 F source/Documents/rfc7578.txt 5dff43151910fe753f8649b08d650137f07a96ff
@@ -641,7 +641,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 800607e48dddc3530610d29717cb13715f5196dd
-R d0b1daa3806c0898231884555120b463
+P ad7c29b8d2db9fff29562372e31ea91d4d83722c
+R f6fc281ec3e3d829aebad315f2882ec5
 U johnfound
-Z 41df39e0d306bb32e28826b34d1c3915
+Z cb9a905592832839c6e5354297e043de

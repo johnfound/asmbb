@@ -51,7 +51,7 @@ else
 #      files=( sqlite*.zip )
 #      echo "Extracting sqlite from ${files[0]}..."
 #      unzip -joq "${files[0]}" *sqlite3.c || { echo >&2 "Error: Broken SQLite source archive."; exit 2; }
-#    else 
+#    else
 #      files=( sqlite*.tar.gz )
 #      echo "Extracting sqlite from ${files[0]}..."
 #      tar --wildcards --strip-components 1 -xzf "${files[0]}" */sqlite3.c || { echo >&2 "Error: Broken SQLite source archive."; exit 2; }
@@ -75,7 +75,7 @@ mkdir muslsrc
 
 cd muslsrc
 
-# Configure and compile MUSL; 
+# Configure and compile MUSL;
 
 echo "Compiling MUSL ..."
 
@@ -88,7 +88,7 @@ rm -rf ./muslsrc/ &
 
 echo "Create gcc.specs file..."
 
-# THE BLANK LINES IN THE BELOW TEXT ARE IMPORTANT! 
+# THE BLANK LINES IN THE BELOW TEXT ARE IMPORTANT!
 # DON'T EDIT IF YOU DON'T KNOW WHAT YOU ARE DOING!
 # IT IS A BLACK GCC MAGIC!
 cat <<EOT > musl/musl-gcc.specs
@@ -148,7 +148,7 @@ gcc -m32 -O3 -shared -fno-stack-protector -mpreferred-stack-boundary=2 -march=x8
     -DSQLITE_OMIT_AUTHORIZATION                                                         \
     -DSQLITE_THREADSAFE=1                                                               \
     -DSQLITE_ENABLE_STAT4                                                               \
-./sqlite3.c -o ./libsqlite3.so							        \
+./sqlite3.c -o ./libsqlite3.so                                                          \
 || { echo >&2 "Error: Can't compile SQLite."; exit 4; }
 
 mv ./musl/lib/libc.so ./ld-musl-i386.so

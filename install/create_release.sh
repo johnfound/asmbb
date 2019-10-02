@@ -53,6 +53,9 @@ cp install.txt asmbb/
 
 # now pack it
 tar -czf asmbb.tar.gz asmbb/
-tar -czf unpack.tar.gz unpack/
+
+if [ ! -f ./unpack.tar.gz ]; then
+  tar -czf unpack.tar.gz unpack/
+fi
 
 rm -rf asmbb/
