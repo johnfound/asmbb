@@ -1,5 +1,5 @@
-C Better\sRAM\scleaning\sof\sthe\spost\sdata.\sProper\sset\sof\sthe\spragma\sstatements\son\sencrypted\sdatabases.
-D 2019-10-02T10:11:03.439
+C The\sbuild\sscript\sfor\smusl\sand\ssqlite\sis\sreworked\sto\sdownload\sand\sbuild\sSQLeet\sinstead\sof\sthe\soriginal\sSQLite.\sThe\spart\sthat\sdownloads\sthe\soriginal\ssqlite\sis\scommened\sout\sand\scan\sbe\sused\sif\sneeded.
+D 2019-10-02T13:26:01.071
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz cd00e258cdc7d01468c7e46170e21569a662bf62
@@ -11,7 +11,7 @@ F install/unpack.tar.gz 17da32119ae2cc9bb3a57f2ce59dc489e542ca59
 F install/unpack/.htaccess efa046601aad51a87da0946b4eecadcc0d234c15
 F install/unpack/unpack.sh 4443f580fe76faffa7015e6e4b73b22f6290f4a0 x
 F musl_sqlite/README 46ab7567ba9efea4d58e5d8e8c01610155a78c02
-F musl_sqlite/build e88efc2d2fb76b4dafd2e359912186d91ec2c993 x
+F musl_sqlite/build 2351c3544cb80aa4b70a2f5971a4f2d41c357155 x
 F source/Documents/FastCGI\sSpecification.html e2fc06a5abf1b3505c665e108ce3ad28b636095a
 F source/Documents/futex.pdf 3297d3e1739a7b294fa0c96ba6d59bae7170c6b9
 F source/Documents/rfc7578.txt 5dff43151910fe753f8649b08d650137f07a96ff
@@ -37,7 +37,7 @@ F source/create.sql f6a98baf2ae8839907d237b7179bad2328a5f6ea
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm dddd1b6b89eef295ab5a65cb7302aefe0d948399
 F source/encryption.asm eddcb77ca199d429f685bcd66250dea2741a6742
-F source/engine.asm ef1531367a1a4176801d2fc747756ce26216446b
+F source/engine.asm 48393d19449ab539802ea89eec69b2ad025d35ee
 F source/engine.fpr 53d13239a24d9b6372d22d541920d957a4b26b83
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -641,7 +641,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 80919ec5f31c8dfd9cb1f99c7990685cf02debd2
-R 54629baad344396994c4959c7b3f9a38
+P 800607e48dddc3530610d29717cb13715f5196dd
+R d0b1daa3806c0898231884555120b463
 U johnfound
-Z 3bab9ae3704a12fc3138b9f6748b55cd
+Z 41df39e0d306bb32e28826b34d1c3915
