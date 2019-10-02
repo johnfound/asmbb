@@ -1,5 +1,5 @@
-C German\stranslation\sfor\sthe\sencryption\shelp\sand\sform\smessages.
-D 2019-09-27T11:53:19.792
+C Better\sRAM\scleaning\sof\sthe\spost\sdata.\sProper\sset\sof\sthe\spragma\sstatements\son\sencrypted\sdatabases.
+D 2019-10-02T10:11:03.439
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz cd00e258cdc7d01468c7e46170e21569a662bf62
@@ -15,12 +15,12 @@ F musl_sqlite/build e88efc2d2fb76b4dafd2e359912186d91ec2c993 x
 F source/Documents/FastCGI\sSpecification.html e2fc06a5abf1b3505c665e108ce3ad28b636095a
 F source/Documents/futex.pdf 3297d3e1739a7b294fa0c96ba6d59bae7170c6b9
 F source/Documents/rfc7578.txt 5dff43151910fe753f8649b08d650137f07a96ff
-F source/Linux/sqlite3.inc aee1093becba96b2c9ede8a6c4b3ce939ff6a02e
+F source/Linux/sqlite3.inc d718ceb6e9ab4c242f0adb24541ea69ffbc3bc91
 F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
 F source/ResetPassword.fpr 3799b0d1769564f2a304b43b44f5894a94045425
 F source/TestsWithTags.sql 6384a56d553e36aa1c54cdb61a147bb2806e3e9d
 F source/ToDo.txt 78c2a566e37fc37db78b799f5ac100bed383c182
-F source/Win32/sqlite3.inc 83b0ebab85f7359c5b99c281b1eae5cce0877b9a
+F source/Win32/sqlite3.inc f941d1cebec53d2bddbd071f4a2fef6d1a80b7f2
 F source/accounts.asm a8fd99724495ab0ca7d3ad7f6af31492304e286b
 F source/alltags.sql e4a0d5084be7a45f5e30ab46b7985f49c797f86a
 F source/atom_list.sql 6a80934c279093592290ca79d0b517e37800badf
@@ -36,12 +36,12 @@ F source/commands.asm 3fab62f5cc0541006d978b2d5b5c3570063ceda9
 F source/create.sql f6a98baf2ae8839907d237b7179bad2328a5f6ea
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm dddd1b6b89eef295ab5a65cb7302aefe0d948399
-F source/encryption.asm 30bef39aa0850d67aa14f9c24d71446bd594ad8f
-F source/engine.asm bcb9186830d0b2c6f3d714ac77fef3c7b7e901ea
-F source/engine.fpr 9beac4908eb51ce667c11df611584796c73ad6c2
+F source/encryption.asm eddcb77ca199d429f685bcd66250dea2741a6742
+F source/engine.asm ef1531367a1a4176801d2fc747756ce26216446b
+F source/engine.fpr 53d13239a24d9b6372d22d541920d957a4b26b83
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
-F source/fcgi.asm 0bd091df2aca22da0f67f33e5dbe1bfdbe680f05
+F source/fcgi.asm 1085fa90d0f65bce49c79dbb891556b6620af6ba
 F source/history.asm 83a291ab72f493ce32ca90b92a2ac76442248fae
 F source/http.asm 1d6405bf48b523b735b12f8167deafe1ac081936
 F source/images_png.asm cb69d9eafb85f6e61c526a3dcff4c7f2c3f4ebd6
@@ -69,7 +69,7 @@ F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm bf0cc81ee01e15f731972a6c951101c814f19c19
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
-F source/settings.asm b2b48c2a9d388391bd47b9259f6315a5f048a32e
+F source/settings.asm 3123d67b30fd4e86b0716cf0a6387e9c8b0fc91c
 F source/settings.sql 066cc77197d5fae94fb27c2bd72aabb2c4b85d8a
 F source/showthread.asm 8d8fa3bdf3eb1034cada9f6273d923e9a4bd2bbd
 F source/showthread.sql 88e6f49dae477c7b96a4ca0722f4885f754b0bb0
@@ -641,7 +641,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 38bb995c517aed2c04346949bd03b2e84fdfeac6
-R 6a261294557028931f35ae76d0205f75
+P 80919ec5f31c8dfd9cb1f99c7990685cf02debd2
+R 54629baad344396994c4959c7b3f9a38
 U johnfound
-Z 1df904323c60f0bf4f5d294227e0cd8b
+Z 3bab9ae3704a12fc3138b9f6748b55cd

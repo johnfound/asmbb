@@ -381,7 +381,7 @@ begin
         cmp     [.requestPost], 0
         jne     .bytes_ok
 
-        stdcall BytesCreate, 1024
+        stdcall BytesCreate, 4096
         mov     [.requestPost], eax
 
 .bytes_ok:
@@ -465,8 +465,24 @@ cError413 text "Status: 413 Payload Too Large", 13, 10, "Content-type: text/html
         mov     [.requestParams], eax
 
 .params_ok:
-        cmp     [.requestPost], eax
-        je      .post_ok
+        mov     edi, [.requestPost]
+        test    edi, edi
+        jz      .post_ok
+
+; paranoid post data cleanup...
+
+        mov     edx, [edi+TByteStream.size]
+        lea     edi, [edi+TByteStream.data]
+
+        mov     ecx, edx
+        shr     ecx, 2
+        rep stosd
+
+        mov     ecx, edx
+        and     ecx, 3
+        rep stosb
+
+; free the post data array...
 
         stdcall FreeMem, [.requestPost]
         mov     [.requestPost], eax

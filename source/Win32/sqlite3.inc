@@ -201,5 +201,6 @@ import_proto sqlite3,  \
     sqliteVmprintf, <.ptrString, .va_list>,  'sqlite3_vmprintf',  \
     sqliteWalAutocheckpoint, <.ptrDB, .N>,  'sqlite3_wal_autocheckpoint',  \
     sqliteWalCheckpoint, <.ptrDB, .ptrDBName>,  'sqlite3_wal_checkpoint',  \
+    sqliteWalCheckpoint_v2, <.ptrDB, .ptrDBName, .eMode, .pvarLog, .pvarCkpt>,  'sqlite3_wal_checkpoint_v2',  \
     sqliteWalHook, <.ptrDB, .procCommitHook, .lparam>,  'sqlite3_wal_hook',  \
     sqliteWin32_MbcsToUtf8, <NONE>,  'sqlite3_win32_mbcs_to_utf8'

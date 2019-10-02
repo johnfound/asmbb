@@ -21,7 +21,7 @@ LINUX_INTERPRETER equ './ld-musl-i386.so'
 options.ShowSkipped = 0
 options.ShowSizes = 0
 
-options.DebugMode = 0
+options.DebugMode = 1
 options.AlignCode = 0
 options.ShowImported = 0
 
@@ -148,13 +148,7 @@ start:
 .crypto_ok:
 
         stdcall SQLiteRegisterFunctions, [hMainDatabase]
-
-        cinvoke sqliteBusyTimeout, [hMainDatabase], 5000
-        cinvoke sqliteExec, [hMainDatabase], "PRAGMA journal_mode = WAL", 0, 0, 0
-        cinvoke sqliteExec, [hMainDatabase], "PRAGMA foreign_keys = TRUE", 0, 0, 0
-        cinvoke sqliteExec, [hMainDatabase], "PRAGMA synchronous = OFF", 0, 0, 0
-        cinvoke sqliteExec, [hMainDatabase], "PRAGMA threads = 2", 0, 0, 0
-        cinvoke sqliteExec, [hMainDatabase], "PRAGMA secure_delete = FALSE", 0, 0, 0
+        stdcall SetDatabaseMode
 
         mov     eax, exitSharedMem
         stdcall InitEventsIPC
@@ -530,6 +524,24 @@ begin
         stdcall TextCat, edx, "</article></div>"
 
         mov     [esp+4*regEAX], edx
+        popad
+        return
+endp
+
+
+; Here are the pragmas and calls that set the needed SQLite engine and database mode.
+; There is no error check and if the database is encrypted some of these calls will fail
+; so they need to be called again after successful sqliteKey call.
+
+proc SetDatabaseMode
+begin
+        pushad
+        cinvoke sqliteBusyTimeout, [hMainDatabase], 5000
+        cinvoke sqliteExec, [hMainDatabase], "PRAGMA foreign_keys = TRUE", 0, 0, 0
+        cinvoke sqliteExec, [hMainDatabase], "PRAGMA threads = 2", 0, 0, 0
+        cinvoke sqliteExec, [hMainDatabase], "PRAGMA secure_delete = FALSE", 0, 0, 0
+        cinvoke sqliteExec, [hMainDatabase], "PRAGMA journal_mode = WAL", 0, 0, 0
+        cinvoke sqliteExec, [hMainDatabase], "PRAGMA synchronous = OFF", 0, 0, 0
         popad
         return
 endp

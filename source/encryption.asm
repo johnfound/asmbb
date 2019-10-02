@@ -20,19 +20,24 @@ begin
 
 .try_to_decrypt:
 
-        stdcall StrDupMem, "pragma key='"
-        mov     ebx, eax
-
         stdcall ValueByName, [esi+TSpecialParams.post_array], 'initpass'
         jc      .redirect
+
+        test    eax, eax
+        jz      .redirect
 
         push    eax
         stdcall StrMD5, eax
         stdcall StrNull ; from the stack
 
-        stdcall StrCat, ebx, eax
-        stdcall StrNull, eax
-        stdcall StrDel, eax
+        push    eax eax eax
+
+        stdcall StrDupMem, "pragma key='"
+        mov     ebx, eax
+
+        stdcall StrCat, ebx ; from the stack
+        stdcall StrNull     ; from the stack
+        stdcall StrDel      ; from the stack
 
         stdcall StrCat, ebx, txt "';"
 
@@ -43,15 +48,18 @@ begin
         mov     esi, eax
         cinvoke sqliteFinalize, [.stmt]
 
-
         stdcall StrNull, ebx
         stdcall StrDel, ebx
+
+        OutputValue "Key returns: ", esi, 10, -1
 
         cmp     esi, SQLITE_ROW
         jne     .redirect
 
         xor     eax, eax
         mov     [fNeedKey], eax
+
+        stdcall SetDatabaseMode
 
 .redirect:
         stdcall TextMakeRedirect, 0, txt "/"
@@ -72,9 +80,17 @@ begin
 
         stdcall StrPtr, [.hString]
         mov     edi, eax
-        mov     ecx, [eax+string.len]
+        mov     edx, [eax+string.len]
+
         xor     eax, eax
         mov     [edi+string.len], eax
+
+        mov     ecx, edx
+        shr     ecx, 2
+        rep stosd
+
+        mov     ecx, edx
+        and     ecx, 3
         rep stosb
 
         popad

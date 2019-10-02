@@ -468,8 +468,11 @@ begin
         stdcall ValueByName, [esi+TSpecialParams.post_array], txt "decrypt"
         jc      .check_key
 
-        xor     eax, eax
-        jmp     .key_prepared
+; remove the encryption
+
+        xor     ebx, ebx
+        jmp     .rekey
+
 
 .check_key:
         stdcall ValueByName, [esi+TSpecialParams.post_array], txt "password"
@@ -481,40 +484,41 @@ begin
         push    eax
         stdcall StrMD5, eax
         stdcall StrNull ; from the stack.
-
-.key_prepared:
-        push    eax eax eax
-
-        stdcall StrDupMem, "pragma rekey='"
         mov     ebx, eax
 
-        pop     eax
+.rekey:
+        stdcall StrDupMem, "pragma rekey='"
+        xchg    ebx, eax
+
         test    eax, eax
-        jz      .key_cat_ok
+        jz      .pass_ok
+
         stdcall StrCat, ebx, eax
-.key_cat_ok:
+        stdcall StrNull, eax
+        stdcall StrDel, eax
 
-        stdcall StrNull ; from the stack
-        stdcall StrDel ; from the stack
-
+.pass_ok:
         stdcall StrCat, ebx, txt "';"
 
-
+        lea     edx, [.stmt]
         stdcall StrPtr, ebx
-        lea     ecx, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], eax, [eax+string.len], ecx, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], eax, [eax+string.len],  edx, 0
         cinvoke sqliteStep, [.stmt]
-        mov     edi, eax
+        push    eax
         cinvoke sqliteFinalize, [.stmt]
 
+        stdcall StrNull, ebx
         stdcall StrDel, ebx
 
-        cmp     edi, SQLITE_ROW
+        cinvoke sqliteExec, [hMainDatabase], 'pragma wal_checkpoint(truncate)', 0, 0, 0
+
+        pop     eax
+        cmp     eax, SQLITE_ROW
         je      .settings_saved_ok
-        cmp     edi, SQLITE_DONE
+        cmp     eax, SQLITE_DONE
         je      .settings_saved_ok
 
-        cinvoke sqliteErrStr, edi
+        cinvoke sqliteErrStr, eax
         push    eax
 
         stdcall StrDupMem, 'The database key change failed with the following message: "'
