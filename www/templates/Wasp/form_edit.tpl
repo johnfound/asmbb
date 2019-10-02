@@ -56,7 +56,7 @@
   [equ:Attach=Datei(en) anhängen]
   [equ:tabText=Text]
   [equ:tabAttach=Anhänge]
-  [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
+  [equ:FileLimit=(Anzahl ≤ 10, Größe ≤ 1MB)]
 ]
 
 <div class="editor" id="editor">

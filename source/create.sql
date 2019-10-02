@@ -18,7 +18,6 @@ create table Params (
 insert into Params values ('default_lang', 0);
 insert into Params values ('user_perm', 1887);  -- permLogin + permRead + permPost + permThreadStart + permEditOwn + permDelOwn + permChat + permDownload + permAttach
 insert into Params values ('anon_perm', 3);     -- permLogin + permRead
-insert into Params values ('log_events', 0);
 insert into Params values ('chat_enabled', 1);
 insert into Params values ('default_skin', 'Wasp');
 insert into Params values ('default_mobile_skin', 'mobile');
@@ -575,20 +574,6 @@ insert into Messages VALUES ('closed_registration','This very place
 Is not a place for you.
 Go elsewhere now.
 ','Closed forum!','<a href="https://duckduckgo.com">A good place to start</a>');
-
-create table Log (
-  process_id integer,   -- the unique process id
-  timestamp  integer,
-  event      text,      -- what event is logged - start process, end process, start request, end request
-  value      text,      -- details in variable form.
-  runtime    integer
-);
-
-
-
-create table ProcessID (
-  id integer primary key autoincrement
-);
 
 
 create table ScratchPad (

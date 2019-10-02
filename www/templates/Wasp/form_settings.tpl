@@ -40,6 +40,13 @@
   [equ:ttlMobile=Default mobile skin]
   [equ:ttlChat=Enable chat]
   [equ:ttlMarkup=Available markup languages: <small>(at least one must be selected)</small>]
+  [equ:tabEncryption=Encryption]
+  [equ:ttlNewPassword=New encryption key]
+  [equ:helpEncryption=
+    <p>The change of the encryption key is relatively long procedure. During it the forum will be not accessible.</p>
+    <p>This procedure is potentially dangerous. Make a backup of the database before encrypting. When encryption finishes successfully delete this backup.</p>
+    <p>If the database is encrypted, you must enter a password on every AsmBB engine restart.</p>
+  ]
 |
   [equ:pLogin=Включване]
   [equ:pRegister=Регистриране]
@@ -79,6 +86,13 @@
   [equ:ttlMobile=Оформление за мобилни устройства]
   [equ:ttlChat=Чат в реално време]
   [equ:ttlMarkup=Езици за форматиране: <small>(поне един трябва да е избран)</small>]
+  [equ:tabEncryption=Шифроване]
+  [equ:ttlNewPassword=Нов ключ]
+  [equ:helpEncryption=
+    <p>Смяната на ключа на шифъра е бавна процедура, по време на която посетителите нямат достъп до сайта.</p>
+    <p>Процедурата по шифроване на базата данни е потенциално опасна. Направете резервно копие и го изтрийте след успешното завършване на процедурата.</p>
+    <p>Шифрованата база данни изисква въвеждане на ключа след всяко рестартиране на AsmBB.</p>
+  ]
 |
   [equ:pLogin=Вход]
   [equ:pRegister=Регистрироваться]
@@ -118,6 +132,13 @@
   [equ:ttlMobile=Оформление для мобильных устройств]
   [equ:ttlChat=Включить чат]
   [equ:ttlMarkup=Языки разметки: <small>(должен быть выбран хотя бы один)</small>]
+  [equ:tabEncryption=Шифрование]
+  [equ:ttlNewPassword=Новый ключ шифрования]
+  [equ:helpEncryption=
+    <p>Изменение ключа шифрования является медленной процедурой, во время которой посетители не могут получить доступ к сайту.</p>
+    <p>Процесс шифрования базы данных потенциально опасен. Сделайте резервное копие и удалите его после успешного завершения процедуры.</p>
+    <p>Зашифрованная база данных требует ввода ключа после каждого перезапуска AsmBB.</p>
+  ]
 |
   [equ:pLogin=Connexion]
   [equ:pRegister=S'enegistrer]
@@ -157,6 +178,13 @@
   [equ:ttlMobile=Thème mobile par défaut]
   [equ:ttlChat=Activer le tchat]
   [equ:ttlMarkup=Langages de marquage disponibles: <small>(au moins un doit être sélectionné)</small>]
+  [equ:tabEncryption=Chiffrement]
+  [equ:ttlNewPassword=Nouvelle clé de cryptage]
+  [equ:helpEncryption=
+    <p>The change of the encryption key is relatively long procedure. During it the forum will be not accessible.</p>
+    <p>This procedure is potentially dangerous. Make a backup of the database before encrypting. When encryption finishes successfully delete this backup.</p>
+    <p>If the database is encrypted, you must enter a password on every AsmBB engine restart.</p>
+  ]
 |
   [equ:pLogin=Anmelden]
   [equ:pRegister=Registrieren]
@@ -196,6 +224,13 @@
   [equ:ttlMobile=Mobiler Standardskin]
   [equ:ttlChat=Chat aktivieren]
   [equ:ttlMarkup=Verfügbare Formatierungssprachen: <small>(mindestens eine muss ausgewählt werden)</small>]
+  [equ:tabEncryption=Verschlüsselung]
+  [equ:ttlNewPassword=Neuer Verschlüsselungspasswort]
+  [equ:helpEncryption=
+      <p>Das Ändern des Schlüssels ist ein vergleichsweise langwieriger Vorgang. Währenddessen wird das Forum nicht verfügbar sein.</p>
+      <p>Diese Prozedur ist potenziell gefährlich. Fertigen Sie eine Sicherung der Datenbank vor der Verschlüsselung an. Wenn die Verschlüsselung erfolgreich abgeschlossen ist, löschen Sie diese Sicherung.</p>
+      <p>Sofern die Datenbank verschlüsselt ist, müssen Sie bei jedem Neustart der AsmBB-Engine ein Passwort eingeben.</p>
+  ]
 ]
 
 
@@ -305,6 +340,20 @@
       <input type="checkbox" [markup1]  name="markups" id="mu1"  value="2"><label for="mu1">BBCode</label>
       </ul>
     </section>
+
+    <input id="tab5" name="tabselector" type="radio" value="4" [case:[tabselector]|||||checked|]>
+    <label for="tab5">[const:tabEncryption]</label>
+    <section>
+      <h3>[const:ttlNewPassword]:</h3>
+      <input type="password" value="" name="password" class="settings" maxlength="1024">
+      <p></p>
+      <input type="checkbox" name="decrypt" id="cbdecr" value="1"><label for="cbdecr">Remove the encryption</label>
+      <p></p>
+      <article>
+        [const:helpEncryption]
+      </article>
+    </section>
+
   </div>
 
   <input type="hidden" name="ticket" value="[Ticket]" >

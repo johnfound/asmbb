@@ -75,6 +75,7 @@ include "version.asm"
 include "images_png.asm"
 include "categories.asm"
 include "history.asm"
+include "encryption.asm"
 
 include "chat.asm"
 
@@ -84,6 +85,8 @@ include "postdebug.asm"
 include "attachments.asm"
 
 include "atomfeed.asm"
+
+
 
 
 iglobal
@@ -96,14 +99,13 @@ endg
 uglobal
   hMainDatabase dd ?
   hCurrentDir   dd ?
-  ProcessID     dd ?
-  ProcessStart  dd ?
   fOwnSocket    dd ?
-  fLogEvents    dd ?
+
+  fNeedKey      dd ?
 endg
 
 
-rb 123
+;rb 123
 
 
 ; process exit codes:
@@ -138,28 +140,15 @@ start:
         stdcall OpenOrCreate, cDatabaseFilename, hMainDatabase, sqlCreateDB
         jc      .finish
 
+        cmp     eax, 1
+        jne     .crypto_ok
+
+        inc     [fNeedKey]
+
+.crypto_ok:
+
         stdcall SQLiteRegisterFunctions, [hMainDatabase]
-
-        cinvoke sqliteBusyTimeout, [hMainDatabase], 5000
-        cinvoke sqliteExec, [hMainDatabase], "PRAGMA journal_mode = WAL", 0, 0, 0
-        cinvoke sqliteExec, [hMainDatabase], "PRAGMA foreign_keys = TRUE", 0, 0, 0
-        cinvoke sqliteExec, [hMainDatabase], "PRAGMA synchronous = OFF", 0, 0, 0
-        cinvoke sqliteExec, [hMainDatabase], "PRAGMA threads = 2", 0, 0, 0
-        cinvoke sqliteExec, [hMainDatabase], "PRAGMA secure_delete = FALSE", 0, 0, 0
-
-        cinvoke sqliteExec, [hMainDatabase], "insert into ProcessID(id) values (NULL)", 0, 0, 0
-
-        cinvoke sqliteLastInsertRowID, [hMainDatabase]
-        mov     [ProcessID], eax
-        cinvoke sqliteExec, [hMainDatabase], "delete from ProcessID", 0, 0, 0
-
-        stdcall GetTimestamp
-        mov     [ProcessStart], eax
-
-        stdcall GetParam, "log_events", gpInteger
-        mov     [fLogEvents], eax
-
-        stdcall LogEvent, "ScriptStart", logNULL, 0, 0
+        stdcall SetDatabaseMode
 
         mov     eax, exitSharedMem
         stdcall InitEventsIPC
@@ -175,15 +164,6 @@ start:
 
 .terminate:
         push    eax
-
-        cmp     [fLogEvents], 0
-        je      .log_script_end_ok
-
-        stdcall GetTimestamp
-        sub     eax, [ProcessStart]
-        stdcall LogEvent, "ScriptEnd", logNULL, 0, eax
-
-.log_script_end_ok:
 
         mov     ebx, 30        ; 300x10ms = 300ms
 
@@ -544,6 +524,24 @@ begin
         stdcall TextCat, edx, "</article></div>"
 
         mov     [esp+4*regEAX], edx
+        popad
+        return
+endp
+
+
+; Here are the pragmas and calls that set the needed SQLite engine and database mode.
+; There is no error check and if the database is encrypted some of these calls will fail
+; so they need to be called again after successful sqliteKey call.
+
+proc SetDatabaseMode
+begin
+        pushad
+        cinvoke sqliteBusyTimeout, [hMainDatabase], 5000
+        cinvoke sqliteExec, [hMainDatabase], "PRAGMA foreign_keys = TRUE", 0, 0, 0
+        cinvoke sqliteExec, [hMainDatabase], "PRAGMA threads = 2", 0, 0, 0
+        cinvoke sqliteExec, [hMainDatabase], "PRAGMA secure_delete = FALSE", 0, 0, 0
+        cinvoke sqliteExec, [hMainDatabase], "PRAGMA journal_mode = WAL", 0, 0, 0
+        cinvoke sqliteExec, [hMainDatabase], "PRAGMA synchronous = OFF", 0, 0, 0
         popad
         return
 endp

@@ -1672,6 +1672,9 @@ endl
         stdcall TextCreate, sizeof.TText
         mov     edx, eax
 
+        test    ebx, ebx
+        jz      .end_styles
+
         stdcall GetParam, 'embeded_css', gpInteger
         jc      .external_css
 
@@ -1717,6 +1720,7 @@ endl
 
 
 .external_css:
+
         cmp     ecx, [ebx+TArray.count]
         jae     .end_styles
 
@@ -1965,6 +1969,13 @@ begin
 
         mov     ebx, [.hString]
         mov     edx, [.pList]
+        test    edx, edx
+        jnz     .array_ok
+
+        stdcall CreateArray, 4
+        mov     edx, eax
+
+.array_ok:
         mov     ecx, [edx+TArray.count]
 
 .loop:

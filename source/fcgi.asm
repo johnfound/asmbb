@@ -218,135 +218,6 @@ endp
 pathMySocket text "./engine.sock"
 
 
-;create table Log (
-;  process_id integer,   -- the unique process id
-;  timestamp  integer,
-;  event      text       -- what event is logged - start process, end process, start request, end request
-;  value      text,      -- details in variable form.
-;  runtime    integer
-;);
-; GOOD report queries:
-;
-; select process_id, strftime('%d.%m.%Y %H:%M:%S', timestamp, 'unixepoch') as `Time`, E.name, value from log L left join Events E on event = E.id order by timestamp desc;
-;
-; select strftime('%d.%m.%Y %H:%M:%S', timestamp, 'unixepoch') as `Time`, E.name, value from log L left join Events E on L.event = E.id where L.event = 3 order by L.timestamp, L.rowID desc;
-;
-;
-; -- Gives the 10 slower requests, value in [ms]:
-;
-; select E.name || " : " || value, cast(L.runtime as float)/1000 from log L left join Events E on L.event = E.id where L.event = 3 order by runtime desc limit 10;
-;
-;
-; -- Shows the process start and end events:
-;
-; select strftime('%d.%m.%Y %H:%M:%S', L.timestamp, 'unixepoch') as Time, process_id, E.name, L.value, L.runtime from log L left join Events E on (L.event = E.id) where E.name in ("ScriptStart", "ScriptEnd") order by L.rowID;
-;
-;
-
-sqlLogEvent text "insert into Log (process_id, timestamp, event, value, runtime) values (?1, strftime('%s','now'), ?2, ?3, ?4 )"
-sqlCleanLog text "delete from Log where timestamp < strftime('%s','now') - 86400"
-
-
-logNULL   = 0
-logNumber = 1
-logText   = 2
-
-
-proc LogEvent, .event, .log_type, .value, .runtime
-.stmt dd ?
-begin
-        pushad
-
-        cmp     [fLogEvents], 0
-        je      .finish
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlLogEvent, sqlLogEvent.length, eax, 0
-
-        cinvoke sqliteBindInt, [.stmt], 1, [ProcessID]
-
-        cmp     [.event], 0
-        je      .event_ok
-
-        stdcall StrLen, [.event]
-        mov     ecx, eax
-        stdcall StrPtr, [.event]
-        cinvoke sqliteBindText, [.stmt], 2, eax, ecx, SQLITE_STATIC
-
-.event_ok:
-        cmp     [.log_type], logNULL
-        je      .value_ok
-
-        cmp     [.log_type], logNumber
-        je      .value_number
-
-        cmp     [.log_type], logText
-        je      .value_text
-
-        jmp     .value_ok
-
-.value_number:
-        cinvoke sqliteBindInt, [.stmt], 3, [.value]
-        jmp     .value_ok
-
-.value_text:
-        stdcall StrLen, [.value]
-        mov     ecx, eax
-        stdcall StrPtr, [.value]
-        cinvoke sqliteBindText, [.stmt], 3, eax, ecx, SQLITE_STATIC
-
-.value_ok:
-        cmp     [.runtime], 0
-        je      .runtime_ok
-
-        cinvoke sqliteBindInt, [.stmt], 4, [.runtime]
-
-.runtime_ok:
-        cinvoke sqliteStep, [.stmt]
-        cinvoke sqliteFinalize, [.stmt]
-
-        cinvoke sqliteExec, [hMainDatabase], sqlCleanLog, 0, 0, 0
-
-.finish:
-        popad
-        return
-endp
-
-
-
-
-uglobal
-  UniqueID   dd ?
-  UniqueLock dd ?
-endg
-
-
-
-proc GetUniqueID
-begin
-        xor     eax, eax
-        dec     eax
-
-.loop:
-        xchg    eax, [UniqueLock]
-        test    eax, eax
-        jz      .locked
-
-        stdcall Sleep, 1
-        jmp     .loop
-
-
-.locked:
-        mov     eax, [UniqueID]
-        inc     [UniqueID]
-
-        mov     [UniqueLock], 0
-        return
-endp
-
-
-
-
 
 
 
@@ -366,31 +237,11 @@ proc procServeRequest, .hSocket
 
 .start_time     dd ?
 
-.threadID       dd ?
-.thread_start   dd ?
-
 begin
         xor     eax, eax
         mov     [.requestParams], eax
         mov     [.requestPost], eax
         xor     esi, esi
-
-        stdcall GetParam, "log_events", gpInteger
-        mov     [fLogEvents], eax
-
-        test    eax, eax
-        jz      .main_loop
-
-; only when the logging is ON
-
-        stdcall GetUniqueID
-        mov     [.threadID], eax
-
-        stdcall GetFineTimestamp
-        mov     [.thread_start], eax
-
-        stdcall LogEvent, "ThreadStart", logNumber, [.threadID], 0
-
 
 .main_loop:
 
@@ -451,8 +302,6 @@ begin
 
         movzx   ecx, [esi+FCGI_BeginRequest.body.flags]
         or      [.requestFlags], ecx
-
-        stdcall LogEvent, "RequestStart", logNumber, [.threadID], 0
 
         stdcall GetFineTimestamp
         mov     [.start_time], eax
@@ -532,7 +381,7 @@ begin
         cmp     [.requestPost], 0
         jne     .bytes_ok
 
-        stdcall BytesCreate, 1024
+        stdcall BytesCreate, 4096
         mov     [.requestPost], eax
 
 .bytes_ok:
@@ -578,14 +427,6 @@ cError413 text "Status: 413 Payload Too Large", 13, 10, "Content-type: text/html
 
 .serve_request:
 
-        cmp     [fLogEvents], 0
-        je      .log_serve_ok
-
-        stdcall ValueByName, [.requestParams], "REQUEST_URI"
-        stdcall LogEvent, "RequestServeStart", logText, eax, 0
-
-.log_serve_ok:
-
         ; SERVE THE REQUEST HERE
         ; returns CF=1 if the socket must to be added to the events listener list
         ; EDX:EAX in this case contains the events mask that the request want to receive.
@@ -594,21 +435,10 @@ cError413 text "Status: 413 Payload Too Large", 13, 10, "Content-type: text/html
         stdcall ServeOneRequest, [.hSocket], [.requestID], [.requestParams], [.requestPost], [.start_time]
         jc      .exit    ; long living connection
 
-        stdcall LogEvent, "RequestServeEnd", logNULL, 0, 0
-
 .request_complete:
 
         stdcall FCGI_send_end_request, [.hSocket], [.requestID], FCGI_REQUEST_COMPLETE
         jc      .finish
-
-        cmp     [fLogEvents], 0
-        je      .log_req_end_ok
-
-        stdcall GetFineTimestamp
-        sub     eax, [.start_time]
-        stdcall LogEvent, "RequestEnd", logNumber, [.threadID], eax
-
-.log_req_end_ok:
 
         test    [.requestFlags], FCGI_KEEP_CONN
         jnz     .main_loop
@@ -619,15 +449,6 @@ cError413 text "Status: 413 Payload Too Large", 13, 10, "Content-type: text/html
 .exit:
         stdcall FreeMem, esi
         call    .FreeAllocations
-
-        cmp     [fLogEvents], 0
-        je      .log_thread_end_ok
-
-        stdcall GetFineTimestamp
-        sub     eax, [.thread_start]
-        stdcall LogEvent, "ThreadEnd", logNumber, [.threadID], eax
-
-.log_thread_end_ok:
 
         stdcall Terminate, 0
 
@@ -644,8 +465,24 @@ cError413 text "Status: 413 Payload Too Large", 13, 10, "Content-type: text/html
         mov     [.requestParams], eax
 
 .params_ok:
-        cmp     [.requestPost], eax
-        je      .post_ok
+        mov     edi, [.requestPost]
+        test    edi, edi
+        jz      .post_ok
+
+; paranoid post data cleanup...
+
+        mov     edx, [edi+TByteStream.size]
+        lea     edi, [edi+TByteStream.data]
+
+        mov     ecx, edx
+        shr     ecx, 2
+        rep stosd
+
+        mov     ecx, edx
+        and     ecx, 3
+        rep stosb
+
+; free the post data array...
 
         stdcall FreeMem, [.requestPost]
         mov     [.requestPost], eax

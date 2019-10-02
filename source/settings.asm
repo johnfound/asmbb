@@ -463,6 +463,74 @@ begin
         cmp     ebx, SQLITE_DONE
         jne     .error_commit
 
+; Check for a new password...
+
+        stdcall ValueByName, [esi+TSpecialParams.post_array], txt "decrypt"
+        jc      .check_key
+
+; remove the encryption
+
+        xor     ebx, ebx
+        jmp     .rekey
+
+
+.check_key:
+        stdcall ValueByName, [esi+TSpecialParams.post_array], txt "password"
+        jc      .settings_saved_ok
+
+        test    eax, eax
+        jz      .settings_saved_ok
+
+        push    eax
+        stdcall StrMD5, eax
+        stdcall StrNull ; from the stack.
+        mov     ebx, eax
+
+.rekey:
+        stdcall StrDupMem, "pragma rekey='"
+        xchg    ebx, eax
+
+        test    eax, eax
+        jz      .pass_ok
+
+        stdcall StrCat, ebx, eax
+        stdcall StrNull, eax
+        stdcall StrDel, eax
+
+.pass_ok:
+        stdcall StrCat, ebx, txt "';"
+
+        lea     edx, [.stmt]
+        stdcall StrPtr, ebx
+        cinvoke sqlitePrepare_v2, [hMainDatabase], eax, [eax+string.len],  edx, 0
+        cinvoke sqliteStep, [.stmt]
+        push    eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        stdcall StrNull, ebx
+        stdcall StrDel, ebx
+
+        cinvoke sqliteExec, [hMainDatabase], 'pragma wal_checkpoint(truncate)', 0, 0, 0
+
+        pop     eax
+        cmp     eax, SQLITE_ROW
+        je      .settings_saved_ok
+        cmp     eax, SQLITE_DONE
+        je      .settings_saved_ok
+
+        cinvoke sqliteErrStr, eax
+        push    eax
+
+        stdcall StrDupMem, 'The database key change failed with the following message: "'
+        stdcall StrCat, eax ; second argument from the stack
+        stdcall StrCat, eax, txt '"'
+
+        inc     [.error]
+        jmp     .end_save
+
+
+.settings_saved_ok:
+
         stdcall StrDupMem, "The settings have been saved"
 
 .end_save:
