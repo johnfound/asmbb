@@ -1,5 +1,5 @@
-C Fixed\srelease\screation\sscript.
-D 2019-10-02T16:43:14.757
+C Fixed\sthe\shelp\stext\scolor\sin\sthe\sencryption\stab\sof\sthe\ssettings\spanel.
+D 2019-10-02T16:50:51.483
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz cd00e258cdc7d01468c7e46170e21569a662bf62
@@ -533,7 +533,7 @@ F www/templates/Wasp/realtime.js f42157b8f718f14cc560e995c4ff36015fcfb402
 F www/templates/Wasp/restore_confirm.tpl 51628410ec4a3753bc384fd0c733e059aba965c4
 F www/templates/Wasp/search.less 17bfdc636da1019916443febbb2073b791ed79d1
 F www/templates/Wasp/search_result.tpl 436d969e5b83d331581f8c0db368cab14d9be8e9
-F www/templates/Wasp/settings.less c4404fddbc73fdaede5643beffe536b5bca9339a
+F www/templates/Wasp/settings.less de9396e5eafb2f88a57886f3ff131c810e444f2d
 F www/templates/Wasp/skin_variables.lsi 6e74f7abcf708e1c3cda86a8e0eb49b135eaa338
 F www/templates/Wasp/sqlite.less f4a2edc06c2c1410f5d78ad1ea298439251482af
 F www/templates/Wasp/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e3c7067
@@ -641,7 +641,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P ad7c29b8d2db9fff29562372e31ea91d4d83722c
-R f6fc281ec3e3d829aebad315f2882ec5
+P 45b0b458f3fd452a32bcfd1fdf455781c3e79d02
+R b81b642e13811d21c31ec26a4ca0abf7
 U johnfound
-Z cb9a905592832839c6e5354297e043de
+Z 0022f026b432f342a5ca1bfd7bb194ba
