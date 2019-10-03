@@ -1,5 +1,5 @@
-C Fixed\sminor\sbug\sin\srender2.asm
-D 2019-10-03T17:10:35.206
+C Official\ssource\srelease\sv2.7
+D 2019-10-03T17:31:08.853
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz cd00e258cdc7d01468c7e46170e21569a662bf62
@@ -95,7 +95,7 @@ F source/users_online.sql 615346c705099d4fed2fe5ea985efa429156075c
 F source/userslist.asm e2a2ee4735143fbf7d05ad0fc8243b28fe1c7104
 F source/userslist.sql c937c8c7d69dbe6762303ecb47625d9f9e78d702
 F source/util.sql 4966cc2e80259edbd565148ba9276aeecec6e274
-F source/version.asm 34fc03c916f46922a9b49b9f5ec08fb2da299196
+F source/version.asm e8d82b0542bb1a9d62a04fde461bbf5434ab3f58
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/.nginx/fastcgi.conf 635d54729b084483347b15cdd35e82866ee86c19
 F www/.nginx/mime.types 5779f6632f02c522615639eedd57a92cce27c791
@@ -641,7 +641,8 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 703ee247c0de0cb4b39f7246c3d37ea380968371
-R 81a0b9c2f2afd92ba7421c2fbc449635
+P 0cdcc4b26b9852c72659f0e6aa8e6d27c46af3ef
+R 18281522c46c7b56acbeba443a3ade82
+T +sym-v2.7 *
 U johnfound
-Z 3c39c6f8e11f6debbdebb3ed018f801d
+Z cc7f7c9fc07f2e3cf00ea4adba5e6c22
