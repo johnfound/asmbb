@@ -345,7 +345,7 @@
     <label for="tab5">[const:tabEncryption]</label>
     <section>
       <h3>[const:ttlNewPassword]:</h3>
-      <input type="password" value="" name="password" class="settings" maxlength="1024">
+      <input type="text" value="" placeholder="Encryption password" name="password" class="settings" maxlength="1024">
       <p></p>
       <input type="checkbox" name="decrypt" id="cbdecr" value="1"><label for="cbdecr">Remove the encryption</label>
       <p></p>

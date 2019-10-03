@@ -13,7 +13,8 @@
   <body>
     <form class="login-block" method="post" target="_self" action="/">
       <h1>Encrypted database!</h1>
-      <p class="pi_pass"><input type="password" value="" placeholder="Cryptography" name="initpass" class="password" maxlength="1024" autocomplete="off" autofocus></p>
+      <p class="pi_pass"><input type="password" value="" placeholder="Password" name="initpass" class="password" maxlength="1024" autocomplete="off" autofocus></p>
+      <p class="pi_pass"><input type="text" value="" placeholder="Page size (default is 4096 bytes)" name="pagesize" class="number" maxlength="1024" autocomplete="off"></p>
       <input type="image" name="submit" id="submit" value="Submit"><label class="submit" for="submit">Decrypt</label>
     </form>
   </body>

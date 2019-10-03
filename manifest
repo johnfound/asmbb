@@ -1,5 +1,5 @@
-C Merged\swith\sCrypto\sbranch.\sPreparations\sfor\srelease...
-D 2019-10-02T22:37:00.255
+C Support\sdifferent\spage\ssizes\sfor\sthe\sencrypted\sdatabase.
+D 2019-10-03T16:08:30.684
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz cd00e258cdc7d01468c7e46170e21569a662bf62
@@ -36,7 +36,7 @@ F source/commands.asm 3fab62f5cc0541006d978b2d5b5c3570063ceda9
 F source/create.sql f6a98baf2ae8839907d237b7179bad2328a5f6ea
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm dddd1b6b89eef295ab5a65cb7302aefe0d948399
-F source/encryption.asm eddcb77ca199d429f685bcd66250dea2741a6742
+F source/encryption.asm 5a5572af0223a4fdc46e707f38c842cf1169f974
 F source/engine.asm 48393d19449ab539802ea89eec69b2ad025d35ee
 F source/engine.fpr 53d13239a24d9b6372d22d541920d957a4b26b83
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
@@ -486,7 +486,7 @@ F www/templates/Wasp/chat.less a4c64381f5ef14741bb249a4678573cbea899f83
 F www/templates/Wasp/chat.tpl d1940de543f8eeb6393a98afc97611b13c3aabe2
 F www/templates/Wasp/common.less 76fa4b2a7ccb5e4f5091fa9059925ef854a74974
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
-F www/templates/Wasp/crypto.tpl 0224bf1779f06e58104c02c7e1a85be3921b6f78
+F www/templates/Wasp/crypto.tpl f36572b4bb122e058ea42d0e8956bc165b84e0f0
 F www/templates/Wasp/del_confirm.tpl 26b8239d78b69cd5fbe206ea12ccb96890aac030
 F www/templates/Wasp/delete.less 253a0f549e132a9d55ae56fe399a8929eabb4a29
 F www/templates/Wasp/edit.json a2aaf0ee51695178d59b589c95b0d9bc63cd5c02
@@ -505,11 +505,11 @@ F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e44992
 F www/templates/Wasp/form_register.tpl 25cdeffa395f90e248b383ee85390f9395cef8d3
 F www/templates/Wasp/form_reset_password.tpl 4b1ca1f5cdf5bb2ea7f0620722393e8324a97fa0
 F www/templates/Wasp/form_reset_request.tpl 45298eaa3544ec492eb9ca6e4f482fe30378a0e0
-F www/templates/Wasp/form_settings.tpl 2a2c29a80b63b47e8505399f627cd4588498f662
+F www/templates/Wasp/form_settings.tpl 43a9c11aa42de117bdf9f4e3454f7844b70842dd
 F www/templates/Wasp/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Wasp/form_sqlite_console.tpl 419ac0e18ab829bb3a5e0569e8fb7fd0e33de1bf
 F www/templates/Wasp/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
-F www/templates/Wasp/login.less 85f8c636e9c15adffb68d098f557d3efbdbc4e5a
+F www/templates/Wasp/login.less b854c20c711dffeec158f044c59cbcf72a3161d5
 F www/templates/Wasp/main_html_end.tpl 548b3ee45b5efcb5e9c99d55a9423d9a2e317553
 F www/templates/Wasp/main_html_start.tpl ef6fd533b0b5885ec8a43ecc5dd25cffb2c4e96b
 F www/templates/Wasp/markdown.less e62eac499043788e834f58f022ad46526e8d5629
@@ -641,7 +641,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 987d150e0d5b8c367d03cc18650be9f57d24c001 5c94dff0ea4d996ca989dee4d634dc77ff54f3e4
-R b81b642e13811d21c31ec26a4ca0abf7
+P 8ce0b4be2f1fa6ede0d2cdd26afd522cba4833d2
+R d7eec10c7705388b55f72ec5d9209f33
 U johnfound
-Z 37586b0ebf164c74cef97bc7949db85d
+Z 003bf56fd4e09c5eb60dd56dc9fd274c

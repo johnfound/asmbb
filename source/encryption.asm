@@ -20,6 +20,34 @@ begin
 
 .try_to_decrypt:
 
+        stdcall ValueByName, [esi+TSpecialParams.post_array], 'pagesize'
+        jc      .page_size_ok
+
+        test    eax, eax
+        jz      .page_size_ok
+
+        stdcall StrToNumEx, eax
+        jc      .page_size_ok
+
+        cmp     eax, 512
+        jb      .page_size_ok
+        cmp     eax, 65536
+        ja      .page_size_ok
+
+        stdcall NumToStr, eax, ntsDec or ntsUnsigned
+        push    eax eax
+
+        stdcall StrDupMem, "pragma page_size="
+        stdcall StrCat, eax ; from the stack
+        stdcall StrDel ; from the stack
+
+        push    eax
+        stdcall StrPtr, eax
+        cinvoke sqliteExec, [hMainDatabase], eax, 0, 0, 0
+        stdcall StrDel ; from the stack
+
+.page_size_ok:
+
         stdcall ValueByName, [esi+TSpecialParams.post_array], 'initpass'
         jc      .redirect
 
@@ -50,8 +78,6 @@ begin
 
         stdcall StrNull, ebx
         stdcall StrDel, ebx
-
-        OutputValue "Key returns: ", esi, 10, -1
 
         cmp     esi, SQLITE_ROW
         jne     .redirect
