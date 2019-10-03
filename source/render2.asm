@@ -2519,7 +2519,7 @@ begin
         mov     ebx, eax
 
         lea     eax, [.stmt]
-        cinvoke _sqlitePrepare_v2, [hMainDatabase], sqlGetThreadTags, sqlGetThreadTags.length, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadTags, sqlGetThreadTags.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
 
 .thread_tag_loop:
@@ -2560,7 +2560,6 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
-.end_thread_tags2:
         mov     [esp+4*regEAX], ebx
         popad
         return
