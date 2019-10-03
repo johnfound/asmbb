@@ -1,8 +1,8 @@
-C Official\ssource\srelease\sv2.7
-D 2019-10-03T17:31:08.853
+C Official\sbinary\srelease\sv2.7
+D 2019-10-03T17:32:27.063
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
-F install/asmbb.tar.gz cd00e258cdc7d01468c7e46170e21569a662bf62
+F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
 F install/create_release.sh c16d914d82bb90a8033e0bb1c36a6d4523f59083 x
 F install/exclude.txt 7678178e332c0c4a1a7d1ac8705ae6e2e2e57e74
 F install/install.txt 64615f21455976e432bda238c6d4282fc561e340
@@ -641,8 +641,8 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 0cdcc4b26b9852c72659f0e6aa8e6d27c46af3ef
-R 18281522c46c7b56acbeba443a3ade82
+P b1b34acbf71dada008793cb074353e44ed4fdd74
+R 48678219fe6f28811f1ce70bb3ccae00
 T +sym-v2.7 *
 U johnfound
-Z cc7f7c9fc07f2e3cf00ea4adba5e6c22
+Z f2c9502b1792059ab70c7fcf8044ead6
