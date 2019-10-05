@@ -1,5 +1,5 @@
-C More\selegant\sscript\sfor\sdownloading\sSQLeet\sfrom\sgithub.
-D 2019-10-05T06:39:49.688
+C The\soptimization\sfor\sthe\smusl/sqlite\sbuild\sscript\sswitched\sto\s-Os.\sFixed\sminor\sbug\swith\sthe\srealtime\snotifications\swhen\sthe\schat\sis\sdisabled.
+D 2019-10-05T09:11:06.840
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -11,7 +11,7 @@ F install/unpack.tar.gz 17da32119ae2cc9bb3a57f2ce59dc489e542ca59
 F install/unpack/.htaccess efa046601aad51a87da0946b4eecadcc0d234c15
 F install/unpack/unpack.sh 4443f580fe76faffa7015e6e4b73b22f6290f4a0 x
 F musl_sqlite/README 46ab7567ba9efea4d58e5d8e8c01610155a78c02
-F musl_sqlite/build 15d1c11e2fd6f909b4076463adceaf62ce7f761c x
+F musl_sqlite/build c0a9c566d49665a0a45587d4204d0ed5b0fd9a39 x
 F source/Documents/FastCGI\sSpecification.html e2fc06a5abf1b3505c665e108ce3ad28b636095a
 F source/Documents/futex.pdf 3297d3e1739a7b294fa0c96ba6d59bae7170c6b9
 F source/Documents/rfc7578.txt 5dff43151910fe753f8649b08d650137f07a96ff
@@ -58,7 +58,7 @@ F source/post.asm d6c3b876048b0cf749f6724da0c8d2eaaadaf76c
 F source/post_data.asm 79fb813775e3bafe6cb314c50a99484e4f0dc211
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
-F source/realtime.asm d44899a25069fe816b9e617d3f6976c8ff8052bd
+F source/realtime.asm ccf33925484178398ae5f96c21e0dc75b289ad44
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
@@ -641,7 +641,7 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 930f71e47109237c91cb3b1486c60d1a15b3412d
-R d23855e81f857fce196a5713cbd78233
+P 235d60f7cdda16764afe71de53a9748d088e5e56
+R eb0e218d3ab9dad859ad8b2f3bf6898a
 U johnfound
-Z 1c7f2aabe4e5538462fcacd4815a9912
+Z 5c19f0b54d6ce330ec3badd9f72ff4cb

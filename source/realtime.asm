@@ -20,9 +20,13 @@ begin
         and     edi, evmAllEventsLo
         and     ebx, evmAllEventsHi
 
+        test    ebx, evmUsersOnline or evmUserChanged or evmMessage
+        jz      .permissions_ok
+
         stdcall ChatPermissions, esi
         jc      .error_no_permissions
 
+.permissions_ok:
         stdcall InitEventSession, esi, edi, ebx
         jc      .exit
 
