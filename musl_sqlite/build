@@ -26,7 +26,7 @@ if [ -f ./sqlite3.c ]; then
 else
 
   echo "Downloading latest SQLeet master branch archive..."
-  { wget -q -O sqleet.zip https://github.com/resilar/sqleet/archive/master.zip; unzip -q sqleet.zip; rm sqleet.zip; } || { echo >&2 "Error: Can't download SQLeet sources."; exit 2;}
+  { wget -q -O - https://github.com/resilar/sqleet/archive/master.tar.gz | tar -xz 2> /dev/null; } || { echo >&2 "Error: Can't download SQLeet sources."; exit 2;}
   cd ./sqleet-master
   echo "Building the amalgamation sqlite3.c ..."
   script/amalgamate.sh < ./sqleet.c > ../sqlite3.c
