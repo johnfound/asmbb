@@ -1,0 +1,184 @@
+@import "skin_variables.lsi";
+
+/* settings form styles */
+
+div.set_page {
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+  opacity: @Opacity;
+  box-shadow: @Shadow;
+  overflow: auto;
+  margin: 2px 2px 6px 6px;
+  border-radius: @Radius;
+  padding: 16px;
+  flex-grow: 1;
+}
+
+
+form.settings {
+  height: 800px;
+  display: flex;
+  flex-direction: column;
+  h1 {
+    height: 38px;
+    text-align: center;
+    font-size: 20px;
+    font-variant: small-caps;
+    margin-top: 0;
+    margin-bottom: 8px;
+    padding: 8px;
+  }
+
+  h2 {
+    font-size: 120%;
+  }
+
+  h3 {
+    font-size: @FontSzMain;
+    font-weight: bold;
+    margin: 8px 0px 4px 0px;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0px;
+    width: 100%;
+    margin-top: 8px;
+
+    td {
+      text-align: left;
+      vertical-align: top;
+      white-space: nowrap;
+      padding: 2px 0;
+    }
+  }
+}
+
+input.settings, select.settings {
+  height: 34px;
+  font-size: @FontSzMain;
+  padding: 0px 8px;
+  outline: none;
+
+  border-radius: @Radius;
+  border: @borderEdit;
+
+  margin: 4px 0px;
+
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+}
+
+textarea.settings {
+  white-space: pre;
+  resize: none;
+  flex-grow: 1;
+  font-family: @FontMono;
+  font-size: @FontSzMono;
+  border-radius: @Radius;
+  padding: 8px;
+  border: @borderEdit;
+}
+
+
+input.button {
+    height: 38px;
+    width: @buttonWidth;
+    background-color: @clButtonHighlightBG;
+    color: @clButtonHighlightFG;
+    border: none;
+    border-radius: @Radius;
+    font-weight: bold;
+    font-size: @FontSzMain;
+    font-variant: small-caps;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    padding: 0px;
+    display: block;
+    margin: 16px 0px;
+}
+
+input.button:hover {
+    background: @clButtonActiveBG;
+    color: @clButtonActiveFG;
+}
+
+
+h1.msg {
+  position: fixed;
+  margin: 0px;
+  padding: 8px;
+  text-align: center;
+  display: block;
+  left: 16px;
+  top: 16px;
+  right: 16px;
+}
+
+.info {
+  background-color: @clMsgInfoBG;
+  color: @clMsgInfoFG;
+  transition: all 1s;
+  -webkit-transition: all 1s;
+}
+
+.error {
+  background-color: @clMsgErrorBG;
+  color: @clMsgErrorFG;
+  transition: all 3s;
+  -webkit-transition: all 3s;
+}
+
+.warning {
+  background-color: @clMsgWarningBG;
+  color: @clMsgWarningFG;
+}
+
+
+input[type=checkbox] + label {
+    display: block;
+    margin-bottom: 4px;
+    margin-top: 4px;
+}
+
+
+.checkboxes {
+  column-width: 250px;
+  li {
+    list-style: none;
+  }
+}
+
+
+h1.msg {
+  position: fixed;
+  margin: 0px;
+  padding: 8px;
+  text-align: center;
+  display: block;
+  left: 16px;
+  top: 16px;
+  right: 16px;
+  border-radius: @Radius;
+}
+
+.info {
+  background-color: @clMsgInfoBG;
+  color: @clMsgInfoFG;
+  transition: all 3s;
+  -webkit-transition: all 3s;
+}
+
+.error {
+  background-color: @clMsgErrorBG;
+  color: @clMsgErrorFG;
+  transition: all 3s;
+  -webkit-transition: all 3s;
+}
+
+.warning {
+  background-color: @clMsgWarningBG;
+  color: @clMsgWarningFG;
+}
+

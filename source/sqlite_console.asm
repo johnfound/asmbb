@@ -1,22 +1,19 @@
 
 
-sqlSource  text 'select ?1 as source, ?2 as ticket'
+sqlSource  text 'select ?1 as source, ?2 as ticket, ?3 as result'
 
 proc SQLiteConsole, .pSpecial
 .stmt dd ?
 .source dd ?
 .ticket dd ?
-
-.next   dd ?
-
-.start dd ?
-
+.result dd ?
 begin
         pushad
 
         xor     eax, eax
         mov     [.ticket], eax
         mov     [.source], eax
+        mov     [.result], eax
 
         stdcall TextCreate, sizeof.TText
         mov     edi, eax
@@ -29,6 +26,11 @@ begin
         stdcall LogUserActivity, esi, uaAdminThings, 0
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], "source", 0
+        test    eax, eax
+        jz      .source_rdy
+        stdcall StrClipSpacesR, eax
+        stdcall StrClipSpacesL, eax
+.source_rdy:
         mov     [.source], eax
 
         stdcall SetUniqueTicket, [esi+TSpecialParams.session]
@@ -55,24 +57,11 @@ begin
         stdcall StrPtr, [.ticket]
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 
-        cinvoke sqliteStep, [.stmt]
-
-
-.make_the_form:
-
-        stdcall RenderTemplate, edi, "form_sqlite_console.tpl", [.stmt], [.pSpecial]
-        mov     edi, eax
-
-        cinvoke sqliteFinalize, [.stmt]
-
-        cmp     [.source], 0
-        je      .finish
-
-; here execute the source.
+; Here execute the source query!
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], "ticket", 0
         test    eax, eax
-        jz      .finish
+        jz      .result_ok
 
         mov     ebx, eax
         stdcall CheckTicket, ebx, [esi+TSpecialParams.session]
@@ -80,15 +69,66 @@ begin
         stdcall ClearTicket3, ebx
         stdcall StrDel, ebx
         popf
-        jc      .finish
+        jc      .result_ok
+
+        cmp     [.source], 0
+        je      .result_ok
+
+        stdcall ExecSourceSQL, [.source]
+        mov     [.result], edx
+
+        cinvoke sqliteBindText, [.stmt], 3, edx, eax, SQLITE_STATIC
+
+.result_ok:
+
+        cinvoke sqliteStep, [.stmt]
+
+.make_the_form:
+
+        stdcall RenderTemplate, edi, "form_sqlite_console.tpl", [.stmt], [.pSpecial]
+        mov     edi, eax
+
+        cinvoke sqliteFinalize, [.stmt]
+        clc
+
+.exit:
+        pushf
+        stdcall TextFree, [.result]
+        stdcall StrDel, [.ticket]
+        stdcall StrDel, [.source]
+        popf
+
+        mov     [esp+4*regEAX], edi
+        popad
+        return
+
+
+.for_admins_only:
+        stdcall TextMakeRedirect, edi, "/!message/only_for_admins"
+        stc
+        jmp     .exit
+
+endp
+
+
+
+proc ExecSourceSQL, .hSource
+.stmt  dd ?
+.next  dd ?
+.start dd ?
+.count dd ?
+begin
+        pushad
+
+        stdcall TextCreate, sizeof.TText
+        mov     edi, eax
+
+; here execute the source.
 
         stdcall TextCat, edi, '<div class="sql_exec">'
         mov     edi, edx
 
-        stdcall StrClipSpacesR, [.source]
-        stdcall StrClipSpacesL, [.source]
-
-        stdcall StrPtr, [.source]
+        stdcall StrPtr, [.hSource]
         mov     esi, eax
 
 .sql_loop:
@@ -101,7 +141,6 @@ begin
         lea     ecx, [.stmt]
         lea     eax, [.next]
         cinvoke sqlitePrepare_v2, [hMainDatabase], esi, -1, ecx, eax
-
         test    eax, eax
         jnz     .error
 
@@ -117,12 +156,6 @@ begin
         stdcall StrClipSpacesR, eax
         stdcall StrClipSpacesL, eax
 
-;; Debug ONLY!!!
-;        pushad
-;        stdcall FileWriteString, [STDERR], eax
-;        stdcall FileWriteString, [STDERR], <txt 13, 10, 13, 10>
-;        popad
-
         stdcall TextCat, edi, "<h5>Statement executed:</h5><pre>"
         stdcall TextCat, edx, eax
         stdcall StrDel, eax
@@ -131,13 +164,41 @@ begin
 
 ; first step
         cinvoke sqliteStep, [.stmt]
-
         cmp     eax, SQLITE_ROW
         je      .fetch_rows
 
 .done:
         cmp     eax, SQLITE_DONE
-        je      .finalize
+        jne     .error
+
+.finalize_one:
+        cinvoke sqliteFinalize, [.stmt]
+
+        stdcall GetFineTimestamp
+        sub     eax, [.start]
+
+        stdcall NumToStr, eax, ntsDec or ntsUnsigned
+        push    eax eax
+
+        stdcall TextCat, edi, "<p>Execution time: "
+        stdcall TextCat, edx ; from the stack
+        stdcall StrDel ; from the stack
+        stdcall TextCat, edx, txt "μs</p>"
+        mov     edi, edx
+
+        xchg    esi, [.next]
+        cmp     esi, [.next]
+        jne     .sql_loop
+
+.finish_exec:
+        stdcall TextCat, edi, '</div>'
+
+        stdcall TextCompact, edx
+
+        mov     [esp+4*regEAX], eax
+        mov     [esp+4*regEDX], edx
+        popad
+        return
 
 
 .error:
@@ -153,55 +214,10 @@ begin
 
         cinvoke sqliteDBMutex, [hMainDatabase]
         cinvoke sqliteMutexLeave, eax
-
-.finalize:
-        cinvoke sqliteFinalize, [.stmt]
-
-        stdcall GetFineTimestamp
-        sub     eax, [.start]
-
-        stdcall NumToStr, eax, ntsDec or ntsUnsigned
-        push    eax eax
-
-        stdcall TextCat, edi, "<p>Execution time: "
-        stdcall TextCat, edx ; from the stack
-        stdcall StrDel ; from the stack
-        stdcall TextCat, edx, txt "us</p>"
-        mov     edi, edx
-
-        xchg    esi, [.next]
-        cmp     esi, [.next]
-        jne     .sql_loop
-
-.finish_exec:
-
-        stdcall TextCat, edi, '</div>'
-        mov     edi, edx
-
-.finish:
-        clc
-
-.exit:
-        stdcall StrDel, [.ticket]
-        stdcall StrDel, [.source]
-        mov     [esp+4*regEAX], edi
-        popad
-        return
-
-
-.for_admins_only:
-
-        stdcall TextMakeRedirect, edi, "/!message/only_for_admins"
-        stc
-        jmp     .exit
-
+        jmp     .finalize_one
 
 
 .fetch_rows:
-
-locals
-  .count dd ?
-endl
 
 ; first the table
 
@@ -274,9 +290,8 @@ endl
 
         stdcall TextCat, edi, "</table>"
         mov     edi, edx
-        jmp     .done
+        jmp     .done           ; done or error?
+
 
 .cNULL db "NULL", 0
-
 endp
-

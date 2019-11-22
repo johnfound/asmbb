@@ -1,0 +1,32 @@
+@import "skin_variables.lsi";
+
+
+
+.users_list {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
+
+.oneuser {
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+  opacity: @Opacity;
+  box-shadow: @Shadow;
+  flex-grow: 1;
+  flex-shrink: 1;
+  padding: 8px;
+  border-radius: @Radius;
+  img.avatar {
+    display: block;
+    width: 128px;
+    height: 128px;
+  }
+}
+
+.sort_order {
+  display: flex;
+  column-gap: 16px;
+}

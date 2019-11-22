@@ -15,4 +15,3 @@ from
 where
   Importance > -1
 order by
-  Tag

@@ -79,7 +79,7 @@ cd muslsrc
 
 echo "Compiling MUSL ..."
 
-./configure --prefix=../musl --host=i386 CC="gcc -m32" CFLAGS="-Os -mpreferred-stack-boundary=2 -march=x86-64" CROSS_COMPILE="/bin/" > /dev/null 2>&1 || { echo >&2 "Error: Can't configure MUSL."; exit 3; }
+./configure --prefix=../musl --host=i386 CC="gcc -m32" CFLAGS="-Os -fno-omit-frame-pointer -mpreferred-stack-boundary=2 -march=x86-64" CROSS_COMPILE="/bin/" > /dev/null 2>&1 || { echo >&2 "Error: Can't configure MUSL."; exit 3; }
 make -j 4 > /dev/null 2>&1 || { echo >&2 "Error: Can't compile MUSL."; exit 3; }
 make -j 4 install > /dev/null 2>&1 || { echo >&2 "Error: Can't install MUSL to the current directory."; exit 3; }
 
@@ -134,6 +134,7 @@ EOT
 echo "Compiling SQLite ..."
 
 gcc -m32 -Os -shared -fno-stack-protector -mpreferred-stack-boundary=2 -march=x86-64    \
+    -fno-omit-frame-pointer                                                             \
     -specs musl/musl-gcc.specs                                                          \
     -DSQLITE_DEFAULT_MEMSTATUS=0                                                        \
     -DSQLITE_LIKE_DOESNT_MATCH_BLOBS                                                    \

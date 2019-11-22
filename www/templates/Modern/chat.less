@@ -1,0 +1,139 @@
+@import "skin_variables.lsi";
+
+body {
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+  overflow: hidden;
+}
+
+div.chat {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+#layout {
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+}
+
+#header_panel, #tagsPanel, .footer, .attribution {
+  display: none !important;
+}
+
+div.chatflex {
+  display: flex;
+  padding: 0px;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+#chatlog {
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+  border-radius: @Radius;
+  box-shadow: @Shadow;
+  margin: 2px 2px 6px 6px;
+  overflow: auto;
+  padding: 16px;
+  flex-grow: 1;
+}
+
+#syslog {
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+  border-radius: @Radius;
+  box-shadow: @Shadow;
+  margin: 2px 2px 6px 6px;
+  overflow: auto;
+  flex-grow: 0;
+  flex-shrink: 0;
+  padding: 16px;
+  width: 200px;
+}
+
+#chat_form {
+  display: flex;
+  align-items: center;
+//  background-color: @clPanelBG;
+//  color: @clPanelFG;
+  border-radius: @Radius;
+//  box-shadow: @Shadow;
+  margin: 2px 2px 6px 6px;
+//  padding: 8px 12px;
+
+  input {
+    margin: 0px 8px 0px 0px;
+    box-shadow: @Shadow;
+  }
+
+  .icon_btn {
+    line-height: 0px;
+    background-color: @clArticleBG;
+    border-radius: @Radius;
+    box-shadow: @Shadow;
+    border: 2px solid @clSeparator;
+  }
+}
+
+#chat_message {
+  flex-grow: 1;
+}
+
+
+
+.message {
+  margin: 4px 0px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chatlink {
+  color: blue;
+}
+
+.emo {
+  vertical-align: middle;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.time {
+  font-size: 80%;
+}
+
+.hline {
+  line-height: 1px;
+  text-align: center;
+  font-size: @FontSize;
+  border-bottom: 1px solid @clThreadLink;
+}
+
+.date {
+  font-size: 80%;
+  padding: 0px 8px;
+  background-color: @clArticleBG;
+}
+
+
+.user {
+  color: @clChatUser;
+  margin: 4px 0px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+}
+
+.fake_user {
+  color: @clFakeUser;
+}
+
+.gray_user {
+  opacity: 0.5;
+}
+
+
+
+

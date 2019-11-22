@@ -75,6 +75,7 @@ PHashTable tableSpecial, tpl_func,                              \
         "unreadLAT",   RenderTemplate.sp_unreadLAT,             \
         "unread",      RenderTemplate.sp_unread,                \
         "alltags",     RenderTemplate.sp_alltags,               \ ; HTML no encoding
+        "alltags2",    RenderTemplate.sp_alltags2,              \ ; HTML no encoding
         "allusers",    RenderTemplate.sp_allusers,              \ ; returns JSON array.
         "setupmode",   RenderTemplate.sp_setupmode,             \ ; no encoding
         "search",      RenderTemplate.sp_search,                \ ; Needs encoding!
@@ -1737,7 +1738,11 @@ endl
 
 
 .sp_alltags:
-        stdcall GetAllTags, [.pSpecial]
+        stdcall GetAllTags, [.pSpecial], 0
+        jmp     .special_ttext
+
+.sp_alltags2:
+        stdcall GetAllTags, [.pSpecial], 1
         jmp     .special_ttext
 
 .sp_allusers:
@@ -2034,8 +2039,14 @@ endp
 
 
 sqlGetAllTags StripText "alltags.sql", SQL
+sqlTagSortAlpha text " Tag"
+sqlTagSortThreads text " ThreadCnt desc, Tag"
 
-proc GetAllTags, .pSpecial
+; Returns all tags.
+; .sort = 0 - sorts alphabetically.
+; .sort <> 0 - sorts by threads count.
+
+proc GetAllTags, .pSpecial, .sort
   .max   dd ?
   .stmt  dd ?
 begin
@@ -2048,10 +2059,23 @@ begin
 
         mov     [.max], 1
 
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetAllTags , sqlGetAllTags.length, eax, 0
+        stdcall StrDupMem, sqlGetAllTags
+        mov     ecx, eax
+
+        mov     eax, sqlTagSortAlpha
+        cmp     [.sort], 0
+        je      .sort_ok
+        mov     eax, sqlTagSortThreads
+.sort_ok:
+        stdcall StrCat, ecx, eax
+
+        lea     edx, [.stmt]
+        stdcall StrPtr, ecx
+        cinvoke sqlitePrepare_v2, [hMainDatabase], eax, [eax+string.len], edx, 0
         cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.userID]
         cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.Limited]
+
+        stdcall StrDel, ecx
 
         push    0       ; end marker
 
@@ -2184,6 +2208,10 @@ begin
         popad
         return
 endp
+
+
+
+
 
 
 
@@ -2848,6 +2876,7 @@ begin
 @@:
         stdcall TextCat, edx, "Location: "
         stdcall TextCat, edx, [.hWhere]
+;        stdcall TextCat, edx, <txt 13, 10, 'Content-Length: 0', 13, 10, 13, 10>
         stdcall TextCat, edx, <txt 13, 10, 13, 10>
 
         mov     edi, edx

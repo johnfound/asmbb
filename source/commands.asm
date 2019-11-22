@@ -705,7 +705,7 @@ proc CreatePagesLinks2, .current, .count, .suffix, .page
 begin
         pushad
 
-        stdcall StrDupMem, '<div class="page_row">'
+        stdcall StrNew
         mov     edi, eax
 
         mov     eax, [.count]
@@ -725,9 +725,11 @@ begin
 
         xor     esi, esi
 
+        stdcall StrCat, edi, '<div class="page_row">'
+
 .loop:
         cmp     ecx, ebx
-        jae     .finish
+        jae     .end
 
         cmp     [.count], 30
         jbe     .regular
@@ -838,9 +840,10 @@ begin
         xor     esi, esi
         jmp     .next
 
+.end:
+        stdcall StrCat, edi, "</div>"
 
 .finish:
-        stdcall StrCat, edi, "</div>"
         mov     [esp+4*regEAX], edi
         popad
         return

@@ -88,3 +88,4 @@
     </div>
   </form>
 </div>
+[html:[result]]

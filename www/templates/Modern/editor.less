@@ -1,0 +1,139 @@
+@import "skin_variables.lsi";
+
+@toolIconHeight: 20px;
+
+.editbtn {
+  display: inline-block;
+  min-width: @buttonHeight;
+  color: @clButtonFG;
+  text-align: center;
+
+  background-color: @clButtonBG;
+  border: (@buttonHeight - @toolIconHeight)/2 solid @clButtonBG;
+  border-radius: @Radius;
+  box-shadow: @Shadow;
+
+  cursor: pointer;
+  &:hover {
+    background-color: @clButtonActiveBG;
+    border-color: @clButtonActiveBG;
+  }
+
+  img {
+    width: @toolIconHeight;
+    height: @toolIconHeight;
+    vertical-align: top;
+    background-image: url('[special:skin]/_images/toolbar.svg') !important;
+    background-size: cover;
+  }
+}
+
+
+.icon_bold      { background-position: -0 * @toolIconHeight 0; font-weight: bold;  }
+.icon_italic    { background-position: -1 * @toolIconHeight 0; font-style: italic; }
+.icon_underline { background-position: -2 * @toolIconHeight 0; text-decoration: underline; }
+.icon_strike    { background-position: -3 * @toolIconHeight 0; text-decoration: line-through; }
+.icon_code      { background-position: -4 * @toolIconHeight 0; }
+.icon_link      { background-position: -5 * @toolIconHeight 0; }
+.icon_picture   { background-position: -6 * @toolIconHeight 0; }
+.icon_quote     { background-position: -7 * @toolIconHeight 0; }
+.icon_blockcode { background-position: -8 * @toolIconHeight 0; }
+
+.icon_smile     { background-position: -9 * @toolIconHeight 0;}
+.icon_lol       { background-position: -10 * @toolIconHeight 0;}
+.icon_rofl      { background-position: -11 * @toolIconHeight 0;}
+.icon_wink      { background-position: -12 * @toolIconHeight 0;}
+.icon_tongue    { background-position: -13 * @toolIconHeight 0;}
+.icon_sad       { background-position: -14 * @toolIconHeight 0;}
+.icon_cry       { background-position: -15 * @toolIconHeight 0;}
+.icon_angry     { background-position: -16 * @toolIconHeight 0;}
+
+
+.toolbar {
+  flex-grow: 1;
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+
+  & > input {
+    position: absolute;
+    opacity: 0;
+    & + label {
+      -webkit-user-select: none; /* Safari 3.1+ */
+      -moz-user-select: none; /* Firefox 2+ */
+      -ms-user-select: none; /* IE 10+ */
+      user-select: none; /* Standard syntax */
+
+      display: flex;
+
+      padding: 0px 8px;
+      margin: 0px;
+      font-size: @FontSize;
+      border-left: 2px solid transparent;
+      border-top-left-radius: @Radius;
+      border-bottom-left-radius: @Radius;
+      cursor: pointer;
+      font-weight: bold;
+      color: black;
+
+      position: absolute;
+      left: 0px;
+      height: 50%;
+      width: 80px;
+
+      span {
+        align-self: center;
+      }
+
+      &:hover {
+        background: @clTabHover;
+      }
+
+      & + section {
+        display: none;
+        padding: 4px 4px 4px 16px;
+        background: @clPanelBG;
+        color: @clPanelFG;
+        flex-direction: row;
+        flex-wrap: wrap;
+        border-top-right-radius: @Radius;
+        border-bottom-right-radius: @Radius;
+        margin: 0px 0px 0px 78px;
+        border: 2px solid @clSeparator;
+        box-shadow: @Shadow;
+      }
+    }
+
+    &:focus + label {
+      outline: 2px dotted @clTabFocus;
+      z-index: 1;
+    }
+
+    &:checked + label {
+      background: @clPanelBG;
+      color: @clPanelFG;
+      border: 2px solid @clSeparator;
+      border-right: none;
+      border-top-left-radius: @Radius;
+      border-bottom-left-radius: @Radius;
+
+      & + section {
+        display: flex;
+      }
+
+      & + section.minimag {
+        display: flex;
+        border-bottom-left-radius: @Radius;
+      }
+
+      & + section.bbcode {
+        display: flex;
+        border-top-left-radius: @Radius;
+      }
+    }
+  }
+}

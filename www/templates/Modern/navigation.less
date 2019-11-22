@@ -1,0 +1,127 @@
+@import "skin_variables.lsi";
+
+div.ui {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0px;
+}
+
+a.ui {
+  display: inline-block;
+  font-size: @FontSzMain;
+  padding: 8px;
+  background-color: @clButtonHighlightBG;
+  color: @clButtonHighlightFG;
+  text-decoration: none;
+  border-radius: @Radius;
+  position: relative;
+  &:hover {
+    background-color: @clButtonActiveBG;
+    color: @clButtonActiveFG;
+  }
+
+  img {
+    display: block;
+    margin: 4px;
+  }
+}
+
+input[type=submit],input[type=reset] {
+  display: inline-block;
+  font-size: @FontSzMain;
+  padding: 8px;
+  background-color: @clButtonHighlightBG;
+  color: @clButtonHighlightFG;
+  border-radius: @Radius;
+  border: none;
+  margin: 8px 0px;
+  &:hover, &:focus {
+    background-color: @clButtonActiveBG;
+    color: @clButtonActiveFG;
+  }
+}
+
+
+.ui2 {
+  display: inline-block;
+  font-size: @FontSzMain;
+  padding: 8px;
+  background-color: @clButtonHighlightBG;
+  color: @clButtonHighlightFG;
+  text-decoration: none;
+  border-radius: @Radius;
+  position: relative;
+  &:hover {
+    background-color: @clButtonActiveBG;
+    color: @clButtonActiveFG;
+  }
+  img {
+    display: block;
+    margin: 0px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+a.ui3 {
+  display: inline-block;
+  font-size: @FontSzMain;
+  padding: 8px;
+  color: @clButtonFG;
+  text-decoration: none;
+  border-radius: @Radius;
+  position: relative;
+  &:hover {
+    background-color: @clButtonActiveBG;
+    color: @clButtonActiveFG;
+  }
+}
+
+
+.left {
+  margin-right: 8px;
+}
+
+
+.right {
+  margin-left: 8px;
+}
+
+
+/* Pages links styles */
+
+div.page_row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0px;
+}
+
+a.page_link {
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+  opacity: @Opacity;
+  border-radius: @Radius;
+  padding: 4px;
+  text-align: center;
+  display:inline;
+  min-width: 32px;
+  margin: 0px 8px 0px 0px;
+}
+
+span.current_page {
+  background-color: @clMono2;
+  color: @clMono0;
+  font-weight: bold;
+  border-radius: @Radius;
+  padding: 4px;
+  text-align: center;
+  display:inline;
+  min-width: 32px;
+  margin: 0px 8px 0px 0px;
+}
+
+span.page_hole {
+  margin: 0px 8px 0px 0px;
+}

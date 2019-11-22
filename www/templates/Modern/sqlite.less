@@ -1,0 +1,83 @@
+@import "skin_variables.lsi";
+
+.console {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: auto;
+}
+
+#editform {
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+  opacity: @Opacity;
+  border-radius: @Radius;
+  box-shadow: @Shadow;
+  margin: 2px 2px 6px 6px;
+  display: flex;
+  flex-direction: column;
+  padding: 0px 16px;
+  textarea {
+    height: 20em;
+    resize: vertical;
+  }
+  p {
+    margin-bottom: 4px;
+  }
+}
+
+
+
+div.sql_exec {
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+  padding: 8px;
+  font-size: 13px;
+  margin: 2px 2px 6px 6px;
+  opacity: @Opacity;
+  border-radius: @Radius;
+  box-shadow: @Shadow;
+  flex-grow: 1;
+  overflow: auto;
+
+  p {
+    margin-bottom: 0px;
+  }
+
+  pre {
+    padding: 4px;
+    margin: 8px 0 4px 0;
+    overflow: auto;
+    font-family: @FontMonospace;
+    font-size: 12px;
+  }
+}
+
+
+table.sql_rows {
+  border-collapse: collapse;
+  border: 2px solid black;
+  width: 100%;
+
+  th {
+    border: 2px solid black;
+    padding: 4px;
+    text-align: center;
+  }
+
+  td {
+    font-family: @FontMono;
+    font-size: 12px;
+    border: 2px solid @clSeparator;
+    padding: 4px;
+    max-width: 400px;
+    max-height: 400px;
+    text-align: left;
+    vertical-align: top;
+
+    white-space: pre-wrap;       /* css-3 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    word-break: break-all;
+  }
+
+}

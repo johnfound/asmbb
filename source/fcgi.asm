@@ -561,6 +561,7 @@ begin
         jz      .end_ok         ; exit without finalizing the stream.
 
         lea     eax, [.header]
+
         stdcall SocketSendAll, [.hSocket], eax, sizeof.FCGI_Header
         jc      .finish
 
@@ -627,6 +628,7 @@ begin
         add     edx, [edx+TText.GapEnd]
 
 .send_second:
+
         stdcall FCGI_output, [.hSocket], [.RequestID], edx, ecx, [.final]
 
 .finish:

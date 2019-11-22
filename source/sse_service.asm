@@ -462,7 +462,7 @@ begin
         mov     esi, [.pSpecial]
 
         stdcall GetMem, sizeof.TEventsListener
-        jc      .finish_release
+        jc      .error_release
 
         mov     edi, eax
 
@@ -485,11 +485,11 @@ begin
 
         mov     [pFirstListener], edi
         test    eax, eax
-        jz      .finish_release
+        jz      .add_session
 
         mov     [eax+TEventsListener.pPrev], edi
 
-.finish_release:
+.add_session:
 
 ; add session to the EventSessions table
 
@@ -525,6 +525,14 @@ begin
         clc
 
 .finish:
+        popad
+        return
+
+
+.error_release:
+
+        stdcall MutexRelease, mxListeners
+        stc
         popad
         return
 endp
@@ -789,6 +797,7 @@ begin
         mov     [.session], eax
 
         stdcall AddEventListener, esi, [.evMaskLo], [.evMaskHi], [.session]
+        jc      .error
 
         or      [esi+TSpecialParams.fDontFree], -1
         clc
@@ -797,6 +806,7 @@ begin
         return
 
 .error:
+        stdcall StrDel, [.session]
         stc
         popad
         return

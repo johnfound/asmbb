@@ -1,0 +1,81 @@
+@import "skin_variables.lsi";
+
+div.editor {
+  max-width: 60%;
+  overflow: hidden;
+  resize: both;
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+  border-radius: @Radius;
+  box-shadow: @Shadow;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  flex-shrink: 0;
+  flex-grow: 1;
+  min-height: 480px;
+  width: 50%;
+  position: relative;
+}
+
+#close_btn {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  z-index: 10;
+}
+
+div.editor:hover {
+  opacity: 1;
+}
+
+#editform {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  p {
+    font-weight: bold;
+    margin: 0px 0px 4px 0px;
+  }
+
+  .tabbed {
+    & > section {
+      background-color: @clDialogBG;
+      color: @clDialogFG;
+    }
+  }
+}
+
+
+textarea.editor {
+  width: 100%;
+  height: 20em;
+  flex-basis: 0;
+  padding: 4px;
+  margin: 0;
+  outline-style: none;
+  overflow: auto;
+  flex-grow: 1;
+  resize: none;
+
+  font-family: @FontMono;
+  font-size: @FontSzMono;
+  background-color: @clEditorBG;
+}
+
+input[type="file"] {
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+  margin-bottom: 8px;
+}
+
+
+.attach_del {
+  overflow: auto;
+  flex-grow: 1;
+  table {
+    width: 100%;
+  }
+}

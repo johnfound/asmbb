@@ -1,0 +1,133 @@
+@import "skin_variables.lsi";
+
+div.thread {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
+.post {
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+  margin: 0px;
+  box-shadow: @Shadow;
+  border-radius: @Radius;
+  border: 1px solid transparent;
+  opacity: @Opacity;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.post_text {
+  margin: 16px;
+}
+
+
+span.nickname {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  float: left;
+  clear: left;
+  margin: 16px 8px;
+  writing-mode: sideways-lr;
+  text-decoration: underline;
+}
+
+.avatar {
+  background-color: @clAvatarBG;
+  color: @clAvatarFG;
+  text-align: center;
+  font-size: 64px;
+  line-height: 115px;
+
+  border-radius: 50%;
+  shape-outside: circle(50%);
+  clip-path: circle(50%);
+  float: left;
+  margin: 16px 16px 16px 8px;
+}
+
+.post_info {
+  display: flex;
+  align-items: center;
+  clear: both;
+  margin-top: 16px;
+  padding-top: 8px;
+  border-top: 2px solid #a0a0a0;
+}
+
+.unread {
+    margin-right: 16px;
+}
+
+.last_edit {
+    margin-right: 16px;
+    margin-left: 16px;
+    flex-grow: 1;
+}
+
+.edit_tools {
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+
+.thread_caption {
+  margin: 0px;
+  background-color: @clHeaderBG;
+  color: @clHeaderFG;
+  padding: 16px;
+  border-radius: @Radius;
+  box-shadow: @Shadow;
+  opacity: @Opacity;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 24px;
+  a {
+    margin: 0px 0px 0px 16px;
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.thread_tags {
+  margin: 0px;
+  background-color: @clHeaderBG;
+  color: @clHeaderFG;
+  border-radius: @Radius;
+  box-shadow: @Shadow;
+  opacity: @Opacity;
+
+  user-select: none;
+  padding: 16px;
+  font-weight: bold;
+  * {
+    font-weight: bold;
+    user-select: all;
+  }
+
+  li {
+    display: inline-block;
+    list-style: none;
+
+    a:before {
+      content: "#";
+    }
+
+    &::after {
+      content: ', ';
+      text-decoration: none;
+      margin-right: 4px;
+    }
+
+    &:last-child::after {
+      content: ' ';
+    }
+  }
+}

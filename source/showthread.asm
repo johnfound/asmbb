@@ -146,7 +146,8 @@ begin
         stdcall CreatePagesLinks2, [esi+TSpecialParams.page_num], [.cnt], 0, [esi+TSpecialParams.page_length]
         mov     [.list], eax
 
-        stdcall TextCat, edi, [.list]
+        stdcall TextCat, edi, eax
+        stdcall TextCat, edx, <txt '<div class="multi_content">', 13, 10>
         mov     edi, edx
 
         lea     eax, [.stmt]
@@ -294,6 +295,9 @@ begin
 .skip_writes:
 
         stdcall StrDel, [.rendered]
+
+        stdcall TextCat, edi, <txt "</div>", 13, 10>   ; div.multi_content
+        mov     edi, edx
 
         cmp     [.cnt], 5
         jbe     .back_navigation_ok

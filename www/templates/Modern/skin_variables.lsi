@@ -1,0 +1,95 @@
+@clPrimary0: #125189;
+@clPrimary1: #4E80AD;
+@clPrimary2: #2D679B;
+@clPrimary3: #083D6E;
+@clPrimary4: #042C50;
+
+@clSecondary10: #D4A40E;
+@clSecondary11: #FFDB69;
+@clSecondary12: #F0C439;
+@clSecondary13: #A98100;
+@clSecondary14: #7C5E00;
+
+@clSecondary20: #FF0000;
+@clSecondary21: #FF6B6B;
+@clSecondary22: #FF3D3D;
+@clSecondary23: #C20000;
+@clSecondary24: #940000;
+
+
+@clMono0: #000000;
+@clMono1: #404040;
+@clMono2: #d0d0d0;
+@clMono3: #ffffff;
+
+
+@FontMain: Arial,Helvetica,Liberation Sans,sans-serif;
+@FontSzMain: 16px;
+
+@FontMono: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
+@FontSzMono: 16px;
+
+@clBodyBG: @clPrimary0;
+@clBodyFG: @clMono3;
+
+@clArticleBG: @clMono3;
+@clArticleFG: @clMono0;
+
+@clDialogBG: @clMono2;
+@clDialogFG: @clMono1;
+
+
+@clHeaderBG: @clMono3;
+@clHeaderFG: @clPrimary0;
+
+@clPanelBG: @clMono1;
+@clPanelFG: @clMono3;
+
+@buttonWidth: 256px;
+@buttonHeight: 32px;
+
+@clButtonBG: transparent;
+@clButtonFG: @clPrimary0;
+@clButtonActiveBG: @clMono2;
+@clButtonActiveFG: @clMono1;
+@clButtonHighlightBG: @clMono1;
+@clButtonHighlightFG: @clMono3;
+
+@Radius: 4px;
+@Shadow: -2px 2px 8px rgba(0, 0, 0, 0.3);
+@Opacity: 0.95;
+
+@clNotifyBG: @clSecondary20;
+@clNotifyFG: @clMono3;
+
+@clThreadLink: @clPrimary0;
+
+@clAvatarBG: @clPrimary0;
+@clAvatarFG: #ffffff;
+
+@borderQuote: 2px solid #808080;
+@borderEdit: 2px solid #808080;
+
+@clSeparator: #808080;
+
+
+@clMsgInfoBG: green;
+@clMsgInfoFG: white;
+
+@clMsgErrorBG: red;
+@clMsgErrorFG: white;
+
+@clMsgWarningBG: yellow;
+@clMsgWarningFG: red;
+
+// User notifications
+
+@clNotifyBG: @clSecondary20;
+@clNotifyFG: @clMono3;
+
+@clActivityBG: @clPrimary0;
+@clActivityFG: @clMono3;
+@clActivityLink: @clMono3;
+
+@clChatUser: @clPrimary0;
+@clFakeUser: @clSecondary20;

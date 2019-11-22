@@ -87,6 +87,7 @@ begin
         mov     [.list], eax
 
         stdcall TextCat, edi, eax
+        stdcall TextCat, edx, <txt '<div class="multi_content">', 13, 10>
         mov     edi, edx
 
 ; now append the list itself.
@@ -141,6 +142,9 @@ begin
         jmp     .loop
 
 .finish:
+        stdcall TextCat, edi, <txt "</div>", 13, 10>   ; div.multi_content
+        mov     edi, edx
+
         cmp     ebx, 5
         jbe     .back_navigation_ok
 
