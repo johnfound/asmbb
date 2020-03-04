@@ -1,5 +1,5 @@
-C Work\son\sthe\sModern\stheme.
-D 2020-03-04T18:01:04.111
+C Changed\snginx\stest\sconfiguration\sin\sorder\sto\sbetter\swork\sin\srelative\spaths.
+D 2020-03-04T18:05:52.597
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -102,7 +102,7 @@ F source/version.asm e8d82b0542bb1a9d62a04fde461bbf5434ab3f58
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/.nginx/fastcgi.conf 635d54729b084483347b15cdd35e82866ee86c19
 F www/.nginx/mime.types 5779f6632f02c522615639eedd57a92cce27c791
-F www/.nginx/nginx.conf 347ba243187cc40e5af044972fc4b59f34c80209
+F www/.nginx/nginx.conf 6c8afc9fda178acbc25858c3a8ce35aac105dda6
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
 F www/images/chat_menu.svg d8485817c3e745dcb8b981bb80d264f18365e377
 F www/images/chat_user.svg 852b9ac428c278409ec89ad580abbeb883d5df72
@@ -188,7 +188,7 @@ F www/images/sources/toolbar.svg 44706bddfbfc0d92bc2c0889c92e772060a691d3
 F www/images/sources/yellow_back.png d7aed4145104dc3224a3fb46f03c14cf6d386167
 F www/images/title.svg cfda872f2467a82c172f6e309ae7a385fdaabff5
 F www/lighttpd.conf fb5eb37a964a9f78d12504214818149d5cff1c5b
-F www/nserver 2f9f4edb69b84a27d09338be1e23771266feaf49 x
+F www/nserver cb790991edf728d3ac49cade0b3e0a92e8e44cae x
 F www/robots.txt bed60589d6ab1cc0470f3ba582444612d1c4109a
 F www/server 2faac8a4e963b844f35fab5856c3f3f15d3b6255 x
 F www/templates/Light/_images/alltags.svg 6e092a166d06e309a3a681fb940def7cff1785f3
@@ -668,7 +668,7 @@ F www/templates/Wasp/users_online.less 910547b8d9853b50a4a1aca66e2e5995ed78c5b4
 F www/templates/Wasp/userslist.less 9dae27c4e52c68f3351549034bdd7f9754bce069
 F www/templates/Wasp/userslist_ftr.tpl cdf4bf8f51f450a842d85ab41a089e05a2e12f73
 F www/templates/Wasp/userslist_hdr.tpl 79c5b28322e9c0f587ed0f81ac451fe12d38235f
-F www/templates/build_styles.sh 6af167e4a80b6028ae8f8bc4cfcb209c3ab712eb x
+F www/templates/build_styles.sh 1a54085ad5672bc6480e1d67922946a504c8e966 x
 F www/templates/create_tar.sh 0620f0e0ff86fc5b47c6ea49c04198f94f534069 x
 F www/templates/mobile/_images 70c26c9bd422a7e59f2dca80d02ec99f39b390fb l
 F www/templates/mobile/activation_email_subject.tpl e0bd685144e72197dd0034b068e82d7604f926d2 l
@@ -764,7 +764,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 296ef2d22cd15e050981d6986a1f260a968649c1
-R 0e3213b7a8ec8f0ad3d2eeaa749a688f
+P fa6faec49fc95a503ff26de4a0436a3c24ae3d5c
+R 45bf64817120be316686a82e338d901c
 U johnfound
-Z b8c201fc3e9af28cd0783063e9bbff01
+Z 7b4097ab3b6faaceeef3c2cfff9f325d
