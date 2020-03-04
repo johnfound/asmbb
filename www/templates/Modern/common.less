@@ -27,13 +27,6 @@ body {
 }
 
 
-
-#layout {
-  position: relative;
-  margin: 8px 0px 8px 188px;
-  min-height: 640px;
-}
-
 .multi_content {
   display: flex;
   flex-wrap: wrap;
@@ -45,35 +38,48 @@ body {
   }
 }
 
-#tagsPanel {
+
+#search_form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  border-radius: @Radius;
+  margin: 0px 4px;
+  width: 100%;
+  background-color: @clPanelBG;
+  box-shadow: @Shadow;
+
+  &>* {
+    margin: 8px 4px !important;
+  }
+
+  label {
+    padding: 0px;
+    cursor: pointer;
+    background-color: transparent;
+    margin-left: 0px !important;
+    line-height: 0px;
+    input {
+      display: none;
+    }
+  }
+}
+
+.search_line {
+  flex-grow: 1;
+}
+
+
+#taglinks {
   background-color: @clArticleBG;
-  padding: 0px;
   box-shadow: @Shadow;
   border-radius: @Radius;
   overflow: hidden;
-  margin: 8px 0px;
-  display: flex;
-  align-items: start;
 
-  #publicsel {
-    display: flex;
-    flex-direction: column;
-    align-self: center;
-    margin-left: @marginX;
-    a {
-      margin: @marginY/2 0px;
-      padding: 4px;
-      white-space: nowrap;
-    }
-  }
+  margin: 0px @marginX/2;
+  padding: @marginY @marginX;
 
-  #taglinks {
-    font-size: 28px;
-    display: block;
-
-    margin: 0px @marginX;
-    padding: 4px 0px;
-  }
+  width: 100%;
 }
 
 
@@ -83,9 +89,6 @@ body {
   padding: 4px;
   color: @clArticleFG;
   border-radius: @Radius;
-  text-decoration: none;
-  text-align: left;
-  position: relative;
   &::before {
     content: "#";
   }
@@ -133,39 +136,39 @@ body {
   }
 }
 
-.tagsize00 { font-size: 38% }
-.tagsize01 { font-size: 38% }
-.tagsize02 { font-size: 38% }
-.tagsize03 { font-size: 38% }
-.tagsize04 { font-size: 38% }
-.tagsize05 { font-size: 41% }
-.tagsize06 { font-size: 47% }
-.tagsize07 { font-size: 52% }
-.tagsize08 { font-size: 57% }
-.tagsize09 { font-size: 62% }
-.tagsize10 { font-size: 66% }
-.tagsize11 { font-size: 70% }
-.tagsize12 { font-size: 73% }
-.tagsize13 { font-size: 76% }
-.tagsize14 { font-size: 79% }
-.tagsize15 { font-size: 81% }
-.tagsize16 { font-size: 83% }
-.tagsize17 { font-size: 85% }
-.tagsize18 { font-size: 87% }
-.tagsize19 { font-size: 89% }
-.tagsize20 { font-size: 90% }
-.tagsize21 { font-size: 91% }
-.tagsize22 { font-size: 93% }
-.tagsize23 { font-size: 94% }
-.tagsize24 { font-size: 95% }
-.tagsize25 { font-size: 96% }
-.tagsize26 { font-size: 97% }
-.tagsize27 { font-size: 97% }
-.tagsize28 { font-size: 98% }
-.tagsize29 { font-size: 99% }
-.tagsize30 { font-size: 99% }
-.tagsize31 { font-size: 100% }
-.tagsize32 { font-size: 100% }
+.tagsize00 { font-size: 28px* 0.38}
+.tagsize01 { font-size: 28px* 0.38}
+.tagsize02 { font-size: 28px* 0.38}
+.tagsize03 { font-size: 28px* 0.38}
+.tagsize04 { font-size: 28px* 0.38}
+.tagsize05 { font-size: 28px* 0.41}
+.tagsize06 { font-size: 28px* 0.47}
+.tagsize07 { font-size: 28px* 0.52}
+.tagsize08 { font-size: 28px* 0.57}
+.tagsize09 { font-size: 28px* 0.62}
+.tagsize10 { font-size: 28px* 0.66}
+.tagsize11 { font-size: 28px* 0.70}
+.tagsize12 { font-size: 28px* 0.73}
+.tagsize13 { font-size: 28px* 0.76}
+.tagsize14 { font-size: 28px* 0.79}
+.tagsize15 { font-size: 28px* 0.81}
+.tagsize16 { font-size: 28px* 0.83}
+.tagsize17 { font-size: 28px* 0.85}
+.tagsize18 { font-size: 28px* 0.87}
+.tagsize19 { font-size: 28px* 0.89}
+.tagsize20 { font-size: 28px* 0.90}
+.tagsize21 { font-size: 28px* 0.91}
+.tagsize22 { font-size: 28px* 0.93}
+.tagsize23 { font-size: 28px* 0.94}
+.tagsize24 { font-size: 28px* 0.95}
+.tagsize25 { font-size: 28px* 0.96}
+.tagsize26 { font-size: 28px* 0.97}
+.tagsize27 { font-size: 28px* 0.97}
+.tagsize28 { font-size: 28px* 0.98}
+.tagsize29 { font-size: 28px* 0.99}
+.tagsize30 { font-size: 28px* 0.99}
+.tagsize31 { font-size: 28px* 1.00}
+.tagsize32 { font-size: 28px* 1.00}
 
 
 
@@ -202,37 +205,6 @@ span.ntf {
 
 
 
-
-#search_form {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  border-radius: @Radius;
-  margin: 0px 4px;
-
-  &>* {
-    margin: 8px 4px !important;
-  }
-
-  label {
-    padding: 0px;
-    cursor: pointer;
-    background-color: transparent;
-    margin-left: 0px !important;
-    line-height: 0px;
-    input {
-      display: none;
-    }
-  }
-}
-
-.search_line {
-  flex-grow: 1;
-}
-
-
-
-
 .panel {
   background-color: @clPanelBG;
   color: @clPanelFG;
@@ -243,22 +215,23 @@ span.ntf {
 
 #header_panel {
   background-color: @clPanelBG;
-//  background-image: linear-gradient(115deg, #ffff00 0%, @clPanelBG 5%, @clPanelBG 98%, #ffff00 100%);
-//  background-image: url('[special:skin]/_images/craft.jpg');
   border-radius: @Radius;
   margin: 0px;
   box-shadow: @Shadow;
 }
 
 .header {
-  padding: 0px @marginX;
+  padding: @marginX;
+  margin: 0px -@marginX/2;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+
+  & > * {
+    margin: 0px @marginX/2;
+  }
+
   h1 {
-    margin: 0px;
-//    -webkit-text-stroke: 2px @clPanelFG;
-//    color: transparent;
     font-weight: bold;
     font-size: 56px;
     line-height: 56px;
@@ -393,7 +366,7 @@ a {
 
 
 select {
-  .inline-svg-code(~'<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="4" ry="4" fill="#444"/><path d="m8 9h16l-8 16z" fill="#fff"/></svg>');
+  .inline-svg-code(~'<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m8 9h16l-8 16z" fill="#444"/></svg>');
 
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -404,9 +377,8 @@ select {
   background-position: right 6px top 50%;
   background-size: 20px auto;
 
-  height: 34px;
   font-size: @FontSzMain;
-  padding: 0px 28px 0px 4px;
+  padding: 3px 28px 3px 4px;
   outline: none;
 
   border-radius: @Radius;
@@ -416,7 +388,6 @@ select {
 
   background-color: @clArticleBGO;
   color: @clArticleFG;
-
 }
 
 input {
@@ -520,11 +491,14 @@ input^[type=checkbox^] {
   }
 
   &.collapseit:not(:checked) + * {
-    white-space: nowrap;
-    overflow: hidden;
-//    overflow: -moz-hidden-unscrollable;
+    white-space: nowrap !important;
+    overflow: hidden !impotant;
     text-overflow: ellipsis;
     padding: 1px 0px;
+  }
+
+  &.dropdown:not(:checked) + * {
+    display: none !important;
   }
 }
 
@@ -559,6 +533,7 @@ input^[type=checkbox^] {
     background-image: linear-gradient(@clButtonActiveBG, white);
     color: @clButtonActiveFG;
     box-shadow: @btnShadowA;
+    text-decoration: none;
     &>svg>* {
       fill: @clButtonActiveFG;
     }
@@ -567,42 +542,9 @@ input^[type=checkbox^] {
 }
 
 
-.btn_svg {
+.btn_svg:extend(.btn all) {
   padding: 0px;
-  background-color: transparent;
-  text-decoration: none;
-  border: none;
-  border-radius: @Radius;
-  cursor: pointer;
-  text-align: center;
-  min-width: 32px;
-  display: inline-block;
-
-  &::-moz-focus-inner {
-    border: 0;
-  }
-
-  & > svg > * {
-    fill: @clPrimary0;
-  }
-
-  &:active {
-    background-image: linear-gradient(white, @clButtonActiveBG) !important;
-  }
-
-  &:hover, &:focus  {
-    background-color: @clButtonActiveBG;
-    background-image: linear-gradient(@clButtonActiveBG, white);
-    color: @clButtonActiveFG;
-    box-shadow: @btnShadowA;
-    & > svg > * {
-      fill: @clButtonActiveFG;
-    }
-  }
-
 }
-
-
 
 // element that separates the flexbox elements on left and right.
 // for example UI buttons.
@@ -610,6 +552,7 @@ input^[type=checkbox^] {
   flex-grow: 1;
   min-width: 0px;
 }
+
 
 
 // Panel for the buttons.
@@ -627,7 +570,7 @@ div.ui {
 .ui3:extend(.btn all) {
   color: @clArticleFG;
   background-color: transparent;
-  padding: 8px;
+//  padding: 8px;
 }
 
 

@@ -45,16 +45,16 @@
 
 
 <div class="ui">
-  <a class="btn left" href="/!categories">[const:btnCats]</a>
-  [case:[special:userid]  | |<a class="btn left" href="!markread">[const:btnMarkRead]</a>]
-  [case:[special:canstart]| |<a class="btn left" href="!post">[const:btnNewThread]</a>]
-  [case:[special:canchat] | |<a class="btn left" href="/!chat">[const:btnChat]</a>]
+  <a class="btn" href="/!categories">[const:btnCats]</a>
+  [case:[special:userid]  | |<a class="btn" href="!markread">[const:btnMarkRead]</a>]
+  [case:[special:canstart]| |<a class="btn" href="!post">[const:btnNewThread]</a>]
+  [case:[special:canchat] | |<a class="btn" href="/!chat">[const:btnChat]</a>]
   <span class="spacer"></span>
   [case:[special:isadmin] | |
-    <a class="btn right" href="/!settings[special:urltag]">[const:btnSettings]</a>
-    <a class="btn right" href="/!sqlite">[const:btnConsole]</a>
+    <a class="btn" href="/!settings[special:urltag]">[const:btnSettings]</a>
+    <a class="btn" href="/!sqlite">[const:btnConsole]</a>
   ]
-  [case:[special:limited]|<a class="btn right" href="!feed" title="[const:rssfeed]"><svg class="listfeed" height="19" width="19" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  [case:[special:limited]|<a class="btn" href="!feed" title="[const:rssfeed]"><svg class="listfeed" height="19" width="19" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
     <title>RSS</title>
     <path d="m8.8 27.6c0 2.43-1.97 4.4-4.4 4.4s-4.4-1.97-4.4-4.4 1.97-4.4 4.4-4.4 4.4 1.97 4.4 4.4z"/>
     <path d="m21.2 32h-6.2c0-8.2-6.8-15-15-15v-6.2c11.8 0 21.2 9.4 21.2 21.2z"/>

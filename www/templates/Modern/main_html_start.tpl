@@ -15,6 +15,7 @@
   [equ:ttlSearchUsr=user search]
   [equ:ttlSearchBtn=Search]
   [equ:ttlAllThreads=All tags]
+  [equ:ttlTags=Tags]
 |
   [equ:ttlPublic=Публични теми]
   [equ:ttlLimited=Теми с ограничен достъп]
@@ -28,6 +29,7 @@
   [equ:ttlSearchUsr=потребител]
   [equ:ttlSearchBtn=Търсене]
   [equ:ttlAllThreads=Всички теми]
+  [equ:ttlTags=Тагове]
 |
   [equ:ttlPublic=Публичные темы]
   [equ:ttlLimited=Темы с ограниченным доступом]
@@ -41,6 +43,7 @@
   [equ:ttlSearchUsr=пользователь]
   [equ:ttlSearchBtn=Поиск]
   [equ:ttlAllThreads=Все темы]
+  [equ:ttlTags=Ярлыки]
 |
   [equ:ttlPublic=Discussions publiques]
   [equ:ttlLimited=Discussions restreintes]
@@ -54,6 +57,7 @@
   [equ:ttlSearchUsr=recherche d'utilisateur]
   [equ:ttlSearchBtn=Rechercher]
   [equ:ttlAllThreads=Montrer tous les sujets]
+  [equ:ttlTags=Mots-clés]
 |
   [equ:ttlPublic=Öffentliche Themen]
   [equ:ttlLimited=Themen mit beschränktem Zugang]
@@ -67,6 +71,7 @@
   [equ:ttlSearchUsr=Benutzersuche]
   [equ:ttlSearchBtn=Suchen]
   [equ:ttlAllThreads=Alle Themen zeigen]
+  [equ:ttlTags=Tags]
 ]
 
 
@@ -191,6 +196,7 @@
       </g>
     </pattern>
   </defs>
+  [case:[special:limited]||<rect x='0' y='0' fill='rgba(255, 160, 255, 0.8)' width='100%' height='100%'/>]
   <rect x='0' y='0' fill='url(#tri)' width='100%' height='100%'/>
 </svg>
 
@@ -199,52 +205,41 @@
   <div class="header">
     [special:header]
     <div class="spacer"></div>
+
     <form method="POST" action="/!skincookie">
       <select class="skin" name="skin" onchange="this.form.submit()">
-        <option value="0">(Default)</option>
+        <option value="0">Skin: (Default)</option>
         [special:skins=[special:skincookie]]
       </select>
       <noscript><input type="submit" value="Go"></noscript>
     </form>
 
-    <div>
-      [case:[special:userid]
-        |<a href="/!login/">[const:Login]</a><br>
-          [case:[special:canregister]||<a href="/!register/">[const:Register]</a>]
-        |<form method="POST" action="/!logout"><input class="logout" type="submit" name="logout"
-         value="[const:Logout] ([special:username])"></form>
-         <a href="/!userinfo/[url:[special:username]]">[const:Profile]</a>
-      ]
-    </div>
-
+    [case:[special:userid]
+        |<a class="btn" href="/!login/">[const:Login]</a> [case:[special:canregister]||<a class="btn" href="/!register/">[const:Register]</a>]
+        |<form method="POST" action="/!logout"><input class="btn" type="submit" name="logout" value="[const:Logout] ([special:username])"></form>
+        <a class="btn" href="/!userinfo/[url:[special:username]]">[const:Profile]</a>
+    ]
   </div>
-  <form id="search_form" action="[case:[special:cmdtype]||/|../]!search/" method="get" >
-    <input class="search_line" type="search" name="s" placeholder="[const:ttlSearchTxt]" value="[special:search]">
-    <input class="search_line" type="search" name="u" placeholder="[const:ttlSearchUsr]" value="[special:usearch]">
-    <label class="btn">
-      <input type="submit">
-      <svg version="1.1" width="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-        <path d="m25.4 23.3-4.3-4.32c-.0231-.0232-.0502-.0392-.0741-.0608.877-1.28
-                 1.36-2.88 1.36-4.56 0-4.64-3.67-8.32-8.21-8.32-4.54 0-8.21 3.68-8.21
-                 8.24 0 4.56 3.67 8.24 8.21 8.24 1.67 0 3.19-.496 4.54-1.36.0215.024.0375.0512.0606.0744l4.3
-                 4.32c.654.656 1.67.656 2.39 0 .654-.656.654-1.68 0-2.4zm-11.2-3.6c-2.95
-                 0-5.34-2.4-5.34-5.36s2.39-5.36 5.34-5.36 5.34 2.4 5.34 5.36-2.39 5.36-5.34 5.36z"
-        />
-      </svg>
-    </label>
-  </form>
+
 </div>
 
-      <div id="publicsel">
+    <div class="ui" id="publicsel">
       [case:[special:userid]||
-        <a class="[case:[special:limited]|btn|ui3] left" href="/[case:[special:dir]||[special:dir]/]" title="[const:ttlPublic]">[const:Public][special:unread]</a>
+        <a class="[case:[special:limited]|btn|ui3]" href="/[case:[special:dir]||[special:dir]/]" title="[const:ttlPublic]">[const:Public][special:unread]</a>
         <a class="[case:[special:limited]|ui3|btn]" href="/(o)/[case:[special:dir]||[special:dir]/]" title="[const:ttlLimited]">[const:Limited][special:unreadLAT]</a>
       ]
-      </div>
 
-    <div id="tagsPanel">
-      <label class="button" for="tagsCollapse">Tags:</label>
-      <input type="checkbox" class="collapseit" id="tagsCollapse">
+      <label class="btn" for="tagsCollapse"><svg width="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <path d="m8 9h16l-8 16z" fill="#fff"/>
+        </svg>[const:ttlTags]: <strong>[case:[special:dir]|[const:ttlAllThreads]|#[special:dir]]</strong>
+      </label>
+
+      <label for="searchDown" class="btn"><svg width="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <path d="m8 9h16l-8 16z" fill="#fff"/>
+        </svg>[const:ttlSearchBtn]
+      </label>
+
+      <input type="checkbox" class="dropdown" id="tagsCollapse">
       <div id="taglinks">
         <a class="taglink [case:[special:variant]|current_tag|current_tag|] alltags"
         href="/[case:[special:limited]||(o)/]"><svg class="alltags" version="1.1" width="24" height="24" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
@@ -260,6 +255,25 @@
                    1.59-3.85v-6.76c-4.5e-5-1.24-1.02-2.26-2.26-2.26l-.0019-.00195z"
           />
         </svg>[const:ttlAllThreads]</a>
-        [special:alltags2]
+        [special:alltags]
       </div>
+
+      <input type="checkbox" class="dropdown" id="searchDown">
+      <form id="search_form" action="[case:[special:cmdtype]||/|../]!search/" method="get" >
+        <input class="search_line" type="search" name="s" placeholder="[const:ttlSearchTxt]" value="[special:search]">
+        <input class="search_line" type="search" name="u" placeholder="[const:ttlSearchUsr]" value="[special:usearch]">
+        <label class="btn">
+          <input type="submit">
+          <svg version="1.1" width="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path d="m25.4 23.3-4.3-4.32c-.0231-.0232-.0502-.0392-.0741-.0608.877-1.28
+                     1.36-2.88 1.36-4.56 0-4.64-3.67-8.32-8.21-8.32-4.54 0-8.21 3.68-8.21
+                     8.24 0 4.56 3.67 8.24 8.21 8.24 1.67 0 3.19-.496 4.54-1.36.0215.024.0375.0512.0606.0744l4.3
+                     4.32c.654.656 1.67.656 2.39 0 .654-.656.654-1.68 0-2.4zm-11.2-3.6c-2.95
+                     0-5.34-2.4-5.34-5.36s2.39-5.36 5.34-5.36 5.34 2.4 5.34 5.36-2.39 5.36-5.34 5.36z"
+            />
+          </svg>
+        </label>
+      </form>
+
+
     </div>

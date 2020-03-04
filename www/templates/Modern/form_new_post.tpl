@@ -62,8 +62,8 @@
 
 <div class="new_editor">
   <div class="ui">
-    <a class="btn left" href="[case:[special:page]||../]../">[const:btnList]</a>
-    <a class="btn left" href="[case:[special:page]|./|!by_id]">[const:btnThread]</a>
+    <a class="btn" href="[case:[special:page]||../]../">[const:btnList]</a>
+    <a class="btn" href="[case:[special:page]|./|!by_id]">[const:btnThread]</a>
   </div>
   <form id="editform" action="!post#preview" method="post" enctype="multipart/form-data">
     <div class="editgroup">

@@ -375,7 +375,7 @@ function OnUserChanged (e) {
 
   <div class="chat">
     <div class="ui">
-      <a class="btn left" href="/">[const:btnForum]</a>
+      <a class="btn" href="/">[const:btnForum]</a>
       <div class="spacer"></div>
       <p>Chat nickname: </p><input type="text" placeholder="[const:phNick]" id="chat_user" onkeypress="KeyPress(event, UserRename)" onChange="UserRename()">
     </div>

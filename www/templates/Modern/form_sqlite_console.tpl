@@ -65,10 +65,10 @@
 
 <div class="console">
   <div class="ui">
-    <a class="btn left" href="/">[const:btnList]</a>
+    <a class="btn" href="/">[const:btnList]</a>
     <span class="spacer"></span>
-    <a class="btn right" href="/!settings">[const:btnSettings]</a>
-    <a class="btn right" target="_blank" href="/!sqlite">[const:btnSQL]</a>
+    <a class="btn" href="/!settings">[const:btnSettings]</a>
+    <a class="btn" target="_blank" href="/!sqlite">[const:btnSQL]</a>
   </div>
   <form id="editform" action="/!sqlite/#sql_result" method="post">
     <p>[const:ttlStmt]:</p>

@@ -45,13 +45,13 @@
 ]
 
 <div class="ui">
-  <a class="btn left" href="/!categories">[const:btnCats]</a>
-  <a class="btn left" href="..">[const:btnList]</a>
-  [case:[special:canpost]| |<a class="btn left" href="!post">[const:btnNewPost]</a>]
+  <a class="btn" href="/!categories">[const:btnCats]</a>
+  <a class="btn" href="..">[const:btnList]</a>
+  [case:[special:canpost]| |<a class="btn" href="!post">[const:btnNewPost]</a>]
   <span class="spacer"></span>
   [case:[special:isadmin] | |
-    <a class="btn right" href="/!settings[special:urltag]">[const:btnSettings]</a>
-    <a class="btn right" href="/!sqlite">[const:btnConsole]</a>
+    <a class="btn" href="/!settings[special:urltag]">[const:btnSettings]</a>
+    <a class="btn" href="/!sqlite">[const:btnConsole]</a>
   ]
 </div>
 <h1 class="thread_caption">

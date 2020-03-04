@@ -57,7 +57,7 @@
 
 <div class="new_editor">
   <div class="ui">
-    <a class="btn left" href=".">The thread</a>
+    <a class="btn" href=".">The thread</a>
   </div>
   <form id="editform" action="!edit_thread" method="post">
     <div class="editgroup">

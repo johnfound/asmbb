@@ -25,10 +25,10 @@
 ]
 
 <div class="ui">
-  <a class="btn left" href="/[special:page]/!by_id">[const:btnBack]</a>
+  <a class="btn" href="/[special:page]/!by_id">[const:btnBack]</a>
   <span class="spacer"></span>
   [case:[special:isadmin] | |
-    <a class="btn right" href="/!settings[special:urltag]">[const:btnSettings]</a>
-    <a class="btn right" href="/!sqlite">[const:btnConsole]</a>
+    <a class="btn" href="/!settings[special:urltag]">[const:btnSettings]</a>
+    <a class="btn" href="/!sqlite">[const:btnConsole]</a>
   ]
 </div>
