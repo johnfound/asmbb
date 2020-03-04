@@ -210,6 +210,7 @@ begin
         je      .empty_search      ; this means the total results count is 0, not the pages.
 
         stdcall TextCat, edi, [.pages]
+        stdcall TextCat, edx, txt '<div class="multi_content">'
         mov     edi, edx
 
         lea     ecx, [.stmt]
@@ -246,7 +247,8 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall TextCat, edi, [.pages]
+        stdcall TextCat, edi, txt '</div>'      ;  class="multi_content"
+        stdcall TextCat, edx, [.pages]
         mov     edi, edx
 
         stdcall StrDel, [.pages]

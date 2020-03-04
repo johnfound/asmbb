@@ -17,7 +17,8 @@ begin
         stdcall TextCreate, sizeof.TText
         stdcall TextCat, eax, '<div class="threads_list">'
         stdcall RenderTemplate, edx, "nav_categories.tpl", 0, esi
-        mov     edi, eax
+        stdcall TextCat, eax, '<div class="multi_content">'
+        mov     edi, edx
 
         stdcall TextCreate, sizeof.TText
         mov     edx, eax
@@ -46,7 +47,7 @@ begin
 .end_cats:
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall TextCat, edi, '</div>'
+        stdcall TextCat, edi, '</div></div>'
         mov     [esp+4*regEAX], edx
 
         clc

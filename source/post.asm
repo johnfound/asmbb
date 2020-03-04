@@ -143,7 +143,9 @@ begin
         test    eax, eax
         jz      .source_ok2
 
-        stdcall StrByteUtf8, [.source], LIMIT_POST_LENGTH
+        mov     eax, LIMIT_POST_LENGTH
+        stdcall GetParam, 'max_post_length', gpInteger
+        stdcall StrByteUtf8, [.source], eax
         stdcall StrTrim, [.source], eax
 
 .source_ok2:
