@@ -1,5 +1,5 @@
-C New\s"modern"\stheme.\sAnd\ssome\schanges\sin\sorder\sto\smake\sit\swork.\sThe\sold\sthemes\swill\sprobably\sneed\ssome\scompatibility\stests/edits.
-D 2019-11-22T14:14:13.225
+C Fixed\sa\sbug\srelated\sto\sthe\sinitial\spassword\sform\swhen\sused\swith\srwasa\sserver.
+D 2020-03-04T08:00:02.025
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -39,7 +39,7 @@ F source/commands.asm 71ae4f602b3a9e644b3e4f11329f52aa593daba3
 F source/create.sql f6a98baf2ae8839907d237b7179bad2328a5f6ea
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm dddd1b6b89eef295ab5a65cb7302aefe0d948399
-F source/encryption.asm 5a5572af0223a4fdc46e707f38c842cf1169f974
+F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm 48393d19449ab539802ea89eec69b2ad025d35ee
 F source/engine.fpr 6c87a9f41170e433981d380c5f1f8b9dc1e19172
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
@@ -779,10 +779,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P cc44a410acc4bd95fb70e228bf68d8e08e76bf0c
-R 9b1501f272113930660a08133051c0e8
-T *branch * ModernTheme
-T *sym-ModernTheme *
-T -sym-trunk *
+P 79265cf985b6214cd4c7620b6c92829a8d93d6d8
+R 504704111e364761074ae69e6557db46
 U johnfound
-Z adefbfd0cfaa9c099024219a14aeadac
+Z 0804a51b81baddebbd2af2dce8706a4c
