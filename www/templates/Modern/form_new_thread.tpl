@@ -7,10 +7,10 @@
   [equ:btnList=Thread list]
   [equ:ttlTitle=Title]
   [equ:phTitle=Thread title]
-  [equ:ttlTags=Tags: <span class="small">(max 3, comma delimited, no spaces)</span>]
+  [equ:ttlTags=Tags: <span class="small">(max 3, comma separated, no spaces)</span>]
   [equ:phTags=some tags here]
   [equ:ttlLimited=Limited access thread]
-  [equ:ttlInvited=Invited users (comma separated list)]
+  [equ:ttlInvited=Invited users <span class="small">(comma separated list)</span>]
   [equ:ttlPost=Post content]
   [equ:phText=Share your thoughts here]
   [equ:ttlAttach=Attach file(s)]
@@ -25,7 +25,7 @@
   [equ:ttlTags=Тагове: <span class="small">(макс. 3, разделени със запетаи, без шпации)</span>]
   [equ:phTags=някакви тагове тук]
   [equ:ttlLimited=Тема с ограничен достъп]
-  [equ:ttlInvited=Поканени в темата (разделени със запетаи)]
+  [equ:ttlInvited=Поканени в темата <span class="small">(разделени със запетаи)</span>]
   [equ:ttlPost=Съобщение]
   [equ:phText=Сподели мислите си тук]
   [equ:ttlAttach=Прикачи файл(ове)]
@@ -40,7 +40,7 @@
   [equ:ttlTags=Ярлыки: <span class="small">(макс. 3, через запятую, без пробелов)</span>]
   [equ:phTags=теги пишутся здесь]
   [equ:ttlLimited=Тема с ограниченным доступом]
-  [equ:ttlInvited=Приглашенные участники (список через запятую)]
+  [equ:ttlInvited=Приглашенные участники <span class="small">(список через запятую)</span>]
   [equ:ttlPost=Текст сообщения]
   [equ:phText=Поделитесь своими мыслями здесь]
   [equ:ttlAttach=Прикрепленные файл(ы)]
@@ -55,7 +55,7 @@
   [equ:ttlTags=Mots-clés: <span class="small">(3 maximum, séparés par une virgule t sans espace)</span>]
   [equ:phTags=quelques mots-clés]
   [equ:ttlLimited=Sujet à accès limité]
-  [equ:ttlInvited=Inviter des utilisateurs (séparés par une virgule)]
+  [equ:ttlInvited=Inviter des utilisateurs <span class="small">(séparés par une virgule)</span>]
   [equ:ttlPost=Contenu du message]
   [equ:phText=Partagez vos idées ici]
   [equ:ttlAttach=Pièce(s) jointe(s)]
@@ -70,7 +70,7 @@
   [equ:ttlTags=Tags: <span class="small">(max. 3, durch Kommas getrennt, keine Leerzeichen)</span>]
   [equ:phTags=hier einige Tags]
   [equ:ttlLimited=Thema mit beschränktem Zugriff]
-  [equ:ttlInvited=Eingeladene Mitglieder (durch Kommas getrennt)]
+  [equ:ttlInvited=Eingeladene Mitglieder <span class="small">(durch Kommas getrennt)</span>]
   [equ:ttlPost=Inhalt des Beitrags]
   [equ:phText=Teilen Sie hier Ihre Gedanken mit]
   [equ:ttlAttach=Datei(en) anhängen]
@@ -82,34 +82,48 @@
 
 <div class="new_editor">
   <div class="ui">
-    <a class="ui" href=".">[const:btnList]</a>
+    <a class="btn" href=".">[const:btnList]</a>
     <div class="spacer"></div>
   </div>
   <form id="editform" action="!post" method="post" enctype="multipart/form-data">
-    <div class="edit_groupL">
-      <p>[const:ttlTitle]:</p>
-      <input type="edit" value="[caption]" placeholder="[const:ttlTitle]" name="title" autofocus>
-    </div><div class="edit_groupR">
-      <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</p>
-      <input type="edit" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
+    <div class="editgroup">
+      <div>
+        <p>[const:ttlTitle]:</p>
+        <input type="text" value="[caption]" placeholder="[const:ttlTitle]" name="title" autofocus>
+      </div>
+      <div>
+        <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</p>
+        <input type="text" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
+      </div>
     </div>
     <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]><label for="limited">[const:ttlLimited]</label>
-    <div id="users_invited">
-      <p>[const:ttlInvited]:</p>
-      <input id="invited" type="edit" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
+    <div class="editgroup" id="users_invited">
+      <div>
+        <p>[const:ttlInvited]:</p>
+        <input type="text" id="invited" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
+      </div>
     </div>
     [include:edit_toolbar.tpl]
-    <p>[const:ttlPost]:</p>
-    <textarea class="editor" name="source" id="source" placeholder="[const:phText]">[source]</textarea>
-    [case:[special:canupload]||<p class="panel">[const:ttlAttach]:</p><div class="attach"><input type="file" placeholder="[const:phSelect]" name="attach" multiple="multiple" tabindex="-1"></div>]
+    <div class="editgroup">
+      <div>
+        <p>[const:ttlPost]:</p>
+        <textarea class="editor" name="source" id="source" placeholder="[const:phText]">[source]</textarea>
+      </div>
+    </div>
+    <div class="editgroup">
+      <div>
+        [case:[special:canupload]||<p>[const:ttlAttach]:</p><div class="attach">
+        <input type="file" placeholder="[const:phSelect]" name="attach" multiple="multiple" tabindex="-1"></div>]
+      </div>
+    </div>
     <div class="attachments">
       [attach_edit:[id]]
     </div>
-    <div class="panel">
-      <input type="submit" name="preview" value="[const:btnPreview]" >
-      <input type="submit" name="submit" value="[const:btnSubmit]" >
+    <div class="ui">
+      <input class="btn" type="submit" name="preview" value="[const:btnPreview]" >
+      <input class="btn" type="submit" name="submit" value="[const:btnSubmit]" >
       <input type="hidden" name="ticket" value="[Ticket]" >
-      <input type="reset" value="[const:btnRevert]" >
+      <input class="btn" type="reset" value="[const:btnRevert]" >
     </div>
   </form>
 </div>

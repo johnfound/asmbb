@@ -79,7 +79,6 @@
   <meta name="description" content="[special:description]">
   <meta name="keywords" content="[special:keywords]">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scallable=no">
-  [special:allstyles]
   <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
   <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
@@ -102,6 +101,8 @@
   <meta name="msapplication-config" content="/images/favicons/browserconfig.xml">
   <meta name="theme-color" content="#ffcc40">
 
+  [special:allstyles]
+
   <noscript>
     <style> .jsonly { display: none !important } </style>
   </noscript>
@@ -114,9 +115,89 @@
 
 <body>
 
+<svg id="background" xmlns='http://www.w3.org/2000/svg' width='100%'>
+  <defs>
+    <pattern patternUnits='userSpaceOnUse' id='tri' width='487' height='405' x='0' y='0' viewBox='0 0 1080 900'>
+      <g fill-opacity='0.17'>
+        <polygon fill='#444' points='90 150 0 300 180 300'/>
+        <polygon points='90 150 180 0 0 0'/>
+        <polygon fill='#AAA' points='270 150 360 0 180 0'/>
+        <polygon fill='#DDD' points='450 150 360 300 540 300'/>
+        <polygon fill='#999' points='450 150 540 0 360 0'/>
+        <polygon points='630 150 540 300 720 300'/>
+        <polygon fill='#DDD' points='630 150 720 0 540 0'/>
+        <polygon fill='#444' points='810 150 720 300 900 300'/>
+        <polygon fill='#FFF' points='810 150 900 0 720 0'/>
+        <polygon fill='#DDD' points='990 150 900 300 1080 300'/>
+        <polygon fill='#444' points='990 150 1080 0 900 0'/>
+        <polygon fill='#DDD' points='90 450 0 600 180 600'/>
+        <polygon points='90 450 180 300 0 300'/>
+        <polygon fill='#666' points='270 450 180 600 360 600'/>
+        <polygon fill='#AAA' points='270 450 360 300 180 300'/>
+        <polygon fill='#DDD' points='450 450 360 600 540 600'/>
+        <polygon fill='#999' points='450 450 540 300 360 300'/>
+        <polygon fill='#999' points='630 450 540 600 720 600'/>
+        <polygon fill='#FFF' points='630 450 720 300 540 300'/>
+        <polygon points='810 450 720 600 900 600'/>
+        <polygon fill='#DDD' points='810 450 900 300 720 300'/>
+        <polygon fill='#AAA' points='990 450 900 600 1080 600'/>
+        <polygon fill='#444' points='990 450 1080 300 900 300'/>
+        <polygon fill='#222' points='90 750 0 900 180 900'/>
+        <polygon points='270 750 180 900 360 900'/>
+        <polygon fill='#DDD' points='270 750 360 600 180 600'/>
+        <polygon points='450 750 540 600 360 600'/>
+        <polygon points='630 750 540 900 720 900'/>
+        <polygon fill='#444' points='630 750 720 600 540 600'/>
+        <polygon fill='#AAA' points='810 750 720 900 900 900'/>
+        <polygon fill='#666' points='810 750 900 600 720 600'/>
+        <polygon fill='#999' points='990 750 900 900 1080 900'/>
+        <polygon fill='#999' points='180 0 90 150 270 150'/>
+        <polygon fill='#444' points='360 0 270 150 450 150'/>
+        <polygon fill='#FFF' points='540 0 450 150 630 150'/>
+        <polygon points='900 0 810 150 990 150'/>
+        <polygon fill='#222' points='0 300 -90 450 90 450'/>
+        <polygon fill='#FFF' points='0 300 90 150 -90 150'/>
+        <polygon fill='#FFF' points='180 300 90 450 270 450'/>
+        <polygon fill='#666' points='180 300 270 150 90 150'/>
+        <polygon fill='#222' points='360 300 270 450 450 450'/>
+        <polygon fill='#FFF' points='360 300 450 150 270 150'/>
+        <polygon fill='#444' points='540 300 450 450 630 450'/>
+        <polygon fill='#222' points='540 300 630 150 450 150'/>
+        <polygon fill='#AAA' points='720 300 630 450 810 450'/>
+        <polygon fill='#666' points='720 300 810 150 630 150'/>
+        <polygon fill='#FFF' points='900 300 810 450 990 450'/>
+        <polygon fill='#999' points='900 300 990 150 810 150'/>
+        <polygon points='0 600 -90 750 90 750'/>
+        <polygon fill='#666' points='0 600 90 450 -90 450'/>
+        <polygon fill='#AAA' points='180 600 90 750 270 750'/>
+        <polygon fill='#444' points='180 600 270 450 90 450'/>
+        <polygon fill='#444' points='360 600 270 750 450 750'/>
+        <polygon fill='#999' points='360 600 450 450 270 450'/>
+        <polygon fill='#666' points='540 600 630 450 450 450'/>
+        <polygon fill='#222' points='720 600 630 750 810 750'/>
+        <polygon fill='#FFF' points='900 600 810 750 990 750'/>
+        <polygon fill='#222' points='900 600 990 450 810 450'/>
+        <polygon fill='#DDD' points='0 900 90 750 -90 750'/>
+        <polygon fill='#444' points='180 900 270 750 90 750'/>
+        <polygon fill='#FFF' points='360 900 450 750 270 750'/>
+        <polygon fill='#AAA' points='540 900 630 750 450 750'/>
+        <polygon fill='#FFF' points='720 900 810 750 630 750'/>
+        <polygon fill='#222' points='900 900 990 750 810 750'/>
+        <polygon fill='#222' points='1080 300 990 450 1170 450'/>
+        <polygon fill='#FFF' points='1080 300 1170 150 990 150'/>
+        <polygon points='1080 600 990 750 1170 750'/>
+        <polygon fill='#666' points='1080 600 1170 450 990 450'/>
+        <polygon fill='#DDD' points='1080 900 1170 750 990 750'/>
+      </g>
+    </pattern>
+  </defs>
+  <rect x='0' y='0' fill='url(#tri)' width='100%' height='100%'/>
+</svg>
+
+
 <div id="header_panel" class="panel">
   <div class="header">
-    <h1>AsmBB</h1>
+    [special:header]
     <div class="spacer"></div>
     <form method="POST" action="/!skincookie">
       <select class="skin" name="skin" onchange="this.form.submit()">
@@ -140,21 +221,45 @@
   <form id="search_form" action="[case:[special:cmdtype]||/|../]!search/" method="get" >
     <input class="search_line" type="search" name="s" placeholder="[const:ttlSearchTxt]" value="[special:search]">
     <input class="search_line" type="search" name="u" placeholder="[const:ttlSearchUsr]" value="[special:usearch]">
-    <a class="icon_btn"><input class="img_input" type="image" width="32" height="32" src="[special:skin]/_images/search.svg" alt="&nbsp;Search&nbsp;" title="[ttlSearchBtn]"></a>
+    <label class="btn">
+      <input type="submit">
+      <svg version="1.1" width="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <path d="m25.4 23.3-4.3-4.32c-.0231-.0232-.0502-.0392-.0741-.0608.877-1.28
+                 1.36-2.88 1.36-4.56 0-4.64-3.67-8.32-8.21-8.32-4.54 0-8.21 3.68-8.21
+                 8.24 0 4.56 3.67 8.24 8.21 8.24 1.67 0 3.19-.496 4.54-1.36.0215.024.0375.0512.0606.0744l4.3
+                 4.32c.654.656 1.67.656 2.39 0 .654-.656.654-1.68 0-2.4zm-11.2-3.6c-2.95
+                 0-5.34-2.4-5.34-5.36s2.39-5.36 5.34-5.36 5.34 2.4 5.34 5.36-2.39 5.36-5.34 5.36z"
+        />
+      </svg>
+    </label>
   </form>
 </div>
 
-
-<div id="layout">
-
-    <div id="tagsPanel">
-      <div>
+      <div id="publicsel">
       [case:[special:userid]||
-        <a class="[case:[special:limited]|ui|ui3] left" href="/[case:[special:dir]||[special:dir]/]" title="[const:ttlPublic]">[const:Public][special:unread]</a>
-        <a class="[case:[special:limited]|ui3|ui]" href="/(o)/[case:[special:dir]||[special:dir]/]" title="[const:ttlLimited]">[const:Limited][special:unreadLAT]</a>
+        <a class="[case:[special:limited]|btn|ui3] left" href="/[case:[special:dir]||[special:dir]/]" title="[const:ttlPublic]">[const:Public][special:unread]</a>
+        <a class="[case:[special:limited]|ui3|btn]" href="/(o)/[case:[special:dir]||[special:dir]/]" title="[const:ttlLimited]">[const:Limited][special:unreadLAT]</a>
       ]
       </div>
-      <a class="taglink [case:[special:variant]|current_tag|current_tag|] alltags"
-      href="/[case:[special:limited]||(o)/]"><img class="tagicon" src="[special:skin]/_images/alltags[case:[special:variant]|||_gray].svg" alt="/" title="[const:ttlAllThreads]">[const:ttlAllThreads]</a>
-      [special:alltags2]
+
+    <div id="tagsPanel">
+      <label class="button" for="tagsCollapse">Tags:</label>
+      <input type="checkbox" class="collapseit" id="tagsCollapse">
+      <div id="taglinks">
+        <a class="taglink [case:[special:variant]|current_tag|current_tag|] alltags"
+        href="/[case:[special:limited]||(o)/]"><svg class="alltags" version="1.1" width="24" height="24" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <path d="m15 .00195c-1.24 0-2.97.717-3.85 1.59l-10.5 10.5c-.877.877-.877
+                   2.31 0 3.19l8.09 8.08c.877.877 2.31.877 3.19 0l10.5-10.5c.877-.877
+                   1.59-2.61 1.59-3.85v-6.76c-4.5e-5-1.24-1.02-2.26-2.26-2.26l-.0019-.00195zm3.77
+                   3.01c1.24 0 2.25 1.01 2.25 2.25 0 1.24-1.01 2.25-2.25 2.25s-2.25-1.01-2.25-2.25c0-1.24
+                   1.01-2.25 2.25-2.25zm6.25.999v6.02c0 1.24-.718 2.97-1.59 3.85l-10.5
+                   10.5c-.877.877-2.31.877-3.19 0l3 3c.877.877 2.31.877 3.19 0l10.5-10.5c.877-.877
+                   1.59-2.61 1.59-3.85v-6.76c-4.5e-5-1.24-1.02-2.26-2.26-2.26l-.0019-.00195zm4.01
+                   4v6.02c0 1.24-.718 2.97-1.59 3.85l-10.5 10.5c-.877.877-2.31.877-3.19 0l3 3c.877.877
+                   2.31.877 3.19 0l10.5-10.5c.877-.877 1.59-2.61
+                   1.59-3.85v-6.76c-4.5e-5-1.24-1.02-2.26-2.26-2.26l-.0019-.00195z"
+          />
+        </svg>[const:ttlAllThreads]</a>
+        [special:alltags2]
+      </div>
     </div>

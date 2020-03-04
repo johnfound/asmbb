@@ -57,24 +57,39 @@
 
 <div class="new_editor">
   <div class="ui">
-    <a class="ui left" href=".">The thread</a>
+    <a class="btn left" href=".">The thread</a>
   </div>
   <form id="editform" action="!edit_thread" method="post">
-
-    <p>[const:ttlTitle]:</p>
-    <input type="edit" value="[caption]" placeholder="[const:phTitle]" name="title" autofocus>
-    <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</p>
-    <input type="edit" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
-    [case:[special:isadmin]||<input type="checkbox" id="pinned" name="pinned" value="1" [case:[Pinned]||checked]><label for="pinned">[const:ttlPin]</label>]
-    <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]><label for="limited">[const:ttlLimited]</label>
-    <div id="users_invited">
-      <p>[const:ttlInvited]:</p>
-      <input id="invited" type="edit" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
+    <div class="editgroup">
+      <div>
+        <p>[const:ttlTitle]:</p>
+        <input type="text" value="[caption]" placeholder="[const:phTitle]" name="title" autofocus>
+      </div>
     </div>
-    <div class="panel">
-      <input type="submit" name="submit" value="[const:btnSubmit]" >
-      <input type="hidden" name="ticket" value="[Ticket]" >
-      <input type="reset" value="[const:btnRevert]" >
+    <div class="editgroup">
+      <div>
+        <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</p>
+        <input type="text" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
+      </div>
+    </div>
+    [case:[special:isadmin]||<div class="editgroup">
+      <div>
+        <input type="checkbox" id="pinned" name="pinned" value="1" [case:[Pinned]||checked]><label for="pinned">[const:ttlPin]</label>
+      </div>
+    </div>]
+
+    <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]><label for="limited">[const:ttlLimited]</label>
+    <div class="editgroup" id="users_invited">
+      <div>
+        <p>[const:ttlInvited]:</p>
+        <input id="invited" type="text" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
+      </div>
+    </div>
+
+    <div class="ui">
+      <input class="btn" type="submit" name="submit" value="[const:btnSubmit]" >
+      <input class="btn" type="hidden" name="ticket" value="[Ticket]" >
+      <input class="btn" type="reset" value="[const:btnRevert]" >
     </div>
   </form>
 </div>

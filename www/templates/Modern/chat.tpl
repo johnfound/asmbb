@@ -375,16 +375,21 @@ function OnUserChanged (e) {
 
   <div class="chat">
     <div class="ui">
-      <a class="ui" href="/">[const:btnForum]</a>
+      <a class="btn left" href="/">[const:btnForum]</a>
+      <div class="spacer"></div>
+      <p>Chat nickname: </p><input type="text" placeholder="[const:phNick]" id="chat_user" onkeypress="KeyPress(event, UserRename)" onChange="UserRename()">
     </div>
     <div class="chatflex">
       <div id="chatlog"></div>
       <div id="syslog"></div>
     </div>
     <div id="chat_form">
-      <input class="chat_input" type="text" placeholder="[const:phNick]" id="chat_user" onkeypress="KeyPress(event, UserRename)" onChange="UserRename()">
       <input class="chat_input" type="text" placeholder="[const:phText]" id="chat_message" autofocus onkeypress="KeyPress(event, SendMessage)">
-      <a class="icon_btn" onclick="SendMessage()"><img class="img_btn" width="30" height="30" src="[special:skin]/_images/send_msg.svg" alt="&nbsp;Post&nbsp;"></a>
+      <a class="btn icon_btn" onclick="SendMessage()">
+        <svg version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+         <path d="m4 6 24 10-24 10 4-10z"/>
+        </svg>
+      </a>
     </div>
   </div>
 

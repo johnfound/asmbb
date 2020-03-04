@@ -1,115 +1,143 @@
 @import "skin_variables.lsi";
 
+* {
+  box-sizing: border-box;
+  padding: 0px;
+}
+
 body {
   font-size: @FontSzMain;
   font-family: @FontMain;
-  background-color: @clBodyBG;
+//  background-color: @clBodyBG;
   color: @clBodyFG;
-
-  * {
-    box-sizing: border-box;
-    padding: 0px;
-  }
-
-//  background-image: linear-gradient(0deg, #8000ff 0px, #8000ff 300px, #ffffff 100%);
-//  background-image: url('[special:skin]/_images/b5.svg');
-//  background-attachment: fixed;
-//  background-size: 256px;
+  margin: 8px;
+  display: flex;
+  flex-direction: column;
+  background-image: linear-gradient(135deg, #a0d0ff 0px, #ffffff 100%);
+  background-attachment: fixed;
 }
 
-#search_form {
-  margin-bottom: 32px;
+#background {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: -100;
 }
 
 
 
 #layout {
   position: relative;
-  margin-left: 196px;
+  margin: 8px 0px 8px 188px;
   min-height: 640px;
 }
 
 .multi_content {
   display: flex;
   flex-wrap: wrap;
-  row-gap: 8px;
-  column-gap: 8px;
+  margin: 0px -@marginX;
+
+  &>* {
+    margin: @marginY @marginX;
+    overflow: hidden;
+  }
 }
 
 #tagsPanel {
-  font-size: 28px;
   background-color: @clArticleBG;
-  padding: 8px;
-  opacity: @Opacity;
+  padding: 0px;
   box-shadow: @Shadow;
   border-radius: @Radius;
-  overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-width: thin;
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  width: 180px;
-  left: -188px;
+  overflow: hidden;
+  margin: 8px 0px;
+  display: flex;
+  align-items: start;
 
-  div {
+  #publicsel {
     display: flex;
+    flex-direction: column;
+    align-self: center;
+    margin-left: @marginX;
     a {
-      margin: 4px 0px;
-      flex-grow: 1;
+      margin: @marginY/2 0px;
+      padding: 4px;
+      white-space: nowrap;
+    }
+  }
+
+  #taglinks {
+    font-size: 28px;
+    display: block;
+
+    margin: 0px @marginX;
+    padding: 4px 0px;
+  }
+}
+
+
+.taglink {
+  display: inline-block;
+  margin: 0;
+  padding: 4px;
+  color: @clArticleFG;
+  border-radius: @Radius;
+  text-decoration: none;
+  text-align: left;
+  position: relative;
+  &::before {
+    content: "#";
+  }
+
+  &:active {
+    background-color: @clButtonActiveBG;
+    background-image: linear-gradient(white, @clButtonActiveBG) !important;
+  }
+
+  &:hover, &:focus {
+    background-color: @clButtonActiveBG;
+    background-image: linear-gradient(@clButtonActiveBG, white);
+  }
+
+  &:active, &:hover, &:focus {
+    color: @clButtonActiveFG;
+    box-shadow: @btnShadowA;
+    svg.alltags>* {
+      fill: @clButtonActiveFG;
+    }
+  }
+
+  svg.alltags {
+    width: 24px;
+    margin: 0px 8px 0px 0px;
+    vertical-align: middle;
+    &>* {
+      fill: @clArticleFG;
     }
   }
 }
 
-.taglink {
-  display: block;
-  margin: 0;
-  padding: 0px 0px 0px 1em;
-  color: @clButtonFG;
-  border-radius: @Radius;
-  border: 4px solid transparent;
-  text-decoration: none;
-  text-align: left;
-  text-indent: 8px;
-  position: relative;
-
-  background-image: url('[special:skin]/_images/tag_gray.svg');
-  background-repeat: no-repeat;
-  background-size: contain;
-
-  &:active, &:hover, &:focus {
-    background-color: @clButtonActiveBG;
-    border: 4px solid @clButtonActiveBG;
-    color: @clButtonActiveFG;
-    text-decoration: @clButtonFG;
-  }
-
-  img {
-    width: 24px;
-    height: 24px;
-    margin: 0px 8px 0px 0px;
-    vertical-align: middle;
-  }
-}
-
 .current_tag {
-  background-image: url('[special:skin]/_images/tag.svg');
-  background-color: @clButtonHighlightBG;
-  border: 4px solid @clButtonHighlightBG;
-  color: @clButtonHighlightFG;
+  background-color: @clButtonBG;
+  color: @clButtonFG;
+  svg.alltags>* {
+    fill: @clButtonFG;
+  }
 }
 
 .alltags {
-  background-image: none;
-  padding: 0px;
   font-size: 16px;
+  &::before {
+    content: '';
+  }
 }
 
-.tagsize00 { font-size: 35% }
-.tagsize01 { font-size: 35% }
-.tagsize02 { font-size: 35% }
-.tagsize03 { font-size: 35% }
-.tagsize04 { font-size: 35% }
+.tagsize00 { font-size: 38% }
+.tagsize01 { font-size: 38% }
+.tagsize02 { font-size: 38% }
+.tagsize03 { font-size: 38% }
+.tagsize04 { font-size: 38% }
 .tagsize05 { font-size: 41% }
 .tagsize06 { font-size: 47% }
 .tagsize07 { font-size: 52% }
@@ -140,116 +168,69 @@ body {
 .tagsize32 { font-size: 100% }
 
 
-.spacer {
-  flex-grow: 1;
-  min-width: 0px;
-  display:block;
-}
-
-
-/* Decorative checkbox mechanism. The label tag, must be styled separately! */
-
-input^[type=checkbox^] {
-  position: absolute;
-  z-index: -1;
-  left: -10000px;
-
-  &:focus + label::before {
-    outline: 2px dotted black;
-    outline-offset: 1px;
-  }
-
-  &:checked + label::before {
-    color: lime;
-    background-color: lime;
-  }
-
-  &:checked + .popup {
-    display: block;
-    opacity: 1;
-  }
-
-  + label {
-    cursor: pointer;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-
-    &::before {
-      content: '';
-      width: 16px;
-      height: 16px;
-      display: inline-block;
-      background-color: white;
-      border: 2px solid @clSeparator;
-      border-radius: @Radius;
-      margin-right: 12px;
-      vertical-align: bottom;
-    }
-  }
-
-// Collapsable block of elements.
-  &.collapseit {
-    &:checked {
-    }
-    &:not(:checked) {
-      & + * {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-    }
-  }
-}
-
-
-
 
 span.ntf {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
   border-radius: 50%;
-  vertical-align: middle;
-  padding: 2px;
-  min-width: 18px;
 
   background-color: @clNotifyBG;
   color: @clNotifyFG;
 
   font-size: 12px;
+  line-height: 12px;
+  vertical-align: middle;
   font-weight: bold;
   margin-left: 0.5ch;
-  text-indent: 0px;
 
-  position: absolute;
-  right: -2px;
-  top: -2px;
-
-  &:before {
-    content:'';
-    float: left;
-    width: auto;
-    padding-bottom: 100%;
+  &::before, &::after {
+    content:'\200B';    // zero width space!
+    display:inline-block;
+    line-height:0px;
+    padding-top:50%;
+    padding-bottom:50%;
   }
+
+  &::before {
+    padding-left: 4px;
+  }
+
+  &::after {
+    padding-right: 4px;
+  }
+
 }
+
+
 
 
 #search_form {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-//  background-color: @clMainHeaderBG;
   border-radius: @Radius;
-  margin: 0px 6px;
+  margin: 0px 4px;
+
+  &>* {
+    margin: 8px 4px !important;
+  }
+
+  label {
+    padding: 0px;
+    cursor: pointer;
+    background-color: transparent;
+    margin-left: 0px !important;
+    line-height: 0px;
+    input {
+      display: none;
+    }
+  }
 }
 
 .search_line {
   flex-grow: 1;
 }
+
+
 
 
 .panel {
@@ -262,21 +243,22 @@ span.ntf {
 
 #header_panel {
   background-color: @clPanelBG;
-  color: @clPanelBG;
+//  background-image: linear-gradient(115deg, #ffff00 0%, @clPanelBG 5%, @clPanelBG 98%, #ffff00 100%);
+//  background-image: url('[special:skin]/_images/craft.jpg');
   border-radius: @Radius;
-  margin: 2px 2px 16px 6px;
+  margin: 0px;
   box-shadow: @Shadow;
 }
 
 .header {
-  padding: 0px 16px;
+  padding: 0px @marginX;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   h1 {
     margin: 0px;
-    -webkit-text-stroke: 2px @clPanelFG;
-//    color: @clSecondary14;
+//    -webkit-text-stroke: 2px @clPanelFG;
+//    color: transparent;
     font-weight: bold;
     font-size: 56px;
     line-height: 56px;
@@ -308,9 +290,10 @@ span.ntf {
 
 .footer {
   background-color: @clPanelBG;
+//  background-image: linear-gradient(115deg, #ffff00 0%, @clPanelBG 5%, @clPanelBG 98%, #ffff00 100%);
   color: @clPanelFG;
   border-radius: @Radius;
-  margin: 16px 2px 2px 6px;
+  margin: 2*@marginY 0px;
   box-shadow: @Shadow;
   padding: 16px;
   p {
@@ -319,17 +302,25 @@ span.ntf {
 }
 
 .attribution {
-  color: @clPanelFG;
+  color: @clArticleFG;
   margin: 16px 2px 16px 6px;
 }
 
 
 a {
   color: inherit;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .small {
-  font-size: 14px;
+  font-size: 12px;
+}
+
+.nowrap {
+  white-space: nowrap;
 }
 
 
@@ -338,6 +329,7 @@ a {
 .tabbed {
   flex-grow: 1;
   position: relative;
+  box-shadow: @Shadow;
 
   &::after {
     content: '';
@@ -365,6 +357,7 @@ a {
 
       &:hover {
         background: @clButtonActiveBG;
+        color: @clButtonActiveFG;
       }
 
       & + section {
@@ -384,7 +377,7 @@ a {
     }
 
     &:focus + label {
-      border-top: 2px solid @clButtonHighlightBG;
+      border-top: 2px solid #404040;
       z-index: 1;
     }
 
@@ -400,10 +393,13 @@ a {
 
 
 select {
+  .inline-svg-code(~'<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="4" ry="4" fill="#444"/><path d="m8 9h16l-8 16z" fill="#fff"/></svg>');
+
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  background-image: url('[special:skin]/_images/drop-down.svg');
+
+  background-image: @-inline-svg-url;
   background-repeat: no-repeat;
   background-position: right 6px top 50%;
   background-size: 20px auto;
@@ -418,37 +414,38 @@ select {
 
   margin: 4px 0px;
 
-  background-color: @clArticleBG;
+  background-color: @clArticleBGO;
   color: @clArticleFG;
 
 }
 
+input {
+  font: inherit;
+}
+
 input[type=text], input[type=password], input[type=search] {
-  margin: 8px 4px 8px 4px;
-  background-color: @clArticleBG;
+  margin: 8px 0px;
+  background-color: @clArticleBGO;
   color: @clArticleFG;
   border: @borderEdit;
   padding: 4px 8px;
   border-radius: @Radius;
-  font: inherit;
-  height: 34px;
+//  height: 34px;
 }
 
 input[type=file] {
   margin: 8px 4px 8px 4px;
-  background-color: @clArticleBG;
+  background-color: @clArticleBGO;
   color: @clArticleFG;
   border: @borderEdit;
   border-radius: @Radius;
-  font: inherit;
-//  height: 34px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 }
 
 textarea {
-  background-color: @clArticleBG;
+  background-color: @clArticleBGO;
   color: @clArticleFG;
   border: @borderEdit;
   border-radius: @Radius;
@@ -456,3 +453,269 @@ textarea {
   font-family: @FontMono;
   font-size: @FontSzMono;
 }
+
+
+svg {
+  vertical-align: middle;
+  &>path {
+    fill: @clPrimary0;
+  }
+  &.disabled {
+    &>path {
+      fill: @clMono4 !important;
+    }
+  }
+}
+
+
+/* USER INTERFACE ELEMENTS */
+
+
+/* Decorative checkbox mechanism. The label tag, must be styled separately! */
+
+input^[type=checkbox^] {
+  position: absolute;
+  z-index: -1;
+  left: -10000px;
+
+  &:focus + label::before {
+    outline: 2px dotted black;
+    outline-offset: 1px;
+  }
+
+  &:checked + label::before {
+    color: lime;
+    background-color: lime;
+  }
+
+  &:checked + .popup {
+    display: block;
+  }
+
+  + label {
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    &::before {
+      content: '';
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      background-color: white;
+      border: 2px solid @clSeparator;
+      border-radius: @Radius;
+      margin-right: 8px;
+      vertical-align: bottom;
+    }
+  }
+
+// Collapsable block of elements.
+  &.collapseit:focus + ul {
+    outline: 2px dotted gray;
+  }
+
+  &.collapseit:not(:checked) + * {
+    white-space: nowrap;
+    overflow: hidden;
+//    overflow: -moz-hidden-unscrollable;
+    text-overflow: ellipsis;
+    padding: 1px 0px;
+  }
+}
+
+/* Button type elements */
+
+.btn {
+  padding: 4px 8px;
+  background-color: @clButtonBG;
+  color: @clButtonFG;
+  text-decoration: none;
+  border: none;
+  border-radius: @Radius;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: @btnShadow;
+  min-width: 32px;
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
+  &>svg>* {
+    fill: @clButtonFG;
+  }
+
+  &:active {
+    background-image: linear-gradient(white, @clButtonActiveBG) !important;
+  }
+
+  &:hover, &:focus  {
+    background-color: @clButtonActiveBG;
+    background-image: linear-gradient(@clButtonActiveBG, white);
+    color: @clButtonActiveFG;
+    box-shadow: @btnShadowA;
+    &>svg>* {
+      fill: @clButtonActiveFG;
+    }
+  }
+
+}
+
+
+.btn_svg {
+  padding: 0px;
+  background-color: transparent;
+  text-decoration: none;
+  border: none;
+  border-radius: @Radius;
+  cursor: pointer;
+  text-align: center;
+  min-width: 32px;
+  display: inline-block;
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
+  & > svg > * {
+    fill: @clPrimary0;
+  }
+
+  &:active {
+    background-image: linear-gradient(white, @clButtonActiveBG) !important;
+  }
+
+  &:hover, &:focus  {
+    background-color: @clButtonActiveBG;
+    background-image: linear-gradient(@clButtonActiveBG, white);
+    color: @clButtonActiveFG;
+    box-shadow: @btnShadowA;
+    & > svg > * {
+      fill: @clButtonActiveFG;
+    }
+  }
+
+}
+
+
+
+// element that separates the flexbox elements on left and right.
+// for example UI buttons.
+.spacer {
+  flex-grow: 1;
+  min-width: 0px;
+}
+
+
+// Panel for the buttons.
+
+div.ui {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: @marginY -@marginX/2;
+  &>* {
+    margin: @marginY/2 @marginX/2;
+  }
+}
+
+.ui3:extend(.btn all) {
+  color: @clArticleFG;
+  background-color: transparent;
+  padding: 8px;
+}
+
+
+.hidden {
+  display: none;
+}
+
+
+
+
+/* The SVG for the button RSS feed */
+
+svg.listfeed {
+  display: block;
+  width: 19px;
+  margin: 0 auto;
+}
+
+
+
+/* Pages links styles */
+
+div.page_row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0px -@marginX;
+}
+
+.page_link:extend(.btn all) {
+  padding: 4px;
+  margin: @marginY @marginX;
+}
+
+span.current_page {
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+  font-weight: bold;
+  border-radius: @Radius;
+  padding: 4px;
+  text-align: center;
+  display:inline;
+  min-width: 32px;
+  margin: @marginY @marginX;
+}
+
+span.page_hole {
+  margin: 0px 8px 0px 0px;
+}
+
+
+
+
+/* messages screen */
+
+div.message_block {
+  font-size: 20px;
+  width: @msgBoxWidth;
+  background: @clArticleBG;
+  border-radius: @Radius;
+  box-shadow: @Shadow;
+  color: @clArticleFG;
+  margin: 8px auto;
+  text-align: center;
+  padding: 20px;
+  clear: both;
+}
+
+div.message_block h1 {
+    text-align: center;
+    font-size: 21px;
+    font-variant: small-caps;
+    margin: 0px;
+}
+
+
+div.message_block {
+  & > a:extend(.btn all) {
+  }
+}
+
+
+div.message {
+  white-space: pre-wrap;
+  padding: 64px;
+  margin: 0px auto;
+  text-align: left;
+  color: black;
+  display: inline-block;
+}
+

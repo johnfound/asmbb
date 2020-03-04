@@ -39,9 +39,9 @@ Supprimer le [case:[cnt_thread]| |sujet et le message|message]|
     Notice, that deletion can break the thread!|
     Beachten Sie, dass Löschen das Thema ruinieren kann!]
 ]</p>
-    <div class="panel">
-      <input type="submit" value="[case:[special:lang]|Delete|Изтрий|Удалить|Supprimer|Löschen]" >
-      <a class="button" href="!by_id">[case:[special:lang]|Cancel|Връщане|Отменить|Annuler|Abbrechen]</a>
+    <div class="ui">
+      <input class="btn button" type="submit" value="[case:[special:lang]|Delete|Изтрий|Удалить|Supprimer|Löschen]" >
+      <a class="btn button" href="!by_id">[case:[special:lang]|Cancel|Връщане|Отменить|Annuler|Abbrechen]</a>
       <input type="hidden" name="ticket" value="[Ticket]" >
     </div>
   </form>

@@ -1,2 +1,41 @@
 @import "skin_variables.lsi";
 
+#users_invited {
+  display: none;
+}
+
+#limited:checked ~ #users_invited {
+  display: block;
+}
+
+#limited + label {
+  margin: @marginY 0px;
+  display: block;
+}
+
+#autocomplete {
+  display: none;
+  position: absolute;
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+  border: @borderEdit;
+  padding: 4px;
+  margin: 0;
+  overflow: auto;
+  max-height: 20em;
+  li {
+    list-style: none;
+    cursor: pointer;
+    &:focus {
+      background-color: @clButtonBG;
+      color: @clButtonFG;
+      outline: none;
+    }
+  }
+}
+
+#__ruler {
+  visibility: hidden;
+  position: absolute;
+  white-space: nowrap;
+}

@@ -1,4 +1,5 @@
 [css:navigation.css]
+[css:posts.css]
 [css:search.css]
 
 [case:[special:lang]|
@@ -24,10 +25,10 @@
 ]
 
 <div class="ui">
-  <a class="ui left" href="..">[const:btnBack]</a>
+  <a class="btn left" href="..">[const:btnBack]</a>
   <span class="spacer"></span>
   [case:[special:isadmin] | |
-    <a class="ui right" href="/!settings[special:urltag]">[const:btnSettings]</a>
-    <a class="ui right" href="/!sqlite">[const:btnConsole]</a>
+    <a class="btn right" href="/!settings[special:urltag]">[const:btnSettings]</a>
+    <a class="btn right" href="/!sqlite">[const:btnConsole]</a>
   ]
 </div>

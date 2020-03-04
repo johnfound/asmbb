@@ -2,7 +2,6 @@
 [css:userinfo.css]
 [css:markdown.css]
 [css:settings.css]
-<div class="user_info">
   <div class="user_desc">
     <img width="128" height="128" class="profile_avatar" src="/!avatar/[url:[username]]?v=[AVer]" alt="(ツ)">
     <h1>[username]</h1>
@@ -130,4 +129,3 @@
     </ul>
   </div>
 ]
-</div>

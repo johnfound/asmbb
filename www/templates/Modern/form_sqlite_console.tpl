@@ -65,18 +65,18 @@
 
 <div class="console">
   <div class="ui">
-    <a class="ui left" href="/">[const:btnList]</a>
+    <a class="btn left" href="/">[const:btnList]</a>
     <span class="spacer"></span>
-    <a class="ui right" href="/!settings">[const:btnSettings]</a>
-    <a class="ui right" target="_blank" href="/!sqlite">[const:btnSQL]</a>
+    <a class="btn right" href="/!settings">[const:btnSettings]</a>
+    <a class="btn right" target="_blank" href="/!sqlite">[const:btnSQL]</a>
   </div>
   <form id="editform" action="/!sqlite/#sql_result" method="post">
     <p>[const:ttlStmt]:</p>
     <textarea class="sql_editor" name="source" id="source"  placeholder="SQL">[source]</textarea>
     <div>
       <a id="sql_result" style="visibility: hidden; margin: 0px; padding: 0px;"></a>
-      <input type="submit" value="[const:btnExec]" >
-      <input type="reset" value="[const:btnRevert]" >
+      <input class="btn" type="submit" value="[const:btnExec]" >
+      <input class="btn" type="reset" value="[const:btnRevert]" >
       <input type="hidden" name="ticket" value="[Ticket]" >
     </div>
   </form>

@@ -7,6 +7,8 @@
 /* paragraph style */
 
 div.post_text article {
+  border: 1px solid transparent;
+
   h1, h2, h3, h4, h5, h6 {margin: 1rem 0 1rem 0;}
 
   h1 { font-size: 1.5rem;}
@@ -43,6 +45,7 @@ div.post_text article {
     padding: 0.5em;
     margin: 0.5em 0px;
     overflow: auto;
+    scrollbar-width: thin;
 
     white-space: pre;
     display: flow-root;
@@ -128,7 +131,7 @@ div.post_text article {
 
     box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.2);
     padding: 0.75em 0.7em 0.1em 1em;
-    margin:  1em;
+    margin:  1.5em 1em 1em 1em;
 
     background-color: @clArticleBG;
     display: flow-root;
@@ -143,7 +146,7 @@ div.post_text article {
       border-radius: @Radius;
 
       box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.2);
-      background: @clArticleBG;
+      background: white;
 
       font-size: 1em;
       font-weight: normal;

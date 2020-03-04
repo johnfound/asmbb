@@ -63,7 +63,8 @@
     <p>... ou utiliser un gestionnaire de mots de passe.</p>
   ]
 |
-  [equ:pDirections=Überprüfen Sie Ihr Postfach - Sie sollten eine Bestätigungs-E-Mail erhalten haben. Kopieren Sie den <b>geheimen Code</b> aus der E-Mail in das Feld für den geheimen Code. Füllen Sie <b>alle</b> weiteren Felder aus. Dann schicken Sie das Formular ab.]
+  [equ:pDirections=Überprüfen Sie Ihr Postfach - Sie sollten eine Bestätigungs-E-Mail erhalten haben. Kopieren Sie den <b>geheimen Code</b> aus der E-Mail in das Feld für den geheimen Code. Füllen Sie <b>alle</b> weiteren Felder aus. Dann schicken Sie das
+Formular ab.]
   [equ:ttlTitle=Passwort zurücksetzen]
   [equ:phUser=Benutzername]
   [equ:phEmail=E-Mail-Adresse]
@@ -81,7 +82,7 @@
 
 <div class="login">
   <div class="ui">
-    <a class="ui" href="/">Threads</a>
+    <a class="btn" href="/">Threads</a>
   </div>
   <article>
     <p>[const:pDirections]</p>
@@ -94,7 +95,7 @@
     <input type="password" value="" placeholder="[const:phPass]" name="password" class="password" maxlength="1024" autocomplete="off">
     <input type="password" value="" placeholder="[const:phPass2]" name="password2" class="password" maxlength="1024" autocomplete="off">
     <input type="hidden" value="[ticket]" name="ticket" id="ticket">
-    <input type="submit" name="submit" class="button" value="[const:btnSubmit]">
+    <input type="submit" name="submit" class="btn button" value="[const:btnSubmit]">
   </form>
   <article>
     [const:helpRegister]

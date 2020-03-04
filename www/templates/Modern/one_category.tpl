@@ -25,15 +25,19 @@
   [equ:ttlUnread=Ungelesen]
 ]
 
-<div class="category">
+<a class="category" href="/[Tag]/">
+  <h2>
+    <svg [case:[Unread]|class="disabled"|] version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      <path d="m29 2.5e-7h-9c-1.7 0-4 .96-5.1 2.1l-14 14c-1.2 1.2-1.2 3.1 0
+               4.3l11 11c1.2 1.2 3.1 1.2 4.3 0l14-14c1.2-1.2 2.1-3.5 2.1-5.1v-9c-6e-5-1.7-1.4-3-3-3zm-4
+               10c-1.7 0-3-1.3-3-3s1.3-3 3-3c1.7 0 3 1.3 3 3s-1.3 3-3 3z"
+      />
+    </svg>
+    <span>[Tag]:&nbsp;</span>[Description]
+  </h2>
  <div>
- [case:[Unread]|
-   <img src="[special:skin]/_images/tag_gray.svg" alt="">|
-   <img src="[special:skin]/_images/tag.svg" alt="[const:altNew]">
- ]
+   <p>[const:ttlThreads]: <b>[ThreadCnt]</b></p>
+   <p>[const:ttlPosts]: <b>[PostCnt]</b></p>
+   [case:[special:userid]||<p>[const:ttlUnread]: <b>[unread]</b></p>]
  </div>
- <a href="/[Tag]/"><span>[Tag]: </span>[Description]</a>
- <div>[const:ttlThreads]<br><span>[ThreadCnt]</span></div>
- <div>[const:ttlPosts]<br><span>[PostCnt]</span></div>
- [case:[special:userid]||<div>[const:ttlUnread]<br><span>[unread]</span></div>]
-</div>
+</a>

@@ -1,4 +1,3 @@
-[css:common.css]
 [css:settings.css]
 
 [case:[special:lang]|
@@ -238,7 +237,7 @@
 [case:[message]||<h1 id="message" class="msg [case:[error]|info|error]">[message]</h1>]
 <form class="settings msgbox" method="post" action="/!settings">
   <h1>[const:ttlSettings]</h1>
-  <input type="submit" name="save" class="button" value="[const:btnSave]">
+  <input type="submit" name="save" class="btn button" value="[const:btnSave]">
 
   <div class="tabbed">
 
@@ -356,7 +355,7 @@
   </div>
 
   <input type="hidden" name="ticket" value="[Ticket]" >
-  <input type="submit" name="save" class="button" value="[const:btnSave]">
+  <input class="btn button" type="submit" name="save" value="[const:btnSave]">
 </form>
 </div>
 

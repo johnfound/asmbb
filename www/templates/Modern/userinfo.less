@@ -1,22 +1,27 @@
 @import "skin_variables.lsi";
 
-div.user_info {
-  display: flex;
-  align-items: stretch;
-  align-content: start;
-  div {
-    background-color: @clArticleBG;
-    color: @clArticleFG;
-    opacity: @Opacity;
-    box-shadow:@Shadow;
-    border-radius: @Radius;
-    margin: 2px 2px 6px 6px;
-    padding: 16px;
-  }
+div.user_stat, div.user_desc {
+  padding: 16px;
 }
 
-div.user_profile {
-  flex-grow: 1;
+div.user_stat {
+  flex-grow: 0;
+}
+
+.user_profile {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0px -@marginX;
+
+  & > * {
+    margin: @marginY @marginX;
+    overflow: hidden;
+    border-radius: @Radius;
+    box-shadow: @Shadow;
+    background-color: @clArticleBG;
+    color: @clArticleFG;
+    flex-grow: 1;
+  }
 }
 
 
@@ -43,6 +48,9 @@ div.user_profile {
 }
 
 .user_stat {
+  h1 {
+    font-size: 20px;
+  }
   li {
     list-style-position: inside;
   }
@@ -54,8 +62,6 @@ form.user_edit_info, form.user_edit_pass {
   color: @clArticleFG;
   border-radius: @Radius;
   box-shadow: @Shadow;
-  opacity: @Opacity;
-  margin: 2px 2px 6px 6px;
   padding: 16px;
 
   display: flex;
@@ -77,6 +83,7 @@ form.user_edit_info, form.user_edit_pass {
 
   h2 {
     font-size: 120%;
+    margin: 8px 0px;
   }
 
   h3 {

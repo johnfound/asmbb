@@ -1,7 +1,7 @@
 [case:[special:lang]|
   [equ:ttlPinned=Pinned thread]
   [equ:ttlLimited=Limited access thread]
-  [equ:ttlUnread=[case:[Unread]|No unread messages|Go to first unread]]
+  [equ:ttlUnread=Go to first unread]
   [equ:tPosts=post[case:[PostCount]|s||s]]
   [equ:ttlMark=Mark thread read]
   [equ:tViews=[case:[ReadCount]|views|view|views]]
@@ -12,7 +12,7 @@
 |
   [equ:ttlPinned=Забодена отгоре]
   [equ:ttlLimited=Тема с ограничен достъп]
-  [equ:ttlUnread=[case:[Unread]|Няма нови съобщения|Към първото непрочетено]]
+  [equ:ttlUnread=Към първото непрочетено]
   [equ:tPosts=съобщени[case:[PostCount]|я|е|я]]
   [equ:ttlMark=Маркирай темата като прочетена]
   [equ:tViews=преглед[case:[ReadCount]|а||а]]
@@ -23,7 +23,7 @@
 |
   [equ:ttlPinned=Прикрепленная на верху]
   [equ:ttlLimited=Тема ограниченным доступом]
-  [equ:ttlUnread=[case:[Unread]|Нет новых сообщений|К первому непрочитанному]]
+  [equ:ttlUnread=К первому непрочитанному]
   [equ:tPosts=сообщени[case:[PostCount]|й|е|й]]
   [equ:ttlMark=Отметить тему прочитанной]
   [equ:tViews=просмотр[case:[ReadCount]|ов||ов]]
@@ -34,7 +34,7 @@
 |
   [equ:ttlPinned=Sujet épinglé]
   [equ:ttlLimited=Sujet à accès limité]
-  [equ:ttlUnread=[case:[Unread]|Pas de messages non-lus|Allez au premier non-lu]]
+  [equ:ttlUnread=Allez au premier non-lu]
   [equ:tPosts=post[case:[PostCount]|s||s]]
   [equ:ttlMark=Marquer le sujet comme lu]
   [equ:tViews=vue[case:[ReadCount]|s||s]]
@@ -45,7 +45,7 @@
 |
   [equ:ttlPinned=Angeheftetes Thema]
   [equ:ttlLimited=Beschränktes Thema]
-  [equ:ttlUnread=[case:[Unread]|Keine ungelesenen Beiträge|Springe zum ersten ungelesenen Beitrag]]
+  [equ:ttlUnread=Springe zum ersten ungelesenen Beitrag]
   [equ:tPosts=Beitr[case:[PostCount]|äge|ag|äge]]
   [equ:ttlMark=Thema als gelesen kennzeichnen]
   [equ:tViews=[case:[ReadCount]|Ansichten|Ansicht|Ansichten]]
@@ -57,21 +57,54 @@
 
 <div class="thread_summary">
   <h2>
-  [case:[Pinned]||<img class="pinned" src="[special:skin]/_images/pinned.png" alt="!"
-  title="[const:ttlPinned]">][case:[Unread]||<a href="[FirstUnread]/!by_id">]<img height="32" width="32"
-  class="unread" src="[special:skin]/_images/posts[case:[Unread]|_gray|].svg"
-  alt="[case:[Unread]||&gt;]" title="[const:ttlUnread]">[case:[Unread]||</a>]
-  <a class="thread_link" href="[Slug]/">[Caption]</a>
-  [case:[Unread]||<span class="small">(&nbsp;[Unread]&nbsp;[const:unread]&nbsp;)&nbsp;<a href="[Slug]/!markread"
-  title="[const:ttlMark]"><img width="16" height="16" src="[special:skin]/_images/markread.svg" alt="X"></a></span>]
+
+[case:[Pinned]||<svg viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+  <title>[const:ttlPinned]</title>
+  <path d="m17.972 3.054-12.366 4.946h-3.356c-1.24 0-2.25 1.01-2.25 2.25v2.75c0 1.178.925 2 2.25 2h.85l.908
+           6.356c.053.37.369.644.742.644h3c.214 0 .417-.091.56-.25.142-.159.21-.371.186-.584l-.59-5.246
+           10.065 4.026c.091.036.185.054.279.054.147 0
+           .295-.044.421-.129.206-.14.329-.372.329-.621v-15.5c0-.249-.123-.481-.329-.621-.207-.14-.469-.168-.699-.075z"
+  />
+  <path d="m21.219 9.336 2.5-2c.323-.259.376-.731.117-1.055-.26-.322-.731-.374-1.055-.117l-2.5
+           2c-.323.259-.376.731-.117 1.055.148.184.366.281.586.281.165 0 .33-.054.469-.164z"
+  />
+  <path d="m21.219 14.664c-.322-.257-.794-.205-1.055.117-.259.323-.206.796.117 1.055l2.5 2c.139.11.304.164.469.164.22
+           0 .438-.097.586-.281.259-.323.206-.796-.117-1.055z"/><path d="m23.25 11.25h-2.5c-.414
+           0-.75.336-.75.75s.336.75.75.75h2.5c.414 0 .75-.336.75-.75s-.336-.75-.75-.75z"
+  />
+</svg>]
+
+[case:[limited]||<svg width="24" height="24" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <title>[const:ttlLimited]</title>
+  <path d="m4 4-3 3v3h-1v3h1v6h-1v3h1v4h6v-4h2v4h6v-4h2v4h6v-4h2v4h6v-4h1v-3h-1v-6h1v-3h-1v-3l-3-3-3 3v3h-2v-3l-3-3-3 3v3h-2v-3l-3-3-3 3v3h-2v-3zm3 9h2v6h-2zm8 0h2v6h-2zm8 0h2v6h-2z"/>
+</svg>]
+
+[case:[Unread]||<a href="[FirstUnread]/!by_id"><svg width="24" height="24" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <title>[const:ttlUnread]</title>
+  <path d="m30 10h-.88l.11 9.4c.017 1.5-1.2 3-3 3l-17 5e-6v.5c0 1.3 1.1 3 3
+           3h11l7 3-1-3c1.6 0 3-1.7 3-3v-11c0-1.3-.7-2.3-2.2-2.3z"
+  />
+  <path d="m24 3.4h-21c-1.8 0-3 1.4-3 2.9v12c0 1.4 1.4 3 3 3l-1 4 7-4h15c1.7
+           0 3-1.5 3-3 .0098-3.9.052-7.7 0-12-.02-1.5-1.3-3-3-3zm-17 10c-.99
+           0-1.8-.81-1.8-1.8s.8-1.8 1.8-1.8c.99 0 1.8.81 1.8 1.8s-.81 1.8-1.8
+           1.8zm6.7 0c-.99 0-1.8-.81-1.8-1.8s.8-1.8 1.8-1.8 1.8.81 1.8 1.8-.8
+           1.8-1.8 1.8zm6.7 0c-.99 0-1.8-.81-1.8-1.8s.81-1.8 1.8-1.8c.99 0
+           1.8.81 1.8 1.8s-.81 1.8-1.8 1.8z"
+  />
+</svg></a>]
+
+<a class="thread_link" href="[Slug]/">[Caption]</a>
+
+[case:[Unread]||<span class="small nowrap">&nbsp;(&nbsp;[Unread]&nbsp;[const:unread]&nbsp;)&nbsp;<a href="[Slug]/!markread"
+  title="[const:ttlMark]"><svg version="1.1" width="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path d="m9.9 8 5.7-5.7c.525-.525.525-1.38 0-1.9-.525-.525-1.38-.525-1.9
+             0l-5.7 5.7-5.7-5.7c-.525-.525-1.38-.525-1.9 0-.525.525-.525 1.38
+             0 1.9l5.7 5.7-5.7 5.7c-.525.525-.525 1.38 0 1.9.525.525 1.38.525
+             1.9 0l5.7-5.7 5.7 5.7c.525.525 1.38.525 1.9 0 .525-.525.525-1.38 0-1.9z"/>
+  </svg></a></span>]
   </h2>
   [PostCount] [const:tPosts] ・ [ReadCount] [const:tViews] ・ [TimeChanged]
   <label><input type="checkbox" class="collapseit"><ul class="small comma posters">[const:Posters][html:[Posters]]</ul></label>
   [case:[limited]||<label><input type="checkbox" class="collapseit"><ul class="small comma invited">[const:Invited][html:[Invited]]</ul></label>]
   [case:[ThreadTags]||<ul class="small comma thread_tags">[const:Tags][html:[ThreadTags]]</ul>]
-
-
-  [case:[limited]||<img height="32" width="32" class="unread" src="[special:skin]/_images/limited.svg" alt="#" title="[const:ttlLimited]">]
-
-
 </div>

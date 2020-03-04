@@ -1,5 +1,5 @@
 [case:[special:lang]|
-  [equ:hUser=User]
+  [equ:hUser=User name]
   [equ:hAvatar=Avatar]
   [equ:hTheme=Theme]
   [equ:hCnt=Post count]
@@ -35,12 +35,23 @@
   [equ:hSeen=Zuletzt gesehen]
 ]
 
-<div class="sort_order">
-  <div>[const:hUser]   <a class="[case:[special:order]||sorted|]" href="?sort=1">▲&nbsp;</a><a class="[case:[special:order]|||sorted|]" href="?sort=2">▼</a></div>
-  <div>[const:hAvatar] <a class="[case:[special:order]||||sorted|]" href="?sort=3">▲&nbsp;</a><a class="[case:[special:order]|||||sorted|]" href="?sort=4">▼</a></div>
-  <div>[const:hTheme]  <a class="[case:[special:order]||||||sorted|]" href="?sort=5">▲&nbsp;</a><a class="[case:[special:order]|||||||sorted|]" href="?sort=6">▼</a></div>
-  <div>[const:hCnt]    <a class="[case:[special:order]||||||||sorted|]" href="?sort=7">▲&nbsp;</a><a class="[case:[special:order]|||||||||sorted|]" href="?sort=8">▼</a></div>
-  <div>[const:hReg]    <a class="[case:[special:order]||||||||||sorted|]" href="?sort=9">▲&nbsp;</a><a class="[case:[special:order]|||||||||||sorted|]" href="?sort=10">▼</a></div>
-  <div>[const:hSeen]   <a class="[case:[special:order]||||||||||||sorted|]" href="?sort=11">▲&nbsp;</a><a class="[case:[special:order]|||||||||||||sorted|]" href="?sort=12">▼</a></div>
-</div>
+<form method="GET">
+  <select name="sort" onchange="this.form.submit()">
+    <option value="0" [case:[special:order]|selected|]>(Default)</option>
+    <option value="1" [case:[special:order]||selected|]>[const:hUser] ▲</option>
+    <option value="2" [case:[special:order]|||selected|]>[const:hUser] ▼</option>
+    <option value="8" [case:[special:order]|||||||||selected|]>[const:hCnt] ▼</option>
+    <option value="7" [case:[special:order]||||||||selected|]>[const:hCnt] ▲</option>
+    <option value="4" [case:[special:order]|||||selected|]>[const:hAvatar]</option>
+    <option value="5" [case:[special:order]||||||selected|]>[const:hTheme] ▲</option>
+    <option value="6" [case:[special:order]|||||||selected|]>[const:hTheme] ▼</option>
+    <option value="9" [case:[special:order]||||||||||selected|]>[const:hReg] ▲</option>
+   <option value="10" [case:[special:order]|||||||||||selected|]>[const:hReg] ▼</option>
+   <option value="11" [case:[special:order]||||||||||||selected|]>[const:hSeen] ▲</option>
+   <option value="12" [case:[special:order]|||||||||||||selected|]>[const:hSeen] ▼</option>
+
+<!----    <option value="3" [case:[special:order]||||selected|]>[const:hAvatar] ▲</option> ---->
+  </select>
+  <input type="submit" value="Sort">
+</form>
 <div class="multi_content">

@@ -1,2 +1,64 @@
 @import "skin_variables.lsi";
 
+a.ban_link {
+  display: inline-block;
+  color: red;
+  font-weight: bold;
+  font-size: 24px;
+  text-decoration: none;
+  vertical-align: middle;
+
+  &:before {
+    content: "🖓";
+  }
+}
+
+a.online {
+  font-weight: bold;
+  background-color: @clDarkBG;
+  color: @clDarkFG;
+  vertical-align: middle;
+  padding: 1px 4px;
+}
+
+/* Users online table styles */
+
+div.users_online {
+  table {
+    display: block;
+    tbody {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0px -@marginX;
+
+      tr:first-child {
+        display: none;
+      }
+
+      tr {
+        display: block;
+        padding: 8px;
+        border-radius: @Radius;
+        margin: 0px;
+        background-color: @clArticleBG;
+        color: @clArticleFG;
+        box-shadow: @Shadow;
+        max-width: 640px;
+
+        margin: @marginY @marginX;
+        overflow: hidden;
+
+        td {
+          display: block;
+          word-wrap: break-word;       /* Internet Explorer 5.5+ */
+          word-break: break-all;
+        }
+
+        th {
+          display: none;
+        }
+      }
+    }
+  }
+}
+

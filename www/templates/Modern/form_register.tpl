@@ -76,16 +76,16 @@
 
 <div class="login">
   <div class="ui">
-    <a class="ui" href="/">Threads</a>
+    <a class="btn" href="/">[const:btnThreads]</a>
   </div>
   <form class="register-block" method="post" action="/!register/">
     <h1>[const:ttlRegister]</h1>
-    <p class="pi_nick"><input type="text" value="" placeholder="[const:phUser]" name="username" class="username" maxlength="256" autofocus></p>
-    <p class="[case:[email_flag]|pi_email|pi_nick]"><input type="text" value="" placeholder="[const:phEmail]" name="email" class="email" maxlength="320"></p>
-    <p class="pi_pass"><input type="password" value="" placeholder="[const:phPass]" name="password" class="password" maxlength="1024" autocomplete="off"></p>
-    <p class="pi_pass"><input type="password" value="" placeholder="[const:phPass2]" name="password2" class="password" maxlength="1024" autocomplete="off"></p>
-    <p class="pi_tick"><input type="text" value="[ticket]" name="ticket" id="ticket" class="ticket"></p>
-    <label class="submit" for="submit">[const:btnSubmit]</label><input type="image" name="submit" id="submit" value="Submit">
+    <input type="text" value="" placeholder="[const:phUser]" name="username" class="username" maxlength="256" autofocus>
+    <input class="email[case:[email_flag]| hidden|]" type="text" value="" placeholder="[const:phEmail]" name="email" class="email" maxlength="320">
+    <input type="password" value="" placeholder="[const:phPass]" name="password" class="password" maxlength="1024" autocomplete="off">
+    <input type="password" value="" placeholder="[const:phPass2]" name="password2" class="password" maxlength="1024" autocomplete="off">
+    <input class="hidden" type="text" value="[ticket]" name="ticket" id="ticket" class="ticket">
+    <label class="submit btn" for="submit">[const:btnSubmit]</label><input type="image" name="submit" id="submit" value="Submit">
   </form>
   <article>
     [const:helpRegister]

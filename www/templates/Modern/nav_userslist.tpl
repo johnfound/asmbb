@@ -29,11 +29,11 @@
 ]
 
 <div class="ui">
-  <a class="ui left" href="/!categories">[const:btnCats]</a>
-  <a class="ui left" href="/">[const:btnList]</a>
+  <a class="btn left" href="/!categories">[const:btnCats]</a>
+  <a class="btn left" href="/">[const:btnList]</a>
   <span class="spacer"></span>
   [case:[special:isadmin] | |
-    <a class="ui right" href="/!settings[special:urltag]">[const:btnSettings]</a>
-    <a class="ui right" href="/!sqlite">[const:btnConsole]</a>
+    <a class="btn right" href="/!settings[special:urltag]">[const:btnSettings]</a>
+    <a class="btn right" href="/!sqlite">[const:btnConsole]</a>
   ]
 </div>

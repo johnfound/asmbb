@@ -6,27 +6,45 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  row-gap: 8px;
+  margin: -@marginY 0px;
 }
 
 
 .oneuser {
   background-color: @clArticleBG;
   color: @clArticleFG;
-  opacity: @Opacity;
   box-shadow: @Shadow;
   flex-grow: 1;
   flex-shrink: 1;
   padding: 8px;
   border-radius: @Radius;
+  margin: @marginY @marginX;
+  text-decoration: none;
+
+  &:focus {
+   outline: 1px dotted @clArticleFG;
+   outline-offset: -4px;
+  }
+
   img.avatar {
     display: block;
     width: 128px;
     height: 128px;
+    margin: auto;
+    border-radius: 50%;
+    background-color: @clPrimary0;
   }
-}
 
-.sort_order {
-  display: flex;
-  column-gap: 16px;
+  .nick {
+    text-align: center;
+    font-weight: bold;
+  }
+
+  div {
+    font-weight: bold;
+    span {
+      font-weight: normal;
+    }
+  }
+
 }

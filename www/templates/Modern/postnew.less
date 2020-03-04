@@ -1,2 +1,58 @@
 @import "skin_variables.lsi";
 
+
+#editform {
+  background-color: @clDialogBG;
+  color: @clDialogFG;
+  border-radius: @Radius;
+  box-shadow: @Shadow;
+  padding: 1px 8px;
+  label {
+    font-weight: bold;
+  }
+}
+
+.editgroup {
+  display: flex;
+  margin: @marginY 0 @marginY 0;
+
+  & > * {
+    margin: 0px @marginX/2;
+    &:first-child {
+      margin-left: 0px;
+    }
+    &:last-child {
+      margin-right: 0px;
+    }
+    p {
+      margin: @marginY 0 @marginY/2 0;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      margin: 0px !important;
+    }
+    textarea {
+      height: 15em;
+    }
+    flex-grow: 1;
+    & > * {
+      display: block;
+    }
+  }
+}
+
+
+.fakeedit {
+  width: 100%;
+  border: @borderEdit;
+  padding: 4px;
+  margin: 0px 0px 8px 0px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  background-color: @clArticleBG;
+  color: @clMono4;
+  font-weight: bold;
+  font-size: inherit;
+}

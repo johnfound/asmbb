@@ -66,14 +66,14 @@
 
 <div class="login">
   <div class="ui">
-    <a class="ui" href="/">Threads</a>
+    <a class="btn" href="/">Threads</a>
   </div>
   <form class="register-block" method="post" action="/!resetpassword/1">
     <h1>[const:ttlRequest]</h1>
     <input type="text" value="" placeholder="[const:phUser]" name="username" class="username" maxlength="256" autofocus>
     <input type="text" value="" placeholder="[const:phEmail]" name="email" class="email" maxlength="320">
     <input type="hidden" value="[ticket]" name="ticket" id="ticket">
-    <input type="submit" name="submit" class="button" value="[const:btnSubmit]">
+    <input type="submit" name="submit" class="btn button" value="[const:btnSubmit]">
   </form>
   <article>
     [const:helpRequest]

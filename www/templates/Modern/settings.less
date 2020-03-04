@@ -5,10 +5,9 @@
 div.set_page {
   background-color: @clArticleBG;
   color: @clArticleFG;
-  opacity: @Opacity;
   box-shadow: @Shadow;
   overflow: auto;
-  margin: 2px 2px 6px 6px;
+  margin: @marginY 0px;
   border-radius: @Radius;
   padding: 16px;
   flex-grow: 1;
@@ -20,13 +19,16 @@ form.settings {
   display: flex;
   flex-direction: column;
   h1 {
-    height: 38px;
     text-align: center;
-    font-size: 20px;
-    font-variant: small-caps;
-    margin-top: 0;
-    margin-bottom: 8px;
+    margin: @marginY 0px;
     padding: 8px;
+    background-color: @clButtonHighlightBG;
+    color: @clButtonHighlightFG;
+    border-radius: @Radius;
+
+    font-size: 24px;
+    font-variant: small-caps;
+    font-weight: bold;
   }
 
   h2 {
@@ -81,29 +83,15 @@ textarea.settings {
 }
 
 
-input.button {
-    height: 38px;
-    width: @buttonWidth;
-    background-color: @clButtonHighlightBG;
-    color: @clButtonHighlightFG;
-    border: none;
-    border-radius: @Radius;
-    font-weight: bold;
-    font-size: @FontSzMain;
-    font-variant: small-caps;
-    outline: none;
-    cursor: pointer;
-    text-align: center;
-    padding: 0px;
-    display: block;
-    margin: 16px 0px;
+.button {
+  height: 38px;
+  width: @buttonWidth;
+  font-weight: bold;
+  font-size: @FontSzMain;
+  font-variant: small-caps;
+  display: block;
+  margin: 16px 0px;
 }
-
-input.button:hover {
-    background: @clButtonActiveBG;
-    color: @clButtonActiveFG;
-}
-
 
 h1.msg {
   position: fixed;
@@ -114,7 +102,9 @@ h1.msg {
   left: 16px;
   top: 16px;
   right: 16px;
+  border-radius: @Radius;
 }
+
 
 .info {
   background-color: @clMsgInfoBG;
@@ -145,23 +135,12 @@ input[type=checkbox] + label {
 
 .checkboxes {
   column-width: 250px;
+  margin: 0px;
   li {
     list-style: none;
   }
 }
 
-
-h1.msg {
-  position: fixed;
-  margin: 0px;
-  padding: 8px;
-  text-align: center;
-  display: block;
-  left: 16px;
-  top: 16px;
-  right: 16px;
-  border-radius: @Radius;
-}
 
 .info {
   background-color: @clMsgInfoBG;

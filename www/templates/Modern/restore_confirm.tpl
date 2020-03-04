@@ -30,7 +30,7 @@
 ]
 
 <div class="confirm">
-  <form id="editform" method="post">
+  <form method="post">
     <h1 class="msg warning">[const:hRestore]</h1>
     <p>[const:pQuestion]</p>
     <div class="post_preview">
@@ -40,9 +40,9 @@
         </article>
       </div>
     </div>
-    <div class="panel">
-      <input type="submit" value="[const:btnRestore]" >
-      <a class="button" href="/[postID]/!history#[version]">[const:btnCancel]</a>
+    <div class="ui">
+      <input class="btn" type="submit" value="[const:btnRestore]" >
+      <a class="btn" href="/[postID]/!history#[version]">[const:btnCancel]</a>
       <input type="hidden" name="version" value="[version]" >
       <input type="hidden" name="ticket" value="[Ticket]" >
     </div>

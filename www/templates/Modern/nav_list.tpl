@@ -45,14 +45,19 @@
 
 
 <div class="ui">
-  <a class="ui left" href="/!categories">[const:btnCats]</a>
-  [case:[special:userid]  | |<a class="ui left" href="!markread">[const:btnMarkRead]</a>]
-  [case:[special:canstart]| |<a class="ui left" href="!post">[const:btnNewThread]</a>]
-  [case:[special:canchat] | |<a class="ui left" href="/!chat">[const:btnChat]</a>]
+  <a class="btn left" href="/!categories">[const:btnCats]</a>
+  [case:[special:userid]  | |<a class="btn left" href="!markread">[const:btnMarkRead]</a>]
+  [case:[special:canstart]| |<a class="btn left" href="!post">[const:btnNewThread]</a>]
+  [case:[special:canchat] | |<a class="btn left" href="/!chat">[const:btnChat]</a>]
   <span class="spacer"></span>
   [case:[special:isadmin] | |
-    <a class="ui right" href="/!settings[special:urltag]">[const:btnSettings]</a>
-    <a class="ui right" href="/!sqlite">[const:btnConsole]</a>
+    <a class="btn right" href="/!settings[special:urltag]">[const:btnSettings]</a>
+    <a class="btn right" href="/!sqlite">[const:btnConsole]</a>
   ]
-  [case:[special:limited]|<a class="ui2 right" href="!feed" title="[const:rssfeed]"><img src="[special:skin]/_images/rss.svg" alt="RSS"></a>|]
+  [case:[special:limited]|<a class="btn right" href="!feed" title="[const:rssfeed]"><svg class="listfeed" height="19" width="19" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+    <title>RSS</title>
+    <path d="m8.8 27.6c0 2.43-1.97 4.4-4.4 4.4s-4.4-1.97-4.4-4.4 1.97-4.4 4.4-4.4 4.4 1.97 4.4 4.4z"/>
+    <path d="m21.2 32h-6.2c0-8.2-6.8-15-15-15v-6.2c11.8 0 21.2 9.4 21.2 21.2z"/>
+    <path d="m25.6 32c0-14.2-11.4-25.6-25.6-25.6v-6.4c17.6 0 32 14.4 32 32z"/>
+  </svg></a>|]
 </div>

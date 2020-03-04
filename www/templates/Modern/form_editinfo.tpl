@@ -172,14 +172,14 @@
   </ul>
   ]
   <input type="hidden" name="ticket" value="[Ticket]">
-  <input type="submit" name="save" class="button" value="[const:btnSave]">
+  <input type="submit" name="save" class="btn button" value="[const:btnSave]">
 </form>
 
 <form class="user_edit_info" method="post" enctype="multipart/form-data" action="/!avatar_upload/[url:[username]]">
   <h2>[const:hdrAvatar]</h2>
-  <input type="file" class="browse" name="avatar">
+  <input type="file" name="avatar">
   <input type="hidden" name="ticket" value="[Ticket]">
-  <input type="submit" name="submit" class="button" value="[const:btnUpload]">
+  <input type="submit" name="submit" class="btn button" value="[const:btnUpload]">
 </form>
 
 <form class="user_edit_info" method="post" action="/!setskin/[url:[username]]">
@@ -198,7 +198,7 @@
     [special:skins=[skin]]
   </select>
   <input type="hidden" name="ticket" value="[Ticket]">
-  <input type="submit" name="save" class="button" value="[const:btnSave]">
+  <input type="submit" name="save" class="btn button" value="[const:btnSave]">
 </form>
 
 
@@ -209,7 +209,7 @@
   <input type="password" value="" placeholder="[const:passNew]" name="newpass" class="password" maxlength="1024" autocomplete="off">
   <input type="password" value="" placeholder="[const:passNew2]" name="newpass2" class="password" maxlength="1024" autocomplete="off">
   <input type="hidden" name="ticket" value="[Ticket]">
-  <input type="submit" name="changepass" class="button" value="[const:btnChangePass]">
+  <input type="submit" name="changepass" class="btn button" value="[const:btnChangePass]">
 </form>
 
 <form class="user_edit_pass" method="post" action="/!changemail">
@@ -217,6 +217,6 @@
   <input type="password" value="" placeholder="[const:passPass]" name="password" class="password" maxlength="1024" autocomplete="off">
   <input type="text" value="[email]" placeholder="[const:emailNew]" name="email" class="email" maxlength="320">
   <input type="hidden" name="ticket" value="[Ticket]">
-  <input type="submit" name="changeemail" class="button" value="[const:btnChangeEmail]">
+  <input type="submit" name="changeemail" class="btn button" value="[const:btnChangeEmail]">
 </form>
 ]

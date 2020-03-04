@@ -4,6 +4,7 @@ body {
   position: absolute;
   left: 0; right: 0; top: 0; bottom: 0;
   overflow: hidden;
+  margin: 0px 4px 16px 4px !important;
 }
 
 div.chat {
@@ -11,6 +12,7 @@ div.chat {
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  overflow: hidden;
 }
 
 #layout {
@@ -20,6 +22,14 @@ div.chat {
 
 #header_panel, #tagsPanel, .footer, .attribution {
   display: none !important;
+}
+
+div.ui {
+  margin: 4px 0px !important;
+  p {
+    margin-right: 8px;
+    font-weight: bold;
+  }
 }
 
 div.chatflex {
@@ -34,7 +44,7 @@ div.chatflex {
   color: @clArticleFG;
   border-radius: @Radius;
   box-shadow: @Shadow;
-  margin: 2px 2px 6px 6px;
+  margin: 4px;
   overflow: auto;
   padding: 16px;
   flex-grow: 1;
@@ -45,7 +55,7 @@ div.chatflex {
   color: @clArticleFG;
   border-radius: @Radius;
   box-shadow: @Shadow;
-  margin: 2px 2px 6px 6px;
+  margin: 4px;
   overflow: auto;
   flex-grow: 0;
   flex-shrink: 0;
@@ -56,12 +66,8 @@ div.chatflex {
 #chat_form {
   display: flex;
   align-items: center;
-//  background-color: @clPanelBG;
-//  color: @clPanelFG;
   border-radius: @Radius;
-//  box-shadow: @Shadow;
-  margin: 2px 2px 6px 6px;
-//  padding: 8px 12px;
+  margin: 4px;
 
   input {
     margin: 0px 8px 0px 0px;
@@ -69,12 +75,18 @@ div.chatflex {
   }
 
   .icon_btn {
-    line-height: 0px;
-    background-color: @clArticleBG;
-    border-radius: @Radius;
-    box-shadow: @Shadow;
-    border: 2px solid @clSeparator;
+    background-color: transparent;
+    padding: 0px;
+    svg > *:not(:hover){
+      fill: @clButtonActiveFG;
+    }
   }
+}
+
+#chat_user {
+  width: 200px;
+  margin: 0px 4px 0px 0px;
+  box-shadow: @Shadow;
 }
 
 #chat_message {
@@ -113,7 +125,7 @@ div.chatflex {
 .date {
   font-size: 80%;
   padding: 0px 8px;
-  background-color: @clArticleBG;
+  background-color: @clArticleBGO;
 }
 
 

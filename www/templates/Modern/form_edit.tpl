@@ -60,7 +60,13 @@
 ]
 
 <div class="editor" id="editor">
-  <a id="close_btn" href="!by_id"><img src="[special:skin]/_images/close.svg" alt="Close" height="16"></a>
+  <a id="close_btn" class="btn" href="!by_id">
+    <svg version="1.1" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+     <title>Close</title>
+     <rect transform="rotate(45)" x=".635" y="-1.53" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
+     <rect transform="rotate(135)" x="-10.7" y="-12.8" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
+    </svg>
+  </a>
   <form id="editform" action="!edit" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
     <div class="tabbed">
       <input id="rad1" name="tabselector" type="radio" checked>
@@ -81,9 +87,9 @@
       </section>
     </div>
 
-    <div>
-      <input type="submit" name="preview" value="[const:btnPreview]" onclick="this.form.cmd='preview'" title="[const:hintPreview]">
-      <input type="submit" name="submit" value="[const:btnSubmit]" onclick="this.form.cmd='submit'" title="[const:hintSubmit]" >
+    <div class="ui">
+      <input class="btn" type="submit" name="preview" value="[const:btnPreview]" onclick="this.form.cmd='preview'" title="[const:hintPreview]">
+      <input class="btn" type="submit" name="submit" value="[const:btnSubmit]" onclick="this.form.cmd='submit'" title="[const:hintSubmit]" >
       <input type="hidden" name="ticket" value="[Ticket]" >
     </div>
   </form>

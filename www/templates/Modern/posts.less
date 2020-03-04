@@ -1,26 +1,38 @@
 @import "skin_variables.lsi";
 
 div.thread {
-  overflow: hidden;
+//  overflow: hidden;
   display: flex;
   flex-direction: column;
-  row-gap: 8px;
+  margin: -@marginY 0px;
 }
 
+div.current_version {
+  overflow: visible;
+  .post {
+     box-shadow: -1px 1px 8px 1px rgba(255, 0, 64, 1);
+  }
+}
+
+
 .post {
+  display: flex;
+  flex-direction: column;
+
   background-color: @clArticleBG;
   color: @clArticleFG;
   margin: 0px;
   box-shadow: @Shadow;
   border-radius: @Radius;
-  border: 1px solid transparent;
-  opacity: @Opacity;
   flex-grow: 1;
   flex-shrink: 1;
+  overflow: auto;
+  padding: 8px;
 }
 
 .post_text {
-  margin: 16px;
+//  margin: 16px;
+  flex-grow: 1;
 }
 
 
@@ -53,9 +65,12 @@ span.nickname {
   display: flex;
   align-items: center;
   clear: both;
-  margin-top: 16px;
+  margin: 16px 0px 0px 0px !important;
   padding-top: 8px;
   border-top: 2px solid #a0a0a0;
+  svg {
+    margin-right: @marginX;
+  }
 }
 
 .unread {
@@ -69,44 +84,50 @@ span.nickname {
 }
 
 .edit_tools {
-  img {
+  margin: 0px;
+  svg {
     width: 20px;
-    height: 20px;
+    margin: 0px;
+  }
+  .quote, .edit {
+    margin-right: @marginX;
+  }
+  .history {
+    margin-left: @marginX;
   }
 }
 
 
 .thread_caption {
-  margin: 0px;
-  background-color: @clHeaderBG;
-  color: @clHeaderFG;
+  margin: @marginY 0px;
+  background-color: @clArticleBG;
+  color: @clArticleFG;
   padding: 16px;
   border-radius: @Radius;
   box-shadow: @Shadow;
-  opacity: @Opacity;
   display: flex;
   flex-wrap: wrap;
   font-size: 24px;
   a {
-    margin: 0px 0px 0px 16px;
-    img {
+    margin: 0px 0px 0px @marginX;
+    svg {
       width: 20px;
-      height: 20px;
+      margin: 0px;
     }
   }
 }
 
 .thread_tags {
-  margin: 0px;
-  background-color: @clHeaderBG;
-  color: @clHeaderFG;
+  margin: @marginY 0;
+  background-color: @clArticleBG;
+  color: @clArticleFG;
   border-radius: @Radius;
   box-shadow: @Shadow;
-  opacity: @Opacity;
 
   user-select: none;
   padding: 16px;
   font-weight: bold;
+
   * {
     font-weight: bold;
     user-select: all;
@@ -130,4 +151,17 @@ span.nickname {
       content: ' ';
     }
   }
+}
+
+
+svg.onepost *{
+  fill: @clMono4;
+}
+
+svg.newpost *{
+  fill: @clPrimary0;
+}
+
+svg.delbtn *{
+  fill: #ff0000 !important;
 }

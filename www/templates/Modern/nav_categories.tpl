@@ -34,12 +34,12 @@
 ]
 
 <div class="ui">
-  <a class="ui left" href="/">[const:btnAll]</a>
-  [case:[special:userid]  | |<a class="ui left" href="!markread">[const:btnMarkRead]</a>]
-  [case:[special:canchat] | |<a class="ui left" href="/!chat">[const:btnChat]</a>]
+  <a class="btn left" href="/">[const:btnAll]</a>
+  [case:[special:userid]  | |<a class="btn left" href="!markread">[const:btnMarkRead]</a>]
+  [case:[special:canchat] | |<a class="btn left" href="/!chat">[const:btnChat]</a>]
   <span class="spacer"></span>
   [case:[special:isadmin] | |
-    <a class="ui right" href="/!settings[special:urltag]">[const:btnSettings]</a>
-    <a class="ui right" href="/!sqlite">[const:btnConsole]</a>
+    <a class="btn right" href="/!settings[special:urltag]">[const:btnSettings]</a>
+    <a class="btn right" href="/!sqlite">[const:btnConsole]</a>
   ]
 </div>

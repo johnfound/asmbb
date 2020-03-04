@@ -1,6 +1,7 @@
 [css:navigation.css]
 [css:posts.css]
 [css:postnew.css]
+[css:threadnew.css]
 
 [case:[special:lang]|
   [equ:btnList=Thread list]
@@ -61,24 +62,36 @@
 
 <div class="new_editor">
   <div class="ui">
-    <a class="ui left" href="[case:[special:page]||../]../">[const:btnList]</a>
-    <a class="ui left" href="[case:[special:page]|./|!by_id]">[const:btnThread]</a>
+    <a class="btn left" href="[case:[special:page]||../]../">[const:btnList]</a>
+    <a class="btn left" href="[case:[special:page]|./|!by_id]">[const:btnThread]</a>
   </div>
   <form id="editform" action="!post#preview" method="post" enctype="multipart/form-data">
-    <p>[const:ttlTitle]:</p>
-    <h1 class="fakeedit">[caption]</h1>
-    [include:edit_toolbar.tpl]
-    <p>[const:ttlPost]:</p>
-    <textarea class="editor" name="source" id="source" placeholder="[const:phText]">[source]</textarea>
-    [case:[special:canupload]||<p class="panel">[const:ttlAttach]:</p><div class="attach"><input type="file" placeholder="[const:phSelect]" name="attach" multiple="multiple" tabindex="-1"></div>]
-    <div class="attachments">
-      [attach_edit:[id]]
+    <div class="editgroup">
+      <div>
+        <p>[const:ttlTitle]:</p>
+        <h1 class="fakeedit">[caption]</h1>
+      </div>
     </div>
-    <div class="panel">
-      <input type="submit" name="preview" value="[const:btnPreview]" >
-      <input type="submit" name="submit" value="[const:btnSubmit]" >
+    [include:edit_toolbar.tpl]
+    <div class="editgroup">
+      <div>
+        <p>[const:ttlPost]:</p>
+        <textarea class="editor" name="source" id="source" placeholder="[const:phText]">[source]</textarea>
+      </div>
+    </div>
+    <div class="editgroup">
+      <div>
+        [case:[special:canupload]||<p class="ui">[const:ttlAttach]:</p><div class="attach"><input type="file" placeholder="[const:phSelect]" name="attach" multiple="multiple" tabindex="-1"></div>]
+        <div class="attachments">
+          [attach_edit:[id]]
+        </div>
+      </div>
+    </div>
+    <div class="ui">
+      <input class="btn" type="submit" name="preview" value="[const:btnPreview]" >
+      <input class="btn" type="submit" name="submit" value="[const:btnSubmit]" >
       <input type="hidden" name="ticket" value="[Ticket]" >
-      <input type="reset" value="[const:btnRevert]" >
+      <input class="btn" type="reset" value="[const:btnRevert]" >
     </div>
   </form>
 </div>
