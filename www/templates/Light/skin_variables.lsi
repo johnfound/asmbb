@@ -8,7 +8,7 @@
 @clColor1: white;
 @clColor1FG: #105289;
 
-@clHeader: white;
+@clHeader: @clColor1FG;
 @clHeaderShadow: #d80027;
 @paddingHeader: 0px;
 @paddingFooter: 8px 0px 0px 0px;
@@ -74,6 +74,8 @@
 @FontMonospace: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
 @FontSize:      16px;
 @FontSizeMono:  16px;
+
+@FontHeader: Arial Black, Helvetica Black, sans-serif;
 
 @HeaderBackground: none;
 

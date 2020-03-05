@@ -118,7 +118,7 @@
 
 </head>
 
-<body>
+<body [case:[special:limited]||class="limited-access"]>
 
 <svg id="background" xmlns='http://www.w3.org/2000/svg' width='100%'>
   <defs>
@@ -196,13 +196,12 @@
       </g>
     </pattern>
   </defs>
-  [case:[special:limited]||<rect x='0' y='0' fill='rgba(255, 160, 255, 0.8)' width='100%' height='100%'/>]
   <rect x='0' y='0' fill='url(#tri)' width='100%' height='100%'/>
 </svg>
 
 
 <div id="header_panel" class="panel">
-  <div class="header">
+  <div class="header noselect">
     [special:header]
     <div class="spacer"></div>
 

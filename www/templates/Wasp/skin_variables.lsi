@@ -8,7 +8,7 @@
 @clColor1: #ffcc40;
 @clColor1FG: #ffcc40;
 
-@clHeader: white;
+@clHeader: #404040;
 @clHeaderShadow: #d80027;
 @paddingHeader: 0px 16px;
 @paddingFooter: 8px;
@@ -74,6 +74,9 @@
 @FontMonospace: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
 @FontSize:      16px;
 @FontSizeMono:  16px;
+
+@FontHeader: Arial Black, Helvetica Black, sans-serif;
+
 
 @HeaderBackground: @clColor1 url("[special:skin]/_images/yellow_back.png") -180px 0%/cover;
 

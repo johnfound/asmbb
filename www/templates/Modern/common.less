@@ -8,14 +8,21 @@
 body {
   font-size: @FontSzMain;
   font-family: @FontMain;
-//  background-color: @clBodyBG;
   color: @clBodyFG;
-  margin: 8px;
+  margin: @marginY @marginX;
   display: flex;
   flex-direction: column;
   background-image: linear-gradient(135deg, #a0d0ff 0px, #ffffff 100%);
   background-attachment: fixed;
+  min-height: calc(100vh + -2*@marginY);
 }
+
+
+.limited-access {
+  box-shadow: 0px 0px 16px 4px red;
+}
+
+
 
 #background {
   position: fixed;
@@ -26,6 +33,11 @@ body {
   z-index: -100;
 }
 
+.noselect {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 
 .multi_content {
   display: flex;
@@ -226,9 +238,14 @@ span.ntf {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  color: @clPanelFG;
 
   & > * {
     margin: 0px @marginX/2;
+  }
+
+  svg > path {
+    fill: @clPanelFG;
   }
 
   h1 {
@@ -236,6 +253,9 @@ span.ntf {
     font-size: 56px;
     line-height: 56px;
     padding: 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: @FontHeader;
   }
 
   div {
@@ -515,6 +535,9 @@ input^[type=checkbox^] {
   text-align: center;
   box-shadow: @btnShadow;
   min-width: 32px;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 
   &::-moz-focus-inner {
     border: 0;

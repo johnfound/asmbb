@@ -74,7 +74,7 @@
 
 <body>
   <div class="header">
-    <h1>[special:header]</h1>
+    [special:header]
     <div class="spacer"></div>
     <div style="text-align: left">
       <form method="POST" action="/!skincookie">
