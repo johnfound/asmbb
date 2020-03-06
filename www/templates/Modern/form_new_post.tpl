@@ -4,7 +4,6 @@
 [css:threadnew.css]
 
 [case:[special:lang]|
-  [equ:btnList=Thread list]
   [equ:btnThread=Thread]
   [equ:ttlTitle=Thread title]
   [equ:ttlPost=Post content]
@@ -15,7 +14,6 @@
   [equ:btnSubmit=Submit]
   [equ:btnRevert=Revert]
 |
-  [equ:btnList=Списък теми]
   [equ:btnThread=Тема]
   [equ:ttlTitle=Заглавие на темата]
   [equ:ttlPost=Съобщение]
@@ -26,7 +24,6 @@
   [equ:btnSubmit=Запис]
   [equ:btnRevert=Отказ]
 |
-  [equ:btnList=Список тем]
   [equ:btnThread=Тема]
   [equ:ttlTitle=Название темы]
   [equ:ttlPost=Текст сообщения]
@@ -37,7 +34,6 @@
   [equ:btnSubmit=Записать]
   [equ:btnRevert=Отказ]
 |
-  [equ:btnList=Liste des sujets]
   [equ:btnThread=Sujet]
   [equ:ttlTitle=Titre du sujet]
   [equ:ttlPost=Contenu du message]
@@ -48,7 +44,6 @@
   [equ:btnSubmit=Poster]
   [equ:btnRevert=Annuler]
 |
-  [equ:btnList=Liste der Themen]
   [equ:btnThread=Thema]
   [equ:ttlTitle=Titel des Themas]
   [equ:ttlPost=Inhalt des Beitrags]
@@ -62,7 +57,6 @@
 
 <div class="new_editor">
   <div class="ui">
-    <a class="btn" href="[case:[special:page]||../]../">[const:btnList]</a>
     <a class="btn" href="[case:[special:page]|./|!by_id]">[const:btnThread]</a>
   </div>
   <form id="editform" action="!post#preview" method="post" enctype="multipart/form-data">

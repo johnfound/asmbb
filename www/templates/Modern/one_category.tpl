@@ -27,7 +27,7 @@
 
 <a class="category" href="/[Tag]/">
   <h2>
-    <svg [case:[Unread]|class="disabled"|] version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+    <svg [case:[Unread]|class="disabled"|] version="1.1" width="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
       <path d="m29 2.5e-7h-9c-1.7 0-4 .96-5.1 2.1l-14 14c-1.2 1.2-1.2 3.1 0
                4.3l11 11c1.2 1.2 3.1 1.2 4.3 0l14-14c1.2-1.2 2.1-3.5 2.1-5.1v-9c-6e-5-1.7-1.4-3-3-3zm-4
                10c-1.7 0-3-1.3-3-3s1.3-3 3-3c1.7 0 3 1.3 3 3s-1.3 3-3 3z"

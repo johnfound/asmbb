@@ -3,56 +3,29 @@
 [css:markdown.css]
 
 [case:[special:lang]|
-  [equ:btnCats=Categories]
-  [equ:btnList=Threads]
   [equ:btnNewPost=Answer]
-  [equ:btnSettings=Settings]
-  [equ:btnConsole=SQL console]
   [equ:ttlEditThread=Edit the thread attributes.]
   [equ:rssfeed=Subscribe to this thread]
 |
-  [equ:btnCats=Категории]
-  [equ:btnList=Теми]
   [equ:btnNewPost=Отговор]
-  [equ:btnSettings=Настройки]
-  [equ:btnConsole=SQL конзола]
   [equ:ttlEditThread=Редактиране на атрибутите на темата.]
   [equ:rssfeed=Абонирай се за тази тема]
 |
-  [equ:btnCats=Категории]
-  [equ:btnList=Темы]
   [equ:btnNewPost=Ответить]
-  [equ:btnSettings=Настройки]
-  [equ:btnConsole=SQL конзоль]
   [equ:ttlEditThread=Редакция атрибутов темы]
   [equ:rssfeed=Подпишитесь на эту тему]
 |
-  [equ:btnCats=Catégories]
-  [equ:btnList=Liste des sujets]
   [equ:btnNewPost=Répondre]
-  [equ:btnSettings=Paramètres]
-  [equ:btnConsole=Console SQL]
   [equ:ttlEditThread=Éditer le titre du sujet et les mots-clés.]
   [equ:rssfeed=Suivre ce sujet]
 |
-  [equ:btnCats=Kategorien]
-  [equ:btnList=Themen]
   [equ:btnNewPost=Antworten]
-  [equ:btnSettings=Einstellungen]
-  [equ:btnConsole=SQL-Konsole]
   [equ:ttlEditThread=Themenoptionen ändern.]
   [equ:rssfeed=Dieses Thema abonnieren]
 ]
 
 <div class="ui">
-  <a class="btn" href="/!categories">[const:btnCats]</a>
-  <a class="btn" href="..">[const:btnList]</a>
   [case:[special:canpost]| |<a class="btn" href="!post">[const:btnNewPost]</a>]
-  <span class="spacer"></span>
-  [case:[special:isadmin] | |
-    <a class="btn" href="/!settings[special:urltag]">[const:btnSettings]</a>
-    <a class="btn" href="/!sqlite">[const:btnConsole]</a>
-  ]
 </div>
 <h1 class="thread_caption">
 [caption]
@@ -79,5 +52,5 @@
  <path d="m25.6 32c0-14.2-11.4-25.6-25.6-25.6v-6.4c17.6 0 32 14.4 32 32z"/>
 </svg></a>|]
 </h1>
-
 <ul class="thread_tags">[special:threadtags=[id]]</ul>
+
