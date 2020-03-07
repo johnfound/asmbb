@@ -1,0 +1,22 @@
+<svg version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <radialGradient id="e" cx="9.71" cy="8.79" r="7.5" gradientTransform="matrix(0 1.34 -2.22 -8.04e-7 34.5 10.1)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#fffffa" offset="0"/>
+   <stop stop-color="#ffd963" offset=".51"/>
+   <stop stop-color="#f90" offset="1"/>
+  </radialGradient>
+  <linearGradient id="l" x1=".983" x2="14.2" y1="5.36" y2="5.98" gradientTransform="matrix(.133 1.82 -2.84 .0852 31.5 -4.37)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#fff" offset="0"/>
+   <stop stop-color="#fff" stop-opacity="0" offset="1"/>
+  </linearGradient>
+ </defs>
+ <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" fill="url(#e)" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width=".999"/>
+ <path d="m15.5 20.5a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" fill="url(#l)" stroke-width="1.03"/>
+ <g transform="matrix(32 0 0 32 -481 -.0138)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path d="m15.8.431c0-.0692-.0649-.0692-.134-.0692" stroke="#00cfff" stroke-width=".0625"/>
+  <path d="m15.7.223-.138.138h.208" stroke="#000" stroke-width=".0312"/>
+  <path d="m15.4.362c-.0692 0-.143 0-.143.0692" stroke="#00cfff" stroke-width=".0625"/>
+  <path d="m15.3.223.138.138h-.208" stroke="#000" stroke-width=".0312"/>
+ </g>
+ <path d="m9.5 16c-2.22 2.22-2.22 6.66 0 8.87 4.42-2.22 8.87-2.22 13.3 0 2.22-2.22 2.22-6.66 0-8.87-4.42 2.22-8.87 2.22-13.3 0z" fill="#fff" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width=".999"/>
+</svg>

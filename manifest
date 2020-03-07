@@ -1,5 +1,5 @@
-C Work\son\sthe\seditor\stoolbar\sfor\sthe\sModern\stheme.\sSome\sglobal\sUI\soptimizations.
-D 2020-03-06T15:33:12.754
+C Forgotten\simages\sadded.
+D 2020-03-07T11:36:51.805
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -431,6 +431,23 @@ F www/templates/Modern/_images/source/save_white.svg 0e45c1d11dcc4a2aef1833a6ccb
 F www/templates/Modern/_images/source/search.svg 7020bc08402df7be99897360f066391c2557e3e4
 F www/templates/Modern/_images/source/send_msg.svg 469ce769ac48bde0c936defe85eb1023b1eb2233
 F www/templates/Modern/_images/source/tag.svg ca9959844db788cdf4f56921eda468cf1f3a6643
+F www/templates/Modern/_images/source/toolbar/angry.svg f1c19403fb2bef3a417e3957287f16f9b87a2674
+F www/templates/Modern/_images/source/toolbar/bold.svg 9062ad660b70abb782e3cad0aa1ea83ae28c19f5
+F www/templates/Modern/_images/source/toolbar/code-block.svg a5ad2c466fd51fdcfb9fb68a38e1ce875f89690a
+F www/templates/Modern/_images/source/toolbar/crying.svg 5096398edf931271e6615b45f7fdb990694b2d84
+F www/templates/Modern/_images/source/toolbar/image.svg 7a8bb910648c4d6115e541dff39d9e06ed3f9edf
+F www/templates/Modern/_images/source/toolbar/italic.svg 7874345c1e1f90227c651e4b943e51de55e36362
+F www/templates/Modern/_images/source/toolbar/link.svg 8f4871ec83ff0de9ff0b9d20392dbd7a16e8a3dd
+F www/templates/Modern/_images/source/toolbar/lol.svg d93d8ae9dfd6bbaabb387f591693bd8971f3ff70
+F www/templates/Modern/_images/source/toolbar/mono.svg c5ad794e2ee55c31275eed6c6cb50bc8e632f403
+F www/templates/Modern/_images/source/toolbar/quote.svg 9f183d6d71cf05ab44d2fbd03d8f40b00301af6d
+F www/templates/Modern/_images/source/toolbar/rofl.svg 2049ad763e4fa35eb401cec49a9b58477af6aa96
+F www/templates/Modern/_images/source/toolbar/sad.svg 679759bc476fbd92992436f777e951c383441b15
+F www/templates/Modern/_images/source/toolbar/smile.svg bfd1fbb48229f5ee5c05335bde372c2003c7bc0c
+F www/templates/Modern/_images/source/toolbar/striked.svg 5feb5509b0f9542ee2f35915dd0d01a50726a982
+F www/templates/Modern/_images/source/toolbar/tongue.svg 22c7a56f8b07d7f3094366827bfeb953661712ac
+F www/templates/Modern/_images/source/toolbar/underlined.svg 8601f9059e769127dad310a08941db7e32b0837b
+F www/templates/Modern/_images/source/toolbar/wink.svg 61a5c40a45f315fc71ab05f70ce01740f5dbb503
 F www/templates/Modern/_images/toolbar.svg 2390a07684cc33627c41f0afd3edb6c8dce671b3
 F www/templates/Modern/activation_email_subject.tpl fbe97e27a9a6cf59c9d590233479925d2836552c
 F www/templates/Modern/activation_email_text.tpl 20d2ce60e7df3923651b8cda1a38ce0d260eaf92
@@ -763,7 +780,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P f04c69a2f488d165af690db75dd5a4fd800b0922
-R 784ca47438a29a38162ff4cf3a61464b
+P 75263a0d1db3f5b9103470398aadf95ee3ea6958
+R 5dd7868cbb6ab4f4286d18107020be1b
 U johnfound
-Z 7dae02463146cbf5b2ec41871f6b55e4
+Z 894ab69125b0d55c3824b10b1da77087
