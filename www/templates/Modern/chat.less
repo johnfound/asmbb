@@ -5,6 +5,8 @@ body {
   left: 0; right: 0; top: 0; bottom: 0;
   overflow: hidden;
   margin: 0px 4px 16px 4px !important;
+  display: flex;
+  flex-direction: column;
 }
 
 div.chat {
@@ -20,7 +22,7 @@ div.chat {
   left: 0; right: 0; top: 0; bottom: 0;
 }
 
-#header_panel, #tagsPanel, .footer, .attribution {
+#header_panel, #taglinks, #global_toolbar, .footer, .attribution {
   display: none !important;
 }
 
@@ -71,6 +73,7 @@ div.chatflex {
 
   input {
     margin: 0px 8px 0px 0px;
+    padding: 8px;
     box-shadow: @Shadow;
   }
 
@@ -87,6 +90,7 @@ div.chatflex {
   width: 200px;
   margin: 0px 4px 0px 0px;
   box-shadow: @Shadow;
+  padding: 8px;
 }
 
 #chat_message {

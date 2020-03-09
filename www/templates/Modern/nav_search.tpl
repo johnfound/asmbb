@@ -16,5 +16,4 @@
 
 <div class="ui">
   <a class="btn" href="..">[const:btnBack]</a>
-  <span class="spacer"></span>
 </div>

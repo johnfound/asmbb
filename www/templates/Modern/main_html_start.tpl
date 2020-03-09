@@ -21,6 +21,7 @@
   [equ:btnConsole=SQL console]
   [equ:btnChat=Chat]
   [equ:btnList=Threads]
+  [equ:rssfeed=Subscribe]
 |
   [equ:ttlPublic=Публични теми]
   [equ:ttlLimited=Теми с ограничен достъп]
@@ -40,6 +41,7 @@
   [equ:btnConsole=SQL конзола]
   [equ:btnChat=Чат]
   [equ:btnList=Теми]
+  [equ:rssfeed=Абонирай се]
 |
   [equ:ttlPublic=Публичные темы]
   [equ:ttlLimited=Темы с ограниченным доступом]
@@ -59,6 +61,7 @@
   [equ:btnConsole=SQL конзоль]
   [equ:btnChat=Чат]
   [equ:btnList=Темы]
+  [equ:rssfeed=Подпишитесь]
 |
   [equ:ttlPublic=Discussions publiques]
   [equ:ttlLimited=Discussions restreintes]
@@ -78,6 +81,7 @@
   [equ:btnConsole=Console SQL]
   [equ:btnChat=Тchat]
   [equ:btnList=Liste des sujets]
+  [equ:rssfeed=Suivre]
 |
   [equ:ttlPublic=Öffentliche Themen]
   [equ:ttlLimited=Themen mit beschränktem Zugang]
@@ -97,6 +101,7 @@
   [equ:btnConsole=SQL-Konsole]
   [equ:btnChat=Chat]
   [equ:btnList=Themen]
+  [equ:rssfeed=Abonnieren]
 ]
 
 
@@ -225,65 +230,82 @@
 </svg>
 
 
-<div id="header_panel" class="panel">
-  <div class="header noselect">
-    [special:header]
+<div class="header noselect">
+  [special:header]
 
-    <div class="spacer"></div>
+  <div class="spacer"></div>
 
-      [case:[special:userid]||
-        <a class="[case:[special:limited]|btn|ui3]" href="/[case:[special:dir]||[special:dir]/]" title="[const:ttlPublic]">[const:Public][special:unread]</a>
-        <a class="[case:[special:limited]|ui3|btn]" href="/(o)/[case:[special:dir]||[special:dir]/]" title="[const:ttlLimited]">[const:Limited][special:unreadLAT]</a>
-      ]
+  <form method="POST" action="/!skincookie">
+    <select class="skin" name="skin" onchange="this.form.submit()">
+      <option value="0">Skin: (Default)</option>
+      [special:skins=[special:skincookie]]
+    </select>
+    <noscript><input type="submit" value="Go"></noscript>
+  </form>
 
-      [case:[special:canchat] | |<a class="btn" href="/!chat">[const:btnChat]</a>]
+    <label for="searchDown" class="btn"><svg width="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <path d="m8 9h16l-8 16z" fill="#fff"/>
+      </svg>[const:ttlSearchBtn]
+    </label>
 
-      <label for="searchDown" class="btn"><svg width="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-          <path d="m8 9h16l-8 16z" fill="#fff"/>
-        </svg>[const:ttlSearchBtn]
-      </label>
+  [case:[special:userid]
+      |<a class="btn" href="/!login/">[const:Login]</a> [case:[special:canregister]||<a class="btn" href="/!register/">[const:Register]</a>]
+      |<form method="POST" action="/!logout"><input class="btn" type="submit" name="logout" value="[const:Logout] ([special:username])"></form>
+      <a class="btn" href="/!userinfo/[url:[special:username]]">[const:Profile]</a>
+  ]
 
-    <form method="POST" action="/!skincookie">
-      <select class="skin" name="skin" onchange="this.form.submit()">
-        <option value="0">Skin: (Default)</option>
-        [special:skins=[special:skincookie]]
-      </select>
-      <noscript><input type="submit" value="Go"></noscript>
-    </form>
+  [case:[special:limited]|<a class="btn" href="!feed" title="[const:rssfeed]"><svg class="listfeed" height="16" width="16" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      <path d="m8.8 27.6c0 2.43-1.97 4.4-4.4 4.4s-4.4-1.97-4.4-4.4 1.97-4.4 4.4-4.4 4.4 1.97 4.4 4.4z"/>
+      <path d="m21.2 32h-6.2c0-8.2-6.8-15-15-15v-6.2c11.8 0 21.2 9.4 21.2 21.2z"/>
+      <path d="m25.6 32c0-14.2-11.4-25.6-25.6-25.6v-6.4c17.6 0 32 14.4 32 32z"/>
+  </svg></a>|]
 
-    [case:[special:userid]
-        |<a class="btn" href="/!login/">[const:Login]</a> [case:[special:canregister]||<a class="btn" href="/!register/">[const:Register]</a>]
-        |<form method="POST" action="/!logout"><input class="btn" type="submit" name="logout" value="[const:Logout] ([special:username])"></form>
-        <a class="btn" href="/!userinfo/[url:[special:username]]">[const:Profile]</a>
-    ]
-
-
-      <input type="checkbox" class="dropdown" id="searchDown">
-      <form id="search_form" action="[case:[special:cmdtype]||/|../]!search/" method="get" >
-        <input class="search_line" type="search" name="s" placeholder="[const:ttlSearchTxt]" value="[special:search]">
-        <input class="search_line" type="search" name="u" placeholder="[const:ttlSearchUsr]" value="[special:usearch]">
-        <label class="btn">
-          <input type="submit">
-          <svg version="1.1" width="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-            <path d="m25.4 23.3-4.3-4.32c-.0231-.0232-.0502-.0392-.0741-.0608.877-1.28
-                     1.36-2.88 1.36-4.56 0-4.64-3.67-8.32-8.21-8.32-4.54 0-8.21 3.68-8.21
-                     8.24 0 4.56 3.67 8.24 8.21 8.24 1.67 0 3.19-.496 4.54-1.36.0215.024.0375.0512.0606.0744l4.3
-                     4.32c.654.656 1.67.656 2.39 0 .654-.656.654-1.68 0-2.4zm-11.2-3.6c-2.95
-                     0-5.34-2.4-5.34-5.36s2.39-5.36 5.34-5.36 5.34 2.4 5.34 5.36-2.39 5.36-5.34 5.36z"
-            />
-          </svg>
-        </label>
-      </form>
-  </div>
-
+  <input type="checkbox" class="dropdown" id="searchDown">
+  <form id="search_form" action="[case:[special:cmdtype]||/|../]!search/" method="get" >
+    <input class="search_line" type="search" name="s" placeholder="[const:ttlSearchTxt]" value="[special:search]">
+    <input class="search_line" type="search" name="u" placeholder="[const:ttlSearchUsr]" value="[special:usearch]">
+    <label class="btn">
+      <input type="submit">
+      <svg version="1.1" width="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <path d="m25.4 23.3-4.3-4.32c-.0231-.0232-.0502-.0392-.0741-.0608.877-1.28
+                 1.36-2.88 1.36-4.56 0-4.64-3.67-8.32-8.21-8.32-4.54 0-8.21 3.68-8.21
+                 8.24 0 4.56 3.67 8.24 8.21 8.24 1.67 0 3.19-.496 4.54-1.36.0215.024.0375.0512.0606.0744l4.3
+                 4.32c.654.656 1.67.656 2.39 0 .654-.656.654-1.68 0-2.4zm-11.2-3.6c-2.95
+                 0-5.34-2.4-5.34-5.36s2.39-5.36 5.34-5.36 5.34 2.4 5.34 5.36-2.39 5.36-5.34 5.36z"
+        />
+      </svg>
+    </label>
+  </form>
 </div>
 
-<div class="ui">
+<div class="ui" id="global_toolbar">
+
+  [case:[special:userid]||
+    [case:[special:limited]
+    |<a class="btn" href="/(o)/[case:[special:dir]||[special:dir]/]" title="[const:ttlLimited]">[const:Limited][special:unreadLAT]</a>
+    |<a class="btn" href="/[case:[special:dir]||[special:dir]/]" title="[const:ttlPublic]">[const:Public][special:unread]</a>
+    ]
+  ]
+
+  <a class="btn" href="/[special:dir][case:[special:dir]||/]">[const:btnList]</a>
 
   <label class="btn" for="tagsCollapse"><svg width="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
       <path d="m8 9h16l-8 16z" fill="#fff"/>
     </svg>[const:ttlTags]: <strong>[case:[special:dir]|[const:ttlAllThreads]|#[special:dir]]</strong>
   </label>
+
+  <a class="btn" href="/!categories">[const:btnCats]</a>
+
+  [case:[special:canchat] | |<a class="btn" href="/!chat">[const:btnChat]</a>]
+
+  <div class="spacer"></div>
+
+  [case:[special:isadmin] | |
+    <a class="btn" href="/!settings[special:urltag]">[const:btnSettings]</a>
+    <a class="btn" href="/!sqlite">[const:btnConsole]</a>
+  ]
+
+</div>
 
   <input type="checkbox" class="dropdown" id="tagsCollapse">
   <div id="taglinks">
@@ -303,16 +325,3 @@
     </svg>[const:ttlAllThreads]</a>
     [special:alltags]
   </div>
-
-  <a class="btn" href="/!categories">[const:btnCats]</a>
-  <a class="btn" href="/[special:dir][case:[special:dir]||/]">[const:btnList]</a>
-
-  <div class="spacer"></div>
-
-  [case:[special:isadmin] | |
-    <a class="btn" href="/!settings[special:urltag]">[const:btnSettings]</a>
-    <a class="btn" href="/!sqlite">[const:btnConsole]</a>
-  ]
-
-
-</div>

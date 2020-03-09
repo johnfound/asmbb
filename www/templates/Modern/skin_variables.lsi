@@ -23,7 +23,6 @@
 @clMono2: #d0d0d0;
 @clMono3: #ffffff;
 
-
 @FontMain: Noto Sans, Liberation Sans,Arial,Helvetica,sans-serif;
 @FontSzMain: 14px;
 
@@ -36,6 +35,9 @@
 @clArticleBG: rgba(255, 255, 255, 0.7);  //@clMono3;
 @clArticleBGO: #ffffff;  //@clMono3;
 @clArticleFG: @clMono0;
+
+@clLinkOnLight: @clPrimary0;
+@clLinkOnDark: #40c0ff;
 
 @clDialogBG: #d0d0d0;
 @clDialogFG: #000000;
@@ -69,7 +71,7 @@
 @clNotifyBG: @clSecondary20;
 @clNotifyFG: @clMono3;
 
-@clThreadLink: @clPrimary0;
+@clThreadLink: @clLinkOnLight;
 
 @clAvatarBG: @clPrimary1;
 @clAvatarFG: #ffffff;

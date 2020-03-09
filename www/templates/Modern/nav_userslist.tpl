@@ -31,9 +31,4 @@
 <div class="ui">
   <a class="btn" href="/!categories">[const:btnCats]</a>
   <a class="btn" href="/">[const:btnList]</a>
-  <span class="spacer"></span>
-  [case:[special:isadmin] | |
-    <a class="btn" href="/!settings[special:urltag]">[const:btnSettings]</a>
-    <a class="btn" href="/!sqlite">[const:btnConsole]</a>
-  ]
 </div>

@@ -80,18 +80,7 @@
     </article>
   </div>
   <div class="post_info">
-    <svg class="onepost [case:[Unread]||newpost]" version="1.1" width="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-      [case:[Unread]||<title>New post</title>]
-      <path d="m4 2c-2.23 0-4 1.86-4 4v14c0 2.15 1.79 4 4 4h1v6l10-6h13c2.21 0 4-1.85
-               4-4v-14c0-2.12-1.84-4-4-4-7.89.00208-16.1 0-24 0zm3.54 13.6c-1.18
-               0-2.14-1.09-2.14-2.08-1e-7-.994.957-2.08 2.14-2.08 1.18 0 2.14.932
-               2.14 2.08 0 1.15-.957 2.08-2.14 2.08zm8.55 0c-1.18 0-2.14-.932-2.14-2.08
-               0-1.15.957-2.08 2.14-2.08 1.18 0 2.14.932 2.14 2.08 0 1.15-.957 2.08-2.14
-               2.08zm8.54 0c-1.18 0-2.14-.932-2.14-2.08 0-1.15.957-2.08 2.14-2.08 1.18 0
-               2.14.932 2.14 2.08.00012 1.15-.957 2.08-2.14 2.08z"
-             style="clip-rule:evenodd;fill-rule:evenodd"
-      />
-    </svg><a href="#[id]">#[id]</a>
+    <a href="#[id]">#[id]</a>
     <div class="last_edit">
       [case:[EditUser]|[const:tCreated]|[const:tEdited] <a href="/!userinfo/[url:[EditUser]]">[EditUser]</a>], [const:tRead]
     </div>

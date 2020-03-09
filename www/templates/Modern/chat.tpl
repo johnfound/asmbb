@@ -386,7 +386,7 @@ function OnUserChanged (e) {
     <div id="chat_form">
       <input class="chat_input" type="text" placeholder="[const:phText]" id="chat_message" autofocus onkeypress="KeyPress(event, SendMessage)">
       <a class="btn icon_btn" onclick="SendMessage()">
-        <svg version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <svg version="1.1" width="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
          <path d="m4 6 24 10-24 10 4-10z"/>
         </svg>
       </a>

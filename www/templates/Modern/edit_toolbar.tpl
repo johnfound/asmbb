@@ -97,6 +97,20 @@
   [equ:EmoAngry=Emoticon wütend]
 ]
 
+<svg version="1.1" style="position:absolute; width:0px; height:0px;" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <radialGradient id="a" cx="9.71" cy="8.79" r="7.5" gradientTransform="matrix(0 1.34 -2.22 -8.04e-7 34.5 10.1)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#fffffa" offset="0"/>
+   <stop stop-color="#ffd963" offset=".51"/>
+   <stop stop-color="#f90" offset="1"/>
+  </radialGradient>
+  <linearGradient id="b" x1=".983" x2="14.2" y1="5.36" y2="5.98" gradientTransform="matrix(.133 1.82 -2.84 .0852 32 -4.72)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#fff" offset="0"/>
+   <stop stop-color="#fff" stop-opacity="0" offset="1"/>
+  </linearGradient>
+ </defs>
+</svg>
+
 
 [equ:iconBold=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m22 15s4-1.41 4-7.01c0-8.19-10.2-8-14-8h-8v32h8c7.39 0 16 .799
 16-8 0-7.62-6-9-6-9zm-10-3.01v-6c3.58 0 6-.101 6 3 0 3.1-2.98 3-6 3zm0 14 .01-8.21c3.58 0 7.98-.601 7.98 4.42 0 3.81-4.98 3.79-7.99 3.79z"/></svg>]
@@ -128,69 +142,76 @@
 
 [equ:iconCodeBlock=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m0 0v32h5v-32zm10 2v4h6v-4zm8 0v4h6v-4zm8 0v4h6v-4zm-8 8v4h6v-4zm8 0v4h6v-4zm-16 8v4h6v-4zm8 0v4h6v-4zm0 8v4h6v-4z"/></svg>]
 
-[equ:iconSmile=<svg version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
- <defs>
-  <radialGradient id="k" cx="9.71" cy="8.79" r="7.5" gradientTransform="matrix(0 1.34 -2.22 -8.04e-7 34.5 10.1)" gradientUnits="userSpaceOnUse">
-   <stop stop-color="#fffffa" offset="0"/>
-   <stop stop-color="#ffd963" offset=".51"/>
-   <stop stop-color="#f90" offset="1"/>
-  </radialGradient>
-  <linearGradient id="r" x1=".983" x2="14.2" y1="5.36" y2="5.98" gradientTransform="matrix(.133 1.82 -2.84 .0852 32 -4.72)" gradientUnits="userSpaceOnUse">
-   <stop stop-color="#fff" offset="0"/>
-   <stop stop-color="#fff" stop-opacity="0" offset="1"/>
-  </linearGradient>
- </defs>
- <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#k) !important;stroke-linecap:round;stroke-linejoin:round;stroke:#000"/>
- <path d="m17 20.2a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#r) !important;stroke-width:1"/>
+[equ:iconSmile=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+ <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#a) !important;stroke-linecap:round;stroke-linejoin:round;stroke:#000"/>
+ <path d="m17 20.2a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#b) !important;stroke-width:1"/>
  <path d="m7 16c0 6.66 4.39 8.87 8.84 8.87 4.42 0 8.9-2.22 8.9-8.87" style="fill:none !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1"/>
  <path d="m14 9.34a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
  <path d="m23 9.34a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
 </svg>]
 
-[equ:iconLol=<svg version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
- <defs>
-  <radialGradient id="j" cx="9.71" cy="8.79" r="7.5" gradientTransform="matrix(0 1.34 -2.22 -8.04e-7 34.5 10.1)" gradientUnits="userSpaceOnUse">
-   <stop stop-color="#fffffa" offset="0"/>
-   <stop stop-color="#ffd963" offset=".51"/>
-   <stop stop-color="#f90" offset="1"/>
-  </radialGradient>
-  <linearGradient id="q" x1=".983" x2="14.2" y1="5.36" y2="5.98" gradientTransform="matrix(.133 1.82 -2.84 .0852 31.5 -4.72)" gradientUnits="userSpaceOnUse">
-   <stop stop-color="#fff" offset="0"/>
-   <stop stop-color="#fff" stop-opacity="0" offset="1"/>
-  </linearGradient>
- </defs>
- <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#j) !important;stroke-linecap:round;stroke-linejoin:round;stroke-width:1;stroke:#000"/>
- <path d="m15.5 20.2a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#q) !important;stroke-width:1px"/>
+[equ:iconLol=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+ <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#a) !important;stroke-linecap:round;stroke-linejoin:round;stroke-width:1;stroke:#000"/>
+ <path d="m15.5 20.2a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#b) !important;stroke-width:1px"/>
  <path d="m25.5 16h-17.7c0 6.66 4.42 8.87 8.87 8.87s8.87-2.22 8.87-8.87z" style="fill:#fff !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
  <path d="m12.5 9.4a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
  <path d="m22.5 9.4a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
 </svg>]
 
-[equ:iconRofl=<svg version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
- <defs>
-  <radialGradient id="i" cx="9.71" cy="8.79" r="7.5" gradientTransform="matrix(0 1.34 -2.22 -8.04e-7 34.5 10.1)" gradientUnits="userSpaceOnUse">
-   <stop stop-color="#fffffa" offset="0"/>
-   <stop stop-color="#ffd963" offset=".51"/>
-   <stop stop-color="#f90" offset="1"/>
-  </radialGradient>
-  <linearGradient id="p" x1=".983" x2="14.2" y1="5.36" y2="5.98" gradientTransform="matrix(.133 1.82 -2.84 .0852 31.5 -4.9)" gradientUnits="userSpaceOnUse">
-   <stop stop-color="#fff" offset="0"/>
-   <stop stop-color="#fff" stop-opacity="0" offset="1"/>
-  </linearGradient>
- </defs>
- <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#i) !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
- <path d="m15.5 20a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#p) !important;stroke-width:1px"/>
+[equ:iconRofl=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+ <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#a) !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+ <path d="m15.5 20a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#b) !important;stroke-width:1px"/>
  <path d="m6.5 16c0 7.33 4.96 11.1 11.1 11.1 6.14 0 11.1-3.75 11.1-11.1z" style="fill:#fff !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
  <path d="m6.5 11.6c0-4.42 6.66-4.42 6.66 0" style="fill:none !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
  <path d="m18.5 11.6c0-4.42 6.66-4.42 6.66 0" style="fill:none !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
  <path d="m19.5 26.5v-10.5m-9.18 0-6e-5 8.5" style="fill:none !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
 </svg>]
 
-[equ:iconWink=]
-[equ:iconTongue=]
-[equ:iconSad=]
-[equ:iconCry=]
-[equ:iconAngry=]
+[equ:iconWink=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+ <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#a) !important;stroke:#000;stroke-linecap:round;stroke-linejoin=round;stroke-width:1px"/>
+ <path d="m15.5 20a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#b) !important;stroke-width:1px"/>
+ <path d="m5.88 13c0 8.87 4.42 11.1 8.87 11.1s8.87-2.22 8.87-8.87" style="fill:none !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+ <path d="m21.9 9a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+ <path d="m12.3 9h-4.42" style="fill:#ecf3f7 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+</svg>]
+
+[equ:iconTongue=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+ <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#a) !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+ <path d="m15.5 20.6a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#b) !important;stroke-width:1px"/>
+ <path d="m11.5 9.4a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+ <path d="m21.5 9.4a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+ <path d="m11.5 18.2v6.66c0 2.22 8.87 2.22 8.87 0v-6.66" style="fill:#fda7ff !important;stroke:#6b1a6f;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+ <path d="m18.5 18.2v4.42" style="fill:none !important;stroke:#6b1a6f;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+ <path d="m5.5 18.2h17.7" style="fill:none !important;stroke:#6b1a6f;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+</svg>]
+
+[equ:iconSad=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+ <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#a) !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+ <path d="m15.5 20a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#b) !important;stroke-width:1px"/>
+ <path d="m5.88 22c0-4.42 4.42-6.66 8.87-6.66s8.87 2.22 8.87 6.66" style="fill:none !important;stroke:#6b1a6f;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+ <path d="m12.3 9a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+ <path d="m21.9 9a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+</svg>]
+
+[equ:iconCry=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+ <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#a) !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+ <path d="m15.5 20.5a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#b) !important;stroke-width:1px"/>
+ <path d="m24.6 13.778c0-2.2144-2.0768-2.2144-4.288-2.2144" style="fill:none !important;stroke-linecap:round;stroke-linejoin:round;stroke-width:2;stroke:#00cfff"/>
+ <path d="m21.4 7.1222-4.416 4.416h6.656" style="fill:none !important;stroke-linecap:round;stroke-linejoin:round;stroke-width:1;stroke:#000"/>
+ <path d="m11.8 11.57c-2.2144 0-4.576 0-4.576 2.2144" style="fill:none !important;stroke-linecap:round;stroke-linejoin:round;stroke-width:2;stroke:#00cfff"/>
+ <path d="m8.6 7.1222 4.416 4.416h-6.656" style="fill:none !important;stroke-linecap:round;stroke-linejoin:round;stroke-width:1;stroke:#000"/>
+ <path d="m9.5 16c-2.22 2.22-2.22 6.66 0 8.87 4.42-2.22 8.87-2.22 13.3 0 2.22-2.22 2.22-6.66 0-8.87-4.42 2.22-8.87 2.22-13.3 0z" style="fill:#fff !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1"/>
+</svg>]
+
+[equ:iconAngry=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+ <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#a) !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+ <path d="m15.5 20a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#b) !important;stroke-width:1px"/>
+ <path d="m6.5 22.7c0-2.22 4.42-4.42 8.87-4.42s8.87 2.22 8.87 4.42" style="fill:none !important;stroke-linecap:round;stroke-linejoin:round;stroke-width:1;stroke:#000"/>
+ <path d="m9.5 4.92 6.66 2.22" style="fill:#fff !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+ <path d="m15.5 7.13 6.66-2.22" style="fill:#fff !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+ <path d="m12.5 11.6a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+ <path d="m22.5 11.6a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+</svg>]
 
 
 <div class="jsonly">
@@ -209,7 +230,7 @@
       <a class="editbtn" onclick="insertTag('source', '^[', '^]^[My link^]', 1)" title="[const:Link]">[const:iconLink]</a>
       <a class="editbtn" onclick="insertTag('source', '^[!','^]^[My picture^]', 1)" title="[const:Image]">[const:iconImage]</a>
       <a class="editbtn" width="20" onclick="insertTag('source', ';quote', ';end', 0)" title="[const:BlockQuote]">[const:iconQuote]</a>
-      <a class="editbtn" onclick="insertTag('source', ';begin', ';end', 0)" title="[const:CodeBlock]">[const:iconCodeBlock]</a>
+      <a class="editbtn" onyclick="insertTag('source', ';begin', ';end', 0)" title="[const:CodeBlock]">[const:iconCodeBlock]</a>
 
       <a class="editbtn" onclick="insertTag('source', '^[?:-)^]', '', 1)" title="[const:EmoSmile]">[const:iconSmile]</a>
       <a class="editbtn" onclick="insertTag('source', '^[?:-D^]', '', 1)" title="[const:EmoLOL]">[const:iconLol]</a>

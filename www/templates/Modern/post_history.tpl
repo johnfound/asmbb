@@ -40,7 +40,7 @@
       [case:[EditUser]|[const:tCreated] <a href="/!userinfo/[url:[PostUser]]">[PostUser]</a>|[const:tEdited] <a href="/!userinfo/[url:[EditUser]]">[EditUser]</a>]
     </div>
     <div class="edit_tools">
-      [case:[rowid]||<a  class="btn_svg" title="[const:ttlRestore]"  href="/[rowid]/!restore">
+      [case:[rowid]||<a title="[const:ttlRestore]"  href="/[rowid]/!restore">
       <svg width="32" height="32" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
         <title>Restore</title>
         <path d="m18.29 2c-7.572 0-13.71 6.269-13.71 14h-4.572l6.095 6.222 6.095-6.222h-4.572c0-6.012

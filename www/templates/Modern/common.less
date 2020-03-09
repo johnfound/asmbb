@@ -10,8 +10,6 @@ body {
   font-family: @FontMain;
   color: @clBodyFG;
   margin: @marginY @marginX;
-  display: flex;
-  flex-direction: column;
   background-image: linear-gradient(135deg, #a0d0ff 0px, #ffffff 100%);
   background-attachment: fixed;
   min-height: calc(100vh + -2*@marginY);
@@ -86,7 +84,7 @@ body {
   border-radius: @Radius;
   overflow: hidden;
 
-  margin: 0px @marginX/2;
+  margin: -@marginY 0px 0px 0px;
   padding: @marginY @marginX;
 
   width: 100%;
@@ -94,11 +92,12 @@ body {
 
 
 .taglink {
-  display: inline-block;
+  display: inline;
   margin: 0;
   padding: 4px;
   color: @clArticleFG;
   border-radius: @Radius;
+  vertical-align: middle;
   &::before {
     content: "#";
   }
@@ -122,7 +121,6 @@ body {
   }
 
   svg.alltags {
-    width: 24px;
     margin: 0px 8px 0px 0px;
     vertical-align: middle;
     &>* {
@@ -215,28 +213,18 @@ span.ntf {
 
 
 
-.panel {
-  background-color: @clPanelBG;
-  color: @clPanelFG;
-  border-radius: @Radius;
-  margin: 2px 2px 16px 6px;
-  box-shadow: @Shadow;
-}
-
-#header_panel {
-  background-color: @clPanelBG;
-  border-radius: @Radius;
-  margin: 0px;
-  box-shadow: @Shadow;
-}
-
 .header {
-  padding: @marginX;
-  margin: 0px -@marginX/2;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+
+  padding: @marginX;
+  margin: 0px;
+
   color: @clPanelFG;
+  background-color: @clPanelBG;
+  box-shadow: @Shadow;
+  border-radius: @Radius;
 
   & > * {
     margin: 0px @marginX/2;
@@ -290,6 +278,10 @@ span.ntf {
   p {
     margin: 4px 0px;
   }
+  a {
+    color: @clLinkOnDark;
+    font-weight: bold;
+  }
 }
 
 .attribution {
@@ -299,7 +291,7 @@ span.ntf {
 
 
 a {
-  color: inherit;
+  color: @clThreadLink;
   text-decoration: none;
   &:hover {
     text-decoration: underline;
@@ -307,7 +299,7 @@ a {
 }
 
 .small {
-  font-size: 12px;
+  font-size: @FontSzMain*6/7;
 }
 
 .nowrap {
@@ -392,11 +384,12 @@ select {
 
   background-image: @-inline-svg-url;
   background-repeat: no-repeat;
-  background-position: right 6px top 50%;
+  background-position: right 0px top 50%;
   background-size: 20px auto;
 
+  font-family: @FontMain;
   font-size: @FontSzMain;
-  padding: 3px 28px 3px 4px;
+  padding: 3px 16px 3px 4px;
   outline: none;
 
   border-radius: @Radius;
@@ -447,7 +440,7 @@ textarea {
 svg {
   vertical-align: middle;
   &>path {
-    fill: @clPrimary0;
+    fill: @clButtonBG;
   }
   &.disabled {
     &>path {
@@ -582,16 +575,10 @@ div.ui {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin: @marginY -@marginX/2;
+  margin: @marginY/2 -@marginX/2;
   &>* {
     margin: @marginY/2 @marginX/2;
   }
-}
-
-.ui3:extend(.btn all) {
-  background-color: transparent;
-  border: 1px dotted;
-//  padding: 8px;
 }
 
 

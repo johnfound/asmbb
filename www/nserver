@@ -1,2 +1,2 @@
 #!/usr/bin/sh
-nginx -c ./.nginx/nginx.conf -p $PWD
+nginx -c .nginx/nginx.conf -p $PWD
