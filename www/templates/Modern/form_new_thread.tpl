@@ -15,7 +15,8 @@
   [equ:phSelect=Select file to attach]
   [equ:btnPreview=Preview]
   [equ:btnSubmit=Submit]
-  [equ:btnRevert=Revert]
+  [equ:hintPreview=Ctrl+Enter for preview]
+  [equ:hintSubmit=Ctrl+S for submit]
 |
   [equ:ttlTitle=Заглавие]
   [equ:phTitle=Заглавие на темата]
@@ -28,7 +29,8 @@
   [equ:phSelect=Избери файл(ове) за прикачане]
   [equ:btnPreview=Преглед]
   [equ:btnSubmit=Запис]
-  [equ:btnRevert=Отказ]
+  [equ:hintPreview=Ctrl+Enter за преглед]
+  [equ:hintSubmit=Ctrl+S за запис]
 |
   [equ:ttlTitle=Название темы]
   [equ:phTitle=Название темы]
@@ -41,7 +43,8 @@
   [equ:phSelect=Выберите файл для вложения]
   [equ:btnPreview=Преглед]
   [equ:btnSubmit=Записать]
-  [equ:btnRevert=Отказ]
+  [equ:hintPreview=Ctrl+Enter для предварительного просмотра]
+  [equ:hintSubmit=Ctrl+S чтобы записать]
 |
   [equ:ttlTitle=Titre]
   [equ:phTitle=Titre du sujet]
@@ -54,7 +57,8 @@
   [equ:phSelect=Sélectionner un fichier à attacher]
   [equ:btnPreview=Prévisualiser]
   [equ:btnSubmit=Poster]
-  [equ:btnRevert=Annuler]
+  [equ:hintPreview=Ctrl+Entrée pour prévisualiser]
+  [equ:hintSubmit=Ctrl+S pour soumettre]
 |
   [equ:ttlTitle=Titel]
   [equ:phTitle=Titel des Themas]
@@ -67,22 +71,20 @@
   [equ:phSelect=Wählen Sie eine Datei als Anhang aus]
   [equ:btnPreview=Vorschau]
   [equ:btnSubmit=Absenden]
-  [equ:btnRevert=Zurücksetzen]
+  [equ:hintPreview=Strg+Eingabe für eine Vorschau]
+  [equ:hintSubmit=Strg+S zum Absenden]
 ]
 
 <div class="new_editor">
   <div class="ui">
       <input form="editform" type="hidden" name="ticket" value="[Ticket]" >
-      <input form="editform" class="btn" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" >
-      <input form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]" >
+      <input form="editform" class="btn" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
+      <input form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]" title="[const:hintSubmit]">
       <div class="spacer"></div>
-      <a class="btn" href=".">
-        <svg version="1.1" width="20" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-         <title>Close</title>
+      <a class="btn round" href="."><svg version="1.1" width="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
          <rect transform="rotate(45)" x=".635" y="-1.53" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
          <rect transform="rotate(135)" x="-10.7" y="-12.8" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
-        </svg>
-      </a>
+        </svg></a>
   </div>
   <form id="editform" action="!post" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
     <div class="editgroup">

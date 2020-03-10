@@ -19,8 +19,12 @@
     margin: 8px 0px;
     display: flex;
     align-items: center;
+    a {
+      font-size: @FontSzMain;
+      line-height: @FontSzMain;
+    }
     svg > * {
-      fill: #ff0020;
+      fill: #d00040;
     }
     svg {
       margin-right: 8px;
@@ -33,7 +37,8 @@
 
 .thread_link {
   color: @clThreadLink;
-  font-size: @FontSzMain*1.5;
+  font-size: @FontSzMain*1.5 !important;
+  line-height: @FontSzMain*1.5 !important;
   margin: 0px;
   text-overflow: ellipsis;
   white-space: nowrap;

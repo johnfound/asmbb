@@ -85,7 +85,7 @@
       [case:[EditUser]|[const:tCreated]|[const:tEdited] <a href="/!userinfo/[url:[EditUser]]">[EditUser]</a>], [const:tRead]
     </div>
     <div class="edit_tools">
-      [case:[special:canpost]||<a title="[const:ttlQuote]" href="[id]/!post"><svg class="quote" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      [case:[special:canpost]||<a title="[const:ttlQuote]" href="[id]/!post"><svg class="quote" version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
         <title>Quote</title>
         <path d="m4 2c-2.23 0-4 1.86-4 4v14c0 2.15 1.79 4 4 4h1v6l10-6h13c2.21 0 4-1.85
                  4-4v-14c0-2.12-1.84-4-4-4-7.89.00208-16.1 0-24 0zm3.54 13.6c-1.18
@@ -97,7 +97,7 @@
               style="clip-rule:evenodd;fill-rule:evenodd"
         />
       </svg></a>]
-      [case:[special:canedit]||<a title="[const:ttlEdit]" href="[id]/!edit"><svg class="edit" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      [case:[special:canedit]||<a title="[const:ttlEdit]" href="[id]/!edit"><svg class="edit" version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
         <title>Edit</title>
         <path d="m19.2 6.7c-.835-.84-2.2-.84-3.02 0l-.755.76-10.6 10.6.00273.0027-.334.335s-1.06 1.07-3.45
                  8.85l-.125.19c-.0436.19-.0854.381-.129.381-.0398.19-.0778.381-.118.381l-.0987.381c-.0761.255-.153.514-.231.782-.173.588-.594
@@ -111,7 +111,7 @@
               style="clip-rule:evenodd;fill-rule:evenodd"
         />
       </svg></a>]
-      [case:[special:candel]||<a title="[const:ttlDel]" href="[id]/!del"><svg class="delbtn" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      [case:[special:candel]||<a title="[const:ttlDel]" href="[id]/!del"><svg class="delbtn" version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
         <title>Del</title>
         <path d="m7.31 29.8s.488 2.17 3 2.17h11.4c2.51 0 3-2.17 3-2.17l2.25-21.3h-21.9l2.25 21.3zm13.1-18.1c0-.589.49-1.07
                  1.09-1.07s1.09.478 1.09 1.07l-1.09 16c0 .589-.49 1.07-1.09 1.07s-1.09-.478-1.09-1.07zm-5.46 0c0-.589.49-1.07
@@ -123,7 +123,7 @@
                style="clip-rule:evenodd;fill-rule:evenodd"
         />
       </svg></a>]
-      [case:[HistoryFlag]||[case:[special:isadmin]| |<a title="[const:ttlHist]" href="/[id]/!history"><svg class="history" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      [case:[HistoryFlag]||[case:[special:isadmin]| |<a title="[const:ttlHist]" href="/[id]/!history"><svg class="history" version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
         <title>History</title>
         <path d="m7.75 5.26h16.5c1.52 0 2.74-1.17 2.74-2.62 0-1.48-1.22-2.64-2.74-2.64h-16.5c-1.52 0-2.74 1.17-2.74 2.62s1.23 2.64 2.74 2.64z" />
         <path d="m24.3 26.8h-16.5c-1.52 0-2.74 1.17-2.74 2.62 0 1.45 1.22 2.62 2.74 2.62h16.5c1.52 0 2.74-1.17 2.74-2.62 0-1.42-1.22-2.62-2.74-2.62z"/>

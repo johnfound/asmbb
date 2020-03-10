@@ -236,8 +236,8 @@ span.ntf {
 
   h1 {
     font-weight: bold;
-    font-size: 56px;
-    line-height: 56px;
+    font-size: 48px;
+    line-height: 48px;
     padding: 0px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -389,7 +389,7 @@ select {
 
   font-family: @FontMain;
   font-size: @FontSzMain;
-  padding: 3px 16px 3px 4px;
+  padding: 0px 16px 0px 4px;
   outline: none;
 
   border-radius: @Radius;
@@ -517,7 +517,7 @@ input^[type=checkbox^] {
 /* Button type elements */
 
 .btn {
-  padding: 4px 8px;
+  padding: 6px;
   background-color: @clButtonBG;
   color: @clButtonFG;
   text-decoration: none;
@@ -526,10 +526,10 @@ input^[type=checkbox^] {
   cursor: pointer;
   text-align: center;
   box-shadow: @btnShadow;
-  min-width: 32px;
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  line-height: 14px;
 
   &::-moz-focus-inner {
     border: 0;
@@ -553,9 +553,11 @@ input^[type=checkbox^] {
       fill: @clButtonActiveFG;
     }
   }
-
 }
 
+.round {
+  border-radius: 50% !important;
+}
 
 .btn_svg:extend(.btn all) {
   padding: 0px;
@@ -594,7 +596,6 @@ div.ui {
 
 svg.listfeed {
   display: block;
-  width: 19px;
   margin: 0 auto;
 }
 

@@ -1,7 +1,13 @@
 [css:navigation.css]
-[css:posts.css]
 [css:postnew.css]
 [css:threadnew.css]
+
+<style>
+  body {
+    width: initial !important;
+    margin: 8px !important;
+  }
+</style>
 
 [case:[special:lang]|
   [equ:ttlTitle=Title]
@@ -55,9 +61,16 @@
   [equ:btnRevert=Zurücksetzen]
 ]
 
-<div class="new_editor">
+<div class="thread_editor">
   <div class="ui">
-    <a class="btn" href=".">The thread</a>
+    <input class="btn" form="editform" type="submit" name="submit" value="[const:btnSubmit]" >
+    <input class="btn" form="editform" type="hidden" name="ticket" value="[Ticket]" >
+    <input class="btn" form="editform" type="reset" value="[const:btnRevert]" >
+    <div class="spacer"></div>
+    <a class="btn round" href="."><svg version="1.1" width="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+       <rect transform="rotate(45)" x=".635" y="-1.53" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
+       <rect transform="rotate(135)" x="-10.7" y="-12.8" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
+    </svg></a>
   </div>
   <form id="editform" action="!edit_thread" method="post">
     <div class="editgroup">
@@ -87,9 +100,6 @@
     </div>
 
     <div class="ui">
-      <input class="btn" type="submit" name="submit" value="[const:btnSubmit]" >
-      <input class="btn" type="hidden" name="ticket" value="[Ticket]" >
-      <input class="btn" type="reset" value="[const:btnRevert]" >
     </div>
   </form>
 </div>

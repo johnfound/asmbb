@@ -11,6 +11,8 @@
   [equ:phSelect=Select file to attach]
   [equ:btnPreview=Preview]
   [equ:btnSubmit=Submit]
+  [equ:hintPreview=Ctrl+Enter for preview]
+  [equ:hintSubmit=Ctrl+S for submit]
 |
   [equ:btnThread=Тема]
   [equ:ttlTitle=Заглавие на темата]
@@ -19,6 +21,8 @@
   [equ:phSelect=Избери файл(ове) за прикачане]
   [equ:btnPreview=Преглед]
   [equ:btnSubmit=Запис]
+  [equ:hintPreview=Ctrl+Enter за преглед]
+  [equ:hintSubmit=Ctrl+S за запис]
 |
   [equ:btnThread=Тема]
   [equ:ttlTitle=Название темы]
@@ -27,6 +31,8 @@
   [equ:phSelect=Выберите файл для вложения]
   [equ:btnPreview=Преглед]
   [equ:btnSubmit=Записать]
+  [equ:hintPreview=Ctrl+Enter для предварительного просмотра]
+  [equ:hintSubmit=Ctrl+S чтобы записать]
 |
   [equ:btnThread=Sujet]
   [equ:ttlTitle=Titre du sujet]
@@ -35,6 +41,8 @@
   [equ:phSelect=Joindre un fichier]
   [equ:btnPreview=Prévisualiser]
   [equ:btnSubmit=Poster]
+  [equ:hintPreview=Ctrl+Entrée pour prévisualiser]
+  [equ:hintSubmit=Ctrl+S pour soumettre]
 |
   [equ:btnThread=Thema]
   [equ:ttlTitle=Titel des Themas]
@@ -43,21 +51,20 @@
   [equ:phSelect=Wählen Sie eine Datei als Anhang aus]
   [equ:btnPreview=Vorschau]
   [equ:btnSubmit=Absenden]
+  [equ:hintPreview=Strg+Eingabe für eine Vorschau]
+  [equ:hintSubmit=Strg+S zum Absenden]
 ]
 
 <div class="new_editor">
   <div class="ui">
     <input form="editform" type="hidden" name="ticket" value="[Ticket]" >
-    <input form="editform" class="btn" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" >
-    <input form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]" >
+    <input form="editform" class="btn" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
+    <input form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]"  title="[const:hintSubmit]">
     <div class="spacer"></div>
-    <a class="btn" href="[case:[special:page]|./|!by_id]">
-      <svg version="1.1" width="20" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-       <title>Close</title>
+    <a class="btn round" href="[case:[special:page]|./|!by_id]"><svg version="1.1" width="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
        <rect transform="rotate(45)" x=".635" y="-1.53" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
        <rect transform="rotate(135)" x="-10.7" y="-12.8" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
-      </svg>
-    </a>
+      </svg></a>
   </div>
   <form id="editform" action="!post#preview" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
     <div>

@@ -11,6 +11,7 @@ div.current_version {
   overflow: visible;
   .post {
      box-shadow: -1px 1px 8px 1px rgba(255, 0, 64, 1);
+     height: 100%;
   }
 }
 
@@ -55,9 +56,9 @@ span.nickname {
   line-height: 115px;
 
   border-radius: 50%;
-  border: 2px solid gray;
+  box-shadow: 0px 0px 16px #0040a0;
   shape-outside: circle(50%);
-  clip-path: circle(50%);
+  clip-path: circle( ~"calc(50% + 16px)");
   float: left;
   margin: 16px 16px 16px 8px;
 }
@@ -86,15 +87,13 @@ span.nickname {
 
 .edit_tools {
   margin: 0px;
+  a {
+    margin-right: 8px;
+  }
+
   svg {
     width: 20px;
     margin: 0px;
-  }
-  .quote, .edit {
-    margin-right: @marginX;
-  }
-  .history {
-    margin-left: @marginX;
   }
 }
 

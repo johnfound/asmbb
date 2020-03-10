@@ -34,7 +34,7 @@
 @clBodyBG: #bef2c1;
 @clBodyFG: @clArticleFG;
 
-@clArticleBG: rgba(255, 255, 255, 0.8);  //@clMono3;
+@clArticleBG: rgba(255, 255, 255, 0.9);  //@clMono3;
 @clArticleBGO: #ffffff;  //@clMono3;
 @clArticleFG: @clMono0;
 
@@ -75,7 +75,7 @@
 
 @clThreadLink: @clLinkOnLight;
 
-@clAvatarBG: transparent; //@clPrimary1;
+@clAvatarBG: rgba(0, 64, 160, 0.5);     //#0040a0;
 @clAvatarFG: #ffffff;
 
 @borderQuote: 2px solid #808080;

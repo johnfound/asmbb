@@ -79,19 +79,9 @@
   <path d="m4 4-3 3v3h-1v3h1v6h-1v3h1v4h6v-4h2v4h6v-4h2v4h6v-4h2v4h6v-4h1v-3h-1v-6h1v-3h-1v-3l-3-3-3 3v3h-2v-3l-3-3-3 3v3h-2v-3l-3-3-3 3v3h-2v-3zm3 9h2v6h-2zm8 0h2v6h-2zm8 0h2v6h-2z"/>
 </svg>]
 
-[case:[Unread]||<a href="[FirstUnread]/!by_id"><svg width="24" height="24" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-  <title>[const:ttlUnread]</title>
-  <path d="m30 10h-.88l.11 9.4c.017 1.5-1.2 3-3 3l-17 5e-6v.5c0 1.3 1.1 3 3
-           3h11l7 3-1-3c1.6 0 3-1.7 3-3v-11c0-1.3-.7-2.3-2.2-2.3z"
-  />
-  <path d="m24 3.4h-21c-1.8 0-3 1.4-3 2.9v12c0 1.4 1.4 3 3 3l-1 4 7-4h15c1.7
-           0 3-1.5 3-3 .0098-3.9.052-7.7 0-12-.02-1.5-1.3-3-3-3zm-17 10c-.99
-           0-1.8-.81-1.8-1.8s.8-1.8 1.8-1.8c.99 0 1.8.81 1.8 1.8s-.81 1.8-1.8
-           1.8zm6.7 0c-.99 0-1.8-.81-1.8-1.8s.8-1.8 1.8-1.8 1.8.81 1.8 1.8-.8
-           1.8-1.8 1.8zm6.7 0c-.99 0-1.8-.81-1.8-1.8s.81-1.8 1.8-1.8c.99 0
-           1.8.81 1.8 1.8s-.81 1.8-1.8 1.8z"
-  />
-</svg></a>]
+[case:[Unread]||<a href="[FirstUnread]/!by_id" title="[const:ttlUnread]"><svg version="1.1" width="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+    <path d="m32 16-16-16v8h-16v16h16v8z"/>
+  </svg></a>]
 
 <a class="thread_link" href="[Slug]/">[Caption]</a>
 
