@@ -1,5 +1,5 @@
-C Work\son\sthe\sUI\sof\sthe\sModern\stheme.
-D 2020-03-09T06:07:07.296
+C Fixed\sminor\sbug\sin\srender2.asm;\sImplemented\ssupport\sfor\sJSON\srendering\sof\sthe\spreview\sfor\sthe\snew\sthreads\sand\sposts,\sjust\slike\sin\sthe\sedit\spost\sfunction.
+D 2020-03-10T14:40:26.909
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -41,7 +41,7 @@ F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm 48393d19449ab539802ea89eec69b2ad025d35ee
-F source/engine.fpr cf7f0a94bf99b92fbca43a4d497f29d9c751e2ee
+F source/engine.fpr c39dcafbc99810a03e7f324aee2bb3389a456f7c
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 2e8df47e5e8f5db4639e9a3d8c166469dc2588d9
@@ -57,7 +57,7 @@ F source/migration2.sql fe978700e39265c6680b69ea8cbfb5444cfdce63
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
 F source/phpbb.sql 6820a2092cc30a774c44d770055b37b66bdbfaf0
 F source/phpbb_pm.sql f88eaf899e72d4e99f367cb654b41695da2231d5
-F source/post.asm 303755a3f823ece70c2303423a169d674324c57d
+F source/post.asm 37aadf394d88980560b78146baf5cbddc39571b7
 F source/post_data.asm 79fb813775e3bafe6cb314c50a99484e4f0dc211
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
@@ -67,7 +67,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm 8483b7238aa09646c7f7baadd8a9ee47b871e33c
+F source/render2.asm 1dc58c7bbec35b6e420d4272bc6364deeb220362
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 9b9467f3f4a86b59be1308fdae6061176c396ebe
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -780,7 +780,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P e902fd2c3d0ee5ba3fa9107d835acc3abbfc6711
-R 6c8dfb9d71116fe3f0e27c795f4a6214
+P daa122c2ad800011c0765bb1c54e8b02fabd9039
+R 4826508f636d7d7ac0068c3f9f78a39a
 U johnfound
-Z 3ff8a49fa1079916cff733d35e5ac0ab
+Z 888b521a7258989f1f03e24a49f77d22

@@ -2070,12 +2070,13 @@ begin
         stdcall StrCat, ecx, eax
 
         lea     edx, [.stmt]
+        push    ecx
         stdcall StrPtr, ecx
         cinvoke sqlitePrepare_v2, [hMainDatabase], eax, [eax+string.len], edx, 0
         cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.userID]
         cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.Limited]
 
-        stdcall StrDel, ecx
+        stdcall StrDel ; from the stack
 
         push    0       ; end marker
 
