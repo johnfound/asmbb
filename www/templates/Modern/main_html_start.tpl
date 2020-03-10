@@ -281,15 +281,14 @@
 <div class="ui" id="global_toolbar">
 
   [case:[special:userid]||
-    [case:[special:limited]
-    |<a class="btn" href="/(o)/[case:[special:dir]||[special:dir]/]" title="[const:ttlLimited]">[const:Limited][special:unreadLAT]</a>
-    |<a class="btn" href="/[case:[special:dir]||[special:dir]/]" title="[const:ttlPublic]">[const:Public][special:unread]</a>
-    ]
+    <a class="btn" href="/[case:[special:dir]||[special:dir]/]" title="[const:ttlPublic]">[const:Public][special:unread]</a>
+    <a class="btn" href="/(o)/[case:[special:dir]||[special:dir]/]" title="[const:ttlLimited]">[const:Limited][special:unreadLAT]</a>
   ]
 
   <a class="btn" href="/[special:dir][case:[special:dir]||/]">[const:btnList]</a>
 
-  <label class="btn" for="tagsCollapse"><svg width="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <label class="btn" for="tagsCollapse">
+    <svg width="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
       <path d="m8 9h16l-8 16z" fill="#fff"/>
     </svg>[const:ttlTags]: <strong>[case:[special:dir]|[const:ttlAllThreads]|#[special:dir]]</strong>
   </label>

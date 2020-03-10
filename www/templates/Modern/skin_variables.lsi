@@ -29,17 +29,19 @@
 @FontMono: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
 @FontSzMono: 14px;
 
+@FontHeader: Noto Sans, Liberation Sans,Arial,Helvetica,sans-serif;
+
 @clBodyBG: #bef2c1;
 @clBodyFG: @clArticleFG;
 
-@clArticleBG: rgba(255, 255, 255, 0.7);  //@clMono3;
+@clArticleBG: rgba(255, 255, 255, 0.8);  //@clMono3;
 @clArticleBGO: #ffffff;  //@clMono3;
 @clArticleFG: @clMono0;
 
 @clLinkOnLight: @clPrimary0;
 @clLinkOnDark: #40c0ff;
 
-@clDialogBG: #d0d0d0;
+@clDialogBG: #ffffff;
 @clDialogFG: #000000;
 @widthDlg: 640px;
 @heightDlg: 480px;
@@ -65,7 +67,7 @@
 @btnShadow: none; // -1px 1px 4px 1px #fff;
 @btnShadowA: -1px 1px 4px 1px rgba(0, 0, 0, 0.8);
 @Radius: 0px;     // 4px;
-@Shadow: -1px 1px 2px 4px rgba(0, 0, 0, 0.2);  // -1px 1px 4px 1px rgba(0, 0, 0, 0.8);
+@Shadow: none; //-1px 1px 2px 4px rgba(0, 0, 0, 0.2);  // -1px 1px 4px 1px rgba(0, 0, 0, 0.8);
 @Opacity: 0.95;
 
 @clNotifyBG: @clSecondary20;
@@ -73,11 +75,11 @@
 
 @clThreadLink: @clLinkOnLight;
 
-@clAvatarBG: @clPrimary1;
+@clAvatarBG: transparent; //@clPrimary1;
 @clAvatarFG: #ffffff;
 
 @borderQuote: 2px solid #808080;
-@borderEdit: 0px solid transparent;
+@borderEdit: 2px solid #808080;
 
 @clSeparator: #808080;
 

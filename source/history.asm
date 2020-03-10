@@ -66,6 +66,9 @@ begin
 .end_query:
         cinvoke sqliteFinalize, [.stmt]
 
+        stdcall TextCat, edi, txt "</div>"   ; div.multi_content
+        mov     edi, edx
+
         cmp     [.cnt], 5
         jbe     .back_navigation_ok
 
@@ -74,7 +77,7 @@ begin
 
 .back_navigation_ok:
 
-        stdcall TextCat, edi, txt "</div></div>"   ; div.multi_content, div.thread
+        stdcall TextCat, edi, txt "</div>"   ; div.thread
         mov     edi, edx
 
 .exit:

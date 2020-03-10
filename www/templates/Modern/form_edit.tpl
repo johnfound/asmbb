@@ -4,7 +4,6 @@
 
 [case:[special:lang]|
   [equ:Caption=Thread title]
-  [equ:Content=Post content]
   [equ:btnPreview=Preview]
   [equ:hintPreview=Ctrl+Enter for preview]
   [equ:btnSubmit=Submit]
@@ -15,7 +14,6 @@
   [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
 |
   [equ:Caption=Заглавие на темата]
-  [equ:Content=Съдържание на поста]
   [equ:btnPreview=Преглед]
   [equ:hintPreview=Ctrl+Enter за преглед]
   [equ:btnSubmit=Публикувай]
@@ -26,7 +24,6 @@
   [equ:FileLimit=(брой ≤ 10, размер ≤ 1MB)]
 |
   [equ:Caption=Название темы]
-  [equ:Content=Содержание поста]
   [equ:btnPreview=Просмотр]
   [equ:hintPreview=Ctrl+Enter для предварительного просмотра]
   [equ:btnSubmit=Отправить]
@@ -37,7 +34,6 @@
   [equ:FileLimit=(количество ≤ 10, размер ≤ 1MB)]
 |
   [equ:Caption=Titre du sujet]
-  [equ:Content=Contenu du message]
   [equ:btnPreview=Prévisualiser]
   [equ:hintPreview=Ctrl+Entrée pour prévisualiser]
   [equ:btnSubmit=Soumettre]
@@ -48,7 +44,6 @@
   [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
 |
   [equ:Caption=Titel des Themas]
-  [equ:Content=Inhalt des Beitrags]
   [equ:btnPreview=Vorschau]
   [equ:hintPreview=Strg+Eingabe für eine Vorschau]
   [equ:btnSubmit=Absenden]
@@ -60,20 +55,26 @@
 ]
 
 <div class="editor" id="editor">
-  <a id="close_btn" class="btn" href="!by_id">
-    <svg version="1.1" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-     <title>Close</title>
-     <rect transform="rotate(45)" x=".635" y="-1.53" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
-     <rect transform="rotate(135)" x="-10.7" y="-12.8" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
-    </svg>
-  </a>
   <form id="editform" action="!edit" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
+    <div class="ui">
+      <input class="btn" type="submit" name="preview" value="[const:btnPreview]" onclick="this.form.cmd='preview'" title="[const:hintPreview]">
+      <input class="btn" type="submit" name="submit" value="[const:btnSubmit]" onclick="this.form.cmd='submit'" title="[const:hintSubmit]" >
+      <input type="hidden" name="ticket" value="[Ticket]" >
+      <div class="spacer"></div>
+      <a class="btn" href="!by_id">
+        <svg version="1.1" width="20" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+         <title>Close</title>
+         <rect transform="rotate(45)" x=".635" y="-1.53" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
+         <rect transform="rotate(135)" x="-10.7" y="-12.8" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
+        </svg>
+      </a>
+    </div>
+
     <div class="tabbed">
       <input id="rad1" name="tabselector" type="radio" checked>
       <label for="rad1">[const:tabText]</label>
       <section>
         [include:edit_toolbar.tpl]
-        <p>[const:Content]:</p>
         <textarea class="editor" name="source" id="source">[source]</textarea>
       </section>
 
@@ -86,57 +87,11 @@
         </div>
       </section>
     </div>
-
-    <div class="ui">
-      <input class="btn" type="submit" name="preview" value="[const:btnPreview]" onclick="this.form.cmd='preview'" title="[const:hintPreview]">
-      <input class="btn" type="submit" name="submit" value="[const:btnSubmit]" onclick="this.form.cmd='submit'" title="[const:hintSubmit]" >
-      <input type="hidden" name="ticket" value="[Ticket]" >
-    </div>
   </form>
 </div>
 
 
 <script>
-dragElement(document.getElementById("editor"),document.getElementById("draghere") );
-
-function dragElement(elmnt, hdr) {
-  var posX = 0, posY = 0;
-  hdr.onmousedown = dragMouseDown;
-
-  function dragMouseDown(e) {
-    e = e || window.event;
-    posX = e.clientX - elmnt.offsetLeft;
-    posY = e.clientY - elmnt.offsetTop;
-    document.onmouseup = closeDragElement;
-    document.onmousemove = elementDrag;
-    e.preventDefault();
-  }
-
-  function elementDrag(e) {
-    e = e || window.event;
-
-    var newx = e.clientX - posX;
-    var newy = e.clientY - posY;
-
-    var maxx = window.innerWidth - 32;
-    var maxy = window.innerHeight - 16;
-
-    if (newx < 0) newx=0;
-    if (newy < 0) newy=0;
-    if (newx > maxx) newx = maxx;
-    if (newy > maxy) newy = maxy;
-
-    elmnt.style.left =  newx + 'px';
-    elmnt.style.top = newy + 'px';
-    e.preventDefault();
-  }
-
-  function closeDragElement() {
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
-}
-
 
 function previewIt(e) {
 

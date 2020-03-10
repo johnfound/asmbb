@@ -6,86 +6,116 @@
 [case:[special:lang]|
   [equ:btnThread=Thread]
   [equ:ttlTitle=Thread title]
-  [equ:ttlPost=Post content]
   [equ:phText=Someone is wrong on the Internet]
   [equ:ttlAttach=Attach file(s)]
   [equ:phSelect=Select file to attach]
   [equ:btnPreview=Preview]
   [equ:btnSubmit=Submit]
-  [equ:btnRevert=Revert]
 |
   [equ:btnThread=Тема]
   [equ:ttlTitle=Заглавие на темата]
-  [equ:ttlPost=Съобщение]
   [equ:phText=Някой в Интернет греши]
   [equ:ttlAttach=Прикачи файл(ове)]
   [equ:phSelect=Избери файл(ове) за прикачане]
   [equ:btnPreview=Преглед]
   [equ:btnSubmit=Запис]
-  [equ:btnRevert=Отказ]
 |
   [equ:btnThread=Тема]
   [equ:ttlTitle=Название темы]
-  [equ:ttlPost=Текст сообщения]
   [equ:phText=В Интернете кто-то неправ]
   [equ:ttlAttach=Прикрепленные файл(ы)]
   [equ:phSelect=Выберите файл для вложения]
   [equ:btnPreview=Преглед]
   [equ:btnSubmit=Записать]
-  [equ:btnRevert=Отказ]
 |
   [equ:btnThread=Sujet]
   [equ:ttlTitle=Titre du sujet]
-  [equ:ttlPost=Contenu du message]
   [equ:phText=Quelqu'un a tort sur internet.]
   [equ:ttlAttach=Pièce(s) jointe(s)]
   [equ:phSelect=Joindre un fichier]
   [equ:btnPreview=Prévisualiser]
   [equ:btnSubmit=Poster]
-  [equ:btnRevert=Annuler]
 |
   [equ:btnThread=Thema]
   [equ:ttlTitle=Titel des Themas]
-  [equ:ttlPost=Inhalt des Beitrags]
   [equ:phText=Jemand hat Unrecht im Internet]
   [equ:ttlAttach=Datei(en) anhängen]
   [equ:phSelect=Wählen Sie eine Datei als Anhang aus]
   [equ:btnPreview=Vorschau]
   [equ:btnSubmit=Absenden]
-  [equ:btnRevert=Zurücksetzen]
 ]
 
 <div class="new_editor">
   <div class="ui">
-    <a class="btn" href="[case:[special:page]|./|!by_id]">[const:btnThread]</a>
+    <input form="editform" type="hidden" name="ticket" value="[Ticket]" >
+    <input form="editform" class="btn" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" >
+    <input form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]" >
+    <div class="spacer"></div>
+    <a class="btn" href="[case:[special:page]|./|!by_id]">
+      <svg version="1.1" width="20" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+       <title>Close</title>
+       <rect transform="rotate(45)" x=".635" y="-1.53" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
+       <rect transform="rotate(135)" x="-10.7" y="-12.8" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
+      </svg>
+    </a>
   </div>
-  <form id="editform" action="!post#preview" method="post" enctype="multipart/form-data">
-    <div class="editgroup">
-      <div>
-        <p>[const:ttlTitle]:</p>
-        <h1 class="fakeedit">[caption]</h1>
-      </div>
+  <form id="editform" action="!post#preview" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
+    <div>
+      <p>[const:ttlTitle]:</p>
+      <h1 class="fakeedit">[caption]</h1>
     </div>
     [include:edit_toolbar.tpl]
-    <div class="editgroup">
-      <div>
-        <p>[const:ttlPost]:</p>
-        <textarea class="editor" name="source" id="source" placeholder="[const:phText]">[source]</textarea>
-      </div>
-    </div>
-    <div class="editgroup">
-      <div>
-        [case:[special:canupload]||<p class="ui">[const:ttlAttach]:</p><div class="attach"><input type="file" placeholder="[const:phSelect]" name="attach" multiple="multiple" tabindex="-1"></div>]
-        <div class="attachments">
-          [attach_edit:[id]]
-        </div>
-      </div>
-    </div>
-    <div class="ui">
-      <input class="btn" type="submit" name="preview" value="[const:btnPreview]" >
-      <input class="btn" type="submit" name="submit" value="[const:btnSubmit]" >
-      <input type="hidden" name="ticket" value="[Ticket]" >
-      <input class="btn" type="reset" value="[const:btnRevert]" >
+    <textarea name="source" id="source" placeholder="[const:phText]">[source]</textarea>
+    <div>
+      [case:[special:canupload]||<p>[const:ttlAttach]:</p><input type="file" placeholder="[const:phSelect]" name="attach" multiple="multiple" tabindex="-1">]
     </div>
   </form>
 </div>
+
+
+<script>
+
+function previewIt(e) {
+
+  if (e.target.cmd === "preview") {
+    e.preventDefault();
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "!post?cmd=preview");
+
+    xhr.onload = function(event){
+      if (event.target.status === 200) {
+        var prv = document.getElementById("preview");
+        var attch = document.getElementById("attachments");
+        var resp = JSON.parse(event.target.response);
+
+        prv.innerHTML = resp.preview;
+        attch.innerHTML = resp.attach_del;
+      }
+      document.getElementById("browse").value = '';
+      document.getElementById("source").focus();
+    };
+
+    var formData = new FormData(document.getElementById("editform"));
+    xhr.send(formData);
+  }
+}
+
+document.onkeydown = function(e) {
+  var key = e.which || e.keyCode;
+  var frm = document.getElementById("editform");
+  var stop = true;
+
+  if (e.ctrlKey && key == 13) {
+    frm.preview.click();
+  } else if (key == 27) {
+    window.location.href = "!by_id";
+  } else if (e.ctrlKey && key == 83) {
+    frm.submit.click();
+  } else stop = false;
+
+  if (stop) e.preventDefault();
+};
+
+
+</script>

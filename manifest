@@ -1,5 +1,5 @@
-C Fixed\sminor\sbug\sin\srender2.asm;\sImplemented\ssupport\sfor\sJSON\srendering\sof\sthe\spreview\sfor\sthe\snew\sthreads\sand\sposts,\sjust\slike\sin\sthe\sedit\spost\sfunction.
-D 2020-03-10T14:40:26.909
+C Fixed\sminor\sbug\sin\sthe\s"history.asm"\srelated\sto\sthe\shtml\sgenaration;\sWork\son\sthe\s"Modern"\stheme.
+D 2020-03-10T15:29:48.556
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -41,11 +41,11 @@ F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm 48393d19449ab539802ea89eec69b2ad025d35ee
-F source/engine.fpr c39dcafbc99810a03e7f324aee2bb3389a456f7c
+F source/engine.fpr ad04235a22c0e004a38ac9e4b9526460d7634aca
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 2e8df47e5e8f5db4639e9a3d8c166469dc2588d9
-F source/history.asm bcfb486d57fb53d6c5fcd0d995bee650d581d08d
+F source/history.asm ada7d1d9956f99bd48a3021eace283a0a76758c8
 F source/http.asm 1d6405bf48b523b735b12f8167deafe1ac081936
 F source/images_png.asm cb69d9eafb85f6e61c526a3dcff4c7f2c3f4ebd6
 F source/messages.asm f1f350f40073680e2ed26e007312987ef9eb327f
@@ -420,6 +420,7 @@ F www/templates/Modern/_images/source/del.svg 800ec8300320e2f4c42eb2dc18d067d523
 F www/templates/Modern/_images/source/drop-down2.svg dbc8d27d8b6d9275492f4a7fe3b435a6fa353ec3
 F www/templates/Modern/_images/source/edit.svg 3d8803456c4a6f3e6fd41968f7455f883094aac0
 F www/templates/Modern/_images/source/flash.svg 67ae5b7e858868b9181da801f7e5e0d23b381391
+F www/templates/Modern/_images/source/flash4.svg 945fbaa959e7c66714d5e3aa64d4f428b77b5ecf
 F www/templates/Modern/_images/source/history.svg c97bb42dbe59239bb58838d5d4d0249ba905d004
 F www/templates/Modern/_images/source/limited.svg 34b6f84c58f102b82b7beb07678120ac3dc0bc54
 F www/templates/Modern/_images/source/megaphone.svg d5e3d54b1b8962d0000eacc3e41d949afd88ca81
@@ -448,7 +449,6 @@ F www/templates/Modern/_images/source/toolbar/striked.svg 5feb5509b0f9542ee2f359
 F www/templates/Modern/_images/source/toolbar/tongue.svg 22c7a56f8b07d7f3094366827bfeb953661712ac
 F www/templates/Modern/_images/source/toolbar/underlined.svg 8601f9059e769127dad310a08941db7e32b0837b
 F www/templates/Modern/_images/source/toolbar/wink.svg 61a5c40a45f315fc71ab05f70ce01740f5dbb503
-F www/templates/Modern/_images/toolbar.svg 2390a07684cc33627c41f0afd3edb6c8dce671b3
 F www/templates/Modern/activation_email_subject.tpl fbe97e27a9a6cf59c9d590233479925d2836552c
 F www/templates/Modern/activation_email_text.tpl 20d2ce60e7df3923651b8cda1a38ce0d260eaf92
 F www/templates/Modern/activity0.tpl c91e8781a391ee4e8a7b99a015a86f123958061f
@@ -478,38 +478,38 @@ F www/templates/Modern/atom_start.tpl 7ab2f5e8819f37921d2fefe675297ccab41e8561
 F www/templates/Modern/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
 F www/templates/Modern/chat.less e9c0d82df4a880867e8e505cd73c98a3e0aa69d5
 F www/templates/Modern/chat.tpl d8e2962d39cbc2a2f060c189e176f63a955eea01
-F www/templates/Modern/common.less 876e6619c193e819f9ca966a642f3b9db1994986
+F www/templates/Modern/common.less 80288623fe4dca11909e79ee86256b55ab3c6598
 F www/templates/Modern/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Modern/crypto.tpl f36572b4bb122e058ea42d0e8956bc165b84e0f0
 F www/templates/Modern/del_confirm.tpl a88209f42daecfe084b89b8942bb49efd857a261
 F www/templates/Modern/delete.less 189f4f2e07ff457e4fd5a399dc0951da6db5b043
-F www/templates/Modern/edit.json a2aaf0ee51695178d59b589c95b0d9bc63cd5c02
+F www/templates/Modern/edit.json 9d81c2f5af4dce4cbdd3b8918d53811390e795b5
 F www/templates/Modern/edit_toolbar.tpl 6c90d39a17792df27014fb8efcf7636db9427a78
-F www/templates/Modern/editor.less 6ac7a411d871f2c7bef4b82a4c70f76fdc979543
+F www/templates/Modern/editor.less 0cc92e0c163a40667e87c0b4271b7f5458e7374b
 F www/templates/Modern/error.less c8cc584b34deb31b31efe5680fbe6b438e4a91dc
 F www/templates/Modern/error_html_end.tpl e5ea7fb2ae849c3efc29d2aace455ce605e7ac55
 F www/templates/Modern/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
-F www/templates/Modern/form_edit.tpl 04a836e8964012a91efdb95891672ec9f1a83331
+F www/templates/Modern/form_edit.tpl 402e846f17acefe666dd31768416a24de830ae47
 F www/templates/Modern/form_edit_thread.tpl 2ff6050c8419525c5859f8de4c99ac2dda891427
 F www/templates/Modern/form_editinfo.tpl 1b2daaba382b8732d1b585689404d4f94797794e
 F www/templates/Modern/form_login.tpl 547dce2f540e891699566d45350e8139aedf49c5
-F www/templates/Modern/form_new_post.tpl 707850dbbc71de38e67ed6b5d85435bba332102c
-F www/templates/Modern/form_new_thread.tpl 33de01debb3f397ed029e04ac59346116e1cba93
+F www/templates/Modern/form_new_post.tpl da917cf661f7f48d585cf0bdf1639c3ccc2e20ec
+F www/templates/Modern/form_new_thread.tpl 9a646597bbdf60ae0bda2160eb7216827dd725b2
 F www/templates/Modern/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/Modern/form_register.tpl 94e997bd18130af337c3c04868773e03ce69f024
 F www/templates/Modern/form_reset_password.tpl b01aef12d13468e611ff957d969d10f61e9596f1
 F www/templates/Modern/form_reset_request.tpl 29757f898f9d641c19b4671325d2337cb9a1d5e5
 F www/templates/Modern/form_settings.tpl 11507486b3fb0bb69c875e840b5db31cc8e19bdd
 F www/templates/Modern/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
-F www/templates/Modern/form_sqlite_console.tpl 391d937cdece0acb78e2c248cc4e99ce3575d107
+F www/templates/Modern/form_sqlite_console.tpl a6eb50e150454d1fd6e178dd5a4db041072e48eb
 F www/templates/Modern/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
 F www/templates/Modern/login.less c71da4e1f80ea009cfa016fef77fd4d4e8674163
 F www/templates/Modern/main_html_end.tpl 30df14792f6e73cbe76a25aeaeb09738b3590bb0
-F www/templates/Modern/main_html_start.tpl 9c8f51a833ead61ce28ec464ab9a7b93fdb8ec9f
+F www/templates/Modern/main_html_start.tpl 2e8c361ac5752419f7692c0ddbedabddc5d8bfe9
 F www/templates/Modern/markdown.less 87c3794e9b3bf57c65d617eb480f725653524bce
 F www/templates/Modern/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
-F www/templates/Modern/nav_categories.tpl d14d96df179071e65950c48fdd538c94a2678286
-F www/templates/Modern/nav_history.tpl c2744b080edc5aa75e0a74cc0619ffcfa511bfcf
+F www/templates/Modern/nav_categories.tpl 7beff81c51d3e03a81bf3abd8496bcc0d271dedc
+F www/templates/Modern/nav_history.tpl 3d457f5afef74a125949a9fa2fc14d3f086ec31a
 F www/templates/Modern/nav_list.tpl 3e3d8d001aa4320e4120c7b71726a18fe2ecd4db
 F www/templates/Modern/nav_search.tpl e45f1584f4001198588097d6b0ffa106945ff78c
 F www/templates/Modern/nav_thread.tpl 2d44ea0bd394be52f47db27123efd0b81bf863b7
@@ -519,16 +519,16 @@ F www/templates/Modern/one_category.tpl 96106ea7f1397896eeaf2de05a0aec2d04d122df
 F www/templates/Modern/one_user.tpl 1ebb768acb7276f56ba9bcad8ba90291bcd96573
 F www/templates/Modern/post_history.tpl a1ec1016b6f7982784d7d202c6ff94f62dc83e8a
 F www/templates/Modern/post_view.tpl 5ac7bd754aea8e50493557c4f3d88b83f1e1f881
-F www/templates/Modern/posteditor.less 32ee1e8e1d0adaa92ad84f25876c6df6484fb230
-F www/templates/Modern/postnew.less 15da327390780189627aa3d8de12192836322fcf
-F www/templates/Modern/posts.less 9260b43cfddc6e003dd83f32a2fcafbf17ea5667
-F www/templates/Modern/preview.tpl f86a01a493e7b3a590925a592ebf36ecea090408
+F www/templates/Modern/posteditor.less 44f3fd80139078b948880b2998ad50869693b346
+F www/templates/Modern/postnew.less 31c7523188e77d7e02cfe3b1e69397d0587de263
+F www/templates/Modern/posts.less 188a66193f7e15af8479cf84d54395f5f3a0687b
+F www/templates/Modern/preview.tpl 11e56e331a2fc791d8186317604e6e6dc40b7ac1
 F www/templates/Modern/realtime.js f42157b8f718f14cc560e995c4ff36015fcfb402
 F www/templates/Modern/restore_confirm.tpl 438a606034dc51d76f64f10b73c75a47f754284d
 F www/templates/Modern/search.less 862db3bdd9c6b448d445c7920bffa2778652cb1e
 F www/templates/Modern/search_result.tpl 601ab3652e00138840894f6ba44a528445b7f341
 F www/templates/Modern/settings.less 2c1189bb543d1c30cbe816cee7c7baf4c33ead43
-F www/templates/Modern/skin_variables.lsi d6a770777daa38bfe23309591fc2d6e8de6dfb23
+F www/templates/Modern/skin_variables.lsi fd5d30e1fb334e7bacbc222127d0b93dba4b9f0f
 F www/templates/Modern/sqlite.less 83445841128ce15c61f3f1f0b4baecea5ff64a47
 F www/templates/Modern/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e3c7067
 F www/templates/Modern/thread_info.tpl f487337eacd2746f07f8e8d6e2d62865c9fe6d04
@@ -780,7 +780,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P daa122c2ad800011c0765bb1c54e8b02fabd9039
-R 4826508f636d7d7ac0068c3f9f78a39a
+P d9a45717dbb5c3fb304a90804e11b596768e58ca
+R af792798a429acc4f6a529f8772e0dc0
 U johnfound
-Z 888b521a7258989f1f03e24a49f77d22
+Z 486ae221da73c68d9d828f530b3e03ba

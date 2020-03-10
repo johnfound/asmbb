@@ -64,12 +64,6 @@
 ]
 
 <div class="console">
-  <div class="ui">
-    <a class="btn" href="/">[const:btnList]</a>
-    <span class="spacer"></span>
-    <a class="btn" href="/!settings">[const:btnSettings]</a>
-    <a class="btn" target="_blank" href="/!sqlite">[const:btnSQL]</a>
-  </div>
   <form id="editform" action="/!sqlite/#sql_result" method="post">
     <p>[const:ttlStmt]:</p>
     <textarea class="sql_editor" name="source" id="source"  placeholder="SQL">[source]</textarea>

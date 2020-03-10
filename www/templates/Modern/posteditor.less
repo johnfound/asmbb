@@ -1,47 +1,26 @@
 @import "skin_variables.lsi";
 
-div.editor {
-  max-width: 60%;
-  overflow: hidden;
-  resize: both;
-  background-color: @clArticleBG;
-  color: @clArticleFG;
-  border-radius: @Radius;
-  box-shadow: @Shadow;
-  display: flex;
-  flex-direction: column;
-  align-self: start;
-  flex-shrink: 0;
-  flex-grow: 1;
-  min-height: 480px;
+body {
   width: 50%;
-  position: relative;
+  margin: @marginY @marginX @marginY auto !important;
 }
 
-#close_btn {
-  position: absolute;
-  right: 8px;
-  top: 8px;
-  width: 32px;
-  height: 32px;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  svg {
-    width: 20px;
-    height: 20px;
-  }
+
+div.editor {
+  color: @clArticleFG;
+  width: ~"calc( 50% - 3*@{marginX})";
+  position: fixed;
+  left: @marginX;
+  top: 0px;
+  bottom: @marginY;
 }
 
-div.editor:hover {
-  opacity: 1;
-}
 
 #editform {
-  padding: 8px;
+  padding: 0px;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  height: 100%;
 
   p {
     font-weight: bold;
@@ -61,16 +40,16 @@ textarea.editor {
   width: 100%;
   height: 20em;
   flex-basis: 0;
-  padding: 4px;
-  margin: 0;
+  padding: 8px;
+  margin: @marginY 0px;
   outline-style: none;
   overflow: auto;
   flex-grow: 1;
   resize: none;
+  overscroll-behavior: none;
 
   font-family: @FontMono;
   font-size: @FontSzMono;
-  background-color: @clEditorBG;
 }
 
 input[type="file"] {
@@ -86,4 +65,8 @@ input[type="file"] {
   table {
     width: 100%;
   }
+}
+
+.tabbed {
+  box-shadow: none !important;
 }

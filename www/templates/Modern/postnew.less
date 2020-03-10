@@ -1,5 +1,21 @@
 @import "skin_variables.lsi";
 
+body {
+  width: 50%;
+  margin: @marginY @marginX @marginY auto !important;
+}
+
+.new_editor {
+  color: @clArticleFG;
+  width: ~"calc( 50% - 3*@{marginX})";
+  position: fixed;
+  left: @marginX;
+  top: 0px;
+  bottom: @marginY;
+  display: flex;
+  flex-direction: column;
+}
+
 
 #editform {
   background-color: @clDialogBG;
@@ -7,9 +23,21 @@
   border-radius: @Radius;
   box-shadow: @Shadow;
   padding: 1px 8px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
   label {
     font-weight: bold;
   }
+  p {
+    font-weight: bold;
+    margin: @marginY 0px @marginY/2 0px;
+  }
+}
+
+#source {
+  flex-grow: 1;
+  margin: @marginY 0px;
 }
 
 .editgroup {

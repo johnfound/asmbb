@@ -416,7 +416,7 @@ input[type=text], input[type=password], input[type=search] {
 }
 
 input[type=file] {
-  margin: 8px 4px 8px 4px;
+  margin: 0px 0px @marginY 0px;
   background-color: @clArticleBGO;
   color: @clArticleFG;
   border: @borderEdit;
@@ -424,6 +424,7 @@ input[type=file] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  width: 100%;
 }
 
 textarea {
@@ -503,7 +504,7 @@ input^[type=checkbox^] {
 
   &.collapseit:not(:checked) + * {
     white-space: nowrap !important;
-    overflow: hidden !impotant;
+    overflow: hidden !important;
     text-overflow: ellipsis;
     padding: 1px 0px;
   }
@@ -636,7 +637,7 @@ span.page_hole {
 
 div.message_block {
   font-size: 20px;
-  width: @msgBoxWidth;
+  width: 640px;
   background: @clArticleBG;
   border-radius: @Radius;
   box-shadow: @Shadow;
