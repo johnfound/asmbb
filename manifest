@@ -1,5 +1,5 @@
-C Official\ssource\srelease\sv2.8
-D 2020-03-11T14:05:51.959
+C Enclose\sthe\ssearch\sstrings\sfor\sthe\sFTS\ssearch\sin\sdouble\squotes.\sFixes\sa\sbug\sthat\sthe\susers\swith\sdot\sin\sthe\snick\scan't\sbe\ssearched.
+D 2020-03-11T14:35:42.363
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -69,7 +69,7 @@ F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
 F source/render2.asm 1dc58c7bbec35b6e420d4272bc6364deeb220362
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
-F source/search.asm 9b9467f3f4a86b59be1308fdae6061176c396ebe
+F source/search.asm 05e6835e03d02ef5fdc6e5e3ae6c4e4bb88d5fce
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm 3123d67b30fd4e86b0716cf0a6387e9c8b0fc91c
@@ -785,7 +785,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 31dcc84205ef25c2691b0cfac78ce029ccc98c78
-R 1c16e18f2b09412e07691855105d1dee
+P a539d0b1fa5444ea42125e366e1f6d6981a3c559
+R b78a381d2cabcf34bb7a92829fd23afb
 U johnfound
-Z c3f12aa46dfe9a171744f903ad987208
+Z 3f5695dde9817e4432c7fc6eb4005c94
