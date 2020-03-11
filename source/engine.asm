@@ -376,11 +376,11 @@ begin
         pushad
 
         mov     esi, [.pSpecial]
-        stdcall ListAddDistinct, [esi+TSpecialParams.pStyles], txt "users_online.css"
+        stdcall ListAddDistinct, [esi+TSpecialParams.pStyles], txt "debug.css"
         mov     [esi+TSpecialParams.pStyles], edx
 
         mov     edx, [.pText]
-        stdcall TextCat, edx, txt '<div class="users_online"><article><h1>Not finalized SQLite statements</h1><table class="users_table"><tr><th>Statement</th><th>Called from</th></tr>'
+        stdcall TextCat, edx, txt '<div class="debug"><article><h1>Not finalized SQLite statements</h1><table class="debug_table"><tr><th>Statement</th><th>Called from</th></tr>'
 
         stdcall WaitForMutex, mxSQLite, 1000
         jc      .finish_sqlite
@@ -484,7 +484,7 @@ begin
         stdcall NumToStr, [esi+TArray.lparam], ntsDec or ntsUnsigned
         stdcall TextCat, edx, eax
         stdcall StrDel, eax
-        stdcall TextCat, edx, txt '</p><p>All allocated strings:</p><table class="users_table"><tr><th>Handle</th><th>Content</th></tr>'
+        stdcall TextCat, edx, txt '</p><p>All allocated strings:</p><table class="debug_table"><tr><th>Handle</th><th>Content</th></tr>'
 
         xor     ecx, ecx
         dec     ecx
@@ -511,7 +511,7 @@ begin
         stdcall TextCat, edx, eax
         stdcall StrDel, eax
 
-        stdcall TextCat, edx, txt "</td><tr>"
+        stdcall TextCat, edx, txt "</td></tr>"
         jmp     .loop2
 
 .end_strings:

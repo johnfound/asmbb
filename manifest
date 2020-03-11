@@ -1,5 +1,5 @@
-C Don't\spack\sthe\sdirectory\snamed\s"source".
-D 2020-03-11T12:57:54.123
+C Fixed\sminor\sbug\sin\sthe\sdebug\sinfo\sfeature.
+D 2020-03-11T13:53:13.596
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -40,8 +40,8 @@ F source/create.sql 73fd5d1ddc198d1d35a0bed605d4d318c609b88b
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
-F source/engine.asm 48393d19449ab539802ea89eec69b2ad025d35ee
-F source/engine.fpr ad04235a22c0e004a38ac9e4b9526460d7634aca
+F source/engine.asm 2cc0598b139224d5f15262a7212debbb40cb5903
+F source/engine.fpr b299859ae8c3d04940d925daae3b60fc5cbe5f41
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 2e8df47e5e8f5db4639e9a3d8c166469dc2588d9
@@ -780,7 +780,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 69bad56efbdde5e7a0063a2ebc37bbfc9579c227
-R 61bd801ef1bb2dda3907ad1747d27efd
+P 8cb84c194a93316d2c9b893a7d792f882830e539
+R 536f207a9745b1fdb3fe3d7925d5b7c2
 U johnfound
-Z bf17e1df8d625f5c9c0c0928dfa8afae
+Z 8c2812062619bf829010f5d6be7b7e54
