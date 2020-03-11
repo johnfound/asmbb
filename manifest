@@ -1,5 +1,5 @@
-C The\s"ModernTheme"\sbranch\smerged\sto\sthe\strunk.\sPreparations\sfor\srelease.
-D 2020-03-11T11:34:58.722
+C Removed\sthe\sattribution\slinks\sfor\sthe\sicons,\sbecause\sthese\sicons\sare\snot\sused\sin\sthis\stheme.\sAttempt\sto\sfix\sa\sminor\sbug\sin\sthe\swrappable\sflexbox\slast\srow\sheight.
+D 2020-03-11T12:16:36.587
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -98,7 +98,7 @@ F source/users_online.sql 615346c705099d4fed2fe5ea985efa429156075c
 F source/userslist.asm ad6c2bc2cc22ef3dc7202c0310754ef1d5afabb3
 F source/userslist.sql c90e4da301687cdec9fd4dc45c0f018a2e73ceb6
 F source/util.sql 4aac8fdfd044e69e0a309f172479b1f9b180ddd6
-F source/version.asm e8d82b0542bb1a9d62a04fde461bbf5434ab3f58
+F source/version.asm 7d506170c2854a10ac0ff8972b45f2fb4410965a
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/.nginx/fastcgi.conf 635d54729b084483347b15cdd35e82866ee86c19
 F www/.nginx/mime.types 5779f6632f02c522615639eedd57a92cce27c791
@@ -478,7 +478,7 @@ F www/templates/Modern/atom_start.tpl 7ab2f5e8819f37921d2fefe675297ccab41e8561
 F www/templates/Modern/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
 F www/templates/Modern/chat.less e9c0d82df4a880867e8e505cd73c98a3e0aa69d5
 F www/templates/Modern/chat.tpl d8e2962d39cbc2a2f060c189e176f63a955eea01
-F www/templates/Modern/common.less 900cd61295052e69a798360f10c448203adb1ec7
+F www/templates/Modern/common.less af4ae23a7f9cf5da5f7bfce7e477a0b7a5c1ff39
 F www/templates/Modern/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Modern/crypto.tpl f36572b4bb122e058ea42d0e8956bc165b84e0f0
 F www/templates/Modern/del_confirm.tpl a88209f42daecfe084b89b8942bb49efd857a261
@@ -504,7 +504,7 @@ F www/templates/Modern/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Modern/form_sqlite_console.tpl a6eb50e150454d1fd6e178dd5a4db041072e48eb
 F www/templates/Modern/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
 F www/templates/Modern/login.less c71da4e1f80ea009cfa016fef77fd4d4e8674163
-F www/templates/Modern/main_html_end.tpl 30df14792f6e73cbe76a25aeaeb09738b3590bb0
+F www/templates/Modern/main_html_end.tpl e409fee48fb1b1979c337cbe6f616f9e36baef53
 F www/templates/Modern/main_html_start.tpl 2e1ce62d7df0d83793a1a6994454df70325241cb
 F www/templates/Modern/markdown.less 87c3794e9b3bf57c65d617eb480f725653524bce
 F www/templates/Modern/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
@@ -780,7 +780,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P cc44a410acc4bd95fb70e228bf68d8e08e76bf0c dfe962a5ff89e9f3d32ddeba034d7124236f42d0
-R 5619b55ad30c77d13b1def42fbd1982b
+P 3bc1190f1303157fa7714d105f5d51ae682f5b75
+R 11716540e855ed5545c6929ac84b5a1d
 U johnfound
-Z 39964dff23254c5877da47d63adc47f6
+Z 7696923125a634489081f54fde0059eb

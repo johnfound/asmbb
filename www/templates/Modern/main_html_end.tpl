@@ -20,14 +20,6 @@
   [special:version]; [special:sqliteversion];
   Powered by <b><a href="http://flatassembler.net">Assembly language</a></b>;
   Created with <b><a href="http://fresh.flatassembler.net">Fresh IDE</a></b>;
-  Icons by <a href="https://www.flaticon.com/authors/egor-rumyantsev">Egor Rumyantsev</a>,
-                    <a href="https://www.flaticon.com/authors/pixel-perfect">Pixel perfect</a>,
-                    <a href="https://www.flaticon.com/authors/good-ware">Good Ware</a>,
-                    <a href="https://www.flaticon.com/authors/vaadin">vaadin</a> and
-                    <a href="https://www.flaticon.com/authors/icomoon">icomoon</a> from
-                    <a href="https://www.flaticon.com/">www.flaticon.com</a>
-
 </div>
-[special:environment]
 </body>
 </html>
