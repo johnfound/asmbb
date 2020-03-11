@@ -1,5 +1,5 @@
-C Fixed\sminor\sbug\sin\sthe\sdebug\sinfo\sfeature.
-D 2020-03-11T13:53:13.596
+C The\sdebug\sinfo\sstyles\sseparated\sin\s"debug.less";\sPut\sa\sbutton\sfor\s/!debuginfo\spage\sin\sModern\stheme.
+D 2020-03-11T13:54:55.479
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -255,6 +255,7 @@ F www/templates/Light/chat.tpl fcdc00ae077c1a36f1d81851ac613dd98013b349 l
 F www/templates/Light/common.less 762e4e8198de87fbcb131462b3476432725a2c65 l
 F www/templates/Light/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Light/crypto.tpl 6ef96b37863b72234fba72b67fe78ac8643ea3df l
+F www/templates/Light/debug.less 6d9e9e8a7950596c5ca3642286341af651f98823 l
 F www/templates/Light/del_confirm.tpl cdcb838e2e3a339de5408643fd2c2f3c447ab916 l
 F www/templates/Light/delete.less 3a74460f12ec494d6ac273a831839c1242abdc60 l
 F www/templates/Light/edit.json bbf3ccaa55253deb23dd57baa42a9044a3827169 l
@@ -348,6 +349,7 @@ F www/templates/MoLight/chat.tpl 6347719b30428c89a53c3869b106aa634f3d4c38 l
 F www/templates/MoLight/common.less 762e4e8198de87fbcb131462b3476432725a2c65 l
 F www/templates/MoLight/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/MoLight/crypto.tpl 6ef96b37863b72234fba72b67fe78ac8643ea3df l
+F www/templates/MoLight/debug.less 6d9e9e8a7950596c5ca3642286341af651f98823 l
 F www/templates/MoLight/del_confirm.tpl cdcb838e2e3a339de5408643fd2c2f3c447ab916 l
 F www/templates/MoLight/delete.less 3a74460f12ec494d6ac273a831839c1242abdc60 l
 F www/templates/MoLight/edit.json bbf3ccaa55253deb23dd57baa42a9044a3827169 l
@@ -481,6 +483,7 @@ F www/templates/Modern/chat.tpl d8e2962d39cbc2a2f060c189e176f63a955eea01
 F www/templates/Modern/common.less af4ae23a7f9cf5da5f7bfce7e477a0b7a5c1ff39
 F www/templates/Modern/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Modern/crypto.tpl f36572b4bb122e058ea42d0e8956bc165b84e0f0
+F www/templates/Modern/debug.less c8b5056b8b58c123fb0be6e154a3051b884acc28
 F www/templates/Modern/del_confirm.tpl a88209f42daecfe084b89b8942bb49efd857a261
 F www/templates/Modern/delete.less 189f4f2e07ff457e4fd5a399dc0951da6db5b043
 F www/templates/Modern/edit.json 9d81c2f5af4dce4cbdd3b8918d53811390e795b5
@@ -505,7 +508,7 @@ F www/templates/Modern/form_sqlite_console.tpl a6eb50e150454d1fd6e178dd5a4db0410
 F www/templates/Modern/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
 F www/templates/Modern/login.less c71da4e1f80ea009cfa016fef77fd4d4e8674163
 F www/templates/Modern/main_html_end.tpl e409fee48fb1b1979c337cbe6f616f9e36baef53
-F www/templates/Modern/main_html_start.tpl 2e1ce62d7df0d83793a1a6994454df70325241cb
+F www/templates/Modern/main_html_start.tpl e43b6ebd1c023652f64d8de1e06229012fd137df
 F www/templates/Modern/markdown.less 87c3794e9b3bf57c65d617eb480f725653524bce
 F www/templates/Modern/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
 F www/templates/Modern/nav_categories.tpl 7beff81c51d3e03a81bf3abd8496bcc0d271dedc
@@ -624,6 +627,7 @@ F www/templates/Wasp/chat.tpl d1940de543f8eeb6393a98afc97611b13c3aabe2
 F www/templates/Wasp/common.less 08205d5a976e919f4e22b30fbdf3e1ae61139dcd
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/crypto.tpl f36572b4bb122e058ea42d0e8956bc165b84e0f0
+F www/templates/Wasp/debug.less 028000816d3504bdb2cf7c9813bbb3300aa2fdc5
 F www/templates/Wasp/del_confirm.tpl 26b8239d78b69cd5fbe206ea12ccb96890aac030
 F www/templates/Wasp/delete.less 253a0f549e132a9d55ae56fe399a8929eabb4a29
 F www/templates/Wasp/edit.json a2aaf0ee51695178d59b589c95b0d9bc63cd5c02
@@ -719,6 +723,7 @@ F www/templates/mobile/chat.tpl d6a0a8115dffba304a4c2e079a7ec4517552b8f8
 F www/templates/mobile/common.less 762e4e8198de87fbcb131462b3476432725a2c65 l
 F www/templates/mobile/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/mobile/crypto.tpl 6ef96b37863b72234fba72b67fe78ac8643ea3df l
+F www/templates/mobile/debug.less 6d9e9e8a7950596c5ca3642286341af651f98823 l
 F www/templates/mobile/del_confirm.tpl cdcb838e2e3a339de5408643fd2c2f3c447ab916 l
 F www/templates/mobile/delete.less 3a74460f12ec494d6ac273a831839c1242abdc60 l
 F www/templates/mobile/edit.json bbf3ccaa55253deb23dd57baa42a9044a3827169 l
@@ -780,7 +785,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 8cb84c194a93316d2c9b893a7d792f882830e539
-R 536f207a9745b1fdb3fe3d7925d5b7c2
+P 3a732349ef12b7fe1213f08b48e581b6c6d6e9dc
+R 1c16e18f2b09412e07691855105d1dee
 U johnfound
-Z 8c2812062619bf829010f5d6be7b7e54
+Z 713b81eea3bd44be77e265a3b14669ef

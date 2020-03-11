@@ -1,0 +1,40 @@
+@import "skin_variables.lsi";
+
+/* Users online table styles */
+
+div.debug {
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
+
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+  padding: 16px;
+  font-size: 14px;
+}
+
+
+table.debug_table {
+  border-collapse: collapse;
+  border: 2px solid gray;
+  width: 100%;
+
+  font-size: 14px;
+
+  th {
+    border: 2px solid black;
+    padding: 4px;
+    max-width: 300px;
+    text-align: center;
+  }
+  td {
+    border: 2px solid gray;
+    padding: 4px;
+    max-width: 400px;
+    text-align: left;
+    vertical-align: top;
+
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    word-break: break-all;
+  }
+}

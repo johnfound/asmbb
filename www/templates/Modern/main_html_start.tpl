@@ -302,7 +302,7 @@
   [case:[special:isadmin] | |
     <a class="btn" href="/!settings[special:urltag]">[const:btnSettings]</a>
     <a class="btn" href="/!sqlite">[const:btnConsole]</a>
-  ]
+    <a class="btn" href="/!debuginfo">Debug info</a>]
 
 </div>
 
