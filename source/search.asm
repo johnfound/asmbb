@@ -63,11 +63,11 @@ begin
         ja      .free_txt
 
         mov     eax, [esp]
-        stdcall StrCat, [.query], txt '( content: ("'
+        stdcall StrCat, [.query], txt '( content: ('
         stdcall StrCat, [.query], eax
-        stdcall StrCat, [.query], '") OR caption: ("'
+        stdcall StrCat, [.query], ') OR caption: ('
         stdcall StrCat, [.query], eax
-        stdcall StrCat, [.query], txt '"))'
+        stdcall StrCat, [.query], txt '))'
 
         stdcall StrCat, [.order], txt " order by rank"
 
