@@ -20,27 +20,31 @@
   margin: @marginY @marginX;
   text-decoration: none;
 
-  &:last-child {
-    flex-grow: 0;
-  }
-
   &:focus {
    outline: 1px dotted @clArticleFG;
    outline-offset: -4px;
   }
 
   img.avatar {
+    background-color: @clAvatarBG;
+    color: @clAvatarFG;
+    text-align: center;
+    font-size: 64px;
+    line-height: 115px;
+    border-radius: 50%;
+    box-shadow: 0px 0px 16px #0040a0;
+    clip-path: circle( ~"calc(50% + 16px)");
+
     display: block;
     width: 128px;
     height: 128px;
-    margin: auto;
-    border-radius: 50%;
-    background-color: @clPrimary0;
+    margin: 2*@marginY auto;
   }
 
   .nick {
     text-align: center;
     font-weight: bold;
+    margin-bottom: @marginY;
   }
 
   div {
@@ -51,3 +55,5 @@
   }
 
 }
+
+

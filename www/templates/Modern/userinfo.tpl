@@ -1,9 +1,11 @@
+[css:posts.css]
 [css:login.css]
 [css:userinfo.css]
 [css:markdown.css]
 [css:settings.css]
+
   <div class="user_desc">
-    <img width="128" height="128" class="profile_avatar" src="/!avatar/[url:[username]]?v=[AVer]" alt="(ツ)">
+    <img width="128" height="128" class="avatar" src="/!avatar/[url:[username]]?v=[AVer]" alt="(ツ)">
     <h1>[username]</h1>
     [html:[minimag:[user_desc][include:minimag_suffix.tpl]]]
     <p style="clear:both"></p>
