@@ -1,10 +1,10 @@
-C A\slittle\sbit\sbetter\sinitial\sheader\sstring\sin\sthe\sdatabase.
-D 2020-03-11T12:56:50.726
+C Don't\spack\sthe\sdirectory\snamed\s"source".
+D 2020-03-11T12:57:54.123
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
 F install/create_release.sh b5721dd1b6252dd9b363258ca069b10c15202f51 x
-F install/exclude.txt 7678178e332c0c4a1a7d1ac8705ae6e2e2e57e74
+F install/exclude.txt f33f826e9610f4298a186d11c50013d7ec55bbb3
 F install/install.txt 64615f21455976e432bda238c6d4282fc561e340
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
 F install/unpack.tar.gz 17da32119ae2cc9bb3a57f2ce59dc489e542ca59
@@ -780,7 +780,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P c250c5536b717763104fd5d80f3208c84043d0fb
-R 339c096620d54631792aaf533a811c7e
+P 69bad56efbdde5e7a0063a2ebc37bbfc9579c227
+R 61bd801ef1bb2dda3907ad1747d27efd
 U johnfound
-Z 01efa2071ae1315c1d72989499dcc8ab
+Z bf17e1df8d625f5c9c0c0928dfa8afae
