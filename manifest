@@ -1,5 +1,5 @@
-C "Modern"\stheme\sis\srelatively\sfinished.\sSome\sminor\spolishing.
-D 2020-03-11T11:23:46.689
+C Updated\sthe\scopyright\syears.
+D 2020-03-11T11:28:04.235
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -647,7 +647,7 @@ F www/templates/Wasp/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Wasp/form_sqlite_console.tpl 7c492fd0663a1f999e88186f0af74f87bcd04a25
 F www/templates/Wasp/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
 F www/templates/Wasp/login.less b854c20c711dffeec158f044c59cbcf72a3161d5
-F www/templates/Wasp/main_html_end.tpl 548b3ee45b5efcb5e9c99d55a9423d9a2e317553
+F www/templates/Wasp/main_html_end.tpl 53de7f6314a3460448c7d8988eb132d82b2d763c
 F www/templates/Wasp/main_html_start.tpl 7aa18a777a4ad87145634b4c50ab1c86c78759ff
 F www/templates/Wasp/markdown.less e62eac499043788e834f58f022ad46526e8d5629
 F www/templates/Wasp/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
@@ -780,7 +780,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 669af2b77167a7ec7a49385577d4342dec90f048
-R 42464f42e8c08fb626de2f1a6f8ac0ac
+P 87e4d66abb373175b7649e21c2d7cef019731fae
+R 5619b55ad30c77d13b1def42fbd1982b
 U johnfound
-Z 06719630aab9269bfa9ab80a7f8fcaf5
+Z 6b1cc70300f4daf332e604ad32449d17
