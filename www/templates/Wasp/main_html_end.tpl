@@ -18,7 +18,7 @@
 </div>
 <div class="attribution">
   [special:version]; [special:sqliteversion];<br><br>
-  <b>&copy;2016..2018 John Found</b>; Licensed under <b>EUPL</b>.<br>
+  <b>&copy;2016..2020 John Found</b>; Licensed under <b>EUPL</b>.<br>
   Powered by <b><a href="http://flatassembler.net">Assembly language</a></b><br>
   Created with <b><a href="http://fresh.flatassembler.net">Fresh IDE</a></b><br><br>
 

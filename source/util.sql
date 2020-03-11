@@ -248,3 +248,23 @@ from
 group by
   threadid,
   userid;
+
+
+
+-- Latest user activity by the user name:
+
+select
+  (g.addr >> 24 & 255)||'.'||(g.addr >> 16 & 255)||'.'||(g.addr >> 8 & 255)||'.'||(g.addr & 255) as IP,
+  datetime(gr.time, 'unixepoch') as Time,
+  gr.method,
+  gr.request,
+  gr.client,
+  gr.referer
+from
+  guests g
+left join
+  guestrequests gr on g.addr = gr.addr
+where
+  g.addr in (select distinct remoteIP from userlog where userid = (select id from users where nick ="SOMEUSERNAME"))
+order by
+  gr.time;

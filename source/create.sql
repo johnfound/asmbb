@@ -22,12 +22,12 @@ insert into Params values ('chat_enabled', 1);
 insert into Params values ('default_skin', 'Wasp');
 insert into Params values ('default_mobile_skin', 'mobile');
 insert into Params values ('email_confirm', 1);
-insert into Params values ('forum_header', '<img src="/images/title.svg" alt=
-" ▄▄             ▄▄▄  ▄▄▄ Power
-█  █ ▄▄▄▄ ▄▄▄▄▄ █  █ █  █
-█▄▄█ █▄▄▄ █ █ █ █▀▀▄ █▀▀▄
-█  █ ▄▄▄█ █ █ █ █▄▄▀ █▄▄▀
-">'
+insert into Params values ('forum_header', '<h1 style="font-weight: 800">AsmBB</h1>
+<b style="text-align: center">Power<br>
+  <svg version="1.1" width="64" viewBox="0 0 32 10" xmlns="http://www.w3.org/2000/svg">
+    <path d="m0 10 12-5-3-3 23-2-12 5 3 3z"/>
+  </svg>
+</b>'
 );
 
 create table Guests (

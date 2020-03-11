@@ -28,7 +28,8 @@ begin
 
         stdcall TextCat, edi, txt '<div class="thread">'
         stdcall RenderTemplate, edx, "nav_history.tpl", 0, esi
-        mov     edi, eax
+        stdcall TextCat, eax, txt '<div class="multi_content">'
+        mov     edi, edx
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlPostHistory, sqlPostHistory.length, eax, 0
@@ -64,6 +65,9 @@ begin
 
 .end_query:
         cinvoke sqliteFinalize, [.stmt]
+
+        stdcall TextCat, edi, txt "</div>"   ; div.multi_content
+        mov     edi, edx
 
         cmp     [.cnt], 5
         jbe     .back_navigation_ok

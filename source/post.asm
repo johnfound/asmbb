@@ -18,8 +18,6 @@ proc PostUserMessage, .pSpecial
 .stmt  dd ?
 .stmt2 dd ?
 
-.fPreview dd ?
-
 .slug     dd ?
 
 .caption  dd ?
@@ -32,6 +30,8 @@ proc PostUserMessage, .pSpecial
 .source   dd ?
 .ticket   dd ?
 
+.softPreview dd ?
+
 begin
         pushad
 
@@ -41,7 +41,7 @@ begin
         mov     [.fLimited], eax
 
         xor     eax, eax
-        mov     [.fPreview], eax  ; preview by default when handling GET requests.
+        mov     [.softPreview], eax
         mov     [.slug], eax
         mov     [.source], eax
         mov     [.caption], eax
@@ -143,7 +143,9 @@ begin
         test    eax, eax
         jz      .source_ok2
 
-        stdcall StrByteUtf8, [.source], LIMIT_POST_LENGTH
+        mov     eax, LIMIT_POST_LENGTH
+        stdcall GetParam, 'max_post_length', gpInteger
+        stdcall StrByteUtf8, [.source], eax
         stdcall StrTrim, [.source], eax
 
 .source_ok2:
@@ -165,11 +167,6 @@ begin
         stdcall StrDel, eax
         test    eax, eax
         jnz     .create_post_and_exit
-
-
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "preview", 0
-        stdcall StrDel, eax
-        mov     [.fPreview], eax
 
         cmp     [.source], 0
         jne     .show_edit_form
@@ -224,6 +221,20 @@ begin
 
 
 .show_edit_form:
+        stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
+        mov     ebx, eax
+
+        stdcall GetQueryItem, ebx, txt "cmd=", 0
+        test    eax, eax
+        jz      .js_preview_ok
+
+        stdcall StrCompNoCase, eax, "preview"
+        stdcall StrDel, eax
+        jnc     .js_preview_ok
+
+        inc     [.softPreview]
+
+.js_preview_ok:
         mov     eax, [esi+TSpecialParams.userLang]
 
         cmp     [.caption], 0
@@ -305,9 +316,23 @@ begin
 .username_ok:
 
         cinvoke sqliteBindInt, [.stmt], 9, [.iFormat]
-
         cinvoke sqliteStep, [.stmt]
 
+; is it request from JS?
+        shr     [.softPreview], 1
+        jnc     .render_all
+
+        stdcall TextAddStr2, edi, 0, cHeadersJSON, cHeadersJSON.length
+        stdcall RenderTemplate, edi, "edit.json", [.stmt], esi
+        mov     edi, eax
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        stc
+        jmp     .finish
+
+
+.render_all:
         mov     ecx, cNewThreadForm
         cmp     [esi+TSpecialParams.thread], 0
         je      .make_form
@@ -319,13 +344,8 @@ begin
         stdcall RenderTemplate, edi, ecx, [.stmt], esi
         mov     edi, eax
 
-        cmp     [.fPreview], 0
-        je      .preview_ok
-
         stdcall RenderTemplate, edi, "preview.tpl", [.stmt], esi
         mov     edi, eax
-
-.preview_ok:
 
         cinvoke sqliteFinalize, [.stmt]
         clc
@@ -336,15 +356,11 @@ begin
 
 .create_post_and_exit:
 
-        inc     [.fPreview]
-
         cmp     [.caption], 0
         je      .show_edit_form
 
         cmp     [.source], 0
         je      .show_edit_form
-
-        dec     [.fPreview]
 
 ; check the ticket
 

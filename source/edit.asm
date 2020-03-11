@@ -245,7 +245,9 @@ begin
         cinvoke sqliteBindInt, [.stmt], 4, [esi+TSpecialParams.userID]
         cinvoke sqliteBindInt, [.stmt], 5, [.format]
 
-        stdcall StrByteUtf8, [.source], LIMIT_POST_LENGTH
+        mov     eax, LIMIT_POST_LENGTH
+        stdcall GetParam, 'max_post_length', gpInteger
+        stdcall StrByteUtf8, [.source], eax
         stdcall StrTrim, [.source], eax
 
         stdcall StrPtr, [.source]

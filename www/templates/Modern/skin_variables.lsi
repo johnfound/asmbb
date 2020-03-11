@@ -1,0 +1,117 @@
+@clPrimary0: #0040a0; //#004090; //#891251;   //#125189;
+@clPrimary1: #ffb000; //#4E80AD;
+@clPrimary2: #2D679B;
+@clPrimary3: #083D6E;
+@clPrimary4: #042C50;
+
+@clSecondary10: #D4A40E;
+@clSecondary11: #FFDB69;
+@clSecondary12: #F0C439;
+@clSecondary13: #A98100;
+@clSecondary14: #7C5E00;
+
+@clSecondary20: #FF0000;
+@clSecondary21: #FF6B6B;
+@clSecondary22: #FF3D3D;
+@clSecondary23: #C20000;
+@clSecondary24: #940000;
+
+
+@clMono0: #000000;
+@clMono1: #404040;
+@clMono4: #a0a0a0;
+@clMono2: #d0d0d0;
+@clMono3: #ffffff;
+
+@FontMain: Noto Sans, Liberation Sans,Arial,Helvetica,sans-serif;
+@FontSzMain: 14px;
+
+@FontMono: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
+@FontSzMono: 14px;
+
+@FontHeader: Noto Sans, Liberation Sans,Arial,Helvetica,sans-serif;
+
+@clBodyBG: #bef2c1;
+@clBodyFG: @clArticleFG;
+
+@clArticleBG: rgba(255, 255, 255, 0.9);  //@clMono3;
+@clArticleBGO: #ffffff;  //@clMono3;
+@clArticleFG: @clMono0;
+
+@clLinkOnLight: @clPrimary0;
+@clLinkOnDark: #40c0ff;
+
+@clDialogBG: #ffffff;
+@clDialogFG: #000000;
+@widthDlg: 640px;
+@heightDlg: 480px;
+
+
+@clHeaderBG: @clMono3;
+@clHeaderFG: @clPrimary0;
+
+@clPanelBG: rgba(64, 64, 64, 0.8);
+@clPanelFG: white;
+
+@buttonWidth: 256px;
+@buttonHeight: 32px;
+
+@clButtonBG: #404040;
+@clButtonFG: #ffffff;
+@clButtonActiveBG: #c0c0c0;
+@clButtonActiveFG: #000000;
+
+@toolButtonSize: 28px;
+@toolIconSize: 20px;
+
+@btnShadow: none; // -1px 1px 4px 1px #fff;
+@btnShadowA: -1px 1px 4px 1px rgba(0, 0, 0, 0.8);
+@Radius: 0px;     // 4px;
+@Shadow: none; //-1px 1px 2px 4px rgba(0, 0, 0, 0.2);  // -1px 1px 4px 1px rgba(0, 0, 0, 0.8);
+@Opacity: 0.95;
+
+@clNotifyBG: @clSecondary20;
+@clNotifyFG: @clMono3;
+
+@clThreadLink: @clLinkOnLight;
+
+@clAvatarBG: rgba(0, 64, 160, 0.5);     //#0040a0;
+@clAvatarFG: #ffffff;
+
+@borderQuote: 2px solid #808080;
+@borderEdit: 2px solid #808080;
+
+@clSeparator: #808080;
+
+
+@clMsgInfoBG: green;
+@clMsgInfoFG: white;
+
+@clMsgErrorBG: red;
+@clMsgErrorFG: white;
+
+@clMsgWarningBG: yellow;
+@clMsgWarningFG: red;
+
+// User notifications
+
+@clNotifyBG: @clSecondary20;
+@clNotifyFG: @clMono3;
+
+@clActivityBG: @clPrimary0;
+@clActivityFG: @clMono3;
+@clActivityLink: @clMono3;
+
+@clChatUser: @clPrimary0;
+@clFakeUser: @clSecondary20;
+
+@marginX: 8px;
+@marginY: 8px;
+
+
+// Inline SVG code images in LESS CSS
+.inline-svg-code( @code ) {
+  @-svg-code: escape(~'<?xml version="1.0" ?>@{code}');
+  @-inline-svg-code: ~'data:image/svg+xml,@{-svg-code}';
+  @-inline-svg-url: ~"url('@{-inline-svg-code}')";
+}

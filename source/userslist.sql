@@ -20,8 +20,8 @@ order by Skin, nick|
 order by Skin desc, nick|
 order by PostCount, nick|
 order by PostCount desc, nick|
-order by Register, nick|
-order by Register desc, nick|
+order by Register, id, nick|
+order by Register desc, id desc, nick|
 order by LastSeen, nick|
 order by LastSeen desc, nick|
 order by id

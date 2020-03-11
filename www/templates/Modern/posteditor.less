@@ -1,0 +1,72 @@
+@import "skin_variables.lsi";
+
+body {
+  width: 50%;
+  margin: @marginY @marginX @marginY auto !important;
+}
+
+
+div.editor {
+  color: @clArticleFG;
+  width: ~"calc( 50% - 3*@{marginX})";
+  position: fixed;
+  left: @marginX;
+  top: 0px;
+  bottom: @marginY;
+}
+
+
+#editform {
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  p {
+    font-weight: bold;
+    margin: 0px 0px 4px 0px;
+  }
+
+  .tabbed {
+    & > section {
+      background-color: @clDialogBG;
+      color: @clDialogFG;
+    }
+  }
+}
+
+
+textarea.editor {
+  width: 100%;
+  height: 20em;
+  flex-basis: 0;
+  padding: 8px;
+  margin: @marginY 0px;
+  outline-style: none;
+  overflow: auto;
+  flex-grow: 1;
+  resize: none;
+  overscroll-behavior: none;
+
+  font-family: @FontMono;
+  font-size: @FontSzMono;
+}
+
+input[type="file"] {
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+  margin-bottom: 8px;
+}
+
+
+.attach_del {
+  overflow: auto;
+  flex-grow: 1;
+  table {
+    width: 100%;
+  }
+}
+
+.tabbed {
+  box-shadow: none !important;
+}

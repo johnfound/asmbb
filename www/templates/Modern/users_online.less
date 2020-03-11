@@ -1,0 +1,79 @@
+@import "skin_variables.lsi";
+
+a.ban_link {
+  display: inline-block;
+  color: red;
+  font-weight: bold;
+  font-size: 24px;
+  text-decoration: none;
+  vertical-align: middle;
+
+  &:before {
+    content: "🖓";
+  }
+}
+
+a.online {
+  font-weight: bold;
+  background-color: @clDarkBG;
+  color: @clDarkFG;
+  vertical-align: middle;
+  padding: 1px 4px;
+}
+
+/* Users online table styles */
+
+div.users_online {
+  table {
+    display: block;
+    tbody {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0px -@marginX;
+
+      &::after {
+        content: '';
+        flex-grow: 1000000000;
+      }
+
+      tr:first-child {
+        display: none;
+      }
+
+      tr {
+        display: block;
+        padding: 8px;
+        border-radius: @Radius;
+        background-color: @clArticleBG;
+        color: @clArticleFG;
+        box-shadow: @Shadow;
+        flex-grow: 1;
+        flex-shrink: 1;
+        width: 320px;
+
+        margin: @marginY @marginX;
+        overflow: hidden;
+
+        td:first-child {
+          font-size: @FontSzMain * 1.3;
+          font-weight: bold;
+        }
+
+        td:last-child {
+          font-weight: bold;
+        }
+
+        td {
+          display: block;
+          word-wrap: break-word;       /* Internet Explorer 5.5+ */
+          word-break: break-all;
+        }
+
+        th {
+          display: none;
+        }
+      }
+    }
+  }
+}
+

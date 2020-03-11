@@ -1,0 +1,59 @@
+@import "skin_variables.lsi";
+
+
+.users_list {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin: -@marginY 0px;
+}
+
+
+.oneuser {
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+  box-shadow: @Shadow;
+  flex-grow: 1;
+  flex-shrink: 1;
+  padding: 8px;
+  border-radius: @Radius;
+  margin: @marginY @marginX;
+  text-decoration: none;
+
+  &:focus {
+   outline: 1px dotted @clArticleFG;
+   outline-offset: -4px;
+  }
+
+  img.avatar {
+    background-color: @clAvatarBG;
+    color: @clAvatarFG;
+    text-align: center;
+    font-size: 64px;
+    line-height: 115px;
+    border-radius: 50%;
+    box-shadow: 0px 0px 16px #0040a0;
+    clip-path: circle( ~"calc(50% + 16px)");
+
+    display: block;
+    width: 128px;
+    height: 128px;
+    margin: 2*@marginY auto;
+  }
+
+  .nick {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: @marginY;
+  }
+
+  div {
+    font-weight: bold;
+    span {
+      font-weight: normal;
+    }
+  }
+
+}
+
+

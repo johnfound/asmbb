@@ -1,0 +1,156 @@
+@import "skin_variables.lsi";
+
+.threads_list {
+  margin: 0px;
+}
+
+.thread_summary {
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+  padding: 8px 16px;
+  box-shadow: @Shadow;
+  margin: 0px;
+  border-radius: @Radius;
+  flex-grow: 1;
+  flex-shrink: 1;
+  h2 {
+    margin: 8px 0px;
+    display: flex;
+    align-items: center;
+    a {
+      font-size: @FontSzMain;
+      line-height: @FontSzMain;
+    }
+    svg > * {
+      fill: #d00040;
+    }
+    svg {
+      margin-right: 8px;
+    }
+    svg.markread {
+      width: 16px;
+    }
+  }
+}
+
+.thread_link {
+  color: @clThreadLink;
+  font-size: @FontSzMain*1.5 !important;
+  line-height: initial !important;
+  margin: 0px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+
+.comma > * {
+  display: inline-block;
+
+  &::after {
+    content: ', ';
+    text-decoration: none;
+    margin-right: 4px;
+  }
+
+  &:last-child::after {
+    content: ' ';
+  }
+}
+
+
+.posters {
+  margin: 8px 0px;
+  user-select: none;
+  font-weight: bold !important;
+  max-width: 480px;
+  * {
+    font-weight: normal;
+    user-select: all;
+  }
+  li {
+    list-style: none;
+    a:before {
+    content: "@";
+    }
+  }
+}
+
+.invited {
+  margin: 8px 0px;
+  user-select: none;
+  font-weight: bold;
+  * {
+    font-weight: normal;
+    user-select: all;
+  }
+  li {
+    list-style: none;
+    a:before {
+      content: "@";
+    }
+  }
+}
+
+.thread_tags {
+  user-select: none;
+  padding: 0px;
+  font-weight: bold;
+  margin: 8px 0px;
+  * {
+    font-weight: normal;
+    user-select: all;
+  }
+  li {
+    list-style: none;
+    a:before {
+      content: "#";
+    }
+  }
+}
+
+
+
+
+.category {
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+  padding: 8px 16px;
+  border-radius: @Radius;
+  box-shadow: @Shadow;
+  margin: 0px;
+  flex-grow: 1;
+  display: block;
+  text-decoration: none;
+
+  h2 {
+    margin: 8px 0px;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    color: @clThreadLink;
+    span {
+      font-variant: small-caps;
+    }
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    p {
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      margin: 0px;
+      b {
+        font-size: 20px;
+        margin-left: @marginX;
+      }
+    }
+  }
+
+  svg {
+    margin-right: @marginX;
+  }
+}

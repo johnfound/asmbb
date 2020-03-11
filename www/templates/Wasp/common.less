@@ -35,8 +35,13 @@ div.header {
   flex-wrap: wrap;
   align-items: center;
   background: @HeaderBackground;
+  color: @clHeader;
 
   padding: @paddingHeader;
+
+  svg > path {
+    fill: @clHeader;
+  }
 
   img {
     padding: 0px;
@@ -52,11 +57,12 @@ div.header {
   }
 
   h1 {
-    font-size: 36px;
+    font-size: 56px;
+    line-height: 56px;
     margin: 0px;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: @clHeader;
+    font-family: @FontHeader;
   }
 
   div {
@@ -399,6 +405,7 @@ input[type=checkbox] {
       & + * {
         white-space: nowrap;
         overflow: hidden;
+        overflow: -moz-hidden-unscrollable;
         text-overflow: ellipsis;
       }
     }

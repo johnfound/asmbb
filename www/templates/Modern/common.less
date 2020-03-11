@@ -1,0 +1,683 @@
+@import "skin_variables.lsi";
+
+* {
+  box-sizing: border-box;
+  padding: 0px;
+}
+
+body {
+  font-size: @FontSzMain;
+  font-family: @FontMain;
+  color: @clBodyFG;
+  margin: @marginY @marginX;
+  background-image: linear-gradient(135deg, #a0d0ff 0px, #ffffff 100%);
+  background-attachment: fixed;
+  min-height: calc(100vh + -2*@marginY);
+}
+
+
+.limited-access {
+  box-shadow: 0px 0px 16px 4px red;
+}
+
+
+
+#background {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: -100;
+  opacity: 0.2;
+}
+
+.noselect {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.multi_content {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0px -@marginX;
+
+  &::after {
+    content: '';
+    flex-grow: 1000000000;
+  }
+
+  &>* {
+    margin: @marginY @marginX;
+    overflow: hidden;
+  }
+}
+
+
+#search_form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  border-radius: @Radius;
+  margin: 0px;
+  width: 100%;
+
+  &>* {
+    margin: 8px 4px !important;
+  }
+
+  label {
+    padding: 0px;
+    cursor: pointer;
+    background-color: transparent;
+    margin-left: 0px !important;
+    line-height: 0px;
+    input {
+      display: none;
+    }
+  }
+}
+
+.search_line {
+  flex-grow: 1;
+}
+
+
+#taglinks {
+  background-color: @clArticleBG;
+  box-shadow: @Shadow;
+  border-radius: @Radius;
+  overflow: hidden;
+
+  margin: -@marginY 0px 0px 0px;
+  padding: @marginY @marginX;
+
+  width: 100%;
+}
+
+
+.taglink {
+  display: inline;
+  margin: 0;
+  padding: 4px;
+  color: @clArticleFG;
+  border-radius: @Radius;
+  vertical-align: middle;
+  &::before {
+    content: "#";
+  }
+
+  &:active {
+    background-color: @clButtonActiveBG;
+    background-image: linear-gradient(white, @clButtonActiveBG) !important;
+  }
+
+  &:hover, &:focus {
+    background-color: @clButtonActiveBG;
+    background-image: linear-gradient(@clButtonActiveBG, white);
+  }
+
+  &:active, &:hover, &:focus {
+    color: @clButtonActiveFG;
+    box-shadow: @btnShadowA;
+    svg.alltags>* {
+      fill: @clButtonActiveFG;
+    }
+  }
+
+  svg.alltags {
+    margin: 0px 8px 0px 0px;
+    vertical-align: middle;
+    &>* {
+      fill: @clArticleFG;
+    }
+  }
+}
+
+.current_tag {
+  background-color: @clButtonBG;
+  color: @clButtonFG;
+  svg.alltags>* {
+    fill: @clButtonFG;
+  }
+}
+
+.alltags {
+  font-size: 16px;
+  &::before {
+    content: '';
+  }
+}
+
+.tagsize00 { font-size: 28px* 0.38}
+.tagsize01 { font-size: 28px* 0.38}
+.tagsize02 { font-size: 28px* 0.38}
+.tagsize03 { font-size: 28px* 0.38}
+.tagsize04 { font-size: 28px* 0.38}
+.tagsize05 { font-size: 28px* 0.41}
+.tagsize06 { font-size: 28px* 0.47}
+.tagsize07 { font-size: 28px* 0.52}
+.tagsize08 { font-size: 28px* 0.57}
+.tagsize09 { font-size: 28px* 0.62}
+.tagsize10 { font-size: 28px* 0.66}
+.tagsize11 { font-size: 28px* 0.70}
+.tagsize12 { font-size: 28px* 0.73}
+.tagsize13 { font-size: 28px* 0.76}
+.tagsize14 { font-size: 28px* 0.79}
+.tagsize15 { font-size: 28px* 0.81}
+.tagsize16 { font-size: 28px* 0.83}
+.tagsize17 { font-size: 28px* 0.85}
+.tagsize18 { font-size: 28px* 0.87}
+.tagsize19 { font-size: 28px* 0.89}
+.tagsize20 { font-size: 28px* 0.90}
+.tagsize21 { font-size: 28px* 0.91}
+.tagsize22 { font-size: 28px* 0.93}
+.tagsize23 { font-size: 28px* 0.94}
+.tagsize24 { font-size: 28px* 0.95}
+.tagsize25 { font-size: 28px* 0.96}
+.tagsize26 { font-size: 28px* 0.97}
+.tagsize27 { font-size: 28px* 0.97}
+.tagsize28 { font-size: 28px* 0.98}
+.tagsize29 { font-size: 28px* 0.99}
+.tagsize30 { font-size: 28px* 0.99}
+.tagsize31 { font-size: 28px* 1.00}
+.tagsize32 { font-size: 28px* 1.00}
+
+
+
+span.ntf {
+  display: inline-flex;
+  border-radius: 100%;
+  justify-content: center;
+  align-items: center;
+
+  background-color: @clNotifyBG;
+  color: @clNotifyFG;
+
+  font-size: 12px;
+  line-height: 12px;
+  font-weight: bold;
+  margin-left: 1ch;
+
+  &::before, &::after {
+    content:'\200B';    // zero width space!
+    display:inline-block;
+    line-height:0px;
+    padding-top:50%;
+    padding-bottom:50%;
+  }
+
+  &::before {
+    padding-left: 4px;
+  }
+
+  &::after {
+    padding-right: 4px;
+  }
+
+}
+
+
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  padding: @marginX;
+  margin: 0px;
+
+  color: @clPanelFG;
+  background-color: @clPanelBG;
+  box-shadow: @Shadow;
+  border-radius: @Radius;
+
+  & > * {
+    margin: 0px @marginX/2;
+  }
+
+  svg > path {
+    fill: @clPanelFG;
+  }
+
+  h1 {
+    font-variant: small-caps;
+    font-weight: bold;
+    font-size: 48px;
+    line-height: 48px;
+    padding: 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: @FontHeader;
+  }
+
+  div {
+    text-align: right;
+    margin-left: 16px;
+
+    a, .logout {
+      font: inherit;
+      background-color: transparent;
+      color: @clPanelFG;
+      border: none;
+      font-weight: bold;
+      text-align: right;
+      display: inline;
+      line-height: 1.5em;
+      text-decoration: underline;
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+}
+
+
+.footer {
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: @Radius;
+  margin: 2*@marginY 0px;
+  box-shadow: @Shadow;
+  padding: 16px;
+  p {
+    margin: 4px 0px;
+  }
+  a {
+    font-weight: bold;
+  }
+}
+
+.attribution {
+  color: @clArticleFG;
+  margin: 16px 2px 16px 6px;
+}
+
+
+a {
+  color: @clThreadLink;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.small {
+  font-size: @FontSzMain*6/7;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+
+/* Tabbed navigation handling */
+
+.tabbed {
+  flex-grow: 1;
+  position: relative;
+  box-shadow: @Shadow;
+
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+
+  & > input {
+    position: absolute;
+    opacity: 0;
+    & + label {
+      float: left;
+      -webkit-user-select: none; /* Safari 3.1+ */
+      -moz-user-select: none; /* Firefox 2+ */
+      -ms-user-select: none; /* IE 10+ */
+      user-select: none; /* Standard syntax */
+
+      padding: 8px 16px;
+      font-size: @FontSzMain;
+      line-height: @FontSzMain;
+      border-top: 2px solid transparent;
+      cursor: pointer;
+      font-weight: bold;
+      color: black;
+
+      &:hover {
+        background: @clButtonActiveBG;
+        color: @clButtonActiveFG;
+      }
+
+      & + section {
+        position: absolute;
+        top: 32px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        border-radius: @Radius;
+
+        display: none;
+        padding: 8px 16px;
+        background: @clDialogBG;
+        color: @clDialogFG;
+        flex-direction: column;
+      }
+    }
+
+    &:focus + label {
+      border-top: 2px solid #404040;
+      z-index: 1;
+    }
+
+    &:checked + label {
+      background: @clDialogBG;
+      color: @clDialogFG;
+      & + section {
+        display: flex;
+      }
+    }
+  }
+}
+
+
+select {
+  .inline-svg-code(~'<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m8 9h16l-8 16z" fill="#444"/></svg>');
+
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+
+  background-image: @-inline-svg-url;
+  background-repeat: no-repeat;
+  background-position: right 0px top 50%;
+  background-size: 20px auto;
+
+  font-family: @FontMain;
+  font-size: @FontSzMain;
+  padding: 0px 16px 0px 4px;
+  outline: none;
+
+  border-radius: @Radius;
+  border: @borderEdit;
+
+  margin: 4px 0px;
+
+  background-color: @clArticleBGO;
+  color: @clArticleFG;
+}
+
+input {
+  font: inherit;
+}
+
+input[type=text], input[type=password], input[type=search] {
+  margin: 8px 0px;
+  background-color: @clArticleBGO;
+  color: @clArticleFG;
+  border: @borderEdit;
+  padding: 4px 8px;
+  border-radius: @Radius;
+//  height: 34px;
+}
+
+input[type=file] {
+  margin: 0px 0px @marginY 0px;
+  background-color: @clArticleBGO;
+  color: @clArticleFG;
+  border: @borderEdit;
+  border-radius: @Radius;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+}
+
+textarea {
+  background-color: @clArticleBGO;
+  color: @clArticleFG;
+  border: @borderEdit;
+  border-radius: @Radius;
+  padding: 8px;
+  font-family: @FontMono;
+  font-size: @FontSzMono;
+}
+
+
+svg {
+  vertical-align: middle;
+  &>path {
+    fill: @clButtonBG;
+  }
+  &.disabled {
+    &>path {
+      fill: @clMono4 !important;
+    }
+  }
+}
+
+
+/* USER INTERFACE ELEMENTS */
+
+
+/* Decorative checkbox mechanism. The label tag, must be styled separately! */
+
+input^[type=checkbox^] {
+  position: absolute;
+  z-index: -1;
+  left: -10000px;
+
+  &:focus + label::before {
+    outline: 2px dotted black;
+    outline-offset: 1px;
+  }
+
+  &:checked + label::before {
+    color: lime;
+    background-color: lime;
+  }
+
+  &:checked + .popup {
+    display: block;
+  }
+
+  + label {
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    &::before {
+      content: '';
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      background-color: white;
+      border: 2px solid @clSeparator;
+      border-radius: @Radius;
+      margin-right: 8px;
+      vertical-align: bottom;
+    }
+  }
+
+// Collapsable block of elements.
+  &.collapseit:focus + ul {
+    outline: 2px dotted gray;
+  }
+
+  &.collapseit:not(:checked) + * {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    padding: 1px 0px;
+  }
+
+  &.dropdown:not(:checked) + * {
+    display: none !important;
+  }
+}
+
+/* Button type elements */
+
+.btn {
+  font-weight: bold;
+  font-variant: small-caps;
+  padding: 6px;
+  background-color: @clButtonBG;
+  color: @clButtonFG;
+  text-decoration: none;
+  border: none;
+  border-radius: @Radius;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: @btnShadow;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
+  &>svg>* {
+    fill: @clButtonFG;
+  }
+
+  &:active {
+    background-image: linear-gradient(white, @clButtonActiveBG) !important;
+  }
+
+  &:hover, &:focus  {
+    background-color: @clButtonActiveBG;
+    background-image: linear-gradient(@clButtonActiveBG, white);
+    color: @clButtonActiveFG;
+    box-shadow: @btnShadowA;
+    text-decoration: none;
+    &>svg>* {
+      fill: @clButtonActiveFG;
+    }
+  }
+}
+
+.round {
+  border-radius: 50% !important;
+  display: flex;
+}
+
+.btn_svg:extend(.btn all) {
+  padding: 0px;
+}
+
+// element that separates the flexbox elements on left and right.
+// for example UI buttons.
+.spacer {
+  flex-grow: 1;
+  min-width: 0px;
+}
+
+
+
+// Panel for the buttons.
+
+div.ui {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: @marginY/2 -@marginX/2;
+  &>* {
+    margin: @marginY/2 @marginX/2;
+  }
+}
+
+
+.hidden {
+  display: none;
+}
+
+
+
+
+/* The SVG for the button RSS feed */
+
+svg.listfeed {
+  display: block;
+  margin: 0 auto;
+}
+
+
+
+/* Pages links styles */
+
+div.page_row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0px -@marginX;
+}
+
+.page_link:extend(.btn all) {
+  padding: 4px;
+  min-width: 32px;
+  line-height: initial;
+  margin: @marginY @marginX;
+}
+
+span.current_page {
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+  font-weight: bold;
+  border-radius: @Radius;
+  padding: 4px;
+  text-align: center;
+  display:inline;
+  min-width: 32px;
+  margin: @marginY @marginX;
+}
+
+span.page_hole {
+  margin: 0px 8px 0px 0px;
+}
+
+
+
+
+/* messages screen */
+
+div.message_block {
+  font-size: 20px;
+  width: 640px;
+  background: @clArticleBG;
+  border-radius: @Radius;
+  box-shadow: @Shadow;
+  color: @clArticleFG;
+  margin: 8px auto;
+  text-align: center;
+  padding: 20px;
+  clear: both;
+}
+
+div.message_block h1 {
+    text-align: center;
+    font-size: 21px;
+    font-variant: small-caps;
+    margin: 0px;
+}
+
+
+div.message_block {
+  & > a:extend(.btn all) {
+  }
+}
+
+
+div.message {
+  white-space: pre-wrap;
+  padding: 64px;
+  margin: 0px auto;
+  text-align: left;
+  color: black;
+  display: inline-block;
+}
+

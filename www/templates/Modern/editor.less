@@ -1,0 +1,114 @@
+@import "skin_variables.lsi";
+
+
+.editbtn {
+  display: inline-block;
+  width: @toolButtonSize;
+  height: @toolButtonSize;
+  padding: (@toolButtonSize - @toolIconSize)/2;
+  color: @clButtonFG;
+  text-align: center;
+
+  background-color: @clButtonBG;
+  border-radius: @Radius;
+
+  cursor: pointer;
+  &:hover {
+    background-color: @clButtonActiveBG;
+    background-image: linear-gradient(@clButtonActiveBG, white);
+    color: @clButtonActiveFG;
+    box-shadow: @btnShadowA;
+
+    & > svg * {
+      fill: @clButtonActiveFG;
+    }
+  }
+
+  & > svg * {
+    fill: @clButtonFG;
+  }
+}
+
+.toolbar {
+  flex-grow: 1;
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+
+  & > input {
+    position: absolute;
+    opacity: 0;
+    & + label {
+      -webkit-user-select: none; /* Safari 3.1+ */
+      -moz-user-select: none; /* Firefox 2+ */
+      -ms-user-select: none; /* IE 10+ */
+      user-select: none; /* Standard syntax */
+
+      display: flex;
+
+      padding: 0px 8px;
+      margin: 0px;
+      font-size: 14px;
+      border-left: 2px solid transparent;
+      border-top-left-radius: @Radius;
+      border-bottom-left-radius: @Radius;
+      cursor: pointer;
+      font-weight: bold;
+      color: black;
+
+      position: absolute;
+      left: 0px;
+      height: 50%;
+      width: 80px;
+
+      span {
+        align-self: center;
+      }
+
+      & + section {
+        display: none;
+        padding: 4px 4px 4px 16px;
+        background: @clButtonBG;
+        color: @clButtonFG;
+        flex-direction: row;
+        flex-wrap: wrap;
+        border-top-right-radius: @Radius;
+        border-bottom-right-radius: @Radius;
+        margin: 0px 0px 0px 78px;
+        border: 2px solid @clSeparator;
+      }
+    }
+
+    &:focus + label {
+      outline: 2px dotted black;
+      z-index: 1;
+    }
+
+    &:checked + label {
+      background: @clButtonBG;
+      color: @clButtonFG;
+      border: 2px solid @clSeparator;
+      border-right: none;
+      border-top-left-radius: @Radius;
+      border-bottom-left-radius: @Radius;
+
+      & + section {
+        display: flex;
+      }
+
+      & + section.minimag {
+        display: flex;
+        border-bottom-left-radius: @Radius;
+      }
+
+      & + section.bbcode {
+        display: flex;
+        border-top-left-radius: @Radius;
+      }
+    }
+  }
+}

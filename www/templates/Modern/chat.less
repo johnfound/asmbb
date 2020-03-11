@@ -1,0 +1,155 @@
+@import "skin_variables.lsi";
+
+body {
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+  overflow: hidden;
+  margin: 0px 4px 16px 4px !important;
+  display: flex;
+  flex-direction: column;
+}
+
+div.chat {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+#layout {
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+}
+
+#header_panel, #taglinks, #global_toolbar, .footer, .attribution {
+  display: none !important;
+}
+
+div.ui {
+  margin: 4px 0px !important;
+  p {
+    margin-right: 8px;
+    font-weight: bold;
+  }
+}
+
+div.chatflex {
+  display: flex;
+  padding: 0px;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+#chatlog {
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+  border-radius: @Radius;
+  box-shadow: @Shadow;
+  margin: 4px;
+  overflow: auto;
+  padding: 16px;
+  flex-grow: 1;
+}
+
+#syslog {
+  background-color: @clArticleBG;
+  color: @clArticleFG;
+  border-radius: @Radius;
+  box-shadow: @Shadow;
+  margin: 4px;
+  overflow: auto;
+  flex-grow: 0;
+  flex-shrink: 0;
+  padding: 16px;
+  width: 200px;
+}
+
+#chat_form {
+  display: flex;
+  align-items: center;
+  border-radius: @Radius;
+  margin: 4px;
+
+  input {
+    margin: 0px 8px 0px 0px;
+    padding: 8px;
+    box-shadow: @Shadow;
+  }
+
+  .icon_btn {
+    background-color: transparent;
+    padding: 0px;
+    svg > *:not(:hover){
+      fill: @clButtonActiveFG;
+    }
+  }
+}
+
+#chat_user {
+  width: 200px;
+  margin: 0px 4px 0px 0px;
+  box-shadow: @Shadow;
+  padding: 8px;
+}
+
+#chat_message {
+  flex-grow: 1;
+}
+
+
+
+.message {
+  margin: 4px 0px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chatlink {
+  color: blue;
+}
+
+.emo {
+  vertical-align: middle;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.time {
+  font-size: 80%;
+}
+
+.hline {
+  line-height: 1px;
+  text-align: center;
+  font-size: @FontSize;
+  border-bottom: 1px solid @clThreadLink;
+}
+
+.date {
+  font-size: 80%;
+  padding: 0px 8px;
+  background-color: @clArticleBGO;
+}
+
+
+.user {
+  color: @clChatUser;
+  margin: 4px 0px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+}
+
+.fake_user {
+  color: @clFakeUser;
+}
+
+.gray_user {
+  opacity: 0.5;
+}
+
+
+
+

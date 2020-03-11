@@ -15,3 +15,7 @@ echo "Compile mobile/"
 cd ../MoLight
 echo "Compile MoLight/"
 ./compile_styles.sh
+
+cd ../Modern
+echo "Compile Modern/"
+./compile_styles.sh

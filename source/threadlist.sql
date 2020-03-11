@@ -53,15 +53,15 @@ from (
     Pinned desc, LastChanged desc
 |
   select
-    LA.threadid
+    TT.threadid
   from
-    LimitedAccessThreads LA
+    threadtags TT
   left join
-    ThreadTags TT on TT.threadid = LA.threadid
+    LimitedAccessThreads LA on LA.threadid = TT.threadid
   where
-    userid = ?3 and TT.tag = ?4
+    LA.userid = ?3 and TT.tag = ?4
   order by
-    LA.LastChanged desc
+    Pinned desc, TT.LastChanged desc
 ]
   limit ?1
   offset ?2 ) as S

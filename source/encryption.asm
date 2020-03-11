@@ -11,8 +11,13 @@ begin
 
 ; render the password page:
 
-        stdcall RenderTemplate, 0, 'crypto.tpl', 0, esi
+        stdcall TextCreate, sizeof.TText
+        mov     edx, eax
+
+        stdcall TextCat, edx, <"Content-type: text/html; charset=utf-8", 13, 10, 13, 10>
+        stdcall RenderTemplate, edx, 'crypto.tpl', 0, esi
         mov     [esp+4*regEAX], eax
+
         stc
         popad
         return

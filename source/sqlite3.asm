@@ -80,6 +80,7 @@ begin
         cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "phpbb", 1, SQLITE_UTF8, 0, sqliteConvertPhpBBText, 0, 0, 0
         cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "xorblob", 2, SQLITE_ANY, 0, sqliteXorBlob, 0, 0, 0
         cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "md5", 1, SQLITE_ANY, 0, sqliteMD5Blob, 0, 0, 0
+        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "base64", 1, SQLITE_ANY, 0, sqliteBase64, 0, 0, 0
         return
 endp
 
@@ -513,5 +514,37 @@ begin
 .null:
         cinvoke sqliteResultNULL, [.context]
         pop     edi esi ebx
+        cret
+endp
+
+
+proc sqliteBase64, .context, .num, .pValue
+begin
+        push    ebx esi
+
+        mov     esi, [.pValue]
+
+        cinvoke sqliteValueBytes, [esi]
+        test    eax, eax
+        jz      .null
+
+        mov     ebx, eax
+
+        cinvoke sqliteValueBlob, [esi]
+        test    eax, eax
+        jz      .null
+
+        stdcall EncodeBase64, eax, ebx
+        push    eax
+        stdcall StrPtr, eax
+
+        cinvoke sqliteResultText, [.context], eax, [eax+string.len], SQLITE_TRANSIENT
+        stdcall StrDel ; from the stack
+        pop     esi ebx
+        cret
+
+.null:
+        cinvoke sqliteResultNULL, [.context]
+        pop     esi ebx
         cret
 endp

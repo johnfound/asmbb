@@ -118,8 +118,8 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
-        stdcall TextCat, edi, txt "</table>"
-        stdcall TextCat, edx, [.list]
+        stdcall RenderTemplate, edi, 'userslist_ftr.tpl', 0, esi
+        stdcall TextCat, eax, [.list]
         stdcall RenderTemplate, edx, "nav_userslist.tpl", 0, esi
         stdcall TextCat, eax, txt "</div>"
 
