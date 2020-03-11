@@ -6,7 +6,6 @@
 
 .thread_summary {
   background-color: @clArticleBG;
-//  background-image: linear-gradient(135deg, #e401f7 0%, white 32px, white calc( ~"100% - 32px"), #0092fd 100%);
   color: @clArticleFG;
   padding: 8px 16px;
   box-shadow: @Shadow;
@@ -14,7 +13,6 @@
   border-radius: @Radius;
   flex-grow: 1;
   flex-shrink: 1;
-  max-width: 640px;
   h2 {
     margin: 8px 0px;
     display: flex;
@@ -32,6 +30,9 @@
     svg.markread {
       width: 16px;
     }
+  }
+  &:last-child {
+    flex-grow: 0;
   }
 }
 

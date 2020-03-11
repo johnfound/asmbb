@@ -1,7 +1,6 @@
 @import "skin_variables.lsi";
 
 
-
 .users_list {
   overflow: hidden;
   display: flex;
@@ -20,6 +19,10 @@
   border-radius: @Radius;
   margin: @marginY @marginX;
   text-decoration: none;
+
+  &:last-child {
+    flex-grow: 0;
+  }
 
   &:focus {
    outline: 1px dotted @clArticleFG;
