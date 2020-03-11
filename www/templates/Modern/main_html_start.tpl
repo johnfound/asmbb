@@ -240,7 +240,7 @@
       <option value="0">Skin: (Default)</option>
       [special:skins=[special:skincookie]]
     </select>
-    <noscript><input type="submit" value="Go"></noscript>
+    <noscript><input type="submit" class="btn" value="Go"></noscript>
   </form>
 
     <label for="searchDown" class="btn"><svg width="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">

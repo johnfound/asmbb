@@ -1,5 +1,5 @@
-C Partial\sstep\sback\sfrom\sthe\sprevious\sfix\sin\sorder\sto\sallow\scomplex\ssearch\squeries.\sThe\ssearch\sfor\sthe\susers\swith\sspecial\scharacters\sin\sthe\snickname\sis\sworking.
-D 2020-03-11T15:00:32.871
+C Fixed\sa\shidden\sbutton\sstyle.
+D 2020-03-11T18:12:19.736
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -508,7 +508,7 @@ F www/templates/Modern/form_sqlite_console.tpl a6eb50e150454d1fd6e178dd5a4db0410
 F www/templates/Modern/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
 F www/templates/Modern/login.less c71da4e1f80ea009cfa016fef77fd4d4e8674163
 F www/templates/Modern/main_html_end.tpl e409fee48fb1b1979c337cbe6f616f9e36baef53
-F www/templates/Modern/main_html_start.tpl e43b6ebd1c023652f64d8de1e06229012fd137df
+F www/templates/Modern/main_html_start.tpl 0df8dd07fedb7b85ff95b18b4fba31d38706f2ae
 F www/templates/Modern/markdown.less 87c3794e9b3bf57c65d617eb480f725653524bce
 F www/templates/Modern/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
 F www/templates/Modern/nav_categories.tpl 7beff81c51d3e03a81bf3abd8496bcc0d271dedc
@@ -785,7 +785,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 8911d2d810d33d214840e0fdbe9daabad00c2b79
-R f94aa0d685b212db4b748c2ecdae6ec8
+P 9cd22ae785986c4c31ec29b3b4574c88f597a413
+R 7a79ec7f55b80df9cdbb512740087ae5
 U johnfound
-Z ac202fe84c2de004678847b9f42f2edc
+Z 1e716ead42aa5ffd088daf9515f007fc
