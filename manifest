@@ -1,9 +1,9 @@
-C Removed\sthe\sattribution\slinks\sfor\sthe\sicons,\sbecause\sthese\sicons\sare\snot\sused\sin\sthis\stheme.\sAttempt\sto\sfix\sa\sminor\sbug\sin\sthe\swrappable\sflexbox\slast\srow\sheight.
-D 2020-03-11T12:16:36.587
+C Added\sthe\s"Modern"\stheme\sto\sthe\screate_release.sh\sscript.
+D 2020-03-11T12:48:57.605
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
-F install/create_release.sh c16d914d82bb90a8033e0bb1c36a6d4523f59083 x
+F install/create_release.sh b5721dd1b6252dd9b363258ca069b10c15202f51 x
 F install/exclude.txt 7678178e332c0c4a1a7d1ac8705ae6e2e2e57e74
 F install/install.txt 64615f21455976e432bda238c6d4282fc561e340
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
@@ -780,7 +780,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 3bc1190f1303157fa7714d105f5d51ae682f5b75
-R 11716540e855ed5545c6929ac84b5a1d
+P abdfc1d4b209f5af9286b29c7b12b96222c1acfa
+R 5aa00282c322e3730bc5439206b1ef82
 U johnfound
-Z 7696923125a634489081f54fde0059eb
+Z d6b8779fc02bd62c5b4f2448615921e4
