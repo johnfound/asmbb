@@ -1,5 +1,5 @@
-C Added\sthe\s"Modern"\stheme\sto\sthe\screate_release.sh\sscript.
-D 2020-03-11T12:48:57.605
+C A\slittle\sbit\sbetter\sinitial\sheader\sstring\sin\sthe\sdatabase.
+D 2020-03-11T12:56:50.726
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -36,7 +36,7 @@ F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm 46e64d22841349e2935e8c62681f2f47cad786a0
 F source/commands.asm 71ae4f602b3a9e644b3e4f11329f52aa593daba3
-F source/create.sql 0b68cb5cc8ffdf08fb180494d9c5e20796e942a4
+F source/create.sql 73fd5d1ddc198d1d35a0bed605d4d318c609b88b
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
@@ -780,7 +780,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P abdfc1d4b209f5af9286b29c7b12b96222c1acfa
-R 5aa00282c322e3730bc5439206b1ef82
+P c250c5536b717763104fd5d80f3208c84043d0fb
+R 339c096620d54631792aaf533a811c7e
 U johnfound
-Z d6b8779fc02bd62c5b4f2448615921e4
+Z 01efa2071ae1315c1d72989499dcc8ab
