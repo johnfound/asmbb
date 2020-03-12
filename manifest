@@ -1,5 +1,5 @@
-C SVG\soptimizations.
-D 2020-03-12T11:08:35.520
+C The\slogic\sfor\sthe\sIP\saddress\sof\sthe\sremote\suser\shas\sbeen\sseparated\sin\sGetRemoteIP\sprocedure\sin\sorder\sto\s\nmake\slater\sthe\slogic\smore\sreliable\sfor\sthe\scases\swhere\sthe\srequest\sis\sforwarder\sthrough\sproxy\sservers\sor\ssimilar.
+D 2020-03-12T13:30:22.360
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -35,7 +35,7 @@ F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm 46e64d22841349e2935e8c62681f2f47cad786a0
-F source/commands.asm 71ae4f602b3a9e644b3e4f11329f52aa593daba3
+F source/commands.asm 6e188e51ee77a419d7e04ee98dfc506d1d3d70ef
 F source/create.sql 73fd5d1ddc198d1d35a0bed605d4d318c609b88b
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
@@ -786,7 +786,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P ab432c5380c65bf09896d8cb1ab413b018b6aaa4
-R f5c6c7fc74862e28fd99c0103562041f
+P 3f0bca3b4a162ffe6e6d99a2c2058a530080cf3d
+R b2b21f87b64381838f69ea2dd9b87e54
 U johnfound
-Z 548b271039cf5dbdd2824e3ad9623ad7
+Z 34c17f4b75f73880e2816a1c262ab3b5

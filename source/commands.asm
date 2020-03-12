@@ -886,15 +886,8 @@ begin
 
 .anon_ok:
 
-        stdcall ValueByName, [edi+TSpecialParams.params], "REMOTE_ADDR"
-        jc      .ip_ok
-
-        stdcall StrIP2Num, eax
-        jc      .ip_ok
-
+        stdcall GetRemoteIP, edi
         mov     [edi+TSpecialParams.remoteIP], eax
-
-.ip_ok:
 
         stdcall ValueByName, [edi+TSpecialParams.params], "REMOTE_PORT"
         jc      .port_ok
@@ -998,6 +991,31 @@ begin
 .finish:
         stdcall InsertGuest, [.pSpecial]
         popad
+        return
+endp
+
+
+;
+; Attempts to retrive the most probable remote IP address of the user.
+;
+; right now, it uses very simple logic, but will be improved soon in
+; order to properly manage the proxy servers and cloudflare forward
+; mechanisms.
+;
+
+proc GetRemoteIP, .pSpecial
+begin
+        mov     eax, [.pSpecial]
+        stdcall ValueByName, [eax+TSpecialParams.params], "REMOTE_ADDR"
+        jc      .error
+
+        stdcall StrIP2Num, eax
+        jnc      .finish
+
+.error:
+        xor     eax, eax
+
+.finish:
         return
 endp
 
