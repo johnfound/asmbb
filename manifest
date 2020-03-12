@@ -1,5 +1,5 @@
-C Removed\snavigation.less\sas\snot\sneeded.
-D 2020-03-12T13:47:21.003
+C Wider\sstrokes\sto\sthe\stoaster\sclose\sbutton.
+D 2020-03-12T14:21:03.549
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -537,7 +537,7 @@ F www/templates/Modern/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e3c7067
 F www/templates/Modern/thread_info.tpl 31321b9176291c819c4241169c7cea460e2e9ee4
 F www/templates/Modern/thread_list.less 0a69eca97a61adfd6b70a305404124ac56bf718e
 F www/templates/Modern/threadnew.less a01c425922203926d6ec4574b4eedccdfe4b57d5
-F www/templates/Modern/toaster.less 2a55385514de9aed8d559e90cc144d37644c849d
+F www/templates/Modern/toaster.less 463c319154e4f2413b5fd3c5e65d2e5b576a943d
 F www/templates/Modern/userinfo.less 7e90979a174c347d337637c6e08500d5da35db44
 F www/templates/Modern/userinfo.tpl 8eced029e1f6591c8c6d82f36c76ae3d23da50e0
 F www/templates/Modern/users_online.less a807d20a84ba5d3c0a0a4e201ce006c638a39cb5
@@ -785,7 +785,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 6cd43ed838d0e024bc48ebc1373b3e2c7e6a6599
-R d4e50a1336eef1f228aec9fd637d8521
+P fd3b48346724a07434892987f7a6e3e083a8d9b4
+R 63fb6e37aa2771c792c1edec5df0e983
 U johnfound
-Z 148db179c13ce97f28e0bee3832f141a
+Z c756f9712209d549c58d296ced06b62a
