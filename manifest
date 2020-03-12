@@ -1,5 +1,5 @@
-C Wider\sstrokes\sto\sthe\stoaster\sclose\sbutton.
-D 2020-03-12T14:21:03.549
+C "user-scallable"\stypo\sfixed.
+D 2020-03-12T15:22:58.353
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -483,7 +483,7 @@ F www/templates/Modern/chat.less bf51ce88bdce1e4b48ae508b6e1dde9ecbd7ad5d
 F www/templates/Modern/chat.tpl 96d6a10d30931bebcd55ed1dd1a96e9ff842744f
 F www/templates/Modern/common.less 511f40462b12cc4778e5bb879a67fd4e80250ee7
 F www/templates/Modern/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
-F www/templates/Modern/crypto.tpl f36572b4bb122e058ea42d0e8956bc165b84e0f0
+F www/templates/Modern/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001
 F www/templates/Modern/debug.less c8b5056b8b58c123fb0be6e154a3051b884acc28
 F www/templates/Modern/del_confirm.tpl c0c6fe6d952f497b9fe7ddf20930fc47ee679c19
 F www/templates/Modern/delete.less 189f4f2e07ff457e4fd5a399dc0951da6db5b043
@@ -509,7 +509,7 @@ F www/templates/Modern/form_sqlite_console.tpl e7018d30d3293f01cf6d159cad260413e
 F www/templates/Modern/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
 F www/templates/Modern/login.less 0439501f5ba0458371402194c885fdd576644057
 F www/templates/Modern/main_html_end.tpl e409fee48fb1b1979c337cbe6f616f9e36baef53
-F www/templates/Modern/main_html_start.tpl 44f77c5b86d651837925b657fea9c9289d9756c1
+F www/templates/Modern/main_html_start.tpl 5532ff1a3f9557676d9e2b32304362493688e73f
 F www/templates/Modern/markdown.less 87c3794e9b3bf57c65d617eb480f725653524bce
 F www/templates/Modern/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
 F www/templates/Modern/nav_categories.tpl 913db6d39408ea09f80f91b55325a6cef4efeba2
@@ -626,7 +626,7 @@ F www/templates/Wasp/chat.less a4c64381f5ef14741bb249a4678573cbea899f83
 F www/templates/Wasp/chat.tpl d1940de543f8eeb6393a98afc97611b13c3aabe2
 F www/templates/Wasp/common.less 08205d5a976e919f4e22b30fbdf3e1ae61139dcd
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
-F www/templates/Wasp/crypto.tpl f36572b4bb122e058ea42d0e8956bc165b84e0f0
+F www/templates/Wasp/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001
 F www/templates/Wasp/debug.less 028000816d3504bdb2cf7c9813bbb3300aa2fdc5
 F www/templates/Wasp/del_confirm.tpl 26b8239d78b69cd5fbe206ea12ccb96890aac030
 F www/templates/Wasp/delete.less 253a0f549e132a9d55ae56fe399a8929eabb4a29
@@ -652,7 +652,7 @@ F www/templates/Wasp/form_sqlite_console.tpl 7c492fd0663a1f999e88186f0af74f87bcd
 F www/templates/Wasp/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
 F www/templates/Wasp/login.less b854c20c711dffeec158f044c59cbcf72a3161d5
 F www/templates/Wasp/main_html_end.tpl 53de7f6314a3460448c7d8988eb132d82b2d763c
-F www/templates/Wasp/main_html_start.tpl 7aa18a777a4ad87145634b4c50ab1c86c78759ff
+F www/templates/Wasp/main_html_start.tpl f56f30f2d08448458ad417b2127fc7708c80db8a
 F www/templates/Wasp/markdown.less e62eac499043788e834f58f022ad46526e8d5629
 F www/templates/Wasp/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
 F www/templates/Wasp/nav_categories.tpl a132b6d7a2351b6d7fabfdb7c821dfb7228c0ac2
@@ -785,7 +785,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P fd3b48346724a07434892987f7a6e3e083a8d9b4
-R 63fb6e37aa2771c792c1edec5df0e983
+P 167b75b393bafc01dbc01283681001d57eed7dea
+R c6917acc137be32e9d3054cdbd83d09c
 U johnfound
-Z c756f9712209d549c58d296ced06b62a
+Z 8968482ac9b87c50d9ab2dbe15e3d662
