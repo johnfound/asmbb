@@ -1,4 +1,3 @@
-[css:navigation.css]
 [css:delete.css]
 [css:markdown.css]
 

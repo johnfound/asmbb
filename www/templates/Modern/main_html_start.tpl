@@ -1,5 +1,4 @@
 [css:common.css]
-[css:navigation.css]
 [css:toaster.css]
 
 [case:[special:lang]|
@@ -254,7 +253,7 @@
       <a class="btn" href="/!userinfo/[url:[special:username]]">[const:Profile]</a>
   ]
 
-  [case:[special:limited]|<a class="btn round" href="!feed" title="[const:rssfeed]"><svg class="listfeed" height="16" width="16" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  [case:[special:limited]|<a class="btn round" href="!feed" title="[const:rssfeed]"><svg height="16" width="16" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
       <path d="m8.8 27.6c0 2.43-1.97 4.4-4.4 4.4s-4.4-1.97-4.4-4.4 1.97-4.4 4.4-4.4 4.4 1.97 4.4 4.4z"/>
       <path d="m21.2 32h-6.2c0-8.2-6.8-15-15-15v-6.2c11.8 0 21.2 9.4 21.2 21.2z"/>
       <path d="m25.6 32c0-14.2-11.4-25.6-25.6-25.6v-6.4c17.6 0 32 14.4 32 32z"/>

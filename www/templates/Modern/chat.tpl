@@ -1,4 +1,3 @@
-[css:navigation.css]
 [css:chat.css]
 
 <script type='text/javascript'>

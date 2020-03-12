@@ -1,4 +1,3 @@
-[css:navigation.css]
 [css:thread_list.css]
 
 [case:[special:lang]|

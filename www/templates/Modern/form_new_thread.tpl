@@ -1,7 +1,6 @@
 [css:posts.css]
 [css:postnew.css]
 [css:threadnew.css]
-[css:navigation.css]
 
 [case:[special:lang]|
   [equ:ttlTitle=Title]

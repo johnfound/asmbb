@@ -1,4 +1,3 @@
-[css:navigation.css]
 [css:login.css]
 
 [case:[special:lang]|

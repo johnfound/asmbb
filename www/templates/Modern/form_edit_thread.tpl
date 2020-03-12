@@ -1,4 +1,3 @@
-[css:navigation.css]
 [css:postnew.css]
 [css:threadnew.css]
 

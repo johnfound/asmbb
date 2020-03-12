@@ -1,4 +1,3 @@
-[css:navigation.css]
 [css:sqlite.css]
 
 [case:[special:lang]|
