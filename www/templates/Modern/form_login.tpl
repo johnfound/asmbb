@@ -2,7 +2,6 @@
 [css:login.css]
 
 [case:[special:lang]|
-  [equ:btnThreads=Threads]
   [equ:ttlLogin=Login]
   [equ:phUser=Username]
   [equ:phPass=Password]
@@ -17,7 +16,6 @@
     <p>When you logout from the forum, all cookies are removed as well.</p>
   ]
 |
-  [equ:btnThreads=Теми]
   [equ:ttlLogin=Включване]
   [equ:phUser=Потребител]
   [equ:phPass=Парола]
@@ -32,7 +30,6 @@
     <p>При ръчно изключване от форума, всички бисквитки се изтриват независимо от това дали са временни или постоянни.</p>
   ]
 |
-  [equ:btnThreads=Темы]
   [equ:ttlLogin=Включение]
   [equ:phUser=Потребитель]
   [equ:phPass=Пароль]
@@ -47,7 +44,6 @@
     <p>Когда вы выходите из форума, все куки также удаляются.</p>
   ]
 |
-  [equ:btnThreads=Sujetss]
   [equ:ttlLogin=Connexion]
   [equ:phUser=Pseudo]
   [equ:phPass=Mot de passe]
@@ -62,7 +58,6 @@
     <p>Lorsque vous vous déconnectez, tous les cookies seront également détruits.</p>
   ]
 |
-  [equ:btnThreads=Themen]
   [equ:ttlLogin=Anmelden]
   [equ:phUser=Benutzername]
   [equ:phPass=Passwort]
@@ -79,9 +74,6 @@
 ]
 
 <div class="login">
-  <div class="ui">
-    <a class="btn" href="/">[const:btnThreads]</a>
-  </div>
   <form class="login-block" method="post" target="_self" action="/!login">
     <h1>[const:ttlLogin]</h1>
     <input type="text" value="" placeholder="[const:phUser]" name="username" class="username" autofocus maxlength="256">

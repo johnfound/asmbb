@@ -2,7 +2,6 @@
 [css:login.css]
 
 [case:[special:lang]|
-  [equ:btnThreads=Threads]
   [equ:ttlRegister=Register]
   [equ:phUser=Username]
   [equ:phEmail=e-mail]
@@ -16,7 +15,6 @@
     <p>... or use some password manager program.</p>
   ]
 |
-  [equ:btnThreads=Теми]
   [equ:ttlRegister=Регистрация]
   [equ:phUser=Потребител]
   [equ:phEmail=e-mail]
@@ -30,7 +28,6 @@
     <p>... или използвайте програма – менажер на пароли.</p>
   ]
 |
-  [equ:btnThreads=Темы]
   [equ:ttlRegister=Регистрация]
   [equ:phUser=Потребитель]
   [equ:phEmail=Адрес электронной почты]
@@ -44,7 +41,6 @@
     <p>...или используйте программу менеджера паролей.</p>
   ]
 |
-  [equ:btnThreads=Sujets]
   [equ:ttlRegister=Inscription]
   [equ:phUser=Nom d'utilisateur]
   [equ:phEmail=e-mail]
@@ -58,7 +54,6 @@
     <p>... ou utiliser un gestionnaire de mots de passe.</p>
   ]
 |
-  [equ:btnThreads=Themen]
   [equ:ttlRegister=Registrieren]
   [equ:phUser=Benutzername]
   [equ:phEmail=E-Mail-Adresse]
@@ -75,9 +70,6 @@
 
 
 <div class="login">
-  <div class="ui">
-    <a class="btn" href="/">[const:btnThreads]</a>
-  </div>
   <form class="register-block" method="post" action="/!register/">
     <h1>[const:ttlRegister]</h1>
     <input type="text" value="" placeholder="[const:phUser]" name="username" class="username" maxlength="256" autofocus>
