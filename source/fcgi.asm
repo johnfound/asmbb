@@ -149,6 +149,13 @@ struct FCGI_NameValuePair44
 ends
 
 
+MAX_THREAD_CNT = 20
+
+uglobal
+  ThreadCnt dd ?
+endg
+
+
 ;
 ; The main FastCGI listening loop.
 ;
@@ -161,7 +168,15 @@ proc Listen
 begin
 
 .loop:
+        cmp     [ThreadCnt], MAX_THREAD_CNT
+        jl      .accept_new
 
+.wait_threads:
+        stdcall Sleep, 1
+        cmp     [ThreadCnt], MAX_THREAD_CNT/2
+        jg      .wait_threads
+
+.accept_new:
         stdcall SocketAccept, [STDIN], 0
         jc      .make_socket
 
@@ -206,7 +221,7 @@ begin
         mov     ecx, 666o
         int     80h
 
-        stdcall SocketListen, [STDIN], -1       ; maximum allowed by the system.
+        stdcall SocketListen, [STDIN], 1  ;-1       ; maximum allowed by the system.
         jnc     .loop
 
 
@@ -238,6 +253,8 @@ proc procServeRequest, .hSocket
 .start_time     dd ?
 
 begin
+        lock inc [ThreadCnt]
+
         xor     eax, eax
         mov     [.requestParams], eax
         mov     [.requestPost], eax
@@ -449,6 +466,8 @@ cError413 text "Status: 413 Payload Too Large", 13, 10, "Content-type: text/html
 .exit:
         stdcall FreeMem, esi
         call    .FreeAllocations
+
+        lock dec [ThreadCnt]
 
         stdcall Terminate, 0
 

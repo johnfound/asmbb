@@ -190,6 +190,9 @@ begin
 .finish:
         cinvoke sqliteFinalize, [.stmt]
 
+        cmp     [ThreadCnt], MAX_THREAD_CNT/2
+        jae     .skip_writes
+
 ;        jmp     .skip_writes           ; not write the posts read count and clearing the unread posts.
                                         ; this is acceptable on very high loads for boosting performance.
 

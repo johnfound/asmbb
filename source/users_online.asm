@@ -124,6 +124,9 @@ proc LogUserActivity, .pSpecialData, .activity, .param
 begin
         pushad
 
+        cmp     [ThreadCnt], MAX_THREAD_CNT/2
+        jae     .finish
+
         mov     esi, [.pSpecialData]
 
         lea     eax, [.stmt]

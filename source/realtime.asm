@@ -98,6 +98,9 @@ cFalse text 'false'
 
 proc AddActivity, .hHTML, .fBot
 begin
+        cmp     [ThreadCnt], MAX_THREAD_CNT/2
+        jae     .exit
+
         push    eax ebx
 
         stdcall StrDupMem, '{ "activity": "'
@@ -119,6 +122,8 @@ begin
         stdcall StrDel, ebx
 
         pop     ebx eax
+
+.exit:
         return
 endp
 
