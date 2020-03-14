@@ -989,7 +989,12 @@ begin
         stdcall SetUserLastSeen, eax
 
 .finish:
+        cmp     [ThreadCnt], MAX_THREAD_CNT/2
+        jae     .exit
+
         stdcall InsertGuest, [.pSpecial]
+
+.exit:
         popad
         return
 endp

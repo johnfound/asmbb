@@ -1,5 +1,5 @@
-C Forgotten\sindication\sfor\sthe\sunread\sposts.
-D 2020-03-14T18:00:01.701
+C Forgotten\schange\sfor\sthe\sddos\sprotection.
+D 2020-03-14T18:07:27.319
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -35,7 +35,7 @@ F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm 46e64d22841349e2935e8c62681f2f47cad786a0
-F source/commands.asm 6e188e51ee77a419d7e04ee98dfc506d1d3d70ef
+F source/commands.asm 5b4600d63333e108b552b94b7ec697d168c19156
 F source/create.sql 73fd5d1ddc198d1d35a0bed605d4d318c609b88b
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
@@ -785,7 +785,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 6be10ee19f592c444d271a62977301bb68ce196f
-R 53dc95b4c6c3884f44d79bb11d7a3b27
+P aee676eed9d25cb4b4ba19b3e8864e04282d62ef
+R bb8729e1220da1d28e29f1710c01437e
 U johnfound
-Z d29d1aafd0e8eb7fc1aa1c34d51509e3
+Z 218058844e20e64ee940b1c64d3e431f
