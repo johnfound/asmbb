@@ -1,5 +1,5 @@
-C Inplemented\skind\sof\sDDOS\sprotection\ssystem.\sAsmBB\slimits\sthe\snumber\sof\sconcurent\srequest\sprocessing\nthreads\sin\sorder\sto\sprovide\sreasonable\sprocessing\stime.\sThe\sperformance\swith\snormal\sload\sis\snot\naffected.\sThe\sperformance\sunder\svery\shigh\sload\sis\sof\scourse\saffected,\sbut\swithout\sside\seffects\nas\shanging\sthe\sengine\sbecause\sof\sthousands\sthreads\stry\sto\swrite\sto\sthe\sdatabase\ssimultaneously.
-D 2020-03-14T17:36:17.584
+C Forgotten\sindication\sfor\sthe\sunread\sposts.
+D 2020-03-14T18:00:01.701
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -521,10 +521,10 @@ F www/templates/Modern/nav_userslist.tpl 3c19066e46a70e4f6a234f9c037a2b7e2891468
 F www/templates/Modern/one_category.tpl 96106ea7f1397896eeaf2de05a0aec2d04d122df
 F www/templates/Modern/one_user.tpl 1ebb768acb7276f56ba9bcad8ba90291bcd96573
 F www/templates/Modern/post_history.tpl f0c0333f9620b87238368063dec6210c3677c25f
-F www/templates/Modern/post_view.tpl 92ac9993f8f81107a59e39d99f6d0c135c005fdf
+F www/templates/Modern/post_view.tpl 83066a81fa5ef6b030a406fcf1d499d11bbaccad
 F www/templates/Modern/posteditor.less 44f3fd80139078b948880b2998ad50869693b346
 F www/templates/Modern/postnew.less 283dbc950f0c64bbfaf53164e440eca1328a54c7
-F www/templates/Modern/posts.less 5b1f30df0657ca0a0a8a237cc65b32a4a4df6fdb
+F www/templates/Modern/posts.less ffe6c6c255d7115f6dcaf6aa18c7c5eabe3ee3e9
 F www/templates/Modern/preview.tpl 11e56e331a2fc791d8186317604e6e6dc40b7ac1
 F www/templates/Modern/realtime.js f42157b8f718f14cc560e995c4ff36015fcfb402
 F www/templates/Modern/restore_confirm.tpl f188857035a342aa1849778853427a4e04ad743d
@@ -785,7 +785,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 11bf9edc16c77e5dd1bb38e18dfdab6dc6845caf
-R 1b046115d9da9e35491eaa58647409b8
+P 6be10ee19f592c444d271a62977301bb68ce196f
+R 53dc95b4c6c3884f44d79bb11d7a3b27
 U johnfound
-Z d2bdcb7deaa1e9b40b5aa1dc2408ad39
+Z d29d1aafd0e8eb7fc1aa1c34d51509e3
