@@ -92,13 +92,10 @@ function previewIt(e) {
     xhr.onload = function(event){
       if (event.target.status === 200) {
         var prv = document.getElementById("preview");
-        var attch = document.getElementById("attachments");
         var resp = JSON.parse(event.target.response);
 
         prv.innerHTML = resp.preview;
-        attch.innerHTML = resp.attach_del;
       }
-      document.getElementById("browse").value = '';
       document.getElementById("source").focus();
     };
 

@@ -1,5 +1,5 @@
-C Fixed\stypo\sin\sedit_toolbar.tpl\sfor\sthe\sModern\stheme.\sUse\ssigned\scomparisons\sfor\sMAX_THREAD_CNT\sconstant.
-D 2020-03-15T15:22:58.773
+C Don't\shandle\sattachments\sin\sthe\sJS\scode\sfor\sthe\s"new\spost"\sand\s"new\sthread"\sforms.\sIt\sis\sallowed\sonly\sfor\sthe\s"edit\spost"\sform.\spost
+D 2020-03-15T15:33:49.079
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -497,8 +497,8 @@ F www/templates/Modern/form_edit.tpl 1aca3b119a7edb204f07d76f7c0a984fce1e5972
 F www/templates/Modern/form_edit_thread.tpl cc72cda007e850ffbbf42bfbbf53025e7f5ad84d
 F www/templates/Modern/form_editinfo.tpl 1b2daaba382b8732d1b585689404d4f94797794e
 F www/templates/Modern/form_login.tpl 5325450df57cfe97b8280f9ac9a485da78266f39
-F www/templates/Modern/form_new_post.tpl 3b526297b07b77600b5cd52ad3e4ca0e03d66225
-F www/templates/Modern/form_new_thread.tpl a2192633a18b89834d725c529dd453bc30df46b1
+F www/templates/Modern/form_new_post.tpl ba84083c5e6327af09e4aed28c2cc5599e98d249
+F www/templates/Modern/form_new_thread.tpl 56da57ef7ea0ee00f3626a2a9b254ef33a7f2442
 F www/templates/Modern/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/Modern/form_register.tpl fd34f9fa1e53f15851be1c82061f711b7d7d2a3e
 F www/templates/Modern/form_reset_password.tpl d615d96f021f1313d2993f42f4db30db0e534da8
@@ -785,7 +785,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P fee4937afc5c8070501beabcfc1ae1b03160c760
-R da647977dc7673bf017c5380de3c5d4f
+P 80815a301e8d15cee655a63c9f59af342dccca47
+R d508728f5e91a74ff4f04f1583c2f364
 U johnfound
-Z 09cfd8d8b4f82ace78a2c574deef5ff6
+Z c14c51945c000efec2ca7f471b1fac88
