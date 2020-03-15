@@ -1,5 +1,5 @@
-C Forgotten\schange\sfor\sthe\sddos\sprotection.
-D 2020-03-14T18:07:27.319
+C Report\sthe\sengine\soverload\sin\sthe\s"Debug\sInfo"\spage.
+D 2020-03-15T10:49:15.055
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -40,7 +40,7 @@ F source/create.sql 73fd5d1ddc198d1d35a0bed605d4d318c609b88b
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
-F source/engine.asm 2cc0598b139224d5f15262a7212debbb40cb5903
+F source/engine.asm 138b0dc8cf4917d541c6182f6b8079ab7a844eaa
 F source/engine.fpr 776ec5954ca790c6a916568ddd81408f87940568
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -74,7 +74,7 @@ F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm 3123d67b30fd4e86b0716cf0a6387e9c8b0fc91c
 F source/settings.sql 066cc77197d5fae94fb27c2bd72aabb2c4b85d8a
-F source/showthread.asm 10e0681f905b4a1797e889944899f65f8d3040bd
+F source/showthread.asm 29789ee52a12d58cdc805b7bc4e8b1b2e9b8aef1
 F source/showthread.sql 88e6f49dae477c7b96a4ca0722f4885f754b0bb0
 F source/sqlite3.asm 15de7f1ac90fda35ac028014f53a0e45276501a2
 F source/sqlite_console.asm bc62f0c681b219f795dbdc9b71c78fda228eb7c0
@@ -785,7 +785,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P aee676eed9d25cb4b4ba19b3e8864e04282d62ef
-R bb8729e1220da1d28e29f1710c01437e
+P c218910a32603a0a66e4daa9bb570113d364bd25
+R 9b39b8ebfbd35c7b033c5ea435c615c4
 U johnfound
-Z 218058844e20e64ee940b1c64d3e431f
+Z df024b1b362914e291e8916a2c930579

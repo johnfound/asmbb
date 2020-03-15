@@ -190,11 +190,9 @@ begin
 .finish:
         cinvoke sqliteFinalize, [.stmt]
 
-        cmp     [ThreadCnt], MAX_THREAD_CNT/2
-        jae     .skip_writes
+        cmp     [ThreadCnt], MAX_THREAD_CNT/2    ; not write the posts read count and clearing the unread posts.
+        jae     .skip_writes                     ; this is acceptable on very high loads for boosting performance.
 
-;        jmp     .skip_writes           ; not write the posts read count and clearing the unread posts.
-                                        ; this is acceptable on very high loads for boosting performance.
 
 ; Send activity events... if the thread is not LAT!
 

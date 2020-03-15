@@ -446,6 +446,15 @@ begin
 
 .finish_sse:
 
+        stdcall TextCat, edx, txt "</article><article><h1>Engine overload.</h1><p>Overload is "
+        cmp     [ThreadCnt], MAX_THREAD_CNT/2
+        jge     .ovl_ok
+        stdcall TextCat, edx, txt "<b>not</b> "
+.ovl_ok:
+        stdcall TextCat, edx, txt "detected. </p>"
+
+
+;StrLib statistics:
         stdcall TextCat, edx, txt "</article><article><h1>StrLib statistics</h1>"
 
 ; StrLib statistics
