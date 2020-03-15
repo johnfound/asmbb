@@ -124,8 +124,13 @@ proc LogUserActivity, .pSpecialData, .activity, .param
 begin
         pushad
 
+        cmp [.activity], uaLoggingIn ; we don't exit if user is logging in, we need save ticket for login process
+        je      .noskiplogin
+
         cmp     [ThreadCnt], MAX_THREAD_CNT/2
-        jae     .finish
+        jge     .finish
+
+.noskiplogin:
 
         mov     esi, [.pSpecialData]
 

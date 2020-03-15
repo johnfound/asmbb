@@ -99,7 +99,7 @@ cFalse text 'false'
 proc AddActivity, .hHTML, .fBot
 begin
         cmp     [ThreadCnt], MAX_THREAD_CNT/2
-        jae     .exit
+        jge     .exit
 
         push    eax ebx
 

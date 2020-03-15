@@ -1,5 +1,5 @@
-C Report\sthe\sengine\soverload\sin\sthe\s"Debug\sInfo"\spage.
-D 2020-03-15T10:49:15.055
+C Allow\suaLoggingIn\sin\sLogUserActivity\seven\sunder\shigh\sload.\sFix\sby\s@ganuonglachanh.
+D 2020-03-15T14:43:50.114
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -61,7 +61,7 @@ F source/post.asm 37aadf394d88980560b78146baf5cbddc39571b7
 F source/post_data.asm 79fb813775e3bafe6cb314c50a99484e4f0dc211
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
-F source/realtime.asm e14379ec65f0d510361926de4d3f4c0ea56e300a
+F source/realtime.asm dbd3f6e3fb5afed68fa53fd66553e6997df4b4d3
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
@@ -93,7 +93,7 @@ F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
 F source/userinfo.asm 010a2ba73acd014cd558c39aae3b9915266dc9e3
 F source/userinfo.sql 41f1f4a8019561b5a5144ae14299e13a53fa168d
-F source/users_online.asm 1b14f52c0a6348f0c1bf59f827611561345d6aa9
+F source/users_online.asm c8b88abc0d2fa11d92c6da919ddfc372c8c8a804
 F source/users_online.sql 615346c705099d4fed2fe5ea985efa429156075c
 F source/userslist.asm ad6c2bc2cc22ef3dc7202c0310754ef1d5afabb3
 F source/userslist.sql c90e4da301687cdec9fd4dc45c0f018a2e73ceb6
@@ -785,7 +785,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P c218910a32603a0a66e4daa9bb570113d364bd25
-R 9b39b8ebfbd35c7b033c5ea435c615c4
+P 8203e8c9bff0b60b1d77853f4cdcbc7def3c736a
+R 72dfc8c9e16f60b0c20464e0c00ff605
 U johnfound
-Z df024b1b362914e291e8916a2c930579
+Z a496f6f487e238557006c80160823084
