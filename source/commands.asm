@@ -990,7 +990,7 @@ begin
 
 .finish:
         cmp     [ThreadCnt], MAX_THREAD_CNT/2
-        jae     .exit
+        jge     .exit
 
         stdcall InsertGuest, [.pSpecial]
 

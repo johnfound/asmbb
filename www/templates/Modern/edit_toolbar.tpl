@@ -229,8 +229,8 @@
       <a class="editbtn" onclick="insertTag('source', '`', '`', 1)" title="[const:InlineCode]">[const:iconInlineCode]</a>
       <a class="editbtn" onclick="insertTag('source', '^[', '^]^[My link^]', 1)" title="[const:Link]">[const:iconLink]</a>
       <a class="editbtn" onclick="insertTag('source', '^[!','^]^[My picture^]', 1)" title="[const:Image]">[const:iconImage]</a>
-      <a class="editbtn" width="20" onclick="insertTag('source', ';quote', ';end', 0)" title="[const:BlockQuote]">[const:iconQuote]</a>
-      <a class="editbtn" onyclick="insertTag('source', ';begin', ';end', 0)" title="[const:CodeBlock]">[const:iconCodeBlock]</a>
+      <a class="editbtn" onclick="insertTag('source', ';quote', ';end', 0)" title="[const:BlockQuote]">[const:iconQuote]</a>
+      <a class="editbtn" onclick="insertTag('source', ';begin', ';end', 0)" title="[const:CodeBlock]">[const:iconCodeBlock]</a>
 
       <a class="editbtn" onclick="insertTag('source', '^[?:-)^]', '', 1)" title="[const:EmoSmile]">[const:iconSmile]</a>
       <a class="editbtn" onclick="insertTag('source', '^[?:-D^]', '', 1)" title="[const:EmoLOL]">[const:iconLol]</a>

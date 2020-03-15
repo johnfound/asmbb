@@ -1,5 +1,5 @@
-C Allow\suaLoggingIn\sin\sLogUserActivity\seven\sunder\shigh\sload.\sFix\sby\s@ganuonglachanh.
-D 2020-03-15T14:43:50.114
+C Fixed\stypo\sin\sedit_toolbar.tpl\sfor\sthe\sModern\stheme.\sUse\ssigned\scomparisons\sfor\sMAX_THREAD_CNT\sconstant.
+D 2020-03-15T15:22:58.773
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -35,7 +35,7 @@ F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm 46e64d22841349e2935e8c62681f2f47cad786a0
-F source/commands.asm 5b4600d63333e108b552b94b7ec697d168c19156
+F source/commands.asm aa9647f5bf256e559b0c0b850945dbc6a3a31a2e
 F source/create.sql 73fd5d1ddc198d1d35a0bed605d4d318c609b88b
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
@@ -74,7 +74,7 @@ F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm 3123d67b30fd4e86b0716cf0a6387e9c8b0fc91c
 F source/settings.sql 066cc77197d5fae94fb27c2bd72aabb2c4b85d8a
-F source/showthread.asm 29789ee52a12d58cdc805b7bc4e8b1b2e9b8aef1
+F source/showthread.asm 33e50b8f1b735f3aed0a83aecc7beb3a96b3c442
 F source/showthread.sql 88e6f49dae477c7b96a4ca0722f4885f754b0bb0
 F source/sqlite3.asm 15de7f1ac90fda35ac028014f53a0e45276501a2
 F source/sqlite_console.asm bc62f0c681b219f795dbdc9b71c78fda228eb7c0
@@ -488,7 +488,7 @@ F www/templates/Modern/debug.less c8b5056b8b58c123fb0be6e154a3051b884acc28
 F www/templates/Modern/del_confirm.tpl c0c6fe6d952f497b9fe7ddf20930fc47ee679c19
 F www/templates/Modern/delete.less 189f4f2e07ff457e4fd5a399dc0951da6db5b043
 F www/templates/Modern/edit.json 9d81c2f5af4dce4cbdd3b8918d53811390e795b5
-F www/templates/Modern/edit_toolbar.tpl 6c90d39a17792df27014fb8efcf7636db9427a78
+F www/templates/Modern/edit_toolbar.tpl de9a7d4d84446ff83bc0642de69a370887988716
 F www/templates/Modern/editor.less 0cc92e0c163a40667e87c0b4271b7f5458e7374b
 F www/templates/Modern/error.less c8cc584b34deb31b31efe5680fbe6b438e4a91dc
 F www/templates/Modern/error_html_end.tpl e5ea7fb2ae849c3efc29d2aace455ce605e7ac55
@@ -785,7 +785,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 8203e8c9bff0b60b1d77853f4cdcbc7def3c736a
-R 72dfc8c9e16f60b0c20464e0c00ff605
+P fee4937afc5c8070501beabcfc1ae1b03160c760
+R da647977dc7673bf017c5380de3c5d4f
 U johnfound
-Z a496f6f487e238557006c80160823084
+Z 09cfd8d8b4f82ace78a2c574deef5ff6
