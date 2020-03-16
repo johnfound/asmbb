@@ -1,5 +1,5 @@
-C Minor\sCSS\sand\sJS\sbugs\sfixed.
-D 2020-03-16T11:53:55.573
+C Prevention\sof\sthe\sXSS\sattacks\son\sthe\sMiniMag\sand\sBBCode\sformatting.
+D 2020-03-16T18:08:29.031
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -67,7 +67,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm 1dc58c7bbec35b6e420d4272bc6364deeb220362
+F source/render2.asm 0b4008575e0e0bb8ac81ff7b85429f4761fbd751
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 474ec06449170797b0b4f5523361f9e184f15837
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -786,7 +786,10 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 5f76f94ab341d2733a299dc6cb2b58bde6e4faa6
-R d812c7022b6348a698fc6de66559d145
+P beee9e1e220c6100d02787531ceb0a21e30a41c6
+R dc2383a29c6a41cc66ffaf308e57ad31
+T *branch * antixss
+T *sym-antixss *
+T -sym-trunk *
 U johnfound
-Z 15f2dad5ef08d8d3b10c1d12f5a2e9c9
+Z 5f9777c4f244406a033aa605f4bd7e78

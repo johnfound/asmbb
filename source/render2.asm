@@ -623,7 +623,7 @@ endl
         stdcall TextMoveGap, edx, edi
         add     [edx+TText.GapEnd], 9
 
-        stdcall TranslateMiniMag, edx, edi
+        stdcall TranslateMiniMag, edx, edi, SanitizeURL
 
         add     [edx+TText.GapEnd], 4
         mov     ecx, [edx+TText.GapBegin]
@@ -3089,5 +3089,104 @@ proc FormatFileSize, .size
 begin
         stdcall NumToStr, [.size], ntsDec or ntsUnsigned
         stdcall StrCat, eax, txt " bytes"
+        return
+endp
+
+
+
+
+
+proc SanitizeURL, .pString, .len
+begin
+        pushad
+
+        stdcall StrNew
+        mov     ebx, eax        ; the result
+
+        stdcall StrExtract, [.pString], 0, [.len]
+        push    eax
+
+        stdcall StrSplitList, eax, "/", TRUE
+        mov     edx, eax
+
+        stdcall StrDel ; from the stack.
+
+        mov     ecx, [edx+TArray.count]
+        jecxz   .finish
+
+        cmp     ecx, 2
+        jl      .recteate
+
+        stdcall StrLen, [edx+TArray.array + 4]  ; the second element
+        test    eax, eax
+        jnz     .recreate
+
+        mov     eax, [edx+TArray.array]         ; the first element
+
+        stdcall StrCompNoCase, eax, txt "http:"
+        jc      .valid_schema
+        stdcall StrCompNoCase, eax, txt "https:"
+        jnc     .recreate
+
+.valid_schema:
+
+        stdcall StrCat, ebx, eax
+        stdcall StrCat, ebx, txt "//"
+
+        xor     eax, eax
+        xchg    eax, [edx+TArray.array]
+        stdcall StrDel, eax
+
+        xor     eax, eax
+        xchg    eax, [edx+TArray.array + 4]
+        stdcall StrDel, eax
+
+.recreate:
+        lea     esi, [edx+TArray.array]
+
+.search_last:
+        cmp     [esi+ecx-4], 0
+        je      .finish
+
+        stdcall StrLen, [esi+4*ecx-4]
+        test    eax, eax
+        jnz     .loop
+
+        dec     ecx
+        jnz     .search_last
+        jmp     .finish
+
+.loop:
+        dec     ecx
+        jz      .last_element
+
+        lodsd
+        test    eax, eax
+        jz      .loop
+
+        stdcall StrURLEncode, eax
+
+        stdcall StrCat, ebx, eax
+        stdcall StrCat, ebx, txt "/"
+        stdcall StrDel, eax
+        jmp     .loop
+
+.last_element:
+        xor     eax, eax
+        xchg    eax, [esi]
+        push    eax
+
+        stdcall ListFree, edx, StrDel
+
+        stdcall StrSplitList, eax, "?",
+
+
+
+
+
+.finish:
+        mov     [esp+4*regEAX], ebx
+        stdcall ListFree, edx, StrDel
+        popad
         return
 endp
