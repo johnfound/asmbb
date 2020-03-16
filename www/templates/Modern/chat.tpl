@@ -152,7 +152,7 @@ window.addEventListener('load',
 
 window.addEventListener('beforeunload',
   function (e) {
-    discinect();
+    if (source) disconnect();
     UserStatusChange(0);
     return null;
   }
