@@ -3096,97 +3096,107 @@ endp
 
 
 
-proc SanitizeURL, .pString, .len
+proc SanitizeURL, .pURL, .len
+.split TSplitURL
 begin
         pushad
 
+        lea     eax, [.split]
+        stdcall StrSplitURLMem, [.pURL], [.len], eax
+
         stdcall StrNew
-        mov     ebx, eax        ; the result
+        mov     ebx, eax
 
-        stdcall StrExtract, [.pString], 0, [.len]
-        push    eax
+        cmp     [.split.scheme], 0
+        je      .default_scheme
 
-        stdcall StrSplitList, eax, "/", TRUE
-        mov     edx, eax
+        stdcall StrCompNoCase, [.split.scheme], txt 'https'
+        jc      .scheme_ok
 
-        stdcall StrDel ; from the stack.
+        stdcall StrCompNoCase, [.split.scheme], txt 'http'
+        jnc     .end_url        ; return empty URL
 
-        mov     ecx, [edx+TArray.count]
-        jecxz   .finish
+.scheme_ok:
+        stdcall StrCat, ebx, [.split.scheme]
+        stdcall StrCat, ebx, txt '://'
+        jmp     .add_host
 
-        cmp     ecx, 2
-        jl      .recteate
+.default_scheme:
+        cmp     [.split.host], 0
+        je      .add_path
 
-        stdcall StrLen, [edx+TArray.array + 4]  ; the second element
-        test    eax, eax
-        jnz     .recreate
+        stdcall StrCat, ebx, txt 'https://'
 
-        mov     eax, [edx+TArray.array]         ; the first element
+.add_host:
+        cmp     [.split.host], 0
+        je      .add_path
 
-        stdcall StrCompNoCase, eax, txt "http:"
-        jc      .valid_schema
-        stdcall StrCompNoCase, eax, txt "https:"
-        jnc     .recreate
-
-.valid_schema:
-
+        stdcall StrURLEncode, [.split.host]
         stdcall StrCat, ebx, eax
-        stdcall StrCat, ebx, txt "//"
-
-        xor     eax, eax
-        xchg    eax, [edx+TArray.array]
         stdcall StrDel, eax
 
-        xor     eax, eax
-        xchg    eax, [edx+TArray.array + 4]
-        stdcall StrDel, eax
+        cmp     [.split.port], 0
+        je      .add_path
 
-.recreate:
-        lea     esi, [edx+TArray.array]
-
-.search_last:
-        cmp     [esi+ecx-4], 0
-        je      .finish
-
-        stdcall StrLen, [esi+4*ecx-4]
+        stdcall StrToNum, [.split.port]
         test    eax, eax
-        jnz     .loop
+        js      .add_path
 
-        dec     ecx
-        jnz     .search_last
-        jmp     .finish
+        cmp     eax, $ffff
+        ja      .add_path
 
-.loop:
-        dec     ecx
-        jz      .last_element
+        mov     ecx, eax
 
-        lodsd
-        test    eax, eax
-        jz      .loop
+        stdcall StrLen, [.split.port]
+        cmp     eax, edx
+        jne     .add_path
 
-        stdcall StrURLEncode, eax
+        stdcall NumToStr, ecx, ntsDec or ntsUnsigned
 
+        stdcall StrCat, ebx, txt ':'
         stdcall StrCat, ebx, eax
-        stdcall StrCat, ebx, txt "/"
         stdcall StrDel, eax
-        jmp     .loop
 
-.last_element:
-        xor     eax, eax
-        xchg    eax, [esi]
-        push    eax
+.add_path:
+        stdcall StrCat, ebx, txt '/'
 
-        stdcall ListFree, edx, StrDel
+        cmp     [.split.path], 0
+        je      .path_ok
+        stdcall StrCat, ebx, [.split.path]
+.path_ok:
+        stdcall StrPtr, ebx
+        mov     ecx, [eax+string.len]
+        sub     eax, sizeof.string
+        add     ecx, sizeof.string
 
-        stdcall StrSplitList, eax, "?",
+        OutputMemoryByte eax, ecx
 
 
+        cmp     [.split.query], 0
+        je      .add_fragment
 
+        stdcall StrCat, ebx, txt '?'
+        stdcall StrCat, ebx, [.split.query]
 
+.add_fragment:
+        cmp     [.split.fragment], 0
+        je      .end_url
 
-.finish:
+        stdcall StrCat, ebx, txt "#"
+
+        stdcall StrURLEncode, [.split.fragment]
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+
+.end_url:
+        stdcall StrDel, [.split.scheme]
+        stdcall StrDel, [.split.host]
+        stdcall StrDel, [.split.port]
+        stdcall StrDel, [.split.path]
+        stdcall StrDel, [.split.query]
+        stdcall StrDel, [.split.fragment]
+
         mov     [esp+4*regEAX], ebx
-        stdcall ListFree, edx, StrDel
         popad
         return
 endp
