@@ -1,5 +1,5 @@
-C Implemented\srelatively\sworking\sURL\ssanitizing\sprocedure.\sIt\sneeds\sthe\slatest\sversion\sof\sFreshLib\sStrLib.
-D 2020-03-18T18:44:39.855
+C Started\swork\son\sthe\sBBCode\sURL\ssanitizing.\sNot\sfinished,\snot\sworking.
+D 2020-03-19T06:14:19.084
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -67,7 +67,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm 668cbeb6902c3d03e4387728fee76469d3f07160
+F source/render2.asm f7c72b0fe11d589375cec660b248ba1b6687848a
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 474ec06449170797b0b4f5523361f9e184f15837
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -786,7 +786,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P bffe364daf5545147d07611705de88b3413b72d6
-R e4786485cb57602462ff150e9749dae9
+P 14d29dfb447fa8c73679c630848c108b832c8829
+R 995ad50924e3267c7f37680dcb1cff45
 U johnfound
-Z 19119baf8469d8aa68caae6a5c7bcfe2
+Z e18dcd822ac1de8fe1f529a76b9571eb

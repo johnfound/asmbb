@@ -652,7 +652,7 @@ endl
         stdcall TextMoveGap, edx, edi
         add     [edx+TText.GapEnd], 8
 
-        stdcall TranslateBBCode, edx, edi
+        stdcall TranslateBBCode, edx, edi, SanitizeURL
 
         add     [edx+TText.GapEnd], 4
         mov     ecx, [edx+TText.GapBegin]
