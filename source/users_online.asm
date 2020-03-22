@@ -256,7 +256,9 @@ begin
         mov     eax, [esi+TSpecialParams.userLang]
         stdcall StrCat, [esi+TSpecialParams.page_title], [cUsersOnlineTitle+8*eax]
         stdcall LogUserActivity, esi, uaTrackingUsers, 0
-        stdcall ListAddDistinct, [esi+TSpecialParams.pStyles], "users_online.css"
+
+        stdcall StrDupMem, txt "users_online.css"
+        stdcall ListAddDistinct, [esi+TSpecialParams.pStyles], eax
         mov     [esi+TSpecialParams.pStyles], edx
 
         stdcall TextCreate, sizeof.TText

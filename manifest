@@ -1,5 +1,5 @@
-C Fixed\smissing\sstyles\sfor\sthe\sMiniMag\stranslator.
-D 2020-03-22T11:42:39.863
+C Minor\sbug\sfixed\srelated\sto\sattempt\sto\sfree\sstrings\sin\smemory.
+D 2020-03-22T11:43:18.575
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -40,7 +40,7 @@ F source/create.sql 73fd5d1ddc198d1d35a0bed605d4d318c609b88b
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
-F source/engine.asm 138b0dc8cf4917d541c6182f6b8079ab7a844eaa
+F source/engine.asm 03059f73a6c143fa5400098b6018f82118b2c146
 F source/engine.fpr 776ec5954ca790c6a916568ddd81408f87940568
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -93,7 +93,7 @@ F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
 F source/userinfo.asm 010a2ba73acd014cd558c39aae3b9915266dc9e3
 F source/userinfo.sql 41f1f4a8019561b5a5144ae14299e13a53fa168d
-F source/users_online.asm c8b88abc0d2fa11d92c6da919ddfc372c8c8a804
+F source/users_online.asm fb813d50fc87b57bfa161a5d043d36c94ef60f12
 F source/users_online.sql 615346c705099d4fed2fe5ea985efa429156075c
 F source/userslist.asm ad6c2bc2cc22ef3dc7202c0310754ef1d5afabb3
 F source/userslist.sql c90e4da301687cdec9fd4dc45c0f018a2e73ceb6
@@ -786,7 +786,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P beee9e1e220c6100d02787531ceb0a21e30a41c6
-R 099567db14ba95c8f44a00ad838163bc
+P 9cec05bfd233bc2362f080a6ba407229378face5
+R c00dae5cac30a4055a10a1e982562e7d
 U johnfound
-Z d5ef464fda99c100f517170c54ac9263
+Z f417b91c2b28403025f5dd464a12ea8c

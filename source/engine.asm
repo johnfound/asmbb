@@ -376,7 +376,9 @@ begin
         pushad
 
         mov     esi, [.pSpecial]
-        stdcall ListAddDistinct, [esi+TSpecialParams.pStyles], txt "debug.css"
+
+        stdcall StrDupMem, txt "debug.css"
+        stdcall ListAddDistinct, [esi+TSpecialParams.pStyles], eax
         mov     [esi+TSpecialParams.pStyles], edx
 
         mov     edx, [.pText]
