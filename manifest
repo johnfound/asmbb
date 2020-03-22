@@ -1,5 +1,5 @@
-C Minor\sCSS\sand\sJS\sbugs\sfixed.
-D 2020-03-16T11:53:55.573
+C Fixed\smissing\sstyles\sfor\sthe\sMiniMag\stranslator.
+D 2020-03-22T11:42:39.863
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -511,7 +511,7 @@ F www/templates/Modern/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af70099
 F www/templates/Modern/login.less 0439501f5ba0458371402194c885fdd576644057
 F www/templates/Modern/main_html_end.tpl e409fee48fb1b1979c337cbe6f616f9e36baef53
 F www/templates/Modern/main_html_start.tpl 5532ff1a3f9557676d9e2b32304362493688e73f
-F www/templates/Modern/markdown.less 87c3794e9b3bf57c65d617eb480f725653524bce
+F www/templates/Modern/markdown.less 7f8efff52ecfe94d2f40354601614ebf835bc639
 F www/templates/Modern/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
 F www/templates/Modern/nav_categories.tpl 913db6d39408ea09f80f91b55325a6cef4efeba2
 F www/templates/Modern/nav_history.tpl 3070c075ad08d5c86a1e0b0fa298279bce6ff09f
@@ -690,7 +690,7 @@ F www/templates/Wasp/userslist.less 9dae27c4e52c68f3351549034bdd7f9754bce069
 F www/templates/Wasp/userslist_ftr.tpl cdf4bf8f51f450a842d85ab41a089e05a2e12f73
 F www/templates/Wasp/userslist_hdr.tpl 79c5b28322e9c0f587ed0f81ac451fe12d38235f
 F www/templates/build_styles.sh 1a54085ad5672bc6480e1d67922946a504c8e966 x
-F www/templates/create_tar.sh 0620f0e0ff86fc5b47c6ea49c04198f94f534069 x
+F www/templates/create_tar.sh f24038eaf60e641cfbcac98b217245cee134d27c x
 F www/templates/mobile/_images 70c26c9bd422a7e59f2dca80d02ec99f39b390fb l
 F www/templates/mobile/activation_email_subject.tpl e0bd685144e72197dd0034b068e82d7604f926d2 l
 F www/templates/mobile/activation_email_text.tpl 50d1d6b7fe42736e334ab6870d7cc72e9085889d l
@@ -786,7 +786,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 82988ba572ebe18ed144fe565450f1451cd605d7 x
-P 5f76f94ab341d2733a299dc6cb2b58bde6e4faa6
-R d812c7022b6348a698fc6de66559d145
+P beee9e1e220c6100d02787531ceb0a21e30a41c6
+R 099567db14ba95c8f44a00ad838163bc
 U johnfound
-Z 15f2dad5ef08d8d3b10c1d12f5a2e9c9
+Z d5ef464fda99c100f517170c54ac9263
