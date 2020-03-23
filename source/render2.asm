@@ -623,7 +623,7 @@ endl
         stdcall TextMoveGap, edx, edi
         add     [edx+TText.GapEnd], 9
 
-        stdcall TranslateMiniMag, edx, edi
+        stdcall TranslateMiniMag, edx, edi, SanitizeURL
 
         add     [edx+TText.GapEnd], 4
         mov     ecx, [edx+TText.GapBegin]
@@ -652,7 +652,7 @@ endl
         stdcall TextMoveGap, edx, edi
         add     [edx+TText.GapEnd], 8
 
-        stdcall TranslateBBCode, edx, edi
+        stdcall TranslateBBCode, edx, edi, SanitizeURL
 
         add     [edx+TText.GapEnd], 4
         mov     ecx, [edx+TText.GapBegin]
@@ -3089,5 +3089,114 @@ proc FormatFileSize, .size
 begin
         stdcall NumToStr, [.size], ntsDec or ntsUnsigned
         stdcall StrCat, eax, txt " bytes"
+        return
+endp
+
+
+
+
+
+proc SanitizeURL, .pURL, .len
+.split TSplitURL
+begin
+        pushad
+
+        lea     eax, [.split]
+        stdcall StrSplitURLMem, [.pURL], [.len], eax
+
+        stdcall StrNew
+        mov     ebx, eax
+
+        cmp     [.split.scheme], 0
+        je      .default_scheme
+
+        stdcall StrCompNoCase, [.split.scheme], txt 'https'
+        jc      .scheme_ok
+
+        stdcall StrCompNoCase, [.split.scheme], txt 'http'
+        jnc     .end_url        ; return empty URL
+
+.scheme_ok:
+        stdcall StrCat, ebx, [.split.scheme]
+        stdcall StrCat, ebx, txt '://'
+        jmp     .add_host
+
+.default_scheme:
+        cmp     [.split.host], 0
+        je      .add_path
+
+        stdcall StrCat, ebx, txt 'https://'
+
+.add_host:
+        cmp     [.split.host], 0
+        je      .add_path
+
+        stdcall StrURLEncode, [.split.host]
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+
+        cmp     [.split.port], 0
+        je      .add_path
+
+        stdcall StrToNum, [.split.port]
+        test    eax, eax
+        js      .add_path
+
+        cmp     eax, $ffff
+        ja      .add_path
+
+        mov     ecx, eax
+
+        stdcall StrLen, [.split.port]
+        cmp     eax, edx
+        jne     .add_path
+
+        stdcall NumToStr, ecx, ntsDec or ntsUnsigned
+
+        stdcall StrCat, ebx, txt ':'
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+
+.add_path:
+        stdcall StrCat, ebx, txt '/'
+
+        cmp     [.split.path], 0
+        je      .path_ok
+        stdcall StrCat, ebx, [.split.path]
+.path_ok:
+        stdcall StrPtr, ebx
+        mov     ecx, [eax+string.len]
+        sub     eax, sizeof.string
+        add     ecx, sizeof.string
+
+        OutputMemoryByte eax, ecx
+
+
+        cmp     [.split.query], 0
+        je      .add_fragment
+
+        stdcall StrCat, ebx, txt '?'
+        stdcall StrCat, ebx, [.split.query]
+
+.add_fragment:
+        cmp     [.split.fragment], 0
+        je      .end_url
+
+        stdcall StrCat, ebx, txt "#"
+
+        stdcall StrURLEncode, [.split.fragment]
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+
+.end_url:
+        stdcall StrDel, [.split.scheme]
+        stdcall StrDel, [.split.host]
+        stdcall StrDel, [.split.port]
+        stdcall StrDel, [.split.path]
+        stdcall StrDel, [.split.query]
+        stdcall StrDel, [.split.fragment]
+
+        mov     [esp+4*regEAX], ebx
+        popad
         return
 endp
