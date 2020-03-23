@@ -1,5 +1,5 @@
-C Merged\swith\santixss\sbranch.
-D 2020-03-23T18:06:59.684
+C Scroll\sto\sthe\send\sof\sthe\schat\swindow\son\swindow\sresize.
+D 2020-03-23T18:59:15.076
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -481,7 +481,7 @@ F www/templates/Modern/atom_entry_thread.tpl ab6e308c142262fa4a7ff9bb98d03a67168
 F www/templates/Modern/atom_start.tpl 7ab2f5e8819f37921d2fefe675297ccab41e8561
 F www/templates/Modern/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
 F www/templates/Modern/chat.less 8a4271676ad693b892705979421fcbb535c82ba1
-F www/templates/Modern/chat.tpl a85138bf1a48782b77761681db320a9cdf57e3f6
+F www/templates/Modern/chat.tpl 95b5dcc935f13958d1d688685d8d6917b470fdbf
 F www/templates/Modern/common.less f247b3b60a59b1b5400493216120b38622457f52
 F www/templates/Modern/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Modern/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001
@@ -786,7 +786,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 970123c099b66f1bb581fa4c14584b5320729816 x
-P 5b19f634a696eec52ab50e963637406091796dfc 7ccc05ac88f8c2f3db3a7d7da43fcfd2515806e8
-R 8ab3b31b5560736554a4e975f5646190
+P 16801245c8fff01bbe15c305262a92462f2d801a
+R 0c51d3df76ea959271c0cc0b3c4a2cf3
 U johnfound
-Z 4b022dd43b63da088221e2c9f900ae73
+Z 48b27958edddf472db29c22ae98a6956

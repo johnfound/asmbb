@@ -176,6 +176,13 @@ document.addEventListener("visibilitychange",
 );
 
 
+window.addEventListener('resize',
+  function() {
+    ScrollBottom(true);
+  }
+);
+
+
 
 function KeyPress(e, proc) {
   if (e.keyCode == '13') {
