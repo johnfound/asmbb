@@ -130,26 +130,26 @@ div.post_text article {
     border-radius: @Radius;
 
     box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.2);
-    padding: 0.75em 0.7em 0.1em 1em;
+    padding: 8px;
     margin:  1.5em 1em 1em 1em;
 
     background-color: @clArticleBG;
     display: flow-root;
     position: relative;
+    overflow: hidden;
 
     header {
       padding: 0.2em 0.3em 0.2em 0.3em;
-      position: absolute;
-      top: -1em;
+      float: left;
+      margin: 0px 16px 16px 0px;
 
-      border: @borderQuote;
-      border-radius: @Radius;
+      writing-mode: sideways-lr;
 
       box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.2);
       background: white;
 
       font-size: 1em;
-      font-weight: normal;
+      font-weight: bold;
 
       white-space: nowrap;
       max-width: 100%;

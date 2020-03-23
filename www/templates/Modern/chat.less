@@ -3,8 +3,12 @@
 body {
   position: absolute;
   left: 0; right: 0; top: 0; bottom: 0;
+
+  padding: 0px 4px 16px 4px !important;
+  min-height: 0px !important;
+  margin: 0px !important;
+
   overflow: hidden;
-  margin: 0px 4px 16px 4px !important;
   display: flex;
   flex-direction: column;
 }
@@ -41,6 +45,35 @@ div.chatflex {
   flex-grow: 1;
 }
 
+.header {
+  display: none !important;
+}
+
+
+@media only screen and (orientation: landscape) {
+  div.chatflex {
+    flex-direction: row;
+  }
+
+  #syslog {
+    height: auto;
+    flex-direction: column;
+  }
+}
+
+
+@media (orientation: portrait) {
+  div.chatflex {
+    flex-direction: column-reverse;
+  }
+
+  #syslog {
+    width: auto;
+    flex-direction: row;
+  }
+}
+
+
 #chatlog {
   background-color: @clArticleBG;
   color: @clArticleFG;
@@ -49,7 +82,7 @@ div.chatflex {
   margin: 4px;
   overflow: auto;
   padding: 16px;
-  flex-grow: 1;
+  flex-grow: 3;
 }
 
 #syslog {
@@ -59,10 +92,13 @@ div.chatflex {
   box-shadow: @Shadow;
   margin: 4px;
   overflow: auto;
-  flex-grow: 0;
+  flex-grow: 1;
   flex-shrink: 0;
-  padding: 16px;
-  width: 200px;
+  padding: 4px;
+  display: flex;
+  align-items: start;
+  align-content: start;
+  flex-wrap: wrap;
 }
 
 #chat_form {
@@ -80,7 +116,7 @@ div.chatflex {
 
 #chat_user {
   width: 200px;
-  margin: 0px 4px 0px 0px;
+  margin: 0px 4px;
   box-shadow: @Shadow;
   padding: 8px;
 }
@@ -114,7 +150,6 @@ div.chatflex {
 .hline {
   line-height: 1px;
   text-align: center;
-  font-size: @FontSize;
   border-bottom: 1px solid @clThreadLink;
 }
 
@@ -127,7 +162,7 @@ div.chatflex {
 
 .user {
   color: @clChatUser;
-  margin: 4px 0px;
+  margin: 4px;
   cursor: pointer;
   overflow: hidden;
   text-overflow: ellipsis;
