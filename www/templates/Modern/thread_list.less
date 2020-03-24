@@ -15,10 +15,15 @@
   flex-grow: 1;
   flex-shrink: 1;
   overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+
   h2 {
-    margin: 8px 0px;
+    flex-grow: 1;
+    margin: 0px 0px 4px 0px;
     display: flex;
-    align-items: center;
+    align-items: baseline;
     a {
       font-size: @FontSzMain;
       line-height: @FontSzMain;
@@ -40,9 +45,6 @@
   font-size: @FontSzMain*1.5 !important;
   line-height: initial !important;
   margin: 0px;
-//  text-overflow: ellipsis;
-//  white-space: nowrap;
-//  overflow: hidden;
 }
 
 
@@ -62,10 +64,9 @@
 
 
 .posters {
-  margin: 8px 0px;
+  margin: 4px 0px;
   user-select: none;
   font-weight: bold !important;
-  max-width: 480px;
   * {
     font-weight: normal;
     user-select: all;
@@ -79,7 +80,7 @@
 }
 
 .invited {
-  margin: 8px 0px;
+  margin: 4px 0px;
   user-select: none;
   font-weight: bold;
   * {
@@ -98,7 +99,7 @@
   user-select: none;
   padding: 0px;
   font-weight: bold;
-  margin: 8px 0px;
+  margin: 4px 0px;
   * {
     font-weight: normal;
     user-select: all;
