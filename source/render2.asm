@@ -358,12 +358,17 @@ begin
 ; here [TText.GapEnd] is the offset of result start, ebx is the offset of the result end
 
         push    eax
+
+        call    .delete_ws
+
         mov     eax, ebx
         sub     eax, [edx+TText.GapEnd]
         add     eax, [edx+TText.GapBegin]
         stdcall TextMoveGap, edx, eax
         mov     ebx, [edx+TText.GapEnd]
         inc     [edx+TText.GapEnd]
+        call    .delete_ws
+
         pop     eax
         jmp     .loop_int
 
@@ -485,7 +490,6 @@ begin
 
 
 .field_match:
-
         pop     edi
 
         push    ecx edx
@@ -546,6 +550,7 @@ begin
         pop     ecx
         add     ecx, ebx
         add     [edx+TText.GapBegin], ebx
+
         jmp     .loop
 
 
@@ -609,7 +614,6 @@ begin
 locals
   BenchVar .minimag_time
 endl
-
         BenchmarkStart .minimag_time
 
 ; here esi points to ":" of the "minimag:" command. edi points to the start "[" and ecx points to the end "]"
@@ -630,6 +634,7 @@ endl
 
         Benchmark "MiniMag markup rendering: "
         BenchmarkEnd
+
         jmp     .loop_dec
 
 
@@ -680,6 +685,7 @@ endl
 .cmd_incraw:
         stdcall TextMoveGap, edx, ecx
         inc     [edx+TText.GapEnd]
+        call    .delete_ws
 
         call    .clip_and_copy
         mov     ebx, eax
@@ -805,6 +811,7 @@ endl
 .end_scan:
         mov     [edx+TText.GapEnd], esi
         mov     [edx+TText.GapBegin], edi
+        mov     [esp+4*regEDX], edx
         popad
 
         mov     ecx, [edx+TText.GapBegin]
@@ -975,6 +982,7 @@ endl
 
         stdcall TextMoveGap, edx, ecx
         inc     [edx+TText.GapEnd]
+        call    .delete_ws
 
         call    .clip_and_copy
 
@@ -1197,6 +1205,8 @@ endl
         popad
         mov     [edx+TText.GapBegin], edi
         inc     [edx+TText.GapEnd]
+        call    .delete_ws
+
         mov     ecx, edi
         jmp     .loop_dec
 
@@ -1959,6 +1969,24 @@ end if
 
 .end_copy:
         pop     ecx
+        retn
+
+; deletes the control characters and spaces.
+
+.delete_ws:
+        mov     eax, [edx+TText.GapEnd]
+        dec     eax
+
+.del_ws_loop:
+        inc     eax
+        cmp     eax, [edx+TText.Length]
+        jae     .exit_del_ws
+
+        cmp     byte [edx+eax], ' '
+        jbe     .del_ws_loop
+
+.exit_del_ws:
+        mov     [edx+TText.GapEnd], eax
         retn
 
 endp

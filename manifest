@@ -1,5 +1,5 @@
-C Fine\stuning\sof\sModern\stheme.
-D 2020-03-24T06:13:46.619
+C Fixed\sbug\sin\srender2.asm\scausing\scrash\son\sthe\scommand\s[enc:]
+D 2020-03-25T11:37:02.199
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -67,7 +67,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm f7c72b0fe11d589375cec660b248ba1b6687848a
+F source/render2.asm 2d9ef5a482b9595584d9cf423c61f57a547cef92
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 474ec06449170797b0b4f5523361f9e184f15837
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -786,7 +786,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 970123c099b66f1bb581fa4c14584b5320729816 x
-P 8c39f103aeb79c5f822f2d59736a9838ce0eedec
-R 0d816ace996d454e753bddc2e6867b59
+P 5a204396437176f5fa2d7e4597ed9fa33ffd99cf
+R d846497bc8c0260ad4072a008c38497d
 U johnfound
-Z 71461d247ca3a71eec0a675f16d7582e
+Z 986ad91e804d143591158de878a0f164
