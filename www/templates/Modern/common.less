@@ -357,7 +357,7 @@ a {
         border-radius: @Radius;
 
         display: none;
-        padding: 8px 16px;
+        padding: 2*@marginY 2*@marginX;
         background: @clDialogBG;
         color: @clDialogFG;
         flex-direction: column;
@@ -440,11 +440,11 @@ textarea {
   padding: 8px;
   font-family: @FontMono;
   font-size: @FontSzMono;
+  resize: none;
 }
 
 
 svg {
-  vertical-align: middle;
   &>path {
     fill: @clButtonBG;
   }

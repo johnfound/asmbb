@@ -1,5 +1,5 @@
 [css:posts.css]
-[css:postnew.css]
+[css:posteditor.css]
 [css:threadnew.css]
 
 [case:[special:lang]|
@@ -54,7 +54,7 @@
   [equ:hintSubmit=Strg+S zum Absenden]
 ]
 
-<div class="new_editor">
+<div class="editor">
   <div class="ui">
     <input form="editform" type="hidden" name="ticket" value="[Ticket]" >
     <input form="editform" class="btn" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
@@ -66,14 +66,12 @@
       </svg></a>
   </div>
   <form id="editform" action="!post#preview" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
-    <div>
-      <p>[const:ttlTitle]:</p>
-      <h1 class="fakeedit">[caption]</h1>
-    </div>
-    [include:edit_toolbar.tpl]
-    <textarea name="source" id="source" placeholder="[const:phText]">[source]</textarea>
-    <div>
-      [case:[special:canupload]||<p>[const:ttlAttach]:</p><input type="file" placeholder="[const:phSelect]" name="attach" multiple="multiple" tabindex="-1">]
+    <div class="notabs">
+      [include:edit_toolbar.tpl]
+      <textarea name="source" id="source" placeholder="[const:phText]">[source]</textarea>
+      <div>
+        [case:[special:canupload]||<p>[const:ttlAttach]:</p><input type="file" placeholder="[const:phSelect]" name="attach" multiple="multiple" tabindex="-1">]
+      </div>
     </div>
   </form>
 </div>

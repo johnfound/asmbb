@@ -1,5 +1,5 @@
 [css:posts.css]
-[css:postnew.css]
+[css:posteditor.css]
 [css:threadnew.css]
 
 [case:[special:lang]|
@@ -74,7 +74,7 @@
   [equ:hintSubmit=Strg+S zum Absenden]
 ]
 
-<div class="new_editor">
+<div class="editor">
   <div class="ui">
       <input form="editform" type="hidden" name="ticket" value="[Ticket]" >
       <input form="editform" class="btn" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
@@ -86,31 +86,33 @@
         </svg></a>
   </div>
   <form id="editform" action="!post" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
-    <div class="editgroup">
-      <div>
-        <p>[const:ttlTitle]:</p>
-        <input type="text" value="[caption]" placeholder="[const:ttlTitle]" name="title" autofocus>
+    <div class="notabs">
+      <div class="editgroup">
+        <div>
+          <p>[const:ttlTitle]:</p>
+          <input type="text" value="[caption]" placeholder="[const:ttlTitle]" name="title" autofocus>
+        </div>
+        <div>
+          <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</p>
+          <input type="text" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
+        </div>
       </div>
-      <div>
-        <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</p>
-        <input type="text" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
+      <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]><label for="limited">[const:ttlLimited]</label>
+      <div class="editgroup" id="users_invited">
+        <div>
+          <p>[const:ttlInvited]:</p>
+          <input type="text" id="invited" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
+        </div>
       </div>
-    </div>
-    <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]><label for="limited">[const:ttlLimited]</label>
-    <div class="editgroup" id="users_invited">
+      [include:edit_toolbar.tpl]
+      <textarea name="source" id="source" placeholder="[const:phText]">[source]</textarea>
       <div>
-        <p>[const:ttlInvited]:</p>
-        <input type="text" id="invited" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
+        [case:[special:canupload]||<p>[const:ttlAttach]:</p><div class="attach">
+        <input type="file" placeholder="[const:phSelect]" name="attach" multiple="multiple" tabindex="-1"></div>]
       </div>
-    </div>
-    [include:edit_toolbar.tpl]
-    <textarea class="editor" name="source" id="source" placeholder="[const:phText]">[source]</textarea>
-    <div>
-      [case:[special:canupload]||<p>[const:ttlAttach]:</p><div class="attach">
-      <input type="file" placeholder="[const:phSelect]" name="attach" multiple="multiple" tabindex="-1"></div>]
-    </div>
-    <div class="attachments">
-      [attach_edit:[id]]
+      <div class="attachments">
+        [attach_edit:[id]]
+      </div>
     </div>
   </form>
 </div>

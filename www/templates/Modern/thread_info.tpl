@@ -70,7 +70,7 @@
   <path d="m4 10-3 3v3h-1v3h1v6h-1v3h1v4h6v-4h2v4h6v-4h2v4h6v-4h2v4h6v-4h1v-3h-1v-6h1v-3h-1v-3l-3-3-3 3v3h-2v-3l-3-3-3 3v3h-2v-3l-3-3-3 3v3h-2v-3zm3 9h2v6h-2zm8 0h2v6h-2zm8 0h2v6h-2z"/>
 </svg>]
 
-[case:[Unread]||<a href="[FirstUnread]/!by_id" title="[const:ttlUnread]"><svg version="1.1" width="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+[case:[Unread]||<a href="[FirstUnread]/!by_id" title="[const:ttlUnread]"><svg version="1.1" width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
     <path d="m32 16-16-16v8h-16v16h16v8z"/>
   </svg></a>]
 

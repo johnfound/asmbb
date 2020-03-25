@@ -54,7 +54,6 @@
 ]
 
 <div class="editor" id="editor">
-  <form id="editform" action="!edit" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
     <div class="ui">
       <input class="btn" type="submit" name="preview" value="[const:btnPreview]" onclick="this.form.cmd='preview'" title="[const:hintPreview]">
       <input class="btn" type="submit" name="submit" value="[const:btnSubmit]" onclick="this.form.cmd='submit'" title="[const:hintSubmit]" >
@@ -66,12 +65,13 @@
         </svg></a>
     </div>
 
+  <form id="editform" action="!edit" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
     <div class="tabbed">
       <input id="rad1" name="tabselector" type="radio" checked>
       <label for="rad1">[const:tabText]</label>
       <section>
         [include:edit_toolbar.tpl]
-        <textarea class="editor" name="source" id="source">[source]</textarea>
+        <textarea name="source" id="source">[source]</textarea>
       </section>
 
       <input id="rad2" name="tabselector" type="radio">

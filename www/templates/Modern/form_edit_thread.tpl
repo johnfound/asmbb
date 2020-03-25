@@ -1,4 +1,4 @@
-[css:postnew.css]
+[css:posteditor.css]
 [css:threadnew.css]
 
 <style>
@@ -72,33 +72,32 @@
     </svg></a>
   </div>
   <form id="editform" action="!edit_thread" method="post">
-    <div class="editgroup">
-      <div>
-        <p>[const:ttlTitle]:</p>
-        <input type="text" value="[caption]" placeholder="[const:phTitle]" name="title" autofocus>
+    <div class="notabs">
+      <div class="editgroup">
+        <div>
+          <p>[const:ttlTitle]:</p>
+          <input type="text" value="[caption]" placeholder="[const:phTitle]" name="title" autofocus>
+        </div>
       </div>
-    </div>
-    <div class="editgroup">
-      <div>
-        <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</p>
-        <input type="text" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
+      <div class="editgroup">
+        <div>
+          <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</p>
+          <input type="text" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
+        </div>
       </div>
-    </div>
-    [case:[special:isadmin]||<div class="editgroup">
-      <div>
-        <input type="checkbox" id="pinned" name="pinned" value="1" [case:[Pinned]||checked]><label for="pinned">[const:ttlPin]</label>
-      </div>
-    </div>]
+      [case:[special:isadmin]||<div class="editgroup">
+        <div>
+          <input type="checkbox" id="pinned" name="pinned" value="1" [case:[Pinned]||checked]><label for="pinned">[const:ttlPin]</label>
+        </div>
+      </div>]
 
-    <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]><label for="limited">[const:ttlLimited]</label>
-    <div class="editgroup" id="users_invited">
-      <div>
-        <p>[const:ttlInvited]:</p>
-        <input id="invited" type="text" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
+      <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]><label for="limited">[const:ttlLimited]</label>
+      <div class="editgroup" id="users_invited">
+        <div>
+          <p>[const:ttlInvited]:</p>
+          <input id="invited" type="text" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
+        </div>
       </div>
-    </div>
-
-    <div class="ui">
     </div>
   </form>
 </div>

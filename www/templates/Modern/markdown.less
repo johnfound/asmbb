@@ -46,8 +46,6 @@ div.post_text article {
     margin: 0.5em 0px;
     overflow: auto;
     scrollbar-width: thin;
-
-    white-space: pre;
     display: flow-root;
 
     border-left: 4px solid @clPanelBG;
@@ -58,7 +56,8 @@ div.post_text article {
     font-family: @FontMono;
     font-size: @FontSzMono;
     font-weight: bold;
-    word-break: break-all;
+//    word-break: break-all;
+    overflow-wrap: break-word;
     white-space: pre-wrap;
   }
 

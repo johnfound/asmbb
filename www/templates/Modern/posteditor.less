@@ -1,56 +1,79 @@
 @import "skin_variables.lsi";
 
-body {
-  width: 50%;
-  margin: @marginY @marginX @marginY auto !important;
+@media (orientation: landscape) {
+  body {
+    width: 50%;
+    margin: @marginY @marginX @marginY auto !important;
+  }
+
+  .editor {
+    width: ~"calc( 50% - 3*@{marginX})";
+    left: @marginX;
+    top: 0px;
+    bottom: @marginY;
+  }
 }
 
 
-div.editor {
+@media (orientation: portrait) {
+  body {
+    height: 50vh;
+    margin: @marginY @marginX 50vh @marginX !important;
+  }
+
+  .editor {
+    height: ~"calc( 50% - 4*@{marginY})";
+    left: @marginX;
+    right: @marginX;
+    bottom: @marginY;
+  }
+}
+
+
+
+.editor {
   color: @clArticleFG;
-  width: ~"calc( 50% - 3*@{marginX})";
   position: fixed;
-  left: @marginX;
-  top: 0px;
-  bottom: @marginY;
+  display: flex;
+  flex-direction: column;
 }
 
+
+.thread_editor {
+  color: @clArticleFG;
+  display: flex;
+  flex-direction: column;
+}
+
+
+#source {
+  flex-grow: 1;
+  margin: @marginY 0px;
+}
 
 #editform {
+  color: @clDialogFG;
+  border-radius: @Radius;
+  box-shadow: @Shadow;
   padding: 0px;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  flex-grow: 1;
 
-  p {
-    font-weight: bold;
-    margin: 0px 0px 4px 0px;
-  }
-
-  .tabbed {
-    & > section {
-      background-color: @clDialogBG;
-      color: @clDialogFG;
+  .notabs {
+    background-color: @clDialogBG;
+    color: @clDialogFG;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 2*@marginY 2*@marginX;
+    p {
+      font-weight: bold;
+      margin: @marginY 0px @marginY/2 0px;
     }
   }
 }
 
-
-textarea.editor {
-  width: 100%;
-  height: 20em;
-  flex-basis: 0;
-  padding: 8px;
-  margin: @marginY 0px;
-  outline-style: none;
-  overflow: auto;
-  flex-grow: 1;
-  resize: none;
-  overscroll-behavior: none;
-
-  font-family: @FontMono;
-  font-size: @FontSzMono;
-}
 
 input[type="file"] {
   background-color: @clArticleBG;
@@ -67,6 +90,43 @@ input[type="file"] {
   }
 }
 
+
 .tabbed {
   box-shadow: none !important;
+}
+
+
+.editgroup {
+  display: flex;
+  margin: @marginY 0 @marginY 0;
+  align-items: end;
+
+  & > * {
+    margin: 0px @marginX/2;
+    &:first-child {
+      margin-left: 0px;
+    }
+    &:last-child {
+      margin-right: 0px;
+    }
+    p {
+      margin: @marginY 0 @marginY/2 0;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      margin: 0px !important;
+    }
+    textarea {
+      height: 15em;
+    }
+    flex-grow: 1;
+    & > * {
+      display: block;
+    }
+  }
+}
+
+.post {
+  flex-basis: auto !important;
 }
