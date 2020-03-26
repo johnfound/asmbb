@@ -1,5 +1,5 @@
-C The\sskin\sModern:\schange\sthe\slayout\sof\sthe\spost\seditor\sdepending\son\sthe\sscreen\sorientation.\sDuplicated\sstyles\sremoved.
-D 2020-03-25T11:40:34.102
+C Some\sscrollbars\sfor\sthe\svery\ssmall\sscreens\s-\slike\smobile\sphones.
+D 2020-03-26T05:47:01.885
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
@@ -491,7 +491,7 @@ F www/templates/Modern/del_confirm.tpl c0c6fe6d952f497b9fe7ddf20930fc47ee679c19
 F www/templates/Modern/delete.less 189f4f2e07ff457e4fd5a399dc0951da6db5b043
 F www/templates/Modern/edit.json 9d81c2f5af4dce4cbdd3b8918d53811390e795b5
 F www/templates/Modern/edit_toolbar.tpl de9a7d4d84446ff83bc0642de69a370887988716
-F www/templates/Modern/editor.less f3d104e4bb52e743de5a6106248f90c3aee5e997
+F www/templates/Modern/editor.less cf1a71910dec88ffafefb4a996e64ae12c21d2f8
 F www/templates/Modern/error.less c8cc584b34deb31b31efe5680fbe6b438e4a91dc
 F www/templates/Modern/error_html_end.tpl e5ea7fb2ae849c3efc29d2aace455ce605e7ac55
 F www/templates/Modern/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
@@ -524,7 +524,7 @@ F www/templates/Modern/one_category.tpl 96106ea7f1397896eeaf2de05a0aec2d04d122df
 F www/templates/Modern/one_user.tpl 1ebb768acb7276f56ba9bcad8ba90291bcd96573
 F www/templates/Modern/post_history.tpl f0c0333f9620b87238368063dec6210c3677c25f
 F www/templates/Modern/post_view.tpl 83066a81fa5ef6b030a406fcf1d499d11bbaccad
-F www/templates/Modern/posteditor.less 074807e5a914d47840eed27312b5e6dfdafa924b
+F www/templates/Modern/posteditor.less 24e8af4e5d9a01bb470393fa7e8e6f5e276bb9d8
 F www/templates/Modern/posts.less 645b5b8c7ed22a72ef98d0bb7f0b1aeef1f4f9fe
 F www/templates/Modern/preview.tpl 11e56e331a2fc791d8186317604e6e6dc40b7ac1
 F www/templates/Modern/realtime.js f42157b8f718f14cc560e995c4ff36015fcfb402
@@ -786,7 +786,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 970123c099b66f1bb581fa4c14584b5320729816 x
-P bccc9db6753bb0f3a48f16c0bd319f3ac8b8103a
-R be39ac931fb557c1dad906f9ad0cd1d2
+P 6d0d9d4bca1af5dded52c2c6f06d93d084230b57
+R 4ceb2a7bc39ad993e0b38f9831c3d9e8
 U johnfound
-Z 656c308c36159ac914979bee8cb4e608
+Z eba4351e45402768441b42c791b36bc6
