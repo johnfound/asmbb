@@ -18,6 +18,8 @@ div.post_text article {
   h5 { font-size: 1.1rem;}
   h6 { font-size: 1rem;}
 
+  hr { clear: both; }
+
   span.underlined {text-decoration: underline;}
 
   p {
@@ -98,14 +100,20 @@ div.post_text article {
     margin-bottom: 8px;
   }
 
+
+  video {
+    display: block;
+    margin: @marginY auto;
+    width: 100%;
+    max-width: 768px;
+  }
+
 /* article tables */
 
   table {
-//    border-right-width: 2px;
-//    border-bottom-width: 2px;
     border-style: solid;
     border-color: @clSeparator;
-    margin: 0.2em;
+    margin: 0.2em auto;
     background-color: white;
     border-collapse: collapse;
 
