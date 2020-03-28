@@ -1,8 +1,8 @@
-C Fixed\ssome\sbugs\sin\sthe\stemplates.
-D 2020-03-27T06:10:15.995
+C Official\sbinary\srelease\sv2.8
+D 2020-03-28T19:33:12.721
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
-F install/asmbb.tar.gz c94a8b33eea796f2249a120e0c6f95ab62ad7fab
+F install/asmbb.tar.gz d3a72695f78f099533154219265cb3a360491685
 F install/create_release.sh b5721dd1b6252dd9b363258ca069b10c15202f51 x
 F install/exclude.txt f33f826e9610f4298a186d11c50013d7ec55bbb3
 F install/install.txt 64615f21455976e432bda238c6d4282fc561e340
@@ -786,7 +786,8 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 970123c099b66f1bb581fa4c14584b5320729816 x
-P 5c6c0fdc6e2dd587c6cb4ed851a6ba4465b6f8bb
-R 395c1883d076b8e961658f5224078acb
+P 328ea554af90f1d8fc4d1e6c59e124a3aeb7fc87
+R f1cc0b94a4affee300ebec1fb9d2b459
+T +sym-v2.8 *
 U johnfound
-Z 3a3646cb86e769fd9f038717f6501c4f
+Z f59281fb27684f20e64785b38e3294e1
