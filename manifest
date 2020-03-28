@@ -1,8 +1,8 @@
-C Fixed\slast-minute\sbug\sin\sthe\sModern\sskin.\sSource\srelease\sv2.8
-D 2020-03-28T20:00:39.602
+C Binary\srelease\sv2.8
+D 2020-03-28T20:01:57.979
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
-F install/asmbb.tar.gz d3a72695f78f099533154219265cb3a360491685
+F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
 F install/create_release.sh b5721dd1b6252dd9b363258ca069b10c15202f51 x
 F install/exclude.txt f33f826e9610f4298a186d11c50013d7ec55bbb3
 F install/install.txt 64615f21455976e432bda238c6d4282fc561e340
@@ -786,8 +786,8 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 970123c099b66f1bb581fa4c14584b5320729816 x
-P e39a5678e27a2abda9d3cf4f81550da85570a007
-R acda587d6877a0b3631ddd9668ccf1ca
+P 132e3d216654e19dbe0d0eb432e8297324cb6da9
+R 5e2157b9d87105ff5f2d90831ad3a973
 T +sym-v2.8 *
 U johnfound
-Z d02014154c2d311f43ce9e3ac14b3a7e
+Z c5a6c3cd2b916701ef0713d9c79c729a
