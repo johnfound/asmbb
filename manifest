@@ -1,5 +1,5 @@
-C Official\sbinary\srelease\sv2.8
-D 2020-03-28T19:33:12.721
+C Fixed\slast-minute\sbug\sin\sthe\sModern\sskin.\sSource\srelease\sv2.8
+D 2020-03-28T20:00:39.602
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz d3a72695f78f099533154219265cb3a360491685
@@ -537,7 +537,7 @@ F www/templates/Modern/sqlite.less 5716244e0d41d5dc61f4b0e9a451546510580aa3
 F www/templates/Modern/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e3c7067
 F www/templates/Modern/thread_info.tpl daa00b071c77a3785b034472e47ecd7ec768624f
 F www/templates/Modern/thread_list.less e56afa0608877a4e0e4efd68eeb5a150487fddf2
-F www/templates/Modern/threadnew.less a01c425922203926d6ec4574b4eedccdfe4b57d5
+F www/templates/Modern/threadnew.less 5bbc07889598f870fa4a24519087d36e02382e57
 F www/templates/Modern/toaster.less 463c319154e4f2413b5fd3c5e65d2e5b576a943d
 F www/templates/Modern/userinfo.less 7e90979a174c347d337637c6e08500d5da35db44
 F www/templates/Modern/userinfo.tpl 8eced029e1f6591c8c6d82f36c76ae3d23da50e0
@@ -786,8 +786,8 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 970123c099b66f1bb581fa4c14584b5320729816 x
-P 328ea554af90f1d8fc4d1e6c59e124a3aeb7fc87
-R f1cc0b94a4affee300ebec1fb9d2b459
+P e39a5678e27a2abda9d3cf4f81550da85570a007
+R acda587d6877a0b3631ddd9668ccf1ca
 T +sym-v2.8 *
 U johnfound
-Z f59281fb27684f20e64785b38e3294e1
+Z d02014154c2d311f43ce9e3ac14b3a7e
