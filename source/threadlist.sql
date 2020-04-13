@@ -3,7 +3,7 @@ select
   t.Slug,
   t.Caption,
   [case:[special:variant]|0 as Pinned|t.Pinned],
-  strftime('%d.%m.%Y %H:%M:%S', t.LastChanged, 'unixepoch') as TimeChanged,
+  fuzzytime(LastChanged) as TimeChanged,
   t.PostCount,
   t.ReadCount,
   t.Limited,

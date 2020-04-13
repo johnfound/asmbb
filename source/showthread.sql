@@ -2,8 +2,8 @@ select
 
   P.id,
   P.threadID,
-  strftime('%d.%m.%Y %H:%M:%S', P.postTime, 'unixepoch') as PostTime,
-  strftime('%d.%m.%Y %H:%M:%S', P.editTime, 'unixepoch') as EditTime,
+  fuzzytime(P.postTime) as PostTime,
+  fuzzytime(P.editTime) as EditTime,
   P.Content,
   P.format,
   P.userID,

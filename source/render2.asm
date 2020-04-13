@@ -3197,9 +3197,6 @@ begin
         sub     eax, sizeof.string
         add     ecx, sizeof.string
 
-        OutputMemoryByte eax, ecx
-
-
         cmp     [.split.query], 0
         je      .add_fragment
 

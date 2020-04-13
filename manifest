@@ -1,5 +1,5 @@
-C Binary\srelease\sv2.8
-D 2020-03-28T20:01:57.979
+C Implemented\ssqlite\sfunction\sfuzzytime()\sfor\sinteligent\sconversion\sof\sunix\stime\sto\sstring,\srelative\sto\sthe\spresent\smoment.
+D 2020-04-13T13:28:30.664
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -67,7 +67,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm 2d9ef5a482b9595584d9cf423c61f57a547cef92
+F source/render2.asm f47ddc36766c7fb346ce20df092903cc4f37c36f
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 474ec06449170797b0b4f5523361f9e184f15837
 F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
@@ -75,8 +75,8 @@ F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm 3123d67b30fd4e86b0716cf0a6387e9c8b0fc91c
 F source/settings.sql 066cc77197d5fae94fb27c2bd72aabb2c4b85d8a
 F source/showthread.asm 33e50b8f1b735f3aed0a83aecc7beb3a96b3c442
-F source/showthread.sql 88e6f49dae477c7b96a4ca0722f4885f754b0bb0
-F source/sqlite3.asm 15de7f1ac90fda35ac028014f53a0e45276501a2
+F source/showthread.sql 1ee08ed9c69a07ca5c60fc639e73333405e14d37
+F source/sqlite3.asm df3a5ea387f60d719fd83c33411b8151ad1a6d77
 F source/sqlite_console.asm bc62f0c681b219f795dbdc9b71c78fda228eb7c0
 F source/sse_service.asm cb9ecc7aa219631e30f7c9a77f0c7cbc23a96a20
 F source/statistics.asm 8574bead31291bdaf459a032659cb41bc34883d3
@@ -88,7 +88,7 @@ F source/text_constants.asm ca4fd3868d1fc9ea09f945afc627d23787d48919
 F source/thread_attr.sql 96f479d9e4ab2a93221b81be1bbb8a8ba6e277f3
 F source/threadcount.sql 897aa66b52dbe48ed09391442d3b288c36cbabff
 F source/threadlist.asm a215815179707425797b3efb604c6eaf8cc65cf8
-F source/threadlist.sql 962f96ec60b0a6956cee4b048a82c0e47ac83a8d
+F source/threadlist.sql 61ceef1d0a8f1b35a59a64fe4618bc402b336b18
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
 F source/userinfo.asm 010a2ba73acd014cd558c39aae3b9915266dc9e3
@@ -511,7 +511,7 @@ F www/templates/Modern/form_sqlite_console.tpl e7018d30d3293f01cf6d159cad260413e
 F www/templates/Modern/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
 F www/templates/Modern/login.less 0439501f5ba0458371402194c885fdd576644057
 F www/templates/Modern/main_html_end.tpl e409fee48fb1b1979c337cbe6f616f9e36baef53
-F www/templates/Modern/main_html_start.tpl 5532ff1a3f9557676d9e2b32304362493688e73f
+F www/templates/Modern/main_html_start.tpl 6da9f183c8418c7e930a44e6dfe5076b698a69db
 F www/templates/Modern/markdown.less 309eb4c4a7334c8df3cd284548f6aeb6d0f230b7
 F www/templates/Modern/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
 F www/templates/Modern/nav_categories.tpl 913db6d39408ea09f80f91b55325a6cef4efeba2
@@ -786,8 +786,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 970123c099b66f1bb581fa4c14584b5320729816 x
-P 132e3d216654e19dbe0d0eb432e8297324cb6da9
-R 5e2157b9d87105ff5f2d90831ad3a973
-T +sym-v2.8 *
+P 59db740b88417d3fe3c2724d5c62ab26c5fa75fa
+R a3944f8d98de9476354f384c5161983b
 U johnfound
-Z c5a6c3cd2b916701ef0713d9c79c729a
+Z 35f470ac1a7a00cd9fefafb7b7f95799

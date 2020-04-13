@@ -71,16 +71,19 @@ begin
 endp
 
 
+SQLITE_DETERMINISTIC = $800
+
 proc SQLiteRegisterFunctions, .ptrDatabase
 begin
-        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "url_encode", 1, SQLITE_UTF8, 0, sqliteURLEncode, 0, 0, 0
-        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "html_encode", 1, SQLITE_UTF8, 0, sqliteHTMLEncode, 0, 0, 0
-        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "slugify", 1, SQLITE_UTF8, 0, sqliteSlugify, 0, 0, 0
-        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "tagify", 1, SQLITE_UTF8, 0, sqliteTagify, 0, 0, 0
-        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "phpbb", 1, SQLITE_UTF8, 0, sqliteConvertPhpBBText, 0, 0, 0
-        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "xorblob", 2, SQLITE_ANY, 0, sqliteXorBlob, 0, 0, 0
-        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "md5", 1, SQLITE_ANY, 0, sqliteMD5Blob, 0, 0, 0
-        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "base64", 1, SQLITE_ANY, 0, sqliteBase64, 0, 0, 0
+        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "url_encode", 1, SQLITE_UTF8 or SQLITE_DETERMINISTIC, 0, sqliteURLEncode, 0, 0, 0
+        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "html_encode", 1, SQLITE_UTF8 or SQLITE_DETERMINISTIC, 0, sqliteHTMLEncode, 0, 0, 0
+        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "slugify", 1, SQLITE_UTF8 or SQLITE_DETERMINISTIC, 0, sqliteSlugify, 0, 0, 0
+        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "tagify", 1, SQLITE_UTF8 or SQLITE_DETERMINISTIC, 0, sqliteTagify, 0, 0, 0
+        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "phpbb", 1, SQLITE_UTF8 or SQLITE_DETERMINISTIC, 0, sqliteConvertPhpBBText, 0, 0, 0
+        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "xorblob", 2, SQLITE_ANY or SQLITE_DETERMINISTIC, 0, sqliteXorBlob, 0, 0, 0
+        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "md5", 1, SQLITE_ANY or SQLITE_DETERMINISTIC, 0, sqliteMD5Blob, 0, 0, 0
+        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "base64", 1, SQLITE_ANY or SQLITE_DETERMINISTIC, 0, sqliteBase64, 0, 0, 0
+        cinvoke sqliteCreateFunction_v2, [.ptrDatabase], txt "fuzzytime", 1, SQLITE_ANY or SQLITE_DETERMINISTIC, 0, sqliteHumanTime, 0, 0, 0
         return
 endp
 
@@ -548,3 +551,99 @@ begin
         pop     esi ebx
         cret
 endp
+
+
+
+
+
+proc sqliteHumanTime, .context, .num, .pValue
+.time     rd 2
+.datetime TDateTime
+begin
+        push    ebx
+
+        mov     eax, [.pValue]
+        cinvoke sqliteValueType, [eax]
+        cmp     eax, SQLITE_NULL
+        je      .exit
+
+        mov     eax, [.pValue]
+        cinvoke sqliteValueInt64, [eax]
+        mov     [.time], eax
+        and     [.time+4], edx
+
+        lea     eax, [.time]
+        lea     edx, [.datetime]
+        stdcall TimeToDateTime, eax, edx
+
+        stdcall StrNew
+        mov     ebx, eax
+
+        stdcall GetTime
+
+        sub     eax, [.time]
+        sbb     edx, [.time+4]
+        jnz     .only_date
+
+        cmp     eax, 24*60*60   ; 24 hours
+        jl      .only_time
+
+        cmp     eax, 2*24*60*60
+        jae     .only_date
+
+; short date and time:
+        mov     cl, 2
+        call    .to_date
+        stdcall StrCat, ebx, txt " "
+        call    .to_time
+        jmp     .finish
+
+.only_time:
+        call    .to_time
+        jmp     .finish
+
+.only_date:
+        mov     cl, 4
+        call    .to_date
+
+.finish:
+        stdcall StrPtr, ebx
+        cinvoke sqliteResultText, [.context], eax, [eax+string.len], SQLITE_TRANSIENT
+        stdcall StrDel, ebx
+
+.exit:
+        xor     eax, eax
+        pop     ebx
+        cret
+
+
+.to_time:
+        stdcall NumToStr, [.datetime.hour], ntsUnsigned or ntsFixedWidth or ntsDec + 2
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+        stdcall StrCat, ebx, txt ':'
+        stdcall NumToStr, [.datetime.minute], ntsUnsigned or ntsFixedWidth or ntsDec + 2
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+        retn
+
+.to_date:
+        stdcall NumToStr, [.datetime.date], ntsUnsigned or ntsFixedWidth or ntsDec + 2
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+        stdcall StrCat, ebx, txt '.'
+        stdcall NumToStr, [.datetime.month], ntsUnsigned or ntsFixedWidth or ntsDec + 2
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+        stdcall StrCat, ebx, txt '.'
+
+        and     ecx, $ff
+        or      ecx, ntsSigned or ntsFixedWidth or ntsDec
+        stdcall NumToStr, [.datetime.year], ecx
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+        retn
+
+endp
+
+
