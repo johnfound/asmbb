@@ -1,5 +1,5 @@
-C SQLite\sconsole,\sbetter\slook&feel.
-D 2020-04-15T11:54:14.576
+C More\sconsistent\scursor\sfor\s.btn\sclass.\sSmaller\sfont\sand\s1px\sborders\sfor\sdebug\spages.
+D 2020-04-15T15:02:13.452
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -740,10 +740,10 @@ F www/templates/Wasp2/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
 F www/templates/Wasp2/chat.js ca9a0a7be865689ffc414f26cbb28b378076c50a
 F www/templates/Wasp2/chat.less a4c64381f5ef14741bb249a4678573cbea899f83
 F www/templates/Wasp2/chat.tpl 764aadf2e34a8c0fabf7b70fe8746594c10665ae
-F www/templates/Wasp2/common.less e37fec1a27ccb4c59060d5ff6cfc59750029c9d5
+F www/templates/Wasp2/common.less 40bdb53b9f7de5806acd6623aa0106c3d85c88a7
 F www/templates/Wasp2/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp2/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001
-F www/templates/Wasp2/debug.less 028000816d3504bdb2cf7c9813bbb3300aa2fdc5
+F www/templates/Wasp2/debug.less eb38e8727c9c8f395d09e4c5b22b03ba44f87a23
 F www/templates/Wasp2/del_confirm.tpl 26b8239d78b69cd5fbe206ea12ccb96890aac030
 F www/templates/Wasp2/delete.less 253a0f549e132a9d55ae56fe399a8929eabb4a29
 F www/templates/Wasp2/edit.json a2aaf0ee51695178d59b589c95b0d9bc63cd5c02
@@ -903,7 +903,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 970123c099b66f1bb581fa4c14584b5320729816 x
-P f1de37540e4153b4f3a8a44e0553122a94c68922
-R ca3ad655dd92b2fa1058be2787681b82
+P 31c9875f407068f25cbe2958d4cd4a6e10eec363
+R cd86acb99a6a034f2f9bf362b226a7d5
 U johnfound
-Z aa118b25183b431be33b2554d8ed9771
+Z d68f4c03a3874997ad2f45ace4b98038
