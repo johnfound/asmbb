@@ -44,10 +44,9 @@
   [equ:rssfeed=Dieses Thema abonnieren]
 ]
 
-[css:highlight/highlight.css]
+[css:highlight.css]
 
-<script src="[special:skin]/highlight/highlight.pack.js"></script>
-
+<script src="[special:skin]/highlight.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', (event) => {
   document.querySelectorAll('code.block').forEach((block) => {

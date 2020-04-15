@@ -1,5 +1,5 @@
-C Some\sdeep\srework\sof\sthe\sWasp\sforum\sskin.\sIt\sis\sin\sfact\snew\sskin\sfrom\sscratch.
-D 2020-04-15T06:09:35.990
+C Make\shighlight.js\sreadable.\sAdd,\shighlight.less\sfile.\sUse\sthem\sin\sthe\stheme.
+D 2020-04-15T08:56:08.399
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -41,7 +41,7 @@ F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm 03059f73a6c143fa5400098b6018f82118b2c146
-F source/engine.fpr 01dc6a21ba52d8de6e84f926e6d0a2f6c0570489
+F source/engine.fpr c8df1ee5413e8cd20ff8f66be79f31f95ffb9589
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 76ca249396c7271ac8876d97e39a169f0eb89d91
@@ -766,7 +766,8 @@ F www/templates/Wasp2/form_settings.tpl 612512789ee83766bf093cf5bea7f5fc4e3d4244
 F www/templates/Wasp2/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Wasp2/form_sqlite_console.tpl 7c492fd0663a1f999e88186f0af74f87bcd04a25
 F www/templates/Wasp2/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
-F www/templates/Wasp2/highlight/highlight.pack.js b10cabc894fbdfcd7dc74151c1f1971330dc0a16
+F www/templates/Wasp2/highlight.js b4a380fb43186d51a405fb185067120657f243f2 w www/templates/Wasp2/highlight/highlight.pack.js
+F www/templates/Wasp2/highlight.less fba68624d1b34a5543fe0bf4b2af2ac1ddf65e74
 F www/templates/Wasp2/login.less b854c20c711dffeec158f044c59cbcf72a3161d5
 F www/templates/Wasp2/main_html_end.tpl 53de7f6314a3460448c7d8988eb132d82b2d763c
 F www/templates/Wasp2/main_html_start.tpl 93a14eb403e561b642a111858254dcaa38e3af0e
@@ -776,7 +777,7 @@ F www/templates/Wasp2/nav_categories.tpl b4f0c9ebd842cdfda41d648e39b367fb3956c38
 F www/templates/Wasp2/nav_history.tpl 7d7b20a16288e53f745d28fe97cf43244b9bb29d
 F www/templates/Wasp2/nav_list.tpl 24f44ba21463886672e432f061ce272832d50efa
 F www/templates/Wasp2/nav_search.tpl 94348341523bd79e3919d36b9a7072ca1da82e27
-F www/templates/Wasp2/nav_thread.tpl 77cb9fc2748a0d8f6df447eda6144937c7f1b3cf
+F www/templates/Wasp2/nav_thread.tpl 83ef56d9651a6bb3a2bfd5d8d2d2e8548e9642e0
 F www/templates/Wasp2/nav_userslist.tpl b25e53dad0dab74e40c295c207593dd929900c06
 F www/templates/Wasp2/navigation.less 27e66e41b15b8874e7d33559ee60f696a8639911
 F www/templates/Wasp2/one_category.tpl 1bfa8a3a4b0b646aac5bc485ce7e0428fe2c1e56
@@ -902,10 +903,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 970123c099b66f1bb581fa4c14584b5320729816 x
-P e9a1aa146ae9b319b24f9298ac80c36915434f50
-R 08ed210b589470bffb7e87489a3b072f
-T *branch * Wasp2skin
-T *sym-Wasp2skin *
-T -sym-trunk *
+P 02f1854471cddebab7930dfa5f635dc72fc214ff
+R 3f9801d62cdd4c884f0634914a8cf0a0
 U johnfound
-Z 71a70ae39946facc96ab2679c933a346
+Z f9acf9af2d755476b7ab5000d02d13a9
