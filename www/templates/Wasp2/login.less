@@ -1,0 +1,128 @@
+@import "skin_variables.lsi";
+
+div.login {
+  position: relative;
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  clear: both;
+  margin: 8px auto;
+
+  article {
+    background-color: @clArticleBG;
+    color: @clArticleFG;
+    padding: 16px;
+    margin: 8px auto;
+
+    p {
+      color: black;
+      margin: 16px;
+    }
+
+  }
+}
+
+
+/* login page styles */
+
+form.login-block, form.register-block {
+    width: @msgBoxWidth;
+    flex-shrink: 0;
+    padding: 16px;
+    background: @clColor1;
+    margin: 8px auto 8px auto;
+
+    input[type=checkbox] + label {
+        display: block;
+        background-color: @clEditorBG;
+        color: @clEditorFG;
+        padding: 8px 8px 8px 14px;
+    }
+}
+
+form.login-block h1, form.register-block h1, form.settings h1 {
+    height: 38px;
+    text-align: center;
+    color: @clDarkFG;
+    background-color: @clDarkBG;
+    font-size: 20px;
+    font-variant: small-caps;
+    margin-top: 0;
+    margin-bottom: 8px;
+    padding: 8px;
+}
+
+input.username, input.email, input.password, input.number {
+    width: 100%;
+    height: 38px;
+    margin-bottom: 8px;
+    font-size: 16px;
+    padding: 0 20px 0 50px;
+    outline: none;
+    border: @borderEdit;
+
+    background: @bgEditor;
+    color: @clEditorFG;
+}
+
+
+input.username {
+    background-image: url('[special:skin]/_images/user.png') !important;
+}
+
+input.email {
+    background-image: url('[special:skin]/_images/email.png') !important;
+}
+
+input.password {
+    background-image: url('[special:skin]/_images/pass.png') !important;
+}
+
+input.username:focus, input.email:focus, input.password:focus {
+    background: @bgEditorFocus;
+}
+
+
+label.submit {
+  height: 38px;
+  line-height: 38px;
+  width: 100%;
+  background: @clButtonBG;
+  color: @clButtonFG;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  font-variant: small-caps;
+  outline: none;
+  cursor: pointer;
+  text-align: center;
+  padding: 0px;
+  display: block;
+  margin: 8px 0px;
+
+  &:hover {
+    background: @clButtonActiveBG;
+    color: @clButtonActiveFG;
+  }
+}
+
+#submit {
+  position: absolute;
+  z-index: -1;
+  left: -10000px;
+
+  &:focus + label {
+    background: @clButtonActiveBG;
+    color: @clButtonActiveFG;
+    outline: 2px dotted @clSeparator;
+    outline-offset: -2px;
+  }
+}
+
+.pi_nick, .pi_pass, .pi_tick, .pi_email {
+  margin: 0px;
+  padding: 0px;
+}
+
+.pi_tick, .pi_email {
+  display: none;
+}

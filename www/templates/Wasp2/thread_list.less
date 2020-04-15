@@ -1,0 +1,179 @@
+@import "skin_variables.lsi";
+
+div.threads_list {
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
+  clear: both;
+}
+
+
+.thread-summary {
+  padding: @margin 0;
+  p {
+    margin: @margin/2 0;
+  }
+
+  .ts-info {
+    display: flex;
+
+    padding: @margin/2 @margin;
+
+    background-color: @clWhite;
+
+    .tsi-link {
+      flex-grow: 1;
+      overflow: hidden;
+
+      a:not(:hover) {
+        text-decoration: none;
+      }
+
+      p > a {
+        margin: @margin 0;
+
+        font-size: 16px;
+        font-weight: bold;
+
+        color: @clBlack;
+      }
+      ul {
+        font-size: 12px;
+        color: @clMiddleGray;
+        * {
+          font-size: 12px;
+          color: @clMiddleGray;
+          font-weight: normal;
+        }
+        svg {
+          fill: @clMiddleGray;
+        }
+      }
+    }
+
+    .tsi-stat {
+      color: @clMiddleGray;
+      flex-shrink: 0;
+      p {
+        text-align: center;
+      }
+    }
+
+  }
+
+  .ts-tags {
+    padding: @margin/2 @margin;
+
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    background-color: @clGray;
+    color: @clWhite;
+
+    a:not(:hover) {
+      text-decoration: none;
+    }
+
+    a {
+      color: @clWhite;
+    }
+
+    ul {
+      margin: 0;
+    }
+  }
+}
+
+.posters {
+  margin: 0;
+}
+
+.invited {
+  margin: 0;
+}
+
+.comma > * {
+  display: inline-block;
+
+  &::after {
+    content: ', ';
+    text-decoration: none;
+    margin-right: 4px;
+  }
+
+  &:last-child::after {
+    content: ' ';
+  }
+}
+
+
+.unread-info {
+  white-space: nowrap;
+  color: @clRed;
+  font-size: 12px;
+  svg {
+    vertical-align: middle;
+    fill: @clRed;
+    stroke: @clRed;
+  }
+}
+
+
+// Categories...
+
+.category {
+  display: flex;
+  align-items: stretch;
+  margin: 8px 0px;
+  background-color: @clWhite;
+  color: @clBlack;
+  height: 48px;
+  border-radius: 24px 0px 0px 24px;
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  a {
+    font-size: 16px;
+    flex-grow: 1;
+    margin: 0px 8px;
+    align-self: center;
+    color: @clBlack;
+
+    span {
+      font-size: 16px;
+      font-weight: bold;
+      font-variant: small-caps;
+    }
+
+    &:not(:hover) {
+      text-decoration: none;
+    }
+  }
+
+  div:first-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: @clDarkBG;
+    width: 40px;
+    border-radius: 20px;
+  }
+
+  div {
+    text-align: center;
+    width: 100px;
+    flex-shrink: 0;
+    margin: 4px;
+    line-height: 20px;
+    span {
+      font-size: 20px;
+      font-weight: bold;
+      color: @clRed;
+    }
+  }
+}

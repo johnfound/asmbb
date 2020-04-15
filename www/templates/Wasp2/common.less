@@ -1,0 +1,721 @@
+@import "skin_variables.lsi";
+
+html {
+  font-family: @FontMain;
+  font-size: @FontSize;
+  box-sizing: border-box;
+  * {
+    box-sizing: border-box;
+    padding: 0px;
+  }
+}
+
+body {
+  background-color: @clLightGray;
+  color: @clBlack;
+  padding: 1px;
+  margin: 0;
+  min-height: 100vh;
+}
+
+body.limited {
+  border: @margin solid @clRed;
+}
+
+.multi_content {
+  clear: both;
+}
+
+
+input {
+  font-size: inherit;
+  font-family: inherit;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 20px !important;
+  background-image: url('data:image/svg+xml,[url:<svg version="1.1" viewBox="0 0 8 4" xmlns="http://www.w3.org/2000/svg"><path d="m0 0h8l-4 4z"/></svg>]');
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 12px;
+
+}
+
+
+.spacer {
+  flex-grow: 1;
+  min-width: 0px;
+  display:block;
+}
+
+
+.hidden {
+  display: block;
+  width: 0px;
+  height: 0px;
+  border: none;
+  position: absolute;
+}
+
+.btn-bar {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -@margin/2;
+  padding: @margin 0;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+
+  border: none;
+  border-radius: @radius;
+  text-decoration: none;
+
+  padding: 0 @margin;
+  margin: @margin/2;
+  height: @buttonHeight;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  user-select: none;
+
+  font-family: inherit;
+  font-weight: normal;
+  white-space: nowrap;
+
+  &::-moz-focus-inner {
+    border: 0;
+    outline: 0;
+  }
+
+  &:focus {
+    outline: 1px dotted @clBlack;
+    outline-offset: -3px;
+  }
+
+  &:focus-within {
+    outline: 1px dotted @clBlack;
+    outline-offset: -3px;
+  }
+
+  &:hover {
+    box-shadow: 1px 1px 3px @clMiddleGray;
+  }
+
+  &:active {
+    box-shadow: -1px -1px 3px @clMiddleGray;
+  }
+
+  color: @clBlack;
+  svg {
+    fill: @clBlack;
+  }
+
+}
+
+
+.btn-active {
+  background-color: @clRed !important;
+  color: @clWhite !important;
+  svg {
+    fill: @clWhite !important;
+  }
+}
+
+
+label:focus-within {
+  outline: 1px dotted @clBlack;
+  outline-offset: -3px;
+}
+
+.img-btn {
+  padding: 0px;
+  border-radius: 50%;
+  outline-offset: 0 !important;
+  width: @buttonHeight;
+  flex-grow: 0;
+  flex-shrink: 0;
+  svg {
+    margin: auto;
+  }
+}
+
+
+select.btn:-moz-focusring {
+  text-shadow: 0 0 0 @clBlack !important;
+  color: transparent !important;
+}
+
+
+/* header styles */
+
+div.header {
+  position: relative;
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMarginV;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  background: @clYellow;
+  color: @clBlack;
+
+  padding: @margin/2;
+
+  .btn {
+    background-color: @clWhite;
+    color: @clBlack;
+  }
+}
+
+
+
+#forum-header {
+  display: flex;
+  align-items: center;
+  user-select: none;
+  padding-left: @margin;
+  padding-right: @margin;
+
+  svg > path {
+    fill: @clBlack;
+  }
+
+  h1 {
+    font-size: 40px;
+    line-height: 40px;
+    margin: 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: @FontHeader;
+  }
+
+}
+
+
+.global-row {
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
+}
+
+
+/* Search form styles */
+
+#search-form {
+  display: flex;
+  flex-grow: 2;
+  flex-shrink: 1;
+  margin: 0;
+  > input {
+    flex-shrink: 1;
+    width: 50px;
+  }
+  > * {
+    margin: @margin/2;
+  }
+}
+
+
+input^[type=text^], input^[type=search^], input^[type=email^], input^[type=password^] {
+  height: @buttonHeight;
+  padding: 4px 8px;
+  border: none;
+  border-radius: @radius;
+
+  background-color: @clWhite;
+  color: @clBlack;
+
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+
+.search_line {
+  height: 32px;
+  margin: 0px 8px 0px 0px;
+  padding: 4px 8px;
+  border: @borderEdit;
+  background-color: @clDarkBG;
+  color: @clDarkFG;
+  display:block;
+  flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 0px;
+  &:focus {
+    background-color: @clEditorBG;
+    color: @clEditorFG;
+    border: 2px solid @clSeparator;
+  }
+}
+
+
+#navigation1 {
+  transform: translateX( ~"calc( -100% - @{buttonHeight} - @{margin})") rotate(-90deg);
+  transform-origin: top right;
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: auto;
+  height: auto;
+  display: inline-flex;
+  margin: -@margin/2;
+
+  .btn {
+    background-color: @clDarkGray;
+    color: @clWhite;
+    svg {
+      fill: @clWhite;
+    }
+  }
+}
+
+
+#navigation2 {
+  .btn {
+    background-color: @clDarkGray;
+    color: @clWhite;
+    svg {
+      fill: @clWhite;
+    }
+  }
+}
+
+.navigation3 {
+  float: left;
+  margin: -@margin/2;
+  .btn {
+    background-color: @clYellow;
+    color: @clBlack;
+    svg {
+      fill: @clBlack;
+    }
+  }
+}
+
+
+/* tag list styles */
+
+div.tags {
+  overflow: auto;
+  padding: @margin/2;
+  scrollbar-width: thin;
+
+  background-color: @clDarkGray;
+  font-weight: normal;
+
+  margin: 0px @margin/2 @margin/2 @margin/2;
+
+  a {
+    color: @clWhite;
+    padding: 2px;
+    margin: 0px;
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+
+    &:hover {
+      background-color: @clRed !important;
+      color: @clWhite !important;
+      svg {
+        fill: @clWhite;
+      }
+    }
+
+    &:active {
+      background-color: @clLightRed !important;
+      color: @clWhite !important;
+      svg {
+        fill: @clWhite;
+      }
+    }
+
+  }
+}
+
+.tag-upper {
+  > span {
+    text-transform: uppercase;
+  }
+}
+
+a.taglink {
+  display:inline-block;
+  min-width: 16px;
+  overflow: visible;
+  text-overflow: ellipsis;
+  border-radius: @borderRadTags;
+  border: @borderTags;
+  text-align: center;
+  white-space: nowrap;
+  text-decoration: none;
+  position: relative;
+  text-transform: uppercase;
+}
+
+a.current_tag {
+  background-color: @clCurrentTagBG;
+  color: @clCurrentTagFG !important;
+  text-decoration: none;
+}
+
+.tagsize00 { font-size: 0.30*28px }
+.tagsize01 { font-size: 0.30*28px }
+.tagsize02 { font-size: 0.30*28px }
+.tagsize03 { font-size: 0.32*28px }
+.tagsize04 { font-size: 0.35*28px }
+.tagsize05 { font-size: 0.41*28px }
+.tagsize06 { font-size: 0.47*28px }
+.tagsize07 { font-size: 0.52*28px }
+.tagsize08 { font-size: 0.57*28px }
+.tagsize09 { font-size: 0.62*28px }
+.tagsize10 { font-size: 0.66*28px }
+.tagsize11 { font-size: 0.70*28px }
+.tagsize12 { font-size: 0.73*28px }
+.tagsize13 { font-size: 0.76*28px }
+.tagsize14 { font-size: 0.79*28px }
+.tagsize15 { font-size: 0.81*28px }
+.tagsize16 { font-size: 0.83*28px }
+.tagsize17 { font-size: 0.85*28px }
+.tagsize18 { font-size: 0.87*28px }
+.tagsize19 { font-size: 0.89*28px }
+.tagsize20 { font-size: 0.90*28px }
+.tagsize21 { font-size: 0.91*28px }
+.tagsize22 { font-size: 0.93*28px }
+.tagsize23 { font-size: 0.94*28px }
+.tagsize24 { font-size: 0.95*28px }
+.tagsize25 { font-size: 0.96*28px }
+.tagsize26 { font-size: 0.97*28px }
+.tagsize27 { font-size: 0.97*28px }
+.tagsize28 { font-size: 0.98*28px }
+.tagsize29 { font-size: 0.99*28px }
+.tagsize30 { font-size: 0.99*28px }
+.tagsize31 { font-size: 1.00*28px }
+.tagsize32 { font-size: 1.00*28px }
+
+
+.svg-gray {
+  vertical-align: bottom;
+  fill: @clGray;
+}
+
+.svg-yellow {
+  vertical-align: bottom;
+  fill: @clYellow;
+}
+
+
+/* Decorative checkbox mechanism. The label tag, must be styled separately! */
+
+.checkbox > input^[type=checkbox^] {
+  position: absolute;
+  z-index: -1;
+  left: -100000px;
+
+  &:focus + label::before {
+    outline: 1px dotted @clBlack;
+    outline-offset: 2px;
+  }
+
+  &:checked + label::before {
+    color: lime;
+    background-color: lime;
+  }
+
+  &:checked + .popup {
+    display: block;
+    opacity: 1;
+  }
+
+  + label {
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    &::before {
+      content: '';
+      width: 12px;
+      height: 12px;
+      display: inline-block;
+      background-color: white;
+      border: 2px solid @clSeparator;
+      margin-right: @margin;
+      vertical-align: middle;
+    }
+  }
+}
+
+
+// Block with multiple elements that can be displayed on one line or
+// wrapped on multiple lines.
+
+.collapsable {
+  flex-wrap: nowrap;
+  align-items: start;
+
+  > input^[type=checkbox^] {
+    position: absolute;
+    z-index: -1;
+    left: -100000px;
+
+    + * {
+      margin: 0px;
+      svg {
+        transform: rotate(0deg);
+        vertical-align: text-bottom;
+      }
+    }
+
+//    &:focus + * {
+//      outline: 1px dotted @clBlack;
+//      outline-offset: 2px;
+//    }
+
+    &:not(:checked) + * {
+      white-space: nowrap !important;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      svg {
+        transform: rotate(-90deg);
+      }
+      + * {
+        white-space: nowrap !important;
+      }
+    }
+  }
+}
+
+
+.dropdown {
+  align-items: start;
+
+  & > input^[type=checkbox^], & > input^[type=radio^] {
+    position: absolute;
+    z-index: -1;
+    left: -100000px;
+
+    & + label {
+      margin-bottom: 0px;
+      svg {
+        transform: rotate(0deg);
+        vertical-align: middle;
+      }
+      & + * {
+        order: 1000;
+        overflow: hidden;
+      }
+    }
+
+    &:focus + label {
+      outline: 1px dotted @clBlack;
+      outline-offset: -3px;
+    }
+
+    &:checked + label {
+      height: @buttonHeight + @margin/2;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+      & + * {
+        width: 100%;
+        flex-basis: 100%;
+        flex-grow: 1;
+      }
+    }
+
+    &:not(:checked) + label {
+      svg {
+        transform: rotate(-90deg);
+      }
+      & + * {
+        display: none !important;
+      }
+    }
+  }
+}
+
+
+.tabbed-form {
+  display: flex;
+  flex-wrap: wrap;
+
+  & > input^[type=radio^] {
+    &:not(checked) + label {
+      background-color: transparent;
+      color: inherit;
+    }
+
+    &:checked + label {
+      background-color: @clWhite;
+      color: @clBlack;
+    }
+
+    + label + * {
+      padding: @margin/2 @margin;
+      background-color: @clWhite;
+      color: @clBlack;
+    }
+  }
+
+
+  & > label {
+    -webkit-user-select: none; /* Safari 3.1+ */
+    -moz-user-select: none; /* Firefox 2+ */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Standard syntax */
+
+    padding: @margin/2 @margin;
+  }
+}
+
+span.ntf {
+  display: inline-block;
+  border-radius: 50%;
+
+  background-color: @clWhite;
+  color: @clRed;
+
+  font-size: 12px;
+  line-height: 12px;
+  vertical-align: middle;
+  font-weight: bold;
+  margin-left: 0.5ch;
+
+  &::before, &::after {
+    content:'\200B';    // zero width space!
+    display:inline-block;
+    line-height:0px;
+    padding-top:50%;
+    padding-bottom:50%;
+  }
+
+  &::before {
+    padding-left: 4px;
+  }
+
+  &::after {
+    padding-right: 4px;
+  }
+
+}
+
+
+/* Pages links styles */
+
+div.page_row {
+  display: flex;
+  margin: -@margin/2;
+  padding: @margin 0;
+  flex-wrap: wrap;
+  font-size: 12px;
+  justify-content: end;
+  float: right;
+  > * {
+    margin: @margin/2;
+  }
+}
+
+a.page_link:extend(.btn all) {
+  background-color: @clYellow;
+  color: @clBlack;
+  border-radius: 50vh;
+}
+
+
+span.current_page {
+  background-color: @clRed;
+  color: @clWhite;
+  padding: 0px @margin/2;
+  text-align: center;
+  min-width: @buttonHeight;
+  height: @buttonHeight;
+  line-height: @buttonHeight;
+  border-radius: 50vh;
+}
+
+span.page_hole {
+  margin: 0px 8px 8px 0px;
+}
+
+
+
+/* Footer styles */
+
+div.footer {
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMarginV;
+  border-top: 8px solid @clLightGray;
+
+  padding: @margin;
+  line-height: 1rem;
+
+  background-color: @clDarkGray;
+  color: @clWhite;
+
+  font-size: 0.9 * @FontSize;
+  clear: both;
+
+  p {
+    margin: 4px 0px 0px 0px;
+  }
+
+  a {
+    font-weight: bold;
+    color: @clYellow;
+  }
+}
+
+div.attribution {
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
+  padding: 4px 0px;
+}
+
+
+
+/* error messages screen */
+
+div.message_block {
+  font-size: 1.2*@FontSize;
+  width: @msgBoxWidth;
+  background: @clWhite;
+  color: @clBlack;
+  margin: @margin auto;
+  text-align: center;
+  padding: 3*@margin;
+  clear: both;
+
+  h1 {
+      text-align: center;
+      font-size: 1.5*@FontSize;
+      font-variant: small-caps;
+      margin: 0px;
+  }
+
+  a:extend(.btn all) {
+    background-color: @clYellow;
+    color: @clBlack;
+  }
+}
+
+div.message {
+  white-space: pre-wrap;
+  padding: 64px;
+  margin: 0px auto;
+  text-align: left;
+  color: @clBlack;
+  display: inline-block;
+}

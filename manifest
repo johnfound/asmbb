@@ -1,5 +1,5 @@
-C Implemented\ssqlite\sfunction\sfuzzytime()\sfor\sinteligent\sconversion\sof\sunix\stime\sto\sstring,\srelative\sto\sthe\spresent\smoment.
-D 2020-04-13T13:28:30.664
+C Some\sdeep\srework\sof\sthe\sWasp\sforum\sskin.\sIt\sis\sin\sfact\snew\sskin\sfrom\sscratch.
+D 2020-04-15T06:09:35.990
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -41,7 +41,7 @@ F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm 03059f73a6c143fa5400098b6018f82118b2c146
-F source/engine.fpr f71c53cc455cfab00ffc2c18b15d30504df36896
+F source/engine.fpr 01dc6a21ba52d8de6e84f926e6d0a2f6c0570489
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 76ca249396c7271ac8876d97e39a169f0eb89d91
@@ -689,6 +689,122 @@ F www/templates/Wasp/users_online.less 910547b8d9853b50a4a1aca66e2e5995ed78c5b4
 F www/templates/Wasp/userslist.less 9dae27c4e52c68f3351549034bdd7f9754bce069
 F www/templates/Wasp/userslist_ftr.tpl cdf4bf8f51f450a842d85ab41a089e05a2e12f73
 F www/templates/Wasp/userslist_hdr.tpl 79c5b28322e9c0f587ed0f81ac451fe12d38235f
+F www/templates/Wasp2/_images/_source/alltags.svg 54cc9a54bfb1155f6219007c2aa430febf96e4ce
+F www/templates/Wasp2/_images/_source/chat.svg 411380cf5f635d1e911789a04e6b32e3f49d6997
+F www/templates/Wasp2/_images/_source/chat2.svg 51afd77b1a81f8a446df6abd6ffc33c14ebda8a3
+F www/templates/Wasp2/_images/_source/close2.svg a453f088f41598a22f1ba04fc00cace8cdb66ad9
+F www/templates/Wasp2/_images/_source/close3.svg ca8377d61a7a7a1c40665c4cb08e181fde72157c
+F www/templates/Wasp2/_images/_source/del.svg 386a3cd2c36aa5d7250637f22ea6401066a3e2ca
+F www/templates/Wasp2/_images/_source/drop-down2.svg 2c7baef041ff421274111036ba1692b226677ee8
+F www/templates/Wasp2/_images/_source/drop-down3.svg e4beabbc9d2fc6fbfd6956f971fce915bfa19f1a
+F www/templates/Wasp2/_images/_source/edit.svg 04ffdad78af310ac6e0c8323052ff22cf67487e9
+F www/templates/Wasp2/_images/_source/megaphone2.svg efc2b1290f6b21909e72213e4ecaebededbd085a
+F www/templates/Wasp2/_images/_source/new-post.svg d85faee513632b9435c60e3873cd5db3cdb5ee8d
+F www/templates/Wasp2/_images/_source/rss.svg 212ef22f50c1926c9e17c43ffd79455827eac4b9
+F www/templates/Wasp2/_images/_source/rss2.svg 9e8a33f52ae2cd159cdb765ea134f02a94593aaa
+F www/templates/Wasp2/_images/_source/rss3.svg 2f2feeb3db8dcf3284610354e01870f5cc3e2e6e
+F www/templates/Wasp2/_images/_source/search.svg 2dd775851877f8bcebe67f6cdf0dca1d54229b3d
+F www/templates/Wasp2/_images/_source/search2.svg c04c298fdc97e59d1e6955252011ede98ffa5110
+F www/templates/Wasp2/_images/_source/send_msg.svg f6f8ed474f9e0c97c4baed62edddd485a86366a5
+F www/templates/Wasp2/_images/_source/tag.svg b074e23c3f58df0fcfe89d3d4039c21f537e82d7
+F www/templates/Wasp2/_images/anon.png bcc2d2595b3565f6d3b0c2bebf1a63d26f924084
+F www/templates/Wasp2/_images/chatemoticons 92b583a5a5e7d203c807f62b3733d6e731355681 l
+F www/templates/Wasp2/_images/emoticons 6f2fb8dfd71252d2cdbe7b9b1d330c5859872e31 l
+F www/templates/Wasp2/activation_email_subject.tpl e0bd685144e72197dd0034b068e82d7604f926d2 l
+F www/templates/Wasp2/activation_email_text.tpl 50d1d6b7fe42736e334ab6870d7cc72e9085889d l
+F www/templates/Wasp2/activity0.tpl 66800be0587fffe32c9acf83029cb8fc7ac74332 l
+F www/templates/Wasp2/activity1.tpl 6fa6f00fea84fee0253d4707881c9a5338feb90f l
+F www/templates/Wasp2/activity10.tpl bc1c313b326ae3ea9f440b0f607cfd0f8ce482d6 l
+F www/templates/Wasp2/activity11.tpl 3a1ef0a6e3383b59f0e17e7bff76186ed93336b5 l
+F www/templates/Wasp2/activity12.tpl 490dd079393fc2a2180dd0cc5f7f9581fee448dd l
+F www/templates/Wasp2/activity13.tpl e5c3c56a5acdf56383fd3e5710c342444a30b61c l
+F www/templates/Wasp2/activity14.tpl 8012d3a8f8147ef4ea446c49fe994f4e0f0e0b38 l
+F www/templates/Wasp2/activity15.tpl 955d52b0160283783778a2e3af17125bc2c9ee8e l
+F www/templates/Wasp2/activity16.tpl c3bb31fa19e15df415b7e7d6f942dad1e80c70c7 l
+F www/templates/Wasp2/activity17.tpl 1229faf8484fa7878c0ff385af534d94b012cf9a l
+F www/templates/Wasp2/activity18.tpl a43359d158536a3a4a0deaa8e8ae9a86f34ee375 l
+F www/templates/Wasp2/activity19.tpl 3f8eb4a66305ccfaecc07e39d0305fa521c4910d l
+F www/templates/Wasp2/activity2.tpl 0c02bfb196ad6955c2e9bdfc53e313d15d32a6f6 l
+F www/templates/Wasp2/activity20.tpl 808359fdf3e47466adc8208357d29467310e1947 l
+F www/templates/Wasp2/activity3.tpl d076539803d955db90cc721ad51644f7c7d4bb70 l
+F www/templates/Wasp2/activity4.tpl 6a7b65a1f69740098b92dfee5e56d9420a3d0980 l
+F www/templates/Wasp2/activity5.tpl a0f664d4ee44680703ed8dc5cf30c1046b21dea0 l
+F www/templates/Wasp2/activity6.tpl b5c8a9fbc2efa2eac931ea024f5d78047618cfc5 l
+F www/templates/Wasp2/activity7.tpl 606eb1ee82da0767dd85e3d2ac63a07e9874a5fb l
+F www/templates/Wasp2/activity8.tpl 36d833a0164bb74532e88161cff3d7c8d05cef52 l
+F www/templates/Wasp2/activity9.tpl 60fe5018f101f822fa00434bff49db7a3f7da947 l
+F www/templates/Wasp2/atom_entry_post.tpl a36d3dd1e06725015323056b09bdc1492aa6a0cc
+F www/templates/Wasp2/atom_entry_thread.tpl ab6e308c142262fa4a7ff9bb98d03a67168ffe39
+F www/templates/Wasp2/atom_start.tpl 93d0cec7a6c29045e0e4bd631eace12699a80aa7
+F www/templates/Wasp2/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
+F www/templates/Wasp2/chat.js ca9a0a7be865689ffc414f26cbb28b378076c50a
+F www/templates/Wasp2/chat.less a4c64381f5ef14741bb249a4678573cbea899f83
+F www/templates/Wasp2/chat.tpl 764aadf2e34a8c0fabf7b70fe8746594c10665ae
+F www/templates/Wasp2/common.less e37fec1a27ccb4c59060d5ff6cfc59750029c9d5
+F www/templates/Wasp2/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
+F www/templates/Wasp2/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001
+F www/templates/Wasp2/debug.less 028000816d3504bdb2cf7c9813bbb3300aa2fdc5
+F www/templates/Wasp2/del_confirm.tpl 26b8239d78b69cd5fbe206ea12ccb96890aac030
+F www/templates/Wasp2/delete.less 253a0f549e132a9d55ae56fe399a8929eabb4a29
+F www/templates/Wasp2/edit.json a2aaf0ee51695178d59b589c95b0d9bc63cd5c02
+F www/templates/Wasp2/edit_toolbar.tpl 592b433d01901590ad32ade1e925bb599ce2ad73
+F www/templates/Wasp2/editor.less a10e7a93ebc53c9612c385f149e70e7fe2683327
+F www/templates/Wasp2/error.less 43f5b23eace778d249411d453321ec6d16d4f306
+F www/templates/Wasp2/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
+F www/templates/Wasp2/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
+F www/templates/Wasp2/form_edit.tpl 960e2204cb967b3c2b7af8c1e66019db5a812b17
+F www/templates/Wasp2/form_edit_thread.tpl eacb39e161ed4bf47fbe8bb0690a4e01b34f3162
+F www/templates/Wasp2/form_editinfo.tpl fa7867c7017da5f81c5424c209a44a1feccf0dd3
+F www/templates/Wasp2/form_login.tpl 9d2c28ae6dc5b44de5ca20d9734402b34ce697a4
+F www/templates/Wasp2/form_new_post.tpl 00b9572e505ce6b8b675b45ac09f05bc0a8090cd
+F www/templates/Wasp2/form_new_thread.tpl 6e5f82f34c601e89e2f20f37020e55797b2ffe6e
+F www/templates/Wasp2/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
+F www/templates/Wasp2/form_register.tpl 25cdeffa395f90e248b383ee85390f9395cef8d3
+F www/templates/Wasp2/form_reset_password.tpl 4b1ca1f5cdf5bb2ea7f0620722393e8324a97fa0
+F www/templates/Wasp2/form_reset_request.tpl 45298eaa3544ec492eb9ca6e4f482fe30378a0e0
+F www/templates/Wasp2/form_settings.tpl 612512789ee83766bf093cf5bea7f5fc4e3d4244
+F www/templates/Wasp2/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
+F www/templates/Wasp2/form_sqlite_console.tpl 7c492fd0663a1f999e88186f0af74f87bcd04a25
+F www/templates/Wasp2/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
+F www/templates/Wasp2/highlight/highlight.pack.js b10cabc894fbdfcd7dc74151c1f1971330dc0a16
+F www/templates/Wasp2/login.less b854c20c711dffeec158f044c59cbcf72a3161d5
+F www/templates/Wasp2/main_html_end.tpl 53de7f6314a3460448c7d8988eb132d82b2d763c
+F www/templates/Wasp2/main_html_start.tpl 93a14eb403e561b642a111858254dcaa38e3af0e
+F www/templates/Wasp2/markdown.less 48b5ff9153633b11bf862a276754a999213874cc
+F www/templates/Wasp2/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
+F www/templates/Wasp2/nav_categories.tpl b4f0c9ebd842cdfda41d648e39b367fb3956c380
+F www/templates/Wasp2/nav_history.tpl 7d7b20a16288e53f745d28fe97cf43244b9bb29d
+F www/templates/Wasp2/nav_list.tpl 24f44ba21463886672e432f061ce272832d50efa
+F www/templates/Wasp2/nav_search.tpl 94348341523bd79e3919d36b9a7072ca1da82e27
+F www/templates/Wasp2/nav_thread.tpl 77cb9fc2748a0d8f6df447eda6144937c7f1b3cf
+F www/templates/Wasp2/nav_userslist.tpl b25e53dad0dab74e40c295c207593dd929900c06
+F www/templates/Wasp2/navigation.less 27e66e41b15b8874e7d33559ee60f696a8639911
+F www/templates/Wasp2/one_category.tpl 1bfa8a3a4b0b646aac5bc485ce7e0428fe2c1e56
+F www/templates/Wasp2/one_user.tpl 66e01f838cd2fd5ed9d9c623bd68a0bf0e9de135
+F www/templates/Wasp2/post_history.tpl 2b467681d5502151d0e4fee49678ae7216009d2f
+F www/templates/Wasp2/post_view.tpl 415c508d0d27b8ff6cdcc10482183bca765b6b8a
+F www/templates/Wasp2/posteditor.less f990d5a9034599e43c3e72471622db9b89f62c43
+F www/templates/Wasp2/postnew.less ddc68e487d815f8cd6aa3ebfc23d1f71bffa3daa
+F www/templates/Wasp2/posts.less ac657bd93dae5704d7d713dbfbf69cde7796c1c8
+F www/templates/Wasp2/preview.tpl 7762cf404ea93817b3121932c29a7cac0502c135
+F www/templates/Wasp2/realtime.js f4324b343a5044390f52d7370c5ac8c733bc0dae
+F www/templates/Wasp2/restore_confirm.tpl 51628410ec4a3753bc384fd0c733e059aba965c4
+F www/templates/Wasp2/search.less b34f1251689d901618c53115ac9c25a2c75f094a
+F www/templates/Wasp2/search_result.tpl 436d969e5b83d331581f8c0db368cab14d9be8e9
+F www/templates/Wasp2/settings.less 852814ef864c296a22a6872e8e9bf76cf9d77213
+F www/templates/Wasp2/skin_variables.lsi b7b0865684454e3f2bc25a7eaf41674a872b14a2
+F www/templates/Wasp2/sqlite.less f4a2edc06c2c1410f5d78ad1ea298439251482af
+F www/templates/Wasp2/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e3c7067
+F www/templates/Wasp2/thread_info.tpl 80f11ce4d992dc36bbc5a0ae6243c8a60858889e
+F www/templates/Wasp2/thread_list.less 3829a72d412ea222e1b375287009508233f5f44e
+F www/templates/Wasp2/threadnew.less d8f5611926584527dfeb2413612be8f97cc0c66f
+F www/templates/Wasp2/toaster.less 09f95cd572a30427e80a980b0e6d6f615564326a
+F www/templates/Wasp2/userinfo.less 19048398c5cf99ef6abbd5d576bafa8f3d0eb89e
+F www/templates/Wasp2/userinfo.tpl 2faf9364061afbec798d8875ed90000bb531bd0b
+F www/templates/Wasp2/users_online.less 910547b8d9853b50a4a1aca66e2e5995ed78c5b4
+F www/templates/Wasp2/userslist.less 9dae27c4e52c68f3351549034bdd7f9754bce069
+F www/templates/Wasp2/userslist_ftr.tpl cdf4bf8f51f450a842d85ab41a089e05a2e12f73
+F www/templates/Wasp2/userslist_hdr.tpl 79c5b28322e9c0f587ed0f81ac451fe12d38235f
 F www/templates/build_styles.sh 1a54085ad5672bc6480e1d67922946a504c8e966 x
 F www/templates/create_tar.sh f24038eaf60e641cfbcac98b217245cee134d27c x
 F www/templates/mobile/_images 70c26c9bd422a7e59f2dca80d02ec99f39b390fb l
@@ -786,7 +902,10 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 970123c099b66f1bb581fa4c14584b5320729816 x
-P 59db740b88417d3fe3c2724d5c62ab26c5fa75fa
-R a3944f8d98de9476354f384c5161983b
+P e9a1aa146ae9b319b24f9298ac80c36915434f50
+R 08ed210b589470bffb7e87489a3b072f
+T *branch * Wasp2skin
+T *sym-Wasp2skin *
+T -sym-trunk *
 U johnfound
-Z 35f470ac1a7a00cd9fefafb7b7f95799
+Z 71a70ae39946facc96ab2679c933a346

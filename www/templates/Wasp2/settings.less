@@ -1,0 +1,159 @@
+@import "skin_variables.lsi";
+
+/* settings form styles */
+
+div.set_page {
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: @globMargin;
+  overflow: auto;
+  padding: 16px;
+}
+
+.msgbox {
+  max-width: @msgBoxWidth;
+  width: 100%;
+  padding: 2*@margin;
+  background-color: @clDarkGray;
+  color: @clWhite;
+  margin: @margin auto;
+
+  .btn {
+    background-color: @clYellow;
+    color: @clBlack;
+  }
+}
+
+
+form.settings {
+  h1 {
+    margin-top: 0;
+    margin-bottom: 2*@margin;
+    padding: @margin/2;
+
+    color: @clRed;
+    background-color: @clWhite;
+    font-size: 1.2*@FontSize;
+    font-variant: small-caps;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 120%;
+    color: @clBlack;
+  }
+
+  h3 {
+    font-size: @FontSize;
+    font-weight: normal;
+    margin: 8px 0px 0px 0px;
+    color: inherit;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0px;
+    width: 100%;
+    margin-top: 8px;
+
+    td {
+      text-align: left;
+      vertical-align: top;
+      white-space: nowrap;
+      padding: 2px 0;
+    }
+  }
+
+  .tabbed-panel {
+    margin: 2*@margin 0;
+    section {
+      height: 480px;
+      overflow: auto;
+    }
+  }
+}
+
+
+input.settings, select.settings {
+  height: @buttonHeight + 4px;
+  font-size: @FontSize;
+  padding: 0px 8px;
+  outline: none;
+  margin: 4px 0px;
+  border: 2px solid @clGray;
+
+  background-color: @clWhite;
+  color: @clBlack;
+  width: 100%;
+  &:focus {
+    border: 2px solid @clYellow;
+  }
+}
+
+textarea.settings {
+  width: 100%;
+  white-space: pre;
+  resize: vertical;
+  padding: @margin/2;
+  border: 2px solid @clGray;
+  &:focus {
+    border: 2px solid @clYellow;
+  }
+}
+
+
+h1.msg {
+  position: fixed;
+  margin: 0px;
+  padding: 8px;
+  text-align: center;
+  display: block;
+  left: 16px;
+  top: 16px;
+  right: 16px;
+}
+
+.info {
+  background-color: @clMsgInfoBG;
+  color: @clMsgInfoFG;
+  transition: all 1s;
+  -webkit-transition: all 1s;
+}
+
+.error {
+  background-color: @clMsgErrorBG;
+  color: @clMsgErrorFG;
+  transition: all 3s;
+  -webkit-transition: all 3s;
+}
+
+.warning {
+  background-color: @clMsgWarningBG;
+  color: @clMsgWarningFG;
+}
+
+
+.checkbox > input[type=checkbox] + label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    color: @clBlack;
+}
+
+
+.checkboxes {
+  column-count: 2;
+  li {
+    list-style: none;
+  }
+}
+
+article {
+  color: @clBlack;
+}
+
+
+
+
+

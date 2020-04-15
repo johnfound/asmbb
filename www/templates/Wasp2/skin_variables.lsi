@@ -1,0 +1,137 @@
+@FontMain:      Noto Sans, Liberation Sans,Arial,Helvetica,sans-serif;
+@FontMonospace: Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace;
+@FontSize:      14px;
+@FontSizeMono:  13px;
+
+@FontHeader: "Noto Sans ExtraBold", "Arial Black", "Helvetica Black", sans-serif;
+
+@sideWidth: 2*@buttonHeight + 4*@margin;
+@globWidth: ~"calc( 100% - @{sideWidth} )";
+@globMaxWidth: 1280px;
+@globMargin: 0 auto;
+@globMarginV: @margin auto;
+
+@margin: 8px;
+@radius: 0px;
+
+@msgBoxWidth: 800px;
+
+@clYellow: #ffcc40;
+@clRed: #e05050;
+@clLightRed: #ff656c;
+
+@clBlack: #000000;
+@clDarkGray: #505050;
+@clDarkOnDark: #606060;
+@clMiddleGray: #808080;
+@clGray: #c0c0c0;
+@clLightGray: #eeeeee;
+@clWhite: #ffffff;
+@clViolet: #ff80FF;
+
+
+@buttonHeight: 24px;
+
+
+
+
+
+
+
+
+
+
+@clColor1: #ffcc40;
+@clColor1FG: #ffcc40;
+
+@clHeader: #404040;
+@clHeaderShadow: #d80027;
+@paddingFooter: 8px;
+
+@clCurrentTagBG: #ffcc40;
+@clCurrentTagFG: black;
+
+@paddingTags: 4px;
+@paddingOneTag: 4px;
+@marginOneTag: 0px;
+@borderRadTags: 0px;
+@borderTags: none;
+
+@clThreadLink: black;
+
+@clFakeUser: #ff80FF;
+@clBodyBG: #d0d0d0;
+@clBodyFG: black;
+@clDarkBG: #404040;
+@clDarkFG: white;
+
+@borderEdit: none;
+
+@clArticleBG: white;
+@clArticleFG: black;
+
+@clFormBG: #808080;
+@clFormFG: white;
+@clDisabledBG: #e0e0e0;
+@clDisabledFG: #404040;
+
+@clEditorBG: white;
+@clEditorFG: black;
+@clReadOnlyBG: #e0e0e0;
+@clReadOnlyFG: black;
+
+@bgEditor: @clEditorBG 12px -10px ~"/" 24px 120px no-repeat;
+@bgEditorFocus: @clEditorBG 12px -70px ~"/" 24px 120px no-repeat;
+
+@clButtonBG: #e05050;
+@clButtonFG: white;
+@buttonWidth: 160px;
+
+@clButtonActiveBG: #ff656c;
+@clButtonActiveFG: white;
+@borderButton: none;
+@borderButtonActive: none;
+@borderNavRad: 0px;
+@paddingNav: 0px 8px;
+
+@clSeparator: #404040;
+@borderQuote: 2px solid @clSeparator;
+@clQuoteTitle: #808080;
+
+@clAvatarBG: #ffcc40;
+@clAvatarFG: #606060;
+
+@clPostInfoBG: #ffcc40;
+@clPostInfoFG: black;
+
+
+
+@clMsgInfoBG: green;
+@clMsgInfoFG: white;
+
+@clMsgErrorBG: red;
+@clMsgErrorFG: white;
+
+@clMsgWarningBG: yellow;
+@clMsgWarningFG: red;
+
+@pinnedWidth: 16px;
+@pinnedHeight: 16px;
+
+@clPinnedTxt: #e05050;
+
+// Tabbed pages styles:
+
+@clTabBG: #404040;
+@clTabFG: #ffffff;
+@clTabHover: #d8d8d8;
+@clTabFocus: #e05050;
+
+// User notifications
+
+@clNotifyBG: white;
+@clNotifyFG: red;
+
+@clActivityBG: #404040;
+@clActivityFG: white;
+@clActivityLink: #ffcc40;

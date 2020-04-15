@@ -1,0 +1,151 @@
+@import "skin_variables.lsi";
+
+/* Main user interface toolbar */
+
+div.ui {
+  width: 100%;
+  margin: 8px 0px 8px 0px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  align-items: center;
+  overflow: visible;
+}
+
+div.alone {
+  width: @globWidth;
+  max-width: @globMaxWidth;
+  margin: 8px auto 0px auto;
+  overflow: visible;
+}
+
+a.ui {
+  display: inline-block;
+  padding: 4px;
+  background-color: @clButtonBG;
+  color: @clButtonFG;
+  text-decoration: none;
+  border-radius: @borderNavRad;
+  flex-shrink: 0;
+  position: relative;
+  vertical-align: middle;
+  img {
+    display: block;
+    margin: 4px;
+  }
+}
+
+
+a.ui3 {
+  display: inline-block;
+  position: relative;
+  padding: 4px;
+  color: @clBodyFG;
+  border: 1px dotted @clButtonBG;
+  text-decoration: none;
+  border-radius: @borderNavRad;
+  flex-shrink: 0;
+}
+
+a.left {
+  margin-right: 8px;
+}
+
+a.right {
+  margin-left: 8px;
+}
+
+
+a.ui2 {
+  display: inline-block;
+  position: relative;
+  padding-top: 4px;
+  color: @clButtonBG;
+  flex-shrink: 0;
+  margin-left: 8px;
+  img {
+    height: 18px;
+  }
+}
+
+a.ui:hover, a.ui:active {
+  background-color: @clButtonActiveBG !important;
+  color: @clButtonActiveFG !important;
+  border-radius: @borderNavRad;
+}
+
+
+/* Buttons in forms */
+
+div.panel {
+  margin: 8px 0px;
+
+
+  input, a {
+    height: @buttonHeight;
+    line-height: @buttonHeight;
+
+    border: @borderButton;
+    border-radius: @borderNavRad;
+    padding: @paddingNav;
+    text-decoration: none;
+
+    background-color: @clButtonBG;
+    color: @clButtonFG;
+    display: inline-block;
+  }
+
+  input:active, input:focus, input:hover, a:active, a:hover, a:focus {
+    border: @borderButtonActive;
+    background-color: @clButtonActiveBG;
+    color: @clButtonActiveFG;
+  }
+}
+
+
+div.popup {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  width: @msgBoxWidth;
+  overflow: auto;
+
+  margin: 0px 16px 0px 0px;
+  padding: 16px;
+  background: @clDisabledBG;
+  color: @clArticleFG;
+
+  font-size: 80%;
+
+  box-shadow: 2px 0px 8px black;
+
+  display: none;
+  opacity: 0;
+}
+
+label.popup {
+  margin: 0px !important;
+  padding: 0px !important;
+  width: 32px;
+  height: 32px;
+  background-size: 20px 20px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: @clButtonBG !important;
+  border-radius: @borderNavRad;
+  &:hover {
+    background-color: @clButtonActiveBG !important;
+  }
+}
+
+
+label.help {
+  background-image: url('[special:skin]/_images/help.svg') !important;
+}
+
+
+label.close {
+  float: right;
+  background-image: url('[special:skin]/_images/close.svg') !important;
+}

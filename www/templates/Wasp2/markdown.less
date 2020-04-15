@@ -1,0 +1,129 @@
+@import "skin_variables.lsi";
+
+/* minimag formatting styles */
+
+/* Headings */
+
+/* paragraph style */
+
+.post-text {
+  h1, h2, h3, h4, h5, h6 {margin: 1rem 0 1rem 0;}
+
+  h1 { font-size: 1.5rem;}
+  h2 { font-size: 1.4rem;}
+  h3 { font-size: 1.3rem;}
+  h4 { font-size: 1.2rem;}
+  h5 { font-size: 1.1rem;}
+  h6 { font-size: 1rem;}
+
+  span.underlined {text-decoration: underline;}
+
+  p {
+    text-align: justify;
+    margin-top: 0.75em;
+    margin-bottom: 0.75em;
+    word-wrap: anywhere;
+    hyphens: auto;
+  }
+
+  ol, ul { padding-left: 4ch;}
+
+  li {
+    margin: 0.5em 0 0.5em 0;
+    list-style-position: outside;
+  }
+
+  /* source code */
+  code {
+    display: inline;
+    font-family: @FontMonospace;
+    font-size: @FontSizeMono;
+
+    word-break: break-all;
+    white-space: pre-wrap;
+
+    &.block {
+      display: block;
+      text-align: left;
+      padding: @margin;
+      margin: 2*@margin 0;
+      overflow: auto;
+
+      white-space: pre;
+      clear: both;
+
+      background-color: @clLightGray;
+      color: black;
+
+      border-left: 4px solid @clRed;
+    }
+  }
+
+  /* Style of the text included image. */
+
+  img.inline {
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    margin: 0px 4px;
+  }
+
+  img.block {
+    border-style: none;
+    border-width: 0px;
+    margin: 8px auto;
+    display: block;
+    max-width: 95%;
+  }
+
+
+/* article tables */
+
+  table {
+    border: 1px solid @clGray;
+    margin: 0.2em auto;
+    background-color: @clWhite;
+    border-collapse: collapse;
+
+    td, th {
+      font-size: 1rem;
+      border: 1px solid @clGray;
+      padding: 0.1em 0.2em;
+      margin: 0;
+    }
+  }
+
+/* block quotes */
+
+  blockquote {
+    border: 1px solid @clGray;
+    box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.2);
+    padding: 0.75em 0.7em 0.1em 1em;
+    margin:  2.5em;
+
+    background-color: @clWhite;
+    clear: both;
+    header {
+      margin-left: 0em;
+      margin-top: -2em;
+      padding: 0.2em 0.3em 0.2em 0.3em;
+
+      border: 1px solid @clGray;
+
+      box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.2);
+      background: @clWhite;
+      color: @clDarkGray;
+
+      font-size: 1em;
+      font-weight: normal;
+
+      float: left;
+      clear: both;
+
+      white-space: nowrap;
+      max-width: 100%;
+      overflow: hidden;
+    }
+  }
+}
+

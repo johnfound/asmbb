@@ -1,0 +1,103 @@
+@import "skin_variables.lsi";
+
+div.thread {
+  width: 95%;
+  max-width: 1280px;
+  margin: auto;
+}
+
+div.post {
+  position: relative;
+  margin-top: 8px;
+}
+
+div.search_info {
+  float: left;
+  position: absolute;
+  width: 184px;
+  width: calc(200px - 0px);
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  padding: 8px;
+
+  background-color: @clDarkBG;
+  color: @clDarkFG;
+}
+
+div.post_thread {
+  margin-left: 200px;
+  padding: 8px;
+  background-color: @clColor1;
+  font-size: 12px;
+
+  a {
+    font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 80%;
+  }
+}
+
+img.unread {
+  display: inline;
+  margin-right: 8px;
+  vertical-align: middle;
+  flex-shrink:0;
+}
+
+a.user_name {
+  display: inline;
+  padding-top: 4px;
+  color: @clColor1FG;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+img.smallavatar {
+  margin: 16px auto 0px auto;
+  width: 64px;
+  height: 64px;
+  display: block;
+  background-color: @clAvatarBG;
+  color: @clAvatarFG;
+  text-align: center;
+  font-size: 32px;
+}
+
+
+div.post_sum {
+  border-left: solid 200px #404040;
+  padding: 4px 4px 4px 8px;
+  background-color: white;
+
+  pre {
+    font-family: 'Source Code Pro', monospace;
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+
+
+div.post_link {
+  padding: 4px;
+  text-align: right;
+  font-size: 18px;
+  min-height: 64px;
+}
+
+
+div.changed {
+  font-size: 80%;
+  position: absolute;
+  bottom: 8px;
+  margin-top: 8px;
+
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  background-image: url("[special:skin]/_images/edited.svg");
+  text-indent: 20px;
+  min-height: 16px;
+}
