@@ -1,5 +1,5 @@
-C Make\shighlight.js\sreadable.\sAdd,\shighlight.less\sfile.\sUse\sthem\sin\sthe\stheme.
-D 2020-04-15T08:56:08.399
+C SQLite\sconsole,\sbetter\slook&feel.
+D 2020-04-15T11:54:14.576
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -41,7 +41,7 @@ F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm 03059f73a6c143fa5400098b6018f82118b2c146
-F source/engine.fpr c8df1ee5413e8cd20ff8f66be79f31f95ffb9589
+F source/engine.fpr 3d0156eccd2a9ea33adeb8b11149ac1ff78591c4
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 76ca249396c7271ac8876d97e39a169f0eb89d91
@@ -77,7 +77,7 @@ F source/settings.sql 066cc77197d5fae94fb27c2bd72aabb2c4b85d8a
 F source/showthread.asm 33e50b8f1b735f3aed0a83aecc7beb3a96b3c442
 F source/showthread.sql 1ee08ed9c69a07ca5c60fc639e73333405e14d37
 F source/sqlite3.asm df3a5ea387f60d719fd83c33411b8151ad1a6d77
-F source/sqlite_console.asm bc62f0c681b219f795dbdc9b71c78fda228eb7c0
+F source/sqlite_console.asm 0090f97aebfd05dec748b3b98e7d43fba65b0064
 F source/sse_service.asm cb9ecc7aa219631e30f7c9a77f0c7cbc23a96a20
 F source/statistics.asm 8574bead31291bdaf459a032659cb41bc34883d3
 F source/statistics.sql b854e249807878dcd87c5e16dde801114639308c
@@ -764,9 +764,9 @@ F www/templates/Wasp2/form_reset_password.tpl 4b1ca1f5cdf5bb2ea7f0620722393e8324
 F www/templates/Wasp2/form_reset_request.tpl 45298eaa3544ec492eb9ca6e4f482fe30378a0e0
 F www/templates/Wasp2/form_settings.tpl 612512789ee83766bf093cf5bea7f5fc4e3d4244
 F www/templates/Wasp2/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
-F www/templates/Wasp2/form_sqlite_console.tpl 7c492fd0663a1f999e88186f0af74f87bcd04a25
+F www/templates/Wasp2/form_sqlite_console.tpl f7c8c2569c00e83dc7915748e51ea7a462b0e0c3
 F www/templates/Wasp2/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
-F www/templates/Wasp2/highlight.js b4a380fb43186d51a405fb185067120657f243f2 w www/templates/Wasp2/highlight/highlight.pack.js
+F www/templates/Wasp2/highlight.js b4a380fb43186d51a405fb185067120657f243f2
 F www/templates/Wasp2/highlight.less fba68624d1b34a5543fe0bf4b2af2ac1ddf65e74
 F www/templates/Wasp2/login.less b854c20c711dffeec158f044c59cbcf72a3161d5
 F www/templates/Wasp2/main_html_end.tpl 53de7f6314a3460448c7d8988eb132d82b2d763c
@@ -794,7 +794,7 @@ F www/templates/Wasp2/search.less b34f1251689d901618c53115ac9c25a2c75f094a
 F www/templates/Wasp2/search_result.tpl 436d969e5b83d331581f8c0db368cab14d9be8e9
 F www/templates/Wasp2/settings.less 852814ef864c296a22a6872e8e9bf76cf9d77213
 F www/templates/Wasp2/skin_variables.lsi b7b0865684454e3f2bc25a7eaf41674a872b14a2
-F www/templates/Wasp2/sqlite.less f4a2edc06c2c1410f5d78ad1ea298439251482af
+F www/templates/Wasp2/sqlite.less ba9c6b8dc43c8bd50780787230fd41d91be3610c
 F www/templates/Wasp2/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e3c7067
 F www/templates/Wasp2/thread_info.tpl 80f11ce4d992dc36bbc5a0ae6243c8a60858889e
 F www/templates/Wasp2/thread_list.less 3829a72d412ea222e1b375287009508233f5f44e
@@ -903,7 +903,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 970123c099b66f1bb581fa4c14584b5320729816 x
-P 02f1854471cddebab7930dfa5f635dc72fc214ff
-R 3f9801d62cdd4c884f0634914a8cf0a0
+P f1de37540e4153b4f3a8a44e0553122a94c68922
+R ca3ad655dd92b2fa1058be2787681b82
 U johnfound
-Z f9acf9af2d755476b7ab5000d02d13a9
+Z aa118b25183b431be33b2554d8ed9771

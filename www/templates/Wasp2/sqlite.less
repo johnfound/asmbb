@@ -9,9 +9,14 @@ div.console {
   clear: both;
 
   p{
-    color: @clDarkFG;
+    color: @clWhite;
     font-weight: bold;
     margin: 0px 0px 4px 0px;
+  }
+
+  .btn {
+    background-color: @clYellow;
+    color: @clBlack;
   }
 }
 
@@ -19,24 +24,28 @@ div.console {
   position: relative;
   padding: 16px;
   margin: 8px 0px 0px 0px;
-  background-color: @clFormBG;
+  background-color: @clDarkGray;
+  display: block;
 }
 
-textarea.sql_editor {
-  display: inline-block;
+#source {
   width: 100%;
   height: 15em;
   padding: 4px;
-  margin-bottom: 8px;
-  margin-top: -1px;
-  border: @borderEdit;
+  margin-bottom: @margin;
   outline-style: none;
   overflow: auto;
   resize: vertical;
+  border: 2px solid @clWhite;
 
   font-family: @FontMonospace;
-  background-color: @clEditorBG;
-  color: @clEditorFG;
+  font-size: @FontSizeMono;
+  background-color: @clWhite;
+  color: @clBlack;
+
+  &:focus {
+    border: 2px solid @clYellow;
+  }
 }
 
 
@@ -45,7 +54,7 @@ div.sql_exec {
   max-width: @globMaxWidth;
   margin: @globMargin;
 
-  background-color: @clArticleBG;
+  background-color: @clWhite;
   padding: 8px;
   font-size: 13px;
 
@@ -58,27 +67,41 @@ div.sql_exec {
     margin: 8px 0 4px 0;
     overflow: auto;
     font-family: @FontMonospace;
-    font-size: 12px;
+    font-size: 10px;
   }
 }
 
 
 table.sql_rows {
-  border-collapse: collapse;
-  border: 2px solid black;
+  border-collapse: separate;
+  border-spacing: 0;
   width: 100%;
 
-  th {
-    border: 2px solid black;
-    padding: 4px;
-//    max-width: 300px;
-    text-align: center;
+  thead {
+    th {
+      position: sticky;
+      top: 0px;
+
+      border-top: 1px solid @clBlack;
+      border-bottom: 1px solid @clBlack;
+      border-right: 1px solid @clBlack;
+
+      padding: 4px;
+      text-align: center;
+      background-color: @clWhite;
+
+      &:first-child {
+        border-left: 1px solid @clBlack;
+      }
+    }
   }
 
   td {
+    border-bottom: 1px solid @clGray;
+    border-right: 1px solid @clGray;
+
     font-family: @FontMonospace;
-    font-size: 12px;
-    border: 2px solid gray;
+    font-size: 10px;
     padding: 4px;
     max-width: 400px;
     max-height: 400px;
@@ -86,60 +109,16 @@ table.sql_rows {
     vertical-align: top;
 
     white-space: pre-wrap;       /* css-3 */
-    word-wrap: break-word;       /* Internet Explorer 5.5+ */
     word-break: break-all;
-  }
 
-}
-
-div.toolbar {
-  display: flex;
-  margin-bottom: 8px;
-}
-
-
-input.title {
-  flex-grow: 1;
-  border: @borderEdit;
-  outline-style: none;
-  padding: 4px;
-
-  background-color: @clEditorBG;
-  color: @clEditorFG;
-}
-
-
-.button {
-  display: block;
-  flex-grow: 0;
-  flex-shrink: 0;
-  margin-left: 8px;
-  padding: 4px;
-
-  height: 32px;
-  min-width: 32px;
-  color: @clButtonFG;
-  text-align: center;
-
-  background-color: @clButtonBG;
-  border: (@buttonHeight - 32px)/2 solid @clButtonBG;
-
-  border-radius: @borderNavRad;
-  cursor: pointer;
-  &:hover {
-    background-color: @clButtonActiveBG;
-    border-color: @clButtonActiveBG;
-  }
-
-  img {
-    object-fit: none;
-    width: 24px;
-    height: 24px;
-    vertical-align: top;
+    &:first-child {
+      border-left: 1px solid @clGray;
+    }
   }
 }
+
 
 h5 {
   margin: 32px 0 0 0;
-  font-size: 13px;
+  font-size: 12px;
 }

@@ -221,7 +221,7 @@ begin
 
 ; first the table
 
-        stdcall TextCat, edi, '<table class="sql_rows"><tr>'
+        stdcall TextCat, edi, '<table class="sql_rows"><thead><tr>'
         mov     edi, edx
 
         cinvoke sqliteColumnCount, [.stmt]
@@ -248,7 +248,7 @@ begin
 
 .end_columns:
 
-        stdcall TextCat, edi, txt "</tr>"
+        stdcall TextCat, edi, txt "</tr></thead>"
         mov     edi, edx
 
 .row_loop:
