@@ -1,77 +1,90 @@
 @import "skin_variables.lsi";
 
-div.editor {
-  position: fixed;
-  right: 16px;
-  top: 16px;
-  width: 640px;
-  max-width: 60%;
-  overflow: hidden;
-  opacity: 0.5;
-  bottom: 16px;
-  resize: both;
-  background-color: @clFormBG;
-  display: flex;
-  flex-direction: column;
-}
+@media (orientation: landscape) {
+  body {
+    width: 50%;
+    margin: @margin @margin @margin auto !important;
+  }
 
-
-div.editor:hover {
-  opacity: 1;
-}
-
-#editform {
-  padding: 8px 16px;
-  background-color: @clFormBG;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-
-  p {
-    color: @clFormFG;
-    font-weight: bold;
-    margin: 0px 0px 4px 0px;
+  .editor {
+    width: ~"calc( 50% - 3*@{margin})";
+    left: @margin;
+    top: 0px;
+    bottom: @margin;
   }
 }
 
-#draghere {
-  background-color: @clSeparator;
-  padding: 2px;
-  margin: 0px 0px -8px 0px;
+
+@media (orientation: portrait) {
+  body {
+    height: 50vh;
+    margin: @margin @margin 50vh @margin !important;
+  }
+
+  .editor {
+    height: ~"calc( 50% - 4*@{margin})";
+    left: @margin;
+    right: @margin;
+    bottom: @margin;
+  }
 }
 
-h1.fakeedit {
-  border-style: none;
-  padding: 4px;
-  margin: 0px 0px 8px 0px;
 
-  background-color: @clDisabledBG;
-  color: @clDisabledFG;
-  font-weight: bold;
-  font-size: inherit;
+
+.editor {
+  color: @clWhite;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
 }
 
-textarea.editor {
-  width: 100%;
-  height: 20em;
-  flex-basis: 0;
-  padding: 4px;
-  margin: 0;
-  border: @borderEdit;
-  outline-style: none;
-  overflow: auto;
+
+.thread_editor {
+  color: @clBlack;
+  display: flex;
+  flex-direction: column;
+}
+
+
+#source {
   flex-grow: 1;
-  resize: none;
-
-  font-family: "Liberation Mono", "Courier New", monospaced;
-  background-color: @clEditorBG;
+  margin: @margin 0px;
+  resize: vertical;
+  padding: @margin/2;
 }
+
+#editform {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: auto;
+
+  input[type="text"], textarea {
+    border: 1px solid @clGray;
+  }
+
+  .notabs {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 2*@margin;
+
+    background-color: @clWhite;
+    color: @clBlack;
+
+    p {
+      font-weight: bold;
+      margin: @margin 0px @margin/2 0px;
+    }
+  }
+}
+
 
 input[type="file"] {
-  background-color: @clEditorBG;
-  color: @clEditorFG;
-  margin-bottom: 8px;
-  border: @borderEdit;
+  background-color: @clWhite;
+  color: @clBlack;
+  margin-bottom: @margin;
 }
 
 
@@ -81,4 +94,40 @@ input[type="file"] {
   table {
     width: 100%;
   }
+}
+
+
+.editgroup {
+  display: flex;
+  margin: @margin 0;
+  align-items: end;
+
+  & > * {
+    margin: 0px @margin/2;
+    &:first-child {
+      margin-left: 0px;
+    }
+    &:last-child {
+      margin-right: 0px;
+    }
+    p {
+      margin: @margin 0 @margin/2 0;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      margin: 0px !important;
+    }
+    textarea {
+      height: 15em;
+    }
+    flex-grow: 1;
+    & > * {
+      display: block;
+    }
+  }
+}
+
+.post {
+  flex-basis: auto !important;
 }

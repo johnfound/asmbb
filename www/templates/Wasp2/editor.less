@@ -4,27 +4,25 @@
 
 .editbtn {
   display: inline-block;
-  min-width: @buttonHeight;
-  margin: 4px;
-  color: @clButtonFG;
+  width: @buttonHeight;
+  height: @buttonHeight;
+  margin: 0;
   text-align: center;
 
-  background-color: @clButtonBG;
-  border: (@buttonHeight - @toolIconHeight)/2 solid @clButtonBG;
+  background-color: transparent;
+  padding: (@buttonHeight - @toolIconHeight)/2;
 
   border-radius: @borderNavRad;
   cursor: pointer;
   &:hover {
-    background-color: @clButtonActiveBG;
-    border-color: @clButtonActiveBG;
+    background-color: @clRed;
+    svg {
+      fill: @clBlack;
+    }
   }
 
-  img {
-    width: @toolIconHeight;
-    height: @toolIconHeight;
-    vertical-align: top;
-    background-image: url('[special:skin]/_images/toolbar.svg') !important;
-    background-size: cover;
+  svg {
+    fill: @clWhite;
   }
 }
 
