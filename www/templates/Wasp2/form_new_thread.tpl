@@ -16,6 +16,7 @@
   [equ:btnSubmit=Submit]
   [equ:hintPreview=Ctrl+Enter for preview]
   [equ:hintSubmit=Ctrl+S for submit]
+  [equ:ttlPost=Post content]
 |
   [equ:ttlTitle=Заглавие]
   [equ:phTitle=Заглавие на темата]
@@ -30,6 +31,7 @@
   [equ:btnSubmit=Запис]
   [equ:hintPreview=Ctrl+Enter за преглед]
   [equ:hintSubmit=Ctrl+S за запис]
+  [equ:ttlPost=Съобщение]
 |
   [equ:ttlTitle=Название темы]
   [equ:phTitle=Название темы]
@@ -44,6 +46,7 @@
   [equ:btnSubmit=Записать]
   [equ:hintPreview=Ctrl+Enter для предварительного просмотра]
   [equ:hintSubmit=Ctrl+S чтобы записать]
+  [equ:ttlPost=Текст сообщения]
 |
   [equ:ttlTitle=Titre]
   [equ:phTitle=Titre du sujet]
@@ -58,6 +61,7 @@
   [equ:btnSubmit=Poster]
   [equ:hintPreview=Ctrl+Entrée pour prévisualiser]
   [equ:hintSubmit=Ctrl+S pour soumettre]
+  [equ:ttlPost=Contenu du message]
 |
   [equ:ttlTitle=Titel]
   [equ:phTitle=Titel des Themas]
@@ -72,6 +76,7 @@
   [equ:btnSubmit=Absenden]
   [equ:hintPreview=Strg+Eingabe für eine Vorschau]
   [equ:hintSubmit=Strg+S zum Absenden]
+  [equ:ttlPost=Inhalt des Beitrags]
 ]
 
 <div class="editor">
@@ -81,7 +86,7 @@
       <input form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]" title="[const:hintSubmit]">
       <div class="spacer"></div>
       <a class="btn img-btn" href=".">
-        <svg version="1.1" width="14" height="14" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+        <svg version="1.1" width="12" height="12" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
            <rect transform="rotate(45)" x=".635" y="-1.53" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
            <rect transform="rotate(135)" x="-10.7" y="-12.8" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
         </svg>
@@ -106,12 +111,20 @@
           <input type="text" id="invited" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
         </div>
       </div>
-      [include:edit_toolbar.tpl]
-      <textarea name="source" id="source" placeholder="[const:phText]">[source]</textarea>
-      <div>
-        [case:[special:canupload]||<p>[const:ttlAttach]:</p><div class="attach">
-        <input type="file" placeholder="[const:phSelect]" name="attach" multiple="multiple" tabindex="-1"></div>]
+      <div class="editgroup">
+        <div>
+          [case:[special:canupload]||<p>[const:ttlAttach]:</p><div class="attach">
+          <div class="file-browse">
+            <label class="btn" for="attach">Browse</label>
+            <input type="file" placeholder="[const:phSelect]" id="attach" name="attach" multiple="multiple"><button>Test</button></imput></div>]
+          </div>
+        </div>
       </div>
+
+      [include:edit_toolbar.tpl]
+
+      <p>[const:ttlPost]:</p>
+      <textarea name="source" id="source" placeholder="[const:phText]">[source]</textarea>
       <div class="attachments">
         [attach_edit:[id]]
       </div>

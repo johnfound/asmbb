@@ -3,21 +3,17 @@
 @toolIconHeight: 20px;
 
 .editbtn {
-  display: inline-block;
+  display: inline-flex;
   width: @buttonHeight;
   height: @buttonHeight;
-  margin: 0;
-  text-align: center;
+  align-items: center;
+  justify-content: center;
 
-  background-color: transparent;
-  padding: (@buttonHeight - @toolIconHeight)/2;
-
-  border-radius: @borderNavRad;
   cursor: pointer;
   &:hover {
     background-color: @clRed;
     svg {
-      fill: @clBlack;
+      fill: @clWhite;
     }
   }
 
@@ -27,29 +23,10 @@
 }
 
 
-.icon_bold      { background-position: -0 * @toolIconHeight 0; font-weight: bold;  }
-.icon_italic    { background-position: -1 * @toolIconHeight 0; font-style: italic; }
-.icon_underline { background-position: -2 * @toolIconHeight 0; text-decoration: underline; }
-.icon_strike    { background-position: -3 * @toolIconHeight 0; text-decoration: line-through; }
-.icon_code      { background-position: -4 * @toolIconHeight 0; }
-.icon_link      { background-position: -5 * @toolIconHeight 0; }
-.icon_picture   { background-position: -6 * @toolIconHeight 0; }
-.icon_quote     { background-position: -7 * @toolIconHeight 0; }
-.icon_blockcode { background-position: -8 * @toolIconHeight 0; }
-
-.icon_smile     { background-position: -9 * @toolIconHeight 0;}
-.icon_lol       { background-position: -10 * @toolIconHeight 0;}
-.icon_rofl      { background-position: -11 * @toolIconHeight 0;}
-.icon_wink      { background-position: -12 * @toolIconHeight 0;}
-.icon_tongue    { background-position: -13 * @toolIconHeight 0;}
-.icon_sad       { background-position: -14 * @toolIconHeight 0;}
-.icon_cry       { background-position: -15 * @toolIconHeight 0;}
-.icon_angry     { background-position: -16 * @toolIconHeight 0;}
-
-
 .toolbar {
   flex-grow: 1;
   position: relative;
+  margin: @margin 0;
 
   &::after {
     content: '';
@@ -70,8 +47,7 @@
 
       padding: 0px 8px;
       margin: 0px;
-      font-size: @FontSize;
-      border-left: 2px solid transparent;
+      font-size: 12px;
       cursor: pointer;
       font-weight: bold;
       color: black;
@@ -96,20 +72,17 @@
         flex-direction: row;
         flex-wrap: wrap;
         margin: 0px 0px 0px 78px;
-        border: 2px solid white;
       }
     }
 
     &:focus + label {
-      outline: 2px dotted @clTabFocus;
+      border-left: 4px solid @clRed;
       z-index: 1;
     }
 
     &:checked + label {
       background: @clTabBG;
       color: @clTabFG;
-      border: 2px solid white;
-      border-right: none;
 
       & + section {
         display: flex;

@@ -2,6 +2,7 @@
 
 #users_invited {
   display: none;
+  margin-top: -@margin;
 }
 
 #limited:checked ~ #users_invited {
@@ -9,8 +10,9 @@
 }
 
 #limited + label {
-  margin: @margin 0px;
-  display: block;
+  margin: @margin 0;
+  display: flex;
+  align-items: center;
 }
 
 #autocomplete {

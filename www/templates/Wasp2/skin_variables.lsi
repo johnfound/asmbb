@@ -16,18 +16,19 @@
 
 @msgBoxWidth: 800px;
 
-@clYellow: #ffcc40;
-@clRed: #e05050;
-@clLightRed: #ff656c;
+@clYellow: hsl(44, 100%, 63%);          //#ffcc40;
+@clRed: hsl(0, 70%, 60%);               //#e05050;
+@clLightRed: hsl(357, 100%, 70%);       //#ff656c;
 
-@clBlack: #000000;
-@clDarkGray: #505050;
-@clDarkOnDark: #606060;
-@clMiddleGray: #808080;
-@clGray: #c0c0c0;
-@clLightGray: #eeeeee;
-@clWhite: #ffffff;
-@clViolet: #ff80FF;
+
+@clBlack: hsl(0, 0%, 0%);               //#000000;
+@clDarkGray: hsl(0, 0%, 31%);           //#505050;
+@clDarkOnDark: hsl(0, 0%, 37.5%);       //#606060;
+@clMiddleGray: hsl(0, 0%, 50%);         //#808080;
+@clGray: hsl(0, 0%, 75%);               //#c0c0c0;
+@clLightGray: hsl(0, 0%, 93%);          //#eeeeee;
+@clWhite: hsl(0, 0%, 100%);             //#ffffff;
+@clViolet: hsl(300, 100%, 75%);         //#ff80FF;
 
 
 @buttonHeight: 24px;

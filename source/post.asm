@@ -323,7 +323,7 @@ begin
         jnc     .render_all
 
         stdcall TextAddStr2, edi, 0, cHeadersJSON, cHeadersJSON.length
-        stdcall RenderTemplate, edi, "edit.json", [.stmt], esi
+        stdcall RenderTemplate, edx, "edit.json", [.stmt], esi
         mov     edi, eax
 
         cinvoke sqliteFinalize, [.stmt]
