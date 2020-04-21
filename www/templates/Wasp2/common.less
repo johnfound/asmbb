@@ -559,6 +559,8 @@ a.current_tag {
 .tabbed-form {
   display: flex;
   flex-wrap: wrap;
+  position: relative;
+  flex-grow: 1;
 
   & > input^[type=radio^] {
     &:not(checked) + label {
@@ -569,12 +571,21 @@ a.current_tag {
     &:checked + label {
       background-color: @clWhite;
       color: @clBlack;
+      svg {
+        fill: @clBlack;
+      }
     }
 
     + label + * {
       padding: @margin/2 @margin;
       background-color: @clWhite;
       color: @clBlack;
+      position: absolute;
+      top: @buttonHeight+4px;
+      bottom: 0;
+      flex-basis: 100%;
+      display: flex;
+      flex-direction: column;
     }
   }
 

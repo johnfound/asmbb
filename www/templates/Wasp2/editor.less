@@ -26,7 +26,13 @@
 .toolbar {
   flex-grow: 1;
   position: relative;
-  margin: @margin 0;
+  margin: 0;
+
+  section {
+    background: @clDarkGray;
+    display: flex;
+    flex-wrap: wrap;
+  }
 
   &::after {
     content: '';
@@ -53,7 +59,7 @@
       color: black;
 
       position: absolute;
-      left: 0px;
+      right: 0px;
       height: 50%;
       width: 80px;
 
@@ -68,21 +74,20 @@
       & + section {
         display: none;
         padding: 4px;
-        background: @clTabBG;
         flex-direction: row;
         flex-wrap: wrap;
-        margin: 0px 0px 0px 78px;
+        margin: 0 80px 0 0;
       }
     }
 
     &:focus + label {
-      border-left: 4px solid @clRed;
+      border-right: 4px solid @clRed;
       z-index: 1;
     }
 
     &:checked + label {
-      background: @clTabBG;
-      color: @clTabFG;
+      background: @clDarkGray;
+      color: @clWhite;
 
       & + section {
         display: flex;

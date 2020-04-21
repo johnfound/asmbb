@@ -7,14 +7,14 @@
 /* paragraph style */
 
 .post-text {
-  h1, h2, h3, h4, h5, h6 {margin: 1rem 0 1rem 0;}
+  h1, h2, h3, h4, h5, h6 {margin: 1em 0 1em 0;}
 
-  h1 { font-size: 1.5rem;}
-  h2 { font-size: 1.4rem;}
-  h3 { font-size: 1.3rem;}
-  h4 { font-size: 1.2rem;}
-  h5 { font-size: 1.1rem;}
-  h6 { font-size: 1rem;}
+  h1 { font-size: 1.5em;}
+  h2 { font-size: 1.4em;}
+  h3 { font-size: 1.3em;}
+  h4 { font-size: 1.2em;}
+  h5 { font-size: 1.1em;}
+  h6 { font-size: 1em;}
 
   span.underlined {text-decoration: underline;}
 
@@ -34,29 +34,34 @@
   }
 
   /* source code */
+
+  pre {
+    padding: 0.5em;
+    margin: 1em 0;
+    overflow: auto;
+
+    font-family: @FontMonospace;
+    font-size: 0.93em;
+
+    background-color: @clLightGray;
+    color: black;
+
+    border-left: 0.5ch solid @clRed;
+    clear: both;
+
+    > code {
+      white-space: inherit;
+      display: block;
+      font: inherit;
+    }
+  }
+
   code {
     display: inline;
     font-family: @FontMonospace;
-    font-size: @FontSizeMono;
-
-    word-break: break-all;
-    white-space: pre-wrap;
-
-    &.block {
-      display: block;
-      text-align: left;
-      padding: @margin;
-      margin: 2*@margin 0;
-      overflow: auto;
-
-      white-space: pre;
-      clear: both;
-
-      background-color: @clLightGray;
-      color: black;
-
-      border-left: 4px solid @clRed;
-    }
+    font-size: 0.93em;
+    font-weight: bold;
+    white-space: pre;
   }
 
   /* Style of the text included image. */
@@ -65,13 +70,13 @@
     display: inline-block;
     vertical-align: middle;
     overflow: hidden;
-    margin: 0px 4px;
+    margin: 0px 0.5ch;
   }
 
   img.block {
     border-style: none;
-    border-width: 0px;
-    margin: 8px auto;
+    border-width: 0;
+    margin: 1em auto;
     display: block;
     max-width: 95%;
   }
@@ -81,15 +86,23 @@
 
   table {
     border: 1px solid @clGray;
-    margin: 0.2em auto;
+    margin: 1em auto;
     background-color: @clWhite;
     border-collapse: collapse;
 
     td, th {
-      font-size: 1rem;
+      font-size: 1em;
       border: 1px solid @clGray;
-      padding: 0.1em 0.2em;
+      padding: 0.5em 1ch;
       margin: 0;
+    }
+
+    th {
+      border: 2px solid @clGray;
+      p {
+        text-align: center;
+        font-weight: bold;
+      }
     }
   }
 
@@ -124,6 +137,16 @@
       max-width: 100%;
       overflow: hidden;
     }
+  }
+
+  video {
+    display: block;
+    margin: @margin auto;
+    max-width: 95%;
+  }
+
+  summary {
+    cursor: pointer;
   }
 }
 

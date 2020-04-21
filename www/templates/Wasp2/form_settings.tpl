@@ -239,7 +239,7 @@
 <form class="settings msgbox" method="post" action="/!settings">
   <h1>[const:ttlSettings]</h1>
 
-  <div class="dropdown tabbed-form tabbed-panel">
+  <div class="dropdown tabbed-form">
 
     <input id="tab1" name="tabselector" type="radio" value="0" [case:[tabselector]|checked|]>
     <label for="tab1">[const:tabHTML]</label>
@@ -336,8 +336,10 @@
     <input id="tab5" name="tabselector" type="radio" value="4" [case:[tabselector]|||||checked|]>
     <label for="tab5">[const:tabEncryption]</label>
     <section>
-      <h3>[const:ttlNewPassword]:</h3>
-      <input type="text" value="" placeholder="Encryption password" name="password" class="settings" maxlength="1024">
+      <div>
+        <h3>[const:ttlNewPassword]:</h3>
+        <input type="text" value="" placeholder="Encryption password" name="password" class="settings" maxlength="1024">
+      </div>
       <p class="checkbox"><input type="checkbox" name="decrypt" id="cbdecr" value="1"><label for="cbdecr">Remove the encryption</label></p>
       <article>
         [const:helpEncryption]

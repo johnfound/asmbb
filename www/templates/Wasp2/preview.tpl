@@ -1,7 +1,7 @@
 [css:markdown.css]
 
 <div id="preview" class="thread">
-  <h1 class="thread_caption">[caption]<a href="#editform"></a></h1>
+  <h1 class="thread_caption">[case:[caption]|Enter thread title...|[caption]]</h1>
   <div class="post">
     <div class="post-header">
       <a href="#preview">#preview</a>

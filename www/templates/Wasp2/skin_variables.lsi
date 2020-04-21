@@ -1,7 +1,7 @@
 @FontMain:      Noto Sans, Liberation Sans,Arial,Helvetica,sans-serif;
 @FontMonospace: Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace;
 @FontSize:      14px;
-@FontSizeMono:  13px;
+@FontSizeMono:  14px;
 
 @FontHeader: "Noto Sans ExtraBold", "Arial Black", "Helvetica Black", sans-serif;
 

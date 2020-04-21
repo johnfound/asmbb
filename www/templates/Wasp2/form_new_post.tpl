@@ -1,6 +1,8 @@
-[css:navigation.css]
 [css:posts.css]
-[css:postnew.css]
+[css:posteditor.css]
+[css:threadnew.css]
+[css:markdown.css]
+[css:highlight.css]
 
 [case:[special:lang]|
   [equ:btnList=Thread list]

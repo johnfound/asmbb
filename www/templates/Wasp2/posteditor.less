@@ -3,13 +3,13 @@
 @media (orientation: landscape) {
   body {
     width: 50%;
-    margin: @margin @margin @margin auto !important;
+    margin: 0 @margin @margin auto !important;
   }
 
   .editor {
-    width: ~"calc( 50% - 3*@{margin})";
+    width: ~"calc( 50% - 3*@{margin})" !important;
     left: @margin;
-    top: 0px;
+    top: @margin;
     bottom: @margin;
   }
 }
@@ -30,15 +30,44 @@
 }
 
 
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: ~"calc( 100vh - @{margin})";
+  & > * {
+    margin-left: @margin !important;
+    margin-right: @margin !important;
+    width: auto !important;
+  }
+}
+
+.thread {
+  flex-grow: 1;
+}
+
+.header > *:not(#forum-header) {
+  display: none !important;
+}
 
 .editor {
-  color: @clWhite;
+  background-color: @clGray;
+  color: @clDarkGray;
+  padding: 0 @margin @margin @margin;
   position: fixed;
   display: flex;
   flex-direction: column;
   z-index: 1000;
+
+  * {
+    overscroll-behavior: none;
+  }
+
+  svg {
+    fill: @clDarkGray;
+  }
+
   p {
-    margin: @margin 0 @margin/2 0;
+    margin: 0;
   }
 }
 
@@ -53,7 +82,7 @@
 #source {
   flex-grow: 1;
   margin: 0 0 @margin 0;
-  resize: vertical;
+  resize: none;
   padding: @margin/2;
 }
 
@@ -71,19 +100,11 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    padding: 2*@margin;
+    padding: 0 2*@margin;
 
     background-color: @clWhite;
     color: @clBlack;
   }
-}
-
-
-input[type="file"] {
-  background-color: @clWhite;
-  color: @clBlack;
-  margin-bottom: @margin;
-  border: 1px solid @clGray;
 }
 
 
@@ -98,7 +119,7 @@ input[type="file"] {
 
 .editgroup {
   display: flex;
-  margin: -@margin 0 @margin 0;
+  margin: @margin/2 0;
   align-items: end;
 
   & > * {
@@ -123,24 +144,35 @@ input[type="file"] {
   }
 }
 
+
 .file-browse {
-  position: relative;
+  display: flex;
+  flex-direction: row-reverse;
+  margin-bottom: @margin;
+  border: 1px solid @clGray;
+
+  #browse-txt {
+    line-height: @buttonHeight;
+    display: none;
+    flex-grow: 1;
+  }
+
   label.btn {
+    margin: 0 4px 0 0;
     background-color: @clYellow;
     color: @clBlack;
-    position: absolute;
-    left: 0;
-    top: 0;
-    margin: 0;
+    display: none;
   }
+
   input[type="file"] {
-    height: @buttonHeight;
-    &:first-child {
-      background-color: red;
-      font-size: 24px;
-    }
-    &::-webkit-file-upload-button {
-      visibility: hidden;
+    font-size: 10px;
+    border: none;
+    background-color: @clWhite;
+    color: @clBlack;
+    outline: none;
+    &:focus + label.btn {
+      outline: 1px dotted green;
+      outline-offset: -3px;
     }
   }
 }
@@ -149,4 +181,9 @@ input[type="file"] {
 
 .post {
   flex-basis: auto !important;
+}
+
+
+.help {
+  font-size: 10px;
 }
