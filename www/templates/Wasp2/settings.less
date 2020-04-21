@@ -14,8 +14,8 @@ div.set_page {
   max-width: @msgBoxWidth;
   width: 100%;
   padding: 2*@margin;
-  background-color: @clDarkGray;
-  color: @clWhite;
+  background-color: @clWhite;
+  color: @clBlack;
   margin: @margin auto;
   display: flex;
   flex-direction: column;
@@ -34,8 +34,8 @@ form.settings {
     margin-bottom: 2*@margin;
     padding: @margin/2;
 
-    color: @clRed;
-    background-color: @clWhite;
+    color: @clYellow;
+    background-color: @clDarkGray;
     font-size: 1.2*@FontSize;
     font-variant: small-caps;
     text-align: center;
@@ -79,17 +79,18 @@ form.settings {
 
 input.settings, select.settings {
   height: @buttonHeight + 4px;
+  flex-grow: 0;
   font-size: @FontSize;
   padding: 0px 8px;
   outline: none;
   margin: 4px 0px;
-  border: 2px solid @clGray;
+  border: 1px solid @clGray;
 
   background-color: @clWhite;
   color: @clBlack;
   width: 100%;
   &:focus {
-    border: 2px solid @clYellow;
+    border: 1px solid @clYellow;
   }
 }
 
@@ -98,9 +99,9 @@ textarea.settings {
   white-space: pre;
   resize: vertical;
   padding: @margin/2;
-  border: 2px solid @clGray;
+  border: 1px solid @clGray;
   &:focus {
-    border: 2px solid @clYellow;
+    border: 1px solid @clYellow;
   }
 }
 

@@ -5,6 +5,7 @@
 [css:highlight.css]
 
 [case:[special:lang]|
+  [equ:ttlEditorTab=New Thread]
   [equ:ttlTitle=Title]
   [equ:phTitle=Thread title]
   [equ:ttlTags=Tags: <span class="small">(max 3, comma separated, no spaces)</span>]
@@ -21,6 +22,7 @@
   [equ:ttlPost=Post content]
   [equ:MultiFiles= files selected.]
 |
+  [equ:ttlEditorTab=Нова тема]
   [equ:ttlTitle=Заглавие]
   [equ:phTitle=Заглавие на темата]
   [equ:ttlTags=Тагове: <span class="small">(макс. 3, разделени със запетаи, без шпации)</span>]
@@ -37,6 +39,7 @@
   [equ:ttlPost=Съобщение]
   [equ:MultiFiles= файла са избрани.]
 |
+  [equ:ttlEditorTab=Новая тема]
   [equ:ttlTitle=Название темы]
   [equ:phTitle=Название темы]
   [equ:ttlTags=Ярлыки: <span class="small">(макс. 3, через запятую, без пробелов)</span>]
@@ -53,6 +56,7 @@
   [equ:ttlPost=Текст сообщения]
   [equ:MultiFiles= выбранные файлы.]
 |
+  [equ:ttlEditorTab=Nouveau sujet]
   [equ:ttlTitle=Titre]
   [equ:phTitle=Titre du sujet]
   [equ:ttlTags=Mots-clés: <span class="small">(3 maximum, séparés par une virgule t sans espace)</span>]
@@ -69,6 +73,7 @@
   [equ:ttlPost=Contenu du message]
   [equ:MultiFiles= dossiers sélectionnés.]
 |
+  [equ:ttlEditorTab=Neues Thema]
   [equ:ttlTitle=Titel]
   [equ:phTitle=Titel des Themas]
   [equ:ttlTags=Tags: <span class="small">(max. 3, durch Kommas getrennt, keine Leerzeichen)</span>]
@@ -103,7 +108,7 @@
     <div class="dropdown tabbed-form">
 
       <input id="tab1" name="tabselector" type="radio" value="0" checked>
-      <label for="tab1">New thread</label>
+      <label for="tab1">[const:ttlEditorTab]</label>
       <section class="checkbox">
         <div class="editgroup">
           <div>
@@ -139,9 +144,6 @@
         [include:edit_toolbar.tpl]
 
         <textarea name="source" id="source" placeholder="[const:phText]" required>[source]</textarea>
-        <div class="attachments">
-          [attach_edit:[id]]
-        </div>
       </section>
 
       [case:[special:markup=0]||

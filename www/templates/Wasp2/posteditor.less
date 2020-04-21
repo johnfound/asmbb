@@ -50,7 +50,7 @@ body {
 }
 
 .editor {
-  background-color: @clGray;
+  background-color: @clWhite;
   color: @clDarkGray;
   padding: 0 @margin @margin @margin;
   position: fixed;
@@ -91,6 +91,7 @@ body {
   flex-direction: column;
   flex-grow: 1;
   overflow: auto;
+  margin-top: @margin;
 
   input[type="text"], textarea {
     border: 1px solid @clGray;
@@ -143,40 +144,6 @@ body {
     }
   }
 }
-
-
-.file-browse {
-  display: flex;
-  flex-direction: row-reverse;
-  margin-bottom: @margin;
-  border: 1px solid @clGray;
-
-  #browse-txt {
-    line-height: @buttonHeight;
-    display: none;
-    flex-grow: 1;
-  }
-
-  label.btn {
-    margin: 0 4px 0 0;
-    background-color: @clYellow;
-    color: @clBlack;
-    display: none;
-  }
-
-  input[type="file"] {
-    font-size: 10px;
-    border: none;
-    background-color: @clWhite;
-    color: @clBlack;
-    outline: none;
-    &:focus + label.btn {
-      outline: 1px dotted green;
-      outline-offset: -3px;
-    }
-  }
-}
-
 
 
 .post {

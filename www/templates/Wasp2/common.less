@@ -560,7 +560,7 @@ a.current_tag {
   display: flex;
   flex-wrap: wrap;
   position: relative;
-  flex-grow: 1;
+    flex-grow: 1;
 
   & > input^[type=radio^] {
     &:not(checked) + label {
@@ -569,7 +569,11 @@ a.current_tag {
     }
 
     &:checked + label {
-      background-color: @clWhite;
+      background-color: @clLightGray;
+      border: 1px solid @clGray;
+      border-bottom: none;
+      height: @buttonHeight+5px;
+      z-index: 100;
       color: @clBlack;
       svg {
         fill: @clBlack;
@@ -578,7 +582,8 @@ a.current_tag {
 
     + label + * {
       padding: @margin/2 @margin;
-      background-color: @clWhite;
+      background-color: @clLightGray;
+      border: 1px solid @clGray;
       color: @clBlack;
       position: absolute;
       top: @buttonHeight+4px;
@@ -744,3 +749,39 @@ div.message {
   color: @clBlack;
   display: inline-block;
 }
+
+/* input[type=file] styling */
+
+.file-browse {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-bottom: @margin;
+  border: 1px solid @clGray;
+  background-color: @clWhite;
+
+  #browse-txt {
+    line-height: @buttonHeight;
+    display: none;
+    flex-grow: 1;
+  }
+
+  label.btn {
+    margin: 0 4px 0 0;
+    background-color: @clYellow;
+    color: @clBlack;
+    display: none;
+  }
+
+  input[type="file"] {
+    font-size: 10px;
+    border: none;
+    background-color: @clWhite;
+    color: @clBlack;
+    outline: none;
+    &:focus + label.btn {
+      outline: 1px dotted green;
+      outline-offset: -3px;
+    }
+  }
+}
+
