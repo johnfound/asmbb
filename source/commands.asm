@@ -1163,6 +1163,10 @@ begin
         stdcall StrCompNoCase, [.extension], txt ".mp3"
         jc      .mime_ok
 
+        mov     eax, mimeMP4
+        stdcall StrCompNoCase, [.extension], txt ".mp4"
+        jc      .mime_ok
+
         xor     eax, eax
         stc
         return
@@ -1187,7 +1191,7 @@ mimeSVG   text "image/svg+xml; charset=utf-8"
 mimeGIF   text "image/gif"
 mimeTTF   text "font/ttf"
 mimeMP3   text "audio/mpeg"
-
+mimeMP4   text "video/mp4"
 
 
 

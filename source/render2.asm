@@ -671,15 +671,11 @@ endl
 
 .cmd_include:
 ; here esi points to ":" of the "include:" command. edi points to the start "[" and ecx points to the end "]"
-
-        lea     eax, [edi-1]
-        push    eax
         pushd   0
         jmp     .cmd_incraw
 
 .cmd_raw:
 ; here esi points to ":" of the "raw:" command. edi points to the start "[" and ecx points to the end "]"
-        push    ecx
         pushd   -1
 
 .cmd_incraw:
@@ -716,13 +712,12 @@ endl
         add     esi, edx
         stdcall FileRead, ebx, esi, eax
         add     [edx+TText.GapBegin], eax
-        and     [esp], eax
+        AND     [esp], eax
 
 .file_close:
         stdcall FileClose, ebx
         pop     eax
-        pop     ecx             ; moves ecx at the start of the included template for "include" and does not change it on "raw".
-        add     ecx, eax        ; increment with the size of the included file if it was "raw" include.
+        lea     ecx, [edi+eax-1]   ; increment with the size of the included file if it was "raw" include.
         jmp     .loop
 
 
