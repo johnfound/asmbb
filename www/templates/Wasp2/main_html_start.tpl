@@ -212,9 +212,10 @@
       </a>
 
       <input type="checkbox" id="tags-collapse" accesskey="t">
-      <label class="tag-upper btn" for="tags-collapse">[case:[special:dir]|[const:ttlAllThreads]|<span>#[special:dir]</span>] <svg width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-          <path d="m8 9h16l-8 16z"/>
-        </svg></label>
+      <label class="tag-upper btn" for="tags-collapse">
+        [case:[special:dir]|[const:ttlAllThreads]|<span>#[special:dir]</span>]
+        &nbsp;<svg width="12" height="6" version="1.1" viewBox="0 0 8 4" xmlns="http://www.w3.org/2000/svg"><path d="m0 0h8l-4 4z"/></svg>
+      </label>
       <div class="tags">
         <a href="/[case:[special:limited]||(o)/]" title="[const:ttlAllThreads]">
           <svg class="[case:[special:variant]|svg-yellow|svg-yellow|svg-gray]" width="24" height="24" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">

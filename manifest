@@ -1,5 +1,5 @@
-C Work\son\sthe\sWasm2\stheme.\sAdaptatopm\sof\sthe\sform_new_post.tpl;\sLighter\sbackground\sfor\sthe\sforms.
-D 2020-04-21T14:57:54.893
+C Small\sstyle\schanges
+D 2020-04-22T06:50:57.226
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -773,8 +773,8 @@ F www/templates/Wasp2/highlight.js b4a380fb43186d51a405fb185067120657f243f2
 F www/templates/Wasp2/highlight.less fba68624d1b34a5543fe0bf4b2af2ac1ddf65e74
 F www/templates/Wasp2/login.less b854c20c711dffeec158f044c59cbcf72a3161d5
 F www/templates/Wasp2/main_html_end.tpl 15f4840f8a6c94324f46ca0dd1a1009ca28009a3
-F www/templates/Wasp2/main_html_start.tpl 93a14eb403e561b642a111858254dcaa38e3af0e
-F www/templates/Wasp2/markdown.less 7696bb0cc82a9d0ddde3a00693f809d9adbcf440
+F www/templates/Wasp2/main_html_start.tpl 3f9ee3d2e7fe83713aab0e352faa3a3d511bfbf0
+F www/templates/Wasp2/markdown.less 8e03cde5faf5befd089d709ad0e26695ed5fb926
 F www/templates/Wasp2/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
 F www/templates/Wasp2/nav_categories.tpl f2841382d9b4413ce5fb3f74ddf5a74aa0665415
 F www/templates/Wasp2/nav_history.tpl 97c10235f88fc4de8cb6bcf8928875b15ffce9ba
@@ -906,7 +906,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 970123c099b66f1bb581fa4c14584b5320729816 x
-P b46c891e5751a9c1005bc7308cc34e9736270110
-R 7be1784687f62c48187d06284bf9804f
+P d0baf78bae36294f56eff3c527c51a3fa9e2dd5f
+R 0af3b64b4958cd899d3b8b64aba2e61f
 U johnfound
-Z 5b3c265037dd857f3f61497c0c003585
+Z e51143d55848f520ba1cead86a598cf6
