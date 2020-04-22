@@ -97,7 +97,7 @@
       <input form="editform" class="btn" id="preview-btn" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
       <input form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]" title="[const:hintSubmit]">
       <div class="spacer"></div>
-      <a class="btn img-btn" href=".">
+      <a id="btn-close" class="btn img-btn" href=".">
         <svg version="1.1" width="12" height="12" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
            <rect transform="rotate(45)" x=".635" y="-1.53" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
            <rect transform="rotate(135)" x="-10.7" y="-12.8" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
@@ -203,86 +203,5 @@
 
 
 <script src="[special:skin]/highlight.js"></script>
-
-<script>
-
-function highlightAll() {
-  document.querySelectorAll('pre>code').forEach((block) => {
-    hljs.highlightBlock(block);
-  });
-}
-
-var browseBtn = document.getElementById('browse-btn');
-var browseTxt = document.getElementById('browse-txt');
-var browseEdt = document.getElementById('attach');
-
-browseEdt.style.width = 0;
-browseBtn.style.display = 'inline-flex';
-browseTxt.style.display = 'block';
-
-browseEdt.onchange = function() {
-  var cnt = browseEdt.files.length;
-
-  if (cnt == 0)
-    browseTxt.innerText = '';
-  else if (cnt == 1)
-    browseTxt.innerText = browseEdt.files^[0^].name;
-  else {
-    browseTxt.innerText = cnt + '[const:MultiFiles]';
-    var allFiles = '';
-    for (i = 0; i<cnt; i++) {
-      allFiles += (browseEdt.files^[i^].name + '\n');
-    };
-    browseTxt.title = allFiles;
-  }
-};
-
-browseEdt.onchange();
-window.addEventListener('load', previewIt());
-
-
-function previewIt(e) {
-
-  if ((e == undefined) ^|^| (e.target.cmd === "preview")) {
-    if (e) e.preventDefault();
-
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "!post?cmd=preview");
-
-    xhr.onload = function(event){
-      if (event.target.status === 200) {
-        var prv = document.getElementById("preview");
-        var resp = JSON.parse(event.target.response);
-
-        prv.innerHTML = resp.preview;
-      }
-      highlightAll();
-      if (e) document.getElementById("source").focus();
-    };
-
-    var formData = new FormData(document.getElementById("editform"));
-    xhr.send(formData);
-  }
-}
-
-document.onkeydown = function(e) {
-  var key = e.which ^|^| e.keyCode;
-  var frm = document.getElementById("editform");
-  var stop = true;
-
-  if (e.ctrlKey && key == 13) {
-    frm.preview.click();
-  } else if (key == 27) {
-    window.location.href = ".";
-  } else if (e.ctrlKey && key == 83) {
-    frm.submit.click();
-  } else stop = false;
-
-  if (stop) e.preventDefault();
-};
-
-
-</script>
-
-
-[raw:autocomplete.js]
+<script src="[special:skin]/editors.js"></script>
+<script src="[special:skin]/autocomplete.js"></script>

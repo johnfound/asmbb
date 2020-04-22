@@ -1,18 +1,17 @@
-<span id="__ruler"></span>
-<ul id="autocomplete"></ul>
+var auto_list = document.createElement("UL");
+auto_list.id = "autocomplete";
 
-<script>
-
+var __ruler = document.createElement("SPAN");
 var cache = {};
+
 
 function VisibleWidth(s) {
   var l = s.split(",");
   if (l.length > 0) l.length--;
   for (var i = 0; i < l.length; i++) l[i] = l[i].trim();
 
-  var r = document.getElementById("__ruler");
-  r.innerHTML = l.join(', ');
-  return r.offsetWidth;
+  __ruler.innerHTML = l.join(', ');
+  return __ruler.offsetWidth;
 }
 
 function SplitAndTrim(inp) {
@@ -32,18 +31,18 @@ function Complete(nm, inpid) {
 }
 
 
-function ShowAutocomplete(users, inp) {
-  var list = document.getElementById('autocomplete');
+function ShowAutocomplete(comp_list, inp) {
+  inp.parentElement.style.position = "relative";
+  inp.parentElement.appendChild(auto_list);
 
-  list.parentEditor = inp;
-  list.style.left = ( inp.offsetLeft + VisibleWidth(inp.value)) + "px";
-  list.style.top = (inp.offsetTop + inp.offsetHeight) + "px";
-//  list.style.width = (list.offsetWidth + 32) + "px";  // something is wrong here!
+  auto_list.parentEditor = inp;
+  auto_list.style.left = ( inp.offsetLeft + VisibleWidth(inp.value)) + "px";
+  auto_list.style.top = (inp.offsetTop + inp.offsetHeight) + "px";
 
-  var ul = JSON.parse(users);
+  var ul = JSON.parse(comp_list);
 
-  while (list.firstChild) {
-    list.removeChild(list.lastChild);
+  while (auto_list.firstChild) {
+    auto_list.removeChild(auto_list.lastChild);
   }
 
   if (ul.length != 0) {
@@ -53,10 +52,10 @@ function ShowAutocomplete(users, inp) {
       li.setAttribute('onkeydown', 'ListKeyDown(event)');
       li.tabIndex = 0;
       li.innerHTML = ul[i];
-      list.appendChild(li);
+      auto_list.appendChild(li);
     }
-    list.style.display = "block";
-  } else list.style.display = "none";
+    auto_list.style.display = "block";
+  } else auto_list.style.display = "none";
 }
 
 
@@ -90,28 +89,30 @@ function OnKeyboard(inp) {
 
 
 function EditKeyDown(e, inp) {
-  var list = document.getElementById('autocomplete');
   var ignore = true;
 
-  if (list.style.display === "block" ) {
+  if (auto_list.style.display === "block" ) {
     var key = e.which || e.keyCode;
     switch (key) {
       case 40:
-        list.firstChild.focus();
+        auto_list.firstChild.focus();
         break;
       case 38:
-        list.lastChild.focus();
+        auto_list.lastChild.focus();
         break;
       case 13:
-        list.firstChild.click();
+        auto_list.firstChild.click();
         break
       case 27:
-        list.style.display = "none";
+        auto_list.style.display = "none";
         break;
       default:
         ignore = false;
     }
-    if (ignore) e.preventDefault();
+    if (ignore) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
   }
 }
 
@@ -147,9 +148,8 @@ function ListKeyDown(e) {
       ignore = false;
   }
 
-  if (ignore) e.preventDefault();
-  return false;
+  if (ignore) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
 }
-
-
-</script>
