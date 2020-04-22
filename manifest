@@ -1,5 +1,5 @@
-C An\saestetical\srefactoring\sof\sthe\sJS\scode.\sMore\ssemantics.\sStarting\sthe\swork\sof\sthe\sUnicode\semoji\suse\sinstead\sof\sthe\s<img>\sbased.
-D 2020-04-22T14:19:18.600
+C Forgotten\sfile\sadded.
+D 2020-04-22T16:59:46.701
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -750,6 +750,7 @@ F www/templates/Wasp2/delete.less 253a0f549e132a9d55ae56fe399a8929eabb4a29
 F www/templates/Wasp2/edit.json 140a9ea82607df88432cbdfb8870a874aa6e8acd
 F www/templates/Wasp2/edit_toolbar.tpl d7464a2014a0bafb1692d78d8113b185dcb4393b
 F www/templates/Wasp2/editor.less c7b4b74afe0a644fd6bbfa2ee9f3108959d33413
+F www/templates/Wasp2/editors.js 0ea981df2a77f8039deb83433d0c71acb4f259bf
 F www/templates/Wasp2/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Wasp2/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
 F www/templates/Wasp2/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
@@ -906,7 +907,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 970123c099b66f1bb581fa4c14584b5320729816 x
-P 5cb5f7652fea43e51f715c7ab580f38ca28ca2ab
-R a909fa19f624e852e20d5f4baecc9d89
+P 9579d41a14a8ed97feb12c453755effb7bddbb32
+R 9fa79c0aee386098940889fbef260b6c
 U johnfound
-Z e0e825547073e90d74f6881e159fc5d5
+Z 25492f0485d2e523d2b22d2007b63ca3
