@@ -27,7 +27,7 @@ browseEdt.onchange = function() {
   else if (cnt == 1)
     browseTxt.innerText = browseEdt.files[0].name;
   else {
-    browseTxt.innerText = cnt + '[const:MultiFiles]';
+    browseTxt.innerText = cnt + lblMultifiles;
     var allFiles = '';
     for (i = 0; i<cnt; i++) {
       allFiles += (browseEdt.files[i].name + '\n');
@@ -43,21 +43,29 @@ function previewIt(e) {
   if ((e == undefined) || (e.target.cmd === "preview")) {
     if (e) e.preventDefault();
 
+    var form = document.getElementById("editform");
+
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "!post?cmd=preview");
+    xhr.open("POST", form.action + "?cmd=preview");
 
     xhr.onload = function(event){
       if (event.target.status === 200) {
         var prv = document.getElementById("preview");
+        var attch = document.getElementById("attachments");
         var resp = JSON.parse(event.target.response);
 
+        if (attch) attch.innerHTML = resp.attach_del;
         prv.innerHTML = resp.preview;
         highlightIt(prv);
       }
-      if (e) document.getElementById("source").focus();
+      if (e) {
+        document.getElementById("source").focus();
+        browseEdt.value = null;
+        browseEdt.onchange();
+      }
     };
 
-    var formData = new FormData(document.getElementById("editform"));
+    var formData = new FormData(form);
     xhr.send(formData);
   }
 }

@@ -201,6 +201,7 @@
   </form>
 </div>
 
+<script>var lblMultifiles = '[const:MultiFiles]';</script>
 
 <script src="[special:skin]/highlight.js"></script>
 <script src="[special:skin]/editors.js"></script>

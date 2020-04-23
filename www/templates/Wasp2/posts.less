@@ -163,38 +163,33 @@ div.current_version {
 
 .attachments, .attach_del {
   padding: 0 4*@margin;
-
+  overflow: auto;
   background-color: @clWhite;
   color: @clBlack;
-  overflow: auto;
 
   table {
-    margin: 0 0 2*@margin 0;
+    margin: 1em 0;
     font-weight: normal;
     clear: both;
-    margin-left: 0px !important;
     border-collapse: collapse;
-
-    * {
-      font-size: 11px;
-    }
+    font-size: 0.8rem;
 
     a {
       font-weight: bold;
-      color: @clDarkFG;
+      color: @clWhite;
     }
 
     td {
-      background-color: @clDarkBG;
-      color: @clDarkFG;
-      padding: @margin/4 @margin;
+      background-color: @clDarkGray;
+      color: @clWhite;
+      padding: 0.2rem 1ch;
       vertical-align: middle;
       word-wrap: anywhere;
     }
 
     th {
-      background-color: @clPostInfoBG;
-      color: @clPostInfoFG;
+      background-color: @clYellow;
+      color: @clBlack;
       text-align: center;
       padding: @margin/4 @margin;
       vertical-align: middle;
@@ -206,8 +201,8 @@ div.current_version {
     }
 
     .head {
-      background-color: @clDarkBG;
-      color: @clDarkFG;
+      background-color: @clDarkGray;
+      color: @clWhite;
       font-weight: bold;
       padding: @margin/2 @margin;
     }
