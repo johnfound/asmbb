@@ -270,6 +270,8 @@
     </section>
     ]
   </div>
+  <div class="post-text"><div id="emolib" class="emoji">Emoji library</div></div>
+
 </div>
 
 <script>

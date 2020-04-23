@@ -79,6 +79,7 @@
         </svg>
       </a>
   </div>
+
   <form id="editform" action="!edit" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
     <div class="dropdown tabbed-form">
 
@@ -166,8 +167,18 @@
 </div>
 
 
-<script>var lblMultifiles = '[const:MultiFiles]';</script>
+<script>
+  var lblMultifiles = '[const:MultiFiles]';
+
+var emolib = document.getElementById("emolib");
+var emocode = "";
+
+for (var i = 0x1f300; i < 0x1fae0; i++) emocode += ' ' + String.fromCodePoint(i);
+emolib.innerHTML = emocode;
+
+</script>
 
 <script src="[special:skin]/highlight.js"></script>
 <script src="[special:skin]/editors.js"></script>
+
 
