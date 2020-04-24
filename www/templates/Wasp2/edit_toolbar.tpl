@@ -221,7 +221,8 @@
     <input id="mark0" name="format" type="radio" [case:[format]|checked|] value="0">
     <label for="mark0" style="top: 0px;"><span>MiniMag</span></label>
     ]]
-    <section class="minimag">
+    <section class="minimag dropdown btn-bar">
+
       <a class="editbtn" onclick="insertTag('source', '*', '*', 1)" title="[const:Bold]">[const:iconBold]</a>
       <a class="editbtn" onclick="insertTag('source', '/', '/', 1)" title="[const:Italic]">[const:iconItalic]</a>
       <a class="editbtn" onclick="insertTag('source', '_', '_', 1)" title="[const:Underlined]">[const:iconUnderlined]</a>
@@ -240,6 +241,12 @@
       <a class="editbtn" onclick="insertTag('source', '^[?:-(^]', '', 1)" title="[const:EmoSad]">[const:iconSad]</a>
       <a class="editbtn" onclick="insertTag('source', '^[?:\'-(^]', '', 1)" title="[const:EmoCry]">[const:iconCry]</a>
       <a class="editbtn" onclick="insertTag('source', '^[?>:-(^]', '', 1)" title="[const:EmoAngry]">[const:iconAngry]</a>
+
+      <input id="emo-drow-down" type="checkbox">
+      <label for="emo-drow-down" class="tag-upper editbtn">🟠
+        <svg width="12" height="6" version="1.1" viewBox="0 0 8 4" xmlns="http://www.w3.org/2000/svg"><path d="m0 0h8l-4 4z"/></svg>
+      </label>
+      <div id="emolib"></div>
     </section>
     ]
 
@@ -270,7 +277,7 @@
     </section>
     ]
   </div>
-  <div class="post-text"><div id="emolib" class="emoji">Emoji library</div></div>
+
 
 </div>
 

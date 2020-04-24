@@ -153,15 +153,18 @@
 
   .emoji {
     font-size: 1.2em;
-    font-family: "Noto Color Emoji", emoji;
-    display: inline;
-    min-width: 1.2em;
-    min-height: 1.2em;
+    font-family: @FontEmoji;
+    display: inline-flex;
+    vertical-align: middle;
+    align-items: center;
+    justify-content: center;
+    & > * {
+      flex-shrink: 0;
+      flex-grow: 0;
+    }
     &>span:hover {
       transform: scale(2);
-      position: absolute;
       z-index: 1000;
-      display: inline;
     }
   }
 }
