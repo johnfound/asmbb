@@ -1,5 +1,5 @@
-C Work\son\sthe\swasp2\stheme.
-D 2020-04-27T05:08:53.658
+C Forgotten\sfile\sadded.
+D 2020-04-27T05:10:46.054
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -734,6 +734,7 @@ F www/templates/Wasp2/activity6.tpl b5c8a9fbc2efa2eac931ea024f5d78047618cfc5 l
 F www/templates/Wasp2/activity7.tpl 606eb1ee82da0767dd85e3d2ac63a07e9874a5fb l
 F www/templates/Wasp2/activity8.tpl 36d833a0164bb74532e88161cff3d7c8d05cef52 l
 F www/templates/Wasp2/activity9.tpl 60fe5018f101f822fa00434bff49db7a3f7da947 l
+F www/templates/Wasp2/all-emoji.txt e98af1671a301fd3a1e58c1934b62f4ce9506be6
 F www/templates/Wasp2/atom_entry_post.tpl a36d3dd1e06725015323056b09bdc1492aa6a0cc
 F www/templates/Wasp2/atom_entry_thread.tpl ab6e308c142262fa4a7ff9bb98d03a67168ffe39
 F www/templates/Wasp2/atom_start.tpl 93d0cec7a6c29045e0e4bd631eace12699a80aa7
@@ -907,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 970123c099b66f1bb581fa4c14584b5320729816 x
-P f9b696fef0a0014a58a98a455ea0442f300796b0
-R 535ed52d4680a772a9948a68ac20408f
+P 4f6a0e7c2b08f0032016263c3d54a634e9295ccf
+R 00d81f5d7e0d6fae850f8b0d860459f9
 U johnfound
-Z a997bb38340defd7772b82f648dc2749
+Z 74cf1eb0f355e9159027b4cd69f61f25
