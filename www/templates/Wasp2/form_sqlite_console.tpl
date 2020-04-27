@@ -25,7 +25,7 @@
 <div class="console">
   <form id="editform" action="/!sqlite/#sql_result" method="post">
     <p>[const:ttlStmt]:</p>
-    <textarea autofocus id="source" name="source" placeholder="SQL">[source]</textarea>
+    <textarea id="source" name="source" placeholder="SQL">[source]</textarea>
     <div class="btn-bar">
       <a id="sql_result" style="visibility: hidden; margin: 0px; padding: 0px;"></a>
       <button class="btn" type="submit">[const:btnExec]</button>

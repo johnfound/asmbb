@@ -35,23 +35,6 @@ a:not(:hover) {
 }
 
 
-input {
-  font-size: inherit;
-  font-family: inherit;
-}
-
-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  padding-right: 20px !important;
-  background-image: url('data:image/svg+xml,[url:<svg version="1.1" viewBox="0 0 8 4" xmlns="http://www.w3.org/2000/svg"><path d="m0 0h8l-4 4z"/></svg>]');
-  background-repeat: no-repeat;
-  background-position: right 8px center;
-  background-size: 12px;
-
-}
-
-
 .spacer {
   flex-grow: 1;
   min-width: 0px;
@@ -233,12 +216,25 @@ div.header {
 }
 
 
-input^[type=text^], input^[type=search^], input^[type=email^], input^[type=password^] {
-  height: @buttonHeight;
-  padding: 4px 8px;
-  border: none;
-  border-radius: @radius;
+input {
+  font-size: inherit;
+  font-family: inherit;
+}
 
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 20px !important;
+  background-image: url('data:image/svg+xml,[url:<svg version="1.1" viewBox="0 0 8 4" xmlns="http://www.w3.org/2000/svg"><path d="m0 0h8l-4 4z"/></svg>]');
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 12px;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+
+input^[type=text^], input^[type=search^], input^[type=email^], input^[type=password^] {
   background-color: @clWhite;
   color: @clBlack;
 
@@ -246,23 +242,10 @@ input^[type=text^], input^[type=search^], input^[type=email^], input^[type=passw
   flex-shrink: 1;
 }
 
-
-.search_line {
-  height: 32px;
-  margin: 0px 8px 0px 0px;
+input^[type=search^] {
+  height: @buttonHeight;
   padding: 4px 8px;
-  border: @borderEdit;
-  background-color: @clDarkBG;
-  color: @clDarkFG;
-  display:block;
-  flex-grow: 1;
-  flex-shrink: 1;
-  min-width: 0px;
-  &:focus {
-    background-color: @clEditorBG;
-    color: @clEditorFG;
-    border: 2px solid @clSeparator;
-  }
+  border: none;
 }
 
 
@@ -425,7 +408,7 @@ a.current_tag {
 
 /* Decorative checkbox mechanism. The label tag, must be styled separately! */
 
-.checkbox > input^[type=checkbox^], .delcheck > input^[type=checkbox^] {
+.checkbox input^[type=checkbox^], .delcheck > input^[type=checkbox^] {
   position: absolute;
   z-index: -1;
   left: -100000px;
@@ -459,8 +442,8 @@ a.current_tag {
       width: 12px;
       height: 12px;
       display: inline-block;
-      background-color: white;
-      border: 2px solid @clSeparator;
+      background-color: @clWhite;
+      border: 1px solid @clDarkGray;
       margin-right: @margin/2;
       vertical-align: middle;
     }

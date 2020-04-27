@@ -133,28 +133,6 @@ div.current_version {
   color: @clBlack;
   overflow: auto !important;
   display: block !important;
-
-  a {
-    position: relative;
-    &:hover:after {
-      content: attr(href);
-
-      position: absolute;
-      left: 0px;
-      bottom: 1.5em;
-      width: max(100%, 150px);
-
-      font-size: 12px;
-      background-color: @clYellow;
-      color: @clBlack;
-      padding: 2px;
-
-      display: inline;
-
-      word-break: break-all;
-      word-wrap: anywhere;
-    }
-  }
 }
 
 

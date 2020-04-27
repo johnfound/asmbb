@@ -1,6 +1,5 @@
-
 [case:[special:lang]|
-  [equ:hdrDesc=User description: <span class="small">(Formatted text)</span>]
+  [equ:hdrDesc=User description: <span class="small">(MiniMag formatted text)</span>]
   [equ:hdrPermissions= User permissions:]
   [equ:pLogin=Login]
   [equ:pRead=Read]
@@ -156,7 +155,7 @@
   <textarea class="user_desc" name="user_desc">[user_desc]</textarea>
   [case:[special:isadmin]||
   <h2>[const:hdrPermissions]</h2>
-  <ul class="checkboxes">
+  <ul class="checkboxes checkbox">
   <li><input type="checkbox" [user_perm0]  name="user_perm" id="up0"  value="1"><label for="up0">[const:pLogin]</label></li>
   <li><input type="checkbox" [user_perm1]  name="user_perm" id="up1"  value="2"><label for="up1">[const:pRead]</label></li>
   <li><input type="checkbox" [user_perm2]  name="user_perm" id="up2"  value="4"><label for="up2">[const:pPost]</label></li>
@@ -172,19 +171,25 @@
   </ul>
   ]
   <input type="hidden" name="ticket" value="[Ticket]">
-  <input type="submit" name="save" class="button" value="[const:btnSave]">
+  <div class="navigation3 btn-bar"><input type="submit" name="save" class="btn" value="[const:btnSave]"></div>
 </form>
 
 <form class="user_edit_info settings" method="post" enctype="multipart/form-data" action="/!avatar_upload/[url:[username]]">
   <h2>[const:hdrAvatar]</h2>
-  <input type="file" class="browse" name="avatar">
+
+  <div class="file-browse">
+    <label for="input-file-browse" id="browse-txt" data-empty="[const:phSelect]"></label>
+    <input type="file" id="input-file-browse" name="avatar">
+    <label id="browse-btn" class="btn" for="input-file-browse">Browse</label>
+  </div>
+
   <input type="hidden" name="ticket" value="[Ticket]">
-  <input type="submit" name="submit" class="button" value="[const:btnUpload]">
+  <div class="navigation3 btn-bar"><input type="submit" name="submit" class="btn" value="[const:btnUpload]"></div>
 </form>
 
 <form class="user_edit_info settings" method="post" action="/!setskin/[url:[username]]">
   <h2>[const:hdrLang]</h2>
-  <select class="userskin" name="user_lang">
+  <select class="settings" name="user_lang">
     <option value="0" [case:[Lang]|selected="selected"|]>[const:sDefault]</option>
     <option value="1" [case:[Lang]||selected="selected"|]>English</option>
     <option value="2" [case:[Lang]|||selected="selected"|]>Български</option>
@@ -193,30 +198,32 @@
     <option value="5" [case:[Lang]||||||selected="selected"|]>Deutsch</option>
   </select>
   <h2>[const:hdrSkin]</h2>
-  <select class="userskin" name="skin">
+  <select class="settings" name="skin">
     <option value="0">[const:sDefault]</option>
     [special:skins=[skin]]
   </select>
   <input type="hidden" name="ticket" value="[Ticket]">
-  <input type="submit" name="save" class="button" value="[const:btnSave]">
+  <div class="navigation3 btn-bar"><input type="submit" name="save" class="btn" value="[const:btnSave]"></div>
 </form>
 
 
 [case:[ItIsMe]| |
 <form class="user_edit_pass settings" method="post" action="/!changepassword">
   <h2>[const:hdrChangePass]</h2>
-  <input type="password" value="" placeholder="[const:passNow]" name="oldpass" class="password" maxlength="1024" autocomplete="off">
-  <input type="password" value="" placeholder="[const:passNew]" name="newpass" class="password" maxlength="1024" autocomplete="off">
-  <input type="password" value="" placeholder="[const:passNew2]" name="newpass2" class="password" maxlength="1024" autocomplete="off">
+  <input type="password" value="" placeholder="[const:passNow]" name="oldpass" class="settings" maxlength="1024" autocomplete="off">
+  <input type="password" value="" placeholder="[const:passNew]" name="newpass" class="settings" maxlength="1024" autocomplete="off">
+  <input type="password" value="" placeholder="[const:passNew2]" name="newpass2" class="settings" maxlength="1024" autocomplete="off">
   <input type="hidden" name="ticket" value="[Ticket]">
-  <input type="submit" name="changepass" class="button" value="[const:btnChangePass]">
+  <div class="navigation3 btn-bar"><input type="submit" name="changepass" class="btn" value="[const:btnChangePass]"></div>
 </form>
 
 <form class="user_edit_pass settings" method="post" action="/!changemail">
   <h2>[const:hdrChangeEmail]</h2>
-  <input type="password" value="" placeholder="[const:passPass]" name="password" class="password" maxlength="1024" autocomplete="off">
-  <input type="text" value="[email]" placeholder="[const:emailNew]" name="email" class="email" maxlength="320">
+  <input type="password" value="" placeholder="[const:passPass]" name="password" class="settings" maxlength="1024" autocomplete="off">
+  <input type="text" value="[email]" placeholder="[const:emailNew]" name="email" class="settings" maxlength="320">
   <input type="hidden" name="ticket" value="[Ticket]">
-  <input type="submit" name="changeemail" class="button" value="[const:btnChangeEmail]">
+  <div class="navigation3 btn-bar"><input type="submit" name="changeemail" class="btn" value="[const:btnChangeEmail]"></div>
 </form>
 ]
+
+<script src="[special:skin]/file-browse.js"></script>

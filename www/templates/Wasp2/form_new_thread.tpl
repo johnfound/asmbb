@@ -132,9 +132,9 @@
           <div>
             <p>[const:ttlAttach]:</p>
             <div class="file-browse">
-              <label for="attach" id="browse-txt"></label>
-              <input type="file" placeholder="[const:phSelect]" id="attach" name="attach" multiple="multiple">
-              <label id="browse-btn" class="btn" for="attach">Browse</label>
+              <label for="inpuit-file-browse" id="browse-txt"></label>
+              <input type="file" placeholder="[const:phSelect]" id="input-file-browse" name="attach" multiple="multiple" data-multiselect="[const:MultiFiles]">
+              <label id="browse-btn" class="btn" for="inpuit-file-browse">Browse</label>
             </div>
           </div>
         </div>
@@ -201,8 +201,8 @@
   </form>
 </div>
 
-<script>var lblMultifiles = '[const:MultiFiles]';</script>
 
 <script src="[special:skin]/highlight.js"></script>
 <script src="[special:skin]/editors.js"></script>
+<script src="[special:skin]/file-browse.js"></script>
 <script src="[special:skin]/autocomplete.js"></script>
