@@ -24,6 +24,7 @@
 
 
 .toolbar {
+  display: flex;
   flex-grow: 1;
   position: relative;
   margin: 0;
@@ -43,6 +44,7 @@
   & > input {
     position: absolute;
     opacity: 0;
+    left: -100000px;
     & + label {
       -webkit-user-select: none; /* Safari 3.1+ */
       -moz-user-select: none; /* Firefox 2+ */
@@ -77,6 +79,7 @@
         flex-direction: row;
         flex-wrap: wrap;
         margin: 0 80px 0 0;
+        flex-grow: 1;
       }
     }
 
@@ -97,9 +100,63 @@
 }
 
 #emolib {
-  max-height: 80px;
-  font-size: 16px;
-  line-height: 20px;
+  font-size: 20px;
   font-family: @FontEmoji;
-  overflow: auto;
+  overflow-y: scroll;
+  position: absolute;
+  width: auto;
+  height: 200px;
+  resize: vertical;
+  left: 4px;
+  top: ~"calc( 100% - 4px )";
+  background-color: @clWhite;
+  color: black;
+  border: 1px solid @clGray;
+  z-index: 10000;
+  white-space: pre;
+  a {
+    cursor: pointer;
+    display: inline-block;
+    margin: @margin;
+    user-select: none;
+    &:hover {
+      background-color: @clRed;
+      box-shadow: 1px 1px 3px @clMiddleGray;
+    }
+  }
+}
+
+.emo-btn-bar {
+  background-color: @clDarkGray;
+  color: @clWhite;
+  padding: 4px 0 4px 4px;
+  margin: 0;
+  align-self: stretch;
+  flex-shrink: 0;
+  display: flex;
+  align-items: end !important;
+
+  &:hover #emolib {
+    display: block !important;
+  }
+
+}
+
+.emo-btn {
+  cursor: pointer;
+  height: @buttonHeight !important;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+
+  font-family: @FontEmoji;
+  font-size: 16px;
+
+  &:hover {
+    background-color: @clRed;
+  }
+
+  &>svg {
+    fill: @clWhite;
+  }
 }

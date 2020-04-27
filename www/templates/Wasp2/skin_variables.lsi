@@ -2,8 +2,8 @@
 @FontMonospace: Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace;
 @FontEmoji:     "Noto Color Emoji", emoji;
 
-@FontSize:      14px;
-@FontSizeMono:  14px;
+@FontSize:      13px;
+@FontSizeMono:  13px;
 
 
 @FontHeader: "Noto Sans ExtraBold", "Arial Black", "Helvetica Black", sans-serif;

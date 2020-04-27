@@ -23,11 +23,11 @@ browseEdt.onchange = function() {
   var cnt = browseEdt.files.length;
 
   if (cnt == 0)
-    browseTxt.innerText = '';
+    browseTxt.innerText = browseTxt.getAttribute("data-empty");
   else if (cnt == 1)
     browseTxt.innerText = browseEdt.files[0].name;
   else {
-    browseTxt.innerText = cnt + lblMultifiles;
+    browseTxt.innerText = cnt + browseEdt.getAttribute("data-multiselect");
     var allFiles = '';
     for (i = 0; i<cnt; i++) {
       allFiles += (browseEdt.files[i].name + '\n');
@@ -91,3 +91,26 @@ document.onkeydown = function(e) {
 
   if (stop) e.preventDefault();
 };
+
+
+
+// Emoji picker
+
+var emolib = document.getElementById('emolib');
+var emolinks = emolib.querySelectorAll("a");
+
+[].forEach.call(emolinks, function(e) {
+  e.onclick = function() {
+    var target = document.getElementById('source');
+    if ( ! target ) return 0;
+
+    var emoji = this.innerText;
+
+    var startPos = target.selectionStart;
+    var endPos = target.selectionEnd;
+
+    target.focus();
+    target.value = target.value.substring(0, startPos) + emoji + ' ' + target.value.substring(endPos, target.value.length);
+    target.setSelectionRange(startPos+3, startPos+3);
+  }
+});

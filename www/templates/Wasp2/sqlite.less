@@ -7,10 +7,12 @@ div.console {
   max-width: @globMaxWidth;
   margin: @globMargin;
   clear: both;
+  background-color: @clWhite;
+  color: @clBlack;
+  padding: @margin;
 
   p{
-    color: @clWhite;
-    font-weight: bold;
+    color: @clDarkGray;
     margin: 0px 0px 4px 0px;
   }
 
@@ -21,10 +23,10 @@ div.console {
 }
 
 #editform {
-  position: relative;
-  padding: 16px;
-  margin: 8px 0px 0px 0px;
-  background-color: @clDarkGray;
+  padding: 2*@margin;
+  margin: 0;
+  background-color: @clLightGray;
+  border: 1px solid @clGray;
   display: block;
 }
 
@@ -36,7 +38,7 @@ div.console {
   outline-style: none;
   overflow: auto;
   resize: vertical;
-  border: 2px solid @clWhite;
+  border: 1px solid @clGray;
 
   font-family: @FontMonospace;
   font-size: @FontSizeMono;
@@ -44,7 +46,7 @@ div.console {
   color: @clBlack;
 
   &:focus {
-    border: 2px solid @clYellow;
+    border: 1px solid @clYellow;
   }
 }
 
@@ -55,8 +57,8 @@ div.sql_exec {
   margin: @globMargin;
 
   background-color: @clWhite;
-  padding: 8px;
-  font-size: 13px;
+  padding: @margin;
+  font-size: 12px;
 
   p {
     margin-bottom: 0px;
@@ -119,6 +121,6 @@ table.sql_rows {
 
 
 h5 {
-  margin: 32px 0 0 0;
+  margin: 2*@margin 0 0 0;
   font-size: 12px;
 }

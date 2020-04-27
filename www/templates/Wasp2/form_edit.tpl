@@ -16,6 +16,7 @@
   [equ:tabAttach=Attachments]
   [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
   [equ:MultiFiles= files selected.]
+  [equ:phSelect=Select file(s) to attach]
 |
   [equ:Caption=Заглавие на темата]
   [equ:Content=Съдържание на поста]
@@ -28,6 +29,7 @@
   [equ:tabAttach=Файлове]
   [equ:FileLimit=(брой ≤ 10, размер ≤ 1MB)]
   [equ:MultiFiles= файла са избрани.]
+  [equ:phSelect=Избери файл(ове) за прикачане]
 |
   [equ:Caption=Название темы]
   [equ:Content=Содержание поста]
@@ -40,6 +42,7 @@
   [equ:tabAttach=Вложения]
   [equ:FileLimit=(количество ≤ 10, размер ≤ 1MB)]
   [equ:MultiFiles= выбранные файлы.]
+  [equ:phSelect=Выберите файл(ы) для вложения]
 |
   [equ:Caption=Titre du sujet]
   [equ:Content=Contenu du message]
@@ -52,6 +55,7 @@
   [equ:tabAttach=Pièces jointes]
   [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
   [equ:MultiFiles= dossiers sélectionnés.]
+  [equ:phSelect=Joindre un fichier]
 |
   [equ:Caption=Titel des Themas]
   [equ:Content=Inhalt des Beitrags]
@@ -64,6 +68,7 @@
   [equ:tabAttach=Anhänge]
   [equ:FileLimit=(Anzahl ≤ 10, Größe ≤ 1MB)]
   [equ:MultiFiles= ausgewählte Dateien.]
+  [equ:phSelect=Wählen Sie eine Datei als Anhang aus]
 ]
 
 <div class="editor" id="editor">
@@ -86,7 +91,6 @@
       <input id="tab0" name="tabselector" type="radio" value="0" checked>
       <label for="tab0">[const:tabText]</label>
       <section>
-
         <p>[const:Content]:</p>
         [include:edit_toolbar.tpl]
         <textarea name="source" id="source" required>[source]</textarea>
@@ -99,8 +103,8 @@
 
         <div class="editgroup">
           <div class="file-browse">
-            <label for="attach" id="browse-txt"></label>
-            <input type="file" placeholder="[const:phSelect]" id="attach" name="attach" multiple="multiple">
+            <label for="attach" id="browse-txt" data-empty="[const:phSelect]"></label>
+            <input type="file" placeholder="[const:phSelect]" id="attach" name="attach" multiple="multiple" data-multiselect="[const:MultiFiles]">
             <label id="browse-btn" class="btn" for="attach">Browse</label>
           </div>
         </div>
@@ -165,18 +169,6 @@
     </div>
   </form>
 </div>
-
-
-<script>
-  var lblMultifiles = '[const:MultiFiles]';
-
-var emolib = document.getElementById("emolib");
-var emocode = "";
-
-for (var i = 0x1f300; i < 0x1fae0; i++) emocode += ' ' + String.fromCodePoint(i);
-emolib.innerHTML = emocode;
-
-</script>
 
 <script src="[special:skin]/highlight.js"></script>
 <script src="[special:skin]/editors.js"></script>
