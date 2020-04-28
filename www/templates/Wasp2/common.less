@@ -53,8 +53,7 @@ a:not(:hover) {
 .btn-bar {
   display: flex;
   flex-wrap: wrap;
-  margin: -@margin/2;
-  padding: @margin 0;
+  margin: 0 -@margin/2;
 }
 
 .btn {
@@ -283,7 +282,7 @@ input^[type=search^] {
 
 .navigation3 {
   float: left;
-  margin: -@margin/2;
+  margin: 0 -@margin/2 1.5*@margin -@margin/2;
   .btn {
     background-color: @clYellow;
     color: @clBlack;
@@ -624,8 +623,7 @@ span.ntf {
 
 div.page_row {
   display: flex;
-  margin: -@margin/2;
-  padding: @margin 0;
+  margin: 0 -@margin/2 1.5*@margin -@margin/2;
   flex-wrap: wrap;
   font-size: 12px;
   justify-content: end;
@@ -665,7 +663,6 @@ footer {
   width: @globWidth;
   max-width: @globMaxWidth;
   margin: @globMarginV;
-  border-top: 8px solid @clLightGray;
 
   padding: @margin;
   line-height: 1rem;

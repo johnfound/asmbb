@@ -11,8 +11,8 @@
 @sideWidth: 2*@buttonHeight + 4*@margin;
 @globWidth: ~"calc( 100% - @{sideWidth} )";
 @globMaxWidth: 1280px;
-@globMargin: 0 auto;
-@globMarginV: @margin auto;
+@globMargin: @margin auto;
+@globMarginV: 1.5*@margin auto;
 
 @margin: 8px;
 @radius: 0px;

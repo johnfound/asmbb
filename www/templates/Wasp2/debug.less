@@ -7,10 +7,15 @@ div.debug {
   max-width: @globMaxWidth;
   margin: @globMargin;
 
-  background-color: @clArticleBG;
-  color: @clArticleFG;
+  background-color: @clWhite;
+  color: @clBlack;
+  border: 1px solid @clGray;
   padding: 16px;
   font-size: 12px;
+
+  h1 {
+    font-size: 16px;
+  }
 }
 
 
@@ -19,17 +24,18 @@ table.debug_table {
   border: 1px solid @clGray;
   width: 100%;
 
-  font-size: 14px;
+  font-size: 12px;
 
   th {
-    border: 1px solid @clBlack;
-    padding: 4px;
+    border: 1px solid @clGray;
+    padding: 2px;
     max-width: 300px;
     text-align: center;
   }
+
   td {
     border: 1px solid @clGray;
-    padding: 4px;
+    padding: 2px;
     max-width: 400px;
     text-align: left;
     vertical-align: top;

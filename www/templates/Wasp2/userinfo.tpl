@@ -8,7 +8,7 @@
     <h1>[username]</h1>
     [html:[minimag:[user_desc]]]
   </div>
-  <div class="user_stat post-text">
+  <div class="user_stat">
 [case:[special:lang]|
     <h1>Statistics for [username]:</h1>
     <ul>

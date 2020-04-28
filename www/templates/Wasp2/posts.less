@@ -27,7 +27,7 @@ h1.thread_caption {
 
 
 .thread_tags {
-  margin: 0;
+  margin: @margin 0;
 
   li {
 
@@ -57,14 +57,14 @@ h1.thread_caption {
 
 
 div.current_version {
-  border-left: 8px solid @clColor1FG;
-  margin-left: -16px;
-  padding-left: 8px;
+  border-right: 4px solid @clRed;
+  margin-right: -4px;
 }
 
 
 .post {
-  padding: @margin 0;
+  margin: 2*@margin 0;
+  border: 1px solid @clGray;
 
   a {
     color: @clRed;
