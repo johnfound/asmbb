@@ -1,5 +1,5 @@
-C Wasp2:\sWork\son\shistory\spages,\ssome\sgeneral\sstyle\srework\sfor\smore\smargin\suse\sinstead\sof\spadding...
-D 2020-04-28T05:22:34.666
+C More\scustomizeable\shtml\sfor\sthe\ssearch\swith\smissing\sresults.
+D 2020-04-28T14:08:09.754
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -69,8 +69,8 @@ F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
 F source/render2.asm 097fd8bebb739967aa52e29381d515ad678d05c7
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
-F source/search.asm 474ec06449170797b0b4f5523361f9e184f15837
-F source/search.sql 00fe6fb1da0ae7a151abe6a993ef8be424b093a6
+F source/search.asm 60acccb553021d13c932470672aec7a3d943443d
+F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm 3123d67b30fd4e86b0716cf0a6387e9c8b0fc91c
 F source/settings.sql 066cc77197d5fae94fb27c2bd72aabb2c4b85d8a
@@ -909,7 +909,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 970123c099b66f1bb581fa4c14584b5320729816 x
-P fcd8e24af3884149f8ea52b082d259fb50a2e7ec
-R b2582030ffa33879adb4ae43fbf85bb7
+P 94adb7191f838593ef8f5d684566d3800606ad91
+R c9880199799879475abcb5a2feedcab0
 U johnfound
-Z cc41cb9b86f5cd83d49519f8d272b166
+Z 28279024d72eb76a01b13a4a3a133552

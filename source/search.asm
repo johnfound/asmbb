@@ -273,10 +273,10 @@ begin
 
 .empty_search:
 
-        stdcall TextCat, edi, txt '<h3>'
+        stdcall TextCat, edi, txt '<div class="nothing"><p>'
         mov     eax, [esi+TSpecialParams.userLang]
         stdcall TextCat, edx, [cEmptySearch+8*eax]
-        stdcall TextCat, edx, txt '</h3>'
+        stdcall TextCat, edx, txt '</p></div>'
         mov     edi, edx
         jmp     .search_ok
 
