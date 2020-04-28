@@ -7,7 +7,7 @@
   [equ:phUser=Username]
   [equ:phPass=Password]
   [equ:lblPers=Persistent login]
-  [equ:btnSubmit=Submit]
+  [equ:btnSubmit=Login]
   [equ:helpLogin=
     [case:[email_flag]||<p>If you forgot your password, <b><a href="/!resetpassword">click here</a></b>. You have limited reset attempts.</p>]
     [case:[special:canregister]||<p>If you don't have an account, you should <b><a href="/!register">register one</a></b>.</p>]
@@ -79,23 +79,27 @@
 ]
 
 <div class="login">
-  <div class="ui">
-    <a class="ui" href="/">[const:btnThreads]</a>
-  </div>
   <form class="login-block" method="post" target="_self" action="/!login">
     <h1>[const:ttlLogin]</h1>
-    <p class="pi_nick"><input type="text" value="" placeholder="[const:phUser]" name="username" class="username" autofocus maxlength="256"></p>
-    <p class="pi_pass"><input type="password" value="" placeholder="[const:phPass]" name="password" class="password" maxlength="1024" autocomplete="off"></p>
-    <p class="pi_tick"><input type="text" value="[special:referer]" name="backlink" id="backlink"></p>
-    <p class="pi_nick"><input type="checkbox" name="persistent" id="pr" value="1"><label for="pr">[const:lblPers]</label></p>
-    <p class="pi_tick"><input type="text" value="[ticket]" name="ticket" id="ticket"></p>
+
+    <div class="ctrl-panel">
+      <h3>[const:phUser]</h3>
+      <input type="text" value="" name="username" autofocus maxlength="256">
+      <h3>[const:phPass]</h3>
+      <input type="password" value="" name="password" maxlength="1024" autocomplete="off">
+      <p class="pi_tick"><input type="text" value="[special:referer]" name="backlink" id="backlink"></p>
+      <p class="checkbox"><input type="checkbox" name="persistent" id="pr" value="1"><label for="pr">[const:lblPers]</label></p>
+      <p class="pi_tick"><input type="text" value="[ticket]" name="ticket" id="ticket"></pi_tick>
+    </div>
     <noscript>
        <p class="pi_tick">
-       <input type="text" name="submit.x" value="0">
-       <input type="text" name="submit.y" value="0">
+         <input type="text" name="submit.x" value="0">
+         <input type="text" name="submit.y" value="0">
        </p>
     </noscript>
-    <input type="image" name="submit" id="submit" value="Submit"><label class="submit" for="submit">[const:btnSubmit]</label>
+    <div class="btn-bar">
+      <label class="btn" for="submit"><input type="image" name="submit" id="submit" value="Submit">[const:btnSubmit]</label>
+    </div>
   </form>
   <article>
     [const:helpLogin]

@@ -1,120 +1,103 @@
 @import "skin_variables.lsi";
 
 div.login {
-  position: relative;
   width: @globWidth;
   max-width: @globMaxWidth;
+  margin: @globMargin;
   clear: both;
-  margin: 8px auto;
+
+  .btn {
+    background-color: @clYellow;
+    color: @clBlack;
+  }
 
   article {
-    background-color: @clArticleBG;
-    color: @clArticleFG;
-    padding: 16px;
-    margin: 8px auto;
+    background-color: @clWhite;
+    color: @clBlack;
+    padding: 2*@margin;
+    margin: @margin 0;
 
     p {
       color: black;
       margin: 16px;
     }
 
+    a {
+      color: @clRed;
+    }
   }
-}
 
-
-/* login page styles */
-
-form.login-block, form.register-block {
+  & > form {
     width: @msgBoxWidth;
     flex-shrink: 0;
     padding: 16px;
-    background: @clColor1;
-    margin: 8px auto 8px auto;
+    background: @clWhite;
+    color: @clBlack;
+    margin: @globMargin;
 
-    input[type=checkbox] + label {
-        display: block;
-        background-color: @clEditorBG;
-        color: @clEditorFG;
-        padding: 8px 8px 8px 14px;
+    h1 {
+      margin-top: 0;
+      margin-bottom: 2*@margin;
+      padding: @margin/2;
+
+      color: @clYellow;
+      background-color: @clDarkGray;
+      font-size: 1.2*@FontSize;
+      font-variant: small-caps;
+      text-align: center;
     }
-}
 
-form.login-block h1, form.register-block h1, form.settings h1 {
-    height: 38px;
-    text-align: center;
-    color: @clDarkFG;
-    background-color: @clDarkBG;
-    font-size: 20px;
-    font-variant: small-caps;
-    margin-top: 0;
-    margin-bottom: 8px;
-    padding: 8px;
-}
+    h3 {
+      font-size: @FontSize;
+      font-weight: normal;
+      margin: @margin 0px 0px 0px;
+      color: inherit;
+    }
 
-input.username, input.email, input.password, input.number {
-    width: 100%;
-    height: 38px;
-    margin-bottom: 8px;
-    font-size: 16px;
-    padding: 0 20px 0 50px;
-    outline: none;
-    border: @borderEdit;
+    input^[type="text"^], input^[type="password"^], input^[type="email"^] {
+      height: @buttonHeight + 4px;
+      flex-grow: 0;
+      font-size: @FontSize;
+      padding: 0px 8px;
+      outline: none;
+      margin: 4px 0px;
+      border: 1px solid @clGray;
 
-    background: @bgEditor;
-    color: @clEditorFG;
-}
-
-
-input.username {
-    background-image: url('[special:skin]/_images/user.png') !important;
-}
-
-input.email {
-    background-image: url('[special:skin]/_images/email.png') !important;
-}
-
-input.password {
-    background-image: url('[special:skin]/_images/pass.png') !important;
-}
-
-input.username:focus, input.email:focus, input.password:focus {
-    background: @bgEditorFocus;
-}
-
-
-label.submit {
-  height: 38px;
-  line-height: 38px;
-  width: 100%;
-  background: @clButtonBG;
-  color: @clButtonFG;
-  border: none;
-  font-weight: bold;
-  font-size: 16px;
-  font-variant: small-caps;
-  outline: none;
-  cursor: pointer;
-  text-align: center;
-  padding: 0px;
-  display: block;
-  margin: 8px 0px;
-
-  &:hover {
-    background: @clButtonActiveBG;
-    color: @clButtonActiveFG;
+      background-color: @clWhite;
+      color: @clBlack;
+      width: 100%;
+      &:focus {
+        border: 1px solid @clYellow;
+      }
+    }
   }
 }
+
+
+.ctrl-panel {
+  background-color: @clLightGray;
+  margin: @margin 0;
+  padding: @margin;
+
+  color: @clBlack;
+  border: 1px solid @clGray;
+}
+
+.checkbox > input[type=checkbox] + label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    color: @clBlack;
+}
+
 
 #submit {
   position: absolute;
   z-index: -1;
   left: -10000px;
-
   &:focus + label {
-    background: @clButtonActiveBG;
-    color: @clButtonActiveFG;
-    outline: 2px dotted @clSeparator;
-    outline-offset: -2px;
+
   }
 }
 

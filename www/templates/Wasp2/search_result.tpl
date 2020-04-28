@@ -1,37 +1,33 @@
 [case:[special:lang]|
   [equ:tThread=Thread]
-  [equ:tPost=Post]
   [equ:tMore=read more...]
 |
   [equ:tThread=Тема]
-  [equ:tPost=Съобщение]
   [equ:tMore=повече...]
 |
   [equ:tThread=Тема]
-  [equ:tPost=Сообщение]
   [equ:tMore=больше...]
 |
   [equ:tThread=Sujet]
-  [equ:tPost=Message]
   [equ:tMore=lire la suite...]
 |
   [equ:tThread=Thema]
-  [equ:tPost=Beitrag]
   [equ:tMore=weiterlesen...]
 ]
 
 <div class="post">
-  <div class="search_info">
-    <img  width="32" height="32" class="unread" [case:[Unread]|src="[special:skin]/_images/onepost_gray.svg" alt="Rd">|src="[special:skin]/_images/onepost.svg" alt="URd">]    <a class="user_name" href="/!userinfo/[url:[UserName]]">[UserName]</a>
-    <img class="smallavatar" src="/!avatar/[url:[username]]?v=[AVer]" alt="(ツ)">
-    <div class="changed">[PostTime]</div>
+  <div class="post-header">
+    [case:[Unread]||<svg width="16" height="16" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      <path d="m12.2 12.4 3.78-11.6 3.78 11.6 12.2 4e-4-9.89 7.19 3.78 11.6-9.89-7.18-9.89 7.19 3.78-11.6-9.89-7.19z"/>
+    </svg>]
+
+    <a class="post-link" href="../[rowid]/!by_id">#[rowid]</a>
+
+    <img class="avatar" src="/!avatar/[url:[UserName]]?v=[AVer]" alt="(ツ)">
+    <p><a class="user_name" href="/!userinfo/[url:[UserName]]">[UserName]</a>; [const:tThread]: <b><a href="../[case:[special:thread]|[Slug]/|]">[Caption]</a></b>; [PostTime]</p>
   </div>
-  <div class="post_thread">
-    [const:tThread]: <a href="../[case:[special:thread]|[Slug]/|]">[Caption]</a>
-    [const:tPost]: <a href="../[rowid]/!by_id">#[rowid]</a>
-  </div>
-  <div class="post_sum">
+  <div class="post-text">
     <pre>[content]</pre>
-    <div class="post_link"><a href="../[rowid]/!by_id">[const:tMore]</a></div>
+    <a class="post-link" href="../[rowid]/!by_id">[const:tMore]</a>
   </div>
 </div>

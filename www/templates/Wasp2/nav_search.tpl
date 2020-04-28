@@ -1,4 +1,5 @@
 [css:navigation.css]
+[css:posts.css]
 [css:search.css]
 
 [case:[special:lang]|
