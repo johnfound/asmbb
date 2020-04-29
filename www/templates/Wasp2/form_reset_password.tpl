@@ -63,7 +63,8 @@
     <p>... ou utiliser un gestionnaire de mots de passe.</p>
   ]
 |
-  [equ:pDirections=Überprüfen Sie Ihr Postfach - Sie sollten eine Bestätigungs-E-Mail erhalten haben. Kopieren Sie den <b>geheimen Code</b> aus der E-Mail in das Feld für den geheimen Code. Füllen Sie <b>alle</b> weiteren Felder aus. Dann schicken Sie das Formular ab.]
+  [equ:pDirections=Überprüfen Sie Ihr Postfach - Sie sollten eine Bestätigungs-E-Mail erhalten haben. Kopieren Sie den <b>geheimen Code</b> aus der E-Mail in das Feld für den geheimen Code. Füllen Sie <b>alle</b> weiteren Felder aus. Dann schicken Sie das
+Formular ab.]
   [equ:ttlTitle=Passwort zurücksetzen]
   [equ:phUser=Benutzername]
   [equ:phEmail=E-Mail-Adresse]
@@ -80,21 +81,26 @@
 ]
 
 <div class="login">
-  <div class="ui">
-    <a class="ui" href="/">Threads</a>
-  </div>
   <article>
     <p>[const:pDirections]</p>
   </article>
   <form class="register-block" method="post" action="/!resetpassword/3">
     <h1>[const:ttlTitle]</h1>
-    <input type="text" value="" placeholder="[const:phUser]" name="username" class="username" maxlength="256" autofocus>
-    <input type="text" value="" placeholder="[const:phEmail]" name="email" class="email" maxlength="320">
-    <input type="text" value="" name="secret" placeholder="[const:phSecret]" class="password" maxlength="32">
-    <input type="password" value="" placeholder="[const:phPass]" name="password" class="password" maxlength="1024" autocomplete="off">
-    <input type="password" value="" placeholder="[const:phPass2]" name="password2" class="password" maxlength="1024" autocomplete="off">
+
+    <div class="ctrl-panel">
+      <h3>[const:phUser]:</h3>
+      <input type="text" name="username" class="username" maxlength="256" autofocus>
+      <h3>[const:phEmail]:</h3>
+      <input type="text" name="email" class="email" maxlength="320">
+      <h3>[const:phSecret]:</h3>
+      <input type="text" name="secret" class="password" maxlength="32">
+      <h3>[const:phPass]:</h3>
+      <input type="password" name="password" class="password" maxlength="1024" autocomplete="off">
+      <h3>[const:phPass2]:</h3>
+      <input type="password" name="password2" class="password" maxlength="1024" autocomplete="off">
+    </div>
     <input type="hidden" value="[ticket]" name="ticket" id="ticket">
-    <input type="submit" name="submit" class="button" value="[const:btnSubmit]">
+    <div class="btn-bar"><input type="submit" name="submit" class="btn" value="[const:btnSubmit]"></div>
   </form>
   <article>
     [const:helpRegister]

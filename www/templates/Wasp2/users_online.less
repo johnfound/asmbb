@@ -1,18 +1,13 @@
 @import "skin_variables.lsi";
 
-a.ban_link {
-  background-image: url("[special:skin]/_images/ban.svg");
-  background-size: 18px 18px;
-  display: inline-block;
-  width: 18px;
-  height: 18px;
-  vertical-align: middle;
+a.ban_link:before {
+  content: '🔨';
 }
 
 a.online {
   font-weight: bold;
-  background-color: @clDarkBG;
-  color: @clDarkFG;
+  background-color: @clDarkGray;
+  color: @clWhite !important;
   vertical-align: middle;
   padding: 1px 4px;
 }
@@ -24,46 +19,38 @@ div.users_online {
   max-width: @globMaxWidth;
   margin: @globMargin;
 
-  background-color: @clArticleBG;
-  color: @clArticleFG;
-  padding: 8px;
-  font-size: 13px;
+  background-color: @clWhite;
+  color: @clBlack;
+  padding: @margin;
+
+  a {
+    color: @clRed;
+  }
 }
 
 
 table.users_table {
   border-collapse: collapse;
-  border: 2px solid gray;
+  border: 1px solid @clGray;
   width: 100%;
-
-  font-size: 16px;
 }
 
 table.users_table th {
-  border: 2px solid black;
-  padding: 8px;
+  border: 1px solid @clGray;
+  padding: @margin/2 @margin;
   max-width: 300px;
   text-align: center;
 }
 
 table.users_table td {
-  border: 2px solid gray;
-  padding: 8px;
+  border: 1px solid @clGray;
+  padding: @margin/2 @margin;
   max-width: 400px;
   text-align: left;
-  vertical-align: top;
+  vertical-align: middle;
 
   word-wrap: break-word;       /* Internet Explorer 5.5+ */
   word-break: break-all;
 }
 
-table.users_table td:nth-of-type(1) {
-  width: 1px;
-  white-space: nowrap;
-}
-
-table.users_table td:nth-of-type(2) {
-  width: 1px;
-  white-space: nowrap;
-}
 

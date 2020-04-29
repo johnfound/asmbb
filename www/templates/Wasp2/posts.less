@@ -72,9 +72,6 @@ div.current_version {
       text-decoration: none;
     }
   }
-  svg {
-    fill: @clYellow;
-  }
 }
 
 
@@ -95,6 +92,10 @@ div.current_version {
     white-space: nowrap;
     text-overflow: ellipsis;
     flex-shrink: 10;
+    > svg {
+      fill: @clYellow;
+      vertical-align: bottom;
+    }
   }
 
   .btn {

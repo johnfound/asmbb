@@ -6,24 +6,30 @@ div.users_list {
   margin: @globMargin;
 
   table {
-    margin: 8px 0px;
+    margin: @margin 0;
     border-collapse: collapse;
-    border-spacing: 0px;
-    background-color: @clArticleBG;
-    color: @clArticleFG;
+    border-spacing: 0;
+    background-color: @clWhite;
+    color: @clBlack;
     width: 100%;
 
+    a {
+      color: @clRed;
+    }
+
     th {
-      border: 1px solid @clSeparator;
+      border: 1px solid @clGray;
       border-left: none;
       border-right: none;
-      padding: 8px;
+      padding: @margin/2;
       text-align: center;
+      background-color: @clGray;
       a {
         text-decoration: none;
+        color: @clDarkGray;
       }
       a.sorted {
-        color: @clButtonBG;
+        color: @clRed;
       }
     }
 
@@ -44,16 +50,18 @@ div.users_list {
       padding: 0px;
 
       img {
-        width: 64px;
-        height: 64px;
-        background-color: @clColor1;
+        width: 48px;
+        height: 48px;
+        line-height: 40px;
+        background-color: @clYellow;
+        color: @clDarkGray;
+        text-align: center;
+        font-size: 24px;
+        border-radius: 50%;
+        margin: @margin/2 auto;
         display: block;
-        margin: 4px auto;
       }
     }
-
   }
-
-
 }
 

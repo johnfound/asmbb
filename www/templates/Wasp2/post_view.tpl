@@ -47,7 +47,12 @@
 
 <div class="post" id="[id]">
   <div class="post-header">
-    <a href="#[id]">#[id]</a>
+    <a href="#[id]">
+      [case:[Unread]||<svg width="16" height="16" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <path d="m12.2 12.4 3.78-11.6 3.78 11.6 12.2 4e-4-9.89 7.19 3.78 11.6-9.89-7.18-9.89 7.19 3.78-11.6-9.89-7.19z"/>
+      </svg>]
+      #[id]
+    </a>
 
     <img class="avatar" alt="(ツ)" src="/!avatar/[url:[UserName]]?v=[AVer]">
 

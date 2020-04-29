@@ -83,9 +83,9 @@
     <h1>[const:ttlLogin]</h1>
 
     <div class="ctrl-panel">
-      <h3>[const:phUser]</h3>
+      <h3>[const:phUser]:</h3>
       <input type="text" value="" name="username" autofocus maxlength="256">
-      <h3>[const:phPass]</h3>
+      <h3>[const:phPass]:</h3>
       <input type="password" value="" name="password" maxlength="1024" autocomplete="off">
       <p class="pi_tick"><input type="text" value="[special:referer]" name="backlink" id="backlink"></p>
       <p class="checkbox"><input type="checkbox" name="persistent" id="pr" value="1"><label for="pr">[const:lblPers]</label></p>

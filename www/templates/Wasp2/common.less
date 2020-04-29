@@ -75,6 +75,7 @@ a:not(:hover) {
   user-select: none;
 
   font-family: inherit;
+  font-size: inherit;
   font-weight: normal;
   white-space: nowrap;
 
@@ -562,17 +563,20 @@ a.current_tag {
       }
     }
 
-    + label + * {
-      padding: @margin/2 @margin;
-      background-color: @clLightGray;
-      border: 1px solid @clGray;
-      color: @clBlack;
-      position: absolute;
-      top: @buttonHeight+4px;
-      bottom: 0;
-      flex-basis: 100%;
-      display: flex;
-      flex-direction: column;
+    + label {
+      outline-offset: -3px !important;
+      + * {
+        padding: @margin/2 @margin;
+        background-color: @clLightGray;
+        border: 1px solid @clGray;
+        color: @clBlack;
+        position: absolute;
+        top: @buttonHeight+4px;
+        bottom: 0;
+        flex-basis: 100%;
+        display: flex;
+        flex-direction: column;
+      }
     }
   }
 

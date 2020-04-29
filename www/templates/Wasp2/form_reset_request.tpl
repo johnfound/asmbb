@@ -5,7 +5,7 @@
 [case:[special:lang]|
   [equ:ttlRequest=Reset password request]
   [equ:phUser=Username]
-  [equ:phEmail=e-mail]
+  [equ:phEmail=E-mail]
   [equ:btnSubmit=Submit]
   [equ:helpRequest=
     <p>You have one reset attempt in 24 hours.</p>
@@ -17,7 +17,7 @@
 |
   [equ:ttlRequest=Заявка за възстановяване на парола]
   [equ:phUser=Потребител]
-  [equ:phEmail=e-mail]
+  [equ:phEmail=E-mail]
   [equ:btnSubmit=Изпрати]
   [equ:helpRequest=
     <p>Имате един опит за нулиране на 24 часа.</p>
@@ -41,7 +41,7 @@
 |
   [equ:ttlRequest=Réinitialiser la demande de mot de passe]
   [equ:phUser=Nom d'utilisateur]
-  [equ:phEmail=email]
+  [equ:phEmail=Email]
   [equ:btnSubmit=Envoyer]
   [equ:helpRequest=
     <p>Vous avez droit à une réinitialisation toutes les 24h.</p>
@@ -65,15 +65,17 @@
 ]
 
 <div class="login">
-  <div class="ui">
-    <a class="ui" href="/">Threads</a>
-  </div>
-  <form class="register-block" method="post" action="/!resetpassword/1">
+  <form method="post" action="/!resetpassword/1">
     <h1>[const:ttlRequest]</h1>
-    <input type="text" value="" placeholder="[const:phUser]" name="username" class="username" maxlength="256" autofocus>
-    <input type="text" value="" placeholder="[const:phEmail]" name="email" class="email" maxlength="320">
+
+    <div class="ctrl-panel">
+      <h3>[const:phUser]:</h3>
+      <input type="text" value="" name="username" maxlength="256" autofocus>
+      <h3>[const:phEmail]:</h3>
+      <input type="text" value="" name="email" maxlength="320">
+    </div>
     <input type="hidden" value="[ticket]" name="ticket" id="ticket">
-    <input type="submit" name="submit" class="button" value="[const:btnSubmit]">
+    <div class="btn-bar"><input type="submit" name="submit" class="btn" value="[const:btnSubmit]"></div>
   </form>
   <article>
     [const:helpRequest]
