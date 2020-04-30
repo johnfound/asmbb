@@ -34,32 +34,38 @@ div.users_list {
     }
 
     td {
-      border: 1px solid @clSeparator;
-      padding: 8px 32px;
-      text-align: right;
+      border: 1px solid @clGray;
       border-left: none;
       border-right: none;
-    }
 
-    td.nick {
-      text-align: left;
+      padding: @margin @margin;
+      text-align: center;
+      height: 40px;
     }
 
     td.avatar {
       text-align: center;
       padding: 0px;
+      position: relative;
 
       img {
-        width: 48px;
-        height: 48px;
+        width: 32px;
+        height: 32px;
         line-height: 40px;
         background-color: @clYellow;
         color: @clDarkGray;
         text-align: center;
-        font-size: 24px;
         border-radius: 50%;
-        margin: @margin/2 auto;
+        margin: 0 auto;
         display: block;
+        &:hover {
+          width: 80px;
+          height: 80px;
+          position: absolute;
+          left: ~"calc(50% - 40px)";
+          top: ~"calc(50% - 40px)";
+          z-index: 1000;
+        }
       }
     }
   }

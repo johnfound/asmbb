@@ -1,5 +1,5 @@
-C Styling:\sPassword\sreset\sforms,\sonline\susers\sreport\stable.\sCosmetics\shere\sand\sthere.
-D 2020-04-29T13:42:24.230
+C More\scompact\susers\slist.
+D 2020-04-30T04:50:47.225
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -810,7 +810,7 @@ F www/templates/Wasp2/toaster.less 09f95cd572a30427e80a980b0e6d6f615564326a
 F www/templates/Wasp2/userinfo.less 40fd4c1eb81ae3f758075407b1987a1964aacaf8
 F www/templates/Wasp2/userinfo.tpl 77fd3cc6001cfd2c2eca432a937d7c389c19e7cb
 F www/templates/Wasp2/users_online.less 9a629b08390de0bb43ca51cb3451f72fc1c4ae71
-F www/templates/Wasp2/userslist.less 754a8023b2356021aece7c43a6608caebeb1e2b4
+F www/templates/Wasp2/userslist.less c78a02975b6d81a2b45e001f8305ac55b5170e50
 F www/templates/Wasp2/userslist_ftr.tpl cdf4bf8f51f450a842d85ab41a089e05a2e12f73
 F www/templates/Wasp2/userslist_hdr.tpl 79c5b28322e9c0f587ed0f81ac451fe12d38235f
 F www/templates/build_styles.sh 1a54085ad5672bc6480e1d67922946a504c8e966 x
@@ -910,7 +910,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 970123c099b66f1bb581fa4c14584b5320729816 x
-P 366192e0a683fc672422fc38fc4041849e519962
-R 01658d8d06cf5f9115a2183a430b08dc
+P cae173434a768c734de5a6295f5e82b754a2f312
+R ec260c41efd5bc57ea435b713d6ecaaf
 U johnfound
-Z 66adf935734cb11e76cc599c4319ae69
+Z 2ee4f8bee1a718efdc73cb3f3d46b401
