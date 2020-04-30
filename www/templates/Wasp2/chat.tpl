@@ -1,4 +1,3 @@
-[css:navigation.css]
 [css:chat.css]
 
 <script>
@@ -33,8 +32,8 @@
       <div id="syslog"></div>
     </div>
     <div id="chat_form">
-      <input class="chat_input" type="edit" placeholder="[const:phNick]" id="chat_user" onkeypress="KeyPress(event, UserRename)" onChange="UserRename()">
-      <input class="chat_input" type="edit" placeholder="[const:phText]" id="chat_message" autofocus onkeypress="KeyPress(event, SendMessage)">
+      <input class="chat_input" type="text" placeholder="[const:phNick]" id="chat_user" onkeypress="KeyPress(event, UserRename)" onChange="UserRename()">
+      <input class="chat_input" type="text" placeholder="[const:phText]" id="chat_message" autofocus onkeypress="KeyPress(event, SendMessage)">
       <a class="icon_btn" onclick="SendMessage()"><img class="img_btn" src="[special:skin]/_images/edit_white.svg" alt="&nbsp;Post&nbsp;"></a>
     </div>
   </div>

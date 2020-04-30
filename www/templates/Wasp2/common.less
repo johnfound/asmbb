@@ -15,6 +15,7 @@ body {
   color: @clBlack;
   padding: 0;
   margin: 0;
+  min-height: 100vh;
 }
 
 body.limited {
@@ -24,6 +25,12 @@ body.limited {
 a:not(:hover) {
   text-decoration: none;
 }
+
+svg {
+  overflow: visible;
+}
+
+
 
 
 .small {
@@ -139,12 +146,6 @@ label:focus-within {
 }
 
 
-select.btn:-moz-focusring {
-  text-shadow: 0 0 0 @clBlack !important;
-  color: transparent !important;
-}
-
-
 /* header styles */
 
 div.header {
@@ -221,9 +222,16 @@ input {
   font-family: inherit;
 }
 
+
+select.btn:-moz-focusring {
+  text-shadow: 0 0 0 @clBlack !important;
+  color: transparent !important;
+}
+
 select {
   -webkit-appearance: none;
   -moz-appearance: none;
+  padding: 3px 4px;
   padding-right: 20px !important;
   background-image: url('data:image/svg+xml,[url:<svg version="1.1" viewBox="0 0 8 4" xmlns="http://www.w3.org/2000/svg"><path d="m0 0h8l-4 4z"/></svg>]');
   background-repeat: no-repeat;
@@ -237,14 +245,21 @@ select {
 input^[type=text^], input^[type=search^], input^[type=email^], input^[type=password^] {
   background-color: @clWhite;
   color: @clBlack;
+  padding: 4px 8px;
 
   flex-grow: 1;
   flex-shrink: 1;
 }
 
+
+input^[type=text^], input^[type=email^], input^[type=password^], select {
+  border: 1px solid @clGray;
+  &:focus {
+    border: 1px solid @clYellow;
+  }
+}
+
 input^[type=search^] {
-  height: @buttonHeight;
-  padding: 4px 8px;
   border: none;
 }
 
@@ -470,11 +485,6 @@ a.current_tag {
         vertical-align: text-bottom;
       }
     }
-
-//    &:focus + * {
-//      outline: 1px dotted @clBlack;
-//      outline-offset: 2px;
-//    }
 
     &:not(:checked) + * {
       white-space: nowrap !important;
@@ -740,6 +750,7 @@ div.message {
   background-color: @clWhite;
 
   #browse-txt {
+    cursor: pointer;
     line-height: @buttonHeight;
     display: none;
     flex-grow: 1;

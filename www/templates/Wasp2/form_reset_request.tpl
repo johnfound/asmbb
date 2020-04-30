@@ -1,6 +1,4 @@
-[css:navigation.css]
 [css:login.css]
-[css:settings.css]
 
 [case:[special:lang]|
   [equ:ttlRequest=Reset password request]

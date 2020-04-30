@@ -1,6 +1,4 @@
-[css:navigation.css]
 [css:login.css]
-[css:settings.css]
 
 [case:[special:lang]|
   [equ:pDirections=Check your mail box for confirmation e-mail. Copy the <b>secret code</b> from the e-mail to this form "Secret token" field. Fill in <b>all</b> remaining fields. Submit the form.]

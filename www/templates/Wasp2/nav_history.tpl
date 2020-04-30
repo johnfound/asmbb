@@ -1,4 +1,3 @@
-[css:navigation.css]
 [css:posts.css]
 [css:markdown.css]
 

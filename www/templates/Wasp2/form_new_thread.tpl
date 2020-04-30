@@ -109,7 +109,7 @@
 
       <input id="tab1" name="tabselector" type="radio" value="0" checked>
       <label for="tab1">[const:ttlEditorTab]</label>
-      <section class="checkbox">
+      <section>
         <div class="editgroup">
           <div>
             <p>[const:ttlTitle]:</p>
@@ -120,11 +120,13 @@
             <input type="text" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
           </div>
         </div>
-        <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]><label for="limited">[const:ttlLimited]</label>
-        <div class="editgroup" id="users_invited">
-          <div>
-            <p>[const:ttlInvited]:</p>
-            <input type="text" id="invited" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
+        <div class="checkbox">
+          <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]><label for="limited">[const:ttlLimited]</label>
+          <div class="editgroup" id="users_invited">
+            <div>
+              <p>[const:ttlInvited]:</p>
+              <input type="text" id="invited" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
+            </div>
           </div>
         </div>
   [case:[special:canupload]||
@@ -132,9 +134,9 @@
           <div>
             <p>[const:ttlAttach]:</p>
             <div class="file-browse">
-              <label for="inpuit-file-browse" id="browse-txt"></label>
+              <label for="input-file-browse" id="browse-txt"></label>
               <input type="file" placeholder="[const:phSelect]" id="input-file-browse" name="attach" multiple="multiple" data-multiselect="[const:MultiFiles]">
-              <label id="browse-btn" class="btn" for="inpuit-file-browse">Browse</label>
+              <label id="browse-btn" class="btn" for="input-file-browse">Browse</label>
             </div>
           </div>
         </div>

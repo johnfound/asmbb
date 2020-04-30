@@ -1,5 +1,4 @@
 [css:common.css]
-[css:navigation.css]
 [css:toaster.css]
 
 [case:[special:lang]|

@@ -41,10 +41,11 @@
 
     <div class="spacer"></div>
 
-    [case:[rowid]||<a title="[const:ttlRestore]"  href="/[rowid]/!restore">
+    [case:[rowid]||<a class="btn img-btn" title="[const:ttlRestore]"  href="/[rowid]/!restore">
       <svg version="1.1" width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-       <path d="m21 16c0-2.76-2.24-5-5-5s-5 2.24-5 5 2.24 5 5 5 5-2.24 5-5z" />
-       <path d="m16 3c-7.18 0-13 5.82-13 13h-3l4.5 6 4.5-6h-3c0-5.53 4.48-10 10-10s10 4.47 10 10-4.48 10-10 10c-2.76 0-5.26-1.12-7.07-2.93l-2.12 2.12c2.35 2.35 5.6 3.81 9.19 3.81 7.18 0 13-5.82 13-13s-5.82-13-13-13z"/>
+        <circle cx="16" cy="16" r="6"/>
+        <path d="m16 0a16 16 0 00-16 16h4a12 12 0 0112-12 12 12 0 0112 12 12 12 0 01-12 12 12 12 0 01-8.48-3.52l-2.83 2.83a16 16 0 0011.3 4.69 16 16 0 0016-16 16 16 0 00-16-16z"/>
+        <path d="m-4 16h12l-6 8z"/>
       </svg>
     </a>]
 

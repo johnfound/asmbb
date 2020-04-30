@@ -1,6 +1,5 @@
-[css:navigation.css]
 [css:posts.css]
-[css:postnew.css]
+[css:posteditor.css]
 [css:threadnew.css]
 
 [case:[special:lang]|
@@ -55,21 +54,28 @@
   [equ:btnRevert=Zurücksetzen]
 ]
 
-<div class="new_editor">
-  <div class="ui">
-    <a class="ui left" href=".">The thread</a>
-  </div>
-  <form id="editform" action="!edit_thread" method="post">
 
-    <p>[const:ttlTitle]:</p>
-    <input type="edit" value="[caption]" placeholder="[const:phTitle]" name="title" autofocus>
-    <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</p>
-    <input type="edit" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
+<div class="navigation3 btn-bar">
+  <a class="btn" href=".">The thread</a>
+</div>
+
+<div class="editor">
+  <form id="editform" action="!edit_thread" method="post">
+    <div class="editgroup">
+      <div>
+        <p>[const:ttlTitle]:</p>
+        <input type="text" value="[caption]" placeholder="[const:phTitle]" name="title" autofocus>
+      </div>
+      <div>
+        <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</p>
+        <input type="text" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
+      </div>
+    </div>
     [case:[special:isadmin]||<input type="checkbox" id="pinned" name="pinned" value="1" [case:[Pinned]||checked]><label for="pinned">[const:ttlPin]</label>]
     <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]><label for="limited">[const:ttlLimited]</label>
     <div id="users_invited">
       <p>[const:ttlInvited]:</p>
-      <input id="invited" type="edit" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
+      <input id="invited" type="text" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
     </div>
     <div class="panel">
       <input type="submit" name="submit" value="[const:btnSubmit]" >
@@ -79,4 +85,4 @@
   </form>
 </div>
 
-[raw:autocomplete.js]
+<script src="[special:skin]/autocomplete.js"></script>

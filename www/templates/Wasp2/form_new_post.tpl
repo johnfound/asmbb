@@ -69,16 +69,15 @@
 
       <input id="tab1" name="tabselector" type="radio" value="0" checked>
       <label for="tab1">[const:btnNewPost]</label>
-      <section class="checkbox">
-
+      <section>
         [case:[special:canupload]||
         <div class="editgroup">
           <div>
             <p>[const:ttlAttach]:</p>
             <div class="file-browse">
-              <label for="inpuit-file-browse" id="browse-txt"></label>
+              <label for="input-file-browse" id="browse-txt"></label>
               <input type="file" placeholder="[const:phSelect]" id="input-file-browse" name="attach" multiple="multiple" data-multiselect="[const:MultiFiles]">
-              <label id="browse-btn" class="btn" for="inpuit-file-browse">Browse</label>
+              <label id="browse-btn" class="btn" for="input-file-browse">Browse</label>
             </div>
           </div>
         </div>
@@ -87,8 +86,6 @@
         <p>[const:ttlPost]:</p>
         [include:edit_toolbar.tpl]
         <textarea   name="source" id="source" placeholder="[const:phText]">[source]</textarea>
-
-        [case:[special:canupload]||<p class="panel">[const:ttlAttach]:</p><div class="attach"><input type="file" placeholder="[const:phSelect]" name="attach" multiple="multiple" tabindex="-1"></div>]
       </section>
 
       [case:[special:markup=0]||

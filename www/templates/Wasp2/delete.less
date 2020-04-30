@@ -3,38 +3,43 @@
 /* Delete confirm dialog styles */
 
 div.confirm {
-  font-size: 18px;
   width: @msgBoxWidth;
-  background-color: @clFormBG;
-  color: @clFormFG;
-  margin: 8px auto;
-  text-align: left;
-  padding: 16px;
+  background-color: @clWhite;
+  color: @clBlack;
+  margin: 2*@margin auto;
+  padding: 2*@margin;
   clear: both;
 }
 
 
 div.post_preview {
-  margin: 8px 0px;
-  padding: 8px;
-  background-color: @clArticleBG;
-  color: @clArticleFG;
+  margin: @margin 0px;
+  padding: @margin/2;
+  background-color: @clLightGray;
+  color: @clBlack;
+  border: 1px solid @clGray;
   text-align: left;
-  max-height: 200px;
+  max-height: 256px;
   overflow: auto;
   font-size: 80%;
+  scrollbar-width: thin;
 }
 
 
 h1.msg {
   margin: 0px;
-  padding: 8px;
+  padding: @margin/2;
   text-align: center;
   display: block;
-  opacity: 1.0;
+  font-size: 18px;
 }
 
 .warning {
-  background-color: @clMsgWarningBG;
-  color: @clMsgWarningFG;
+  background-color: @clRed;
+  color: @clWhite;
+}
+
+.btn {
+  background-color: @clYellow;
+  color: @clBlack;
 }

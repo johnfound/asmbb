@@ -93,8 +93,11 @@ body {
   overflow: auto;
   margin-top: @margin;
 
-  input[type="text"], textarea {
+  input^[type="text"^], textarea {
     border: 1px solid @clGray;
+  }
+
+  textarea {
     font-size: @FontSizeMono;
     font-family: @FontMonospace;
   }

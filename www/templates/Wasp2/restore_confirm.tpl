@@ -1,4 +1,3 @@
-[css:navigation.css]
 [css:delete.css]
 [css:markdown.css]
 
@@ -40,9 +39,9 @@
         </article>
       </div>
     </div>
-    <div class="panel">
-      <input type="submit" value="[const:btnRestore]" >
-      <a class="button" href="/[postID]/!history#[version]">[const:btnCancel]</a>
+    <div class="btn-bar">
+      <input class="btn" type="submit" value="[const:btnRestore]" >
+      <a class="btn" href="/[postID]/!history#[version]">[const:btnCancel]</a>
       <input type="hidden" name="version" value="[version]" >
       <input type="hidden" name="ticket" value="[Ticket]" >
     </div>
