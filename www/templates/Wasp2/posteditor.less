@@ -52,7 +52,7 @@ body {
 .editor {
   background-color: @clWhite;
   color: @clDarkGray;
-  padding: 0 @margin @margin @margin;
+  padding: @margin;
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -81,7 +81,7 @@ body {
 
 #source {
   flex-grow: 1;
-  margin: 0 0 @margin 0;
+  margin: 0;
   resize: none;
   padding: @margin/2;
 }
@@ -93,23 +93,9 @@ body {
   overflow: auto;
   margin-top: @margin;
 
-  input^[type="text"^], textarea {
-    border: 1px solid @clGray;
-  }
-
   textarea {
     font-size: @FontSizeMono;
     font-family: @FontMonospace;
-  }
-
-  .notabs {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    padding: 0 2*@margin;
-
-    background-color: @clWhite;
-    color: @clBlack;
   }
 }
 

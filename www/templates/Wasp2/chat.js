@@ -102,7 +102,7 @@ function ScrollBottom(force) {
 
 
 function KeyPress(e, proc) {
-  if (e.keyCode == '13') {
+  if (e.keyCode == 13 && e.ctrlKey) {
     proc();
   }
 }
@@ -157,7 +157,7 @@ function CreateUserSpan(user, original) {
   if (user != original) {
     c += " fake_user";
   }
-  return '<span onclick="InsertNick(this)" class="' + c + '" title="' + original + '">' + user + '</span>: ';
+  return '<span onclick="InsertNick(this)" class="' + c + '" title="' + original + '">' + user + '</span>';
 }
 
 
@@ -192,7 +192,14 @@ function OnFullChatMessage(e) {
       var p = document.createElement('p');
       p.id = "chat" + msg.id;
       p.classList.add("message");
-      p.innerHTML = '<span class="time">(' + hours + ':' + minutes + ':' + seconds + ')</span> ' + CreateUserSpan(msg.user, msg.originalname) + replaceEmoticons(linkify(msg.text));
+
+      if (msg.text.indexOf("\n") == -1 ) {
+        var msg_class = "msg_one_line";
+      } else {
+        var msg_class = "msg_multi_line";
+      }
+
+      p.innerHTML = '<span class="time">(' + hours + ':' + minutes + ':' + seconds + ')</span> ' + CreateUserSpan(msg.user, msg.originalname) + '<span class="' + msg_class + '">' + replaceEmoticons(linkify(msg.text)) + '</span>';
       all.appendChild(p);
       cnt++;
 

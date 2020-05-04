@@ -1152,6 +1152,7 @@ begin
         stdcall StrPtr, [.hString]
         mov     esi, eax
 
+.loop_clr:
         xor     eax, eax
 
 .loop:
@@ -1161,7 +1162,7 @@ begin
         jz      .end_of_string
 
         cmp     al, ' '
-        jb      .loop
+        jb      .ctrl_escape
 
         cmp     al, '<'
         je      .char_less_then
@@ -1188,6 +1189,23 @@ begin
         popad
         return
 
+.ctrl_escape:
+        cmp     al, $0d ; CR
+        ja      .space
+        sub     al, 8   ; backspace
+        jc      .space
+
+        mov     ah, [.ctrls + eax]
+        mov     al, '\'
+        stosw
+        jmp     .loop_clr
+
+.space:
+        mov     al, ' '
+        stosb
+        jmp     .loop
+
+.ctrls  db      'b', 't', 'n', 'v', 'f', 'r'
 
 .char_less_then:
         mov     dword [edi], '&lt;'

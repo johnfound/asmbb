@@ -15,7 +15,9 @@ body {
   color: @clBlack;
   padding: 0;
   margin: 0;
-  min-height: 100vh;
+  min-height: 100vh; //~"calc( 100vh - 12px)";
+  display: flex;
+  flex-direction: column;
 }
 
 body.limited {
@@ -69,7 +71,6 @@ svg {
   vertical-align: middle;
 
   border: none;
-  border-radius: @radius;
   text-decoration: none;
 
   padding: 0 @margin;
@@ -84,6 +85,7 @@ svg {
   font-family: inherit;
   font-size: inherit;
   font-weight: normal;
+  font-variant: small-caps;
   white-space: nowrap;
 
   cursor: pointer;
@@ -148,7 +150,7 @@ label:focus-within {
 
 /* header styles */
 
-div.header {
+header {
   position: relative;
   width: @globWidth;
   max-width: @globMaxWidth;
@@ -176,9 +178,10 @@ div.header {
   user-select: none;
   padding-left: @margin;
   padding-right: @margin;
+  color: @clDarkGray;
 
-  svg > path {
-    fill: @clBlack;
+  svg {
+    fill: @clDarkGray;
   }
 
   h1 {
@@ -246,13 +249,14 @@ input^[type=text^], input^[type=search^], input^[type=email^], input^[type=passw
   background-color: @clWhite;
   color: @clBlack;
   padding: 4px 8px;
+  outline: none;
 
   flex-grow: 1;
   flex-shrink: 1;
 }
 
 
-input^[type=text^], input^[type=email^], input^[type=password^], select {
+input^[type=text^], input^[type=email^], input^[type=password^], select, textarea {
   border: 1px solid @clGray;
   &:focus {
     border: 1px solid @clYellow;
@@ -281,6 +285,9 @@ input^[type=search^] {
     color: @clWhite;
     svg {
       fill: @clWhite;
+    }
+    &:hover {
+      box-shadow: -1px 1px 3px @clMiddleGray !important;
     }
   }
 }
@@ -360,8 +367,6 @@ a.taglink {
   min-width: 16px;
   overflow: visible;
   text-overflow: ellipsis;
-  border-radius: @borderRadTags;
-  border: @borderTags;
   text-align: center;
   white-space: nowrap;
   text-decoration: none;
@@ -370,8 +375,8 @@ a.taglink {
 }
 
 a.current_tag {
-  background-color: @clCurrentTagBG;
-  color: @clCurrentTagFG !important;
+  background-color: @clYellow;
+  color: @clBlack !important;
   text-decoration: none;
 }
 
@@ -444,13 +449,13 @@ a.current_tag {
   }
 
   + label {
-    cursor: pointer;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    cursor: pointer;
 
     &::before {
       content: '';
@@ -458,7 +463,7 @@ a.current_tag {
       height: 12px;
       display: inline-block;
       background-color: @clWhite;
-      border: 1px solid @clDarkGray;
+      border: 1px solid @clGray;
       margin-right: @margin/2;
       vertical-align: middle;
     }
@@ -528,8 +533,6 @@ a.current_tag {
 
     &:checked + label {
       height: @buttonHeight + @margin/2;
-      border-bottom-left-radius: 0px;
-      border-bottom-right-radius: 0px;
       & + * {
         width: 100%;
         flex-basis: 100%;
@@ -553,7 +556,7 @@ a.current_tag {
   display: flex;
   flex-wrap: wrap;
   position: relative;
-    flex-grow: 1;
+  flex-grow: 1;
 
   & > input^[type=radio^] {
     &:not(checked) + label {
@@ -562,7 +565,7 @@ a.current_tag {
     }
 
     &:checked + label {
-      background-color: @clLightGray;
+      background-color: @clWhite;
       border: 1px solid @clGray;
       border-bottom: none;
       height: @buttonHeight+5px;
@@ -576,9 +579,9 @@ a.current_tag {
     + label {
       outline-offset: -3px !important;
       + * {
-        padding: @margin/2 @margin;
-        background-color: @clLightGray;
-        border: 1px solid @clGray;
+        padding: @margin/2 0;
+        background-color: @clWhite;
+        border-top: 1px solid @clGray;
         color: @clBlack;
         position: absolute;
         top: @buttonHeight+4px;
@@ -586,6 +589,7 @@ a.current_tag {
         flex-basis: 100%;
         display: flex;
         flex-direction: column;
+        overflow: visible;
       }
     }
   }
@@ -596,6 +600,7 @@ a.current_tag {
     -moz-user-select: none; /* Firefox 2+ */
     -ms-user-select: none; /* IE 10+ */
     user-select: none; /* Standard syntax */
+    cursor: pointer;
 
     padding: @margin/2 @margin;
   }

@@ -147,7 +147,7 @@
 </head>
 
 <body [case:[special:limited]||class="limited"]>
-  <div class="header">
+  <header>
 
     <div class="global-row" id="navigation1">
       [case:[special:userid]||
@@ -189,7 +189,7 @@
       |<form method="post" action="/!logout"><button class="btn" name="logout" type="submit" title="[special:username]">[const:btnLogout]</button></form>
       <a class="btn" href="/!userinfo/[url:[special:username]]" title="[special:username]">[const:btnProfile]</a>
     ]
-  </div>
+  </header>
 
 
   <div class="global-row">

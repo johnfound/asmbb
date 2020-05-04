@@ -77,23 +77,23 @@
   <form class="register-block" method="post" action="/!register/">
     <h1>[const:ttlRegister]</h1>
 
-    <div class="ctrl-panel">
-      <h3>[const:phUser]:</h3>
-      <input type="text" value="" name="username" class="username" maxlength="256" autofocus>
+    <h3>[const:phUser]:</h3>
+    <input type="text" value="" name="username" class="username" maxlength="256" autofocus>
 
-      <div [case:[email_flag]|class="pi_email"|]>
-        <h3>[const:phEmail]:</h3>
-        <input type="text" value="" name="email" maxlength="320">
-      </div>
-
-      <h3>[const:phPass]:</h3>
-      <input type="password" value="" name="password" class="password" maxlength="1024" autocomplete="off">
-
-      <h3>[const:phPass2]:</h3>
-      <input type="password" value="" name="password2" class="password" maxlength="1024" autocomplete="off">
-
-      <input type="text" value="[ticket]" name="ticket" id="ticket" class="pi_tick">
+    <div [case:[email_flag]|class="pi_email"|]>
+      <h3>[const:phEmail]:</h3>
+      <input type="text" value="" name="email" maxlength="320">
     </div>
+
+    <h3>[const:phPass]:</h3>
+    <input type="password" value="" name="password" class="password" maxlength="1024" autocomplete="off">
+
+    <h3>[const:phPass2]:</h3>
+    <input type="password" value="" name="password2" class="password" maxlength="1024" autocomplete="off">
+
+    <input type="text" value="[ticket]" name="ticket" id="ticket" class="pi_tick">
+
+    <p></p>
     <div class="btn-bar"><label class="btn" for="submit"><input type="image" name="submit" id="submit" value="Submit">[const:btnSubmit]</label></div>
   </form>
   <article>

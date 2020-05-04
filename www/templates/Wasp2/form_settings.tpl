@@ -1,4 +1,3 @@
-[css:common.css]
 [css:settings.css]
 
 [case:[special:lang]|

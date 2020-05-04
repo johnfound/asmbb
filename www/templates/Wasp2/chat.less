@@ -2,67 +2,145 @@
 
 body {
   position: absolute;
-  height: 100%;
+  left: 0; right: 0; top: 0; bottom: 0;
+
+  padding: 4px !important;
+  min-height: 0px !important;
+  margin: 0px !important;
+
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  margin: 0px;
-  align-items: center;
 }
 
-div.header {
-  flex-shrink: 0;
+div.chat {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
 }
 
-.tags, .footer, .alone {
+#layout {
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+}
+
+
+header, footer, .global-row, .attribution {
   display: none !important;
 }
 
-.attribution {
-  font-size: 60%;
+.btn-bar {
+  margin: 4px 0px !important;
+  align-items: center;
+}
+
+.btn {
+  background-color: @clYellow;
 }
 
 
-div.chat {
-  width: 95%;
-  max-width: 1280px;
-  flex-grow: 1;
-  height: 320px;
+div.chatflex {
   display: flex;
-  flex-direction: column;
+  padding: 0px;
+  overflow: hidden;
+  flex-grow: 1;
 }
 
 
-div.ui {
-  flex-shrink: 0;
-  margin: 0px;
+@media (orientation: landscape) {
+  div.chatflex {
+    flex-direction: row;
+  }
+
+  #syslog {
+    height: auto;
+    flex-direction: column;
+  }
 }
 
-a.ui {
-  margin: 0px;
+
+@media (orientation: portrait) {
+  div.chatflex {
+    flex-direction: column-reverse;
+  }
+
+  #syslog {
+    width: auto;
+    flex-direction: row;
+  }
 }
 
 
 #chatlog {
-  overflow-x: hidden;
-  overflow-y: auto;
-  background-color: @clDarkBG;
-  color: @clDarkFG;
-  padding: 8px;
-  flex-grow: 8;
-  flex-shrink: 8;
-  border: @borderEdit;
+  background-color: @clWhite;
+  color: @clBlack;
+  margin: 4px;
+  overflow: auto;
+  padding: 16px;
+  flex-grow: 3;
+}
+
+#syslog {
+  background-color: @clWhite;
+  color: @clBlack;
+  margin: 4px;
+  overflow: auto;
+  flex-grow: 1;
+  flex-shrink: 0;
+  padding: 4px;
+  display: flex;
+  align-items: start;
+  align-content: start;
+  flex-wrap: wrap;
+  min-width: 150px;
+}
+
+#chat_form {
+  display: flex;
+  align-items: center;
+  margin: 4px;
+
+  input {
+    margin: 0px 8px 0px 0px;
+  }
+}
+
+#chat_user {
+  width: 200px;
+  margin: 0 4px 0 8px;
+  flex-grow: 0;
+}
+
+#chat_message {
+  flex-grow: 1;
+  padding: @margin/2;
+  resize: none;
 }
 
 
 .message {
-  margin: 4px 0px;
+  margin: @margin/2 0;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: flex;
+  align-items: baseline;
+
+  .msg_one_line {
+    flex-grow: 1;
+  }
+
+  .msg_multi_line {
+    white-space: pre-wrap;
+    flex-grow: 1;
+    font-family: @FontMonospace;
+    font-size: @FontSizeMono*0.8;
+  }
 }
 
 .chatlink {
-  color: @clColor1FG;
+  color: @clRed;
 }
 
 .emo {
@@ -73,95 +151,38 @@ a.ui {
 
 .time {
   font-size: 80%;
+  margin: 0;
+  flex-shrink: 0
 }
 
 .hline {
   line-height: 1px;
   text-align: center;
-  font-size: @FontSize;
-  border-bottom: 1px solid @clColor1FG;
+  border-bottom: 1px solid @clGray;
 }
 
 .date {
   font-size: 80%;
   padding: 0px 8px;
-  background-color: @clDarkBG;
+  background-color: @clWhite;
+  color: @clGray;
 }
 
-
-#syslog {
-  margin: 0px 0px 0px 8px;
-  overflow: auto;
-  background-color: @clDarkBG;
-  color: @clDarkFG;
-  padding: 8px;
-  flex-grow: 1;
-  flex-shrink: 0;
-  max-width: 30%;
-  min-width: 150px;
-  border: @borderEdit;
-}
 
 .user {
-  color: @clColor1FG;
-  margin: 4px 0px;
+  color: @clRed;
+  margin: 0 8px;
   cursor: pointer;
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: bold;
+  flex-shrink: 0;
 }
 
 .fake_user {
-  color: @clFakeUser;
+  color: @clViolet;
 }
 
 .gray_user {
   opacity: 0.5;
-}
-
-
-
-div.chatflex {
-  display: flex;
-  overflow: hidden;
-  margin: 8px 0px;
-  flex-grow: 1;
-}
-
-
-#chat_form {
-  display: flex;
-  flex-shrink: 0;
-}
-
-
-.chat_input {
-  height: 32px;
-  border: @borderEdit;
-  background-color: @clDarkBG;
-  color: @clDarkFG;
-  display:block;
-  margin-right: 8px;
-}
-
-.chat_input:focus {
-    background-color: @clEditorBG;
-    color: @clEditorFG;
-}
-
-#chat_message {
-  flex-grow: 1;
-  padding: 4px 36px 4px 8px;
-}
-
-#chat_user {
-  width: 200px;
-  padding: 4px;
-  text-align: right;
-  flex-shrink: 0;
-}
-
-.icon_btn img {
-  width: 32px;
-  height: 32px;
 }

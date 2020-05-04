@@ -17,11 +17,9 @@ a.online {
 div.users_online {
   width: @globWidth;
   max-width: @globMaxWidth;
-  margin: @globMargin;
-
-  background-color: @clWhite;
+  margin: 2*@margin auto;
   color: @clBlack;
-  padding: @margin;
+  overflow: hidden;
 
   a {
     color: @clRed;
@@ -30,27 +28,22 @@ div.users_online {
 
 
 table.users_table {
-  border-collapse: collapse;
-  border: 1px solid @clGray;
   width: 100%;
+  border-spacing: 0 1px;
 }
 
 table.users_table th {
-  border: 1px solid @clGray;
+  background-color: @clGray;
   padding: @margin/2 @margin;
-  max-width: 300px;
   text-align: center;
 }
 
 table.users_table td {
-  border: 1px solid @clGray;
+  background-color: @clWhite;
   padding: @margin/2 @margin;
-  max-width: 400px;
-  text-align: left;
+  text-align: center;
   vertical-align: middle;
-
-  word-wrap: break-word;       /* Internet Explorer 5.5+ */
-  word-break: break-all;
+  overflow: hidden;
 }
 
 

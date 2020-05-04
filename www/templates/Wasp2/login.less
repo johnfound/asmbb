@@ -16,7 +16,6 @@ div.login {
     color: @clBlack;
     padding: 2*@margin;
     margin: 2*@margin 0;
-    border: 1px solid @clGray;
 
     p {
       color: black;
@@ -41,8 +40,9 @@ div.login {
       margin-bottom: 2*@margin;
       padding: @margin/2;
 
-      color: @clYellow;
-      background-color: @clDarkGray;
+      color: @clDarkGray;
+      background-color: @clYellow;
+      font-weight: normal;
       font-size: 1.2*@FontSize;
       font-variant: small-caps;
       text-align: center;
@@ -56,33 +56,11 @@ div.login {
     }
 
     input^[type="text"^], input^[type="password"^], input^[type="email"^] {
-      height: @buttonHeight + 4px;
-      flex-grow: 0;
-      font-size: @FontSize;
-      padding: 0px 8px;
-      outline: none;
-      margin: @margin/2 0 @margin 0;
-      border: 1px solid @clGray;
-
-      background-color: @clWhite;
-      color: @clBlack;
       width: 100%;
-      &:focus {
-        border: 1px solid @clYellow;
-      }
     }
   }
 }
 
-
-.ctrl-panel {
-  background-color: @clLightGray;
-  margin: @margin 0;
-  padding: @margin;
-
-  color: @clBlack;
-  border: 1px solid @clGray;
-}
 
 .checkbox > input[type=checkbox] + label {
     display: flex;

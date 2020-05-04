@@ -1,6 +1,4 @@
-[css:posts.css]
-[css:posteditor.css]
-[css:threadnew.css]
+[css:settings.css]
 
 [case:[special:lang]|
   [equ:ttlTitle=Title]
@@ -55,34 +53,38 @@
 ]
 
 
-<div class="navigation3 btn-bar">
-  <a class="btn" href=".">The thread</a>
-</div>
+<form id="editform" class="settings msgbox-auto" action="!edit_thread" method="post">
+  <div class="btn-bar">
+     <input type="hidden" name="ticket" value="[Ticket]" >
+     <input class="btn" type="submit" name="submit" value="[const:btnSubmit]" >
+     <input class="btn" type="reset" value="[const:btnRevert]" >
+     <div class="spacer"></div>
+     <a class="btn img-btn" href=".">
+      <svg version="1.1" width="12" height="12" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+         <rect transform="rotate(45)" x=".635" y="-1.53" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
+         <rect transform="rotate(135)" x="-10.7" y="-12.8" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
+      </svg>
+     </a>
+  </div>
 
-<div class="editor">
-  <form id="editform" action="!edit_thread" method="post">
-    <div class="editgroup">
-      <div>
-        <p>[const:ttlTitle]:</p>
-        <input type="text" value="[caption]" placeholder="[const:phTitle]" name="title" autofocus>
-      </div>
-      <div>
-        <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</p>
-        <input type="text" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
-      </div>
-    </div>
-    [case:[special:isadmin]||<input type="checkbox" id="pinned" name="pinned" value="1" [case:[Pinned]||checked]><label for="pinned">[const:ttlPin]</label>]
-    <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]><label for="limited">[const:ttlLimited]</label>
+  <h3>[const:ttlTitle]:</h3>
+  <input class="settings" type="text" value="[caption]" placeholder="[const:phTitle]" name="title" autofocus>
+
+  <h3>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</h3>
+  <input class="settings" type="text" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
+
+  <div class="checkbox">
+  [case:[special:isadmin]||<input type="checkbox" id="pinned" name="pinned" value="1" [case:[Pinned]||checked]><label for="pinned">[const:ttlPin]</label>]
+  </div>
+
+  <div class="dropdown checkbox">
+    <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]>
+    <label for="limited" style="outline: none;" >[const:ttlLimited]</label>
     <div id="users_invited">
-      <p>[const:ttlInvited]:</p>
-      <input id="invited" type="text" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
+      <h3>[const:ttlInvited]:</h3>
+      <input class="settings" id="invited" type="text" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
     </div>
-    <div class="panel">
-      <input type="submit" name="submit" value="[const:btnSubmit]" >
-      <input type="hidden" name="ticket" value="[Ticket]" >
-      <input type="reset" value="[const:btnRevert]" >
-    </div>
-  </form>
-</div>
+  </div>
+</form>
 
 <script src="[special:skin]/autocomplete.js"></script>

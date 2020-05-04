@@ -10,19 +10,20 @@ div.threads_list {
 
 .thread-summary {
   margin: 2*@margin 0;
+  overflow: hidden;
+
   p {
     margin: @margin/2 0;
   }
 
   .ts-info {
     display: flex;
-
-    padding: @margin/2 @margin;
-
+    padding: @margin/2;
     background-color: @clWhite;
 
     .tsi-link {
       flex-grow: 1;
+      padding: 0 4px;
       overflow: hidden;
 
       a:not(:hover) {
@@ -31,12 +32,11 @@ div.threads_list {
 
       p > a {
         margin: @margin 0;
-
         font-size: 16px;
         font-weight: bold;
-
         color: @clBlack;
       }
+
       ul {
         font-size: 12px;
         color: @clMiddleGray;
@@ -54,6 +54,7 @@ div.threads_list {
     .tsi-stat {
       color: @clMiddleGray;
       flex-shrink: 0;
+      padding: 0 @margin/2;
       p {
         text-align: center;
       }
@@ -125,15 +126,9 @@ div.threads_list {
 .category {
   display: flex;
   align-items: stretch;
-  margin: 8px 0px;
+  margin: 1px 0px;
   background-color: @clWhite;
   color: @clBlack;
-  height: 48px;
-  border-radius: 24px 0px 0px 24px;
-
-  svg {
-    flex-shrink: 0;
-  }
 
   a {
     font-size: 16px;
@@ -142,26 +137,20 @@ div.threads_list {
     align-self: center;
     color: @clBlack;
 
+    &.category-unread {
+      color: @clRed;
+    }
+
     span {
-      font-size: 16px;
-      font-weight: bold;
-      font-variant: small-caps;
+      font-size: 12px;
+      color: @clGray;
+      text-transform: uppercase;
+//      font-variant: small-caps;
     }
 
-    &:not(:hover) {
-      text-decoration: none;
-    }
-  }
-
-  div:first-child {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background-color: @clDarkBG;
-    width: 40px;
-    border-radius: 20px;
+//    &:not(:hover) {
+//      text-decoration: none;
+//    }
   }
 
   div {
@@ -169,10 +158,10 @@ div.threads_list {
     width: 100px;
     flex-shrink: 0;
     margin: 4px;
-    line-height: 20px;
+//    line-height: 20px;
     span {
       font-size: 20px;
-      font-weight: bold;
+//      font-weight: bold;
       color: @clRed;
     }
   }

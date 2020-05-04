@@ -66,13 +66,13 @@
   <form method="post" action="/!resetpassword/1">
     <h1>[const:ttlRequest]</h1>
 
-    <div class="ctrl-panel">
-      <h3>[const:phUser]:</h3>
-      <input type="text" value="" name="username" maxlength="256" autofocus>
-      <h3>[const:phEmail]:</h3>
-      <input type="text" value="" name="email" maxlength="320">
-    </div>
+    <h3>[const:phUser]:</h3>
+    <input type="text" value="" name="username" maxlength="256" autofocus>
+    <h3>[const:phEmail]:</h3>
+    <input type="text" value="" name="email" maxlength="320">
+
     <input type="hidden" value="[ticket]" name="ticket" id="ticket">
+    <p></p>
     <div class="btn-bar"><input type="submit" name="submit" class="btn" value="[const:btnSubmit]"></div>
   </form>
   <article>

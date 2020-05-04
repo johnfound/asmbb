@@ -85,19 +85,19 @@ Formular ab.]
   <form class="register-block" method="post" action="/!resetpassword/3">
     <h1>[const:ttlTitle]</h1>
 
-    <div class="ctrl-panel">
-      <h3>[const:phUser]:</h3>
-      <input type="text" name="username" class="username" maxlength="256" autofocus>
-      <h3>[const:phEmail]:</h3>
-      <input type="text" name="email" class="email" maxlength="320">
-      <h3>[const:phSecret]:</h3>
-      <input type="text" name="secret" class="password" maxlength="32">
-      <h3>[const:phPass]:</h3>
-      <input type="password" name="password" class="password" maxlength="1024" autocomplete="off">
-      <h3>[const:phPass2]:</h3>
-      <input type="password" name="password2" class="password" maxlength="1024" autocomplete="off">
-    </div>
+    <h3>[const:phUser]:</h3>
+    <input type="text" name="username" class="username" maxlength="256" autofocus>
+    <h3>[const:phEmail]:</h3>
+    <input type="text" name="email" class="email" maxlength="320">
+    <h3>[const:phSecret]:</h3>
+    <input type="text" name="secret" class="password" maxlength="32">
+    <h3>[const:phPass]:</h3>
+    <input type="password" name="password" class="password" maxlength="1024" autocomplete="off">
+    <h3>[const:phPass2]:</h3>
+    <input type="password" name="password2" class="password" maxlength="1024" autocomplete="off">
+
     <input type="hidden" value="[ticket]" name="ticket" id="ticket">
+    <p></p>
     <div class="btn-bar"><input type="submit" name="submit" class="btn" value="[const:btnSubmit]"></div>
   </form>
   <article>

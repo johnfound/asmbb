@@ -10,7 +10,7 @@ div.set_page {
   padding: 16px;
 }
 
-.msgbox {
+.msgbox, .msgbox-auto {
   max-width: @msgBoxWidth;
   width: 100%;
   padding: 2*@margin;
@@ -19,12 +19,15 @@ div.set_page {
   margin: @margin auto;
   display: flex;
   flex-direction: column;
-  height: 600px;
 
   .btn {
     background-color: @clYellow;
     color: @clBlack;
   }
+}
+
+.msgbox {
+  height: 600px;
 }
 
 
@@ -34,9 +37,10 @@ form.settings {
     margin-bottom: 2*@margin;
     padding: @margin/2;
 
-    color: @clYellow;
-    background-color: @clDarkGray;
+    color: @clDarkGray;
+    background-color: @clYellow;
     font-size: 1.2*@FontSize;
+    font-weight: normal;
     font-variant: small-caps;
     text-align: center;
   }
@@ -78,7 +82,7 @@ form.settings {
 
 
 input.settings, select.settings {
-  flex-grow: 0;
+  flex-grow: 0 !important;
   font-size: @FontSize;
   outline: none;
   margin: 4px 0px;
@@ -116,22 +120,22 @@ h1.msg {
 }
 
 .info {
-  background-color: @clMsgInfoBG;
-  color: @clMsgInfoFG;
+  background-color: @clGreen;
+  color: @clWhite;
   transition: all 1s;
   -webkit-transition: all 1s;
 }
 
 .error {
-  background-color: @clMsgErrorBG;
-  color: @clMsgErrorFG;
+  background-color: @clRed;
+  color: @clWhite;
   transition: all 3s;
   -webkit-transition: all 3s;
 }
 
 .warning {
-  background-color: @clMsgWarningBG;
-  color: @clMsgWarningFG;
+  background-color: @clYellow;
+  color: @clRed;
 }
 
 

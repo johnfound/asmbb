@@ -8,8 +8,9 @@
   [equ:Caption=Thread title]
   [equ:Content=Post content]
   [equ:btnPreview=Preview]
-  [equ:hintPreview=Ctrl+Enter for preview]
   [equ:btnSubmit=Submit]
+  [equ:btnRevert=Revert]
+  [equ:hintPreview=Ctrl+Enter for preview]
   [equ:hintSubmit=Ctrl+S for submit]
   [equ:Attach=Attach file(s)]
   [equ:tabText=Text]
@@ -21,8 +22,9 @@
   [equ:Caption=Заглавие на темата]
   [equ:Content=Съдържание на поста]
   [equ:btnPreview=Преглед]
-  [equ:hintPreview=Ctrl+Enter за преглед]
   [equ:btnSubmit=Публикувай]
+  [equ:btnRevert=Отказ]
+  [equ:hintPreview=Ctrl+Enter за преглед]
   [equ:hintSubmit=Ctrl+S за публикуване]
   [equ:Attach=Прикачи файл(ове)]
   [equ:tabText=Текст]
@@ -34,8 +36,9 @@
   [equ:Caption=Название темы]
   [equ:Content=Содержание поста]
   [equ:btnPreview=Просмотр]
-  [equ:hintPreview=Ctrl+Enter для предварительного просмотра]
   [equ:btnSubmit=Отправить]
+  [equ:btnRevert=Отказатся]
+  [equ:hintPreview=Ctrl+Enter для предварительного просмотра]
   [equ:hintSubmit=Ctrl+S чтобы отправить]
   [equ:Attach=Прикрепить файл(ы)]
   [equ:tabText=Текст]
@@ -47,8 +50,9 @@
   [equ:Caption=Titre du sujet]
   [equ:Content=Contenu du message]
   [equ:btnPreview=Prévisualiser]
-  [equ:hintPreview=Ctrl+Entrée pour prévisualiser]
   [equ:btnSubmit=Soumettre]
+  [equ:btnRevert=Annuler]
+  [equ:hintPreview=Ctrl+Entrée pour prévisualiser]
   [equ:hintSubmit=Ctrl+S pour soumettre]
   [equ:Attach=Pièce(s) jointe(s)]
   [equ:tabText=Texte]
@@ -60,8 +64,9 @@
   [equ:Caption=Titel des Themas]
   [equ:Content=Inhalt des Beitrags]
   [equ:btnPreview=Vorschau]
-  [equ:hintPreview=Strg+Eingabe für eine Vorschau]
   [equ:btnSubmit=Absenden]
+  [equ:btnRevert=Zurücksetzen]
+  [equ:hintPreview=Strg+Eingabe für eine Vorschau]
   [equ:hintSubmit=Strg+S zum Absenden]
   [equ:Attach=Datei(en) anhängen]
   [equ:tabText=Text]
@@ -76,6 +81,7 @@
       <input form="editform" type="hidden" name="ticket" value="[Ticket]" >
       <input form="editform" class="btn" id="preview-btn" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
       <input form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]" title="[const:hintSubmit]">
+      <input form="editform" class="btn" type="reset" value="[const:btnRevert]" >
       <div class="spacer"></div>
       <a class="btn img-btn" href="!by_id">
         <svg version="1.1" width="12" height="12" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
@@ -103,9 +109,9 @@
 
         <div class="editgroup">
           <div class="file-browse">
-            <label for="inpuit-file-browse" id="browse-txt" data-empty="[const:phSelect]"></label>
+            <label for="input-file-browse" id="browse-txt" data-empty="[const:phSelect]"></label>
             <input type="file" placeholder="[const:phSelect]" id="input-file-browse" name="attach" multiple="multiple" data-multiselect="[const:MultiFiles]">
-            <label id="browse-btn" class="btn" for="inpuit-file-browse">Browse</label>
+            <label id="browse-btn" class="btn" for="input-file-browse">Browse</label>
           </div>
         </div>
 

@@ -1,3 +1,5 @@
+<div class="spacer"></div>
+
 <footer>
   <p>[case:[special:lang]|
     <a href="/!users_online" title="Recent activities of the visitors.">Online</a> now: [special:visitors]

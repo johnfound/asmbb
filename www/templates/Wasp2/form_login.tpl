@@ -81,7 +81,6 @@
   <form class="login-block" method="post" target="_self" action="/!login">
     <h1>[const:ttlLogin]</h1>
 
-    <div class="ctrl-panel">
       <h3>[const:phUser]:</h3>
       <input type="text" value="" name="username" autofocus maxlength="256">
       <h3>[const:phPass]:</h3>
@@ -89,13 +88,14 @@
       <p class="pi_tick"><input type="text" value="[special:referer]" name="backlink" id="backlink"></p>
       <p class="checkbox"><input type="checkbox" name="persistent" id="pr" value="1"><label for="pr">[const:lblPers]</label></p>
       <p class="pi_tick"><input type="text" value="[ticket]" name="ticket" id="ticket"></pi_tick>
-    </div>
+
     <noscript>
        <p class="pi_tick">
          <input type="text" name="submit.x" value="0">
          <input type="text" name="submit.y" value="0">
        </p>
     </noscript>
+
     <div class="btn-bar">
       <label class="btn" for="submit"><input type="image" name="submit" id="submit" value="Submit">[const:btnSubmit]</label>
     </div>
