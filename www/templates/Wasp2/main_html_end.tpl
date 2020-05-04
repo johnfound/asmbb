@@ -1,4 +1,4 @@
-<div class="spacer"></div>
+<div class="vspacer"></div>
 
 <footer>
   <p>[case:[special:lang]|

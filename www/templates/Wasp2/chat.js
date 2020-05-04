@@ -306,3 +306,26 @@ function notify(Msg) {
                   });
                 }
 }
+
+
+
+// Emoji picker
+
+var emolib = document.getElementById('emolib');
+var emolinks = emolib.querySelectorAll("a");
+
+[].forEach.call(emolinks, function(e) {
+  e.onclick = function() {
+    var target = document.getElementById('chat_message');
+    if ( ! target ) return 0;
+
+    var emoji = this.innerText;
+
+    var startPos = target.selectionStart;
+    var endPos = target.selectionEnd;
+
+    target.focus();
+    target.value = target.value.substring(0, startPos) + emoji + ' ' + target.value.substring(endPos, target.value.length);
+    target.setSelectionRange(startPos+3, startPos+3);
+  }
+});

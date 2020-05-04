@@ -234,7 +234,6 @@
 
 
 <div class="set_page">
-[case:[message]||<h1 id="message" class="msg [case:[error]|info|error]">[message]</h1>]
 <form class="settings msgbox" method="post" action="/!settings">
   <h1>[const:ttlSettings]</h1>
 
@@ -348,7 +347,11 @@
   </div>
 
   <input type="hidden" name="ticket" value="[Ticket]" >
-  <div class="btn-bar"><input type="submit" name="save" class="btn" value="[const:btnSave]"><input type="reset" name="save" class="btn" value="Reset"></div>
+  <div class="btn-bar">
+    <input type="submit" name="save" class="btn" value="[const:btnSave]">
+    <input type="reset" name="save" class="btn" value="Reset">
+    [case:[message]||<div id="message" class="msg [case:[error]|info|error]">[message]</div>]
+  </div>
 </form>
 </div>
 

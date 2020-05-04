@@ -1,25 +1,15 @@
 @import "skin_variables.lsi";
 
 body {
-  position: absolute;
-  left: 0; right: 0; top: 0; bottom: 0;
-
-  padding: 4px !important;
-  min-height: 0px !important;
-  margin: 0px !important;
+  padding: @margin !important;
+  margin: 0px auto !important;
+  width: 100vw;
+  height: 100vh;
+  max-width: @globMaxWidth;
 
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
 }
 
-div.chat {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  overflow: hidden;
-}
 
 #layout {
   position: absolute;
@@ -27,7 +17,7 @@ div.chat {
 }
 
 
-header, footer, .global-row, .attribution {
+header, footer, .global-row, .attribution, .vspacer {
   display: none !important;
 }
 
@@ -38,6 +28,15 @@ header, footer, .global-row, .attribution {
 
 .btn {
   background-color: @clYellow;
+}
+
+.img-btn {
+  background-color: @clDarkGray !important;
+  color: @clWhite !important;
+  height: @buttonHeight !important;
+  svg {
+    fill: @clWhite !important;
+  }
 }
 
 
@@ -185,4 +184,82 @@ div.chatflex {
 
 .gray_user {
   opacity: 0.5;
+}
+
+
+#emolib {
+  font-size: 20px;
+  font-family: @FontEmoji;
+  overflow-y: scroll;
+  position: absolute;
+  width: auto;
+  height: 200px;
+  resize: vertical;
+  right: 4px;
+  bottom: ~"calc( 100% - 4px )";
+  background-color: @clWhite;
+  color: black;
+  border: 1px solid @clGray;
+  z-index: 10000;
+  white-space: pre;
+  a {
+    cursor: pointer;
+    display: inline-block;
+    margin: @margin;
+    &:hover {
+      background-color: @clRed;
+      box-shadow: 1px 1px 3px @clMiddleGray;
+    }
+  }
+}
+
+.emo-btn-bar {
+  padding: 0;
+  margin: 0;
+  align-self: stretch;
+  flex-shrink: 0;
+  display: flex;
+  align-items: end !important;
+  position: relative;
+
+  &:hover #emolib {
+    display: block !important;
+  }
+
+}
+
+.emo-btn {
+  cursor: pointer;
+  height: @buttonHeight !important;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+
+  font-family: @FontEmoji;
+  font-size: 16px;
+
+  &:hover {
+    background-color: @clRed;
+  }
+
+  &>svg {
+    fill: @clWhite;
+  }
+}
+
+.v-btn-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  align-self: stretch;
+  justify-content: space-evenly;
+}
+
+
+.noscript {
+  background-color: @clYellow;
+  color: @clDarkGray;
+  font-weight: normal;
+  font-variant: small-caps;
+  text-align: center;
 }
