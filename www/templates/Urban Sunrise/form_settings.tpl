@@ -327,8 +327,10 @@
       <p class="checkbox"><input type="checkbox" [chat_enabled] name="chat_enabled" id="chat_enabled"><label for="chat_enabled">[const:ttlChat]</label></p>
 
       <h3>[const:ttlMarkup]</h3>
-      <p class="checkbox"><input type="checkbox" [markup0]  name="markups" id="mu0"  value="1"><label for="mu0">MiniMag (like markdown)</label></p>
-      <p class="checkbox"><input type="checkbox" [markup1]  name="markups" id="mu1"  value="2"><label for="mu1">BBCode</label></p>
+      <p class="checkbox">
+        <input type="checkbox" [markup0]  name="markups" id="mu0"  value="1"><label for="mu0">MiniMag (like markdown)</label>
+        <input type="checkbox" [markup1]  name="markups" id="mu1"  value="2"><label for="mu1">BBCode</label>
+      </p>
     </section>
 
     <input id="tab5" name="tabselector" type="radio" value="4" [case:[tabselector]|||||checked|]>

@@ -1,5 +1,5 @@
-C Preparation\sfor\srenaming\sWasp2...
-D 2020-05-05T07:40:49.526
+C Wasp2\sskin\srenamed\sto\s"Urban\sSunrise"
+D 2020-05-05T08:10:52.272
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -41,7 +41,7 @@ F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm 03059f73a6c143fa5400098b6018f82118b2c146
-F source/engine.fpr e35b0bbf9789af4688deac43df046f09d3795333
+F source/engine.fpr bcaf4f3d8d59ac3f4e416cbd14497631b4bec9cc
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 81f60b545fb3f7a184f6f6075f9a4e7ce31b7a0a
@@ -545,6 +545,128 @@ F www/templates/Modern/users_online.less a807d20a84ba5d3c0a0a4e201ce006c638a39cb
 F www/templates/Modern/userslist.less cd1902ebd82281d362dcbd8d227bccd3d03274ab
 F www/templates/Modern/userslist_ftr.tpl 125a168e24b2bd38aadb84cbb5f87f316b073c41
 F www/templates/Modern/userslist_hdr.tpl af4d4df8f6c0052cd17119ce67cbfb5fab9cd8a4
+F www/templates/Urban\sSunrise/_images/_source/alltags.svg 54cc9a54bfb1155f6219007c2aa430febf96e4ce w www/templates/Wasp2/_images/_source/alltags.svg
+F www/templates/Urban\sSunrise/_images/_source/chat.svg 411380cf5f635d1e911789a04e6b32e3f49d6997 w www/templates/Wasp2/_images/_source/chat.svg
+F www/templates/Urban\sSunrise/_images/_source/chat2.svg 51afd77b1a81f8a446df6abd6ffc33c14ebda8a3 w www/templates/Wasp2/_images/_source/chat2.svg
+F www/templates/Urban\sSunrise/_images/_source/close2.svg a453f088f41598a22f1ba04fc00cace8cdb66ad9 w www/templates/Wasp2/_images/_source/close2.svg
+F www/templates/Urban\sSunrise/_images/_source/close3.svg ca8377d61a7a7a1c40665c4cb08e181fde72157c w www/templates/Wasp2/_images/_source/close3.svg
+F www/templates/Urban\sSunrise/_images/_source/del.svg 386a3cd2c36aa5d7250637f22ea6401066a3e2ca w www/templates/Wasp2/_images/_source/del.svg
+F www/templates/Urban\sSunrise/_images/_source/drop-down2.svg 2c7baef041ff421274111036ba1692b226677ee8 w www/templates/Wasp2/_images/_source/drop-down2.svg
+F www/templates/Urban\sSunrise/_images/_source/drop-down3.svg e4beabbc9d2fc6fbfd6956f971fce915bfa19f1a w www/templates/Wasp2/_images/_source/drop-down3.svg
+F www/templates/Urban\sSunrise/_images/_source/edit.svg 04ffdad78af310ac6e0c8323052ff22cf67487e9 w www/templates/Wasp2/_images/_source/edit.svg
+F www/templates/Urban\sSunrise/_images/_source/help4s.svg 567c8e6642c35afa99bf9df30891e37e8f23846b w www/templates/Wasp2/_images/_source/help4s.svg
+F www/templates/Urban\sSunrise/_images/_source/megaphone2.svg efc2b1290f6b21909e72213e4ecaebededbd085a w www/templates/Wasp2/_images/_source/megaphone2.svg
+F www/templates/Urban\sSunrise/_images/_source/new-post.svg d85faee513632b9435c60e3873cd5db3cdb5ee8d w www/templates/Wasp2/_images/_source/new-post.svg
+F www/templates/Urban\sSunrise/_images/_source/new-post2.svg 7c362696403f1269d228a19a5c076b54e2e1e309 w www/templates/Wasp2/_images/_source/new-post2.svg
+F www/templates/Urban\sSunrise/_images/_source/rss.svg 212ef22f50c1926c9e17c43ffd79455827eac4b9 w www/templates/Wasp2/_images/_source/rss.svg
+F www/templates/Urban\sSunrise/_images/_source/rss2.svg 9e8a33f52ae2cd159cdb765ea134f02a94593aaa w www/templates/Wasp2/_images/_source/rss2.svg
+F www/templates/Urban\sSunrise/_images/_source/rss3.svg 2f2feeb3db8dcf3284610354e01870f5cc3e2e6e w www/templates/Wasp2/_images/_source/rss3.svg
+F www/templates/Urban\sSunrise/_images/_source/search.svg 2dd775851877f8bcebe67f6cdf0dca1d54229b3d w www/templates/Wasp2/_images/_source/search.svg
+F www/templates/Urban\sSunrise/_images/_source/search2.svg c04c298fdc97e59d1e6955252011ede98ffa5110 w www/templates/Wasp2/_images/_source/search2.svg
+F www/templates/Urban\sSunrise/_images/_source/send_msg.svg f6f8ed474f9e0c97c4baed62edddd485a86366a5 w www/templates/Wasp2/_images/_source/send_msg.svg
+F www/templates/Urban\sSunrise/_images/_source/tag.svg b074e23c3f58df0fcfe89d3d4039c21f537e82d7 w www/templates/Wasp2/_images/_source/tag.svg
+F www/templates/Urban\sSunrise/_images/anon.png bcc2d2595b3565f6d3b0c2bebf1a63d26f924084 w www/templates/Wasp2/_images/anon.png
+F www/templates/Urban\sSunrise/_images/chatemoticons 6f2fb8dfd71252d2cdbe7b9b1d330c5859872e31 l www/templates/Wasp2/_images/chatemoticons
+F www/templates/Urban\sSunrise/_images/emoticons 6f2fb8dfd71252d2cdbe7b9b1d330c5859872e31 l www/templates/Wasp2/_images/emoticons
+F www/templates/Urban\sSunrise/activation_email_subject.tpl e0bd685144e72197dd0034b068e82d7604f926d2 l www/templates/Wasp2/activation_email_subject.tpl
+F www/templates/Urban\sSunrise/activation_email_text.tpl 50d1d6b7fe42736e334ab6870d7cc72e9085889d l www/templates/Wasp2/activation_email_text.tpl
+F www/templates/Urban\sSunrise/activity0.tpl 66800be0587fffe32c9acf83029cb8fc7ac74332 l www/templates/Wasp2/activity0.tpl
+F www/templates/Urban\sSunrise/activity1.tpl 6fa6f00fea84fee0253d4707881c9a5338feb90f l www/templates/Wasp2/activity1.tpl
+F www/templates/Urban\sSunrise/activity10.tpl bc1c313b326ae3ea9f440b0f607cfd0f8ce482d6 l www/templates/Wasp2/activity10.tpl
+F www/templates/Urban\sSunrise/activity11.tpl 3a1ef0a6e3383b59f0e17e7bff76186ed93336b5 l www/templates/Wasp2/activity11.tpl
+F www/templates/Urban\sSunrise/activity12.tpl 490dd079393fc2a2180dd0cc5f7f9581fee448dd l www/templates/Wasp2/activity12.tpl
+F www/templates/Urban\sSunrise/activity13.tpl e5c3c56a5acdf56383fd3e5710c342444a30b61c l www/templates/Wasp2/activity13.tpl
+F www/templates/Urban\sSunrise/activity14.tpl 8012d3a8f8147ef4ea446c49fe994f4e0f0e0b38 l www/templates/Wasp2/activity14.tpl
+F www/templates/Urban\sSunrise/activity15.tpl 955d52b0160283783778a2e3af17125bc2c9ee8e l www/templates/Wasp2/activity15.tpl
+F www/templates/Urban\sSunrise/activity16.tpl c3bb31fa19e15df415b7e7d6f942dad1e80c70c7 l www/templates/Wasp2/activity16.tpl
+F www/templates/Urban\sSunrise/activity17.tpl 1229faf8484fa7878c0ff385af534d94b012cf9a l www/templates/Wasp2/activity17.tpl
+F www/templates/Urban\sSunrise/activity18.tpl a43359d158536a3a4a0deaa8e8ae9a86f34ee375 l www/templates/Wasp2/activity18.tpl
+F www/templates/Urban\sSunrise/activity19.tpl 3f8eb4a66305ccfaecc07e39d0305fa521c4910d l www/templates/Wasp2/activity19.tpl
+F www/templates/Urban\sSunrise/activity2.tpl 0c02bfb196ad6955c2e9bdfc53e313d15d32a6f6 l www/templates/Wasp2/activity2.tpl
+F www/templates/Urban\sSunrise/activity20.tpl 808359fdf3e47466adc8208357d29467310e1947 l www/templates/Wasp2/activity20.tpl
+F www/templates/Urban\sSunrise/activity3.tpl d076539803d955db90cc721ad51644f7c7d4bb70 l www/templates/Wasp2/activity3.tpl
+F www/templates/Urban\sSunrise/activity4.tpl 6a7b65a1f69740098b92dfee5e56d9420a3d0980 l www/templates/Wasp2/activity4.tpl
+F www/templates/Urban\sSunrise/activity5.tpl a0f664d4ee44680703ed8dc5cf30c1046b21dea0 l www/templates/Wasp2/activity5.tpl
+F www/templates/Urban\sSunrise/activity6.tpl b5c8a9fbc2efa2eac931ea024f5d78047618cfc5 l www/templates/Wasp2/activity6.tpl
+F www/templates/Urban\sSunrise/activity7.tpl 606eb1ee82da0767dd85e3d2ac63a07e9874a5fb l www/templates/Wasp2/activity7.tpl
+F www/templates/Urban\sSunrise/activity8.tpl 36d833a0164bb74532e88161cff3d7c8d05cef52 l www/templates/Wasp2/activity8.tpl
+F www/templates/Urban\sSunrise/activity9.tpl 60fe5018f101f822fa00434bff49db7a3f7da947 l www/templates/Wasp2/activity9.tpl
+F www/templates/Urban\sSunrise/all-emoji.txt e98af1671a301fd3a1e58c1934b62f4ce9506be6 w www/templates/Wasp2/all-emoji.txt
+F www/templates/Urban\sSunrise/atom_entry_post.tpl a36d3dd1e06725015323056b09bdc1492aa6a0cc w www/templates/Wasp2/atom_entry_post.tpl
+F www/templates/Urban\sSunrise/atom_entry_thread.tpl ab6e308c142262fa4a7ff9bb98d03a67168ffe39 w www/templates/Wasp2/atom_entry_thread.tpl
+F www/templates/Urban\sSunrise/atom_start.tpl 93d0cec7a6c29045e0e4bd631eace12699a80aa7 w www/templates/Wasp2/atom_start.tpl
+F www/templates/Urban\sSunrise/autocomplete.js 7f821fe4b74d465ef6042714c91ced568d7ef6d4 w www/templates/Wasp2/autocomplete.js
+F www/templates/Urban\sSunrise/chat.js 44acebfb1ebeda7d310971060ff7f332f9963c74 w www/templates/Wasp2/chat.js
+F www/templates/Urban\sSunrise/chat.less 3c8855cd66461159292ed1d3a1e951473b42ac9a w www/templates/Wasp2/chat.less
+F www/templates/Urban\sSunrise/chat.tpl 1fc9e26ded4ec4ff57aab30a630568f892bf2764 w www/templates/Wasp2/chat.tpl
+F www/templates/Urban\sSunrise/common.less 3054877b07561cf6046d8a2923b5c87f52f85b41 w www/templates/Wasp2/common.less
+F www/templates/Urban\sSunrise/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x www/templates/Wasp2/compile_styles.sh
+F www/templates/Urban\sSunrise/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001 w www/templates/Wasp2/crypto.tpl
+F www/templates/Urban\sSunrise/debug.less 3514d4b83950078d0a01c36090dbe1444f5aea93 w www/templates/Wasp2/debug.less
+F www/templates/Urban\sSunrise/del_confirm.tpl e63ef3040705ecd7c913128a2102e714d3e32c70 w www/templates/Wasp2/del_confirm.tpl
+F www/templates/Urban\sSunrise/delete.less 397589f431219056581591243e48548d43fb8507 w www/templates/Wasp2/delete.less
+F www/templates/Urban\sSunrise/edit.json 140a9ea82607df88432cbdfb8870a874aa6e8acd w www/templates/Wasp2/edit.json
+F www/templates/Urban\sSunrise/edit_toolbar.tpl 61f2f99cd30e489b195616eefa66b4eb1b784fc5 w www/templates/Wasp2/edit_toolbar.tpl
+F www/templates/Urban\sSunrise/editor.less 3828ec7af1c4ffddc13afdbe9a5cd5be578c85ae w www/templates/Wasp2/editor.less
+F www/templates/Urban\sSunrise/editors.js b1918721b66ca80b741411234c541f4234969fe9 w www/templates/Wasp2/editors.js
+F www/templates/Urban\sSunrise/error.less 43f5b23eace778d249411d453321ec6d16d4f306 w www/templates/Wasp2/error.less
+F www/templates/Urban\sSunrise/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92 w www/templates/Wasp2/error_html_end.tpl
+F www/templates/Urban\sSunrise/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0 w www/templates/Wasp2/error_html_start.tpl
+F www/templates/Urban\sSunrise/file-browse.js f24eef322b130b2715410431ea4199679de5f65b w www/templates/Wasp2/file-browse.js
+F www/templates/Urban\sSunrise/form_edit.tpl 9b3c10b0155145b30833be481e7fbaa61e4dead6 w www/templates/Wasp2/form_edit.tpl
+F www/templates/Urban\sSunrise/form_edit_thread.tpl 788dba9c786235cae6f55c0ae9f799c07e16e9c0 w www/templates/Wasp2/form_edit_thread.tpl
+F www/templates/Urban\sSunrise/form_editinfo.tpl 905b2a7b443efc06f86ba28eeb7ebfccecefc1b2 w www/templates/Wasp2/form_editinfo.tpl
+F www/templates/Urban\sSunrise/form_login.tpl fe8b409f221a5553ee0f40bde655fa3cb276485f w www/templates/Wasp2/form_login.tpl
+F www/templates/Urban\sSunrise/form_new_post.tpl 7960b1467e97041938510a09622b62a64c0780a3 w www/templates/Wasp2/form_new_post.tpl
+F www/templates/Urban\sSunrise/form_new_thread.tpl fceaf4c451dd2349cee838c3c091e6321ac0495a w www/templates/Wasp2/form_new_thread.tpl
+F www/templates/Urban\sSunrise/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922 w www/templates/Wasp2/form_post_debug.tpl
+F www/templates/Urban\sSunrise/form_register.tpl 02cc15121365375ffe92866cfe46ae944ef1855b w www/templates/Wasp2/form_register.tpl
+F www/templates/Urban\sSunrise/form_reset_password.tpl d9aa084867bfc75045a93db88af361770a960158 w www/templates/Wasp2/form_reset_password.tpl
+F www/templates/Urban\sSunrise/form_reset_request.tpl 2670304557d27ff156db4652a360a9044b415c7e w www/templates/Wasp2/form_reset_request.tpl
+F www/templates/Urban\sSunrise/form_settings.tpl 98b3345a5bded6420a647fd6f2ffc299edba8df2 w www/templates/Wasp2/form_settings.tpl
+F www/templates/Urban\sSunrise/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da w www/templates/Wasp2/form_setup.tpl
+F www/templates/Urban\sSunrise/form_sqlite_console.tpl 04720cf7c2be67a3ec0922a734eb58b6739c66b3 w www/templates/Wasp2/form_sqlite_console.tpl
+F www/templates/Urban\sSunrise/help-bbcode.txt a35145f7f61575d36cb7b14ebff9387cc4944aa2 w www/templates/Wasp2/help-bbcode.txt
+F www/templates/Urban\sSunrise/help-minimag.txt fc7edb304e4d3d6ade4dd77361b178cb7706a402 w www/templates/Wasp2/help-minimag.txt
+F www/templates/Urban\sSunrise/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec w www/templates/Wasp2/help_new_thread.tpl
+F www/templates/Urban\sSunrise/highlight.js b4a380fb43186d51a405fb185067120657f243f2 w www/templates/Wasp2/highlight.js
+F www/templates/Urban\sSunrise/highlight.less fba68624d1b34a5543fe0bf4b2af2ac1ddf65e74 w www/templates/Wasp2/highlight.less
+F www/templates/Urban\sSunrise/login.less 46e4d3d72ebc9a7738bc4b1180cdcc652d6d4a3b w www/templates/Wasp2/login.less
+F www/templates/Urban\sSunrise/main_html_end.tpl 05bb25b9490ce93732628c937860db787c516c46 w www/templates/Wasp2/main_html_end.tpl
+F www/templates/Urban\sSunrise/main_html_start.tpl 7021fb09be38237cc6d2ad5c8495f729bc4b17d7 w www/templates/Wasp2/main_html_start.tpl
+F www/templates/Urban\sSunrise/markdown.less f7949f6e2f9b45de8b292e9cbeac903c22c465cf w www/templates/Wasp2/markdown.less
+F www/templates/Urban\sSunrise/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352 w www/templates/Wasp2/minimag_suffix.tpl
+F www/templates/Urban\sSunrise/nav_categories.tpl c04334bde3272eed0ceeb558cb640a15a41b39e8 w www/templates/Wasp2/nav_categories.tpl
+F www/templates/Urban\sSunrise/nav_history.tpl 20332cc80d34a9c4fe360cc5559d98f0537900c2 w www/templates/Wasp2/nav_history.tpl
+F www/templates/Urban\sSunrise/nav_list.tpl 0451bef02de358f26e35e00e7377d396b3190378 w www/templates/Wasp2/nav_list.tpl
+F www/templates/Urban\sSunrise/nav_search.tpl c5abc05e0defefe48c8d79167638f0e65b805948 w www/templates/Wasp2/nav_search.tpl
+F www/templates/Urban\sSunrise/nav_thread.tpl 072b3c477a15f2ef6d93545e53b4fe0ce9edd940 w www/templates/Wasp2/nav_thread.tpl
+F www/templates/Urban\sSunrise/nav_userslist.tpl f589aae323b62e3ee2de91251c3bbcce11e597d1 w www/templates/Wasp2/nav_userslist.tpl
+F www/templates/Urban\sSunrise/one_category.tpl 221b1f24f1fd8949cdfabca65f2e7fcbb48303fd w www/templates/Wasp2/one_category.tpl
+F www/templates/Urban\sSunrise/one_user.tpl 66e01f838cd2fd5ed9d9c623bd68a0bf0e9de135 w www/templates/Wasp2/one_user.tpl
+F www/templates/Urban\sSunrise/post_history.tpl 14d36bc7bd53912d73c2d8ba662eff1fb949113a w www/templates/Wasp2/post_history.tpl
+F www/templates/Urban\sSunrise/post_view.tpl 2cf320b7201f14761f077c3ef676fe1606c2dcc5 w www/templates/Wasp2/post_view.tpl
+F www/templates/Urban\sSunrise/posteditor.less 89782c14eb2ea867e370959bdac1856565485003 w www/templates/Wasp2/posteditor.less
+F www/templates/Urban\sSunrise/posts.less 9d5a4c072783d2f7999dc5f902de4b4592eabd05 w www/templates/Wasp2/posts.less
+F www/templates/Urban\sSunrise/preview.tpl c6866b8dd54715aa415c38c6a047567c54dc7c5b w www/templates/Wasp2/preview.tpl
+F www/templates/Urban\sSunrise/realtime.js 130e002c1d17eaea5d3a266109659d38dfdb876d w www/templates/Wasp2/realtime.js
+F www/templates/Urban\sSunrise/restore_confirm.tpl 52a9c63c3575dc9a740886776c4dc6c2e0a07efe w www/templates/Wasp2/restore_confirm.tpl
+F www/templates/Urban\sSunrise/search.less 0bcaf20f6012fe18db4ecdad203032fc082678df w www/templates/Wasp2/search.less
+F www/templates/Urban\sSunrise/search_result.tpl ef10b3a14fe5e603b7fdc900c0a266782cafeabc w www/templates/Wasp2/search_result.tpl
+F www/templates/Urban\sSunrise/settings.less a0cc9498175b503ee1d7791731eeb22d33f75660 w www/templates/Wasp2/settings.less
+F www/templates/Urban\sSunrise/skin_variables.lsi 241d2aee11299c0d4ca16db1ff844cd5a807f0ad w www/templates/Wasp2/skin_variables.lsi
+F www/templates/Urban\sSunrise/sqlite.less c3f10a66105bdd2bca5c9692ec724ea5ac202c15 w www/templates/Wasp2/sqlite.less
+F www/templates/Urban\sSunrise/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e3c7067 w www/templates/Wasp2/statistics.tpl
+F www/templates/Urban\sSunrise/thread_info.tpl 80f11ce4d992dc36bbc5a0ae6243c8a60858889e w www/templates/Wasp2/thread_info.tpl
+F www/templates/Urban\sSunrise/thread_list.less 46e1246b12f45f7f90a502be686d441189e13553 w www/templates/Wasp2/thread_list.less
+F www/templates/Urban\sSunrise/threadnew.less eb1e03f73882e8f1e940d0a1b1228988afef665f w www/templates/Wasp2/threadnew.less
+F www/templates/Urban\sSunrise/toaster.less 09f95cd572a30427e80a980b0e6d6f615564326a w www/templates/Wasp2/toaster.less
+F www/templates/Urban\sSunrise/userinfo.less 40d4c5d1527c50a2bd328d8b591b4a1d31baa85a w www/templates/Wasp2/userinfo.less
+F www/templates/Urban\sSunrise/userinfo.tpl 77fd3cc6001cfd2c2eca432a937d7c389c19e7cb w www/templates/Wasp2/userinfo.tpl
+F www/templates/Urban\sSunrise/users_online.less 83c5937075547abbf513be81bea5c0198b6576b9 w www/templates/Wasp2/users_online.less
+F www/templates/Urban\sSunrise/userslist.less 611ec1b70b4be555e739f5829f77d9122622d455 w www/templates/Wasp2/userslist.less
+F www/templates/Urban\sSunrise/userslist_ftr.tpl cdf4bf8f51f450a842d85ab41a089e05a2e12f73 w www/templates/Wasp2/userslist_ftr.tpl
+F www/templates/Urban\sSunrise/userslist_hdr.tpl 79c5b28322e9c0f587ed0f81ac451fe12d38235f w www/templates/Wasp2/userslist_hdr.tpl
 F www/templates/Wasp/_images/alltags.svg e5f3073cd5c54ae00888851d31ee830f9e96bce1
 F www/templates/Wasp/_images/alltags_gray.svg b269030eb91ca5d10dfd8a66a6ea1cb4c83966af
 F www/templates/Wasp/_images/anon.png f1150ae9c16cb5dd89c7f9f6c502bb6128783519
@@ -689,129 +811,7 @@ F www/templates/Wasp/users_online.less 910547b8d9853b50a4a1aca66e2e5995ed78c5b4
 F www/templates/Wasp/userslist.less 9dae27c4e52c68f3351549034bdd7f9754bce069
 F www/templates/Wasp/userslist_ftr.tpl cdf4bf8f51f450a842d85ab41a089e05a2e12f73
 F www/templates/Wasp/userslist_hdr.tpl 79c5b28322e9c0f587ed0f81ac451fe12d38235f
-F www/templates/Wasp2/_images/_source/alltags.svg 54cc9a54bfb1155f6219007c2aa430febf96e4ce
-F www/templates/Wasp2/_images/_source/chat.svg 411380cf5f635d1e911789a04e6b32e3f49d6997
-F www/templates/Wasp2/_images/_source/chat2.svg 51afd77b1a81f8a446df6abd6ffc33c14ebda8a3
-F www/templates/Wasp2/_images/_source/close2.svg a453f088f41598a22f1ba04fc00cace8cdb66ad9
-F www/templates/Wasp2/_images/_source/close3.svg ca8377d61a7a7a1c40665c4cb08e181fde72157c
-F www/templates/Wasp2/_images/_source/del.svg 386a3cd2c36aa5d7250637f22ea6401066a3e2ca
-F www/templates/Wasp2/_images/_source/drop-down2.svg 2c7baef041ff421274111036ba1692b226677ee8
-F www/templates/Wasp2/_images/_source/drop-down3.svg e4beabbc9d2fc6fbfd6956f971fce915bfa19f1a
-F www/templates/Wasp2/_images/_source/edit.svg 04ffdad78af310ac6e0c8323052ff22cf67487e9
-F www/templates/Wasp2/_images/_source/help4s.svg 567c8e6642c35afa99bf9df30891e37e8f23846b
-F www/templates/Wasp2/_images/_source/megaphone2.svg efc2b1290f6b21909e72213e4ecaebededbd085a
-F www/templates/Wasp2/_images/_source/new-post.svg d85faee513632b9435c60e3873cd5db3cdb5ee8d
-F www/templates/Wasp2/_images/_source/new-post2.svg 7c362696403f1269d228a19a5c076b54e2e1e309
-F www/templates/Wasp2/_images/_source/rss.svg 212ef22f50c1926c9e17c43ffd79455827eac4b9
-F www/templates/Wasp2/_images/_source/rss2.svg 9e8a33f52ae2cd159cdb765ea134f02a94593aaa
-F www/templates/Wasp2/_images/_source/rss3.svg 2f2feeb3db8dcf3284610354e01870f5cc3e2e6e
-F www/templates/Wasp2/_images/_source/search.svg 2dd775851877f8bcebe67f6cdf0dca1d54229b3d
-F www/templates/Wasp2/_images/_source/search2.svg c04c298fdc97e59d1e6955252011ede98ffa5110
-F www/templates/Wasp2/_images/_source/send_msg.svg f6f8ed474f9e0c97c4baed62edddd485a86366a5
-F www/templates/Wasp2/_images/_source/tag.svg b074e23c3f58df0fcfe89d3d4039c21f537e82d7
-F www/templates/Wasp2/_images/anon.png bcc2d2595b3565f6d3b0c2bebf1a63d26f924084
-F www/templates/Wasp2/_images/chatemoticons 6f2fb8dfd71252d2cdbe7b9b1d330c5859872e31 l
-F www/templates/Wasp2/_images/emoticons 6f2fb8dfd71252d2cdbe7b9b1d330c5859872e31 l
-F www/templates/Wasp2/activation_email_subject.tpl e0bd685144e72197dd0034b068e82d7604f926d2 l
-F www/templates/Wasp2/activation_email_text.tpl 50d1d6b7fe42736e334ab6870d7cc72e9085889d l
-F www/templates/Wasp2/activity0.tpl 66800be0587fffe32c9acf83029cb8fc7ac74332 l
-F www/templates/Wasp2/activity1.tpl 6fa6f00fea84fee0253d4707881c9a5338feb90f l
-F www/templates/Wasp2/activity10.tpl bc1c313b326ae3ea9f440b0f607cfd0f8ce482d6 l
-F www/templates/Wasp2/activity11.tpl 3a1ef0a6e3383b59f0e17e7bff76186ed93336b5 l
-F www/templates/Wasp2/activity12.tpl 490dd079393fc2a2180dd0cc5f7f9581fee448dd l
-F www/templates/Wasp2/activity13.tpl e5c3c56a5acdf56383fd3e5710c342444a30b61c l
-F www/templates/Wasp2/activity14.tpl 8012d3a8f8147ef4ea446c49fe994f4e0f0e0b38 l
-F www/templates/Wasp2/activity15.tpl 955d52b0160283783778a2e3af17125bc2c9ee8e l
-F www/templates/Wasp2/activity16.tpl c3bb31fa19e15df415b7e7d6f942dad1e80c70c7 l
-F www/templates/Wasp2/activity17.tpl 1229faf8484fa7878c0ff385af534d94b012cf9a l
-F www/templates/Wasp2/activity18.tpl a43359d158536a3a4a0deaa8e8ae9a86f34ee375 l
-F www/templates/Wasp2/activity19.tpl 3f8eb4a66305ccfaecc07e39d0305fa521c4910d l
-F www/templates/Wasp2/activity2.tpl 0c02bfb196ad6955c2e9bdfc53e313d15d32a6f6 l
-F www/templates/Wasp2/activity20.tpl 808359fdf3e47466adc8208357d29467310e1947 l
-F www/templates/Wasp2/activity3.tpl d076539803d955db90cc721ad51644f7c7d4bb70 l
-F www/templates/Wasp2/activity4.tpl 6a7b65a1f69740098b92dfee5e56d9420a3d0980 l
-F www/templates/Wasp2/activity5.tpl a0f664d4ee44680703ed8dc5cf30c1046b21dea0 l
-F www/templates/Wasp2/activity6.tpl b5c8a9fbc2efa2eac931ea024f5d78047618cfc5 l
-F www/templates/Wasp2/activity7.tpl 606eb1ee82da0767dd85e3d2ac63a07e9874a5fb l
-F www/templates/Wasp2/activity8.tpl 36d833a0164bb74532e88161cff3d7c8d05cef52 l
-F www/templates/Wasp2/activity9.tpl 60fe5018f101f822fa00434bff49db7a3f7da947 l
-F www/templates/Wasp2/all-emoji.txt e98af1671a301fd3a1e58c1934b62f4ce9506be6
-F www/templates/Wasp2/atom_entry_post.tpl a36d3dd1e06725015323056b09bdc1492aa6a0cc
-F www/templates/Wasp2/atom_entry_thread.tpl ab6e308c142262fa4a7ff9bb98d03a67168ffe39
-F www/templates/Wasp2/atom_start.tpl 93d0cec7a6c29045e0e4bd631eace12699a80aa7
-F www/templates/Wasp2/autocomplete.js 7f821fe4b74d465ef6042714c91ced568d7ef6d4
-F www/templates/Wasp2/chat.js 44acebfb1ebeda7d310971060ff7f332f9963c74
-F www/templates/Wasp2/chat.less 3c8855cd66461159292ed1d3a1e951473b42ac9a
-F www/templates/Wasp2/chat.tpl 1fc9e26ded4ec4ff57aab30a630568f892bf2764
-F www/templates/Wasp2/common.less 3054877b07561cf6046d8a2923b5c87f52f85b41
-F www/templates/Wasp2/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
-F www/templates/Wasp2/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001
-F www/templates/Wasp2/debug.less 3514d4b83950078d0a01c36090dbe1444f5aea93
-F www/templates/Wasp2/del_confirm.tpl e63ef3040705ecd7c913128a2102e714d3e32c70
-F www/templates/Wasp2/delete.less 397589f431219056581591243e48548d43fb8507
-F www/templates/Wasp2/edit.json 140a9ea82607df88432cbdfb8870a874aa6e8acd
-F www/templates/Wasp2/edit_toolbar.tpl 61f2f99cd30e489b195616eefa66b4eb1b784fc5
-F www/templates/Wasp2/editor.less 3828ec7af1c4ffddc13afdbe9a5cd5be578c85ae
-F www/templates/Wasp2/editors.js b1918721b66ca80b741411234c541f4234969fe9
-F www/templates/Wasp2/error.less 43f5b23eace778d249411d453321ec6d16d4f306
-F www/templates/Wasp2/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
-F www/templates/Wasp2/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
-F www/templates/Wasp2/file-browse.js f24eef322b130b2715410431ea4199679de5f65b
-F www/templates/Wasp2/form_edit.tpl 9b3c10b0155145b30833be481e7fbaa61e4dead6
-F www/templates/Wasp2/form_edit_thread.tpl 788dba9c786235cae6f55c0ae9f799c07e16e9c0
-F www/templates/Wasp2/form_editinfo.tpl 905b2a7b443efc06f86ba28eeb7ebfccecefc1b2
-F www/templates/Wasp2/form_login.tpl fe8b409f221a5553ee0f40bde655fa3cb276485f
-F www/templates/Wasp2/form_new_post.tpl 7960b1467e97041938510a09622b62a64c0780a3
-F www/templates/Wasp2/form_new_thread.tpl fceaf4c451dd2349cee838c3c091e6321ac0495a
-F www/templates/Wasp2/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
-F www/templates/Wasp2/form_register.tpl 02cc15121365375ffe92866cfe46ae944ef1855b
-F www/templates/Wasp2/form_reset_password.tpl d9aa084867bfc75045a93db88af361770a960158
-F www/templates/Wasp2/form_reset_request.tpl 2670304557d27ff156db4652a360a9044b415c7e
-F www/templates/Wasp2/form_settings.tpl 58bea19737861bb1db2a789b416ebebf8658fb88
-F www/templates/Wasp2/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
-F www/templates/Wasp2/form_sqlite_console.tpl 04720cf7c2be67a3ec0922a734eb58b6739c66b3
-F www/templates/Wasp2/help-bbcode.txt a35145f7f61575d36cb7b14ebff9387cc4944aa2
-F www/templates/Wasp2/help-minimag.txt fc7edb304e4d3d6ade4dd77361b178cb7706a402
-F www/templates/Wasp2/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
-F www/templates/Wasp2/highlight.js b4a380fb43186d51a405fb185067120657f243f2
-F www/templates/Wasp2/highlight.less fba68624d1b34a5543fe0bf4b2af2ac1ddf65e74
-F www/templates/Wasp2/login.less 46e4d3d72ebc9a7738bc4b1180cdcc652d6d4a3b
-F www/templates/Wasp2/main_html_end.tpl 05bb25b9490ce93732628c937860db787c516c46
-F www/templates/Wasp2/main_html_start.tpl 7021fb09be38237cc6d2ad5c8495f729bc4b17d7
-F www/templates/Wasp2/markdown.less f7949f6e2f9b45de8b292e9cbeac903c22c465cf
-F www/templates/Wasp2/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
-F www/templates/Wasp2/nav_categories.tpl c04334bde3272eed0ceeb558cb640a15a41b39e8
-F www/templates/Wasp2/nav_history.tpl 20332cc80d34a9c4fe360cc5559d98f0537900c2
-F www/templates/Wasp2/nav_list.tpl 0451bef02de358f26e35e00e7377d396b3190378
-F www/templates/Wasp2/nav_search.tpl c5abc05e0defefe48c8d79167638f0e65b805948
-F www/templates/Wasp2/nav_thread.tpl 072b3c477a15f2ef6d93545e53b4fe0ce9edd940
-F www/templates/Wasp2/nav_userslist.tpl f589aae323b62e3ee2de91251c3bbcce11e597d1
-F www/templates/Wasp2/one_category.tpl 221b1f24f1fd8949cdfabca65f2e7fcbb48303fd
-F www/templates/Wasp2/one_user.tpl 66e01f838cd2fd5ed9d9c623bd68a0bf0e9de135
-F www/templates/Wasp2/post_history.tpl 14d36bc7bd53912d73c2d8ba662eff1fb949113a
-F www/templates/Wasp2/post_view.tpl 2cf320b7201f14761f077c3ef676fe1606c2dcc5
-F www/templates/Wasp2/posteditor.less 89782c14eb2ea867e370959bdac1856565485003
-F www/templates/Wasp2/posts.less 9d5a4c072783d2f7999dc5f902de4b4592eabd05
-F www/templates/Wasp2/preview.tpl c6866b8dd54715aa415c38c6a047567c54dc7c5b
-F www/templates/Wasp2/realtime.js 130e002c1d17eaea5d3a266109659d38dfdb876d
-F www/templates/Wasp2/restore_confirm.tpl 52a9c63c3575dc9a740886776c4dc6c2e0a07efe
-F www/templates/Wasp2/search.less 0bcaf20f6012fe18db4ecdad203032fc082678df
-F www/templates/Wasp2/search_result.tpl ef10b3a14fe5e603b7fdc900c0a266782cafeabc
-F www/templates/Wasp2/settings.less 0b638487f2a10a1087860ad29a156ba51f867b61
-F www/templates/Wasp2/skin_variables.lsi 241d2aee11299c0d4ca16db1ff844cd5a807f0ad
-F www/templates/Wasp2/sqlite.less c3f10a66105bdd2bca5c9692ec724ea5ac202c15
-F www/templates/Wasp2/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e3c7067
-F www/templates/Wasp2/thread_info.tpl 80f11ce4d992dc36bbc5a0ae6243c8a60858889e
-F www/templates/Wasp2/thread_list.less 46e1246b12f45f7f90a502be686d441189e13553
-F www/templates/Wasp2/threadnew.less eb1e03f73882e8f1e940d0a1b1228988afef665f
-F www/templates/Wasp2/toaster.less 09f95cd572a30427e80a980b0e6d6f615564326a
-F www/templates/Wasp2/userinfo.less 40d4c5d1527c50a2bd328d8b591b4a1d31baa85a
-F www/templates/Wasp2/userinfo.tpl 77fd3cc6001cfd2c2eca432a937d7c389c19e7cb
-F www/templates/Wasp2/users_online.less 83c5937075547abbf513be81bea5c0198b6576b9
-F www/templates/Wasp2/userslist.less 611ec1b70b4be555e739f5829f77d9122622d455
-F www/templates/Wasp2/userslist_ftr.tpl cdf4bf8f51f450a842d85ab41a089e05a2e12f73
-F www/templates/Wasp2/userslist_hdr.tpl 79c5b28322e9c0f587ed0f81ac451fe12d38235f
-F www/templates/build_styles.sh 1a54085ad5672bc6480e1d67922946a504c8e966 x
+F www/templates/build_styles.sh a745cff403fbcc4a5f298ab3b7f2ddd37841a5e2 x
 F www/templates/create_tar.sh f24038eaf60e641cfbcac98b217245cee134d27c x
 F www/templates/mobile/_images 70c26c9bd422a7e59f2dca80d02ec99f39b390fb l
 F www/templates/mobile/activation_email_subject.tpl e0bd685144e72197dd0034b068e82d7604f926d2 l
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 970123c099b66f1bb581fa4c14584b5320729816 x
-P 87ad85e8d106c684da3381665a87c6bd375b2a00
-R 1c2fc29401f9b1984a7de26afb09b0d3
+P 854e2702b42d8b748d60b3067563f5c305980f95
+R 804a0988b2e73cc580659a68394ae7ff
 U johnfound
-Z c62f8dda518a5b7ddf93c206e41657ed
+Z fd44f5e6b43007a22dd253a78a9ff0d3
