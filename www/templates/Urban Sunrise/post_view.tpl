@@ -63,13 +63,13 @@
 
     <div class="spacer"></div>
 
-    [case:[special:canpost]| |<a title="[const:ttlQuote]" href="[id]/!post" class="btn img-btn">
+    <a title="[const:ttlQuote]" href="[case:[special:userid]|/!login|[id]/!post]" class="btn img-btn">
       <svg version="1.1" width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
         <path d="m9.02 3s-9.02 1.22-9.02 10.8v14.2h14v-14h-7.83s-1.55-1.98-.751-4.38c.801-3.2
                  4.76-3.81 4.76-3.81zm18 0s-9.02 1.22-9.02
                  10.8v14.2h14v-14h-7.83s-1.62-1.98-.814-4.38c.801-3.2 4.82-3.81 4.82-3.81z"/>
       </svg>
-    </a>]
+    </a>
 
     [case:[special:canedit]| |<a title="[const:ttlEdit]" href="[id]/!edit" class="btn img-btn">
       <svg version="1.1" width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
