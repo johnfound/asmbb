@@ -6,6 +6,8 @@ var edit_line;
 var user_line;
 var chat_log;
 var sys_log;
+var emoji_dd;
+
 var total_cnt = 0;
 var title = document.title;
 var do_notify = false;
@@ -66,6 +68,7 @@ window.addEventListener('load',
     edit_line = document.getElementById("chat_message");
     chat_log  = document.getElementById("chatlog");
     sys_log   = document.getElementById("syslog");
+    emoji_dd  = document.getElementById("emo-drow-down");
   }
 );
 
@@ -97,7 +100,10 @@ document.addEventListener("visibilitychange",
 
 
 function ScrollBottom(force) {
-  if ( force || ! do_notify ) chat_log.scrollTop = chat_log.scrollHeight - chat_log.clientHeight;
+  if ( force || ! do_notify ) {
+    var delta = chat_log.scrollTop - chat_log.scrollHeight + chat_log.clientHeight;
+    if (delta !== 0) chat_log.scrollTop = chat_log.scrollHeight - chat_log.clientHeight;
+  }
 }
 
 
@@ -147,6 +153,7 @@ function SendMessage() {
 
     edit_line.value = "";
     edit_line.focus();
+    emoji_dd.checked = false;
   }
 }
 
@@ -199,7 +206,9 @@ function OnFullChatMessage(e) {
         var msg_class = "msg_multi_line";
       }
 
-      p.innerHTML = '<span class="time">(' + hours + ':' + minutes + ':' + seconds + ')</span> ' + CreateUserSpan(msg.user, msg.originalname) + '<span class="' + msg_class + '">' + replaceEmoticons(linkify(msg.text)) + '</span>';
+      p.innerHTML = '<span class="user-col">' + CreateUserSpan(msg.user, msg.originalname) +
+                    '<span class="time">(' + hours + ':' + minutes + ':' + seconds + ')</span></span>' +
+                    '<span class="' + msg_class + '">' + replaceEmoticons(linkify(formatEmoji(msg.text))) + '</span>';
       all.appendChild(p);
       cnt++;
 

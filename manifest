@@ -1,5 +1,5 @@
-C Unicode\semoticons\sfor\sthe\schat.\sFine\stuning\shere\sand\sthere...
-D 2020-05-04T14:37:21.003
+C Unicode\semoji\ssupport\sfor\sthe\schat.
+D 2020-05-05T05:14:53.002
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -740,8 +740,8 @@ F www/templates/Wasp2/atom_entry_post.tpl a36d3dd1e06725015323056b09bdc1492aa6a0
 F www/templates/Wasp2/atom_entry_thread.tpl ab6e308c142262fa4a7ff9bb98d03a67168ffe39
 F www/templates/Wasp2/atom_start.tpl 93d0cec7a6c29045e0e4bd631eace12699a80aa7
 F www/templates/Wasp2/autocomplete.js 7f821fe4b74d465ef6042714c91ced568d7ef6d4
-F www/templates/Wasp2/chat.js 1d481979a662ac72ec680b94f61182902e0937c4
-F www/templates/Wasp2/chat.less a1fd54b166e838271364b587cf2d502b13e4fd0e
+F www/templates/Wasp2/chat.js 44acebfb1ebeda7d310971060ff7f332f9963c74
+F www/templates/Wasp2/chat.less 3c8855cd66461159292ed1d3a1e951473b42ac9a
 F www/templates/Wasp2/chat.tpl 1fc9e26ded4ec4ff57aab30a630568f892bf2764
 F www/templates/Wasp2/common.less 02b93040c41e41c57495e9dd54ca6c525f2cee0d
 F www/templates/Wasp2/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
@@ -793,7 +793,7 @@ F www/templates/Wasp2/post_view.tpl 2cf320b7201f14761f077c3ef676fe1606c2dcc5
 F www/templates/Wasp2/posteditor.less 1953d4059547b0c2067ee6f0d06df7da84a7b262
 F www/templates/Wasp2/posts.less 9d5a4c072783d2f7999dc5f902de4b4592eabd05
 F www/templates/Wasp2/preview.tpl c6866b8dd54715aa415c38c6a047567c54dc7c5b
-F www/templates/Wasp2/realtime.js f4324b343a5044390f52d7370c5ac8c733bc0dae
+F www/templates/Wasp2/realtime.js 130e002c1d17eaea5d3a266109659d38dfdb876d
 F www/templates/Wasp2/restore_confirm.tpl 52a9c63c3575dc9a740886776c4dc6c2e0a07efe
 F www/templates/Wasp2/search.less 0bcaf20f6012fe18db4ecdad203032fc082678df
 F www/templates/Wasp2/search_result.tpl ef10b3a14fe5e603b7fdc900c0a266782cafeabc
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 970123c099b66f1bb581fa4c14584b5320729816 x
-P 2afcfef92f2bc076680c2f172d80c90c46aa4f1d
-R 8488e7d614c8adb3cdcc1f48223b5f32
+P fc5fd4408c6822e632b7e9ecaf416c5bffeae734
+R 9e17c0b0a3b2706865b1765bf706d70b
 U johnfound
-Z a94d401a20757238011ff203a187894c
+Z 20c0842531884591de845ad27e15e1e2

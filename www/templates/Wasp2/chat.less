@@ -121,10 +121,13 @@ div.chatflex {
 
 .message {
   margin: @margin/2 0;
-  overflow: hidden;
   text-overflow: ellipsis;
   display: flex;
   align-items: baseline;
+
+  &:last-child {
+    margin-bottom: 16px;
+  }
 
   .msg_one_line {
     flex-grow: 1;
@@ -148,12 +151,6 @@ div.chatflex {
   line-height: 20px;
 }
 
-.time {
-  font-size: 80%;
-  margin: 0;
-  flex-shrink: 0
-}
-
 .hline {
   line-height: 1px;
   text-align: center;
@@ -167,19 +164,41 @@ div.chatflex {
   color: @clGray;
 }
 
-
-.user {
-  color: @clRed;
-  margin: 0 8px;
-  cursor: pointer;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: bold;
+.user-col {
+  margin-right: 8px;
   flex-shrink: 0;
+  line-height: 1em;
+  max-width: 30%;
 }
 
+.time {
+  font-size: 80%;
+  display: block;
+}
+
+span.user {
+  color: @clRed;
+  cursor: pointer;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: block;
+}
+
+p.user {
+  color: @clRed;
+  cursor: pointer;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin: 0;
+  padding: @margin/2 @margin;
+  display: block;
+}
+
+
 .fake_user {
-  color: @clViolet;
+  color: @clViolet !important;
 }
 
 .gray_user {
@@ -262,4 +281,22 @@ div.chatflex {
   font-weight: normal;
   font-variant: small-caps;
   text-align: center;
+}
+
+
+.emoji {
+  font-size: 1.3em;
+  font-family: @FontEmoji;
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+  & > * {
+    flex-shrink: 0;
+    flex-grow: 0;
+  }
+  &>span:hover {
+    transform: scale(2);
+    z-index: 1000;
+  }
 }
