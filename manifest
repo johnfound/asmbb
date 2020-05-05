@@ -1,5 +1,5 @@
-C Unicode\semoji\ssupport\sfor\sthe\schat.
-D 2020-05-05T05:14:53.002
+C Preparation\sfor\srenaming\sWasp2...
+D 2020-05-05T07:40:49.526
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -743,14 +743,14 @@ F www/templates/Wasp2/autocomplete.js 7f821fe4b74d465ef6042714c91ced568d7ef6d4
 F www/templates/Wasp2/chat.js 44acebfb1ebeda7d310971060ff7f332f9963c74
 F www/templates/Wasp2/chat.less 3c8855cd66461159292ed1d3a1e951473b42ac9a
 F www/templates/Wasp2/chat.tpl 1fc9e26ded4ec4ff57aab30a630568f892bf2764
-F www/templates/Wasp2/common.less 02b93040c41e41c57495e9dd54ca6c525f2cee0d
+F www/templates/Wasp2/common.less 3054877b07561cf6046d8a2923b5c87f52f85b41
 F www/templates/Wasp2/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp2/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001
 F www/templates/Wasp2/debug.less 3514d4b83950078d0a01c36090dbe1444f5aea93
 F www/templates/Wasp2/del_confirm.tpl e63ef3040705ecd7c913128a2102e714d3e32c70
 F www/templates/Wasp2/delete.less 397589f431219056581591243e48548d43fb8507
 F www/templates/Wasp2/edit.json 140a9ea82607df88432cbdfb8870a874aa6e8acd
-F www/templates/Wasp2/edit_toolbar.tpl 057e8d9d6053db65368a9393d00eb8c387dd5fe3
+F www/templates/Wasp2/edit_toolbar.tpl 61f2f99cd30e489b195616eefa66b4eb1b784fc5
 F www/templates/Wasp2/editor.less 3828ec7af1c4ffddc13afdbe9a5cd5be578c85ae
 F www/templates/Wasp2/editors.js b1918721b66ca80b741411234c541f4234969fe9
 F www/templates/Wasp2/error.less 43f5b23eace778d249411d453321ec6d16d4f306
@@ -790,7 +790,7 @@ F www/templates/Wasp2/one_category.tpl 221b1f24f1fd8949cdfabca65f2e7fcbb48303fd
 F www/templates/Wasp2/one_user.tpl 66e01f838cd2fd5ed9d9c623bd68a0bf0e9de135
 F www/templates/Wasp2/post_history.tpl 14d36bc7bd53912d73c2d8ba662eff1fb949113a
 F www/templates/Wasp2/post_view.tpl 2cf320b7201f14761f077c3ef676fe1606c2dcc5
-F www/templates/Wasp2/posteditor.less 1953d4059547b0c2067ee6f0d06df7da84a7b262
+F www/templates/Wasp2/posteditor.less 89782c14eb2ea867e370959bdac1856565485003
 F www/templates/Wasp2/posts.less 9d5a4c072783d2f7999dc5f902de4b4592eabd05
 F www/templates/Wasp2/preview.tpl c6866b8dd54715aa415c38c6a047567c54dc7c5b
 F www/templates/Wasp2/realtime.js 130e002c1d17eaea5d3a266109659d38dfdb876d
@@ -798,8 +798,8 @@ F www/templates/Wasp2/restore_confirm.tpl 52a9c63c3575dc9a740886776c4dc6c2e0a07e
 F www/templates/Wasp2/search.less 0bcaf20f6012fe18db4ecdad203032fc082678df
 F www/templates/Wasp2/search_result.tpl ef10b3a14fe5e603b7fdc900c0a266782cafeabc
 F www/templates/Wasp2/settings.less 0b638487f2a10a1087860ad29a156ba51f867b61
-F www/templates/Wasp2/skin_variables.lsi e123a054d553b2708857ee9791efc0abcebb2cd3
-F www/templates/Wasp2/sqlite.less d706cc9cbef88291407b1843265f7410e63f56fe
+F www/templates/Wasp2/skin_variables.lsi 241d2aee11299c0d4ca16db1ff844cd5a807f0ad
+F www/templates/Wasp2/sqlite.less c3f10a66105bdd2bca5c9692ec724ea5ac202c15
 F www/templates/Wasp2/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e3c7067
 F www/templates/Wasp2/thread_info.tpl 80f11ce4d992dc36bbc5a0ae6243c8a60858889e
 F www/templates/Wasp2/thread_list.less 46e1246b12f45f7f90a502be686d441189e13553
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 970123c099b66f1bb581fa4c14584b5320729816 x
-P fc5fd4408c6822e632b7e9ecaf416c5bffeae734
-R 9e17c0b0a3b2706865b1765bf706d70b
+P 87ad85e8d106c684da3381665a87c6bd375b2a00
+R 1c2fc29401f9b1984a7de26afb09b0d3
 U johnfound
-Z 20c0842531884591de845ad27e15e1e2
+Z c62f8dda518a5b7ddf93c206e41657ed

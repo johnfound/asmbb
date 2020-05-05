@@ -12,7 +12,6 @@
 @globWidth: ~"calc( 100% - @{sideWidth} )";
 @globMaxWidth: 1280px;
 @globMargin: @margin auto;
-@globMarginV: 1.5*@margin auto;
 
 @margin: 8px;
 
