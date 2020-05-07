@@ -210,8 +210,10 @@ p.user {
   font-size: 20px;
   font-family: @FontEmoji;
   overflow-y: scroll;
+  overflow-x: auto;
   position: absolute;
   width: auto;
+  max-width: ~"calc( 100vw - 28px )";
   height: 200px;
   resize: vertical;
   right: 4px;
@@ -240,11 +242,12 @@ p.user {
   display: flex;
   align-items: end !important;
   position: relative;
+}
 
-  &:hover #emolib {
+@media (hover: hover) {
+  .emo-btn-bar:hover #emolib {
     display: block !important;
   }
-
 }
 
 .emo-btn {

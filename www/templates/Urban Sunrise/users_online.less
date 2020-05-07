@@ -1,15 +1,20 @@
 @import "skin_variables.lsi";
 
-a.ban_link:before {
-  content: '🔨';
+a.ban_link {
+  margin-left: @margin/2;
+  &:before {
+    content: '📈';
+    font-size: 14px;
+    font-family: @FontEmoji;
+  }
 }
 
 a.online {
   font-weight: bold;
   background-color: @clDarkGray;
   color: @clWhite !important;
-  vertical-align: middle;
-  padding: 1px 4px;
+  padding: 0px 4px;
+  line-height: 16px;
 }
 
 /* Users online table styles */
@@ -29,7 +34,7 @@ div.users_online {
 
 table.users_table {
   width: 100%;
-  border-spacing: 0 1px;
+  border-spacing: 1px 1px;
 }
 
 table.users_table th {
@@ -41,7 +46,7 @@ table.users_table th {
 table.users_table td {
   background-color: @clWhite;
   padding: @margin/2 @margin;
-  text-align: center;
+  text-align: left;
   vertical-align: middle;
   overflow: hidden;
 }

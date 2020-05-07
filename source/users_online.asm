@@ -386,7 +386,7 @@ begin
 
         stdcall IP2Str, eax
         stdcall TextCat, edi, eax
-        stdcall TextCat, edx, txt ' <a class="ban_link" href="/!ban_ip/'
+        stdcall TextCat, edx, txt '<a class="ban_link" href="/!ip-report/'
         stdcall TextCat, edx, eax
         stdcall StrDel, eax
         stdcall TextCat, edx, txt '"></a></td><td>'

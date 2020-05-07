@@ -1,5 +1,5 @@
 #!/bin/bash
 
-tar -czf ./templates.tar.gz ./Light/ ./mobile/ ./Wasp/ ./MoLight/ ./Modern/
+tar --exclude=*.less -czf ./templates.tar.gz ./Light/ ./mobile/ ./Wasp/ ./MoLight/ ./Modern/ ./"Urban Sunrise"/
 
 # --exclude=*.less

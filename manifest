@@ -1,5 +1,5 @@
-C It\sis\sbetter\sto\sdisplay\sthe\spost\sbuttons\sfor\sthe\sguests.
-D 2020-05-05T09:12:30.964
+C Fine\stuning\sof\sthe\schat\sand\semoticon\sstyles\son\smobile\sdevices.\sFont\sissues.
+D 2020-05-07T05:28:05.778
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -41,7 +41,7 @@ F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm 03059f73a6c143fa5400098b6018f82118b2c146
-F source/engine.fpr bcaf4f3d8d59ac3f4e416cbd14497631b4bec9cc
+F source/engine.fpr cc89fcd4a4086df9908f86d4abcd891e27c4603b
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 81f60b545fb3f7a184f6f6075f9a4e7ce31b7a0a
@@ -93,7 +93,7 @@ F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
 F source/userinfo.asm 010a2ba73acd014cd558c39aae3b9915266dc9e3
 F source/userinfo.sql 41f1f4a8019561b5a5144ae14299e13a53fa168d
-F source/users_online.asm fb813d50fc87b57bfa161a5d043d36c94ef60f12
+F source/users_online.asm a730d7a2a7af9604c20523307b6a516c6be5af43
 F source/users_online.sql 615346c705099d4fed2fe5ea985efa429156075c
 F source/userslist.asm ad6c2bc2cc22ef3dc7202c0310754ef1d5afabb3
 F source/userslist.sql c90e4da301687cdec9fd4dc45c0f018a2e73ceb6
@@ -597,9 +597,9 @@ F www/templates/Urban\sSunrise/atom_entry_thread.tpl ab6e308c142262fa4a7ff9bb98d
 F www/templates/Urban\sSunrise/atom_start.tpl 93d0cec7a6c29045e0e4bd631eace12699a80aa7
 F www/templates/Urban\sSunrise/autocomplete.js 7f821fe4b74d465ef6042714c91ced568d7ef6d4
 F www/templates/Urban\sSunrise/chat.js 44acebfb1ebeda7d310971060ff7f332f9963c74
-F www/templates/Urban\sSunrise/chat.less 3c8855cd66461159292ed1d3a1e951473b42ac9a
-F www/templates/Urban\sSunrise/chat.tpl 1fc9e26ded4ec4ff57aab30a630568f892bf2764
-F www/templates/Urban\sSunrise/common.less 3054877b07561cf6046d8a2923b5c87f52f85b41
+F www/templates/Urban\sSunrise/chat.less b02c4e174a6cd617c562bb0844f178241a19b865
+F www/templates/Urban\sSunrise/chat.tpl 08566a7722d6b493d920ef352cb26a6b3481ffeb
+F www/templates/Urban\sSunrise/common.less 00fc357cb3394e256fe8db31f0192e88970bc2b7
 F www/templates/Urban\sSunrise/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Urban\sSunrise/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001
 F www/templates/Urban\sSunrise/debug.less 3514d4b83950078d0a01c36090dbe1444f5aea93
@@ -654,7 +654,7 @@ F www/templates/Urban\sSunrise/restore_confirm.tpl 52a9c63c3575dc9a740886776c4dc
 F www/templates/Urban\sSunrise/search.less 0bcaf20f6012fe18db4ecdad203032fc082678df
 F www/templates/Urban\sSunrise/search_result.tpl ef10b3a14fe5e603b7fdc900c0a266782cafeabc
 F www/templates/Urban\sSunrise/settings.less a0cc9498175b503ee1d7791731eeb22d33f75660
-F www/templates/Urban\sSunrise/skin_variables.lsi 241d2aee11299c0d4ca16db1ff844cd5a807f0ad
+F www/templates/Urban\sSunrise/skin_variables.lsi 1be939245fb6b3c5b6bb562e860208e46ad9825a
 F www/templates/Urban\sSunrise/sqlite.less c3f10a66105bdd2bca5c9692ec724ea5ac202c15
 F www/templates/Urban\sSunrise/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e3c7067
 F www/templates/Urban\sSunrise/thread_info.tpl 80f11ce4d992dc36bbc5a0ae6243c8a60858889e
@@ -663,7 +663,7 @@ F www/templates/Urban\sSunrise/threadnew.less eb1e03f73882e8f1e940d0a1b1228988af
 F www/templates/Urban\sSunrise/toaster.less 09f95cd572a30427e80a980b0e6d6f615564326a
 F www/templates/Urban\sSunrise/userinfo.less 40d4c5d1527c50a2bd328d8b591b4a1d31baa85a
 F www/templates/Urban\sSunrise/userinfo.tpl 77fd3cc6001cfd2c2eca432a937d7c389c19e7cb
-F www/templates/Urban\sSunrise/users_online.less 83c5937075547abbf513be81bea5c0198b6576b9
+F www/templates/Urban\sSunrise/users_online.less f6db02b7bc1d05724974c05f9b54541b7fb5b300
 F www/templates/Urban\sSunrise/userslist.less 611ec1b70b4be555e739f5829f77d9122622d455
 F www/templates/Urban\sSunrise/userslist_ftr.tpl cdf4bf8f51f450a842d85ab41a089e05a2e12f73
 F www/templates/Urban\sSunrise/userslist_hdr.tpl 79c5b28322e9c0f587ed0f81ac451fe12d38235f
@@ -812,7 +812,7 @@ F www/templates/Wasp/userslist.less 9dae27c4e52c68f3351549034bdd7f9754bce069
 F www/templates/Wasp/userslist_ftr.tpl cdf4bf8f51f450a842d85ab41a089e05a2e12f73
 F www/templates/Wasp/userslist_hdr.tpl 79c5b28322e9c0f587ed0f81ac451fe12d38235f
 F www/templates/build_styles.sh a745cff403fbcc4a5f298ab3b7f2ddd37841a5e2 x
-F www/templates/create_tar.sh f24038eaf60e641cfbcac98b217245cee134d27c x
+F www/templates/create_tar.sh dd173c259f4463fd89b63436678c53247257cf01 x
 F www/templates/mobile/_images 70c26c9bd422a7e59f2dca80d02ec99f39b390fb l
 F www/templates/mobile/activation_email_subject.tpl e0bd685144e72197dd0034b068e82d7604f926d2 l
 F www/templates/mobile/activation_email_text.tpl 50d1d6b7fe42736e334ab6870d7cc72e9085889d l
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 970123c099b66f1bb581fa4c14584b5320729816 x
-P fe6c6f2c07e53493089e20783ad2200699ccb34d
-R 9d3bffe9d32807751c3c60716b80b850
+P 430e80d510e857d1554063108b37052e397854ab
+R 597cc0ad09f867cada5bbae8f2b4ca30
 U johnfound
-Z b64b779bb5e230053170e00e36b8b1f9
+Z 4bd62654d6b4e54ee524964e238f6327
