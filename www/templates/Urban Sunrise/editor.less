@@ -104,8 +104,10 @@
   font-size: 20px;
   font-family: @FontEmoji;
   overflow-y: scroll;
+  overflow-x: auto;
   position: absolute;
   width: auto;
+  max-width: ~"calc( 100vw - 28px )";
   height: 200px;
   resize: vertical;
   left: 4px;
@@ -119,6 +121,9 @@
     cursor: pointer;
     display: inline-block;
     margin: @margin;
+    width: @buttonHeight;
+    height: @buttonHeight;
+    overflow: hidden;
     &:hover {
       background-color: @clRed;
       box-shadow: 1px 1px 3px @clMiddleGray;
@@ -134,12 +139,15 @@
   flex-shrink: 0;
   display: flex;
   align-items: end !important;
+}
 
-  &:hover #emolib {
+
+@media (pointer: fine) {
+  .emo-btn-bar:hover #emolib {
     display: block !important;
   }
-
 }
+
 
 .emo-btn {
   cursor: pointer;
@@ -160,3 +168,4 @@
     fill: @clWhite;
   }
 }
+

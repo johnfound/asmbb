@@ -218,8 +218,8 @@
   <div class="toolbar">
 
     <div class="dropdown emo-btn-bar">
-      <input id="emo-drow-down" type="checkbox">
-      <label for="emo-drow-down" class="emo-btn">
+      <input id="emo-drop-down" type="checkbox">
+      <label for="emo-drop-down" class="emo-btn">
         <svg version="1.1" width="18" height="18" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
          <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#a) !important;stroke-linecap:round;stroke-linejoin:round;stroke:#000"/>
          <path d="m17 20.2a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#b) !important;stroke-width:1"/>

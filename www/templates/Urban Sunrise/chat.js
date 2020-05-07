@@ -68,7 +68,7 @@ window.addEventListener('load',
     edit_line = document.getElementById("chat_message");
     chat_log  = document.getElementById("chatlog");
     sys_log   = document.getElementById("syslog");
-    emoji_dd  = document.getElementById("emo-drow-down");
+    emoji_dd  = document.getElementById("emo-drop-down");
   }
 );
 
