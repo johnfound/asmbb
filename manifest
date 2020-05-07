@@ -1,5 +1,5 @@
-C Handle\sthe\semoji\spicker\sthe\ssame\sway\sin\sthe\spost\seditor\sand\sthe\schat.\sSome\stypo\sfixed.
-D 2020-05-07T13:07:41.172
+C Forgotten\sfiles\sadded.
+D 2020-05-07T13:13:54.361
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -558,6 +558,7 @@ F www/templates/Urban\sSunrise/_images/_source/help4s.svg 567c8e6642c35afa99bf9d
 F www/templates/Urban\sSunrise/_images/_source/megaphone2.svg efc2b1290f6b21909e72213e4ecaebededbd085a
 F www/templates/Urban\sSunrise/_images/_source/new-post.svg d85faee513632b9435c60e3873cd5db3cdb5ee8d
 F www/templates/Urban\sSunrise/_images/_source/new-post2.svg 7c362696403f1269d228a19a5c076b54e2e1e309
+F www/templates/Urban\sSunrise/_images/_source/restore.svg f2598a638739af6238b5c8363d4c16a9b91df2c5
 F www/templates/Urban\sSunrise/_images/_source/rss.svg 212ef22f50c1926c9e17c43ffd79455827eac4b9
 F www/templates/Urban\sSunrise/_images/_source/rss2.svg 9e8a33f52ae2cd159cdb765ea134f02a94593aaa
 F www/templates/Urban\sSunrise/_images/_source/rss3.svg 2f2feeb3db8dcf3284610354e01870f5cc3e2e6e
@@ -811,6 +812,7 @@ F www/templates/Wasp/users_online.less 910547b8d9853b50a4a1aca66e2e5995ed78c5b4
 F www/templates/Wasp/userslist.less 9dae27c4e52c68f3351549034bdd7f9754bce069
 F www/templates/Wasp/userslist_ftr.tpl cdf4bf8f51f450a842d85ab41a089e05a2e12f73
 F www/templates/Wasp/userslist_hdr.tpl 79c5b28322e9c0f587ed0f81ac451fe12d38235f
+F www/templates/_fonts/NotoSansSymbols2-Regular.ttf 9d9826dba2d6daea10338e73a5943783d1d00946
 F www/templates/build_styles.sh a745cff403fbcc4a5f298ab3b7f2ddd37841a5e2 x
 F www/templates/create_tar.sh 25628f0b7580d3c703ba55042951a3a5f34f9c8e x
 F www/templates/mobile/_images 70c26c9bd422a7e59f2dca80d02ec99f39b390fb l
@@ -908,7 +910,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P e08c01c428596b2bf7cc48b9a56d9a6a109ac553
-R fe04c6dc05791b712a19be0d2416f849
+P 5134eff734006f3249b6fae60b4fb33ad7b97b33
+R 832e249663b3446c050bdb69a592b5f8
 U johnfound
-Z 657819aec51576d99fcafd026b678958
+Z c64de68fefaddbcead65d503877d97df
