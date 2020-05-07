@@ -1,5 +1,5 @@
-C Fine\stuning\sof\sthe\schat\sand\semoticon\sstyles\son\smobile\sdevices.\sFont\sissues.
-D 2020-05-07T05:28:05.778
+C Additional\scheck\sfor\sthe\sskin\sexistence.\sSome\sminor\simprovements\sin\sUrban\sSunrise\stheme.
+D 2020-05-07T08:08:38.593
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -67,7 +67,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm 097fd8bebb739967aa52e29381d515ad678d05c7
+F source/render2.asm bd6b0e9e1965bb9488dd170736ce4d645233f9b8
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 60acccb553021d13c932470672aec7a3d943443d
 F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
@@ -597,9 +597,9 @@ F www/templates/Urban\sSunrise/atom_entry_thread.tpl ab6e308c142262fa4a7ff9bb98d
 F www/templates/Urban\sSunrise/atom_start.tpl 93d0cec7a6c29045e0e4bd631eace12699a80aa7
 F www/templates/Urban\sSunrise/autocomplete.js 7f821fe4b74d465ef6042714c91ced568d7ef6d4
 F www/templates/Urban\sSunrise/chat.js 44acebfb1ebeda7d310971060ff7f332f9963c74
-F www/templates/Urban\sSunrise/chat.less b02c4e174a6cd617c562bb0844f178241a19b865
+F www/templates/Urban\sSunrise/chat.less 4f4c0450234f8f7aeccdc046d42c1e1c185963f7
 F www/templates/Urban\sSunrise/chat.tpl 08566a7722d6b493d920ef352cb26a6b3481ffeb
-F www/templates/Urban\sSunrise/common.less 00fc357cb3394e256fe8db31f0192e88970bc2b7
+F www/templates/Urban\sSunrise/common.less 7affba881b618475c69319842c18f9469fc33b21
 F www/templates/Urban\sSunrise/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Urban\sSunrise/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001
 F www/templates/Urban\sSunrise/debug.less 3514d4b83950078d0a01c36090dbe1444f5aea93
@@ -607,7 +607,7 @@ F www/templates/Urban\sSunrise/del_confirm.tpl e63ef3040705ecd7c913128a2102e714d
 F www/templates/Urban\sSunrise/delete.less 397589f431219056581591243e48548d43fb8507
 F www/templates/Urban\sSunrise/edit.json 140a9ea82607df88432cbdfb8870a874aa6e8acd
 F www/templates/Urban\sSunrise/edit_toolbar.tpl 61f2f99cd30e489b195616eefa66b4eb1b784fc5
-F www/templates/Urban\sSunrise/editor.less 3ea9f0074d2c1b31c6db3b4602fd52cabdd03772
+F www/templates/Urban\sSunrise/editor.less feb1720da56c00e5136e49e0f1ccf35233e11ad7
 F www/templates/Urban\sSunrise/editors.js b1918721b66ca80b741411234c541f4234969fe9
 F www/templates/Urban\sSunrise/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Urban\sSunrise/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
@@ -812,7 +812,7 @@ F www/templates/Wasp/userslist.less 9dae27c4e52c68f3351549034bdd7f9754bce069
 F www/templates/Wasp/userslist_ftr.tpl cdf4bf8f51f450a842d85ab41a089e05a2e12f73
 F www/templates/Wasp/userslist_hdr.tpl 79c5b28322e9c0f587ed0f81ac451fe12d38235f
 F www/templates/build_styles.sh a745cff403fbcc4a5f298ab3b7f2ddd37841a5e2 x
-F www/templates/create_tar.sh dd173c259f4463fd89b63436678c53247257cf01 x
+F www/templates/create_tar.sh 25628f0b7580d3c703ba55042951a3a5f34f9c8e x
 F www/templates/mobile/_images 70c26c9bd422a7e59f2dca80d02ec99f39b390fb l
 F www/templates/mobile/activation_email_subject.tpl e0bd685144e72197dd0034b068e82d7604f926d2 l
 F www/templates/mobile/activation_email_text.tpl 50d1d6b7fe42736e334ab6870d7cc72e9085889d l
@@ -907,8 +907,8 @@ F www/templates/mobile/users_online.less cda0da3c26b9fa07bc6d0b5a32dafa70e5d009d
 F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
-F www/templates/untar.sh 970123c099b66f1bb581fa4c14584b5320729816 x
-P 430e80d510e857d1554063108b37052e397854ab
-R 597cc0ad09f867cada5bbae8f2b4ca30
+F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
+P 0b7c2466dba1a7ebdef8d4a5123a987973f36668
+R f42560bd4ec5656454706055efc919c4
 U johnfound
-Z 4bd62654d6b4e54ee524964e238f6327
+Z 36fa4305b2c3e5f22583a28c0f03d655

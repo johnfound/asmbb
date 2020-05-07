@@ -3022,6 +3022,21 @@ begin
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax
 
+        stdcall StrDup, [hCurrentDir]
+        push    eax
+        stdcall StrCat, eax, ebx
+        stdcall StrCat, eax, SKIN_CHECK_FILE
+
+        stdcall FileExists, eax
+        stdcall StrDel ; from the stack
+        jnc     .finish
+
+        stdcall StrDel, ebx
+        stdcall StrDupMem, "/templates/"
+        mov     ebx, eax
+        stdcall StrCat, ebx, cDefaultSkin
+
+.finish:
         mov     [esp+4*regEAX], ebx
         popad
         return

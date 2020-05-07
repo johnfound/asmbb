@@ -167,7 +167,7 @@ div.chatflex {
 .user-col {
   margin-right: 8px;
   flex-shrink: 0;
-  line-height: 1em;
+  line-height: 1.2em;
   max-width: 30%;
 }
 
@@ -227,6 +227,9 @@ p.user {
     cursor: pointer;
     display: inline-block;
     margin: @margin;
+    width: @buttonHeight;
+    height: @buttonHeight;
+    overflow: hidden;
     &:hover {
       background-color: @clRed;
       box-shadow: 1px 1px 3px @clMiddleGray;
@@ -244,7 +247,7 @@ p.user {
   position: relative;
 }
 
-@media (hover: hover) {
+@media (pointer: fine) {
   .emo-btn-bar:hover #emolib {
     display: block !important;
   }
