@@ -1,13 +1,14 @@
 @import "skin_variables.lsi";
 
-body {
-  padding: @margin !important;
+#chat-window {
   margin: 0px auto !important;
-  width: 100vw;
-  height: 100vh;
   max-width: @globMaxWidth;
+  display: flex;
+  flex-direction: column;
 
   overflow: hidden;
+  position: fixed;
+  left: 0; right: 0; top: 0; bottom: 0;
 }
 
 
@@ -48,7 +49,7 @@ div.chatflex {
 }
 
 
-@media (orientation: landscape) {
+@media (orientation: landscape) and (min-width: 600px) {
   div.chatflex {
     flex-direction: row;
   }
@@ -60,7 +61,7 @@ div.chatflex {
 }
 
 
-@media (orientation: portrait) {
+@media (orientation: portrait), (max-width: 600px) {
   div.chatflex {
     flex-direction: column-reverse;
   }

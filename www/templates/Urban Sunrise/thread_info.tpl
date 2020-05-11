@@ -5,9 +5,9 @@
   [equ:tPosts=post[case:[PostCount]|s||s]]
   [equ:ttlMark=Mark thread read]
   [equ:tViews=view[case:[ReadCount]|s||s]]
-  [equ:Posters=Participants: ]
-  [equ:Invited=Invited: ]
-  [equ:Tags=Tags: ]
+  [equ:Posters=Participants]
+  [equ:Invited=Invited]
+  [equ:Tags=Tags]
 |
   [equ:ttlPinned=Забодена отгоре]
   [equ:ttlLimited=Тема с ограничен достъп]
@@ -15,9 +15,9 @@
   [equ:tPosts=съобщени[case:[PostCount]|я|е|я]]
   [equ:ttlMark=Маркирай темата като прочетена]
   [equ:tViews=преглед[case:[ReadCount]|а||а]]
-  [equ:Posters=Участници: ]
-  [equ:Invited=Поканени: ]
-  [equ:Tags=Тагове: ]
+  [equ:Posters=Участници]
+  [equ:Invited=Поканени]
+  [equ:Tags=Тагове]
 |
   [equ:ttlPinned=Прикрепленная на верху]
   [equ:ttlLimited=Тема ограниченным доступом]
@@ -25,9 +25,9 @@
   [equ:tPosts=сообщени[case:[PostCount]|й|е|й]]
   [equ:ttlMark=Отметить тему прочитанной]
   [equ:tViews=просмотр[case:[ReadCount]|ов||ов]]
-  [equ:Posters=Участники: ]
-  [equ:Invited=Приглашенные: ]
-  [equ:Tags=Ярлыки: ]
+  [equ:Posters=Участники]
+  [equ:Invited=Приглашенные]
+  [equ:Tags=Ярлыки]
 |
   [equ:ttlPinned=Sujet épinglé]
   [equ:ttlLimited=Sujet à accès limité]
@@ -35,9 +35,9 @@
   [equ:tPosts=post[case:[PostCount]|s||s]]
   [equ:ttlMark=Marquer le sujet comme lu]
   [equ:tViews=vue[case:[ReadCount]|s||s]]
-  [equ:Posters=Participants: ]
-  [equ:Invited=Invités: ]
-  [equ:Tags=Mots-clés: ]
+  [equ:Posters=Participants]
+  [equ:Invited=Invités]
+  [equ:Tags=Mots-clés]
 |
   [equ:ttlPinned=Angeheftetes Thema]
   [equ:ttlLimited=Beschränktes Thema]
@@ -45,9 +45,9 @@
   [equ:tPosts=Beitr[case:[PostCount]|äge|ag|äge]]
   [equ:ttlMark=Thema als gelesen kennzeichnen]
   [equ:tViews=[case:[ReadCount]|Ansichten|Ansicht|Ansichten]]
-  [equ:Posters=Teilnehmer: ]
-  [equ:Invited=Eingeladen: ]
-  [equ:Tags=Tags: ]
+  [equ:Posters=Teilnehmer]
+  [equ:Invited=Eingeladen]
+  [equ:Tags=Tags]
 ]
 
 
@@ -69,14 +69,20 @@
           <path d="m1.5 1.5 13 13" fill="none" stroke-linecap="round" stroke-width="4"/>
         </svg></a></span>]
       </p>
-      <label class="collapsable"><input type="checkbox"><ul class="comma posters">
-      <svg width="17" height="17" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-        <path d="m8 9h16l-8 16z"/>
-      </svg>[const:Posters][html:[Posters]]</ul></label>
-      [case:[limited]||<label class="collapsable"><input type="checkbox"><ul class="comma invited">
-      <svg width="17" height="17" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-        <path d="m8 9h16l-8 16z"/>
-      </svg>[const:Invited][html:[Invited]]</ul></label>]
+
+      [case:[limited]||
+      <div><b>[const:Invited]:</b>
+        <ul class="comma invited">
+          [html:[Invited]]
+        </ul>
+      </div>]
+
+      <div><b>[const:Posters]:</b>
+        <ul class="comma posters">
+          [html:[Posters]]
+        </ul>
+      </div>
+
     </div>
     <div class="tsi-stat">
       <p>[PostCount] [const:tPosts] | [ReadCount] [const:tViews]</p>
@@ -85,6 +91,6 @@
   </div>
 
   <div class="ts-tags">
-    <ul class="comma">[const:Tags][html:[ThreadTags]]</ul>
+    <ul class="comma">[const:Tags]: [html:[ThreadTags]]</ul>
   </div>
 </div>

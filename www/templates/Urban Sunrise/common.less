@@ -484,41 +484,6 @@ a.current_tag {
 }
 
 
-// Block with multiple elements that can be displayed on one line or
-// wrapped on multiple lines.
-
-.collapsable {
-  flex-wrap: nowrap;
-  align-items: start;
-
-  > input^[type=checkbox^] {
-    position: absolute;
-    z-index: -1;
-    left: -100000px;
-
-    + * {
-      margin: 0px;
-      svg {
-        transform: rotate(0deg);
-        vertical-align: text-bottom;
-      }
-    }
-
-    &:not(:checked) + * {
-      white-space: nowrap !important;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      svg {
-        transform: rotate(-90deg);
-      }
-      + * {
-        white-space: nowrap !important;
-      }
-    }
-  }
-}
-
-
 .dropdown {
   align-items: start;
 
