@@ -1,5 +1,35 @@
 @import "skin_variables.lsi";
 
+@media (max-width: 600px) {
+  body {
+    overflow-y: hidden !important;
+    overflow-x: auto;
+  }
+  header, footer, .global-row, .attribution, .vspacer {
+    display: none !important;
+  }
+  .editor {
+    height: 100vh !important;
+    margin: 0 !important;
+  }
+  #editor-window:target {
+    z-index: 10000;
+  }
+  #preview {
+    background-color: @clLightGray;
+    margin: 0 !important;
+    padding: @margin;
+    display: flex;
+    flex-direction: column;
+    &:target {
+      z-index: 10000;
+    }
+  }
+  #preview-switch {
+    display: flex !important;
+  }
+}
+
 @media (orientation: landscape) {
   body {
     width: 50%;
@@ -76,6 +106,10 @@ body {
   color: @clBlack;
   display: flex;
   flex-direction: column;
+}
+
+#preview-switch {
+  display: none;
 }
 
 

@@ -8,6 +8,7 @@
   height: @buttonHeight;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 
   cursor: pointer;
   &:hover {
@@ -32,8 +33,11 @@
   section {
     background: @clDarkGray;
     display: flex;
-    flex-wrap: wrap;
     flex-grow: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 4px;
+    margin-right: 80px;
   }
 
   &::after {
@@ -76,11 +80,6 @@
 
       & + section {
         display: none;
-        padding: 4px;
-        flex-direction: row;
-        flex-wrap: wrap;
-        margin: 0 80px 0 0;
-        flex-grow: 1;
       }
     }
 

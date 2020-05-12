@@ -163,7 +163,7 @@ label:focus-within {
 
 /* header styles */
 
-header {
+body > header {
   position: relative;
   width: @globWidth;
   max-width: @globMaxWidth;
@@ -222,6 +222,7 @@ header {
   display: flex;
   flex-grow: 2;
   flex-shrink: 1;
+  flex-basis: 400px;
   margin: 0;
   > input {
     flex-shrink: 1;
@@ -652,7 +653,7 @@ span.current_page {
 
 /* Footer styles */
 
-footer {
+body > footer {
   width: @globWidth;
   max-width: @globMaxWidth;
   margin: @globMargin;
@@ -694,6 +695,7 @@ div.attribution {
 div.message_block {
   font-size: 1.2*@FontSize;
   width: @msgBoxWidth;
+  max-width: @globWidth;
   background: @clWhite;
   color: @clBlack;
   margin: @margin auto;
@@ -716,8 +718,7 @@ div.message_block {
 
 div.message {
   white-space: pre-wrap;
-  padding: 64px;
-  margin: 0px auto;
+  padding: 64px 0;
   text-align: left;
   color: @clBlack;
   display: inline-block;

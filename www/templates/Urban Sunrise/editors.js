@@ -36,10 +36,11 @@ function previewIt(e) {
 
     var formData = new FormData(form);
     xhr.send(formData);
+    document.location = "#preview";
   }
 }
 
-window.addEventListener('load', previewIt());
+window.addEventListener('load', function() { previewIt(); document.location="#editor-window"; });
 
 
 // Form keyboard hot keys.
@@ -51,7 +52,10 @@ document.onkeydown = function(e) {
   var stop = true;
 
   if (e.ctrlKey && key == 13) {
-    frm.preview.click();
+    if (document.location.hash == '#preview')
+      document.location = '#editor-window'
+    else
+      frm.preview.click();
   } else if (key == 27) {
     btnclose.click();
   } else if (e.ctrlKey && key == 83) {

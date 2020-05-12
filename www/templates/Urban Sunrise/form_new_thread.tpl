@@ -91,10 +91,10 @@
   [equ:MultiFiles= ausgewählte Dateien.]
 ]
 
-<div class="editor">
+<div id="editor-window" class="editor">
   <div class="navigation3 btn-bar">
       <input form="editform" type="hidden" name="ticket" value="[Ticket]" >
-      <input form="editform" class="btn" id="preview-btn" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
+      <input form="editform" class="btn" id="preview-btn" action="!post#preview" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
       <input form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]" title="[const:hintSubmit]">
       <div class="spacer"></div>
       <a id="btn-close" class="btn img-btn" href=".">
