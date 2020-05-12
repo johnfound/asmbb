@@ -50,7 +50,11 @@
   <div class="btn-bar">
     <a class="btn" href="/">[const:btnForum]</a>
     <div class="spacer"></div>
-    <span>Nick:<input type="text" placeholder="[const:phNick]" id="chat_user" onkeypress="KeyPress(event, UserRename)" onChange="UserRename()"></span>
+    <span><svg width="18" height="18" style="vertical-align: middle" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="16" cy="9" r="9"/>
+        <path d="m16 16a16 16 0 00-16 16h32a16 16 0 00-16-16z"/>
+      </svg><input type="text" placeholder="[const:phNick]" id="chat_user" onkeypress="KeyPress(event, UserRename)" onChange="UserRename()">
+    </span>
   </div>
 
   <div class="chatflex">

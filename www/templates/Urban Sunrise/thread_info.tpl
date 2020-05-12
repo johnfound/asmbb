@@ -70,18 +70,18 @@
         </svg></a></span>]
       </p>
 
-      [case:[limited]||
-      <div><b>[const:Invited]:</b>
-        <ul class="comma invited">
-          [html:[Invited]]
-        </ul>
-      </div>]
-
-      <div><b>[const:Posters]:</b>
+      <div>[const:Posters]:
         <ul class="comma posters">
           [html:[Posters]]
         </ul>
       </div>
+
+      [case:[limited]||
+      <div>[const:Invited]:
+        <ul class="comma invited">
+          [html:[Invited]]
+        </ul>
+      </div>]
 
     </div>
     <div class="tsi-stat">

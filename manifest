@@ -1,5 +1,5 @@
-C Some\swork\son\sthe\schat\sstyles\sfor\smobile\sdevices\sand\sthe\sformatting\sof\sthe\sthread\sparticipants\sand\sinvited\susers.
-D 2020-05-11T19:58:43.485
+C More\swork\son\sthe\sthread\sview.
+D 2020-05-12T05:47:01.525
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -599,7 +599,7 @@ F www/templates/Urban\sSunrise/atom_start.tpl 93d0cec7a6c29045e0e4bd631eace12699
 F www/templates/Urban\sSunrise/autocomplete.js 7f821fe4b74d465ef6042714c91ced568d7ef6d4
 F www/templates/Urban\sSunrise/chat.js 334bf986319e9b511caceda9dcd9ae1c2e60a6d5
 F www/templates/Urban\sSunrise/chat.less 7e3affa9b2e5a2826cd61bb77f484c0df1b8f190
-F www/templates/Urban\sSunrise/chat.tpl 9a06f956d0272b942c4f70fb8abcc39e4d5eaad5
+F www/templates/Urban\sSunrise/chat.tpl 5141a052cd4911ab8af4a380bc25614d41050b7d
 F www/templates/Urban\sSunrise/common.less 5f77ae75665d2e1b7ca4165cd40773d0257391eb
 F www/templates/Urban\sSunrise/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Urban\sSunrise/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001
@@ -658,8 +658,8 @@ F www/templates/Urban\sSunrise/settings.less a0cc9498175b503ee1d7791731eeb22d33f
 F www/templates/Urban\sSunrise/skin_variables.lsi 1be939245fb6b3c5b6bb562e860208e46ad9825a
 F www/templates/Urban\sSunrise/sqlite.less c3f10a66105bdd2bca5c9692ec724ea5ac202c15
 F www/templates/Urban\sSunrise/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e3c7067
-F www/templates/Urban\sSunrise/thread_info.tpl ba9affb17adeb21d86a26393771327ea837b77a1
-F www/templates/Urban\sSunrise/thread_list.less fe0d61c049ad6ad5d6d80707249722fe6a376b60
+F www/templates/Urban\sSunrise/thread_info.tpl 2a0593adbf42e9f277623d965486b2b504e7aca8
+F www/templates/Urban\sSunrise/thread_list.less 29d8dbe06656fce2435bdea13b4bf6c60155999a
 F www/templates/Urban\sSunrise/threadnew.less eb1e03f73882e8f1e940d0a1b1228988afef665f
 F www/templates/Urban\sSunrise/toaster.less 09f95cd572a30427e80a980b0e6d6f615564326a
 F www/templates/Urban\sSunrise/userinfo.less 40d4c5d1527c50a2bd328d8b591b4a1d31baa85a
@@ -910,7 +910,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P f9ea19c693b65b50927995d16607bb3f727a1712
-R 8a5dd8b8a33c3a85cab99e09cb0ba40c
+P 5f02c490cf6a0b0b1376023ae38c422390cfe520
+R 4db3c64e0552de22bb6c9b9eef20378b
 U johnfound
-Z efec89a4c354bf02ae5d1608780c4094
+Z 881214ca8cf6b729c9c375243c127105
