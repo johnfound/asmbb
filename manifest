@@ -1,5 +1,5 @@
-C Fixed\ssyntax\swarnings.
-D 2020-05-13T11:07:00.055
+C Pushing\sthe\scode\stowards\sthe\sstandarts.
+D 2020-05-13T14:01:20.978
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -67,7 +67,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm bd6b0e9e1965bb9488dd170736ce4d645233f9b8
+F source/render2.asm d18c4dff1187263935b5101627858f3281b1827b
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 60acccb553021d13c932470672aec7a3d943443d
 F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
@@ -600,7 +600,7 @@ F www/templates/Urban\sSunrise/autocomplete.js 7f821fe4b74d465ef6042714c91ced568
 F www/templates/Urban\sSunrise/chat.js 334bf986319e9b511caceda9dcd9ae1c2e60a6d5
 F www/templates/Urban\sSunrise/chat.less 7e3affa9b2e5a2826cd61bb77f484c0df1b8f190
 F www/templates/Urban\sSunrise/chat.tpl 5141a052cd4911ab8af4a380bc25614d41050b7d
-F www/templates/Urban\sSunrise/common.less cea2b32e922e8ee5213768234087aa47494cc65a
+F www/templates/Urban\sSunrise/common.less b035abe2f44491540291572a9eb382a89c93ee88
 F www/templates/Urban\sSunrise/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Urban\sSunrise/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001
 F www/templates/Urban\sSunrise/debug.less 9a989f4670bb3d584f60c57d50af9fbf9bf75117
@@ -634,7 +634,7 @@ F www/templates/Urban\sSunrise/highlight.js b4a380fb43186d51a405fb185067120657f2
 F www/templates/Urban\sSunrise/highlight.less fba68624d1b34a5543fe0bf4b2af2ac1ddf65e74
 F www/templates/Urban\sSunrise/login.less e2c9b06104a775ae1abcc63bdc69f71b4662b870
 F www/templates/Urban\sSunrise/main_html_end.tpl 05bb25b9490ce93732628c937860db787c516c46
-F www/templates/Urban\sSunrise/main_html_start.tpl 45342967dcd56a06effda5741cdf83f0ec96283a
+F www/templates/Urban\sSunrise/main_html_start.tpl d7049028cd8f50f72922e32cd1b6714d4c3aea08
 F www/templates/Urban\sSunrise/markdown.less 7649809dd20852e716a1aef73b112ef2d400d2ca
 F www/templates/Urban\sSunrise/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
 F www/templates/Urban\sSunrise/nav_categories.tpl c04334bde3272eed0ceeb558cb640a15a41b39e8
@@ -658,8 +658,8 @@ F www/templates/Urban\sSunrise/settings.less bf5853436cdf02aabfd8e721b677517d30a
 F www/templates/Urban\sSunrise/skin_variables.lsi 04aace2a418050afd6d4f7bbe3fd425b776d001c
 F www/templates/Urban\sSunrise/sqlite.less 660b247ef2a036462dd4aeae6d92f54881fda877
 F www/templates/Urban\sSunrise/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e3c7067
-F www/templates/Urban\sSunrise/thread_info.tpl 2a0593adbf42e9f277623d965486b2b504e7aca8
-F www/templates/Urban\sSunrise/thread_list.less 7f0c7a71a0471902ef63961562c3a818a9ae54f7
+F www/templates/Urban\sSunrise/thread_info.tpl 99bb8c1493d5691145abc7d7e726f5fe309bb570
+F www/templates/Urban\sSunrise/thread_list.less 4959d5ab4cedecb49e03ac57166ee9668c09db68
 F www/templates/Urban\sSunrise/threadnew.less 5a4763e82b7635a7288925cd86cb785b92ba9bef
 F www/templates/Urban\sSunrise/toaster.less 09f95cd572a30427e80a980b0e6d6f615564326a
 F www/templates/Urban\sSunrise/userinfo.less b6f644807f3369dd43b449cf85e74b236c8386d8
@@ -910,7 +910,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P db4412365b141dea5a446598a23c7f32855a13bc
-R a93bc336e75f611132ee5423bce4f1ec
+P 1dde1cb568d8f7bfbb834cdda97fb1b8fb8bf683
+R 7d10b4b1f6c03724a3cd02fb7900321e
 U johnfound
-Z 600c9359e9d66de5d68f97f76df9e075
+Z d38eb2de42d6fa8fe37565c7468153f7

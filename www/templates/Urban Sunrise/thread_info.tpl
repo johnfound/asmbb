@@ -91,6 +91,7 @@
   </div>
 
   <div class="ts-tags">
-    <ul class="comma">[const:Tags]: [html:[ThreadTags]]</ul>
+    [const:Tags]:
+    <ul class="comma">[html:[ThreadTags]]</ul>
   </div>
 </div>

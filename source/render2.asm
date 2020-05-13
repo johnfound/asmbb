@@ -1424,8 +1424,12 @@ endl
         jmp     .special_string
 
 .sp_skin:
-        mov     eax, [ebx+TSpecialParams.userSkin]
-        jmp     .special_string
+        stdcall StrDup, [ebx+TSpecialParams.userSkin]
+        push    eax
+        stdcall StrPtr, eax
+        stdcall SanitizeURL, eax, [eax+string.len]
+        stdcall StrDel ; from the stack
+        jmp     .special_string_free
 
 .sp_lang:
         mov     eax, [ebx+TSpecialParams.userLang]

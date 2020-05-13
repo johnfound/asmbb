@@ -352,9 +352,10 @@ input^[type=search^] {
 /* tag list styles */
 
 div.tags {
-  overflow: auto;
+  overflow: auto !important;
+  max-height: 250px;
   padding: @margin/2;
-  scrollbar-width: thin;
+//  scrollbar-width: thin;
 
   background-color: @clDarkGray;
   font-weight: normal;
