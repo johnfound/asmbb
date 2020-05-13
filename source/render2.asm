@@ -1424,12 +1424,8 @@ endl
         jmp     .special_string
 
 .sp_skin:
-        stdcall StrDup, [ebx+TSpecialParams.userSkin]
-        push    eax
-        stdcall StrPtr, eax
-        stdcall SanitizeURL, eax, [eax+string.len]
-        stdcall StrDel ; from the stack
-        jmp     .special_string_free
+        mov     eax, [ebx+TSpecialParams.userSkinURL]
+        jmp     .special_string
 
 .sp_lang:
         mov     eax, [ebx+TSpecialParams.userLang]
@@ -1735,11 +1731,11 @@ endl
         jae     .end_styles
 
         stdcall TextCat, edx, '<link rel="stylesheet" href="'
-        stdcall TextCat, edx, [esi+TSpecialParams.userSkin]
+        stdcall TextCat, edx, [esi+TSpecialParams.userSkinURL]
         stdcall TextCat, edx, txt '/'
         stdcall TextCat, edx, [ebx+TArray.array+4*ecx]
         stdcall TextCat, edx, txt '?skin='
-        stdcall TextCat, edx, [esi+TSpecialParams.userSkin]
+        stdcall TextCat, edx, [esi+TSpecialParams.userSkinURL]
         stdcall TextCat, edx, <txt '" type="text/css">', 13, 10>
 
         inc     ecx
@@ -3237,5 +3233,88 @@ begin
 
         mov     [esp+4*regEAX], ebx
         popad
+        return
+endp
+
+
+
+; Encodes the path in URL encoding, but without encoding "/" characters.
+
+proc StrURLEncode2, .hstr
+.res dd ?
+begin
+        push    ebx ecx edx esi edi
+        stdcall StrPtr, [.hstr]
+        mov     esi, eax
+
+        stdcall StrLen, esi
+        mov     ecx, eax
+        lea     edx, [3*eax]        ; the encoded string can be max 3x long as original string.
+
+        stdcall StrNew
+        mov     [.res], eax
+        jecxz   .finish
+
+        stdcall StrSetCapacity, eax, edx
+        mov     edi, eax
+        xor     edx, edx
+        xor     ebx, ebx
+
+        push    eax
+
+.encode:
+        lodsb
+        cmp     al, $80
+        jae     .store          ; it is a hack, but I hope save enough.
+
+        cmp     al, '/'
+        je      .store
+        cmp     al, '\'
+        jne     @f
+        mov     al, '/'
+        jmp     .store
+
+@@:
+        cmp     al, ' '
+        jne     @f
+        mov     al, '+'
+        jmp     .store
+@@:
+        mov     dl, al
+        mov     bl, al
+        shr     edx, 5
+        and     ebx, $1f
+        bt      dword [URLCharTable+4*edx], ebx
+        jnc     .store
+
+        mov     ah, al
+        mov     al, '%'
+        stosb
+        mov     al, ah
+        shr     al, 4
+        cmp     al, $0a
+        sbb     al, $69
+        das
+        stosb
+        mov     al, ah
+        and     al, $0f
+        cmp     al, $0a
+        sbb     al, $69
+        das
+
+.store:
+        stosb
+        loop    .encode
+
+        xor     al, al
+        mov     [edi], al
+
+        pop     eax
+        sub     edi, eax
+        mov     [eax+string.len], edi
+
+.finish:
+        mov     eax, [.res]
+        pop     edi esi edx ecx ebx
         return
 endp

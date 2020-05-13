@@ -1,5 +1,5 @@
-C Pushing\sthe\scode\stowards\sthe\sstandarts.
-D 2020-05-13T14:01:20.978
+C Properly\sencode\sthe\sskin\spaths\sfor\sthe\scases\sthey\scontains\sspaces\sand\sother\sURL\sencodable\scharacters.
+D 2020-05-13T18:14:11.788
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -35,7 +35,7 @@ F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm 46e64d22841349e2935e8c62681f2f47cad786a0
-F source/commands.asm 48fe23effa4e2bee063dd36cb6b99e0c0b2e4eb6
+F source/commands.asm 4426b50b3a66ea6c28bce7110fd7bf9379027828
 F source/create.sql 73fd5d1ddc198d1d35a0bed605d4d318c609b88b
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
@@ -67,7 +67,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm d18c4dff1187263935b5101627858f3281b1827b
+F source/render2.asm 5a772d494a7e1886c67a0f4ca9a500f5baba0da4
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 60acccb553021d13c932470672aec7a3d943443d
 F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
@@ -910,7 +910,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 1dde1cb568d8f7bfbb834cdda97fb1b8fb8bf683
-R 7d10b4b1f6c03724a3cd02fb7900321e
+P eaceab76c9b98ee3499b41f581283fd4cc79ac5e
+R c71a1197099780ca681327fe3351607b
 U johnfound
-Z d38eb2de42d6fa8fe37565c7468153f7
+Z aba5bd8d15092e9f6821cdd7b7aaa3c0
