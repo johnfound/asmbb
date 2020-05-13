@@ -112,7 +112,20 @@ textarea.settings {
 }
 
 
+@keyframes slideOutFromLeft {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100vw);
+    opacity: 0;
+  }
+}
+
 .msg {
+  animation: 1s ease-in 3s 1 slideOutFromLeft forwards;
+
   padding: @margin/2;
   margin: @margin/2;
   height: @buttonHeight;
@@ -125,15 +138,11 @@ textarea.settings {
 .info {
   background-color: @clGreen;
   color: @clWhite;
-  transition: all 1s;
-  -webkit-transition: all 1s;
 }
 
 .error {
   background-color: @clRed;
   color: @clWhite;
-  transition: all 3s;
-  -webkit-transition: all 3s;
 }
 
 .warning {
@@ -162,8 +171,6 @@ textarea.settings {
 article {
   color: @clBlack;
 }
-
-
 
 
 

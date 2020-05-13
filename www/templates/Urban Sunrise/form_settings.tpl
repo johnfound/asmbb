@@ -356,15 +356,3 @@
   </div>
 </form>
 </div>
-
-
-
-<script type="text/javascript">
-<!--
- if (document.getElementById('message'))
-   setTimeout( function() {
-                            document.getElementById('message').style.display = "none";
-                          }, 3000
-             );
-// -->
-</script>

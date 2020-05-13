@@ -29,15 +29,14 @@
 //  flex-grow: 1;
   position: relative;
   margin: 0;
+  padding-right: 80px;
 
   section {
     background: @clDarkGray;
-    display: flex;
     flex-grow: 1;
     overflow-x: auto;
     overflow-y: hidden;
     padding: 4px;
-    margin-right: 80px;
   }
 
   &::after {
@@ -136,8 +135,10 @@
   margin: 0;
   align-self: stretch;
   flex-shrink: 0;
+  flex-grow: 1;
   display: flex;
   align-items: end !important;
+  padding: 4px;
 }
 
 

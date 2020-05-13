@@ -1,5 +1,5 @@
-C Media\squeries\sfor\sless\smargin\son\sthe\ssmall\sscreen\sdevices.
-D 2020-05-13T06:36:38.254
+C CSS\sanimation\sfor\sthe\smessage\sremoving\sin\sthe\ssettings\sdialog;\sPost\seditor\stoolbar,\sfix\sthe\sbehavior\sand\sformatting\swithout\sJS.
+D 2020-05-13T11:00:49.807
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -608,7 +608,7 @@ F www/templates/Urban\sSunrise/del_confirm.tpl e63ef3040705ecd7c913128a2102e714d
 F www/templates/Urban\sSunrise/delete.less 397589f431219056581591243e48548d43fb8507
 F www/templates/Urban\sSunrise/edit.json 57373eabba1d23e08fc65a2693970bb8ab13cca8
 F www/templates/Urban\sSunrise/edit_toolbar.tpl 3f18db7549b9f247fb24c4ec4bbcf130103ab069
-F www/templates/Urban\sSunrise/editor.less 5bac147149067d73a2975658fa6b67ca20be8be9
+F www/templates/Urban\sSunrise/editor.less ce4eab18b1b74d06a44d4c99857d9ef16d067066
 F www/templates/Urban\sSunrise/editors.js 949bbb40b9974363677cb67ebecf8c3b1947ad19
 F www/templates/Urban\sSunrise/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Urban\sSunrise/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
@@ -624,7 +624,7 @@ F www/templates/Urban\sSunrise/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09
 F www/templates/Urban\sSunrise/form_register.tpl 02cc15121365375ffe92866cfe46ae944ef1855b
 F www/templates/Urban\sSunrise/form_reset_password.tpl d9aa084867bfc75045a93db88af361770a960158
 F www/templates/Urban\sSunrise/form_reset_request.tpl 2670304557d27ff156db4652a360a9044b415c7e
-F www/templates/Urban\sSunrise/form_settings.tpl 98b3345a5bded6420a647fd6f2ffc299edba8df2
+F www/templates/Urban\sSunrise/form_settings.tpl c05d8ae981a5f76f135a9ed2b857486e9b8e2834
 F www/templates/Urban\sSunrise/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Urban\sSunrise/form_sqlite_console.tpl 04720cf7c2be67a3ec0922a734eb58b6739c66b3
 F www/templates/Urban\sSunrise/help-bbcode.txt 6732933421f6641562759d73997cbf611b9bc59b
@@ -654,7 +654,7 @@ F www/templates/Urban\sSunrise/realtime.js 130e002c1d17eaea5d3a266109659d38dfdb8
 F www/templates/Urban\sSunrise/restore_confirm.tpl 52a9c63c3575dc9a740886776c4dc6c2e0a07efe
 F www/templates/Urban\sSunrise/search.less 0bcaf20f6012fe18db4ecdad203032fc082678df
 F www/templates/Urban\sSunrise/search_result.tpl ef10b3a14fe5e603b7fdc900c0a266782cafeabc
-F www/templates/Urban\sSunrise/settings.less fac4c6e946f84d7aaa9d90646d4c2480f0cb5e87
+F www/templates/Urban\sSunrise/settings.less bf5853436cdf02aabfd8e721b677517d30a5310c
 F www/templates/Urban\sSunrise/skin_variables.lsi 04aace2a418050afd6d4f7bbe3fd425b776d001c
 F www/templates/Urban\sSunrise/sqlite.less 660b247ef2a036462dd4aeae6d92f54881fda877
 F www/templates/Urban\sSunrise/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e3c7067
@@ -910,7 +910,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 93a1c028525ba086b9676f5c57fe9aa763edf172
-R 1e892633e272e1f541a4170274c34204
+P e20d595e001b3b4dc31c8e3b605e61a56cb4ecd3
+R 087aeee37847004fbfe3130958e099d8
 U johnfound
-Z c6248cef568a6c82fb3a85ee042094e1
+Z e2ab64d9563ef6f968df743b7bb93952
