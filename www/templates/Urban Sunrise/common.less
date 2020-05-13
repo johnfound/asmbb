@@ -7,6 +7,25 @@
 }
 
 
+@media (max-width: 600px) {
+  :root {
+    --globWidth: ~"calc( 100% - 2*@{margin} )";
+  }
+  #navigation1 {
+    transform: none !important;
+    order: 1000;
+    margin: 0 !important;
+    position: initial !important;
+  }
+}
+
+@media (min-width: 600px) {
+  :root {
+    --globWidth: ~"calc( 100% - 2*@{sideWidth} )";
+  }
+}
+
+
 html {
   font-family: @FontMain;
   font-size: @FontSize;
@@ -165,7 +184,7 @@ label:focus-within {
 
 body > header {
   position: relative;
-  width: @globWidth;
+  width: var(--globWidth);
   max-width: @globMaxWidth;
   margin: @globMargin;
 
@@ -210,7 +229,7 @@ body > header {
 
 
 .global-row {
-  width: @globWidth;
+  width: var(--globWidth);
   max-width: @globMaxWidth;
   margin: @globMargin;
 }
@@ -660,7 +679,7 @@ span.current_page {
 /* Footer styles */
 
 body > footer {
-  width: @globWidth;
+  width: var(--globWidth);
   max-width: @globMaxWidth;
   margin: @globMargin;
 
@@ -683,7 +702,7 @@ body > footer {
 }
 
 div.attribution {
-  width: @globWidth;
+  width: var(--globWidth);
   max-width: @globMaxWidth;
   margin: @globMargin;
   padding: 4px 0px;
@@ -701,7 +720,7 @@ div.attribution {
 div.message_block {
   font-size: 1.2*@FontSize;
   width: @msgBoxWidth;
-  max-width: @globWidth;
+  max-width: var(--globWidth);
   background: @clWhite;
   color: @clBlack;
   margin: @margin auto;

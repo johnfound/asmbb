@@ -8,8 +8,8 @@
 
 @FontHeader: "Noto Sans ExtraBold", "Arial Black", "Helvetica Black", sans-serif;
 
-@sideWidth: 2*@buttonHeight + 4*@margin;
-@globWidth: ~"calc( 100% - @{sideWidth} )";
+@sideWidth: @buttonHeight + 2*@margin;
+@globWidth: ~"calc( 100% - 2*@{sideWidth} )";
 @globMaxWidth: 1280px;
 @globMargin: @margin auto;
 
