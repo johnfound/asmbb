@@ -319,7 +319,7 @@ input^[type=search^] {
 
 .navigation3 {
   float: left;
-  margin: 0 -@margin/2 1.5*@margin -@margin/2;
+  margin: 0 -@margin/2 @margin -@margin/2;
   .btn {
     background-color: @clYellow;
     color: @clBlack;
@@ -533,9 +533,10 @@ a.current_tag {
 
 .tabbed-form {
   display: flex;
-  flex-wrap: wrap;
+//  flex-wrap: wrap;
   position: relative;
   flex-grow: 1;
+  overflow: hidden;
 
   & > input^[type=radio^] {
     &:not(checked) + label {
@@ -557,6 +558,11 @@ a.current_tag {
 
     + label {
       outline-offset: -3px !important;
+      white-space: nowrap;
+      flex-grow: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
       + * {
         padding: @margin/2 0;
         background-color: @clWhite;
@@ -581,7 +587,7 @@ a.current_tag {
     user-select: none; /* Standard syntax */
     cursor: pointer;
 
-    padding: @margin/2 @margin;
+    padding: @margin/2;
   }
 }
 

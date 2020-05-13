@@ -167,10 +167,8 @@ Example:
   [tr]
     [td]Cell 2,0 with code block
       [code=x86asm]
-        push    eax
-        stdcall TextMoveGap, edx, ebx
-        stdcall TextSetGapSize, edx, 4
-        mov     eax, [edx+TText.GapBegin]
+push    eax
+mov     eax, ebx
       [/сode]
     [/td]
     [td]Cell with emoticon [;)] 2,1[/td]
@@ -194,10 +192,8 @@ Example:
   [tr]
     [td]Cell 2,0 with code block
       [code=x86asm]
-        push    eax
-        stdcall TextMoveGap, edx, ebx
-        stdcall TextSetGapSize, edx, 4
-        mov     eax, [edx+TText.GapBegin]
+push    eax
+mov     eax, ebx
       [/code]
     [/td]
     [td]Cell with emoticon [;)] 2,1[/td]

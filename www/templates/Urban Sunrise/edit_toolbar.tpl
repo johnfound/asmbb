@@ -214,81 +214,79 @@
 </svg>]
 
 
-<div class="jsonly">
-  <div class="toolbar">
+<div class="toolbar">
 
-    <div class="dropdown emo-btn-bar">
-      <input id="emo-drop-down" type="checkbox">
-      <label for="emo-drop-down" class="emo-btn">
-        <svg version="1.1" width="18" height="18" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-         <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#a) !important;stroke-linecap:round;stroke-linejoin:round;stroke:#000"/>
-         <path d="m17 20.2a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#b) !important;stroke-width:1"/>
-         <path d="m7 16c0 6.66 4.39 8.87 8.84 8.87 4.42 0 8.9-2.22 8.9-8.87" style="fill:none !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1"/>
-         <path d="m14 9.34a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
-         <path d="m23 9.34a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
-        </svg>
-      </label>
-      <div id="emolib">[raw:all-emoji.txt]</div>
-    </div>
-
-    [case:[special:markup=0]|<section><input name="format" value="1" type="hidden"></section>|
-    [case:[special:markup=0]||[case:[special:markup=1]||
-    <input id="mark0" name="format" type="radio" [case:[format]|checked|] value="0">
-    <label for="mark0" style="top: 0px;"><span>MiniMag</span></label>
-    ]]
-    <section class="minimag">
-
-      <a class="editbtn" onclick="insertTag('source', '*', '*', 1)" title="[const:Bold]">[const:iconBold]</a>
-      <a class="editbtn" onclick="insertTag('source', '/', '/', 1)" title="[const:Italic]">[const:iconItalic]</a>
-      <a class="editbtn" onclick="insertTag('source', '_', '_', 1)" title="[const:Underlined]">[const:iconUnderlined]</a>
-      <a class="editbtn" onclick="insertTag('source', '-', '-', 1)" title="[const:Strikethrough]">[const:iconStrike]</a>
-      <a class="editbtn" onclick="insertTag('source', '`', '`', 1)" title="[const:InlineCode]">[const:iconInlineCode]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[', '^]^[My link^]', 1)" title="[const:Link]">[const:iconLink]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[!','^]^[My picture^]', 1)" title="[const:Image]">[const:iconImage]</a>
-      <a class="editbtn" onclick="insertTag('source', ';quote', ';end', 0)" title="[const:BlockQuote]">[const:iconQuote]</a>
-      <a class="editbtn" onclick="insertTag('source', ';begin', ';end', 0)" title="[const:CodeBlock]">[const:iconCodeBlock]</a>
-
-      <a class="editbtn" onclick="insertTag('source', '^[?:-)^]', '', 1)" title="[const:EmoSmile]">[const:iconSmile]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[?:-D^]', '', 1)" title="[const:EmoLOL]">[const:iconLol]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[?rofl^]', '', 1)" title="[const:EmoROFL]">[const:iconRofl]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[?;-)^]', '', 1)" title="[const:EmoWink]">[const:iconWink]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[?:-P^]', '', 1)" title="[const:EmoTongue]">[const:iconTongue]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[?:-(^]', '', 1)" title="[const:EmoSad]">[const:iconSad]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[?:\'-(^]', '', 1)" title="[const:EmoCry]">[const:iconCry]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[?>:-(^]', '', 1)" title="[const:EmoAngry]">[const:iconAngry]</a>
-    </section>
-    ]
-
-    [case:[special:markup=1]|<section><input name="format" value="0" type="hidden"></section>|
-    [case:[special:markup=1]||[case:[special:markup=0]||
-    <input id="mark1" name="format" type="radio" [case:[format]||checked] value="1">
-    <label for="mark1" style="top: 50%;"><span>BBcode</span></label>
-    ]]
-    <section class="bbcode">
-      <a class="editbtn" onclick="insertTag('source', '^[b^]', '^[/b^]', 1)" title="[const:Bold]">[const:iconBold]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[i^]', '^[/i^]', 1)" title="[const:Italic]">[const:iconItalic]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[u^]', '^[/u^]', 1)" title="[const:Underlined]">[const:iconUnderlined]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[s^]', '^[/s^]', 1)" title="[const:Strikethrough]">[const:iconStrike]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[c^]', '^[/c^]', 1)" title="[const:InlineCode]">[const:iconInlineCode]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[url=^]', '^[/url^]', 1)" title="[const:Link]">[const:iconLink]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[img=^]', '^[/img^]', 1)" title="[const:Image]">[const:iconImage]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[quote=^]', '^[/quote^]', 0)" title="[const:BlockQuote]">[const:iconQuote]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[code^]', '^[/code^]', 0)" title="[const:CodeBlock]">[const:iconCodeBlock]</a>
-
-      <a class="editbtn" onclick="insertTag('source', '^[:)^]', '', 1)" title="[const:EmoSmile]">[const:iconSmile]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[:D^]', '', 1)" title="[const:EmoLOL]">[const:iconLol]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[:rofl:^]', '', 1)" title="[const:EmoROFL]">[const:iconRofl]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[;)^]', '', 1)" title="[const:EmoWink]">[const:iconWink]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[:P^]', '', 1)" title="[const:EmoTongue]">[const:iconTongue]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[:(^]', '', 1)" title="[const:EmoSad]">[const:iconSad]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[:`(^]', '', 1)" title="[const:EmoCry]">[const:iconCry]</a>
-      <a class="editbtn" onclick="insertTag('source', '^[>:(^]', '', 1)" title="[const:EmoAngry]">[const:iconAngry]</a>
-    </section>
-    ]
+  <div class="dropdown emo-btn-bar">
+    <input id="emo-drop-down" type="checkbox">
+    <label for="emo-drop-down" class="emo-btn">
+      <svg version="1.1" width="18" height="18" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+       <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#a) !important;stroke-linecap:round;stroke-linejoin:round;stroke:#000"/>
+       <path d="m17 20.2a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#b) !important;stroke-width:1"/>
+       <path d="m7 16c0 6.66 4.39 8.87 8.84 8.87 4.42 0 8.9-2.22 8.9-8.87" style="fill:none !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1"/>
+       <path d="m14 9.34a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+       <path d="m23 9.34a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
+      </svg>
+    </label>
+    <div id="emolib">[raw:all-emoji.txt]</div>
   </div>
 
+  [case:[special:markup=0]|<section><input name="format" value="1" type="hidden"></section>|
+  [case:[special:markup=0]||[case:[special:markup=1]||
+  <input id="mark0" name="format" type="radio" [case:[format]|checked|] value="0">
+  <label for="mark0" style="top: 0px;"><span>MiniMag</span></label>
+  ]]
 
+  <section class="minimag jsonly">
+
+    <a class="editbtn" onclick="insertTag('source', '*', '*', 1)" title="[const:Bold]">[const:iconBold]</a>
+    <a class="editbtn" onclick="insertTag('source', '/', '/', 1)" title="[const:Italic]">[const:iconItalic]</a>
+    <a class="editbtn" onclick="insertTag('source', '_', '_', 1)" title="[const:Underlined]">[const:iconUnderlined]</a>
+    <a class="editbtn" onclick="insertTag('source', '-', '-', 1)" title="[const:Strikethrough]">[const:iconStrike]</a>
+    <a class="editbtn" onclick="insertTag('source', '`', '`', 1)" title="[const:InlineCode]">[const:iconInlineCode]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[', '^]^[My link^]', 1)" title="[const:Link]">[const:iconLink]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[!','^]^[My picture^]', 1)" title="[const:Image]">[const:iconImage]</a>
+    <a class="editbtn" onclick="insertTag('source', ';quote', ';end', 0)" title="[const:BlockQuote]">[const:iconQuote]</a>
+    <a class="editbtn" onclick="insertTag('source', ';begin', ';end', 0)" title="[const:CodeBlock]">[const:iconCodeBlock]</a>
+
+    <a class="editbtn" onclick="insertTag('source', '^[?:-)^]', '', 1)" title="[const:EmoSmile]">[const:iconSmile]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[?:-D^]', '', 1)" title="[const:EmoLOL]">[const:iconLol]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[?rofl^]', '', 1)" title="[const:EmoROFL]">[const:iconRofl]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[?;-)^]', '', 1)" title="[const:EmoWink]">[const:iconWink]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[?:-P^]', '', 1)" title="[const:EmoTongue]">[const:iconTongue]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[?:-(^]', '', 1)" title="[const:EmoSad]">[const:iconSad]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[?:\'-(^]', '', 1)" title="[const:EmoCry]">[const:iconCry]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[?>:-(^]', '', 1)" title="[const:EmoAngry]">[const:iconAngry]</a>
+  </section>
+  ]
+
+  [case:[special:markup=1]|<section><input name="format" value="0" type="hidden"></section>|
+  [case:[special:markup=1]||[case:[special:markup=0]||
+  <input id="mark1" name="format" type="radio" [case:[format]||checked] value="1">
+  <label for="mark1" style="top: 50%;"><span>BBcode</span></label>
+  ]]
+  <section class="bbcode jsonly">
+    <a class="editbtn" onclick="insertTag('source', '^[b^]', '^[/b^]', 1)" title="[const:Bold]">[const:iconBold]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[i^]', '^[/i^]', 1)" title="[const:Italic]">[const:iconItalic]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[u^]', '^[/u^]', 1)" title="[const:Underlined]">[const:iconUnderlined]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[s^]', '^[/s^]', 1)" title="[const:Strikethrough]">[const:iconStrike]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[c^]', '^[/c^]', 1)" title="[const:InlineCode]">[const:iconInlineCode]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[url=^]', '^[/url^]', 1)" title="[const:Link]">[const:iconLink]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[img=^]', '^[/img^]', 1)" title="[const:Image]">[const:iconImage]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[quote=^]', '^[/quote^]', 0)" title="[const:BlockQuote]">[const:iconQuote]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[code^]', '^[/code^]', 0)" title="[const:CodeBlock]">[const:iconCodeBlock]</a>
+
+    <a class="editbtn" onclick="insertTag('source', '^[:)^]', '', 1)" title="[const:EmoSmile]">[const:iconSmile]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[:D^]', '', 1)" title="[const:EmoLOL]">[const:iconLol]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[:rofl:^]', '', 1)" title="[const:EmoROFL]">[const:iconRofl]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[;)^]', '', 1)" title="[const:EmoWink]">[const:iconWink]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[:P^]', '', 1)" title="[const:EmoTongue]">[const:iconTongue]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[:(^]', '', 1)" title="[const:EmoSad]">[const:iconSad]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[:`(^]', '', 1)" title="[const:EmoCry]">[const:iconCry]</a>
+    <a class="editbtn" onclick="insertTag('source', '^[>:(^]', '', 1)" title="[const:EmoAngry]">[const:iconAngry]</a>
+  </section>
+  ]
 </div>
+
 
 <script>
   function insertTag(id, opentag, closetag, fInline) {

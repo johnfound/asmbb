@@ -98,6 +98,9 @@ body {
 
   p {
     margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
@@ -124,8 +127,6 @@ body {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  overflow: auto;
-  margin-top: @margin;
 
   textarea {
     font-size: @FontSizeMono;

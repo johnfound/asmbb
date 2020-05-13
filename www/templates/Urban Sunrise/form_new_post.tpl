@@ -51,10 +51,10 @@
   [equ:btnRevert=Zurücksetzen]
 ]
 
-<div class="editor">
+<div id="editor-window" class="editor">
   <div class="navigation3 btn-bar">
       <input form="editform" type="hidden" name="ticket" value="[Ticket]" >
-      <input form="editform" class="btn" id="preview-btn" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
+      <input form="editform" class="btn" formaction="!post#preview" id="preview-btn" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
       <input form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]" title="[const:hintSubmit]">
       <div class="spacer"></div>
       <a class="btn img-btn" href=".">
@@ -64,7 +64,7 @@
         </svg>
       </a>
   </div>
-  <form id="editform" action="!post#preview" method="post" enctype="multipart/form-data">
+  <form id="editform" action="!post" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
     <div class="dropdown tabbed-form">
 
       <input id="tab1" name="tabselector" type="radio" value="0" checked>

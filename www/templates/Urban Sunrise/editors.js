@@ -52,10 +52,13 @@ document.onkeydown = function(e) {
   var stop = true;
 
   if (e.ctrlKey && key == 13) {
-    if (document.location.hash == '#preview')
-      document.location = '#editor-window'
-    else
-      frm.preview.click();
+    if (window.matchMedia("(max-width: 600px)").matches) {
+      if (document.location.hash == '#preview') {
+        document.location = '#editor-window';
+        document.getElementById('source').focus();
+      } else
+        frm.preview.click();
+    } else frm.preview.click();
   } else if (key == 27) {
     btnclose.click();
   } else if (e.ctrlKey && key == 83) {

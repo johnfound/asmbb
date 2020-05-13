@@ -8,7 +8,7 @@
   [equ:ttlEditorTab=New Thread]
   [equ:ttlTitle=Title]
   [equ:phTitle=Thread title]
-  [equ:ttlTags=Tags: <span class="small">(max 3, comma separated, no spaces)</span>]
+  [equ:ttlTags=Tags:]
   [equ:phTags=some tags here]
   [equ:ttlLimited=Limited access thread]
   [equ:ttlInvited=Invited users <span class="small">(comma separated list)</span>]
@@ -25,7 +25,7 @@
   [equ:ttlEditorTab=Нова тема]
   [equ:ttlTitle=Заглавие]
   [equ:phTitle=Заглавие на темата]
-  [equ:ttlTags=Тагове: <span class="small">(макс. 3, разделени със запетаи, без шпации)</span>]
+  [equ:ttlTags=Тагове:]
   [equ:phTags=някакви тагове тук]
   [equ:ttlLimited=Тема с ограничен достъп]
   [equ:ttlInvited=Поканени в темата <span class="small">(разделени със запетаи)</span>]
@@ -42,7 +42,7 @@
   [equ:ttlEditorTab=Новая тема]
   [equ:ttlTitle=Название темы]
   [equ:phTitle=Название темы]
-  [equ:ttlTags=Ярлыки: <span class="small">(макс. 3, через запятую, без пробелов)</span>]
+  [equ:ttlTags=Ярлыки:]
   [equ:phTags=теги пишутся здесь]
   [equ:ttlLimited=Тема с ограниченным доступом]
   [equ:ttlInvited=Приглашенные участники <span class="small">(список через запятую)</span>]
@@ -59,7 +59,7 @@
   [equ:ttlEditorTab=Nouveau sujet]
   [equ:ttlTitle=Titre]
   [equ:phTitle=Titre du sujet]
-  [equ:ttlTags=Mots-clés: <span class="small">(3 maximum, séparés par une virgule t sans espace)</span>]
+  [equ:ttlTags=Mots-clés:]
   [equ:phTags=quelques mots-clés]
   [equ:ttlLimited=Sujet à accès limité]
   [equ:ttlInvited=Inviter des utilisateurs <span class="small">(séparés par une virgule)</span>]
@@ -76,7 +76,7 @@
   [equ:ttlEditorTab=Neues Thema]
   [equ:ttlTitle=Titel]
   [equ:phTitle=Titel des Themas]
-  [equ:ttlTags=Tags: <span class="small">(max. 3, durch Kommas getrennt, keine Leerzeichen)</span>]
+  [equ:ttlTags=Tags:]
   [equ:phTags=hier einige Tags]
   [equ:ttlLimited=Thema mit beschränktem Zugriff]
   [equ:ttlInvited=Eingeladene Mitglieder <span class="small">(durch Kommas getrennt)</span>]
@@ -94,7 +94,7 @@
 <div id="editor-window" class="editor">
   <div class="navigation3 btn-bar">
       <input form="editform" type="hidden" name="ticket" value="[Ticket]" >
-      <input form="editform" class="btn" id="preview-btn" action="!post#preview" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
+      <input form="editform" class="btn" id="preview-btn" formaction="!post#preview" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
       <input form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]" title="[const:hintSubmit]">
       <div class="spacer"></div>
       <a id="btn-close" class="btn img-btn" href=".">
