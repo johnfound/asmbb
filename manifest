@@ -1,5 +1,5 @@
-C CSS\sanimation\sfor\sthe\smessage\sremoving\sin\sthe\ssettings\sdialog;\sPost\seditor\stoolbar,\sfix\sthe\sbehavior\sand\sformatting\swithout\sJS.
-D 2020-05-13T11:00:49.807
+C Fixed\ssyntax\swarnings.
+D 2020-05-13T11:07:00.055
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -482,7 +482,7 @@ F www/templates/Modern/atom_entry_thread.tpl ab6e308c142262fa4a7ff9bb98d03a67168
 F www/templates/Modern/atom_start.tpl 7ab2f5e8819f37921d2fefe675297ccab41e8561
 F www/templates/Modern/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
 F www/templates/Modern/chat.less f4866990385145d18d552605af2d7a5c03184897
-F www/templates/Modern/chat.tpl 3b777cdaca05f06060cb7947143ca97189d58102
+F www/templates/Modern/chat.tpl 7f8c5dc3b00c63659a52e426a76facba603cb029
 F www/templates/Modern/common.less 70e4686f9cbc429d4d16a89b910891bc886a70bc
 F www/templates/Modern/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Modern/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001
@@ -505,13 +505,13 @@ F www/templates/Modern/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449
 F www/templates/Modern/form_register.tpl fd34f9fa1e53f15851be1c82061f711b7d7d2a3e
 F www/templates/Modern/form_reset_password.tpl d615d96f021f1313d2993f42f4db30db0e534da8
 F www/templates/Modern/form_reset_request.tpl 40eccfc2673ae7ad3ff37b90cb77f676f51cd5cf
-F www/templates/Modern/form_settings.tpl 11507486b3fb0bb69c875e840b5db31cc8e19bdd
+F www/templates/Modern/form_settings.tpl 41827dc33229bab73d751383cfefe2efe9934452
 F www/templates/Modern/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Modern/form_sqlite_console.tpl e7018d30d3293f01cf6d159cad260413e27511c5
 F www/templates/Modern/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
 F www/templates/Modern/login.less 0439501f5ba0458371402194c885fdd576644057
 F www/templates/Modern/main_html_end.tpl e409fee48fb1b1979c337cbe6f616f9e36baef53
-F www/templates/Modern/main_html_start.tpl 6da9f183c8418c7e930a44e6dfe5076b698a69db
+F www/templates/Modern/main_html_start.tpl 3db5c46e412ecfb293c9e0316623a3ceed03a103
 F www/templates/Modern/markdown.less 309eb4c4a7334c8df3cd284548f6aeb6d0f230b7
 F www/templates/Modern/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
 F www/templates/Modern/nav_categories.tpl 913db6d39408ea09f80f91b55325a6cef4efeba2
@@ -634,7 +634,7 @@ F www/templates/Urban\sSunrise/highlight.js b4a380fb43186d51a405fb185067120657f2
 F www/templates/Urban\sSunrise/highlight.less fba68624d1b34a5543fe0bf4b2af2ac1ddf65e74
 F www/templates/Urban\sSunrise/login.less e2c9b06104a775ae1abcc63bdc69f71b4662b870
 F www/templates/Urban\sSunrise/main_html_end.tpl 05bb25b9490ce93732628c937860db787c516c46
-F www/templates/Urban\sSunrise/main_html_start.tpl 2e099376cee16932e7c31a4b209f5789035a4336
+F www/templates/Urban\sSunrise/main_html_start.tpl 45342967dcd56a06effda5741cdf83f0ec96283a
 F www/templates/Urban\sSunrise/markdown.less 7649809dd20852e716a1aef73b112ef2d400d2ca
 F www/templates/Urban\sSunrise/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
 F www/templates/Urban\sSunrise/nav_categories.tpl c04334bde3272eed0ceeb558cb640a15a41b39e8
@@ -747,7 +747,7 @@ F www/templates/Wasp/atom_entry_thread.tpl ab6e308c142262fa4a7ff9bb98d03a67168ff
 F www/templates/Wasp/atom_start.tpl 93d0cec7a6c29045e0e4bd631eace12699a80aa7
 F www/templates/Wasp/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
 F www/templates/Wasp/chat.less a4c64381f5ef14741bb249a4678573cbea899f83
-F www/templates/Wasp/chat.tpl e67ad5bff65df0ae7ccd24af6f935a0edfb54132
+F www/templates/Wasp/chat.tpl 24337d6caa5f210bdec82092507bed38f524b12a
 F www/templates/Wasp/common.less 08205d5a976e919f4e22b30fbdf3e1ae61139dcd
 F www/templates/Wasp/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Wasp/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001
@@ -770,13 +770,13 @@ F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e44992
 F www/templates/Wasp/form_register.tpl 25cdeffa395f90e248b383ee85390f9395cef8d3
 F www/templates/Wasp/form_reset_password.tpl 4b1ca1f5cdf5bb2ea7f0620722393e8324a97fa0
 F www/templates/Wasp/form_reset_request.tpl 45298eaa3544ec492eb9ca6e4f482fe30378a0e0
-F www/templates/Wasp/form_settings.tpl 43a9c11aa42de117bdf9f4e3454f7844b70842dd
+F www/templates/Wasp/form_settings.tpl a4f94b22b41e057a7358481758d2ff55f2da71a3
 F www/templates/Wasp/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Wasp/form_sqlite_console.tpl 7c492fd0663a1f999e88186f0af74f87bcd04a25
 F www/templates/Wasp/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
 F www/templates/Wasp/login.less b854c20c711dffeec158f044c59cbcf72a3161d5
 F www/templates/Wasp/main_html_end.tpl 53de7f6314a3460448c7d8988eb132d82b2d763c
-F www/templates/Wasp/main_html_start.tpl f56f30f2d08448458ad417b2127fc7708c80db8a
+F www/templates/Wasp/main_html_start.tpl 843c036a240e668a5e8664d0c1035fb9adcd216b
 F www/templates/Wasp/markdown.less e62eac499043788e834f58f022ad46526e8d5629
 F www/templates/Wasp/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
 F www/templates/Wasp/nav_categories.tpl a132b6d7a2351b6d7fabfdb7c821dfb7228c0ac2
@@ -844,7 +844,7 @@ F www/templates/mobile/atom_entry_thread.tpl d6f76cb18d5e725a3708a966e9e8720ca64
 F www/templates/mobile/atom_start.tpl d47f23ad78f9717598c748c2b37f812d56a4ccdb l
 F www/templates/mobile/autocomplete.js a996b9733be61eac1ebe92d8d4382cade7a93a26 l
 F www/templates/mobile/chat.less a79e6ed68fe1c2ed2ce8398687a97d762a30b025
-F www/templates/mobile/chat.tpl d6a0a8115dffba304a4c2e079a7ec4517552b8f8
+F www/templates/mobile/chat.tpl d913bb600dd3a1d8b4109999cb5e0a567b02276f
 F www/templates/mobile/common.less 762e4e8198de87fbcb131462b3476432725a2c65 l
 F www/templates/mobile/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/mobile/crypto.tpl 6ef96b37863b72234fba72b67fe78ac8643ea3df l
@@ -910,7 +910,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P e20d595e001b3b4dc31c8e3b605e61a56cb4ecd3
-R 087aeee37847004fbfe3130958e099d8
+P db4412365b141dea5a446598a23c7f32855a13bc
+R a93bc336e75f611132ee5423bce4f1ec
 U johnfound
-Z e2ab64d9563ef6f968df743b7bb93952
+Z 600c9359e9d66de5d68f97f76df9e075

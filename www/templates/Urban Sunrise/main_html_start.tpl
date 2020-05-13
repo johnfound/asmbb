@@ -139,7 +139,7 @@
     <style> .jsonly { display: none !important } </style>
   </noscript>
 
-  <script type='text/javascript'>
+  <script>
     var ActiveSkin = '[special:skin]';
     [raw:realtime.js]
   </script>
