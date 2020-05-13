@@ -55,8 +55,8 @@
 
   <div class="ts-info">
     <div class="tsi-link">
-      <p>[case:[Pinned]||
-        <svg class="svg-yellow" width="24" height="24" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" title="[const:ttlPinned]">
+      <p[case:[Pinned]|>| title="[const:ttlPinned]">
+        <svg class="svg-yellow" width="24" height="24" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="m0 9h4l17-6v18l-17-6h-4z"/>
           <path d="m3 15 3 9 4.5-1.5-2.5-7.5z"/>
           <circle cx="21" cy="12" r="3"/>
