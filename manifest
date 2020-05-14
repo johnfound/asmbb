@@ -1,5 +1,5 @@
-C Fixed\ssome\sHTML\svalidator\sissues\sand\stypo\sin\sthe\srussian\stranslation.
-D 2020-05-13T19:01:19.404
+C Small\sstyle\sfixes.
+D 2020-05-14T10:36:35.794
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -600,7 +600,7 @@ F www/templates/Urban\sSunrise/autocomplete.js 7f821fe4b74d465ef6042714c91ced568
 F www/templates/Urban\sSunrise/chat.js 334bf986319e9b511caceda9dcd9ae1c2e60a6d5
 F www/templates/Urban\sSunrise/chat.less 7e3affa9b2e5a2826cd61bb77f484c0df1b8f190
 F www/templates/Urban\sSunrise/chat.tpl 5141a052cd4911ab8af4a380bc25614d41050b7d
-F www/templates/Urban\sSunrise/common.less a9678fbb9eda19d9bbb53385c5a443dea11d0a88
+F www/templates/Urban\sSunrise/common.less 8ffaf6f8e388ea758da10954e4af91a1f6da2c3e
 F www/templates/Urban\sSunrise/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Urban\sSunrise/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001
 F www/templates/Urban\sSunrise/debug.less 9a989f4670bb3d584f60c57d50af9fbf9bf75117
@@ -608,7 +608,7 @@ F www/templates/Urban\sSunrise/del_confirm.tpl e63ef3040705ecd7c913128a2102e714d
 F www/templates/Urban\sSunrise/delete.less 397589f431219056581591243e48548d43fb8507
 F www/templates/Urban\sSunrise/edit.json 57373eabba1d23e08fc65a2693970bb8ab13cca8
 F www/templates/Urban\sSunrise/edit_toolbar.tpl 3f18db7549b9f247fb24c4ec4bbcf130103ab069
-F www/templates/Urban\sSunrise/editor.less ce4eab18b1b74d06a44d4c99857d9ef16d067066
+F www/templates/Urban\sSunrise/editor.less be05f1f1838a634d2159e70c27ca74ba078face2
 F www/templates/Urban\sSunrise/editors.js 949bbb40b9974363677cb67ebecf8c3b1947ad19
 F www/templates/Urban\sSunrise/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Urban\sSunrise/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
@@ -910,7 +910,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 4f660d9ea34c480bcaebfc98b31e91f396d620ea
-R 8c34280e82c357e9e701465c71d3082d
+P 7a642f982725a7790a67123203c3a53086066ace
+R 30835c4c6c74af69b88cab0d6d8e339e
 U johnfound
-Z f5d81226f006908b8a609293832db63a
+Z 6d2ceb3dc245284fc2fe2134a1144486
