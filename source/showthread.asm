@@ -93,6 +93,9 @@ begin
         cinvoke sqliteColumnInt, [.stmt2], 0
         mov     [.threadID], eax
 
+        cinvoke sqliteColumnInt, [.stmt2], 3
+        mov     [esi+TSpecialParams.Limited], eax ; OVERRIDE the limited parameter, according to the real state of the thread.
+
 ; make the title
 
         mov     ebx, [esi+TSpecialParams.page_title]
@@ -196,9 +199,8 @@ begin
 
 ; Send activity events... if the thread is not LAT!
 
-        cinvoke sqliteColumnInt, [.stmt2], 3    ; The "Limited" field of the Threads table.
-        test    eax, eax
-        jnz     .notifications_ok
+        cmp     [esi+TSpecialParams.Limited], 0
+        jne     .notifications_ok
 
         stdcall LogUserActivity, esi, uaReadingThread, 0
 
@@ -379,15 +381,16 @@ endp
 
 
 
-sqlGetThreadID text "select P.ThreadID, T.Slug from Posts P left join Threads T on P.threadID = T.id where P.id = ?"
+sqlGetThreadID text "select P.ThreadID, T.Slug, T.Limited from Posts P left join Threads T on P.threadID = T.id where P.id = ?"
 
-sqlGetThePostIndex text "select count() from Posts p where threadID = ?1 and id < ?2 order by id"
+sqlGetThePostIndex text "select count() from Posts p where threadID = ?1 and id < ?2"
 
 proc StrRedirectToPost, .postID, .pSpecial
 .stmt dd ?
 
 .page dd ?
 .slug dd ?
+.limited dd ?
 
 begin
         pushad
@@ -417,6 +420,9 @@ begin
         stdcall StrDupMem, eax
         mov     [.slug], eax
 
+        cinvoke sqliteColumnInt, [.stmt], 2
+        mov     [.limited], eax
+
         cinvoke sqliteFinalize, [.stmt]
 
 
@@ -443,6 +449,12 @@ begin
 
 ; now compose the redirection string
 
+        cmp     [.limited], 0
+        je      .limited_ok
+
+        stdcall StrCat, edi, txt "(o)/"
+
+.limited_ok:
         cmp     [esi+TSpecialParams.dir], 0
         je      .dir_ok
 

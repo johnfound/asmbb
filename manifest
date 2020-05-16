@@ -1,5 +1,5 @@
-C Small\sstyle\sfixes.
-D 2020-05-14T10:36:35.794
+C Show\sLAT\sstatus,\seven\sif\sthe\sthread\sis\sopen\swithout\s(o)\sprefix.
+D 2020-05-16T18:05:13.102
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -74,7 +74,7 @@ F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm 3123d67b30fd4e86b0716cf0a6387e9c8b0fc91c
 F source/settings.sql 066cc77197d5fae94fb27c2bd72aabb2c4b85d8a
-F source/showthread.asm 33e50b8f1b735f3aed0a83aecc7beb3a96b3c442
+F source/showthread.asm e39bac0c56c2a4f9cfcc631c3e23a8f221368653
 F source/showthread.sql 1ee08ed9c69a07ca5c60fc639e73333405e14d37
 F source/sqlite3.asm df3a5ea387f60d719fd83c33411b8151ad1a6d77
 F source/sqlite_console.asm 0090f97aebfd05dec748b3b98e7d43fba65b0064
@@ -910,7 +910,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 7a642f982725a7790a67123203c3a53086066ace
-R 30835c4c6c74af69b88cab0d6d8e339e
+P c84968d5b4e39dfa051f6762a44e8e953635e998
+R edcd14a5a4a297865b867cbb4532ba93
 U johnfound
-Z 6d2ceb3dc245284fc2fe2134a1144486
+Z 51e15c0330d6a069bb32eb6a8e5bf3c6
