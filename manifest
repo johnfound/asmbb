@@ -1,5 +1,5 @@
-C Show\sLAT\sstatus,\seven\sif\sthe\sthread\sis\sopen\swithout\s(o)\sprefix.
-D 2020-05-16T18:05:13.102
+C One\sspace\sbug\sin\sModern\stheme\sfixed.\s;)
+D 2020-05-16T18:17:48.073
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -502,7 +502,7 @@ F www/templates/Modern/form_login.tpl 5325450df57cfe97b8280f9ac9a485da78266f39
 F www/templates/Modern/form_new_post.tpl e85231b7432edb519dc7502866019ff9e0715c3d
 F www/templates/Modern/form_new_thread.tpl 71b46d058ba93c516ad5897a986ca3a122c8f44d
 F www/templates/Modern/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
-F www/templates/Modern/form_register.tpl fd34f9fa1e53f15851be1c82061f711b7d7d2a3e
+F www/templates/Modern/form_register.tpl 97482aa6d96f3664f0b4dd4e15a5701fc6b76d62
 F www/templates/Modern/form_reset_password.tpl d615d96f021f1313d2993f42f4db30db0e534da8
 F www/templates/Modern/form_reset_request.tpl 40eccfc2673ae7ad3ff37b90cb77f676f51cd5cf
 F www/templates/Modern/form_settings.tpl 41827dc33229bab73d751383cfefe2efe9934452
@@ -910,7 +910,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P c84968d5b4e39dfa051f6762a44e8e953635e998
-R edcd14a5a4a297865b867cbb4532ba93
+P 06057571400e96409c55d6d8095e3857e3237d42
+R 50171ec405ab5b128e7b90147e06610a
 U johnfound
-Z 51e15c0330d6a069bb32eb6a8e5bf3c6
+Z b39b506546d315930672a578fe09b9b7
