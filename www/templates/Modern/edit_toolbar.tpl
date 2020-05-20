@@ -112,37 +112,37 @@
 </svg>
 
 
-[equ:iconBold=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m22 15s4-1.41 4-7.01c0-8.19-10.2-8-14-8h-8v32h8c7.39 0 16 .799
+[equ:iconBold=<svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m22 15s4-1.41 4-7.01c0-8.19-10.2-8-14-8h-8v32h8c7.39 0 16 .799
 16-8 0-7.62-6-9-6-9zm-10-3.01v-6c3.58 0 6-.101 6 3 0 3.1-2.98 3-6 3zm0 14 .01-8.21c3.58 0 7.98-.601 7.98 4.42 0 3.81-4.98 3.79-7.99 3.79z"/></svg>]
 
-[equ:iconItalic=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m16 0h6l-6 32h-6z"/></svg>]
-[equ:iconUnderlined=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+[equ:iconItalic=<svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m16 0h6l-6 32h-6z"/></svg>]
+[equ:iconUnderlined=<svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
 <path d="m4 0v16.8c0 6.21 4.87 11.2 11 11.2h2c6.13 0 11-4.98 11-11.2v-16.8h-6.01v17c0 3-2.04 5-5 5h-2c-2.97 0-5-2.02-5-5v-17zm0 30v2h24v-2z"/></svg>]
 
-[equ:iconStrike=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m20 0c-2.35-.288-5.23-.192-7.62 1.19-1.6.997-3.99 3.01-4.38 6.81-.4 2.59.794 4.59 2
+[equ:iconStrike=<svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m20 0c-2.35-.288-5.23-.192-7.62 1.19-1.6.997-3.99 3.01-4.38 6.81-.4 2.59.794 4.59 2
 6h-10v2h32v-2h-11c-.998-.599-2-1.08-2.8-1.48-4-1.79-4.19-2.17-4-3.76.202-1.6.788-2.04 1.19-2.44 1.8-.997 5.59-.16 7 .439l2.19-5.57c-.4-.192-2.22-.891-4.56-1.19zm-4.81 17.7c2.48 1.92 4.95 2.97 4.63
 5.39-.4 1.79-.961 2.17-1.56 2.57-2.2 1.2-6.61-.005-8.81-1l-2.45 5.19c.601.192 4.62 2 9 2 1.8 0 3.6-.391 5.2-1.19 1.8-.997 4.01-2.82 4.81-6.82.4-2.59-.0128-4.53-.812-6.13z"/></svg>]
 
-[equ:iconInlineCode=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m7.79 0c-2.2 0-4.19 2-3.59 6.21v-.0234c.4 2.6.797 3.22.797 5.81
+[equ:iconInlineCode=<svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m7.79 0c-2.2 0-4.19 2-3.59 6.21v-.0234c.4 2.6.797 3.22.797 5.81
 0 1.6-3 3-3 3v2s3 1.4 3 3c0 2.6-.397 3.19-.797 5.79-.602 4.19 1.6 6.21 3.59 6.21h4.21v-4s-3.6.403-3.6-2c0-1.8.401-1.81.801-5.8.2-1.8-.999-3.21-2.2-4.2 1.2-1 2.4-2.2 2.2-4-.602-4-.801-4-.801-5.79 0-2.4 3.6-2.21 3.6-2.21v-4zm12.2
 0v4s3.7-.196 3.7 2.21c0 1.79-.401 1.79-.801 5.79-.198 1.8.897 3 2.1 4-1.2.991-2.3 2.4-2.1 4.2.4 4 .801 4 .801 5.8 0 2.4-3.7 2-3.7 2v4l4.31-4e-5c1.99-2e-5 4.19-2.02 3.59-6.21-.4-2.6-.898-3.19-.898-5.79 1e-6-1.6 3-3
 3-3v-2s-3-1.4-3-3c1e-6-2.6.498-3.21.898-5.81v.0234c.608-4.21-1.38-6.21-3.59-6.21z"/></svg>]
 
-[equ:iconLink=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m24.6 0c-1.86 0-3.75.716-5.15 2.12l-8.8 8.61c-2.82 3.01-2.82 7.48 0
+[equ:iconLink=<svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m24.6 0c-1.86 0-3.75.716-5.15 2.12l-8.8 8.61c-2.82 3.01-2.82 7.48 0
 10.5.203.192.617.361.817.562l3.02-2.99c-.203-.192-.617-.422-.817-.623-1.21-1.2-1.21-3.19 0-4.37l8.86-8.86c1.21-1.2 3.18-1.2 4.4 0 1.21 1.2 1.21 3.25 0 4.43l-2.64 2.56c.804 1.61
 1.02 3.46.817 5.05l4.65-4.62c3-2.8 2.97-7.42 0-10.2-1.41-1.41-3.29-2.12-5.15-2.12zm-4.21 10.2-3.02 2.99s.617.422.817.623c1.21 1.2 1.21 3.25 0 4.43l-8.86 8.8c-1.21 1.2-3.18 1.2-4.4
 0-1.21-1.2-1.21-3.19 0-4.37l2.58-2.62c-.804-1.61-.151-2.65-.754-5.05l-4.65 4.68c-2.82 2.81-2.82 7.42 0 10.2 2.82 2.81 7.44 2.81 10.2 0l8.86-8.86c2.82-2.81 2.82-7.42
 0-10.2-.402-.192-.817-.623-.817-.623z"/></svg>]
 
-[equ:iconImage=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m0 4v24h32v-24zm2 2h28v20h-28zm20 2c-2.21 0-4 1.79-4 4s1.79 4 4 4
+[equ:iconImage=<svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m0 4v24h32v-24zm2 2h28v20h-28zm20 2c-2.21 0-4 1.79-4 4s1.79 4 4 4
 4-1.79 4-4-1.79-4-4-4zm-12.2 8c-3.4 0-5.83 4-5.83 4v4h24v-2s.267-3.39-4.14-4c-3.81-.602-4.44 1.19-7.64 1.19-2.2 0-1.78-3.19-6.39-3.19z"/></svg>]
 
-[equ:iconQuote=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m9.02 3s-9.02 1.22-9.02 10.8v14.2h14v-14h-7.83s-1.55-1.98-.751-4.38c.801-3.2
+[equ:iconQuote=<svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m9.02 3s-9.02 1.22-9.02 10.8v14.2h14v-14h-7.83s-1.55-1.98-.751-4.38c.801-3.2
 4.76-3.81 4.76-3.81zm18 0s-9.02 1.22-9.02 10.8v14.2h14v-14h-7.83s-1.62-1.98-.814-4.38c.801-3.2 4.82-3.81 4.82-3.81z"/></svg>]
 
-[equ:iconCodeBlock=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m0 0v32h5v-32zm10 2v4h6v-4zm8 0v4h6v-4zm8 0v4h6v-4zm-8 8v4h6v-4zm8 0v4h6v-4zm-16 8v4h6v-4zm8 0v4h6v-4zm0 8v4h6v-4z"/></svg>]
+[equ:iconCodeBlock=<svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m0 0v32h5v-32zm10 2v4h6v-4zm8 0v4h6v-4zm8 0v4h6v-4zm-8 8v4h6v-4zm8 0v4h6v-4zm-16 8v4h6v-4zm8 0v4h6v-4zm0 8v4h6v-4z"/></svg>]
 
-[equ:iconSmile=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+[equ:iconSmile=<svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
  <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#a) !important;stroke-linecap:round;stroke-linejoin:round;stroke:#000"/>
  <path d="m17 20.2a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#b) !important;stroke-width:1"/>
  <path d="m7 16c0 6.66 4.39 8.87 8.84 8.87 4.42 0 8.9-2.22 8.9-8.87" style="fill:none !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1"/>
@@ -150,7 +150,7 @@
  <path d="m23 9.34a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
 </svg>]
 
-[equ:iconLol=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+[equ:iconLol=<svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
  <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#a) !important;stroke-linecap:round;stroke-linejoin:round;stroke-width:1;stroke:#000"/>
  <path d="m15.5 20.2a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#b) !important;stroke-width:1px"/>
  <path d="m25.5 16h-17.7c0 6.66 4.42 8.87 8.87 8.87s8.87-2.22 8.87-8.87z" style="fill:#fff !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
@@ -158,7 +158,7 @@
  <path d="m22.5 9.4a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
 </svg>]
 
-[equ:iconRofl=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+[equ:iconRofl=<svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
  <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#a) !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
  <path d="m15.5 20a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#b) !important;stroke-width:1px"/>
  <path d="m6.5 16c0 7.33 4.96 11.1 11.1 11.1 6.14 0 11.1-3.75 11.1-11.1z" style="fill:#fff !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
@@ -167,7 +167,7 @@
  <path d="m19.5 26.5v-10.5m-9.18 0-6e-5 8.5" style="fill:none !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
 </svg>]
 
-[equ:iconWink=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+[equ:iconWink=<svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
  <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#a) !important;stroke:#000;stroke-linecap:round;stroke-linejoin=round;stroke-width:1px"/>
  <path d="m15.5 20a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#b) !important;stroke-width:1px"/>
  <path d="m5.88 13c0 8.87 4.42 11.1 8.87 11.1s8.87-2.22 8.87-8.87" style="fill:none !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
@@ -175,7 +175,7 @@
  <path d="m12.3 9h-4.42" style="fill:#ecf3f7 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
 </svg>]
 
-[equ:iconTongue=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+[equ:iconTongue=<svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
  <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#a) !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
  <path d="m15.5 20.6a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#b) !important;stroke-width:1px"/>
  <path d="m11.5 9.4a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
@@ -185,7 +185,7 @@
  <path d="m5.5 18.2h17.7" style="fill:none !important;stroke:#6b1a6f;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
 </svg>]
 
-[equ:iconSad=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+[equ:iconSad=<svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
  <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#a) !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
  <path d="m15.5 20a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#b) !important;stroke-width:1px"/>
  <path d="m5.88 22c0-4.42 4.42-6.66 8.87-6.66s8.87 2.22 8.87 6.66" style="fill:none !important;stroke:#6b1a6f;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
@@ -193,7 +193,7 @@
  <path d="m21.9 9a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
 </svg>]
 
-[equ:iconCry=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+[equ:iconCry=<svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
  <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#a) !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
  <path d="m15.5 20.5a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#b) !important;stroke-width:1px"/>
  <path d="m24.6 13.778c0-2.2144-2.0768-2.2144-4.288-2.2144" style="fill:none !important;stroke-linecap:round;stroke-linejoin:round;stroke-width:2;stroke:#00cfff"/>
@@ -203,7 +203,7 @@
  <path d="m9.5 16c-2.22 2.22-2.22 6.66 0 8.87 4.42-2.22 8.87-2.22 13.3 0 2.22-2.22 2.22-6.66 0-8.87-4.42 2.22-8.87 2.22-13.3 0z" style="fill:#fff !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1"/>
 </svg>]
 
-[equ:iconAngry=<svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+[equ:iconAngry=<svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
  <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#a) !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
  <path d="m15.5 20a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#b) !important;stroke-width:1px"/>
  <path d="m6.5 22.7c0-2.22 4.42-4.42 8.87-4.42s8.87 2.22 8.87 4.42" style="fill:none !important;stroke-linecap:round;stroke-linejoin:round;stroke-width:1;stroke:#000"/>

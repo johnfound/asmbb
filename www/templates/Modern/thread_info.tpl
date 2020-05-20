@@ -77,7 +77,7 @@
 <a class="thread_link" href="[Slug]/">[Caption]</a>
 
 [case:[Unread]||<span class="small nowrap">&nbsp;(&nbsp;[Unread]&nbsp;[const:unread]&nbsp;)&nbsp;<a href="[Slug]/!markread"
-  title="[const:ttlMark]"><svg version="1.1" width="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  title="[const:ttlMark]"><svg version="1.1" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
     <path d="m9.9 8 5.7-5.7c.525-.525.525-1.38 0-1.9-.525-.525-1.38-.525-1.9
              0l-5.7 5.7-5.7-5.7c-.525-.525-1.38-.525-1.9 0-.525.525-.525 1.38
              0 1.9l5.7 5.7-5.7 5.7c-.525.525-.525 1.38 0 1.9.525.525 1.38.525

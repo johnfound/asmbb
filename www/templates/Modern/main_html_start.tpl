@@ -242,7 +242,7 @@
     <noscript><input type="submit" class="btn" value="Go"></noscript>
   </form>
 
-    <label for="searchDown" class="btn"><svg width="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+    <label for="searchDown" class="btn"><svg width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
         <path d="m8 9h16l-8 16z" fill="#fff"/>
       </svg>[const:ttlSearchBtn]
     </label>
@@ -265,7 +265,7 @@
     <input class="search_line" type="search" name="u" placeholder="[const:ttlSearchUsr]" value="[special:usearch]">
     <label class="btn round">
       <input type="submit">
-      <svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      <svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
         <path d="m30.2 26.9-6.45-6.48c-.0347-.0348-.0753-.0588-.111-.0912 1.32-1.92
                  2.04-4.32 2.04-6.84 0-6.96-5.51-12.5-12.3-12.5-6.81 0-12.3 5.52-12.3
                  12.4 0 6.84 5.51 12.4 12.3 12.4 2.51 0 4.79-.744
@@ -287,7 +287,7 @@
   <a class="btn" href="/[special:dir][case:[special:dir]||/]">[const:btnList]</a>
 
   <label class="btn" for="tagsCollapse">
-    <svg width="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+    <svg width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
       <path d="m8 9h16l-8 16z" fill="#fff"/>
     </svg>[const:ttlTags]: <strong>[case:[special:dir]|[const:ttlAllThreads]|#[special:dir]]</strong>
   </label>
