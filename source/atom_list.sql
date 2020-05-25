@@ -6,7 +6,7 @@ select
   T.PostCount,
   T.ReadCount,
   strftime('%Y-%m-%dT%H:%M:%SZ', T.LastChanged, 'unixepoch') as TimeChanged,
-  (select group_concat('<b>' || html_encode(nick) || '</b>',', ')
+  (select group_concat(html_encode(nick),', ')
    from ThreadPosters left join Users on userID = id where threadID = T.id order by firstPost
   ) as Posters,
   'AllThreads' as FeedID,
