@@ -1,5 +1,5 @@
-C Some\sfixes\son\sthe\sAtom\sfeed\stemplates\sand\sgeneration\scode\sin\sorder\sto\srespect\sthe\sstandards.
-D 2020-05-25T21:48:13.804
+C Added\ssymlinks\sto\sthe\sAtom\sfeed\stemplates.
+D 2020-05-25T21:49:07.276
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -477,6 +477,9 @@ F www/templates/Modern/activity6.tpl 8183551cc7d489d3fef5f42dba5d275ce1120278
 F www/templates/Modern/activity7.tpl e25bb04eb0b2e06619095bc1f2165d989fb93460
 F www/templates/Modern/activity8.tpl 312c9c2b7443e8c135a1ad8124d0415d780fffc9
 F www/templates/Modern/activity9.tpl 9f354c2dd3b3a9d3c171e7230a88aaf3b074b848
+F www/templates/Modern/atom_entry_post.tpl b909b679b9c4ea1723cf9ca5827c2fba527bf589 l
+F www/templates/Modern/atom_entry_thread.tpl d6f76cb18d5e725a3708a966e9e8720ca643a239 l
+F www/templates/Modern/atom_start.tpl d47f23ad78f9717598c748c2b37f812d56a4ccdb l
 F www/templates/Modern/autocomplete.js 7a997eb0436880fc544f24424bdcacb311584831
 F www/templates/Modern/chat.less f4866990385145d18d552605af2d7a5c03184897
 F www/templates/Modern/chat.tpl 1b5abd774f408fae8ea1987b8eb23bbfcd3e6f02
@@ -590,6 +593,9 @@ F www/templates/Urban\sSunrise/activity7.tpl 606eb1ee82da0767dd85e3d2ac63a07e987
 F www/templates/Urban\sSunrise/activity8.tpl 36d833a0164bb74532e88161cff3d7c8d05cef52 l
 F www/templates/Urban\sSunrise/activity9.tpl 60fe5018f101f822fa00434bff49db7a3f7da947 l
 F www/templates/Urban\sSunrise/all-emoji.txt e98af1671a301fd3a1e58c1934b62f4ce9506be6
+F www/templates/Urban\sSunrise/atom_entry_post.tpl b909b679b9c4ea1723cf9ca5827c2fba527bf589 l
+F www/templates/Urban\sSunrise/atom_entry_thread.tpl d6f76cb18d5e725a3708a966e9e8720ca643a239 l
+F www/templates/Urban\sSunrise/atom_start.tpl d47f23ad78f9717598c748c2b37f812d56a4ccdb l
 F www/templates/Urban\sSunrise/autocomplete.js 7f821fe4b74d465ef6042714c91ced568d7ef6d4
 F www/templates/Urban\sSunrise/chat.js 334bf986319e9b511caceda9dcd9ae1c2e60a6d5
 F www/templates/Urban\sSunrise/chat.less 7e3affa9b2e5a2826cd61bb77f484c0df1b8f190
@@ -904,7 +910,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P aa96bc87a8f3a1f707875965c436f3aec507e3b1
-R 916c8a7f6daac2664866acfeed5c9a0b
+P 2345a816c4d7ae731c19f23ce9d7014252b8f3c9
+R dde20e596580010290ef25fcf9af9d9d
 U johnfound
-Z ef46a560080f276e7d2c55163f49dbb6
+Z f2a53f388a8f37cf2c702d3503cc6b18
