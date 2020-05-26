@@ -72,7 +72,7 @@
   <form class="register-block" method="post" action="/!register/">
     <h1>[const:ttlRegister]</h1>
     <input type="text" value="" placeholder="[const:phUser]" name="username" class="username" maxlength="256" autofocus>
-    <input class="email[case:[email_flag]| hidden|]" type="text" value="" placeholder="[const:phEmail]" name="email" class="email" maxlength="320">
+    <input class="email [case:[email_flag]|hidden|]" type="text" value="" placeholder="[const:phEmail]" name="email" class="email" maxlength="320">
     <input type="password" value="" placeholder="[const:phPass]" name="password" class="password" maxlength="1024" autocomplete="off">
     <input type="password" value="" placeholder="[const:phPass2]" name="password2" class="password" maxlength="1024" autocomplete="off">
     <input class="hidden" type="text" value="[ticket]" name="ticket" id="ticket" class="ticket">

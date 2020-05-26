@@ -1,0 +1,309 @@
+@import "skin_variables.lsi";
+
+#chat-window {
+  margin: 0px auto !important;
+  max-width: @globMaxWidth;
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+  position: fixed;
+  left: 0; right: 0; top: 0; bottom: 0;
+}
+
+
+#layout {
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+}
+
+
+header, footer, .global-row, .attribution, .vspacer {
+  display: none !important;
+}
+
+.btn-bar {
+  margin: 4px 0px !important;
+  align-items: center;
+}
+
+.btn {
+  background-color: @clYellow;
+}
+
+.img-btn {
+  background-color: @clDarkGray !important;
+  color: @clWhite !important;
+  height: @buttonHeight !important;
+  svg {
+    fill: @clWhite !important;
+  }
+}
+
+
+div.chatflex {
+  display: flex;
+  padding: 0px;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+
+@media (orientation: landscape) and (min-width: 600px) {
+  div.chatflex {
+    flex-direction: row;
+  }
+
+  #syslog {
+    height: auto;
+    flex-direction: column;
+  }
+}
+
+
+@media (orientation: portrait), (max-width: 600px) {
+  div.chatflex {
+    flex-direction: column-reverse;
+  }
+
+  #syslog {
+    width: auto;
+    flex-direction: row;
+  }
+}
+
+
+#chatlog {
+  background-color: @clWhite;
+  color: @clBlack;
+  margin: 4px;
+  overflow: auto;
+  padding: 16px;
+  flex-grow: 3;
+}
+
+#syslog {
+  background-color: @clWhite;
+  color: @clBlack;
+  margin: 4px;
+  overflow: auto;
+  flex-grow: 1;
+  flex-shrink: 0;
+  padding: 4px;
+  display: flex;
+  align-items: start;
+  align-content: start;
+  flex-wrap: wrap;
+  min-width: 150px;
+}
+
+#chat_form {
+  display: flex;
+  align-items: center;
+  margin: 4px;
+
+  input {
+    margin: 0px 8px 0px 0px;
+  }
+}
+
+#chat_user {
+  width: 200px;
+  margin: 0 4px 0 8px;
+  flex-grow: 0;
+}
+
+#chat_message {
+  flex-grow: 1;
+  padding: @margin/2;
+  resize: none;
+}
+
+
+.message {
+  margin: @margin/2 0;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: baseline;
+
+  &:last-child {
+    margin-bottom: 16px;
+  }
+
+  .msg_one_line {
+    flex-grow: 1;
+  }
+
+  .msg_multi_line {
+    white-space: pre-wrap;
+    flex-grow: 1;
+    font-family: @FontMonospace;
+    font-size: @FontSizeMono*0.8;
+  }
+}
+
+.chatlink {
+  color: @clRed;
+}
+
+.emo {
+  vertical-align: middle;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.hline {
+  line-height: 1px;
+  text-align: center;
+  border-bottom: 1px solid @clGray;
+}
+
+.date {
+  font-size: 80%;
+  padding: 0px 8px;
+  background-color: @clWhite;
+  color: @clGray;
+}
+
+.user-col {
+  margin-right: 8px;
+  flex-shrink: 0;
+  line-height: 1.2em;
+  max-width: 30%;
+}
+
+.time {
+  font-size: 80%;
+  display: block;
+}
+
+span.user {
+  color: @clRed;
+  cursor: pointer;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: block;
+}
+
+p.user {
+  color: @clRed;
+  cursor: pointer;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin: 0;
+  padding: @margin/2 @margin;
+  display: block;
+}
+
+
+.fake_user {
+  color: @clViolet !important;
+}
+
+.gray_user {
+  opacity: 0.5;
+}
+
+
+#emolib {
+  font-size: 20px;
+  font-family: @FontEmoji;
+  overflow-y: scroll;
+  overflow-x: auto;
+  position: absolute;
+  width: auto;
+  max-width: ~"calc( 100vw - 28px )";
+  height: 200px;
+  resize: vertical;
+  right: 4px;
+  bottom: ~"calc( 100% - 4px )";
+  background-color: @clWhite;
+  color: black;
+  border: 1px solid @clGray;
+  z-index: 10000;
+  white-space: pre;
+  a {
+    cursor: pointer;
+    display: inline-block;
+    margin: @margin;
+    width: @buttonHeight;
+    height: @buttonHeight;
+    overflow: hidden;
+    &:hover {
+      background-color: @clRed;
+      box-shadow: 1px 1px 3px @clMiddleGray;
+    }
+  }
+}
+
+.emo-btn-bar {
+  padding: 0;
+  margin: 0;
+  align-self: stretch;
+  flex-shrink: 0;
+  display: flex;
+  align-items: end !important;
+  position: relative;
+}
+
+@media (pointer: fine) {
+  .emo-btn-bar:hover #emolib {
+    display: block !important;
+  }
+}
+
+.emo-btn {
+  cursor: pointer;
+  height: @buttonHeight !important;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+
+  font-family: @FontEmoji;
+  font-size: 16px;
+
+  &:hover {
+    background-color: @clRed;
+  }
+
+  &>svg {
+    fill: @clWhite;
+  }
+}
+
+.v-btn-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  align-self: stretch;
+  justify-content: space-evenly;
+}
+
+
+.noscript {
+  background-color: @clYellow;
+  color: @clDarkGray;
+  font-weight: normal;
+  font-variant: small-caps;
+  text-align: center;
+}
+
+
+.emoji {
+  font-size: 1.3em;
+  font-family: @FontEmoji;
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+  & > * {
+    flex-shrink: 0;
+    flex-grow: 0;
+  }
+  &>span:hover {
+    transform: scale(2);
+    z-index: 1000;
+  }
+}

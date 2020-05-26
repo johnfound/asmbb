@@ -1,0 +1,176 @@
+@import "skin_variables.lsi";
+
+/* settings form styles */
+
+div.set_page {
+  width: var(--globWidth);
+  max-width: @globMaxWidth;
+  margin: @globMargin;
+  overflow: auto;
+  padding: 16px;
+}
+
+.msgbox, .msgbox-auto {
+  max-width: @msgBoxWidth;
+  width: 100%;
+  padding: 2*@margin;
+  background-color: @clWhite;
+  color: @clBlack;
+  margin: @margin auto;
+  display: flex;
+  flex-direction: column;
+
+  p {
+    margin: @margin/2 0;
+  }
+
+  .btn {
+    background-color: @clYellow;
+    color: @clBlack;
+  }
+}
+
+.msgbox {
+  height: 600px;
+}
+
+
+form.settings {
+  h1 {
+    margin-top: 0;
+    margin-bottom: 2*@margin;
+    padding: @margin/2;
+
+    color: @clDarkGray;
+    background-color: @clYellow;
+    font-size: 1.2*@FontSize;
+    font-weight: normal;
+    font-variant: small-caps;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 120%;
+    color: @clBlack;
+  }
+
+  h3 {
+    font-size: @FontSize;
+    font-weight: normal;
+    margin: 8px 0px 0px 0px;
+    color: inherit;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0px;
+    width: 100%;
+    margin-top: 8px;
+
+    td {
+      text-align: left;
+      vertical-align: top;
+      white-space: nowrap;
+      padding: 2px 0;
+    }
+  }
+
+  .tabbed-panel {
+    margin: 2*@margin 0;
+    section {
+      height: 480px;
+      overflow: auto;
+    }
+  }
+}
+
+
+input.settings, select.settings {
+  flex-grow: 0 !important;
+  font-size: @FontSize;
+  outline: none;
+  margin: 4px 0px;
+  border: 1px solid @clGray;
+
+  background-color: @clWhite;
+  color: @clBlack;
+  width: 100%;
+  &:focus {
+    border: 1px solid @clYellow;
+  }
+}
+
+textarea.settings {
+  width: 100%;
+  white-space: pre;
+  resize: vertical;
+  padding: @margin/2;
+  border: 1px solid @clGray;
+  &:focus {
+    border: 1px solid @clYellow;
+  }
+}
+
+
+@keyframes slideOutFromLeft {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100vw);
+    opacity: 0;
+  }
+}
+
+.msg {
+  animation: 1s ease-in 3s 1 slideOutFromLeft forwards;
+
+  padding: @margin/2;
+  margin: @margin/2;
+  height: @buttonHeight;
+
+  text-align: center;
+  font-weight: bold;
+  flex-grow: 1;
+}
+
+.info {
+  background-color: @clGreen;
+  color: @clWhite;
+}
+
+.error {
+  background-color: @clRed;
+  color: @clWhite;
+}
+
+.warning {
+  background-color: @clYellow;
+  color: @clRed;
+}
+
+
+.checkbox > input[type=checkbox] + label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    color: @clBlack;
+}
+
+
+.checkboxes {
+  column-count: 2;
+  margin: @margin 0;
+  li {
+    list-style: none;
+  }
+}
+
+article {
+  color: @clBlack;
+}
+
+
+

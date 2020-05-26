@@ -361,7 +361,7 @@
 </form>
 </div>
 
-<script type="text/javascript">
+<script>
 <!--
  if (document.getElementById('message'))
    setTimeout( function() {

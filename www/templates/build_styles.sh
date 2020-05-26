@@ -19,3 +19,7 @@ echo "Compile MoLight/"
 cd ../Modern
 echo "Compile Modern/"
 ./compile_styles.sh
+
+cd ../"Urban Sunrise"
+echo "Compile Urban Sunrise/"
+./compile_styles.sh

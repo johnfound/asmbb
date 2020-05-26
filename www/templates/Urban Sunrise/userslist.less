@@ -1,0 +1,65 @@
+@import "skin_variables.lsi";
+
+div.users_list {
+  width: var(--globWidth);
+  max-width: @globMaxWidth;
+  margin: @globMargin;
+
+  table {
+    margin: @margin 0;
+    border-spacing: 0 1px;
+    color: @clBlack;
+    width: 100%;
+
+    a {
+      color: @clRed;
+    }
+
+    th {
+      padding: @margin/2;
+      text-align: center;
+      background-color: @clGray;
+      a {
+        text-decoration: none;
+        color: @clDarkGray;
+      }
+      a.sorted {
+        color: @clRed;
+      }
+    }
+
+    td {
+      background-color: @clWhite;
+      padding: @margin @margin;
+      text-align: center;
+      height: 40px;
+    }
+
+    td.avatar {
+      text-align: center;
+      padding: 0px;
+      position: relative;
+
+      img {
+        width: 32px;
+        height: 32px;
+        line-height: 40px;
+        background-color: @clYellow;
+        color: @clDarkGray;
+        text-align: center;
+        border-radius: 50%;
+        margin: 0 auto;
+        display: block;
+        &:hover {
+          width: 80px;
+          height: 80px;
+          position: absolute;
+          left: ~"calc(50% - 40px)";
+          top: ~"calc(50% - 40px)";
+          z-index: 1000;
+        }
+      }
+    }
+  }
+}
+

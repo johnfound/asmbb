@@ -1,0 +1,202 @@
+The BBCode formatting is tag based. All tags are enclosed in square brackets "[c][TAG]CONTENT[/TAG][/c]".
+
+[h2]Paragraphs[/h2]
+
+Every new line in the text, starts a new paragraph.
+
+[h2]Inline formatting[/h2]
+
+The following tags format the text inside the paragraphs:
+
+[code=nohighlight][b]Bold text[/b]
+[i]Italic text[/i]
+[u]Underlined text[/u]
+[s]Strikedthrough[/s]
+[c]Monospaced inline text[/c]
+[size=CSS_SIZE]Different size of the text[/size]
+[color=CSS_COLOR]Different color of the text[/color]
+[/code]
+
+[b]Bold text[/b]
+[i]Italic text[/i]
+[u]Underlined text[/u]
+[s]Strikedthrough[/s]
+[c]Monospaced inline text[/c]
+[size=22px]Different size of the text[/size]
+[color=red]Different color of the text[/color]
+[h2]Headers[/h2]
+The headers are set by enclosing the header text with tags from "h1" to "h6":
+
+[code=nohighlight][h1]Header level 1[/h1]
+[h2]Header level 2[/h2]
+[h3]Header level 3[/h3]
+[h4]Header level 4[/h4]
+[h5]Header level 5[/h5]
+[h6]Header level 6[/h6]
+[/code]
+
+[h1]Header level 1[/h1]
+[h2]Header level 2[/h2]
+[h3]Header level 3[/h3]
+[h4]Header level 4[/h4]
+[h5]Header level 5[/h5]
+[h6]Header level 6[/h6]
+
+[h2]Links[/h2]
+
+The links are formatted by the tag "[c][url=URL]Link text[/URL][/c]".
+
+For example: [c][url=https://board.asm32.info]AsmBB demo forum[/url][/c] will render as: [url=https://board.asm32.info]AsmBB demo forum[/url].
+
+[h2]Images[/h2]
+
+The images are formatted with the tag "[c][img=ALT_TEXT]IMAGE_URL[/img][/c].
+
+Only block type of images are supported by BBCode formatting.
+
+[h2]Emoticons[/h2]
+
+Some emoticon tags are supported:
+
+[code=nohighlight][:)] = Smile
+[:D] = LOL
+[:rofl:] = ROFL
+[;)] = Wink
+[:P] = Tongue
+[:(] = Sad
+[:`(] = Crying
+[>:(] = Angry
+[/code]
+
+[:)] = Smile
+[:D] = LOL
+[:rofl:] = ROFL
+[;)] = Wink
+[:P] = Tongue
+[:(] = Sad
+[:`(] = Crying
+[>:(] = Angry
+
+
+[h2]Block quote[/h2]
+
+The block quotes are formatted with the tag "[c][quote=QUOTE_TITLE]QUOTE TEXT[/quote][/c]".
+
+Example: [quote=QUOTE_TITLE]QUOTE TEXT[/quote]
+
+[h2]Source code block[/h2]
+
+The source code block is formatted with the tags "[c][code=LANGUAGE]SOURCE CODE[/code][/c]".
+
+The optional LANGUAGE parameter is a hint for the syntax highlighter.
+The parameter can be in one of the following forms: "language-LANGNAME", "lang-LANGNAME" or simply "LANGNAME".
+If omitted, autodedtection is used.
+If syntax highlighting is not desirable, "nohighlight" or "plaintext" can be used as a language specifier.
+The difference is that while "nohighlight" disables the highlighter at all for this block, "plaintext" applies formatting (for example the theme colors) but the whole code is formatted as "plain text".
+
+All formatting tags are disabled inside the code block.
+
+The supported languages in the official release are: [b]x86asm, armasm, avrasm, mipsasm, cpp, arduino, sql, bash, xml, css, less, scss, javascript, http, nginx, markdown, ini, diff, plaintext.[/b]
+
+The list can be changed by replacing the JS highlighter. The JS library [url=https://highlightjs.org]highlight.js[/url] is used and another set of languages can be downloaded from the project home page.
+
+
+
+
+[h2]Lists[/h2]
+
+The unordered list is formatted with the tags [c][list][/list][/c] or [c][ul][/ul][/c]. Ordered list, respectively with [c][ol][/ol][/c]
+
+The list items in both cases are formatted with only the open tag: "[c][*][/c]".
+
+Example:
+
+[code=nohighlight][list]
+  [*] Bullet item 1
+    [ol]
+      [*] Num item 1
+      [*] Num item 2
+    [/ol]
+  [*] Bullet item 2
+  [ul]
+    [*] Nested bullet item.
+        Paragraph for this bullet item.
+    [*] Another nested bullet item.
+  [/ul]
+[/list]
+[/code]
+
+[list]
+  [*] Bullet item 1
+    [ol]
+      [*] Num item 1
+      [*] Num item 2
+    [/ol]
+  [*] Bullet item 2
+  [ul]
+    [*] Nested bullet item.
+        Paragraph for this bullet item.
+    [*] Another nested bullet item.
+  [/ul]
+[/list]
+
+[h2]Spoiler element[/h2]
+
+The spoiler is an element with initially hiden content that can be expanded if the reader wants to read it.
+
+The spoiler is formatted by the tag "[c][spoiler=ALWAIS VISIBLE TITLE TEXT]INITIALLY HIDDEN TEXT[/spoiler][/c]".
+
+[spoiler=ALWAIS VISIBLE TITLE TEXT]INITIALLY HIDDEN TEXT[/spoiler]
+
+[h2]Tables[/h2]
+
+The tables formatting is very similar to the HTML tables. The tags are the same, but enclosed in square brackets. The available tags are: [c][table], [tr], [th] and [td][/c].
+
+Example:
+[code=nohighlight][table]
+  [tr]
+    [th]Header 0,0[/th]
+    [th]Header 0,1[/th]
+    [th]Header 0,2[/th]
+  [/tr]
+  [tr]
+    [td]Cell with [url=https://board.asm32.info]link[/url] 1,0
+    [td]Cell with inline [i][b]formatting[/b][/i] 1,1[/td]
+    [td]Cell 1,2[/td]
+  [/tr]
+  [tr]
+    [td]Cell 2,0 with code block
+      [code=x86asm]
+push    eax
+mov     eax, ebx
+      [/сode]
+    [/td]
+    [td]Cell with emoticon [;)] 2,1[/td]
+    [td]Cell with block image: [img]/~/_images/emoticons/smile.gif[/img] 2,2[/td]
+  [/tr]
+[/table]
+[/code]
+
+
+[table]
+  [tr]
+    [th]Header 0,0[/th]
+    [th]Header 0,1[/th]
+    [th]Header 0,2[/th]
+  [/tr]
+  [tr]
+    [td]Cell with [url=https://board.asm32.info]link[/url] 1,0
+    [td]Cell with inline [i][b]formatting[/b][/i] 1,1[/td]
+    [td]Cell 1,2[/td]
+  [/tr]
+  [tr]
+    [td]Cell 2,0 with code block
+      [code=x86asm]
+push    eax
+mov     eax, ebx
+      [/code]
+    [/td]
+    [td]Cell with emoticon [;)] 2,1[/td]
+    [td]Cell with block image: [img]/~/_images/emoticons/smile.gif[/img] 2,2[/td]
+  [/tr]
+[/table]

@@ -221,7 +221,7 @@ begin
         mov     ecx, 666o
         int     80h
 
-        stdcall SocketListen, [STDIN], 1  ;-1       ; maximum allowed by the system.
+        stdcall SocketListen, [STDIN], -1       ; maximum allowed by the system.
         jnc     .loop
 
 

@@ -4,7 +4,7 @@
   <id>[special:tagprefix]Thread[threadid]</id>
   <updated>[TimeChanged]</updated>
   <author>
-    <name type="html">
+    <name>
       [Posters]
     </name>
   </author>

@@ -671,15 +671,11 @@ endl
 
 .cmd_include:
 ; here esi points to ":" of the "include:" command. edi points to the start "[" and ecx points to the end "]"
-
-        lea     eax, [edi-1]
-        push    eax
         pushd   0
         jmp     .cmd_incraw
 
 .cmd_raw:
 ; here esi points to ":" of the "raw:" command. edi points to the start "[" and ecx points to the end "]"
-        push    ecx
         pushd   -1
 
 .cmd_incraw:
@@ -716,13 +712,12 @@ endl
         add     esi, edx
         stdcall FileRead, ebx, esi, eax
         add     [edx+TText.GapBegin], eax
-        and     [esp], eax
+        AND     [esp], eax
 
 .file_close:
         stdcall FileClose, ebx
         pop     eax
-        pop     ecx             ; moves ecx at the start of the included template for "include" and does not change it on "raw".
-        add     ecx, eax        ; increment with the size of the included file if it was "raw" include.
+        lea     ecx, [edi+eax-1]   ; increment with the size of the included file if it was "raw" include.
         jmp     .loop
 
 
@@ -1429,7 +1424,7 @@ endl
         jmp     .special_string
 
 .sp_skin:
-        mov     eax, [ebx+TSpecialParams.userSkin]
+        mov     eax, [ebx+TSpecialParams.userSkinURL]
         jmp     .special_string
 
 .sp_lang:
@@ -1736,11 +1731,11 @@ endl
         jae     .end_styles
 
         stdcall TextCat, edx, '<link rel="stylesheet" href="'
-        stdcall TextCat, edx, [esi+TSpecialParams.userSkin]
+        stdcall TextCat, edx, [esi+TSpecialParams.userSkinURL]
         stdcall TextCat, edx, txt '/'
         stdcall TextCat, edx, [ebx+TArray.array+4*ecx]
         stdcall TextCat, edx, txt '?skin='
-        stdcall TextCat, edx, [esi+TSpecialParams.userSkin]
+        stdcall TextCat, edx, [esi+TSpecialParams.userSkinURL]
         stdcall TextCat, edx, <txt '" type="text/css">', 13, 10>
 
         inc     ecx
@@ -3027,6 +3022,21 @@ begin
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax
 
+        stdcall StrDup, [hCurrentDir]
+        push    eax
+        stdcall StrCat, eax, ebx
+        stdcall StrCat, eax, SKIN_CHECK_FILE
+
+        stdcall FileExists, eax
+        stdcall StrDel ; from the stack
+        jnc     .finish
+
+        stdcall StrDel, ebx
+        stdcall StrDupMem, "/templates/"
+        mov     ebx, eax
+        stdcall StrCat, ebx, cDefaultSkin
+
+.finish:
         mov     [esp+4*regEAX], ebx
         popad
         return
@@ -3223,5 +3233,88 @@ begin
 
         mov     [esp+4*regEAX], ebx
         popad
+        return
+endp
+
+
+
+; Encodes the path in URL encoding, but without encoding "/" characters.
+
+proc StrURLEncode2, .hstr
+.res dd ?
+begin
+        push    ebx ecx edx esi edi
+        stdcall StrPtr, [.hstr]
+        mov     esi, eax
+
+        stdcall StrLen, esi
+        mov     ecx, eax
+        lea     edx, [3*eax]        ; the encoded string can be max 3x long as original string.
+
+        stdcall StrNew
+        mov     [.res], eax
+        jecxz   .finish
+
+        stdcall StrSetCapacity, eax, edx
+        mov     edi, eax
+        xor     edx, edx
+        xor     ebx, ebx
+
+        push    eax
+
+.encode:
+        lodsb
+        cmp     al, $80
+        jae     .store          ; it is a hack, but I hope save enough.
+
+        cmp     al, '/'
+        je      .store
+        cmp     al, '\'
+        jne     @f
+        mov     al, '/'
+        jmp     .store
+
+@@:
+        cmp     al, ' '
+        jne     @f
+        mov     al, '+'
+        jmp     .store
+@@:
+        mov     dl, al
+        mov     bl, al
+        shr     edx, 5
+        and     ebx, $1f
+        bt      dword [URLCharTable+4*edx], ebx
+        jnc     .store
+
+        mov     ah, al
+        mov     al, '%'
+        stosb
+        mov     al, ah
+        shr     al, 4
+        cmp     al, $0a
+        sbb     al, $69
+        das
+        stosb
+        mov     al, ah
+        and     al, $0f
+        cmp     al, $0a
+        sbb     al, $69
+        das
+
+.store:
+        stosb
+        loop    .encode
+
+        xor     al, al
+        mov     [edi], al
+
+        pop     eax
+        sub     edi, eax
+        mov     [eax+string.len], edi
+
+.finish:
+        mov     eax, [.res]
+        pop     edi esi edx ecx ebx
         return
 endp

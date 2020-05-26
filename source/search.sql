@@ -4,7 +4,7 @@ select
   P.userID,
   U.av_time as AVer,
   PostFTS.slug,
-  strftime('%d.%m.%Y %H:%M:%S', P.postTime, 'unixepoch') as PostTime,
+  fuzzytime(P.postTime) as PostTime,
   PC.count as ReadCount,
   snippet(PostFTS, 0, '*', '*', '...', 16) as Content,
   PostFTS.Caption,

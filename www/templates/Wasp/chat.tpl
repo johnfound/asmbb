@@ -1,7 +1,7 @@
 [css:navigation.css]
 [css:chat.css]
 
-<script type='text/javascript'>
+<script>
 
 // some extras and utilities
 

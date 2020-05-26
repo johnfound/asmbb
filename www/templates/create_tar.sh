@@ -1,5 +1,3 @@
 #!/bin/bash
-
-tar -czf ./templates.tar.gz ./Light/ ./mobile/ ./Wasp/ ./MoLight/ ./Modern/
-
-# --exclude=*.less
+rm ./templates.tar.gz
+tar --exclude=*.less --exclude="_source" -czf ./templates.tar.gz ./_fonts/ ./Light/ ./mobile/ ./Wasp/ ./MoLight/ ./Modern/ ./"Urban Sunrise"/

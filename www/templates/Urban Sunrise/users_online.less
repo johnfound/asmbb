@@ -1,0 +1,54 @@
+@import "skin_variables.lsi";
+
+a.ban_link {
+  margin-left: @margin/2;
+  &:before {
+    content: '📈';
+    font-size: 14px;
+    font-family: @FontEmoji;
+  }
+}
+
+a.online {
+  font-weight: bold;
+  background-color: @clDarkGray;
+  color: @clWhite !important;
+  padding: 0px 4px;
+  line-height: 16px;
+}
+
+/* Users online table styles */
+
+div.users_online {
+  width: var(--globWidth);
+  max-width: @globMaxWidth;
+  margin: 2*@margin auto;
+  color: @clBlack;
+  overflow: hidden;
+
+  a {
+    color: @clRed;
+  }
+}
+
+
+table.users_table {
+  width: 100%;
+  border-spacing: 1px 1px;
+}
+
+table.users_table th {
+  background-color: @clGray;
+  padding: @margin/2 @margin;
+  text-align: center;
+}
+
+table.users_table td {
+  background-color: @clWhite;
+  padding: @margin/2 @margin;
+  text-align: left;
+  vertical-align: middle;
+  overflow: hidden;
+}
+
+

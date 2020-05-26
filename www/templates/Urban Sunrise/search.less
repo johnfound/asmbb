@@ -1,0 +1,31 @@
+@import "skin_variables.lsi";
+
+
+div.post-text > pre {
+  font-family: @FontMonospace;
+  font-size: @FontSizeMono;
+  white-space: pre-wrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+
+.post-link {
+  display: block;
+  text-align: right;
+  font-weight: bold;
+}
+
+.nothing {
+  text-align: center;
+  display: flex;
+  margin: 2*@margin 0;
+  background-color: @clWhite;
+  color: @clBlack;
+  border: 1px solid @clGray;
+  align-items: center;
+  justify-content: center;
+  font-size: @FontSize;
+  font-weight: bold;
+  clear: both;
+}

@@ -86,18 +86,18 @@
     </div>
     <div class="edit_tools">
       [case:[special:canpost]||<a class="btn round" title="[const:ttlQuote]" href="[id]/!post">
-        <svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
           <path d="m9.02 3s-9.02 1.22-9.02 10.8v14.2h14v-14h-7.83s-1.55-1.98-.751-4.38c.801-3.2
                    4.76-3.81 4.76-3.81zm18 0s-9.02 1.22-9.02
                    10.8v14.2h14v-14h-7.83s-1.62-1.98-.814-4.38c.801-3.2 4.82-3.81 4.82-3.81z"
           />
         </svg>
       </a>]
-      [case:[special:canedit]||<a class="btn round" title="[const:ttlEdit]" href="[id]/!edit"><svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      [case:[special:canedit]||<a class="btn round" title="[const:ttlEdit]" href="[id]/!edit"><svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
          <path d="m19 4-14 14-5 14 14-5 14-14-9-9zm-13 16.4 5.6 5.6-5.6 2-2-2 2-5.6z"/>
          <path d="m20 3 9 9 3-3-9-9z"/>
         </svg></a>]
-      [case:[special:candel]||<a class="btn round" title="[const:ttlDel]" href="[id]/!del"><svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      [case:[special:candel]||<a class="btn round" title="[const:ttlDel]" href="[id]/!del"><svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
         <path d="m5 9 3 23h16l3-23z"/>
         <rect x="5" y="4" width="22" height="3"/>
         <rect x="10" y="1.55e-15" width="2" height="4"/>
@@ -105,7 +105,7 @@
         <rect x="20" width="2" height="4"/>
       </svg></a>]
       [case:[HistoryFlag]||[case:[special:isadmin]| |<a class="btn round" title="[const:ttlHist]" href="/[id]/!history">
-        <svg version="1.1" width="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <svg version="1.1" width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
          <circle cx="3" cy="29" r="3"/>
          <circle cx="16" cy="29" r="3"/>
          <circle cx="29" cy="29" r="3"/>

@@ -1,0 +1,217 @@
+@import "skin_variables.lsi";
+
+/* Thread view styles */
+
+div.thread {
+  width: var(--globWidth);
+  max-width: @globMaxWidth;
+  margin: @globMargin;
+}
+
+
+
+h1.thread_caption {
+  font-size: 1.5rem;
+  margin: 8px 0px;
+  clear:both;
+  text-align: center;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  background-color: @clGray;
+  color: @clRed;
+
+  .btn {
+    background-color: @clYellow;
+  }
+}
+
+
+.thread_tags {
+  margin: @margin 0;
+
+  li {
+
+    display:inline;
+    text-align: left;
+    white-space: nowrap;
+
+    color: @clDarkGray;
+    text-decoration: none;
+
+    a {
+      color: inherit;
+      &:not(:hover) {
+        text-decoration: none;
+      }
+    }
+
+    &:before {
+      content: '#';
+    }
+
+    &:not(:last-child):after {
+      content: ', ';
+    }
+  }
+}
+
+
+div.current_version {
+  border-right: 4px solid @clRed;
+  margin-right: -4px;
+}
+
+
+.post {
+  margin: 2*@margin 0;
+
+  a {
+    color: @clRed;
+    &:not(:hover) {
+      text-decoration: none;
+    }
+  }
+}
+
+
+.post-header {
+  display: flex;
+  margin: 0px;
+  align-items: start;
+  color: @clDarkGray;
+
+  background-color: @clGray;
+  height: 32px;
+  padding: @margin/2;
+  line-height: 16px;
+
+  > * {
+    margin: @margin/2;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    flex-shrink: 10;
+    > svg {
+      fill: @clYellow;
+      vertical-align: bottom;
+    }
+  }
+
+  .btn {
+    background-color: @clYellow;
+    color: @clBlack;
+    margin: 0 @margin/2;
+    svg {
+      fill: @clDarkGray;
+    }
+  }
+
+  img.avatar {
+    width: 48px;
+    height: 48px;
+    line-height: 40px;
+    background-color: @clYellow;
+    color: @clDarkGray;
+    text-align: center;
+    font-size: 24px;
+    border-radius: 50%;
+    margin-top: 0;
+    flex-shrink: 0;
+  }
+
+  a.user_name {
+    color: @clBlack;
+    font-weight: bold;
+    flex-shrink: 1;
+  }
+
+}
+
+
+.post-text {
+  margin: 0;
+  padding: 2*@margin 4*@margin !important;
+
+  background-color: @clWhite;
+  color: @clBlack;
+  overflow: auto !important;
+  display: block !important;
+}
+
+
+
+/* The attachments table */
+
+.attachments, .attach_del {
+  padding: 0 4*@margin;
+  overflow: auto;
+  background-color: @clWhite;
+  color: @clBlack;
+
+  table {
+    margin: 1em 0;
+    font-weight: normal;
+    clear: both;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+
+    a {
+      font-weight: bold;
+      color: @clWhite;
+    }
+
+    td {
+      background-color: @clDarkGray;
+      color: @clWhite;
+      padding: 0.2rem 1ch;
+      vertical-align: middle;
+      word-wrap: anywhere;
+    }
+
+    th {
+      background-color: @clYellow;
+      color: @clBlack;
+      text-align: center;
+      padding: @margin/4 @margin;
+      vertical-align: middle;
+      word-wrap: anywhere;
+    }
+
+    label, label::before {
+      margin: 0 !important;
+    }
+
+    .head {
+      background-color: @clDarkGray;
+      color: @clWhite;
+      font-weight: bold;
+      padding: @margin/2 @margin;
+    }
+
+    .delcheck {
+      text-align: center;
+    }
+
+    .filename {
+      text-align: left;
+    }
+
+    .filesize {
+      text-align: right;
+    }
+
+    .filetime {
+      text-align: left;
+    }
+
+    .filecnt {
+      text-align: right;
+      font-weight: bold;
+    }
+
+    .checksum {
+      text-align: left;
+      font-family: @FontMonospace;
+    }
+  }
+}

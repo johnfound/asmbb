@@ -1,0 +1,164 @@
+@import "skin_variables.lsi";
+
+div.threads_list {
+  width: var(--globWidth);
+  max-width: @globMaxWidth;
+  margin: @globMargin;
+  clear: both;
+}
+
+
+.thread-summary {
+  margin: 2*@margin 0;
+  overflow: hidden;
+
+  p {
+    margin: 0;
+  }
+
+  .ts-info {
+    display: flex;
+    padding: @margin;
+    background-color: @clWhite;
+
+    .tsi-link {
+      flex-grow: 1;
+      padding: 0;
+      color: @clMiddleGray;
+      font-size: 12px;
+      font-weight: normal;
+
+      a {
+        color: inherit;
+      }
+
+      ul {
+        display: inline;
+      }
+
+      div {
+        margin: @margin/2 0 0 0;
+      }
+
+      p > a {
+        margin: 0;
+        font-size: 16px;
+        font-weight: bold;
+        color: @clBlack;
+      }
+    }
+
+    .tsi-stat {
+      color: @clMiddleGray;
+      flex-shrink: 0;
+      padding: 0 @margin/2;
+      p {
+        text-align: center;
+      }
+    }
+
+  }
+
+  .ts-tags {
+    padding: @margin/2 @margin;
+
+    font-size: 12px;
+    text-transform: uppercase;
+
+    background-color: @clGray;
+    color: @clWhite;
+
+    a:not(:hover) {
+      text-decoration: none;
+    }
+
+    a {
+      color: @clWhite;
+    }
+
+    ul {
+      margin: 0;
+      display: inline-block;
+    }
+  }
+}
+
+.posters {
+  margin: 0;
+}
+
+.invited {
+  margin: 0;
+}
+
+.comma > * {
+  display: inline-block;
+
+  &::after {
+    content: ', ';
+    text-decoration: none;
+    margin-right: 4px;
+  }
+
+  &:last-child::after {
+    content: ' ';
+  }
+}
+
+
+.unread-info {
+  white-space: nowrap;
+  color: @clRed;
+  svg {
+    vertical-align: middle;
+    fill: @clRed;
+    stroke: @clRed;
+  }
+}
+
+
+// Categories...
+
+.category {
+  display: flex;
+  align-items: stretch;
+  margin: 1px 0px;
+  background-color: @clWhite;
+  color: @clBlack;
+
+  a {
+    font-size: 16px;
+    flex-grow: 1;
+    margin: 0px 8px;
+    align-self: center;
+    color: @clBlack;
+
+    &.category-unread {
+      color: @clRed;
+    }
+
+    span {
+      font-size: 12px;
+      color: @clGray;
+      text-transform: uppercase;
+//      font-variant: small-caps;
+    }
+
+//    &:not(:hover) {
+//      text-decoration: none;
+//    }
+  }
+
+  div {
+    text-align: center;
+    width: 100px;
+    flex-shrink: 0;
+    margin: 4px;
+//    line-height: 20px;
+    span {
+      font-size: 20px;
+//      font-weight: bold;
+      color: @clRed;
+    }
+  }
+}

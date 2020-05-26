@@ -60,7 +60,8 @@ struct TSpecialParams
   .userStatus      dd ?
 
   .userLang        dd ?         ; not used right now.
-  .userSkin        dd ?
+  .userSkin        dd ?         ; Path, relative to the document_root
+  .userSkinURL     dd ?         ; the same path URL encoded.
   .session         dd ?
   .remoteIP        dd ?
   .remotePort      dd ?
@@ -156,6 +157,9 @@ begin
         lea     eax, [.special]
         stdcall GetDefaultSkin, eax
         mov     [.special.userSkin], eax
+
+        stdcall StrURLEncode2, eax
+        mov     [.special.userSkinURL], eax
 
         cmp     [.pPost2], 0
         je      .post_ok
@@ -302,7 +306,7 @@ begin
         lea     eax, [.special]
         stdcall GetLoggedUser, eax
 
-        stdcall StrDup, [.special.userSkin]
+        stdcall StrDup, [.special.userSkinURL]
         stdcall StrCat, eax, edi
         stdcall TextMakeRedirect, edx, eax
         stdcall StrDel, eax
@@ -384,6 +388,7 @@ begin
 
         stdcall StrDel, [.special.userName]
         stdcall StrDel, [.special.userSkin]
+        stdcall StrDel, [.special.userSkinURL]
         stdcall StrDel, [.special.session]
         stdcall StrDel, [.special.dir]
         stdcall StrDel, [.special.thread]
@@ -957,6 +962,9 @@ begin
         stdcall StrCat, eax ; from the stack
         mov     edx, eax
 
+        stdcall StrURLEncode2, eax
+        mov     ecx, eax
+
 ; check skin existence.
 
         stdcall StrDup, [hCurrentDir]
@@ -969,9 +977,11 @@ begin
         jc      .free_skin
 
         xchg    edx, [edi+TSpecialParams.userSkin]
+        xchg    ecx, [edi+TSpecialParams.userSkinURL]
 
 .free_skin:
         stdcall StrDel, edx
+        stdcall StrDel, ecx
 
 .skin_ok:
 
@@ -1163,6 +1173,10 @@ begin
         stdcall StrCompNoCase, [.extension], txt ".mp3"
         jc      .mime_ok
 
+        mov     eax, mimeMP4
+        stdcall StrCompNoCase, [.extension], txt ".mp4"
+        jc      .mime_ok
+
         xor     eax, eax
         stc
         return
@@ -1187,7 +1201,7 @@ mimeSVG   text "image/svg+xml; charset=utf-8"
 mimeGIF   text "image/gif"
 mimeTTF   text "font/ttf"
 mimeMP3   text "audio/mpeg"
-
+mimeMP4   text "video/mp4"
 
 
 
