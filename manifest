@@ -1,5 +1,5 @@
-C Added\ssymlinks\sto\sthe\sAtom\sfeed\stemplates.
-D 2020-05-25T21:49:07.276
+C Added\san\simage\sneeded\sby\sthe\sAtom\sfeed.
+D 2020-05-26T21:28:38.941
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -186,6 +186,7 @@ F www/images/sources/title.svg b55073be362e7f268cd2c2626ee25cf457fa9376
 F www/images/sources/title2.svg 38a1b994139b4814b00b4cfda84577a31467d7ad
 F www/images/sources/toolbar.svg 44706bddfbfc0d92bc2c0889c92e772060a691d3
 F www/images/sources/yellow_back.png d7aed4145104dc3224a3fb46f03c14cf6d386167
+F www/images/title.svg f00b16abdaa3316ade52282fa0850bef3260cb95
 F www/lighttpd.conf fb5eb37a964a9f78d12504214818149d5cff1c5b
 F www/nserver 77fd50bebf9ee5bcd54c8b4035d362b72acf44c7 x
 F www/robots.txt bed60589d6ab1cc0470f3ba582444612d1c4109a
@@ -910,7 +911,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 2345a816c4d7ae731c19f23ce9d7014252b8f3c9
-R dde20e596580010290ef25fcf9af9d9d
+P 84159d9fa118b49d45b265fec520a4c1156a81fc
+R 53f0fa966c76453f4f6bca6432d3e6b4
 U johnfound
-Z f2a53f388a8f37cf2c702d3503cc6b18
+Z fbafb22c89292dfd1a76cff2ae9ee0bc
