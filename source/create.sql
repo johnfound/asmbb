@@ -19,12 +19,12 @@ insert into Params values ('default_lang', 0);
 insert into Params values ('user_perm', 1887);  -- permLogin + permRead + permPost + permThreadStart + permEditOwn + permDelOwn + permChat + permDownload + permAttach
 insert into Params values ('anon_perm', 3);     -- permLogin + permRead
 insert into Params values ('chat_enabled', 1);
-insert into Params values ('default_skin', 'Wasp');
-insert into Params values ('default_mobile_skin', 'mobile');
+insert into Params values ('default_skin', 'Urban Sunrise');
+insert into Params values ('default_mobile_skin', 'Urban Sunrise');
 insert into Params values ('email_confirm', 1);
 insert into Params values ('forum_header', '<h1 style="font-weight: 800">AsmBB</h1>
 <b style="text-align: center">Power<br>
-<svg version="1.1" width="64" viewBox="0 0 64 16" xmlns="http://www.w3.org/2000/svg">
+<svg version="1.1" width="64" height="16" viewBox="0 0 64 16" xmlns="http://www.w3.org/2000/svg">
  <path d="m0 6 8 10h34l-6-6 28-2-50-8 8 8z"/>
 </svg>
 </b>

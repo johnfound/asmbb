@@ -1,5 +1,5 @@
-C Respect\sthe\spermRead\son\sthe\sAtom\sfeed
-D 2020-05-28T05:53:41.857
+C Some\schanges\sin\sthe\sdatabase\sinitialization\sSQL.\sRemoved\sobsolete\simages.
+D 2020-05-28T07:38:31.433
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -36,7 +36,7 @@ F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm 46e64d22841349e2935e8c62681f2f47cad786a0
 F source/commands.asm 4426b50b3a66ea6c28bce7110fd7bf9379027828
-F source/create.sql 73fd5d1ddc198d1d35a0bed605d4d318c609b88b
+F source/create.sql 384f403dee2e34fcaa7d45c272a6cdd2bca3bd86
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
@@ -104,9 +104,6 @@ F www/.nginx/fastcgi.conf 635d54729b084483347b15cdd35e82866ee86c19
 F www/.nginx/mime.types 5779f6632f02c522615639eedd57a92cce27c791
 F www/.nginx/nginx.conf 6c8afc9fda178acbc25858c3a8ce35aac105dda6
 F www/favicon.ico 01ba7fafa5e9e561996452a57f13d9c3fbadcb06
-F www/images/chat_menu.svg d8485817c3e745dcb8b981bb80d264f18365e377
-F www/images/chat_user.svg 852b9ac428c278409ec89ad580abbeb883d5df72
-F www/images/download.svg 04b28da1997aa6f0464b7d8f6592d339acd7aa27
 F www/images/emoticons_dark/angry.gif d43a06f17649f6c9da6c85ff3dbbf0e4853f0520
 F www/images/emoticons_dark/cry.gif 44fbe228ae5fda20c3e83a7b8175fe7981afaf57
 F www/images/emoticons_dark/lol.gif 305f1546cdceaee6d5118c7cf739874c86c4200e
@@ -911,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 6348f13102432a47e5fa4c6ffc750411c18151ef
-R bb9a93fa326e72351ffe6988a16f9626
+P d01ad56e07e43601c4f8903d211608b69a801c82
+R 77dbe5abea003eca1956df27baa4895f
 U johnfound
-Z cc976437f8bccf4a922e14970e7556b6
+Z b71b94dfa28634ca5acd38b340c9e1c8
