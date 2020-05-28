@@ -1,10 +1,10 @@
-C Some\schanges\sin\sthe\sdatabase\sinitialization\sSQL.\sRemoved\sobsolete\simages.
-D 2020-05-28T07:38:31.433
+C Remove\ssome\ssources\sfrom\sthe\srelease.
+D 2020-05-28T08:07:35.573
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
 F install/create_release.sh b5721dd1b6252dd9b363258ca069b10c15202f51 x
-F install/exclude.txt f33f826e9610f4298a186d11c50013d7ec55bbb3
+F install/exclude.txt 467c30b4dd05b31dfbfe95812d9ad730b4ead243
 F install/install.txt 64615f21455976e432bda238c6d4282fc561e340
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
 F install/unpack.tar.gz 17da32119ae2cc9bb3a57f2ce59dc489e542ca59
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P d01ad56e07e43601c4f8903d211608b69a801c82
-R 77dbe5abea003eca1956df27baa4895f
+P 44de7d8932f873ce57fe54234eb9e79c0082c83e
+R 04f15b61a14248d44a25529c8f05c451
 U johnfound
-Z b71b94dfa28634ca5acd38b340c9e1c8
+Z 5212ad787e1063ec83ce5f8c4d4e67e5

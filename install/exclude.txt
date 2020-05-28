@@ -1,6 +1,8 @@
 *.less
 *.lsi
 *.sh
-sources
-*.gz
 source
+sources
+_source
+_sources
+*.gz
