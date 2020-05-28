@@ -1,5 +1,5 @@
-C Merged\swith\sWasp2skin\sas\sa\spreparation\sfor\srelease.
-D 2020-05-26T21:31:23.975
+C Respect\sthe\spermRead\son\sthe\sAtom\sfeed
+D 2020-05-28T05:53:41.857
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz df85f2c329f8b7cc2d1367a127b20976bef2121c
@@ -29,7 +29,7 @@ F source/alltags2.sql e4a0d5084be7a45f5e30ab46b7985f49c797f86a
 F source/atom_list.sql b98816111a61da81721974b558bbf74fcf3d78ed
 F source/atom_one_thread.sql 32da01bccec3dc4f86463f355a476028bc0632de
 F source/atom_tag_list.sql a22f6ff17e4e8517efdbf5aad59f707391a17b0e
-F source/atomfeed.asm 94b9fe8d4866c99a5d06f00add79b2495b6e75b7
+F source/atomfeed.asm 9ef462830c29252ee7a88b512fb9d3ae782238ee
 F source/attachments.asm 6843dd5b449b1394ae9c6f2b6bc44ed561f9a913
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
@@ -911,7 +911,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P e9a1aa146ae9b319b24f9298ac80c36915434f50 e68755f96294b6fbc658e66fec619e50132cd542
-R 53f0fa966c76453f4f6bca6432d3e6b4
+P 6348f13102432a47e5fa4c6ffc750411c18151ef
+R bb9a93fa326e72351ffe6988a16f9626
 U johnfound
-Z b4969216e6a26c6d1fc55c6d55a46e3e
+Z cc976437f8bccf4a922e14970e7556b6

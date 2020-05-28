@@ -30,6 +30,9 @@ begin
         clc
         jne     .finish                              ; no limited threads in the feed. return 404 not found
 
+        test    [esi+TSpecialParams.userStatus], permRead
+        jz      .error_403                              ; the user have no permissions to read the forum. So, don't generate the feed.
+
         stdcall LogUserActivity, esi, uaAtomFeedUpdate, 0
 
         stdcall TextCreate, sizeof.TText
@@ -141,6 +144,14 @@ begin
         xor     edi, edi
         clc
         jmp     .finalize
+
+
+.error_403:
+        stdcall TextCreate, sizeof.TText
+        stdcall AppendError, eax, txt "403 Forbidden", esi
+        mov     edi, edx
+        stc
+        jmp     .finish
 
 
 .not_changed_304:
