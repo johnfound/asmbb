@@ -1,5 +1,5 @@
-C Official\sbinary\srelease\sv2.9
-D 2020-05-28T08:20:51.125
+C Small\sfix\sof\sthe\sfont\sorder\sin\sUrban\sSunrise\stheme.
+D 2020-06-30T06:06:43.613
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 4d50c447ba23d467203f3487f0612aea9d50e01b
@@ -653,7 +653,7 @@ F www/templates/Urban\sSunrise/restore_confirm.tpl 52a9c63c3575dc9a740886776c4dc
 F www/templates/Urban\sSunrise/search.less 0bcaf20f6012fe18db4ecdad203032fc082678df
 F www/templates/Urban\sSunrise/search_result.tpl ef10b3a14fe5e603b7fdc900c0a266782cafeabc
 F www/templates/Urban\sSunrise/settings.less bf5853436cdf02aabfd8e721b677517d30a5310c
-F www/templates/Urban\sSunrise/skin_variables.lsi 04aace2a418050afd6d4f7bbe3fd425b776d001c
+F www/templates/Urban\sSunrise/skin_variables.lsi 78974d8372551ed85a981703a612ca20dacdf9f0
 F www/templates/Urban\sSunrise/sqlite.less 660b247ef2a036462dd4aeae6d92f54881fda877
 F www/templates/Urban\sSunrise/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e3c7067
 F www/templates/Urban\sSunrise/thread_info.tpl a04631b7692491ce02b943a11c1efd22ae5a4f2f
@@ -908,8 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 9e588ddff277a7f89b658367b5d97149eaea357e
-R 1e795234df233c19f7d5726b3825c94e
-T +sym-v2.9 *
+P 6d407831308ba556825be8ab5cd614ea658928aa
+R b5ee9f9ecee30acf244f7070288ce521
 U johnfound
-Z a5868c669649ef6426702d1038caa724
+Z df912d4403759d9eed323b051256b272
