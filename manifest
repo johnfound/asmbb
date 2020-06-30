@@ -1,8 +1,8 @@
-C Small\sfix\sof\sthe\sfont\sorder\sin\sUrban\sSunrise\stheme.
-D 2020-06-30T06:06:43.613
+C Binary\srelease\sfix\sfor\sv2.9;\sThis\scommit\scontains\sthe\sbinary\srelease\spackage,\srecompiled\swith\sthe\slatest\sversion\sof\sFreshLib,\sthat\sfixes\sa\sbug\sin\sBBCode\sparser,\scausing\scrashes\sof\sthe\sengine\sin\ssome\sedge\scases.\s\n\nThe\supdate\sof\sthe\sengine\sbinary\sfile\sif\shighly\srecommended.\sFrom\sthis\sbinary\srelease,\sor\ssimply\sby\srecompiling\swith\sthe\slatest\sversion\sof\sFreshLib.
+D 2020-06-30T06:33:25.708
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
-F install/asmbb.tar.gz 4d50c447ba23d467203f3487f0612aea9d50e01b
+F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
 F install/create_release.sh b5721dd1b6252dd9b363258ca069b10c15202f51 x
 F install/exclude.txt 467c30b4dd05b31dfbfe95812d9ad730b4ead243
 F install/install.txt 64615f21455976e432bda238c6d4282fc561e340
@@ -908,7 +908,8 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 6d407831308ba556825be8ab5cd614ea658928aa
-R b5ee9f9ecee30acf244f7070288ce521
+P 59be7d6ff342db761d23583f16b11ab50cac3eee
+R c686c09e1a4eb78fd9ee7f18e7bb977a
+T +sym-v2.9.1 *
 U johnfound
-Z df912d4403759d9eed323b051256b272
+Z 8db2ebbca1ff73b515dc6a17e878441b
