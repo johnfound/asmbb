@@ -1,4 +1,5 @@
 [css:settings.css]
+[css:threadnew.css]
 
 [case:[special:lang]|
   [equ:ttlTitle=Title]

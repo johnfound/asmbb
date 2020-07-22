@@ -1,5 +1,5 @@
-C Forgotten\shints\sfor\sthe\snew\spost\seditor.
-D 2020-07-22T11:37:17.239
+C Fixed\sthe\sautocomplete\sCSS\sin\sthe\sthread\sediting\sform.
+D 2020-07-22T13:25:10.486
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -613,7 +613,7 @@ F www/templates/Urban\sSunrise/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a
 F www/templates/Urban\sSunrise/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
 F www/templates/Urban\sSunrise/file-browse.js f24eef322b130b2715410431ea4199679de5f65b
 F www/templates/Urban\sSunrise/form_edit.tpl 35447dc2e14aaec631768e00cb39cc2c41c803d6
-F www/templates/Urban\sSunrise/form_edit_thread.tpl 788dba9c786235cae6f55c0ae9f799c07e16e9c0
+F www/templates/Urban\sSunrise/form_edit_thread.tpl 235f47cd3758d3cd0208d7ece47e5f6e44f54877
 F www/templates/Urban\sSunrise/form_editinfo.tpl 905b2a7b443efc06f86ba28eeb7ebfccecefc1b2
 F www/templates/Urban\sSunrise/form_login.tpl fe8b409f221a5553ee0f40bde655fa3cb276485f
 F www/templates/Urban\sSunrise/form_new_post.tpl 5c79ea7b1e3a4d15c3afc7449e4e82c23d04a240
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 7df8c36fac8901d8e7a447a2a06f59998fbc441b
-R eb073b18740eb60956db54711b3784b3
+P 1b38356b5062f474ef0e8643f70ee365d22caae6
+R 1a4802c2ea28fe81aef6c7f45233fc61
 U johnfound
-Z 934b8de32a2f73e919688062f486d75d
+Z 8bb918c4c594c369f49c3057f3b41369
