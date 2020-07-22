@@ -51,7 +51,7 @@ document.onkeydown = function(e) {
   var btnclose = document.getElementById("btn-close");
   var stop = true;
 
-  if (e.ctrlKey && key == 13) {
+  if (e.ctrlKey && ((key == 13)||(key == 10))) {
     if (window.matchMedia("(max-width: 600px)").matches) {
       if (document.location.hash == '#preview') {
         document.location = '#editor-window';

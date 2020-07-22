@@ -1,5 +1,5 @@
-C Binary\srelease\sfix\sfor\sv2.9;\sThis\scommit\scontains\sthe\sbinary\srelease\spackage,\srecompiled\swith\sthe\slatest\sversion\sof\sFreshLib,\sthat\sfixes\sa\sbug\sin\sBBCode\sparser,\scausing\scrashes\sof\sthe\sengine\sin\ssome\sedge\scases.\s\n\nThe\supdate\sof\sthe\sengine\sbinary\sfile\sif\shighly\srecommended.\sFrom\sthis\sbinary\srelease,\sor\ssimply\sby\srecompiling\swith\sthe\slatest\sversion\sof\sFreshLib.
-D 2020-06-30T06:33:25.708
+C Fixed\sCtrl-Enter\skey\sdetection\sin\sChromium/Chrome\sbrowser.
+D 2020-07-22T08:42:13.112
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -595,7 +595,7 @@ F www/templates/Urban\sSunrise/atom_entry_post.tpl b909b679b9c4ea1723cf9ca5827c2
 F www/templates/Urban\sSunrise/atom_entry_thread.tpl d6f76cb18d5e725a3708a966e9e8720ca643a239 l
 F www/templates/Urban\sSunrise/atom_start.tpl d47f23ad78f9717598c748c2b37f812d56a4ccdb l
 F www/templates/Urban\sSunrise/autocomplete.js 7f821fe4b74d465ef6042714c91ced568d7ef6d4
-F www/templates/Urban\sSunrise/chat.js 334bf986319e9b511caceda9dcd9ae1c2e60a6d5
+F www/templates/Urban\sSunrise/chat.js af2f7194df2c16f49ae8b77bf014f160f2984385
 F www/templates/Urban\sSunrise/chat.less 7e3affa9b2e5a2826cd61bb77f484c0df1b8f190
 F www/templates/Urban\sSunrise/chat.tpl 5141a052cd4911ab8af4a380bc25614d41050b7d
 F www/templates/Urban\sSunrise/common.less 8ffaf6f8e388ea758da10954e4af91a1f6da2c3e
@@ -607,7 +607,7 @@ F www/templates/Urban\sSunrise/delete.less 397589f431219056581591243e48548d43fb8
 F www/templates/Urban\sSunrise/edit.json 57373eabba1d23e08fc65a2693970bb8ab13cca8
 F www/templates/Urban\sSunrise/edit_toolbar.tpl 3f18db7549b9f247fb24c4ec4bbcf130103ab069
 F www/templates/Urban\sSunrise/editor.less be05f1f1838a634d2159e70c27ca74ba078face2
-F www/templates/Urban\sSunrise/editors.js 949bbb40b9974363677cb67ebecf8c3b1947ad19
+F www/templates/Urban\sSunrise/editors.js 25b2f020e2b7047f16b04e1543e3d4269f9e82b1
 F www/templates/Urban\sSunrise/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Urban\sSunrise/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
 F www/templates/Urban\sSunrise/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
@@ -908,8 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 59be7d6ff342db761d23583f16b11ab50cac3eee
-R c686c09e1a4eb78fd9ee7f18e7bb977a
-T +sym-v2.9.1 *
+P b48eed00bbf34e876f05a54fe437737aca20dd41
+R fe024d3e67a1ab4ff2fa78e0c4bde3df
 U johnfound
-Z 8db2ebbca1ff73b515dc6a17e878441b
+Z 95fc298d71135912dc27280a586e2053

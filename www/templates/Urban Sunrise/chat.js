@@ -108,7 +108,7 @@ function ScrollBottom(force) {
 
 
 function KeyPress(e, proc) {
-  if (e.keyCode == 13 && e.ctrlKey) {
+  if ( ((e.keyCode == 13) || (e.keyCode == 10)) && e.ctrlKey) {
     proc();
   }
 }
