@@ -1,5 +1,5 @@
-C Fixed\sCtrl-Enter\skey\sdetection\sin\sChromium/Chrome\sbrowser.
-D 2020-07-22T08:42:13.112
+C Forgotten\shints\sfor\sthe\snew\spost\seditor.
+D 2020-07-22T11:37:17.239
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -616,7 +616,7 @@ F www/templates/Urban\sSunrise/form_edit.tpl 35447dc2e14aaec631768e00cb39cc2c41c
 F www/templates/Urban\sSunrise/form_edit_thread.tpl 788dba9c786235cae6f55c0ae9f799c07e16e9c0
 F www/templates/Urban\sSunrise/form_editinfo.tpl 905b2a7b443efc06f86ba28eeb7ebfccecefc1b2
 F www/templates/Urban\sSunrise/form_login.tpl fe8b409f221a5553ee0f40bde655fa3cb276485f
-F www/templates/Urban\sSunrise/form_new_post.tpl 6c087c626ff6ca78447b399cea181f329dfc991d
+F www/templates/Urban\sSunrise/form_new_post.tpl 5c79ea7b1e3a4d15c3afc7449e4e82c23d04a240
 F www/templates/Urban\sSunrise/form_new_thread.tpl fe634f528fe69f75acfd65b4dec356a57278075d
 F www/templates/Urban\sSunrise/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/Urban\sSunrise/form_register.tpl 02cc15121365375ffe92866cfe46ae944ef1855b
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P b48eed00bbf34e876f05a54fe437737aca20dd41
-R fe024d3e67a1ab4ff2fa78e0c4bde3df
+P 7df8c36fac8901d8e7a447a2a06f59998fbc441b
+R eb073b18740eb60956db54711b3784b3
 U johnfound
-Z 95fc298d71135912dc27280a586e2053
+Z 934b8de32a2f73e919688062f486d75d

@@ -13,6 +13,8 @@
   [equ:btnPreview=Preview]
   [equ:btnSubmit=Submit]
   [equ:btnRevert=Revert]
+  [equ:hintPreview=Ctrl+Enter for preview]
+  [equ:hintSubmit=Ctrl+S for submit]
 |
   [equ:btnNewPost=Отговор]
   [equ:ttlPost=Съобщение]
@@ -22,6 +24,8 @@
   [equ:btnPreview=Преглед]
   [equ:btnSubmit=Запис]
   [equ:btnRevert=Отказ]
+  [equ:hintPreview=Ctrl+Enter за преглед]
+  [equ:hintSubmit=Ctrl+S за публикуване]
 |
   [equ:btnNewPost=Ответить]
   [equ:ttlPost=Текст сообщения]
@@ -31,6 +35,8 @@
   [equ:btnPreview=Преглед]
   [equ:btnSubmit=Записать]
   [equ:btnRevert=Отказ]
+  [equ:hintPreview=Ctrl+Enter для предварительного просмотра]
+  [equ:hintSubmit=Ctrl+S чтобы отправить]
 |
   [equ:btnNewPost=Répondre]
   [equ:ttlPost=Contenu du message]
@@ -40,6 +46,8 @@
   [equ:btnPreview=Prévisualiser]
   [equ:btnSubmit=Poster]
   [equ:btnRevert=Annuler]
+  [equ:hintPreview=Ctrl+Entrée pour prévisualiser]
+  [equ:hintSubmit=Ctrl+S pour soumettre]
 |
   [equ:btnNewPost=Antworten]
   [equ:ttlPost=Inhalt des Beitrags]
@@ -49,6 +57,8 @@
   [equ:btnPreview=Vorschau]
   [equ:btnSubmit=Absenden]
   [equ:btnRevert=Zurücksetzen]
+  [equ:hintPreview=Strg+Eingabe für eine Vorschau]
+  [equ:hintSubmit=Strg+S zum Absenden]
 ]
 
 <div id="editor-window" class="editor">
