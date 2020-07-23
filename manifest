@@ -1,5 +1,5 @@
-C User\sname\sminimal\slength\schanged\sto\s2\sand\sless\sbytes.\sSome\sCSS\sfine\stuning.
-D 2020-07-23T12:40:44.740
+C Fixed\sthe\smissing\sscroll\sin\sthe\shelp\stexts.
+D 2020-07-23T22:36:46.117
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -645,7 +645,7 @@ F www/templates/Urban\sSunrise/one_category.tpl 221b1f24f1fd8949cdfabca65f2e7fcb
 F www/templates/Urban\sSunrise/one_user.tpl 66e01f838cd2fd5ed9d9c623bd68a0bf0e9de135
 F www/templates/Urban\sSunrise/post_history.tpl 14d36bc7bd53912d73c2d8ba662eff1fb949113a
 F www/templates/Urban\sSunrise/post_view.tpl a738e6117bc5ccd8d4ffc8b2cf6746e4c5be45b8
-F www/templates/Urban\sSunrise/posteditor.less 01a3a01e8f507725dda0ae104dabbd545d1f9859
+F www/templates/Urban\sSunrise/posteditor.less af2d688c4445e9c333d411f20af8ee860519a302
 F www/templates/Urban\sSunrise/posts.less 503bb880b10736efdb4bef50a2741a4d000ac43e
 F www/templates/Urban\sSunrise/preview.tpl 8477e385f5ea211ff7c7b635375a1a364d20e032
 F www/templates/Urban\sSunrise/realtime.js 130e002c1d17eaea5d3a266109659d38dfdb876d
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P a34850b82a3b3abdece8e115d921a94800d0ec94
-R 3fe6fc8e9224aa5866340e652bd0e646
+P c43f352adf33d6f59d8ead0b5c34f1981da10c2a
+R 2f773dcee9cf3fcfe3e42944ff951f3b
 U johnfound
-Z 242c50198264e48c1f2cbe216be40be4
+Z b47e3dc480cd3e86c457f22b4c31c1e1
