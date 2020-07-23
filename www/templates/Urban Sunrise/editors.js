@@ -23,9 +23,13 @@ function previewIt(e) {
         var attch = document.getElementById("attachments");
         var resp = JSON.parse(event.target.response);
 
+        var focus = document.activeElement;
+
         if (attch) attch.innerHTML = resp.attach_del;
         prv.innerHTML = resp.preview;
         highlightIt(prv);
+
+        focus.focus();
       }
       if (e) {
         document.getElementById("source").focus();
@@ -40,7 +44,7 @@ function previewIt(e) {
   }
 }
 
-window.addEventListener('load', function() { previewIt(); document.location="#editor-window"; });
+//window.addEventListener('load', function() { previewIt(); document.location="#editor-window"; });
 
 
 // Form keyboard hot keys.

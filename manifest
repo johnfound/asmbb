@@ -1,5 +1,5 @@
-C Fixed\sa\sbug\sin\sthe\snotification\slinks.
-D 2020-07-23T04:57:26.551
+C Improved\sthe\snested\squote\sformatting.\sFixed\sa\slost\sfocus\sbug\sin\sthe\spost\seditor.
+D 2020-07-23T07:50:01.803
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -607,7 +607,7 @@ F www/templates/Urban\sSunrise/delete.less 397589f431219056581591243e48548d43fb8
 F www/templates/Urban\sSunrise/edit.json 57373eabba1d23e08fc65a2693970bb8ab13cca8
 F www/templates/Urban\sSunrise/edit_toolbar.tpl 3f18db7549b9f247fb24c4ec4bbcf130103ab069
 F www/templates/Urban\sSunrise/editor.less be05f1f1838a634d2159e70c27ca74ba078face2
-F www/templates/Urban\sSunrise/editors.js 25b2f020e2b7047f16b04e1543e3d4269f9e82b1
+F www/templates/Urban\sSunrise/editors.js 62b24fad2427dfb5e525534e6cfd07e0a62d8a75
 F www/templates/Urban\sSunrise/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Urban\sSunrise/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
 F www/templates/Urban\sSunrise/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
@@ -633,7 +633,7 @@ F www/templates/Urban\sSunrise/highlight.less fba68624d1b34a5543fe0bf4b2af2ac1dd
 F www/templates/Urban\sSunrise/login.less e2c9b06104a775ae1abcc63bdc69f71b4662b870
 F www/templates/Urban\sSunrise/main_html_end.tpl 05bb25b9490ce93732628c937860db787c516c46
 F www/templates/Urban\sSunrise/main_html_start.tpl d7049028cd8f50f72922e32cd1b6714d4c3aea08
-F www/templates/Urban\sSunrise/markdown.less 7649809dd20852e716a1aef73b112ef2d400d2ca
+F www/templates/Urban\sSunrise/markdown.less 93d45a124d881f64ee365b765e65fa96529d9b6f
 F www/templates/Urban\sSunrise/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
 F www/templates/Urban\sSunrise/nav_categories.tpl c04334bde3272eed0ceeb558cb640a15a41b39e8
 F www/templates/Urban\sSunrise/nav_history.tpl 20332cc80d34a9c4fe360cc5559d98f0537900c2
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 53cbe37aeaf6d7258a50ba19bb999ea3c307cb38
-R c15ad912881e0a2fb5f6fb5d93f888de
+P 56d431e518fc07eb5ece17b9e0bd4ef4000e0e09
+R e7879ea04039a3ce549f428af512461b
 U johnfound
-Z fb34cf0a3fa0e0ee934d86c6f14cfaf6
+Z 12c6c6f19a7c37d4c647c24a1610570e
