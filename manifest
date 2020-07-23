@@ -1,5 +1,5 @@
-C Improved\sthe\snested\squote\sformatting.\sFixed\sa\slost\sfocus\sbug\sin\sthe\spost\seditor.
-D 2020-07-23T07:50:01.803
+C User\sname\sminimal\slength\schanged\sto\s2\sand\sless\sbytes.\sSome\sCSS\sfine\stuning.
+D 2020-07-23T12:40:44.740
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -23,7 +23,7 @@ F source/TestsWithTags.sql 6384a56d553e36aa1c54cdb61a147bb2806e3e9d
 F source/ToDo.txt 78c2a566e37fc37db78b799f5ac100bed383c182
 F source/Win32/sqleet.inc d3fe767bb10368a936112e35df3e734c32161b2d
 F source/Win32/sqlite3.inc f941d1cebec53d2bddbd071f4a2fef6d1a80b7f2
-F source/accounts.asm a8fd99724495ab0ca7d3ad7f6af31492304e286b
+F source/accounts.asm 94d43aa83eb9822fb5eb13829aba47a565a4b997
 F source/alltags.sql aa3093196f8c5132f8e763f2a80fbe977a878687
 F source/alltags2.sql e4a0d5084be7a45f5e30ab46b7985f49c797f86a
 F source/atom_list.sql b98816111a61da81721974b558bbf74fcf3d78ed
@@ -646,7 +646,7 @@ F www/templates/Urban\sSunrise/one_user.tpl 66e01f838cd2fd5ed9d9c623bd68a0bf0e9d
 F www/templates/Urban\sSunrise/post_history.tpl 14d36bc7bd53912d73c2d8ba662eff1fb949113a
 F www/templates/Urban\sSunrise/post_view.tpl a738e6117bc5ccd8d4ffc8b2cf6746e4c5be45b8
 F www/templates/Urban\sSunrise/posteditor.less 01a3a01e8f507725dda0ae104dabbd545d1f9859
-F www/templates/Urban\sSunrise/posts.less 32f60a79ccf15a6afff46f65060011abd5bf22ff
+F www/templates/Urban\sSunrise/posts.less 503bb880b10736efdb4bef50a2741a4d000ac43e
 F www/templates/Urban\sSunrise/preview.tpl 8477e385f5ea211ff7c7b635375a1a364d20e032
 F www/templates/Urban\sSunrise/realtime.js 130e002c1d17eaea5d3a266109659d38dfdb876d
 F www/templates/Urban\sSunrise/restore_confirm.tpl 52a9c63c3575dc9a740886776c4dc6c2e0a07efe
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 56d431e518fc07eb5ece17b9e0bd4ef4000e0e09
-R e7879ea04039a3ce549f428af512461b
+P a34850b82a3b3abdece8e115d921a94800d0ec94
+R 3fe6fc8e9224aa5866340e652bd0e646
 U johnfound
-Z 12c6c6f19a7c37d4c647c24a1610570e
+Z 242c50198264e48c1f2cbe216be40be4

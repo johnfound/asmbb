@@ -550,7 +550,7 @@ begin
         jnc     .error_short_name         ; the name contains special characters actually!
 
         stdcall StrLen, eax
-        cmp     eax, 3
+        cmp     eax, 2
         jbe     .error_short_name
 
         cmp     eax, 256
