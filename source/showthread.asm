@@ -216,7 +216,7 @@ begin
         stdcall StrEncodeHTML, [esi+TSpecialParams.thread]
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax
-        stdcall StrCat, ebx, txt '">'
+        stdcall StrCat, ebx, txt '/">'
 
         cinvoke sqliteColumnText, [.stmt2], 1
         stdcall StrEncodeHTML, eax

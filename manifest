@@ -1,5 +1,5 @@
-C Fixed\sthe\sautocomplete\sCSS\sin\sthe\sthread\sediting\sform.
-D 2020-07-22T13:25:10.486
+C Fixed\sa\sbug\sin\sthe\snotification\slinks.
+D 2020-07-23T04:57:26.551
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -74,7 +74,7 @@ F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm 3123d67b30fd4e86b0716cf0a6387e9c8b0fc91c
 F source/settings.sql 066cc77197d5fae94fb27c2bd72aabb2c4b85d8a
-F source/showthread.asm e39bac0c56c2a4f9cfcc631c3e23a8f221368653
+F source/showthread.asm dee82b2927b329ea0e638b5bdacc1653368d604c
 F source/showthread.sql 1ee08ed9c69a07ca5c60fc639e73333405e14d37
 F source/sqlite3.asm df3a5ea387f60d719fd83c33411b8151ad1a6d77
 F source/sqlite_console.asm 0090f97aebfd05dec748b3b98e7d43fba65b0064
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 1b38356b5062f474ef0e8643f70ee365d22caae6
-R 1a4802c2ea28fe81aef6c7f45233fc61
+P 53cbe37aeaf6d7258a50ba19bb999ea3c307cb38
+R c15ad912881e0a2fb5f6fb5d93f888de
 U johnfound
-Z 8bb918c4c594c369f49c3057f3b41369
+Z fb34cf0a3fa0e0ee934d86c6f14cfaf6
