@@ -1,5 +1,5 @@
-C Fixed\sthe\smissing\sscroll\sin\sthe\shelp\stexts.
-D 2020-07-23T22:36:46.117
+C Border\son\sthe\snotification\smessages.
+D 2020-07-24T06:41:48.160
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -659,7 +659,7 @@ F www/templates/Urban\sSunrise/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e
 F www/templates/Urban\sSunrise/thread_info.tpl a04631b7692491ce02b943a11c1efd22ae5a4f2f
 F www/templates/Urban\sSunrise/thread_list.less 4959d5ab4cedecb49e03ac57166ee9668c09db68
 F www/templates/Urban\sSunrise/threadnew.less 5a4763e82b7635a7288925cd86cb785b92ba9bef
-F www/templates/Urban\sSunrise/toaster.less 09f95cd572a30427e80a980b0e6d6f615564326a
+F www/templates/Urban\sSunrise/toaster.less ef23208bda00fc0322c56c41a928c29d526d8f35
 F www/templates/Urban\sSunrise/userinfo.less b6f644807f3369dd43b449cf85e74b236c8386d8
 F www/templates/Urban\sSunrise/userinfo.tpl 3c2bb1243cde84854f2ec10450511849b2ff7622
 F www/templates/Urban\sSunrise/users_online.less 1965f5016a3cbb2fe1f3d403d245fc42b7fdb898
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P c43f352adf33d6f59d8ead0b5c34f1981da10c2a
-R 2f773dcee9cf3fcfe3e42944ff951f3b
+P 26eb89deab3275abc49049c79d82b5618dded117
+R f3a7d69f8b19f71b42e0039687d288c2
 U johnfound
-Z b47e3dc480cd3e86c457f22b4c31c1e1
+Z 59354a309453657d13f37c335c0433e2
