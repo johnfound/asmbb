@@ -492,14 +492,17 @@ a.current_tag {
     cursor: pointer;
 
     &::before {
-      content: '';
+      content: 'X';
       width: 12px;
       height: 12px;
+      line-height: 12px;
       display: inline-block;
+
+      color: @clWhite;
       background-color: @clWhite;
+
       border: 1px solid @clGray;
       margin-right: @margin/2;
-      vertical-align: middle;
     }
   }
 }

@@ -1,5 +1,5 @@
-C Border\son\sthe\snotification\smessages.
-D 2020-07-24T06:41:48.160
+C A\sbetter\sappearance\sof\sthe\scheckboxes\sin\s"Urban\sSunrise"\stheme.
+D 2020-07-25T18:47:59.563
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -598,7 +598,7 @@ F www/templates/Urban\sSunrise/autocomplete.js 7f821fe4b74d465ef6042714c91ced568
 F www/templates/Urban\sSunrise/chat.js af2f7194df2c16f49ae8b77bf014f160f2984385
 F www/templates/Urban\sSunrise/chat.less 7e3affa9b2e5a2826cd61bb77f484c0df1b8f190
 F www/templates/Urban\sSunrise/chat.tpl 5141a052cd4911ab8af4a380bc25614d41050b7d
-F www/templates/Urban\sSunrise/common.less 8ffaf6f8e388ea758da10954e4af91a1f6da2c3e
+F www/templates/Urban\sSunrise/common.less 5189a7628589b9b068cf1c50d44b3074fff9c940
 F www/templates/Urban\sSunrise/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Urban\sSunrise/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001
 F www/templates/Urban\sSunrise/debug.less 9a989f4670bb3d584f60c57d50af9fbf9bf75117
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 26eb89deab3275abc49049c79d82b5618dded117
-R f3a7d69f8b19f71b42e0039687d288c2
+P 7488321cbcbf12960d5cf989346d679c9007e46c
+R 1d928af211df2b9cf468343a4baab29f
 U johnfound
-Z 59354a309453657d13f37c335c0433e2
+Z 2df1e0eaaebb890db759e5090fda841c
