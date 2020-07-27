@@ -15,6 +15,7 @@
   [equ:ttlSearchBtn=Search]
   [equ:ttlAllThreads=All tags]
   [equ:ttlTags=Tags]
+  [equ:ttlNotifications=Off/On the real time notifications]
   [equ:btnCats=Categories]
   [equ:btnSettings=Settings]
   [equ:btnConsole=SQL console]
@@ -35,6 +36,7 @@
   [equ:ttlSearchBtn=Търсене]
   [equ:ttlAllThreads=Всички теми]
   [equ:ttlTags=Тагове]
+  [equ:ttlNotifications=Изкл/Вкл на нотификациите в реално време]
   [equ:btnCats=Категории]
   [equ:btnSettings=Настройки]
   [equ:btnConsole=SQL конзола]
@@ -55,6 +57,7 @@
   [equ:ttlSearchBtn=Поиск]
   [equ:ttlAllThreads=Все темы]
   [equ:ttlTags=Ярлыки]
+  [equ:ttlNotifications=Выкл/Вкл нотификации в реальном времени]
   [equ:btnCats=Категории]
   [equ:btnSettings=Настройки]
   [equ:btnConsole=SQL конзоль]
@@ -75,6 +78,7 @@
   [equ:ttlSearchBtn=Rechercher]
   [equ:ttlAllThreads=Montrer tous les sujets]
   [equ:ttlTags=Mots-clés]
+  [equ:ttlNotifications=Off/On the real time notifications]
   [equ:btnCats=Catégories]
   [equ:btnSettings=Paramètres]
   [equ:btnConsole=Console SQL]
@@ -95,6 +99,7 @@
   [equ:ttlSearchBtn=Suchen]
   [equ:ttlAllThreads=Alle Themen zeigen]
   [equ:ttlTags=Tags]
+  [equ:ttlNotifications=Off/On the real time notifications]
   [equ:btnCats=Kategorien]
   [equ:btnSettings=Einstellungen]
   [equ:btnConsole=SQL-Konsole]
@@ -238,7 +243,16 @@
       <a class="btn" href="/[case:[special:limited]||(o)/][special:dir][case:[special:dir]||/]">[const:btnList]</a>]
       <a class="btn" href="/!categories">[const:btnCats]</a>
 
-      [case:[special:canchat]||<a class="btn" href="/!chat" accesskey="c">[const:btnChat]</a>]
+      [case:[special:canchat]||<a class="jsonly btn" href="/!chat" accesskey="c">[const:btnChat]</a>]
+
+      <button class="jsonly btn img-btn" onclick="switchNotificationCookie();" title="[const:ttlNotifications]">
+        <svg width="16" height="16" version="1.1" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="10" cy="17" r="3" />
+         <path d="m20 17h-20c0-1.37 1.7-1.08 2-3 .663-4.28 1.1-11 8-11 7.12 0 7.41 6.61 8 11 .239 1.78 2 1.73 2 3z"/>
+         <path d="m10 0a3 3 0 00-3 3 3 3 0 003 3 3 3 0 003-3 3 3 0 00-3-3zm0 2a1 1 0 011 1 1 1 0 01-1 1 1 1 0 01-1-1 1 1 0 011-1z"/>
+         <line id="notiStroked" x1="0" y1="20" x2="20" y2="0" style="stroke-width:4;stroke:hsl(0, 70%, 50%);visibility:hidden;"/>
+        </svg>
+      </button>
 
       <div class="spacer"></div>
 

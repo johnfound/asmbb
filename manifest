@@ -1,5 +1,5 @@
-C Fixed\scheckbox\sappearance\sin\sthe\sforum\ssettings\spage.
-D 2020-07-27T05:15:58.529
+C Disable/Enable\sof\sthe\sreal-time\snotifications.\sThanks\sto\sthe\scode\sprovided\sby\s[stewie](https://bgdev-free.asm32.info/!userinfo/stewie).
+D 2020-07-27T09:06:07.281
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -632,7 +632,7 @@ F www/templates/Urban\sSunrise/highlight.js b4a380fb43186d51a405fb185067120657f2
 F www/templates/Urban\sSunrise/highlight.less fba68624d1b34a5543fe0bf4b2af2ac1ddf65e74
 F www/templates/Urban\sSunrise/login.less e2c9b06104a775ae1abcc63bdc69f71b4662b870
 F www/templates/Urban\sSunrise/main_html_end.tpl 05bb25b9490ce93732628c937860db787c516c46
-F www/templates/Urban\sSunrise/main_html_start.tpl d7049028cd8f50f72922e32cd1b6714d4c3aea08
+F www/templates/Urban\sSunrise/main_html_start.tpl 3eb252e4e16ed2b0022f8ae6cdfda67d07584eea
 F www/templates/Urban\sSunrise/markdown.less 93d45a124d881f64ee365b765e65fa96529d9b6f
 F www/templates/Urban\sSunrise/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
 F www/templates/Urban\sSunrise/nav_categories.tpl c04334bde3272eed0ceeb558cb640a15a41b39e8
@@ -648,7 +648,7 @@ F www/templates/Urban\sSunrise/post_view.tpl a738e6117bc5ccd8d4ffc8b2cf6746e4c5b
 F www/templates/Urban\sSunrise/posteditor.less af2d688c4445e9c333d411f20af8ee860519a302
 F www/templates/Urban\sSunrise/posts.less 503bb880b10736efdb4bef50a2741a4d000ac43e
 F www/templates/Urban\sSunrise/preview.tpl 8477e385f5ea211ff7c7b635375a1a364d20e032
-F www/templates/Urban\sSunrise/realtime.js 130e002c1d17eaea5d3a266109659d38dfdb876d
+F www/templates/Urban\sSunrise/realtime.js 12fd7e4a8d7aecd293b20529a7ba2ef5203909a7
 F www/templates/Urban\sSunrise/restore_confirm.tpl 52a9c63c3575dc9a740886776c4dc6c2e0a07efe
 F www/templates/Urban\sSunrise/search.less 0bcaf20f6012fe18db4ecdad203032fc082678df
 F www/templates/Urban\sSunrise/search_result.tpl ef10b3a14fe5e603b7fdc900c0a266782cafeabc
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 319db60c1f0aea2482dcfd643cb2cae0d7372062
-R 1aa927bd8b64d31c5f719225884dc7d9
+P 6c1127d3031fd79f02234b1eb1956900f572dbc7
+R 7b190c1877fb9a6ed1af141bf7f7d10d
 U johnfound
-Z 87a14f7084166f0dec0c5299eaa46646
+Z f19d1bdeeb19c1d6a408ef76fcc2f0ad

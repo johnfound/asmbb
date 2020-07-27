@@ -188,7 +188,16 @@ function disconnect() {
 
 
 function connect() {
+  var indicator  = document.getElementById("notiStroked");
+
   if (source) disconnect();
+
+  if (getCookie("notificationsDisabled")) {
+    indicator.style.visibility = "visible";
+    return;
+  }
+
+  indicator.style.visibility = "hidden";
   source = new EventSource("/!events?events=" + WantEvents);
   StartTime = Date.now()/1000;
   listSourceEvents.forEach( function(value) { source.addEventListener(value.event, value.handler) } );
@@ -347,8 +356,42 @@ function replaceEmoticons(text) {
   });
 }
 
-
 function formatEmoji(text) {
   var emojiRegEx = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
   return text.replace(emojiRegEx, '<span class="emoji"><span>$1</span></span>');
+}
+
+function switchNotificationCookie() {
+  var cname = "notificationsDisabled";
+
+  if(getCookie(cname) == "true") {
+    setCookie(cname, "false", -1);
+  } else {
+    setCookie(cname, "true", 365);
+  }
+
+  connect();
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return false;
+}
+
+function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  var expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/; SameSite=Strict; Secure;";
 }
