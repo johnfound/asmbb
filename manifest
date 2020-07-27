@@ -1,5 +1,5 @@
-C A\sbetter\sappearance\sof\sthe\scheckboxes\sin\s"Urban\sSunrise"\stheme.
-D 2020-07-25T18:47:59.563
+C Fixed\scheckbox\sappearance\sin\sthe\sforum\ssettings\spage.
+D 2020-07-27T05:15:58.529
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -622,7 +622,7 @@ F www/templates/Urban\sSunrise/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09
 F www/templates/Urban\sSunrise/form_register.tpl 02cc15121365375ffe92866cfe46ae944ef1855b
 F www/templates/Urban\sSunrise/form_reset_password.tpl d9aa084867bfc75045a93db88af361770a960158
 F www/templates/Urban\sSunrise/form_reset_request.tpl 2670304557d27ff156db4652a360a9044b415c7e
-F www/templates/Urban\sSunrise/form_settings.tpl c05d8ae981a5f76f135a9ed2b857486e9b8e2834
+F www/templates/Urban\sSunrise/form_settings.tpl c3396b6fcce2bb981bec1ebe31e56a0b1a1c8e54
 F www/templates/Urban\sSunrise/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Urban\sSunrise/form_sqlite_console.tpl 04720cf7c2be67a3ec0922a734eb58b6739c66b3
 F www/templates/Urban\sSunrise/help-bbcode.txt 6732933421f6641562759d73997cbf611b9bc59b
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 7488321cbcbf12960d5cf989346d679c9007e46c
-R 1d928af211df2b9cf468343a4baab29f
+P 319db60c1f0aea2482dcfd643cb2cae0d7372062
+R 1aa927bd8b64d31c5f719225884dc7d9
 U johnfound
-Z 2df1e0eaaebb890db759e5090fda841c
+Z 87a14f7084166f0dec0c5299eaa46646

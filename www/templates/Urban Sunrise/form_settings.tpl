@@ -280,26 +280,26 @@
     <label for="tab3">[const:tabPermissions]</label>
     <section>
       <h3>[const:ttlPermNew]:</h3>
-      <ul class="checkboxes">
-        <li class="checkbox"><input type="checkbox" [user_perm0]  name="user_perm" id="up0"  value="1"><label for="up0">[const:pLogin]</label></li>
-        <li class="checkbox"><input type="checkbox" [user_perm1]  name="user_perm" id="up1"  value="2"><label for="up1">[const:pRead]</label></li>
-        <li class="checkbox"><input type="checkbox" [user_perm2]  name="user_perm" id="up2"  value="4"><label for="up2">[const:pPost]</label></li>
-        <li class="checkbox"><input type="checkbox" [user_perm3]  name="user_perm" id="up3"  value="8"><label for="up3">[const:pStart]</label></li>
-        <li class="checkbox"><input type="checkbox" [user_perm4]  name="user_perm" id="up4"  value="16"><label for="up4">[const:pEditOwn]</label></li>
-        <li class="checkbox"><input type="checkbox" [user_perm5]  name="user_perm" id="up5"  value="32"><label for="up5">[const:pEditAll]</label></li>
-        <li class="checkbox"><input type="checkbox" [user_perm6]  name="user_perm" id="up6"  value="64"><label for="up6">[const:pDelOwn]</label></li>
-        <li class="checkbox"><input type="checkbox" [user_perm7]  name="user_perm" id="up7"  value="128"><label for="up7">[const:pDelAll]</label></li>
-        <li class="checkbox"><input type="checkbox" [user_perm8]  name="user_perm" id="up8"  value="256"><label for="up8">[const:pChat]</label></li>
-        <li class="checkbox"><input type="checkbox" [user_perm9]  name="user_perm" id="up9"  value="512"><label for="up9">[const:pDownload]</label></li>
-        <li class="checkbox"><input type="checkbox" [user_perm10] name="user_perm" id="up10" value="1024"><label for="up10">[const:pAttach]</label></li>
-        <li class="checkbox"><input type="checkbox" [user_perm31] name="user_perm" id="up31" value="$80000000"><label for="up31">[const:pAdmin]</label></li>
+      <ul class="checkboxes checkbox">
+        <li><input type="checkbox" [user_perm0]  name="user_perm" id="up0"  value="1"><label for="up0">[const:pLogin]</label></li>
+        <li><input type="checkbox" [user_perm1]  name="user_perm" id="up1"  value="2"><label for="up1">[const:pRead]</label></li>
+        <li><input type="checkbox" [user_perm2]  name="user_perm" id="up2"  value="4"><label for="up2">[const:pPost]</label></li>
+        <li><input type="checkbox" [user_perm3]  name="user_perm" id="up3"  value="8"><label for="up3">[const:pStart]</label></li>
+        <li><input type="checkbox" [user_perm4]  name="user_perm" id="up4"  value="16"><label for="up4">[const:pEditOwn]</label></li>
+        <li><input type="checkbox" [user_perm5]  name="user_perm" id="up5"  value="32"><label for="up5">[const:pEditAll]</label></li>
+        <li><input type="checkbox" [user_perm6]  name="user_perm" id="up6"  value="64"><label for="up6">[const:pDelOwn]</label></li>
+        <li><input type="checkbox" [user_perm7]  name="user_perm" id="up7"  value="128"><label for="up7">[const:pDelAll]</label></li>
+        <li><input type="checkbox" [user_perm8]  name="user_perm" id="up8"  value="256"><label for="up8">[const:pChat]</label></li>
+        <li><input type="checkbox" [user_perm9]  name="user_perm" id="up9"  value="512"><label for="up9">[const:pDownload]</label></li>
+        <li><input type="checkbox" [user_perm10] name="user_perm" id="up10" value="1024"><label for="up10">[const:pAttach]</label></li>
+        <li><input type="checkbox" [user_perm31] name="user_perm" id="up31" value="$80000000"><label for="up31">[const:pAdmin]</label></li>
       </ul>
       <h3>[const:ttlPermGuests]:</h3>
-      <ul class="checkboxes">
-        <li class="checkbox"><input type="checkbox" [anon_perm0]  name="anon_perm" id="ap0"  value="1"><label for="ap0">[const:pRegister]</label></li>
-        <li class="checkbox"><input type="checkbox" [anon_perm1]  name="anon_perm" id="ap1"  value="2"><label for="ap1">[const:pRead]</label></li>
-        <li class="checkbox"><input type="checkbox" [anon_perm8]  name="anon_perm" id="ap8"  value="256"><label for="ap8">[const:pChat]</label></li>
-        <li class="checkbox"><input type="checkbox" [anon_perm9]  name="anon_perm" id="ap9"  value="512"><label for="ap9">[const:pDownload]</label></li>
+      <ul class="checkboxes checkbox">
+        <li><input type="checkbox" [anon_perm0]  name="anon_perm" id="ap0"  value="1"><label for="ap0">[const:pRegister]</label></li>
+        <li><input type="checkbox" [anon_perm1]  name="anon_perm" id="ap1"  value="2"><label for="ap1">[const:pRead]</label></li>
+        <li><input type="checkbox" [anon_perm8]  name="anon_perm" id="ap8"  value="256"><label for="ap8">[const:pChat]</label></li>
+        <li><input type="checkbox" [anon_perm9]  name="anon_perm" id="ap9"  value="512"><label for="ap9">[const:pDownload]</label></li>
       </ul>
     </section>
 
