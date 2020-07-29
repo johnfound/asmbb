@@ -1,5 +1,5 @@
-C Disable/Enable\sof\sthe\sreal-time\snotifications.\sThanks\sto\sthe\scode\sprovided\sby\s[stewie](https://bgdev-free.asm32.info/!userinfo/stewie).
-D 2020-07-27T09:06:07.281
+C Make\soptional\sin\scompile-time\sthe\sadditional\simage\sand\svideo\sattributes,\sas\s"crossorigin"\sfor\sBBCode\sand\sMiniMag\sparsers.
+D 2020-07-29T19:43:20.596
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -40,7 +40,7 @@ F source/create.sql 384f403dee2e34fcaa7d45c272a6cdd2bca3bd86
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
-F source/engine.asm 03059f73a6c143fa5400098b6018f82118b2c146
+F source/engine.asm b443b01650411fcfaaf2cc29b33d586339b42fe6
 F source/engine.fpr 54f355abd2c434b3e6024d591048c6315357c47d
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 6c1127d3031fd79f02234b1eb1956900f572dbc7
-R 7b190c1877fb9a6ed1af141bf7f7d10d
+P 2ccdfda04f90e7204cd0ae50e678d32931ccde8f
+R 5b9d91d153a058b6bbd8f6c6bef72355
 U johnfound
-Z f19d1bdeeb19c1d6a408ef76fcc2f0ad
+Z 757919a16518145def2623ff6eaad9e0
