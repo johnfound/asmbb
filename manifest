@@ -1,5 +1,5 @@
-C Make\soptional\sin\scompile-time\sthe\sadditional\simage\sand\svideo\sattributes,\sas\s"crossorigin"\sfor\sBBCode\sand\sMiniMag\sparsers.
-D 2020-07-29T19:43:20.596
+C Render\salwaus\sthe\sback\snavigation
+D 2020-07-29T20:39:07.378
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -74,7 +74,7 @@ F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm 3123d67b30fd4e86b0716cf0a6387e9c8b0fc91c
 F source/settings.sql 066cc77197d5fae94fb27c2bd72aabb2c4b85d8a
-F source/showthread.asm dee82b2927b329ea0e638b5bdacc1653368d604c
+F source/showthread.asm c506792239034ef6fbf2e9df1d88d321320fb4e3
 F source/showthread.sql 1ee08ed9c69a07ca5c60fc639e73333405e14d37
 F source/sqlite3.asm df3a5ea387f60d719fd83c33411b8151ad1a6d77
 F source/sqlite_console.asm 0090f97aebfd05dec748b3b98e7d43fba65b0064
@@ -87,7 +87,7 @@ F source/tests/test_templates.fpr 0b6d692c0d55f91a6e310f622a6fe2c49c06ddf9
 F source/text_constants.asm ca4fd3868d1fc9ea09f945afc627d23787d48919
 F source/thread_attr.sql 96f479d9e4ab2a93221b81be1bbb8a8ba6e277f3
 F source/threadcount.sql 897aa66b52dbe48ed09391442d3b288c36cbabff
-F source/threadlist.asm a215815179707425797b3efb604c6eaf8cc65cf8
+F source/threadlist.asm c7cc892c6bdf9e485bc7bb033394f0ed5323c59e
 F source/threadlist.sql 64b032bdb72366d90edeab6ff5990bb208e7b800
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 2ccdfda04f90e7204cd0ae50e678d32931ccde8f
-R 5b9d91d153a058b6bbd8f6c6bef72355
+P d776ef9c25afd171db5b58d0a7785f324d6eecd0
+R e5b7b2009eb39e281c94fb9ae1617744
 U johnfound
-Z 757919a16518145def2623ff6eaad9e0
+Z 253280f56ee4de379e22ab5912a36398

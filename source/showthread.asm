@@ -141,12 +141,12 @@ begin
         cinvoke sqliteStep, [.stmt]
 
         cinvoke sqliteColumnInt, [.stmt], 0
-        mov     [.cnt], eax
+        mov     ebx, eax
 
         cinvoke sqliteFinalize, [.stmt]
 
 
-        stdcall CreatePagesLinks2, [esi+TSpecialParams.page_num], [.cnt], 0, [esi+TSpecialParams.page_length]
+        stdcall CreatePagesLinks2, [esi+TSpecialParams.page_num], ebx, 0, [esi+TSpecialParams.page_length]
         mov     [.list], eax
 
         stdcall TextCat, edi, eax
@@ -168,14 +168,10 @@ begin
 
         cinvoke sqliteBindInt, [.stmt], 5, [esi+TSpecialParams.userID]  ; the current user.
 
-        mov     [.cnt], 0
-
 .loop:
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
         jne     .finish
-
-        inc     [.cnt]
 
         stdcall RenderTemplate, edi, "post_view.tpl", [.stmt], esi
         mov     edi, eax
@@ -302,14 +298,9 @@ begin
         stdcall TextCat, edi, <txt "</div>", 13, 10>   ; div.multi_content
         mov     edi, edx
 
-        cmp     [.cnt], 5
-        jbe     .back_navigation_ok
-
         stdcall TextCat, edi, [.list]
         stdcall RenderTemplate, edx, "nav_thread.tpl", [.stmt2], esi
         mov     edi, eax
-
-.back_navigation_ok:
 
         stdcall StrDel, [.list]
         stdcall TextCat, edi, txt "</div>"   ; div.thread
