@@ -1,5 +1,5 @@
-C Render\salwaus\sthe\sback\snavigation
-D 2020-07-29T20:39:07.378
+C Implemented\s!unread\scommand\sthat\sredirects\sto\sthe\sfirst\sunread\smessage\sif\sany\sor\sto\sthe\send\sof\sthe\sthread\sif\snot.\nThe\sskins\sadapted\sto\suse\sit\sinstead\sof\s!by_id.\sStarted\simplementation\sof\snew\sreal-time\sevent.
+D 2020-07-30T13:12:35.590
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -35,7 +35,7 @@ F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm 46e64d22841349e2935e8c62681f2f47cad786a0
-F source/commands.asm 4426b50b3a66ea6c28bce7110fd7bf9379027828
+F source/commands.asm d24f8e6843b8435477b83f07190b941efbe5ec06
 F source/create.sql 384f403dee2e34fcaa7d45c272a6cdd2bca3bd86
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
@@ -57,7 +57,7 @@ F source/migration2.sql fe978700e39265c6680b69ea8cbfb5444cfdce63
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
 F source/phpbb.sql 6820a2092cc30a774c44d770055b37b66bdbfaf0
 F source/phpbb_pm.sql f88eaf899e72d4e99f367cb654b41695da2231d5
-F source/post.asm 15ca1b54ad5e12ccee2f3ad9c77f6ff37077d1c0
+F source/post.asm 36d504e78dde80c990a2d4c3fcf9bebd8afdcae4
 F source/post_data.asm 79fb813775e3bafe6cb314c50a99484e4f0dc211
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
@@ -74,21 +74,21 @@ F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm 3123d67b30fd4e86b0716cf0a6387e9c8b0fc91c
 F source/settings.sql 066cc77197d5fae94fb27c2bd72aabb2c4b85d8a
-F source/showthread.asm c506792239034ef6fbf2e9df1d88d321320fb4e3
+F source/showthread.asm c4f661f19b73abbbf109694e301d7b8a0d2c5906
 F source/showthread.sql 1ee08ed9c69a07ca5c60fc639e73333405e14d37
 F source/sqlite3.asm df3a5ea387f60d719fd83c33411b8151ad1a6d77
 F source/sqlite_console.asm 0090f97aebfd05dec748b3b98e7d43fba65b0064
-F source/sse_service.asm 8351a9fc7b0ca9ea638244e5ca5aa50ae3f215e8
+F source/sse_service.asm 04c2274c6e8909078f8e5ccc97e73b8091dfce05
 F source/statistics.asm 8574bead31291bdaf459a032659cb41bc34883d3
 F source/statistics.sql b854e249807878dcd87c5e16dde801114639308c
 F source/tests/Test1.tpl 3787fb082cb7f6404ff4631fd6ca67ed14c7beac
 F source/tests/test_templates.asm 9fbe778c983448663d18c9cc2cc3cd9d0107e93b
 F source/tests/test_templates.fpr 0b6d692c0d55f91a6e310f622a6fe2c49c06ddf9
-F source/text_constants.asm ca4fd3868d1fc9ea09f945afc627d23787d48919
+F source/text_constants.asm f0f98dde7ef5c3d80dc49258c72ad405176275f9
 F source/thread_attr.sql 96f479d9e4ab2a93221b81be1bbb8a8ba6e277f3
 F source/threadcount.sql 897aa66b52dbe48ed09391442d3b288c36cbabff
 F source/threadlist.asm c7cc892c6bdf9e485bc7bb033394f0ed5323c59e
-F source/threadlist.sql 64b032bdb72366d90edeab6ff5990bb208e7b800
+F source/threadlist.sql 21e3badbc8dfaa76414918848a78f3e78c3d335b
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
 F source/userinfo.asm 010a2ba73acd014cd558c39aae3b9915266dc9e3
@@ -305,7 +305,7 @@ F www/templates/Light/settings.less ceddd6b5948701659f883fd99ed0b9a31067df6e l
 F www/templates/Light/skin_variables.lsi a243bd21daf144cb06f08698055f57aad8f8309e
 F www/templates/Light/sqlite.less d6c705801f27dd30658b51803f0638ded21bb45c l
 F www/templates/Light/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
-F www/templates/Light/thread_info.tpl ad4d400e05a8ea3c5536f91460dc89b39a06e927
+F www/templates/Light/thread_info.tpl d8fea85862e825d472da9c8c5e3a7fe6752119c9
 F www/templates/Light/thread_list.less b74326a999c9178842ac5b61f13fd67fa7bcbbc0
 F www/templates/Light/threadnew.less c2af3d158e2e03851692576dce99f5287e50b0c6 l
 F www/templates/Light/toaster.less 0e571446584a37703a12a550d2235c322a604e07 l
@@ -533,7 +533,7 @@ F www/templates/Modern/settings.less 7d14f1ab499c3125998e9baae957b7e86109a836
 F www/templates/Modern/skin_variables.lsi 51d37f8c036062f0a924407dbf913e39f6ba9c75
 F www/templates/Modern/sqlite.less 5716244e0d41d5dc61f4b0e9a451546510580aa3
 F www/templates/Modern/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e3c7067
-F www/templates/Modern/thread_info.tpl 4192941dee9cca2f1265dcde78b56c35e5c9e0ae
+F www/templates/Modern/thread_info.tpl f36990dcb85dacf92db97f97e1130a7ae557766c
 F www/templates/Modern/thread_list.less e56afa0608877a4e0e4efd68eeb5a150487fddf2
 F www/templates/Modern/threadnew.less 5bbc07889598f870fa4a24519087d36e02382e57
 F www/templates/Modern/toaster.less 463c319154e4f2413b5fd3c5e65d2e5b576a943d
@@ -656,8 +656,8 @@ F www/templates/Urban\sSunrise/settings.less bf5853436cdf02aabfd8e721b677517d30a
 F www/templates/Urban\sSunrise/skin_variables.lsi 78974d8372551ed85a981703a612ca20dacdf9f0
 F www/templates/Urban\sSunrise/sqlite.less 660b247ef2a036462dd4aeae6d92f54881fda877
 F www/templates/Urban\sSunrise/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e3c7067
-F www/templates/Urban\sSunrise/thread_info.tpl a04631b7692491ce02b943a11c1efd22ae5a4f2f
-F www/templates/Urban\sSunrise/thread_list.less 4959d5ab4cedecb49e03ac57166ee9668c09db68
+F www/templates/Urban\sSunrise/thread_info.tpl 79f62e983692d5c8e5385e7cbb6b83b2b18bba28
+F www/templates/Urban\sSunrise/thread_list.less 0fc3d401b2059046026623e95009bb102f7f0812
 F www/templates/Urban\sSunrise/threadnew.less 5a4763e82b7635a7288925cd86cb785b92ba9bef
 F www/templates/Urban\sSunrise/toaster.less ef23208bda00fc0322c56c41a928c29d526d8f35
 F www/templates/Urban\sSunrise/userinfo.less b6f644807f3369dd43b449cf85e74b236c8386d8
@@ -800,7 +800,7 @@ F www/templates/Wasp/settings.less de9396e5eafb2f88a57886f3ff131c810e444f2d
 F www/templates/Wasp/skin_variables.lsi e56bdd2d3fc3f7947e6dbb8d69f74581a4efb807
 F www/templates/Wasp/sqlite.less f4a2edc06c2c1410f5d78ad1ea298439251482af
 F www/templates/Wasp/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e3c7067
-F www/templates/Wasp/thread_info.tpl e80e70abe8f1f7c67894b2f83043c7c5fbef1cce
+F www/templates/Wasp/thread_info.tpl 4c175bfcd6cf486a10a729809f69b208cead54c0
 F www/templates/Wasp/thread_list.less 0456c492a51c4ac4355b20a65ebd799dcd3a7de0
 F www/templates/Wasp/threadnew.less edfa421addbc85ccc765c47e70e6a2cb395c7733
 F www/templates/Wasp/toaster.less 9d765eccadcd46072bf309ad0ea48739b0e1f516
@@ -897,7 +897,7 @@ F www/templates/mobile/settings.less ceddd6b5948701659f883fd99ed0b9a31067df6e l
 F www/templates/mobile/skin_variables.lsi d448d21d7d36a03671002606decb06f54334ac1f
 F www/templates/mobile/sqlite.less d6c705801f27dd30658b51803f0638ded21bb45c l
 F www/templates/mobile/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
-F www/templates/mobile/thread_info.tpl bf06ae3f83744e7bfbdea9c9ffbe081dd06d9383
+F www/templates/mobile/thread_info.tpl 20a9cf8bffc64c18e9c29fb2454c807cb111f16c
 F www/templates/mobile/thread_list.less 09d6aa44e80627b8c22b5a1ddecff43a738b6108
 F www/templates/mobile/threadnew.less c2af3d158e2e03851692576dce99f5287e50b0c6 l
 F www/templates/mobile/toaster.less 0e571446584a37703a12a550d2235c322a604e07 l
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P d776ef9c25afd171db5b58d0a7785f324d6eecd0
-R e5b7b2009eb39e281c94fb9ae1617744
+P baad89220eed2cbe6b0cf01430eaff395b40e081
+R f6572e1d6398fdb5a9d47f13190e9067
 U johnfound
-Z 253280f56ee4de379e22ab5912a36398
+Z a244017b41585e68a86cc87fb00531d1

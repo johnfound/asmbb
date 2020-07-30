@@ -155,3 +155,8 @@ cActivityChat           mtext   EN: " entered the chat.",               \
                                 FR: " est entré dans le chat.",         \
                                 DE: " hat den Chat betreten."
 
+cNewPost                mtext   EN: "New post",               \
+                                BG: "Нов пост",                   \
+                                RU: "Новый пост",                    \
+                                FR: "New post",         \
+                                DE: "New post"

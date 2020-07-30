@@ -100,6 +100,7 @@ PHashTable tablePreCommands, tpl_func,                  \
 
 PHashTable tablePostCommands, tpl_func,                 \
         "!markread",        MarkThreadRead,             \
+        "!unread",          GotoFirstUnread,            \
         "!post",            PostUserMessage,            \
         "!edit",            EditUserMessage,            \
         "!edit_thread",     EditThreadAttr,             \
@@ -642,11 +643,6 @@ begin
 
 
 endp
-
-
-
-
-
 
 
 

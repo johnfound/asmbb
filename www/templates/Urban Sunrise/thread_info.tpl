@@ -1,7 +1,7 @@
 [case:[special:lang]|
   [equ:ttlPinned=Pinned thread]
   [equ:ttlLimited=Limited access thread]
-  [equ:ttlUnread=[case:[Unread]|No unread messages|Go to first unread]]
+  [equ:ttlUnread=[case:[Unread]|Go to last message|Go to first unread]]
   [equ:tPosts=post[case:[PostCount]|s||s]]
   [equ:ttlMark=Mark thread read]
   [equ:tViews=view[case:[ReadCount]|s||s]]
@@ -11,7 +11,7 @@
 |
   [equ:ttlPinned=Забодена отгоре]
   [equ:ttlLimited=Тема с ограничен достъп]
-  [equ:ttlUnread=[case:[Unread]|Няма нови съобщения|Към първото непрочетено]]
+  [equ:ttlUnread=[case:[Unread]|Към последното|Към първото непрочетено]]
   [equ:tPosts=съобщени[case:[PostCount]|я|е|я]]
   [equ:ttlMark=Маркирай темата като прочетена]
   [equ:tViews=преглед[case:[ReadCount]|а||а]]
@@ -21,7 +21,7 @@
 |
   [equ:ttlPinned=Прикрепленная на верху]
   [equ:ttlLimited=Тема ограниченным доступом]
-  [equ:ttlUnread=[case:[Unread]|Нет новых сообщений|К первому непрочитанному]]
+  [equ:ttlUnread=[case:[Unread]|В край темы|К первому непрочитанному]]
   [equ:tPosts=сообщени[case:[PostCount]|й|е|й]]
   [equ:ttlMark=Отметить тему прочитанной]
   [equ:tViews=просмотр[case:[ReadCount]|ов||ов]]
@@ -62,12 +62,25 @@
           <circle cx="21" cy="12" r="3"/>
         </svg>]
         <a href="[Slug]/">[Caption]</a>
-        [case:[Unread]||<span class="unread-info"><a class="unread-info" href="[FirstUnread]/!by_id" title="[const:ttlUnread]">
-          ( [Unread] unread )</a> <a href="[Slug]/!markread" title="[const:ttlMark]">
-        <svg version="1.1" width="12" height="12" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-          <path d="m1.5 14.5 13-13" fill="none" stroke-linecap="round" stroke-width="4"/>
-          <path d="m1.5 1.5 13 13" fill="none" stroke-linecap="round" stroke-width="4"/>
-        </svg></a></span>]
+        <span class="unread-info">
+        <a href="[Slug]/!unread" title="[const:ttlUnread]">
+          [case:[Unread]|
+            <svg class="go-last" version="1.1" width="13" height="13" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+              <path d="m0 0v32l32-16z"/>
+            </svg>
+          |
+            <svg class="go-first" width="16" height="16" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+              <path d="m12.2 12.4 3.78-11.6 3.78 11.6 12.2 4e-4-9.89 7.19 3.78 11.6-9.89-7.18-9.89 7.19 3.78-11.6-9.89-7.19z"/>
+            </svg>
+            ( [Unread] unread )
+        </a>
+            <a href="[Slug]/!markread" title="[const:ttlMark]">
+              <svg class="mark-read" version="1.1" width="12" height="12" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                <path d="m1.5 14.5 13-13" fill="none" stroke-linecap="round" stroke-width="4"/>
+                <path d="m1.5 1.5 13 13" fill="none" stroke-linecap="round" stroke-width="4"/>
+              </svg>
+          ]
+        </a></span>
       </p>
 
       <div>[const:Posters]:

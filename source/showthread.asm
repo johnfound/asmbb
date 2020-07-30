@@ -341,6 +341,75 @@ endp
 
 
 
+sqlFirstUnread text "select PostID from UnreadPosts where (UserID = ?1) and (ThreadID = (select id from threads where Slug = ?2)) limit 1"
+sqlLastInThread text "select id from Posts where ThreadID = (select id from threads where Slug = ?2) order by rowid desc limit 1"
+
+proc GotoFirstUnread, .pSpecial
+.stmt dd ?
+begin
+        pushad
+
+        mov     esi, [.pSpecial]
+
+        mov     edi, sqlFirstUnread
+        mov     ecx, sqlFirstUnread.length
+        jmp     .prepare
+
+.search_last_post:
+        cmp     edi, sqlLastInThread
+        je      .goto_root
+
+        mov     edi, sqlLastInThread
+        mov     ecx, sqlLastInThread.length
+
+.prepare:
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], edi, ecx, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.userID]
+
+        cmp     [esi+TSpecialParams.thread], 0
+        je      .thread_ok
+
+        stdcall StrPtr, [esi+TSpecialParams.thread]
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
+.thread_ok:
+        xor     ebx, ebx
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .finalize
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        mov     ebx, eax
+
+.finalize:
+        cinvoke sqliteFinalize, [.stmt]
+
+        test    ebx, ebx
+        jz      .search_last_post
+
+        stdcall StrRedirectToPost, ebx, esi
+        stdcall TextMakeRedirect, 0, eax
+        stdcall StrDel, eax
+
+.finish:
+        stc
+        mov     dword [esp+4*regEAX], edi
+        popad
+        return
+
+.goto_root:
+
+        stdcall TextMakeRedirect, 0, txt "/"
+        jmp     .finish
+endp
+
+
+
+
+
+
 
 
 proc PostByID, .pSpecial

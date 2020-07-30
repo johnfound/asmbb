@@ -1078,3 +1078,9 @@ endp
 
 
 
+proc SendNewPostNotifications, .postID, .threadSlug, .threadCaption, .forUser
+begin
+
+
+        return
+endp

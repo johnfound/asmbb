@@ -109,11 +109,30 @@ div.threads_list {
 .unread-info {
   white-space: nowrap;
   color: @clRed;
-  svg {
-    vertical-align: middle;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    * {
+      margin: 0px 4px;
+    }
+  }
+
+  svg.go-last {
+    fill: @clGray;
+    stroke: @clGray;
+  }
+
+  svg.go-first {
     fill: @clRed;
     stroke: @clRed;
   }
+
+  svg.mark-read {
+    fill: @clRed;
+    stroke: @clRed;
+  }
+
 }
 
 
