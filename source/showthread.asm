@@ -220,7 +220,7 @@ begin
         stdcall StrDel, eax
         stdcall StrCat, ebx, txt '</a>'
 
-        stdcall AddActivity, ebx ; fBot flag from the stack.
+        stdcall AddActivity, ebx, [esi+TSpecialParams.userID] ; fBot flag from the stack.
         stdcall StrDel, ebx
 
 .notifications_ok:

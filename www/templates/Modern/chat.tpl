@@ -2,60 +2,6 @@
 
 <script>
 
-// some extras and utilities
-
-function linkify(inputText) {
-    var replacedText, replacePattern1;
-    //URLs starting with http://, https://, or ftp://
-    replacePattern1 = /(\b(https?|ftp):\/\/^[-A-Z0-9+&@#\/%?=~_|!:,.;^]*^[-A-Z0-9+&@#\/%=~_|^])/gim;
-    replacedText = inputText.replace(replacePattern1, '<a class="chatlink" href="$1" target="_blank">$1</a>');
-    return replacedText;
-}
-
-
-function replaceEmoticons(text) {
-  var emoticons = {
-    ':LOL:'  : ^['rofl.gif', '&#x1F602;'^],
-    ':lol:'  : ^['rofl.gif', '&#x1F602;'^],
-    ':ЛОЛ:'  : ^['rofl.gif', '&#x1F602;'^],
-    ':лол:'  : ^['rofl.gif', '&#x1F602;'^],
-    ':-)'    : ^['smile.gif', '&#x1F60A;'^],
-    ':)'     : ^['smile.gif', '&#x1F60A;'^],
-    ':-D'    : ^['lol.gif', '&#x1F600;'^],
-    ':D'     : ^['lol.gif', '&#x1F600;'^],
-    ':-Д'    : ^['lol.gif', '&#x1F600;'^],
-    ':Д'     : ^['lol.gif', '&#x1F600;'^],
-    '&gt;:-(': ^['angry.gif', '&#x1F620;'^],
-    '&gt;:(' : ^['angry.gif', '&#x1F620;'^],
-    ':-('    : ^['sad.gif', '&#x1F61E;'^],
-    ':('     : ^['sad.gif', '&#x1F61E;'^],
-    ':`-('   : ^['cry.gif', '&#x1F62D;'^],
-    ':`('    : ^['cry.gif', '&#x1F62D;'^],
-    ':\'-('  : ^['cry.gif', '&#x1F62D;'^],
-    ':\'('   : ^['cry.gif', '&#x1F62D;'^],
-    ';-)'    : ^['wink.gif', '&#x1F609;'^],
-    ';)'     : ^['wink.gif', '&#x1F609;'^],
-    ':-P'    : ^['tongue.gif', '&#x1F61B;'^],
-    ':P'     : ^['tongue.gif', '&#x1F61B;'^],
-    ':-П'    : ^['tongue.gif', '&#x1F61B;'^],
-    ':П'     : ^['tongue.gif', '&#x1F61B;'^]
-  };
-  var url = "[special:skin]/_images/chatemoticons/";
-  var patterns = ^[^];
-  var metachars = /^[^[\^]{}()*+?.\\|^$\-,&#\s^]/g;
-
-  // build a regex pattern for each defined property
-  for (var i in emoticons) {
-    if (emoticons.hasOwnProperty(i)) { // escape metacharacters
-      patterns.push('('+i.replace(metachars, "\\$&")+')');
-    }
-  }
-
-  // build the regular expression and replace
-  return text.replace(new RegExp(patterns.join('|'),'g'), function (match) {
-    return typeof emoticons^[match^] != 'undefined' ? '<img class="emo" width="20" height="20" src="'+url+emoticons^[match^]^[0^]+'" alt="'+emoticons^[match^]^[1^]+'">' : match;
-  });
-}
 
 function notify(Msg) {
   var notify;
@@ -93,6 +39,8 @@ function ScrollBottom(force) {
 
 // Entering the chat.
 
+listSourceEvents.find(o=>o.event === "message").handler = OnFullChatMessage;
+
 listSourceEvents.push(
   {
     event: 'open',
@@ -118,12 +66,6 @@ listSourceEvents.push(
   }
 );
 
-listSourceEvents.push(
-  {
-    event: 'message',
-    handler: OnMessage
-  }
-);
 
 listSourceEvents.push(
   {
@@ -246,7 +188,7 @@ function CreateUserSpan(user, original) {
 
 
 
-function OnMessage(e) {
+function OnFullChatMessage(e) {
 
   var msgset = JSON.parse(e.data);
   var ntf = "";

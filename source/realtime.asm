@@ -84,7 +84,7 @@ begin
 
         stdcall UserNameLink, esi
         stdcall StrCat, eax, [edi]
-        stdcall AddActivity, eax, edx
+        stdcall AddActivity, eax, [esi+TSpecialParams.userID], edx
         stdcall StrDel, eax
 
         popad
@@ -96,7 +96,7 @@ endp
 cTrue text 'true'
 cFalse text 'false'
 
-proc AddActivity, .hHTML, .fBot
+proc AddActivity, .hHTML, .idUser, .fBot
 begin
         cmp     [ThreadCnt], MAX_THREAD_CNT/2
         jge     .exit
@@ -116,6 +116,10 @@ begin
         mov     eax, cFalse
 @@:
         stdcall StrCat, ebx, eax
+        stdcall StrCat, ebx, txt ', "userid": '
+        stdcall NumToStr, [.idUser], ntsDec or ntsUnsigned
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
         stdcall StrCat, ebx, txt ' }'
 
         stdcall AddEvent, evUserActivity, ebx, 0

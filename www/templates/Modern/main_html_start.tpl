@@ -142,6 +142,7 @@
   </noscript>
 
   <script>
+    var ActiveSkin = '[special:skin]';
     [raw:realtime.js]
   </script>
 
@@ -252,6 +253,15 @@
       |<form method="POST" action="/!logout"><input class="btn" type="submit" name="logout" value="[const:Logout] ([special:username])"></form>
       <a class="btn" href="/!userinfo/[url:[special:username]]">[const:Profile]</a>
   ]
+
+  <a class="jsonly btn round" onclick="switchNotificationCookie();" title="[const:ttlNotifications]">
+    <svg width="16" height="16" version="1.1" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+     <circle cx="10" cy="17" r="3" />
+     <path d="m20 17h-20c0-1.37 1.7-1.08 2-3 .663-4.28 1.1-11 8-11 7.12 0 7.41 6.61 8 11 .239 1.78 2 1.73 2 3z"/>
+     <path d="m10 0a3 3 0 00-3 3 3 3 0 003 3 3 3 0 003-3 3 3 0 00-3-3zm0 2a1 1 0 011 1 1 1 0 01-1 1 1 1 0 01-1-1 1 1 0 011-1z"/>
+     <line id="notiStroked" x1="0" y1="20" x2="20" y2="0" style="stroke-width:4;stroke:hsl(0, 70%, 50%);visibility:hidden;"/>
+    </svg>
+  </a>
 
   [case:[special:limited]|<a class="btn round" href="!feed" title="[const:rssfeed]"><svg height="16" width="16" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
       <path d="m8.8 27.6c0 2.43-1.97 4.4-4.4 4.4s-4.4-1.97-4.4-4.4 1.97-4.4 4.4-4.4 4.4 1.97 4.4 4.4z"/>

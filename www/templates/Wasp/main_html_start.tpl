@@ -67,6 +67,7 @@
   </noscript>
 
   <script>
+    var ActiveSkin = '[special:skin]';
     [raw:realtime.js]
   </script>
 
@@ -104,12 +105,24 @@
     <a class="icon_btn"><input class="img_input" type="image" width="32" height="32" src="[special:skin]/_images/search.svg" alt="&nbsp;Search&nbsp;" title="[case:[special:lang]|Search|Търсене|Поиск|Rechercher|Suchen]"></a>
   </form>
 
-  [case:[special:userid]||
   <div class="alone">
+  [case:[special:userid]||
     <a class="[case:[special:limited]|ui|ui3] left" href="/[case:[special:dir]||[special:dir]/]" title="[const:ttlPublic]">[const:Public][special:unread]</a>
     <a class="[case:[special:limited]|ui3|ui] left" href="/(o)/[case:[special:dir]||[special:dir]/]" title="[const:ttlLimited]">[const:Limited][special:unreadLAT]</a>
-  </div>
   ]
+
+  <a class="jsonly ui3 left" onclick="switchNotificationCookie();" title="[const:ttlNotifications]">
+    <svg width="16" height="16" version="1.1" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+     <circle cx="10" cy="17" r="3" />
+     <path d="m20 17h-20c0-1.37 1.7-1.08 2-3 .663-4.28 1.1-11 8-11 7.12 0 7.41 6.61 8 11 .239 1.78 2 1.73 2 3z"/>
+     <path d="m10 0a3 3 0 00-3 3 3 3 0 003 3 3 3 0 003-3 3 3 0 00-3-3zm0 2a1 1 0 011 1 1 1 0 01-1 1 1 1 0 01-1-1 1 1 0 011-1z"/>
+     <line id="notiStroked" x1="0" y1="20" x2="20" y2="0" style="stroke-width:4;stroke:hsl(0, 70%, 50%);visibility:hidden;"/>
+    </svg>
+  </a>
+
+  </div>
+
+
 
   <div class="tags">
     <a href="/[case:[special:limited]||(o)/]"><img class="tagicon" src="[special:skin]/_images/alltags[case:[special:variant]|||_gray].svg" alt="/"

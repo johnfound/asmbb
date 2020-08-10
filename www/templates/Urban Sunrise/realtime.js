@@ -177,11 +177,14 @@ var StartTime = -1;
 var WantEvents = 0x0c;
 var listSourceEvents = [];
 
+var Activities = {};
+
 
 function disconnect() {
   if (source) {
     source.close();
     source = null;
+    Activities = {};
   }
   return null;
 }
@@ -249,14 +252,17 @@ listSourceEvents.push(
 function OnActivity(e) {
   var act = JSON.parse(e.data);
   if ( ! act.robot ) {
-    var toast = new Toast(
-        {
-          content: decodeURIComponent(act.activity),
-          timeout: ActivityTimeout,
-          position: TosterAlign,
-          type: 'info'
-        }, 0);
-    toast.show();
+    if (Activities[act.userid] !== act.activity) {
+      Activities[act.userid] = act.activity;
+      var toast = new Toast(
+          {
+            content: decodeURIComponent(act.activity),
+            timeout: ActivityTimeout,
+            position: TosterAlign,
+            type: 'info'
+          }, 0);
+      toast.show();
+    }
   }
 }
 

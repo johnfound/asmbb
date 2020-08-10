@@ -98,6 +98,29 @@
       color: @clActivityLink;
       font-weight: bold;
     }
+
+    &.chat {
+      a {
+        display: block;
+        color: @clActivityFG;
+        text-decoration: none;
+      }
+      background-color: @clActivityBG;
+      color: @clActivityFG;
+      .user {
+        color: @clActivityFG;
+        font-weight: bold;
+      }
+      .fake_user {
+        color: @clFakeUser;
+      }
+      > .toast-content svg {
+        fill: @clActivityFG;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+
 }
 
 

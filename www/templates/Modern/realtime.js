@@ -52,9 +52,9 @@
         this.toast = create('div', '', 'toast');
         this.close = create('div', '', 'toast-close');
         var svg = [];
-        svg.push('<svg viewBox="0 0 32 32">');
-            svg.push('<line x1="0" y1="0" x2="32" y2="32" />');
-            svg.push('<line x1="32" y1="0" x2="0" y2="32" />');
+        svg.push('<svg viewBox="0 0 16 16">');
+            svg.push('<line x1="1.5" y1="1.5" x2="14.5" y2="14.5" />');
+            svg.push('<line x1="14.5" y1="1.5" x2="1.5" y2="14.5" />');
         svg.push('</svg>');
         this.close.insertAdjacentHTML('afterbegin', svg.join(' '));
         this.toast.insertAdjacentElement('afterbegin', this.close);
@@ -87,6 +87,7 @@
                 case 'info': this.toast.className += ' info'; break;
                 case 'success': this.toast.className += ' success'; break;
                 case 'caution': this.toast.className += ' caution'; break;
+                case 'chat': this.toast.className += ' chat'; break;
             }
         }
 
@@ -168,23 +169,40 @@
 var EventSource = window.EventSource;
 var source = null;
 var session = '';
-var ActivityAlign = 'bottom right';
-var ActivityTimeout = 10000;
+var TosterAlign = 'bottom right';
+var ActivityTimeout = 5000;
+var MessageTimeout = 15000;
+var StartTime = -1;
 
-var WantEvents = 8;
+var WantEvents = 0x0c;
 var listSourceEvents = [];
+
+var Activities = {};
 
 
 function disconnect() {
-  source.close();
-  source = null;
+  if (source) {
+    source.close();
+    source = null;
+    Activities = {};
+  }
   return null;
 }
 
 
 function connect() {
+  var indicator  = document.getElementById("notiStroked");
+
   if (source) disconnect();
+
+  if (getCookie("notificationsDisabled")) {
+    indicator.style.visibility = "visible";
+    return;
+  }
+
+  indicator.style.visibility = "hidden";
   source = new EventSource("/!events?events=" + WantEvents);
+  StartTime = Date.now()/1000;
   listSourceEvents.forEach( function(value) { source.addEventListener(value.event, value.handler) } );
 }
 
@@ -199,6 +217,7 @@ listSourceEvents.push(
   }
 );
 
+
 listSourceEvents.push(
   {
     event: 'error',
@@ -211,21 +230,6 @@ listSourceEvents.push(
 );
 
 
-function OnActivity(e) {
-  var act = JSON.parse(e.data);
-  if ( ! act.robot ) {
-    var toast = new Toast(
-        {
-          content: decodeURIComponent(act.activity),
-          timeout: ActivityTimeout,
-          position: ActivityAlign,
-          type: 'info'
-        }, 0);
-    toast.show();
-  }
-}
-
-
 listSourceEvents.push(
   {
     event: 'user_activity',
@@ -234,6 +238,164 @@ listSourceEvents.push(
 );
 
 
+
+listSourceEvents.push(
+  {
+    event: 'message',
+    handler: OnChatMessage
+  }
+);
+
+
+
+
+function OnActivity(e) {
+  var act = JSON.parse(e.data);
+  if ( ! act.robot ) {
+    if (Activities[act.userid] !== act.activity) {
+      Activities[act.userid] = act.activity;
+      var toast = new Toast(
+          {
+            content: decodeURIComponent(act.activity),
+            timeout: ActivityTimeout,
+            position: TosterAlign,
+            type: 'info'
+          }, 0);
+      toast.show();
+    }
+  }
+}
+
+
+
+function createUserToaster(user, original) {
+  var c = "user";
+  if (user != original) {
+    c += " fake_user";
+  }
+  return '<span class="' + c + '" title="' + original + '">' + user + '</span> ' +
+  '<svg version="1.1" width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><ellipse cx="10" cy="8" rx="10" ry="6.18"/><path d="m2.36 17v-6.52l3.82 2.54z"/></svg> ';
+}
+
+
+
+function OnChatMessage(e) {
+  var msgset = JSON.parse(e.data);
+
+  for (var i = 0; i < msgset.msgs.length; i++) {
+    var msg = msgset.msgs[i];
+    if ( msg.time >= StartTime) {
+      var txt = '<a href="/!chat">' + createUserToaster(msg.user, msg.originalname) + replaceEmoticons(msg.text) + '</a>';
+
+      var toast = new Toast(
+          {
+            content: txt,
+            timeout: MessageTimeout,
+            position: TosterAlign,
+            type: 'chat'
+          }, 0);
+      toast.show();
+    }
+  }
+}
+
+
+
 window.addEventListener('load', connect);
 window.addEventListener('beforeunload', disconnect);
 
+// Some util functions.
+
+
+function linkify(inputText) {
+    var replacedText, replacePattern1;
+    //URLs starting with http://, https://, or ftp://
+    replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+    replacedText = inputText.replace(replacePattern1, '<a class="chatlink" href="$1" target="_blank">$1</a>');
+    return replacedText;
+}
+
+
+function replaceEmoticons(text) {
+  var emoticons = {
+    ':LOL:'  : ['rofl.gif', '&#x1F602;'],
+    ':lol:'  : ['rofl.gif', '&#x1F602;'],
+    ':ЛОЛ:'  : ['rofl.gif', '&#x1F602;'],
+    ':лол:'  : ['rofl.gif', '&#x1F602;'],
+    ':-)'    : ['smile.gif', '&#x1F60A;'],
+    ':)'     : ['smile.gif', '&#x1F60A;'],
+    ':-D'    : ['lol.gif', '&#x1F600;'],
+    ':D'     : ['lol.gif', '&#x1F600;'],
+    ':-Д'    : ['lol.gif', '&#x1F600;'],
+    ':Д'     : ['lol.gif', '&#x1F600;'],
+    '&gt;:-(': ['angry.gif', '&#x1F620;'],
+    '&gt;:(' : ['angry.gif', '&#x1F620;'],
+    ':-('    : ['sad.gif', '&#x1F61E;'],
+    ':('     : ['sad.gif', '&#x1F61E;'],
+    ':`-('   : ['cry.gif', '&#x1F62D;'],
+    ':`('    : ['cry.gif', '&#x1F62D;'],
+    ':\'-('  : ['cry.gif', '&#x1F62D;'],
+    ':\'('   : ['cry.gif', '&#x1F62D;'],
+    ';-)'    : ['wink.gif', '&#x1F609;'],
+    ';)'     : ['wink.gif', '&#x1F609;'],
+    ':-P'    : ['tongue.gif', '&#x1F61B;'],
+    ':P'     : ['tongue.gif', '&#x1F61B;'],
+    ':-П'    : ['tongue.gif', '&#x1F61B;'],
+    ':П'     : ['tongue.gif', '&#x1F61B;']
+  };
+  var url = ActiveSkin + "/_images/chatemoticons/";
+  var patterns = [];
+  var metachars = /[[\]{}()*+?.\\|^$\-,&#\s]/g;
+
+  // build a regex pattern for each defined property
+  for (var i in emoticons) {
+    if (emoticons.hasOwnProperty(i)) { // escape metacharacters
+      patterns.push('('+i.replace(metachars, "\\$&")+')');
+    }
+  }
+
+  // build the regular expression and replace
+  return text.replace(new RegExp(patterns.join('|'),'g'), function (match) {
+    return typeof emoticons[match] != 'undefined' ? '<img class="emo" width="20" height="20" src="'+url+emoticons[match][0]+'" alt="'+emoticons[match][1]+'">' : match;
+  });
+}
+
+function formatEmoji(text) {
+  var emojiRegEx = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
+  return text.replace(emojiRegEx, '<span class="emoji"><span>$1</span></span>');
+}
+
+function switchNotificationCookie() {
+  var cname = "notificationsDisabled";
+
+  if(getCookie(cname) == "true") {
+    setCookie(cname, "false", -1);
+  } else {
+    setCookie(cname, "true", 365);
+  }
+
+  connect();
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return false;
+}
+
+function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  var expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/; SameSite=Strict; Secure;";
+}

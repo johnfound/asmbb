@@ -17,10 +17,11 @@ div.alone {
   max-width: @globMaxWidth;
   margin: 8px auto 0px auto;
   overflow: visible;
+  display: flex;
 }
 
 a.ui {
-  display: inline-block;
+  display: inline-flex;
   padding: 4px;
   background-color: @clButtonBG;
   color: @clButtonFG;
@@ -28,16 +29,21 @@ a.ui {
   border-radius: @borderNavRad;
   flex-shrink: 0;
   position: relative;
-  vertical-align: middle;
+  align-items: center;
+
   img {
     display: block;
     margin: 4px;
+  }
+
+  svg {
+    fill: #ffffff;
   }
 }
 
 
 a.ui3 {
-  display: inline-block;
+  display: inline-flex;
   position: relative;
   padding: 4px;
   color: @clBodyFG;
@@ -45,6 +51,10 @@ a.ui3 {
   text-decoration: none;
   border-radius: @borderNavRad;
   flex-shrink: 0;
+  align-items: center;
+  svg {
+    fill: black;
+  }
 }
 
 a.left {
