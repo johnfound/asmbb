@@ -1,5 +1,5 @@
-C Implemented\s!unread\scommand\sthat\sredirects\sto\sthe\sfirst\sunread\smessage\sif\sany\sor\sto\sthe\send\sof\sthe\sthread\sif\snot.\nThe\sskins\sadapted\sto\suse\sit\sinstead\sof\s!by_id.\sStarted\simplementation\sof\snew\sreal-time\sevent.
-D 2020-07-30T13:12:35.590
+C Return\sthe\sthreadlist.sql\sto\sthe\smore\soptimal\sform.
+D 2020-08-10T07:15:40.424
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -88,7 +88,7 @@ F source/text_constants.asm f0f98dde7ef5c3d80dc49258c72ad405176275f9
 F source/thread_attr.sql 96f479d9e4ab2a93221b81be1bbb8a8ba6e277f3
 F source/threadcount.sql 897aa66b52dbe48ed09391442d3b288c36cbabff
 F source/threadlist.asm c7cc892c6bdf9e485bc7bb033394f0ed5323c59e
-F source/threadlist.sql 21e3badbc8dfaa76414918848a78f3e78c3d335b
+F source/threadlist.sql c4bfbd504b2297f078a98901a9a0df4f039ef15b
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
 F source/userinfo.asm 010a2ba73acd014cd558c39aae3b9915266dc9e3
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P baad89220eed2cbe6b0cf01430eaff395b40e081
-R f6572e1d6398fdb5a9d47f13190e9067
+P 6bdcaabb3cc63f069bcf467610d2c80e1145a70f
+R fbc06a8a16798f1e12760eb8e257de47
 U johnfound
-Z a244017b41585e68a86cc87fb00531d1
+Z b563974b4f721783dd5ec0c605a64134
