@@ -1,5 +1,5 @@
-C Fixed\sbug\sin\sthe\snew\spost\sform\sclose\sbutton.
-D 2020-08-17T06:31:06.863
+C Changed\sthe\sURL\sof\sthe\ssource\srepository.
+D 2020-08-26T03:41:11.416
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -98,7 +98,7 @@ F source/users_online.sql 615346c705099d4fed2fe5ea985efa429156075c
 F source/userslist.asm ad6c2bc2cc22ef3dc7202c0310754ef1d5afabb3
 F source/userslist.sql c90e4da301687cdec9fd4dc45c0f018a2e73ceb6
 F source/util.sql 4aac8fdfd044e69e0a309f172479b1f9b180ddd6
-F source/version.asm c5375b57037891dd7df89e926bc15aa749a0d555
+F source/version.asm bc87e5fe2b5905a1fa3a5c5854a440632f3c1e77
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/.nginx/fastcgi.conf 635d54729b084483347b15cdd35e82866ee86c19
 F www/.nginx/mime.types 5779f6632f02c522615639eedd57a92cce27c791
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 0c7c2e6722b787f01b5324cc09eac5ecf50fe705
-R b19dfcc1a6292ada4a3710e5101bf24c
+P 5e3095370ba0c43c6a0c1332d86cb19f296b220c
+R 7948417585778485a4be3cf7e3fb7073
 U johnfound
-Z 1df86f1bc8f51dc8db63942af315a354
+Z 3f25cd57d9c824c026632025d45dffcc
