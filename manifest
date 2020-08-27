@@ -1,5 +1,5 @@
-C Changed\sthe\sURL\sof\sthe\ssource\srepository.
-D 2020-08-26T03:41:11.416
+C Mark\sthe\snicknames\sthat\stry\sto\smimic\sother\snicknames\sby\smixing\sLatin\sand\sUnicode\scharacters\slooking\ssimilarly.
+D 2020-08-27T04:44:28.176
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -67,7 +67,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm 5a772d494a7e1886c67a0f4ca9a500f5baba0da4
+F source/render2.asm 059fef89ef6cd576880ab56bf713a9667ede8a87
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 60acccb553021d13c932470672aec7a3d943443d
 F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
@@ -644,14 +644,14 @@ F www/templates/Urban\sSunrise/nav_userslist.tpl f589aae323b62e3ee2de91251c3bbcc
 F www/templates/Urban\sSunrise/one_category.tpl 221b1f24f1fd8949cdfabca65f2e7fcbb48303fd
 F www/templates/Urban\sSunrise/one_user.tpl 66e01f838cd2fd5ed9d9c623bd68a0bf0e9de135
 F www/templates/Urban\sSunrise/post_history.tpl 14d36bc7bd53912d73c2d8ba662eff1fb949113a
-F www/templates/Urban\sSunrise/post_view.tpl a738e6117bc5ccd8d4ffc8b2cf6746e4c5be45b8
+F www/templates/Urban\sSunrise/post_view.tpl c91df3306a7eb4d326ad8e25fe51b75e4751ba68
 F www/templates/Urban\sSunrise/posteditor.less af2d688c4445e9c333d411f20af8ee860519a302
-F www/templates/Urban\sSunrise/posts.less 503bb880b10736efdb4bef50a2741a4d000ac43e
+F www/templates/Urban\sSunrise/posts.less e3dd56bbb0c8e1dd9165af453a5c3f46f2f22cec
 F www/templates/Urban\sSunrise/preview.tpl feaf8a6acc9bc1442c2a80b04381b058c9f0112d
 F www/templates/Urban\sSunrise/realtime.js 23b3ec62e9f0a4176a4af6480bc44e2992cfe069
 F www/templates/Urban\sSunrise/restore_confirm.tpl 52a9c63c3575dc9a740886776c4dc6c2e0a07efe
 F www/templates/Urban\sSunrise/search.less 0bcaf20f6012fe18db4ecdad203032fc082678df
-F www/templates/Urban\sSunrise/search_result.tpl ef10b3a14fe5e603b7fdc900c0a266782cafeabc
+F www/templates/Urban\sSunrise/search_result.tpl 1a6afffaece887d62e6925d751d3b321800bd29b
 F www/templates/Urban\sSunrise/settings.less bf5853436cdf02aabfd8e721b677517d30a5310c
 F www/templates/Urban\sSunrise/skin_variables.lsi 78974d8372551ed85a981703a612ca20dacdf9f0
 F www/templates/Urban\sSunrise/sqlite.less 660b247ef2a036462dd4aeae6d92f54881fda877
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 5e3095370ba0c43c6a0c1332d86cb19f296b220c
-R 7948417585778485a4be3cf7e3fb7073
+P 69b6f5df9aa9b78b46f1e878f2e8a703a7377669
+R 7592498723c69c2cb3868d0981a2513f
 U johnfound
-Z 3f25cd57d9c824c026632025d45dffcc
+Z 336ba20baa741817b93f4637f8b4fc9e

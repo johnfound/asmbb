@@ -36,7 +36,8 @@ PHashTable tableRenderCmd, tpl_func,                      \
         'css:',         RenderTemplate.cmd_css,           \   ; No output, no encoding.
         'equ:',         RenderTemplate.cmd_equ,           \
         'const:',       RenderTemplate.cmd_const,         \
-        'enc:',         RenderTemplate.cmd_encode             ; encode the content in html encoding.
+        'enc:',         RenderTemplate.cmd_encode,        \   ; encode the content in html encoding.
+        'usr:',         RenderTemplate.cmd_user_encode    \   ; encodes the unicode content of the user nickname for unicode-clones distinction.
 
 PHashTable tableSpecial, tpl_func,                              \
         "visitors",    RenderTemplate.sp_visitors,              \ ; HTML no encoding
@@ -753,8 +754,6 @@ endl
         mov     esi, [edx+TText.GapEnd]
         mov     edi, [edx+TText.GapBegin]
 
-        lea     eax, [edx+esi]
-
 .enc_loop:
         cmp     esi, ebx
         jae     .end_scan
@@ -826,6 +825,73 @@ endl
         sub     ebx, [edx+TText.GapBegin]
         mov     esi, [edx+TText.GapEnd]
         retn
+
+; ...................................................................
+
+.cmd_user_encode:
+; here esi points to ":" of the "usr:" command. edi points to the start "[" and ecx points to the end "]"
+        pushad
+
+        stdcall TextMoveGap, edx, ecx
+        inc     [edx+TText.GapEnd]              ; delete the end "]"
+        mov     ebx, [edx+TText.GapEnd]         ; where to stop scanning
+
+        stdcall TextMoveGap, edx, edi
+        add     [edx+TText.GapEnd], 5           ; delete "[usr:"
+
+        mov     esi, [edx+TText.GapEnd]
+        mov     edi, [edx+TText.GapBegin]
+
+.usr_loop:
+        cmp     esi, ebx
+        jae     .end_usr_scan
+
+        mov     ah, al
+        mov     al, [edx+esi]
+        inc     esi
+
+        test    al, al
+        js      .usr_utf
+
+; ascii char.
+
+        test    ah, ah
+        jns     .store_usr
+
+        call    .space_for_enc
+        mov     dword [edx+edi], '</u>'
+        add     edi, 4
+
+.store_usr:
+        mov     [edx+edi], al
+        inc     edi
+        jmp     .usr_loop
+
+.usr_utf:
+        test    ah, ah
+        js      .store_usr
+
+        call    .space_for_enc
+        mov     dword [edx+edi], '<u>'
+        add     edi, 3
+        jmp     .store_usr
+
+.end_usr_scan:
+        test    al, al
+        jns     .finish_usr_scan
+
+        call    .space_for_enc
+        mov     dword [edx+edi], '</u>'
+        add     edi, 4
+
+.finish_usr_scan:
+        mov     [edx+TText.GapEnd], esi
+        mov     [edx+TText.GapBegin], edi
+        mov     [esp+4*regEDX], edx
+        popad
+
+        mov     ecx, [edx+TText.GapBegin]
+        jmp     .loop_dec
 
 ; ...................................................................
 
@@ -3318,3 +3384,52 @@ begin
         pop     edi esi edx ecx ebx
         return
 endp
+
+
+
+
+proc StrHighlightUnicode, .pString
+begin
+        pushad
+
+        mov     esi, [.pString]
+        stdcall StrNew
+        mov     ebx, eax
+
+        xor     ecx, ecx
+
+.loop:
+        stdcall DecodeUtf8, [esi]
+        add     esi, edx
+
+        test    eax, eax
+        jz      .finish
+
+        cmp     edx, 1
+        ja      .unicode
+
+        test    ecx, 1
+        jz      .next
+
+        stdcall StrCat, ebx, txt '</span>'
+        inc     ecx
+
+.next:
+        stdcall EncodeUtf8, eax
+        stdcall StrCharCat, ebx, eax
+        jmp     .loop
+
+.unicode:
+        test    ecx, 1
+        jnz     .next
+
+        stdcall StrCat, ebx, txt '<span class="non-ascii">'
+        inc     ecx
+        jmp     .next
+
+.finish:
+        mov     [esp+4*regEAX], ebx
+        popad
+        return
+endp
+
