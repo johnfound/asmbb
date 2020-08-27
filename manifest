@@ -1,5 +1,5 @@
-C Mark\sthe\snicknames\sthat\stry\sto\smimic\sother\snicknames\sby\smixing\sLatin\sand\sUnicode\scharacters\slooking\ssimilarly.
-D 2020-08-27T04:44:28.176
+C Better\smark\salgorithm\sfor\smixed\scharacters\snicknames.
+D 2020-08-27T06:29:39.503
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -67,7 +67,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm 059fef89ef6cd576880ab56bf713a9667ede8a87
+F source/render2.asm 071041871320c81c2cfe439c53ba24ecda62d40e
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 60acccb553021d13c932470672aec7a3d943443d
 F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 69b6f5df9aa9b78b46f1e878f2e8a703a7377669
-R 7592498723c69c2cb3868d0981a2513f
+P 1a9da43179457d5e1c1d84a522b61a24b096e4c8
+R e12911b0e5422216e6fd19baa9eda94c
 U johnfound
-Z 336ba20baa741817b93f4637f8b4fc9e
+Z caaa9744d5ac481fae513e01a9ba7fc9

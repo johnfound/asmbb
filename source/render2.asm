@@ -842,6 +842,16 @@ endl
         mov     esi, [edx+TText.GapEnd]
         mov     edi, [edx+TText.GapBegin]
 
+        cmp     esi, ebx
+        jae     .finish_usr_scan
+
+        mov     al, [edx+esi]
+        inc     esi
+        mov     [edx+edi], al
+        inc     edi
+
+        mov     ecx, '<u >'
+
 .usr_loop:
         cmp     esi, ebx
         jae     .end_usr_scan
@@ -850,38 +860,25 @@ endl
         mov     al, [edx+esi]
         inc     esi
 
-        test    al, al
-        js      .usr_utf
-
-; ascii char.
-
-        test    ah, ah
-        jns     .store_usr
+        xor     ah, al
+        jns     .tag_ok
 
         call    .space_for_enc
-        mov     dword [edx+edi], '</u>'
+        mov     dword [edx+edi], ecx
         add     edi, 4
+        xor     ecx, '<u >' xor '</u>' ; turns "<u >" into "</u>" and vice versa
 
-.store_usr:
+.tag_ok :
         mov     [edx+edi], al
         inc     edi
         jmp     .usr_loop
 
-.usr_utf:
-        test    ah, ah
-        js      .store_usr
-
-        call    .space_for_enc
-        mov     dword [edx+edi], '<u>'
-        add     edi, 3
-        jmp     .store_usr
-
 .end_usr_scan:
-        test    al, al
-        jns     .finish_usr_scan
+        cmp     ch, '/'
+        jne     .finish_usr_scan
 
         call    .space_for_enc
-        mov     dword [edx+edi], '</u>'
+        mov     dword [edx+edi], ecx
         add     edi, 4
 
 .finish_usr_scan:
