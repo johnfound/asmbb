@@ -1,5 +1,5 @@
-C Better\smark\salgorithm\sfor\smixed\scharacters\snicknames.
-D 2020-08-27T06:29:39.503
+C Unicode\sspoofing\sprotection\sstyles.
+D 2020-08-28T06:28:58.399
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -633,7 +633,7 @@ F www/templates/Urban\sSunrise/highlight.less fba68624d1b34a5543fe0bf4b2af2ac1dd
 F www/templates/Urban\sSunrise/login.less e2c9b06104a775ae1abcc63bdc69f71b4662b870
 F www/templates/Urban\sSunrise/main_html_end.tpl 05bb25b9490ce93732628c937860db787c516c46
 F www/templates/Urban\sSunrise/main_html_start.tpl 3eb252e4e16ed2b0022f8ae6cdfda67d07584eea
-F www/templates/Urban\sSunrise/markdown.less 93d45a124d881f64ee365b765e65fa96529d9b6f
+F www/templates/Urban\sSunrise/markdown.less c4d25a578e55c1326da7d71bb3104bc17f131756
 F www/templates/Urban\sSunrise/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
 F www/templates/Urban\sSunrise/nav_categories.tpl c04334bde3272eed0ceeb558cb640a15a41b39e8
 F www/templates/Urban\sSunrise/nav_history.tpl 20332cc80d34a9c4fe360cc5559d98f0537900c2
@@ -646,8 +646,8 @@ F www/templates/Urban\sSunrise/one_user.tpl 66e01f838cd2fd5ed9d9c623bd68a0bf0e9d
 F www/templates/Urban\sSunrise/post_history.tpl 14d36bc7bd53912d73c2d8ba662eff1fb949113a
 F www/templates/Urban\sSunrise/post_view.tpl c91df3306a7eb4d326ad8e25fe51b75e4751ba68
 F www/templates/Urban\sSunrise/posteditor.less af2d688c4445e9c333d411f20af8ee860519a302
-F www/templates/Urban\sSunrise/posts.less e3dd56bbb0c8e1dd9165af453a5c3f46f2f22cec
-F www/templates/Urban\sSunrise/preview.tpl feaf8a6acc9bc1442c2a80b04381b058c9f0112d
+F www/templates/Urban\sSunrise/posts.less 57f6cf7cbc8f8bdc569a6530f9dbd18bb03533b9
+F www/templates/Urban\sSunrise/preview.tpl 09f2ab3f33a2e2ffaa1c1064d678b4e96bd3593a
 F www/templates/Urban\sSunrise/realtime.js 23b3ec62e9f0a4176a4af6480bc44e2992cfe069
 F www/templates/Urban\sSunrise/restore_confirm.tpl 52a9c63c3575dc9a740886776c4dc6c2e0a07efe
 F www/templates/Urban\sSunrise/search.less 0bcaf20f6012fe18db4ecdad203032fc082678df
@@ -908,7 +908,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 1a9da43179457d5e1c1d84a522b61a24b096e4c8
-R e12911b0e5422216e6fd19baa9eda94c
+P 459d49dcf99c7d74d4c68e13a13164f7e31d1c3a
+R 329a16f06f2a227c1b769c4c9092ffbd
 U johnfound
-Z caaa9744d5ac481fae513e01a9ba7fc9
+Z 2cd9725f8f704412441b22c82a39757a

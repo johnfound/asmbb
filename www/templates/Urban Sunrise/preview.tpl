@@ -17,7 +17,7 @@
       <a href="#preview">#preview</a>
       <img class="avatar" alt="(ツ)" src="/!avatar/[url:[UserName]]?v=[AVer]">
 
-      [case:[UserID]|<span|<a href="/!userinfo/[url:[UserName]]" class="user_name">[UserName][case:[UserID]|</span>|</a>]
+      [case:[UserID]|<span|<a href="/!userinfo/[url:[UserName]]" class="user_name">[usr:[UserName]][case:[UserID]|</span>|</a>]
     </div>
 
     <article class="post-text">
