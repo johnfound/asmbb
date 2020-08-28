@@ -110,10 +110,19 @@ img.unread {
 a.user_name {
   display: inline;
   color: @clColor1FG;
+  font-family: @FontMonospace;
   font-weight: bold;
   overflow: hidden;
   text-overflow: ellipsis;
   flex-grow: 1;
+  u {
+    color: @clFakeUser;
+    min-width: 2ch;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    border-bottom: 2px dotted @clFakeUser;
+  }
 }
 
 img.avatar {
@@ -149,6 +158,17 @@ div.post_info {
 
 div.last_edit {
   flex-grow: 1;
+  a {
+    font-family: @FontMonospace;
+    u {
+      color: @clFakeUser;
+      min-width: 2ch;
+      text-align: center;
+      display: inline-block;
+      text-decoration: none;
+      border-bottom: 2px dotted @clFakeUser;
+    }
+  }
 }
 
 div.edit_tools {

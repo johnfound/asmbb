@@ -155,12 +155,22 @@ div.post_text article {
       box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.2);
       background: white;
 
+      font-family: @FontMono;
       font-size: 1em;
       font-weight: bold;
 
       white-space: nowrap;
       max-width: 100%;
       overflow: hidden;
+
+      u {
+        color: @clFakeUser;
+        min-height: 2ch;
+        text-align: center;
+        display: inline-block;
+        text-decoration: none;
+        border-right: 2px dotted @clFakeUser;
+      }
     }
   }
 }

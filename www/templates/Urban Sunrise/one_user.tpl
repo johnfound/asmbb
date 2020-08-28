@@ -16,7 +16,7 @@
 ]
 
 <tr>
-  <td class="nick"><a href="/!userinfo/[url:[nick]]">[nick]</a></td>
+  <td class="nick"><a href="/!userinfo/[url:[nick]]">[usr:[nick]]</a></td>
   <td class="avatar"><img src="/!avatar/[url:[nick]]?v=[av_time]" alt=":)"></td>
   <td>[case:[Skin]|default|[Skin]]</td>
   <td>[PostCount]</td>

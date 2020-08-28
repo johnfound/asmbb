@@ -69,7 +69,7 @@
   <div class="user_info">
     <div class="username">
       <img width="32" height="32" class="unread" [case:[Unread]|src="[special:skin]/_images/onepost_gray.svg" alt="">|src="[special:skin]/_images/onepost.svg" alt="&gt;">]
-      [case:[UserID]||<a class="user_name" href="/!userinfo/[url:[UserName]]">][UserName][case:[UserID]||</a>]
+      [case:[UserID]||<a class="user_name" href="/!userinfo/[url:[UserName]]">][usr:[UserName]][case:[UserID]||</a>]
     </div>
     <div class="avatar">
       <img class="avatar" alt="(ツ)" src="/!avatar/[url:[UserName]]?v=[AVer]">
@@ -80,7 +80,7 @@
     <div class="post_info">
       <div class="last_edit">
         <a href="#[id]">#[id]</a>
-        [case:[EditUser]|[const:tCreated]|[const:tEdited] <a href="/!userinfo/[url:[EditUser]]">[EditUser]</a>], [const:tRead]
+        [case:[EditUser]|[const:tCreated]|[const:tEdited] <a href="/!userinfo/[url:[EditUser]]">[usr:[EditUser]]</a>], [const:tRead]
       </div>
       <div class="edit_tools">
         [case:[special:canpost]| |<a title="[const:ttlQuote]" href="[id]/!post"><img src="[special:skin]/_images/quote.svg" alt="[const:altQuote]"></a>]

@@ -5,12 +5,12 @@
 
   <div class="user_desc post-text">
     <img class="profile_avatar" src="/!avatar/[url:[username]]?v=[AVer]" alt="(ツ)">
-    <h1>[username]</h1>
+    <h1>[usr:[username]]</h1>
     [html:[minimag:[user_desc]]]
   </div>
   <div class="user_stat">
 [case:[special:lang]|
-    <h1>Statistics for [username]:</h1>
+    <h1>Statistics for [usr:[username]]:</h1>
     <ul>
       <li>Last seen on <b>[LastSeen]</b></li>
       <br>
@@ -32,7 +32,7 @@
       <li>Has written [case:[totalposts]||<a href="/!search/?u=[url:[username]]" >]<b>[totalposts]</b> post[case:[totalposts]|s||s][case:[totalposts]||</a>] on the forum.</li>
     </ul>
 |
-    <h1>Данни за [username]:</h1>
+    <h1>Данни за [usr:[username]]:</h1>
     <ul>
       <li>Последно е видян на <b>[LastSeen]</b></li>
       <br>
@@ -54,7 +54,7 @@
       <li>Е написал [case:[totalposts]||<a href="/!search/?u=[url:[username]]" >]<b>[totalposts]</b> мнени[case:[totalposts]|я|е</a>|я</a>] във форума.</li>
     </ul>
 |
-    <h1>Статистика для [username]:</h1>
+    <h1>Статистика для [usr:[username]]:</h1>
     <ul>
       <li>Последний раз входил <b>[LastSeen]</b></li>
       <br>
@@ -76,7 +76,7 @@
       <li>Написал [case:[totalposts]||<a href="/!search/?u=[url:[username]]" >]<b>[totalposts]</b> мнени[case:[totalposts]|я|е</a>|я</a>] на форуме.</li>
     </ul>
 |
-    <h1>Statistiques de [username]:</h1>
+    <h1>Statistiques de [usr:[username]]:</h1>
     <ul>
       <li>Dernière connexion le <b>[LastSeen]</b></li>
       <br>
@@ -98,7 +98,7 @@
       <li>A écrit [case:[totalposts]||<a href="/!search/?u=[url:[username]]" >]<b>[totalposts]</b> message[case:[totalposts]|s||s][case:[totalposts]||</a>] sur le forum.</li>
     </ul>
 |
-    <h1>Statistiken für [username]:</h1>
+    <h1>Statistiken für [usr:[username]]:</h1>
     <ul>
       <li>Zuletzt gesehen am <b>[LastSeen]</b></li>
       <br>

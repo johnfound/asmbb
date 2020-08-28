@@ -24,7 +24,7 @@
 
 @clThreadLink: #105289;
 
-@clFakeUser: #ff80FF;
+@clFakeUser: #ff00a0; //#ff80FF;
 @clBodyBG: white;
 @clBodyFG: black;
 @clDarkBG: white;

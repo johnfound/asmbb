@@ -5,7 +5,7 @@
   <div class="post">
     <div class="post_text">
       [case:[UserID]||<a class="user_name" title="[UserName] profile." href="/!userinfo/[url:[UserName]]">]
-        <span class="nickname">[UserName]</span>
+        <span class="nickname">[usr:[UserName]]</span>
         <img width="96" height="96" class="avatar" alt="(ツ)" src="/!avatar/[url:[UserName]]?v=[AVer]">
       [case:[UserID]||</a>]
       <article>

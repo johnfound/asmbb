@@ -137,10 +137,20 @@ div.post_text article {
       padding: 2px;
       background-color: @clColor1;
 
+      font-family: @FontMonospace;
       font-size: 1em;
-      font-style: italic;
+//      font-style: italic;
       clear: both;
       overflow: hidden;
+
+      u {
+        color: @clFakeUser;
+        min-width: 2ch;
+        text-align: center;
+        display: inline-block;
+        text-decoration: none;
+        border-bottom: 2px dotted @clFakeUser;
+      }
     }
   }
 }
