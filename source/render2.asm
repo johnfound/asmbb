@@ -539,6 +539,8 @@ begin
         je      .char_quote
         cmp     al, '&'
         je      .char_amp
+        cmp     al, '|'
+        je      .char_vert
 
         stosb
         inc     ebx
@@ -553,6 +555,13 @@ begin
         add     [edx+TText.GapBegin], ebx
 
         jmp     .loop
+
+.char_vert:
+        mov     dword [edi], '&ver'
+        mov     word [edi+4], 't;'
+        add     edi, 6
+        add     ebx, 6
+        jmp     .next_encode
 
 
 .char_less_than:

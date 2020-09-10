@@ -110,7 +110,8 @@ create table Threads (
   Pinned      integer default 0,
   PostCount   integer default 0,
   ReadCount   integer default 0,
-  Limited     integer default 0
+  Limited     integer default 0,
+  Rating      integer default 0
 );
 
 create index idxThreadsPinnedLastChangedLimited on threads (Limited, Pinned desc, Lastchanged desc);
@@ -126,6 +127,16 @@ create table ThreadPosters (
 
 create unique index idxThreadPosters on ThreadPosters(threadID, userID);
 create index idxThreadPostersOrder on ThreadPosters(threadid, firstPost, userid);
+
+
+create table ThreadVoters (
+  threadID integer references Threads(id) on delete cascade on update cascade,
+  userID   integer references Users(id) on delete cascade on update cascade,
+  Vote     integer
+);
+
+create unique index idxThreadVoters on ThreadVoters(threadID, userID);
+
 
 
 create table ThreadsHistory (

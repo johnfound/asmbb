@@ -1,5 +1,5 @@
-C Adaptation\sof\sall\sskins\sto\sthe\snickname\sspoofing\sprotection.\sRemoved\ssome\snot\sused\scode\sin\srender2.asm
-D 2020-08-28T09:07:57.172
+C New\sfeature\simplementation\s-\srating\sof\sthe\sthreads\sand\sdisplaying\son\sthe\smain\swall\sonly\sthe\sthreads\swith\spositive\srating.\nHTML\sencoding\sof\sthe\srender\sspecial\ssymbols,\ssuch\sas\s"|"\sin\sorder\sto\snot\smess\swith\sthe\srender\ssyntax.
+D 2020-09-10T13:48:35.007
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -35,13 +35,13 @@ F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm 46e64d22841349e2935e8c62681f2f47cad786a0
-F source/commands.asm d24f8e6843b8435477b83f07190b941efbe5ec06
-F source/create.sql 384f403dee2e34fcaa7d45c272a6cdd2bca3bd86
+F source/commands.asm 31b74510aa8602e3ac76bea8980018f0560bd4d4
+F source/create.sql 48677bb80b50bfeb9b5fdcf2d70a319d8e53f9aa
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
-F source/engine.asm b443b01650411fcfaaf2cc29b33d586339b42fe6
-F source/engine.fpr 54f355abd2c434b3e6024d591048c6315357c47d
+F source/engine.asm 10fb6640725d2d7c939b7a07fb80aa0382fbb079
+F source/engine.fpr e82f65e79ad183281a70230bff616d6dc7a05676
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 81f60b545fb3f7a184f6f6075f9a4e7ce31b7a0a
@@ -67,7 +67,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm 97e8b09e85cdc249e34301f4231f071c823ef622
+F source/render2.asm c86c3738d414b5b3ef60d63eaf65379c573b123a
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 60acccb553021d13c932470672aec7a3d943443d
 F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
@@ -99,6 +99,7 @@ F source/userslist.asm ad6c2bc2cc22ef3dc7202c0310754ef1d5afabb3
 F source/userslist.sql c90e4da301687cdec9fd4dc45c0f018a2e73ceb6
 F source/util.sql 4aac8fdfd044e69e0a309f172479b1f9b180ddd6
 F source/version.asm bc87e5fe2b5905a1fa3a5c5854a440632f3c1e77
+F source/votes.asm 7f09b2221caf28c970e02875b2c9fbf35f87e4c6
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/.nginx/fastcgi.conf 635d54729b084483347b15cdd35e82866ee86c19
 F www/.nginx/mime.types 5779f6632f02c522615639eedd57a92cce27c791
@@ -644,7 +645,7 @@ F www/templates/Urban\sSunrise/nav_userslist.tpl f589aae323b62e3ee2de91251c3bbcc
 F www/templates/Urban\sSunrise/one_category.tpl 221b1f24f1fd8949cdfabca65f2e7fcbb48303fd
 F www/templates/Urban\sSunrise/one_user.tpl 9273ea4b264ca41acde6cc3d20b87fe18d42168d
 F www/templates/Urban\sSunrise/post_history.tpl 14d36bc7bd53912d73c2d8ba662eff1fb949113a
-F www/templates/Urban\sSunrise/post_view.tpl c91df3306a7eb4d326ad8e25fe51b75e4751ba68
+F www/templates/Urban\sSunrise/post_view.tpl 2c00fb4dc153a2ea2c7a592502faa92f6fff228c
 F www/templates/Urban\sSunrise/posteditor.less af2d688c4445e9c333d411f20af8ee860519a302
 F www/templates/Urban\sSunrise/posts.less 36c7d85ee5cc62933d9c83b6e6003788dc8152a1
 F www/templates/Urban\sSunrise/preview.tpl 09f2ab3f33a2e2ffaa1c1064d678b4e96bd3593a
@@ -908,7 +909,10 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P e1eb1fcc2f6bb9bb9acf59321ec6270dc902d144
-R 17b353b61600c12ca62c61a5b8543089
+P da644e02e5e193ae8875350d1b6abbd8eef73149
+R 961c92d8ff893284cc385cf4cd90b8e0
+T *branch * ThreadsRating
+T *sym-ThreadsRating *
+T -sym-trunk *
 U johnfound
-Z 774fb010d1ab81b8d1bcd551bac3d3cc
+Z b04e35ab96123d5049c658ca374daac4

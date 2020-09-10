@@ -59,7 +59,7 @@
     [case:[UserID]|<span|<a href="/!userinfo/[url:[UserName]]" class="user_name">
     [usr:[UserName]][case:[UserID]|</span>|</a>]
 
-    <div>[case:[EditUser]|[const:tCreated]|[const:tEdited] <a href="/!userinfo/[url:[EditUser]]">[usr:[EditUser]]</a>], [const:tRead]</div>
+    <div>[case:[editUserID]|[const:tCreated]|[const:tEdited] <a href="/!userinfo/[url:[EditUser]]">[usr:[EditUser]]</a>], [const:tRead]</div>
 
     <div class="spacer"></div>
 

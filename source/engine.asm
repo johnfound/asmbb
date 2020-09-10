@@ -77,6 +77,7 @@ include "images_png.asm"
 include "categories.asm"
 include "history.asm"
 include "encryption.asm"
+include "votes.asm"
 
 include "chat.asm"
 
