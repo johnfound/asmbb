@@ -26,7 +26,7 @@ begin
 
 
 
-
+.bad_method:
 
 .must_be_logged_in:
 

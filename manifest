@@ -1,5 +1,5 @@
-C New\sfeature\simplementation\s-\srating\sof\sthe\sthreads\sand\sdisplaying\son\sthe\smain\swall\sonly\sthe\sthreads\swith\spositive\srating.\nHTML\sencoding\sof\sthe\srender\sspecial\ssymbols,\ssuch\sas\s"|"\sin\sorder\sto\snot\smess\swith\sthe\srender\ssyntax.
-D 2020-09-10T13:48:35.007
+C nothing\syet
+D 2020-09-11T04:23:42.187
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -88,7 +88,7 @@ F source/text_constants.asm f0f98dde7ef5c3d80dc49258c72ad405176275f9
 F source/thread_attr.sql 96f479d9e4ab2a93221b81be1bbb8a8ba6e277f3
 F source/threadcount.sql 897aa66b52dbe48ed09391442d3b288c36cbabff
 F source/threadlist.asm c7cc892c6bdf9e485bc7bb033394f0ed5323c59e
-F source/threadlist.sql c4bfbd504b2297f078a98901a9a0df4f039ef15b
+F source/threadlist.sql 5e2d4dc5d0c25d70da3dd6543bda5f555fc41fcd
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
 F source/userinfo.asm 010a2ba73acd014cd558c39aae3b9915266dc9e3
@@ -99,7 +99,7 @@ F source/userslist.asm ad6c2bc2cc22ef3dc7202c0310754ef1d5afabb3
 F source/userslist.sql c90e4da301687cdec9fd4dc45c0f018a2e73ceb6
 F source/util.sql 4aac8fdfd044e69e0a309f172479b1f9b180ddd6
 F source/version.asm bc87e5fe2b5905a1fa3a5c5854a440632f3c1e77
-F source/votes.asm 7f09b2221caf28c970e02875b2c9fbf35f87e4c6
+F source/votes.asm 1842f322193b4c48d4a2fd8a373bf6a487070bb6
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/.nginx/fastcgi.conf 635d54729b084483347b15cdd35e82866ee86c19
 F www/.nginx/mime.types 5779f6632f02c522615639eedd57a92cce27c791
@@ -909,10 +909,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P da644e02e5e193ae8875350d1b6abbd8eef73149
-R 961c92d8ff893284cc385cf4cd90b8e0
-T *branch * ThreadsRating
-T *sym-ThreadsRating *
-T -sym-trunk *
+P 7e3c624e0508263de562bee66cd8c427264503ff
+R 3987ebbc9882f387af6d27a34069a283
 U johnfound
-Z b04e35ab96123d5049c658ca374daac4
+Z 20138d18f0179ff08e705a9c90eebc40
