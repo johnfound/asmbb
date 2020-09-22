@@ -174,7 +174,7 @@ var ActivityTimeout = 5000;
 var MessageTimeout = 15000;
 var StartTime = -1;
 
-var WantEvents = 0x0c;
+var WantEvents = 0x0c;       // evUserActivity or evMessage
 var listSourceEvents = [];
 
 var Activities = {};

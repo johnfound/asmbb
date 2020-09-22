@@ -128,7 +128,9 @@ begin
         jz      .limited_not_for_you
 
 .have_access:
-        stdcall TextCat, edi, txt '<div class="thread">'
+        stdcall RenderTemplate, edi, "thread.js", [.stmt2], esi
+
+        stdcall TextCat, eax, txt '<div class="thread">'
         stdcall RenderTemplate, edx, "nav_thread.tpl", [.stmt2], esi
         mov     edi, eax
 

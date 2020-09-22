@@ -4,13 +4,13 @@ sqlGetThreadID   text "select id from threads where slug = ?1"
 sqlVoteForThread text "update Threads set Rating = Rating + ?2 where id = ?1"
 sqlRegisterVoter text "insert into ThreadVoters(threadID, userID, Vote) values (?1, ?2, ?3)"
 
-respVoteOK              text "Status: 200 Voted", 13, 10, 13, 10
-respVoteBadRequest      text "Status: 400 Bad Request", 13, 10, 13, 10
-respVoteUnauthorized    text "Status: 401 Unauthorized", 13, 10, 13, 10
-respVotePermissions     text "Status: 403 No vote permissions", 13, 10, 13, 10
-respVoteThreadMissing   text "Status: 404 Thread not exists", 13, 10, 13, 10
-respVoteMethod          text "Status: 405 Method not allowed", 13, 10, 13, 10
-respVoteServer          text "Status: 500 Internal Server Error", 13, 10, 13, 10
+respVoteOK              text "Status: 200 Voted", 13, 10, "Content-Type: text/plain", 13, 10, 13, 10, "OK", 13, 10
+respVoteBadRequest      text "Status: 400 Bad Request", 13, 10, "Content-Type: text/plain", 13, 10, 13, 10
+respVoteUnauthorized    text "Status: 401 Unauthorized", 13, 10, "Content-Type: text/plain", 13, 10, 13, 10
+respVotePermissions     text "Status: 403 No vote permissions", 13, 10, "Content-Type: text/plain", 13, 10, 13, 10
+respVoteThreadMissing   text "Status: 404 Thread not exists", 13, 10, "Content-Type: text/plain", 13, 10, 13, 10
+respVoteMethod          text "Status: 405 Method not allowed", 13, 10, "Content-Type: text/plain", 13, 10, 13, 10
+respVoteServer          text "Status: 500 Internal Server Error", 13, 10, "Content-Type: text/plain", 13, 10, 13, 10
 
 
 
@@ -68,7 +68,7 @@ begin
 
         mov     [.response], respVoteBadRequest
 
-        stdcall GetPostString, [esi+TSpecialParams.post_array], 'vote', 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt 'vote', 0
         test    eax, eax
         jz      .finish
 
@@ -100,7 +100,7 @@ begin
         mov     ebx, eax
         cinvoke sqliteFinalize, [.stmt]
 
-        cmp     ebx, SQLITE_OK
+        cmp     ebx, SQLITE_DONE
         jne     .commit_rollback
 
         lea     eax, [.stmt]
@@ -114,7 +114,7 @@ begin
         mov     ebx, eax
 
         cinvoke sqliteFinalize, [.stmt]
-        cmp     ebx, SQLITE_OK
+        cmp     ebx, SQLITE_DONE
         jne     .commit_rollback
 
         mov     edi, sqlCommit
@@ -142,14 +142,14 @@ endp
 
 proc ThreadRating_AddEvent, .thread, .vote
 begin
-        stdcall StrDupMem, txt '{ threadid:'
+        stdcall StrDupMem, txt '{ "threadid":'
         mov     ebx, eax
 
         stdcall NumToStr, [.thread], ntsDec or ntsUnsigned
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax
 
-        stdcall StrCat, ebx, txt ', change:'
+        stdcall StrCat, ebx, txt ', "change":'
         stdcall NumToStr, [.vote], ntsDec or ntsSigned
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax

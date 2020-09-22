@@ -371,6 +371,10 @@ begin
         shl     eax, cl
         mov     [.evMask+4*edx], eax    ; bit mask of the event type
 
+        OutputValue "Event number: ", ebx, 10, -1
+        OutputValue "Event mask lo: ", [.evMask], 16, 8
+        OutputValue "Event mask hi: ", [.evMask+4], 16, 8
+
         cinvoke sqliteColumnText, [.stmt], 2    ; event text
         mov     esi, eax
 
@@ -420,6 +424,9 @@ begin
         jz      .next_listener
 
 .sendit:
+        stdcall FileWriteString, [STDERR], ebx
+        stdcall FileWriteString, [STDERR], cCRLF2
+
         stdcall StrPtr, ebx
         stdcall FCGI_output, [edi+TEventsListener.hSocket], [edi+TEventsListener.requestID], eax, [eax+string.len], FALSE
         jc      .error_send

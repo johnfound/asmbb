@@ -25,15 +25,6 @@
 
 [css:highlight.css]
 
-<script src="[special:skin]/highlight.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', (event) => {
-  document.querySelectorAll('pre>code').forEach((block) => {
-    hljs.highlightBlock(block);
-  });
-});
-</script>
-
 <h1 class="thread_caption">
 [caption]
 [case:[special:canedit]||<a href="!edit_thread" title="[const:ttlEditThread]" class="btn img-btn">
@@ -42,7 +33,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     <path d="m20 3 9 9 3-3-9-9z"/>
   </svg>
 </a>]
-<div class="vote"><button class="btn img-btn">+</button><span class="rating">[Rating]</span><button class="btn img-btn">–</button></div>
+<div class="vote"><button class="btn img-btn" onclick="OnVote(1)">+</button><span class="thread_rating[id]">[Rating]</span><button class="btn img-btn" onclick="OnVote(-1)">–</button></div>
 </h1>
 <ul class="thread_tags">[special:threadtags=[id]]</ul>
 
