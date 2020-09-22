@@ -8,7 +8,7 @@ sqlCheckAccess   text "select not count() or sum(userID = ?2) from LimitedAccess
 sqlGetPostCount  text "select PostCount from threads where id = ?1"
 
 ; IMPORTANT: userID is needed because of [special:canedit] template statement!
-sqlGetThreadInfo text "select T.id, T.caption, (select userID from Posts where threadID=T.id order by id limit 1) as UserID, Limited from Threads T where T.slug = ?1"
+sqlGetThreadInfo text "select T.id, T.caption, (select userID from Posts where threadID=T.id order by id limit 1) as UserID, Limited, Rating from Threads T where T.slug = ?1"
 
 sqlIncReadCount  text "update PostCNT set Count = Count + 1 where postid in ("
 sqlSetPostsRead  text "delete from UnreadPosts where UserID = ?1 and PostID in ("
@@ -441,7 +441,7 @@ endp
 
 
 
-sqlGetThreadID text "select P.ThreadID, T.Slug, T.Limited from Posts P left join Threads T on P.threadID = T.id where P.id = ?"
+sqlGetThreadForPost text "select P.ThreadID, T.Slug, T.Limited from Posts P left join Threads T on P.threadID = T.id where P.id = ?"
 
 sqlGetThePostIndex text "select count() from Posts p where threadID = ?1 and id < ?2"
 
@@ -465,7 +465,7 @@ begin
 ; get the thread ID and slug
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadID, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadForPost, -1, eax, 0
 
         cinvoke sqliteBindInt, [.stmt], 1, [.postID]
 

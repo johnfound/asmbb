@@ -26,7 +26,7 @@ from (
   from
     threads
   where
-    limited = 0
+    limited = 0 and Rating >= 0
   order by
     LastChanged desc
 |

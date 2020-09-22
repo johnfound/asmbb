@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     <path d="m20 3 9 9 3-3-9-9z"/>
   </svg>
 </a>]
+<div class="vote"><button class="btn img-btn">+</button><span class="rating">[Rating]</span><button class="btn img-btn">–</button></div>
 </h1>
 <ul class="thread_tags">[special:threadtags=[id]]</ul>
 

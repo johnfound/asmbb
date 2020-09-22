@@ -79,6 +79,7 @@ evMessage            = 2
 evUserActivity       = 3
 evSession            = 4      ; sent only once on connection initialization.
 evNewPost            = 5
+evThreadRating       = 6
 
 evmUsersOnline       = 1 shl evUsersOnline
 evmUserChanged       = 1 shl evUserChanged
@@ -86,11 +87,11 @@ evmMessage           = 1 shl evMessage
 evmUserActivity      = 1 shl evUserActivity
 evmSession           = 1 shl evSession        ; always received
 evmNewPost           = 1 shl evNewPost
+evmThreadRating      = 1 shl evThreadRating
 
 
-evmAllEventsLo = (evmNewPost or evmUsersOnline or evmUserChanged or evmMessage or evmUserActivity) and $ffffffff
-evmAllEventsHi = ((evmNewPost or evmUsersOnline or evmUserChanged or evmMessage or evmUserActivity) shr 32) and $ffffffff
-
+evmAllEventsLo = (evmUsersOnline or evmUserChanged or evmMessage or evmUserActivity or evmThreadRating or evmNewPost or evmThreadRating) and $ffffffff
+evmAllEventsHi = ((evmUsersOnline or evmUserChanged or evmMessage or evmUserActivity or evmThreadRating or evmNewPost or evmThreadRating) shr 32) and $ffffffff
 
 iglobal
 ; definition of the used event masks and names. The order is according to the related evXXXXX constant defined above!
@@ -100,7 +101,8 @@ iglobal
     'message',                                  \
     'user_activity',                            \
     'session',                                  \
-    'new_post'
+    'new_post',                                 \
+    'thread_rating'
 endg
 
 

@@ -8,6 +8,7 @@
   [equ:Posters=Participants]
   [equ:Invited=Invited]
   [equ:Tags=Tags]
+  [equ:Rating=Rating]
 |
   [equ:ttlPinned=Забодена отгоре]
   [equ:ttlLimited=Тема с ограничен достъп]
@@ -18,6 +19,7 @@
   [equ:Posters=Участници]
   [equ:Invited=Поканени]
   [equ:Tags=Тагове]
+  [equ:Rating=Рейтинг]
 |
   [equ:ttlPinned=Прикрепленная на верху]
   [equ:ttlLimited=Тема ограниченным доступом]
@@ -28,6 +30,7 @@
   [equ:Posters=Участники]
   [equ:Invited=Приглашенные]
   [equ:Tags=Ярлыки]
+  [equ:Rating=Рейтинг]
 |
   [equ:ttlPinned=Sujet épinglé]
   [equ:ttlLimited=Sujet à accès limité]
@@ -38,6 +41,7 @@
   [equ:Posters=Participants]
   [equ:Invited=Invités]
   [equ:Tags=Mots-clés]
+  [equ:Rating=Rating]
 |
   [equ:ttlPinned=Angeheftetes Thema]
   [equ:ttlLimited=Beschränktes Thema]
@@ -48,6 +52,7 @@
   [equ:Posters=Teilnehmer]
   [equ:Invited=Eingeladen]
   [equ:Tags=Tags]
+  [equ:Rating=Rating]
 ]
 
 
@@ -99,6 +104,7 @@
     </div>
     <div class="tsi-stat">
       <p>[PostCount] [const:tPosts] | [ReadCount] [const:tViews]</p>
+      <p>[const:Rating]: <span id="thread_rating[id]">[Rating]</span>
       <p>[TimeChanged]</p>
     </div>
   </div>
