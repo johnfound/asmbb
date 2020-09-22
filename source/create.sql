@@ -217,7 +217,14 @@ create table PostsHistory (
 
 create unique index idxPostsHistory on PostsHistory(postID, Content);
 
-CREATE VIRTUAL TABLE PostFTS using fts5(Content, Caption, slug, User, Tags, prefix="1 2 3", tokenize='porter unicode61 remove_diacritics 1');
+CREATE VIRTUAL TABLE PostFTS using fts5(
+  Content,
+  Caption,
+  slug,
+  User,
+  Tags, prefix="1 2 3", tokenize="porter unicode61 remove_diacritics 2 tokenchars '!""#$%&''()*+,-./:;<=>?@[\]^_`{|}~'"
+);
+
 
 CREATE TRIGGER PostsAI AFTER INSERT ON Posts BEGIN
   insert into PostFTS(rowid, Content, Caption, slug, user, tags) VALUES (

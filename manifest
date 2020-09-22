@@ -1,5 +1,5 @@
-C nothing\syet
-D 2020-09-11T04:23:42.187
+C Better\sstructure\sof\sthe\sPostFTS\stable.
+D 2020-09-22T10:31:06.947
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -36,7 +36,7 @@ F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm 46e64d22841349e2935e8c62681f2f47cad786a0
 F source/commands.asm 31b74510aa8602e3ac76bea8980018f0560bd4d4
-F source/create.sql 48677bb80b50bfeb9b5fdcf2d70a319d8e53f9aa
+F source/create.sql 46e5bc7f2b40436b786ff667c60a2fe0ea8363bb
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
@@ -97,7 +97,7 @@ F source/users_online.asm a730d7a2a7af9604c20523307b6a516c6be5af43
 F source/users_online.sql 615346c705099d4fed2fe5ea985efa429156075c
 F source/userslist.asm ad6c2bc2cc22ef3dc7202c0310754ef1d5afabb3
 F source/userslist.sql c90e4da301687cdec9fd4dc45c0f018a2e73ceb6
-F source/util.sql 4aac8fdfd044e69e0a309f172479b1f9b180ddd6
+F source/util.sql e346fefbfd8214e204527aa3a88c766de5d1f9b8
 F source/version.asm bc87e5fe2b5905a1fa3a5c5854a440632f3c1e77
 F source/votes.asm 1842f322193b4c48d4a2fd8a373bf6a487070bb6
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
@@ -909,7 +909,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 7e3c624e0508263de562bee66cd8c427264503ff
-R 3987ebbc9882f387af6d27a34069a283
+P f46289457727e1caf2c9cabbc33a934d66ca1230
+R d54c0b1b6e35f05f3d6ae53ea2ed9e7d
 U johnfound
-Z 20138d18f0179ff08e705a9c90eebc40
+Z de9bf49a76c62349f9fb2038e0ec6b8f
