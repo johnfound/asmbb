@@ -424,9 +424,6 @@ begin
         jz      .next_listener
 
 .sendit:
-        stdcall FileWriteString, [STDERR], ebx
-        stdcall FileWriteString, [STDERR], cCRLF2
-
         stdcall StrPtr, ebx
         stdcall FCGI_output, [edi+TEventsListener.hSocket], [edi+TEventsListener.requestID], eax, [eax+string.len], FALSE
         jc      .error_send

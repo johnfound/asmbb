@@ -1,10 +1,11 @@
 
 
 sqlGetThreadID   text "select id from threads where slug = ?1"
-sqlVoteForThread text "update Threads set Rating = Rating + ?2 where id = ?1"
-sqlRegisterVoter text "insert into ThreadVoters(threadID, userID, Vote) values (?1, ?2, ?3)"
+sqlVoteForThread text "insert or replace into ThreadVoters(threadID, userID, Vote) values (?1, ?2, ?3)"
+sqlUnvote        text "delete from ThreadVoters where threadID = ?1 and userID = ?2"
+sqlGetThreadRating text "select Rating from Threads where id = ?1"
 
-respVoteOK              text "Status: 200 Voted", 13, 10, "Content-Type: text/plain", 13, 10, 13, 10, "OK", 13, 10
+respVoteOK              text "Status: 200 Voted", 13, 10, "Content-Type: text/plain", 13, 10, 13, 10
 respVoteBadRequest      text "Status: 400 Bad Request", 13, 10, "Content-Type: text/plain", 13, 10, 13, 10
 respVoteUnauthorized    text "Status: 401 Unauthorized", 13, 10, "Content-Type: text/plain", 13, 10, 13, 10
 respVotePermissions     text "Status: 403 No vote permissions", 13, 10, "Content-Type: text/plain", 13, 10, 13, 10
@@ -12,33 +13,35 @@ respVoteThreadMissing   text "Status: 404 Thread not exists", 13, 10, "Content-T
 respVoteMethod          text "Status: 405 Method not allowed", 13, 10, "Content-Type: text/plain", 13, 10, 13, 10
 respVoteServer          text "Status: 500 Internal Server Error", 13, 10, "Content-Type: text/plain", 13, 10, 13, 10
 
+voteNeutral text "vote_0"
+voteUp      text "vote_up"
+voteDn      text "vote_dn"
 
 
 proc Vote, .pSpecial
 .stmt dd ?
 .threadID dd ?
 .vote     dd ?
-.response dd ?
 
 begin
         pushad
         mov     esi, [.pSpecial]
 
-        mov     [.response], respVoteMethod
+        mov     edi, respVoteMethod
         cmp     [esi+TSpecialParams.post_array], 0
         je      .finish
 
-        mov     [.response], respVoteUnauthorized
+        mov     edi, respVoteUnauthorized
         cmp     [esi+TSpecialParams.userID], 0
         je      .finish
 
 ; check the permissions.
 
-        mov     [.response], respVotePermissions
+        mov     edi, respVotePermissions
         test    [esi+TSpecialParams.userStatus], permVote or permAdmin
         jz      .finish
 
-        mov     [.response], respVoteThreadMissing
+        mov     edi, respVoteThreadMissing
         cmp     [esi+TSpecialParams.thread], 0
         je      .finish                     ; no thread specified.
 
@@ -66,7 +69,7 @@ begin
 
 ; get vote up or down
 
-        mov     [.response], respVoteBadRequest
+        mov     edi, respVoteBadRequest
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt 'vote', 0
         test    eax, eax
@@ -79,59 +82,62 @@ begin
         cdq
         neg     eax
         adc     edx, edx        ; edx == sign(eax)
-        jz      .finish
-
         mov     [.vote], edx
 
-; start the transaction and process the request.
+        mov     edi, respVoteServer
 
-        cinvoke sqliteExec, [hMainDatabase], sqlBegin, 0, 0, 0
+        test    edx, edx
+        jnz     .do_vote
 
-        mov     edi, sqlRollback
-        mov     [.response], respVoteServer
+; delete the previous votes for this thread.
 
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUnvote, sqlUnvote.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
+        cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.userID]
+        jmp     .sql_step
+
+.do_vote:
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlVoteForThread, sqlVoteForThread.length, eax, 0
-
-        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
-        cinvoke sqliteBindInt, [.stmt], 2, [.vote]
-
-        cinvoke sqliteStep, [.stmt]
-        mov     ebx, eax
-        cinvoke sqliteFinalize, [.stmt]
-
-        cmp     ebx, SQLITE_DONE
-        jne     .commit_rollback
-
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlRegisterVoter, sqlRegisterVoter.length, eax, 0
 
         cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
         cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.userID]
         cinvoke sqliteBindInt, [.stmt], 3, [.vote]
 
+.sql_step:
         cinvoke sqliteStep, [.stmt]
         mov     ebx, eax
-
         cinvoke sqliteFinalize, [.stmt]
+
         cmp     ebx, SQLITE_DONE
-        jne     .commit_rollback
-
-        mov     edi, sqlCommit
-        mov     [.response], respVoteOK
-
-.commit_rollback:
-
-        cinvoke sqliteExec, [hMainDatabase], edi, 0, 0, 0
-        cmp     edi, sqlCommit
         jne     .finish
 
-        stdcall ThreadRating_AddEvent, [.threadID], [.vote]
+        mov     edi, respVoteOK
 
 .finish:
         stdcall TextCreate, sizeof.TText
-        stdcall TextCat, eax, [.response]
+        stdcall TextCat, eax, edi
 
+        cmp     edi, respVoteOK
+        jne     .exit
+
+        mov     edi, voteNeutral
+        cmp     [.vote], 0
+        je      .vote_result
+
+        mov     edi, voteUp
+        cmp     [.vote], 1
+        je      .vote_result
+
+        mov     edi, voteDn
+
+.vote_result:
+        stdcall TextCat, edx, edi
+
+        stdcall ThreadRating_AddEvent, [.threadID]
+
+.exit:
         stc
         mov     [esp+4*regEAX], edx
         popad
@@ -140,24 +146,48 @@ endp
 
 
 
-proc ThreadRating_AddEvent, .thread, .vote
+
+proc ThreadRating_AddEvent, .threadID
+.stmt dd ?
 begin
+        pushad
+        xor     ebx, ebx
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadRating, sqlGetThreadRating.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .finalize
+
         stdcall StrDupMem, txt '{ "threadid":'
         mov     ebx, eax
 
-        stdcall NumToStr, [.thread], ntsDec or ntsUnsigned
+        stdcall NumToStr, [.threadID], ntsDec or ntsUnsigned
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax
 
-        stdcall StrCat, ebx, txt ', "change":'
-        stdcall NumToStr, [.vote], ntsDec or ntsSigned
+        stdcall StrCat, ebx, txt ', "rating":'
+
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+
+        stdcall NumToStr, eax, ntsDec or ntsSigned
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax
 
         stdcall StrCat, ebx, txt '}'
 
+.finalize:
+        cinvoke sqliteFinalize, [.stmt]
+
+        test    ebx, ebx
+        jz      .finish
+
         stdcall AddEvent, evThreadRating, ebx, 0
         stdcall StrDel, ebx
 
+.finish:
+        popad
         return
 endp

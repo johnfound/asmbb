@@ -1,5 +1,5 @@
-C The\svote\sup/down\sinside\sthe\sthreads\sworks.
-D 2020-09-22T19:21:05.351
+C Now\sthe\sthread\srating\ssystem\sworks\slike\splanned.
+D 2020-09-23T13:44:22.380
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -36,12 +36,12 @@ F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm 46e64d22841349e2935e8c62681f2f47cad786a0
 F source/commands.asm 31b74510aa8602e3ac76bea8980018f0560bd4d4
-F source/create.sql 46e5bc7f2b40436b786ff667c60a2fe0ea8363bb
+F source/create.sql c9c864ca420b736194f16270d55eecca852c3f15
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
-F source/engine.asm 71aed230a336b5e97d607b1991085531778f23cc
-F source/engine.fpr 977352a528855a8cb3f7d3396141aaa577559c6e
+F source/engine.asm 0711c8da15baf58a1d7f43700c30b79600fc8c26
+F source/engine.fpr c64cbd07a2169f34cb84a44334fbbd5e8b3b6a4c
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 81f60b545fb3f7a184f6f6075f9a4e7ce31b7a0a
@@ -67,18 +67,18 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm c86c3738d414b5b3ef60d63eaf65379c573b123a
+F source/render2.asm 8f9e0337ba6b8d3a70933a29095a326b489d6e35
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 60acccb553021d13c932470672aec7a3d943443d
 F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm 3123d67b30fd4e86b0716cf0a6387e9c8b0fc91c
 F source/settings.sql 066cc77197d5fae94fb27c2bd72aabb2c4b85d8a
-F source/showthread.asm 9484b61d9fe163bdc90a431e79227958e276d288
+F source/showthread.asm aa8dddd84b985b0799575f57d73eff9984c4e037
 F source/showthread.sql 1ee08ed9c69a07ca5c60fc639e73333405e14d37
 F source/sqlite3.asm df3a5ea387f60d719fd83c33411b8151ad1a6d77
 F source/sqlite_console.asm 0090f97aebfd05dec748b3b98e7d43fba65b0064
-F source/sse_service.asm 60f7701a1f747a4a345046544dbe7b98186de926
+F source/sse_service.asm ae22ec3e6913f2abe6655478703a41b03b324d13
 F source/statistics.asm 8574bead31291bdaf459a032659cb41bc34883d3
 F source/statistics.sql b854e249807878dcd87c5e16dde801114639308c
 F source/tests/Test1.tpl 3787fb082cb7f6404ff4631fd6ca67ed14c7beac
@@ -86,8 +86,8 @@ F source/tests/test_templates.asm 9fbe778c983448663d18c9cc2cc3cd9d0107e93b
 F source/tests/test_templates.fpr 0b6d692c0d55f91a6e310f622a6fe2c49c06ddf9
 F source/text_constants.asm f0f98dde7ef5c3d80dc49258c72ad405176275f9
 F source/thread_attr.sql 96f479d9e4ab2a93221b81be1bbb8a8ba6e277f3
-F source/threadcount.sql 897aa66b52dbe48ed09391442d3b288c36cbabff
-F source/threadlist.asm c7cc892c6bdf9e485bc7bb033394f0ed5323c59e
+F source/threadcount.sql 9f6243d9f8795a5caf4cd8baac554ee4afe38a08
+F source/threadlist.asm 9fd5edef7fb2be6af687280fbb2dda43a57b0075
 F source/threadlist.sql 2c83cf663011edf32c911e9f49f17e35a26a84d1
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
@@ -99,7 +99,7 @@ F source/userslist.asm ad6c2bc2cc22ef3dc7202c0310754ef1d5afabb3
 F source/userslist.sql c90e4da301687cdec9fd4dc45c0f018a2e73ceb6
 F source/util.sql e346fefbfd8214e204527aa3a88c766de5d1f9b8
 F source/version.asm bc87e5fe2b5905a1fa3a5c5854a440632f3c1e77
-F source/votes.asm 4a00ead6dff0ebd96bbef09159837b96eda5bdcd
+F source/votes.asm fb9dba27fa630fd866539e026b4e5d77a44ca2e1
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/.nginx/fastcgi.conf 635d54729b084483347b15cdd35e82866ee86c19
 F www/.nginx/mime.types 5779f6632f02c522615639eedd57a92cce27c791
@@ -309,6 +309,7 @@ F www/templates/Light/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
 F www/templates/Light/thread.js b5883bf7dbbd4387716fac6f0fa77ebcc523c98d l
 F www/templates/Light/thread_info.tpl d8fea85862e825d472da9c8c5e3a7fe6752119c9
 F www/templates/Light/thread_list.less b74326a999c9178842ac5b61f13fd67fa7bcbbc0
+F www/templates/Light/threadlist.js bff866739ecbd63dfd73a32e31927f9a0eb82b9b l
 F www/templates/Light/threadnew.less c2af3d158e2e03851692576dce99f5287e50b0c6 l
 F www/templates/Light/toaster.less 0e571446584a37703a12a550d2235c322a604e07 l
 F www/templates/Light/userinfo.less 7ed31b5cc710b5821802771232bbc02db392ebf9 l
@@ -404,6 +405,7 @@ F www/templates/MoLight/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 
 F www/templates/MoLight/thread.js b5883bf7dbbd4387716fac6f0fa77ebcc523c98d l
 F www/templates/MoLight/thread_info.tpl 7cb85ae78a1c9533e82068fed34eeaf9f5b72d30 l
 F www/templates/MoLight/thread_list.less c522489ce7ce3693f484bed85f2da0851ddcd88f l
+F www/templates/MoLight/threadlist.js bff866739ecbd63dfd73a32e31927f9a0eb82b9b l
 F www/templates/MoLight/threadnew.less c2af3d158e2e03851692576dce99f5287e50b0c6 l
 F www/templates/MoLight/toaster.less 0e571446584a37703a12a550d2235c322a604e07 l
 F www/templates/MoLight/userinfo.less d0d0852a1dfcb7885c34202cd86b595eee0427bf l
@@ -538,6 +540,7 @@ F www/templates/Modern/sqlite.less 5716244e0d41d5dc61f4b0e9a451546510580aa3
 F www/templates/Modern/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e3c7067
 F www/templates/Modern/thread_info.tpl f36990dcb85dacf92db97f97e1130a7ae557766c
 F www/templates/Modern/thread_list.less e56afa0608877a4e0e4efd68eeb5a150487fddf2
+F www/templates/Modern/threadlist.js bff866739ecbd63dfd73a32e31927f9a0eb82b9b l
 F www/templates/Modern/threadnew.less 5bbc07889598f870fa4a24519087d36e02382e57
 F www/templates/Modern/toaster.less a914584382f86f8fe00aadf160499c9df9816040
 F www/templates/Modern/userinfo.less 7e90979a174c347d337637c6e08500d5da35db44
@@ -642,14 +645,14 @@ F www/templates/Urban\sSunrise/nav_categories.tpl c04334bde3272eed0ceeb558cb640a
 F www/templates/Urban\sSunrise/nav_history.tpl 20332cc80d34a9c4fe360cc5559d98f0537900c2
 F www/templates/Urban\sSunrise/nav_list.tpl cb440a2c3860302344fdc735a241ee9d8468b4a3
 F www/templates/Urban\sSunrise/nav_search.tpl c5abc05e0defefe48c8d79167638f0e65b805948
-F www/templates/Urban\sSunrise/nav_thread.tpl 94e5b40bbdc69594df51aa2b321f2e946f5d4a90
+F www/templates/Urban\sSunrise/nav_thread.tpl 78e326c9ff6f378d41eb188ba92b961f2b011930
 F www/templates/Urban\sSunrise/nav_userslist.tpl f589aae323b62e3ee2de91251c3bbcce11e597d1
 F www/templates/Urban\sSunrise/one_category.tpl 221b1f24f1fd8949cdfabca65f2e7fcbb48303fd
 F www/templates/Urban\sSunrise/one_user.tpl 9273ea4b264ca41acde6cc3d20b87fe18d42168d
 F www/templates/Urban\sSunrise/post_history.tpl 14d36bc7bd53912d73c2d8ba662eff1fb949113a
 F www/templates/Urban\sSunrise/post_view.tpl 2c00fb4dc153a2ea2c7a592502faa92f6fff228c
 F www/templates/Urban\sSunrise/posteditor.less af2d688c4445e9c333d411f20af8ee860519a302
-F www/templates/Urban\sSunrise/posts.less e56b09c33be2f94701f474ab4261081ada82b9d0
+F www/templates/Urban\sSunrise/posts.less 0aa6edf7470af08b0fb41553a75704e2c6c946af
 F www/templates/Urban\sSunrise/preview.tpl 09f2ab3f33a2e2ffaa1c1064d678b4e96bd3593a
 F www/templates/Urban\sSunrise/realtime.js 111f64ada1479c1f1553c86a4183dd342589ad21
 F www/templates/Urban\sSunrise/restore_confirm.tpl 52a9c63c3575dc9a740886776c4dc6c2e0a07efe
@@ -659,9 +662,10 @@ F www/templates/Urban\sSunrise/settings.less bf5853436cdf02aabfd8e721b677517d30a
 F www/templates/Urban\sSunrise/skin_variables.lsi 78974d8372551ed85a981703a612ca20dacdf9f0
 F www/templates/Urban\sSunrise/sqlite.less 660b247ef2a036462dd4aeae6d92f54881fda877
 F www/templates/Urban\sSunrise/statistics.tpl 99126ca5d255a737e3d5baf8911168ea3bb1d26c
-F www/templates/Urban\sSunrise/thread.js dbcc0ee66ab62af0d210eeeb6e82fb95eb337dd6
+F www/templates/Urban\sSunrise/thread.js 697257bc1088e2c9eb4b1e9a1b178f3c2ef84b68
 F www/templates/Urban\sSunrise/thread_info.tpl d76b25d046be7456e1efa471b90b45e6246d4aab
 F www/templates/Urban\sSunrise/thread_list.less 0fc3d401b2059046026623e95009bb102f7f0812
+F www/templates/Urban\sSunrise/threadlist.js 182da973af013e5729b62fb4ff58fc6a140f957f
 F www/templates/Urban\sSunrise/threadnew.less 5a4763e82b7635a7288925cd86cb785b92ba9bef
 F www/templates/Urban\sSunrise/toaster.less ef23208bda00fc0322c56c41a928c29d526d8f35
 F www/templates/Urban\sSunrise/userinfo.less 3f513169b2ebedd5cb4787877587e50d7ccf8ea6
@@ -807,6 +811,7 @@ F www/templates/Wasp/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e3c7067
 F www/templates/Wasp/thread.js da39a3ee5e6b4b0d3255bfef95601890afd80709
 F www/templates/Wasp/thread_info.tpl 4c175bfcd6cf486a10a729809f69b208cead54c0
 F www/templates/Wasp/thread_list.less 0456c492a51c4ac4355b20a65ebd799dcd3a7de0
+F www/templates/Wasp/threadlist.js da39a3ee5e6b4b0d3255bfef95601890afd80709
 F www/templates/Wasp/threadnew.less edfa421addbc85ccc765c47e70e6a2cb395c7733
 F www/templates/Wasp/toaster.less f086b1652eaf342fc95a13bf4ed8718662d242d4
 F www/templates/Wasp/userinfo.less 19048398c5cf99ef6abbd5d576bafa8f3d0eb89e
@@ -905,6 +910,7 @@ F www/templates/mobile/statistics.tpl 02861774083214684cafea3d902f3788fd388fe5 l
 F www/templates/mobile/thread.js b5883bf7dbbd4387716fac6f0fa77ebcc523c98d l
 F www/templates/mobile/thread_info.tpl 20a9cf8bffc64c18e9c29fb2454c807cb111f16c
 F www/templates/mobile/thread_list.less 09d6aa44e80627b8c22b5a1ddecff43a738b6108
+F www/templates/mobile/threadlist.js bff866739ecbd63dfd73a32e31927f9a0eb82b9b l
 F www/templates/mobile/threadnew.less c2af3d158e2e03851692576dce99f5287e50b0c6 l
 F www/templates/mobile/toaster.less 0e571446584a37703a12a550d2235c322a604e07 l
 F www/templates/mobile/userinfo.less b1372ec6bfe2edede336dfcf10e8b25f9910bccb
@@ -914,7 +920,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 87e2b3e3af024c27e18e6e94a9208a8a8a1a8ccf
-R 5acd4e6b940259bb6746dbbc3561f20b
+P 196c347549ff0aaf8dfa3de4eb1e5552036d7368
+R 08ff4e42160f81692e74f0083b9d5566
 U johnfound
-Z c06ef2f7ab8752d049b920c259df222b
+Z 3b3056efa165f470bcf789bbf0ab67db

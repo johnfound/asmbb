@@ -21,7 +21,7 @@ LINUX_INTERPRETER equ './ld-musl-i386.so'
 options.ShowSkipped = 0
 options.ShowSizes = 0
 
-options.DebugMode = 1
+options.DebugMode = 0
 options.AlignCode = 0
 options.ShowImported = 0
 
@@ -551,6 +551,7 @@ begin
         pushad
         cinvoke sqliteBusyTimeout, [hMainDatabase], 5000
         cinvoke sqliteExec, [hMainDatabase], "PRAGMA foreign_keys = TRUE", 0, 0, 0
+        cinvoke sqliteExec, [hMainDatabase], "PRAGMA recursive_triggers = TRUE", 0, 0, 0
         cinvoke sqliteExec, [hMainDatabase], "PRAGMA threads = 2", 0, 0, 0
         cinvoke sqliteExec, [hMainDatabase], "PRAGMA secure_delete = FALSE", 0, 0, 0
         cinvoke sqliteExec, [hMainDatabase], "PRAGMA journal_mode = WAL", 0, 0, 0

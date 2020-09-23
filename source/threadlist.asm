@@ -53,7 +53,9 @@ begin
         stdcall StrDel, eax
 
 .page_ok:
-        stdcall TextCat, edi, <txt '<div class="threads_list">', 13, 10>
+        stdcall RenderTemplate, edi, "threadlist.js", 0, esi   ; navigation tool bar
+
+        stdcall TextCat, eax, <txt '<div class="threads_list">', 13, 10>
         stdcall RenderTemplate, edx, "nav_list.tpl", 0, esi   ; navigation tool bar
         mov     edi, eax
 

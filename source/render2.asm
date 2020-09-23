@@ -125,24 +125,6 @@ begin
 
         BenchmarkStart .render2
 
-        xor     eax, eax
-
-        lea     edi, [.tblFields]
-        mov     ecx, 256 * sizeof.TFieldSlot / 4
-        rep stosd
-
-        lea     edi, [.tblConst]
-        mov     ecx, 256 * sizeof.TConstSlot / 4
-        rep stosd
-
-        cmp     [.sqlite_statement], eax
-        je      .hash_ok
-
-        call    .build_hash_table       ; creates a hash table for the SQL statement field names.
-
-.hash_ok:
-        mov     [.fEncode], 1
-
         mov     edx, [.pText]
         test    edx, edx
         jnz     .text_ok
@@ -184,9 +166,10 @@ begin
         stdcall FileOpenAccess, ebx, faReadOnly
         stdcall StrDel, ebx
         mov     ebx, eax
-        jc      .exit
+        jc      .exit                   ; missing file.
 
         stdcall FileSize, ebx
+
         push    eax
         stdcall TextSetGapSize, edx, eax
 
@@ -199,7 +182,27 @@ begin
 
         stdcall FileClose, ebx
 
+
 .start_render:
+
+        xor     eax, eax
+
+        lea     edi, [.tblFields]
+        mov     ecx, 256 * sizeof.TFieldSlot / 4
+        rep stosd
+
+        lea     edi, [.tblConst]
+        mov     ecx, 256 * sizeof.TConstSlot / 4
+        rep stosd
+
+        cmp     [.sqlite_statement], eax
+        je      .hash_ok
+
+        call    .build_hash_table       ; creates a hash table for the SQL statement field names.
+
+.hash_ok:
+        mov     [.fEncode], 1
+
         or      eax, -1
         push    eax
 

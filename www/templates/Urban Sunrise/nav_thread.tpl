@@ -33,7 +33,20 @@
     <path d="m20 3 9 9 3-3-9-9z"/>
   </svg>
 </a>]
-<div class="vote"><button class="btn img-btn" onclick="OnVote(1)">+</button><span class="thread_rating[id]">[Rating]</span><button class="btn img-btn" onclick="OnVote(-1)">–</button></div>
+<div class="vote">
+  <span class="thread_rating[id]">[Rating]</span>
+  <button class="btn img-btn vote_dn [case:[VoteStatus]|voted|]" onclick="OnVote(this, -1)">
+    <svg version="1.1" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" style="stroke-width:1.5">
+     <line x1="5" x2="11" y1="8" y2="8" />
+    </svg>
+  </button>
+  <button class="btn img-btn vote_up [case:[VoteStatus]|||voted]" onclick="OnVote(this, 1)">
+    <svg version="1.1" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" style="stroke-width:1.5">
+     <line x1="4" x2="12" y1="8" y2="8" />
+     <line x1="8" x2="8" y1="4" y2="12" />
+    </svg>
+  </button>
+</div>
 </h1>
 <ul class="thread_tags">[special:threadtags=[id]]</ul>
 

@@ -137,6 +137,19 @@ create table ThreadVoters (
 
 create unique index idxThreadVoters on ThreadVoters(threadID, userID);
 
+create trigger ThreadVotersAU after update on ThreadVoters begin
+  update Threads set Rating = Rating - old.Vote + new.Vote where id = new.threadID;
+end;
+
+create trigger ThreadVotersAD after delete on ThreadVoters begin
+  update Threads set Rating = Rating - old.Vote where id = old.threadID;
+end;
+
+create trigger ThreadVotersAI after insert on ThreadVoters begin
+  update Threads set Rating = Rating + new.Vote where id = new.threadID;
+end;
+
+
 
 
 create table ThreadsHistory (
