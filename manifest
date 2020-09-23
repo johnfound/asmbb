@@ -1,5 +1,5 @@
-C Forgotten\sfiles\sadded.
-D 2020-09-23T14:04:34.753
+C Forgotten\sfile\sadded.
+D 2020-09-23T15:02:50.018
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -87,6 +87,7 @@ F source/tests/test_templates.fpr 0b6d692c0d55f91a6e310f622a6fe2c49c06ddf9
 F source/text_constants.asm f0f98dde7ef5c3d80dc49258c72ad405176275f9
 F source/thread_attr.sql 96f479d9e4ab2a93221b81be1bbb8a8ba6e277f3
 F source/threadcount.sql 9f6243d9f8795a5caf4cd8baac554ee4afe38a08
+F source/threadinfo.sql 3adb203468e7bdda2bd759fb6eacdbe73d7a3775
 F source/threadlist.asm 9fd5edef7fb2be6af687280fbb2dda43a57b0075
 F source/threadlist.sql 2c83cf663011edf32c911e9f49f17e35a26a84d1
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
@@ -923,7 +924,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 688944e3a93463c2284a8eb27dd4179c920cd50c
-R dc6e54e96445f1d93982e8edd93875ab
+P a7405394d241318a2a74be7476105e0dbe66f17a
+R fd94c85f35c0fea95bd91a1bb952bc0c
 U johnfound
-Z 73cee332b9f3ee7b71781d05050848fa
+Z 7eb325338e5ef652006564ecd0fb9fe4
