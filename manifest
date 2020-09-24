@@ -1,5 +1,5 @@
-C The\ssettings\sdialog\sand\suser\spermissings\sediting\spage\s-\sadded\svoting\spermission.
-D 2020-09-24T10:36:49.525
+C Notifications\sicon\ssource\sfile\sadded.
+D 2020-09-24T10:39:14.327
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -566,6 +566,7 @@ F www/templates/Urban\sSunrise/_images/_source/megaphone2.svg efc2b1290f6b21909e
 F www/templates/Urban\sSunrise/_images/_source/minus.svg 8612efce9a7651cd4dc64bb232ec55b83a8f735d
 F www/templates/Urban\sSunrise/_images/_source/new-post.svg d85faee513632b9435c60e3873cd5db3cdb5ee8d
 F www/templates/Urban\sSunrise/_images/_source/new-post2.svg 7c362696403f1269d228a19a5c076b54e2e1e309
+F www/templates/Urban\sSunrise/_images/_source/notifications.svg 28e49780fe6e4b4dd9a4405c1e075159bb1e53b6
 F www/templates/Urban\sSunrise/_images/_source/plus.svg f99f78cf92ef6c67aa245f9b63a00c364e060526
 F www/templates/Urban\sSunrise/_images/_source/restore.svg f2598a638739af6238b5c8363d4c16a9b91df2c5
 F www/templates/Urban\sSunrise/_images/_source/rss.svg 212ef22f50c1926c9e17c43ffd79455827eac4b9
@@ -925,7 +926,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 93010fe8f076d9949583fc109437f25cd7f59b61
-R 608cd1c8a97ba5ac9361234a29bb305a
+P c67b05f62396b49f6e245be70965ad6882a8566a
+R 2b223a3f51d7c55547720c9248cf9904
 U johnfound
-Z b0c9ac94baeb77efa55f17f5686482cc
+Z a70c02b46edff865a7cefbcc5692670f
