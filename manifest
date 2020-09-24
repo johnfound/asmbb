@@ -1,5 +1,5 @@
-C Display\sthe\sthread\srating\sin\sall\sskins.
-D 2020-09-24T11:38:38.314
+C Small\sdesign\sfix.
+D 2020-09-24T11:47:35.873
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -815,7 +815,7 @@ F www/templates/Wasp/skin_variables.lsi 05a574ad988e0a5dac28e438e17de81ab39cd7a6
 F www/templates/Wasp/sqlite.less f4a2edc06c2c1410f5d78ad1ea298439251482af
 F www/templates/Wasp/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e3c7067
 F www/templates/Wasp/thread.js eaaa62bef7109b7939386fdc7395d2125e9eff1e
-F www/templates/Wasp/thread_info.tpl 5621dc633bd75e43904b46030997092734086194
+F www/templates/Wasp/thread_info.tpl 1eac8dc2e8b03473ec3b10e6aa115aea3e62feb0
 F www/templates/Wasp/thread_list.less 926590c1434fd9976c092d123f67e24667f3f2d6
 F www/templates/Wasp/threadlist.js 182da973af013e5729b62fb4ff58fc6a140f957f
 F www/templates/Wasp/threadnew.less edfa421addbc85ccc765c47e70e6a2cb395c7733
@@ -926,7 +926,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P ae23d964b292e3674db6b3166d4422b5f1c9da81
-R 7d2b86059787ad9085fc641215381073
+P 6d640c725f9fcb896d565fb8c89f51071b7759ef
+R 27d02b15c6fb3797911fc8a8527dd4e1
 U johnfound
-Z e655641324aa6d31dd6968ce5c9b8e05
+Z ec62450178a6971e961cefd63e925e06

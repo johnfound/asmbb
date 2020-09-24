@@ -73,6 +73,6 @@
       <label><input type="checkbox" class="collapseit"><ul class="small comma posters">[const:Posters][html:[Posters]]</ul></label>
       [case:[limited]||<label><input type="checkbox" class="collapseit"><ul class="small comma invited">[const:Invited][html:[Invited]]</ul></label>]
     </div>
-    <div class="small thread_tags"><span>[const:Rating]: </span><span id="thread_rating[id]">[Rating]</span> | [case:[ThreadTags]||<ul class="comma">[const:Tags][html:[ThreadTags]]</ul>]</div>
+    <div class="small thread_tags"><span>[const:Rating]: </span><span id="thread_rating[id]">[Rating]</span>[case:[ThreadTags]|| ^| <ul class="comma">[const:Tags][html:[ThreadTags]]</ul>]</div>
   </div>
 </div>
