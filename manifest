@@ -1,5 +1,5 @@
-C Handle\sproperly\sthe\sweird\suser\snames.
-D 2020-09-24T08:13:54.652
+C Make\suserinfo.tpl\sa\ssymlink.
+D 2020-09-24T08:14:50.687
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -673,6 +673,7 @@ F www/templates/Urban\sSunrise/threadlist.js 182da973af013e5729b62fb4ff58fc6a140
 F www/templates/Urban\sSunrise/threadnew.less 5a4763e82b7635a7288925cd86cb785b92ba9bef
 F www/templates/Urban\sSunrise/toaster.less ef23208bda00fc0322c56c41a928c29d526d8f35
 F www/templates/Urban\sSunrise/userinfo.less 3f513169b2ebedd5cb4787877587e50d7ccf8ea6
+F www/templates/Urban\sSunrise/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
 F www/templates/Urban\sSunrise/users_online.less 1965f5016a3cbb2fe1f3d403d245fc42b7fdb898
 F www/templates/Urban\sSunrise/userslist.less ec1e6eef4a20099688911201883ec818733fc43e
 F www/templates/Urban\sSunrise/userslist_ftr.tpl cdf4bf8f51f450a842d85ab41a089e05a2e12f73
@@ -923,7 +924,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 2b4c9f83a5fceb3d50f9154f1ec025f09dc863b9
-R de0ea96df4855744940c3e762a14ec0f
+P 8033774fd96d5dd6dfd0073bb57726e0f84dc462
+R ca5357af47bd83d82f8167e42120eb58
 U johnfound
-Z 122936693a0c179261287afd52b854b8
+Z 5e9c01081dc86395861c452ace51f546
