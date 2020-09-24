@@ -781,6 +781,8 @@ endl
         je      .enc_quote
         cmp     al, '&'
         je      .enc_amp
+        cmp     al, '|'
+        je      .enc_vert
 
         mov     [edx+edi], al
         inc     edi
@@ -812,6 +814,13 @@ endl
         mov     dword [edx+edi], '&amp'
         mov     byte [edx+edi+4], ';'
         add     edi, 5
+        jmp     .enc_loop
+
+.enc_vert:
+        call    .space_for_enc
+        mov     dword [edx+edi], '&ver'
+        mov     word  [edx+edi+4], 't;'
+        add     edi, 6
         jmp     .enc_loop
 
 .end_scan:

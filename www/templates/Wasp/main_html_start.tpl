@@ -93,7 +93,7 @@
         |<a href="/!login/">[case:[special:lang]|Login|Вход|Вход|Connexion|Anmelden]</a><br>
           [case:[special:canregister]||<a href="/!register/">[case:[special:lang]|Register|Регистрация|Регистрация|Inscription|Registrieren]</a>]
         |<form method="POST" action="/!logout"><input class="logout" type="submit" name="logout"
-         value="[case:[special:lang]|Logout|Изход|Выйти|Se déconnecter|Abmelden] ([special:username])"></form>
+         value="[case:[special:lang]|Logout|Изход|Выйти|Se déconnecter|Abmelden] ([enc:[special:username]])"></form>
          <a href="/!userinfo/[url:[special:username]]">[case:[special:lang]|User profile|Профил|Профиль|Profil|Profil]</a>
       ]
     </div>

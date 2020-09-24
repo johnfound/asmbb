@@ -1,5 +1,5 @@
 select
-  nick,
+  nick as UserName,
   status,
   av_time,
   strftime('%d.%m.%Y %H:%M:%S', Register, 'unixepoch') as RegisterStr,
@@ -12,8 +12,8 @@ from
   users
 [case:[special:order]|
 order by id|
-order by nick|
-order by nick desc|
+order by UserName|
+order by UserName desc|
 order by av_time, nick|
 order by av_time desc, nick|
 order by Skin, nick|

@@ -3,14 +3,14 @@
 [css:markdown.css]
 [css:settings.css]
 
-  <div class="user_desc">
-    <img class="profile_avatar" src="/!avatar/[url:[username]]?v=[AVer]" alt="(ツ)">
-    <h1>[username]</h1>
+  <div class="user_desc post-text">
+    <img class="profile_avatar" src="/!avatar/[url:[html:[UserName]]]?v=[AVer]" alt="(ツ)">
+    <h1>[usr:[UserName]]</h1>
     [html:[minimag:[user_desc]]]
   </div>
-[case:[special:lang]|
   <div class="user_stat">
-    <h1>Statistics for [username]:</h1>
+[case:[special:lang]|
+    <h1>Statistics for [usr:[UserName]]:</h1>
     <ul>
       <li>Last seen on <b>[LastSeen]</b></li>
       <br>
@@ -28,13 +28,12 @@
       <li>Can [case:[user_perm5]|<b>not</b> |]<b>edit</b> others posts</li>
       <li>Can [case:[user_perm7]|<b>not</b> |]<b>delete</b> others posts</li>
       <li>Can [case:[user_perm8]|<b>not</b> |]<b>chat</b></li>
+      <li>Can [case:[user_perm11]|<b>not</b> |]<b>vote</b></li>
       <br>
-      <li>Has written [case:[totalposts]||<a href="/!search/?u=[url:[username]]" >]<b>[totalposts]</b> post[case:[totalposts]|s||s][case:[totalposts]||</a>] on the forum.</li>
+      <li>Has written [case:[totalposts]||<a href="/!search/?u=[url:[html:[UserName]]]" >]<b>[totalposts]</b> post[case:[totalposts]|s||s][case:[totalposts]||</a>] on the forum.</li>
     </ul>
-  </div>
 |
-  <div class="user_stat">
-    <h1>Данни за [username]:</h1>
+    <h1>Данни за [usr:[UserName]]:</h1>
     <ul>
       <li>Последно е видян на <b>[LastSeen]</b></li>
       <br>
@@ -52,17 +51,16 @@
       <li><b>[case:[user_perm5]|Не може|Може]</b> да <b>редактира</b> мненията на другите</li>
       <li><b>[case:[user_perm7]|Не може|Може]</b> да <b>изтрива</b> мненията на другите</li>
       <li><b>[case:[user_perm8]|Не може|Може]</b> да <b>използва чата</b></li>
+      <li><b>[case:[user_perm11]|Не може|Може]</b> да <b>гласува</b></li>
       <br>
-      <li>Е написал [case:[totalposts]||<a href="/!search/?u=[url:[username]]" >]<b>[totalposts]</b> мнени[case:[totalposts]|я|е</a>|я</a>] във форума.</li>
+      <li>Е написал [case:[totalposts]||<a href="/!search/?u=[url:[html:[UserName]]]" >]<b>[totalposts]</b> мнени[case:[totalposts]|я|е</a>|я</a>] във форума.</li>
     </ul>
-  </div>
 |
-  <div class="user_stat">
-    <h1>Статистика для [username]:</h1>
+    <h1>Статистика для [usr:[UserName]]:</h1>
     <ul>
       <li>Последний раз входил <b>[LastSeen]</b></li>
       <br>
-      [case:[user_perm31]||<li>Е <b>администратор</b></li>]
+      [case:[user_perm31]||<li>Является <b>администратором</b></li>]
       <li><b>[case:[user_perm0]|Не может|Может]</b> <b>входит</b></li>
       <li><b>[case:[user_perm1]|Не может|Может]</b> <b>читать</b> форум</li>
       <li><b>[case:[user_perm9]|Не может|Может]</b> <b>скачивать</b> прикрепленные файлы</li>
@@ -76,13 +74,12 @@
       <li><b>[case:[user_perm5]|Не может|Может]</b> <b>редактировать</b> чужие мнения</li>
       <li><b>[case:[user_perm7]|Не может|Может]</b> <b>удалять</b> чужие мнения</li>
       <li><b>[case:[user_perm8]|Не может|Может]</b> <b>входит в чат</b></li>
+      <li><b>[case:[user_perm11]|Не может|Может]</b> <b>голосовать</b></li>
       <br>
-      <li>Написал [case:[totalposts]||<a href="/!search/?u=[url:[username]]" >]<b>[totalposts]</b> мнени[case:[totalposts]|я|е</a>|я</a>] на форуме.</li>
+      <li>Написал [case:[totalposts]||<a href="/!search/?u=[url:[html:[UserName]]]" >]<b>[totalposts]</b> мнени[case:[totalposts]|я|е</a>|я</a>] на форуме.</li>
     </ul>
-  </div>
 |
-  <div class="user_stat">
-    <h1>Statistiques de [username]:</h1>
+    <h1>Statistiques de [usr:[UserName]]:</h1>
     <ul>
       <li>Dernière connexion le <b>[LastSeen]</b></li>
       <br>
@@ -100,13 +97,12 @@
       <li>[case:[user_perm5]|<b>Ne</b> peut <b>pas</b>|Peut] <b>éditer</b> d'autres messages</li>
       <li>[case:[user_perm7]|<b>Ne</b> peut <b>pas</b>|Peut] <b>supprimer</b> d'autres messages</li>
       <li>[case:[user_perm8]|<b>Ne</b> peut <b>pas</b>|Peut] <b>tchatter</b></li>
+      <li>[case:[user_perm11]|<b>Ne</b> peut <b>pas</b>|Peut] <b>voter</b></li>
       <br>
-      <li>A écrit [case:[totalposts]||<a href="/!search/?u=[url:[username]]" >]<b>[totalposts]</b> message[case:[totalposts]|s||s][case:[totalposts]||</a>] sur le forum.</li>
+      <li>A écrit [case:[totalposts]||<a href="/!search/?u=[url:[html:[UserName]]]" >]<b>[totalposts]</b> message[case:[totalposts]|s||s][case:[totalposts]||</a>] sur le forum.</li>
     </ul>
-  </div>
 |
-  <div class="user_stat">
-    <h1>Statistiken für [username]:</h1>
+    <h1>Statistiken für [usr:[UserName]]:</h1>
     <ul>
       <li>Zuletzt gesehen am <b>[LastSeen]</b></li>
       <br>
@@ -124,8 +120,9 @@
       <li>Kann [case:[user_perm5]|<b>nicht</b> |]fremde Beiträge <b>ändern</b></li>
       <li>Kann [case:[user_perm7]|<b>nicht</b> |]fremde Beiträge <b>löschen</b></li>
       <li>Kann [case:[user_perm8]|<b>nicht</b> |]<b>chatten</b></li>
+      <li>Kann [case:[user_perm11]|<b>nicht</b> |]<b>abstimmen</b></li>
       <br>
-      <li>Hat [case:[totalposts]||<a href="/!search/?u=[url:[username]]" >]<b>[totalposts]</b> Beitr[case:[totalposts]|äge|ag|äge][case:[totalposts]||</a>] im Forum verfasst.</li>
+      <li>Hat [case:[totalposts]||<a href="/!search/?u=[url:[html:[UserName]]]" >]<b>[totalposts]</b> Beitr[case:[totalposts]|äge|ag|äge][case:[totalposts]||</a>] im Forum verfasst.</li>
     </ul>
-  </div>
 ]
+  </div>

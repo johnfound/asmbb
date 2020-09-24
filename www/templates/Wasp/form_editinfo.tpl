@@ -151,7 +151,7 @@
   [equ:btnChangeEmail=E-Mail-Adresse ändern]
 ]
 
-<form class="user_edit_info settings" method="post" action="/!userinfo/[url:[username]]">
+<form class="user_edit_info settings" method="post" action="/!userinfo/[url:[html:[UserName]]]">
   <h2>[const:hdrDesc]</h2>
   <textarea class="user_desc" name="user_desc">[user_desc]</textarea>
   [case:[special:isadmin]||
@@ -175,14 +175,14 @@
   <input type="submit" name="save" class="button" value="[const:btnSave]">
 </form>
 
-<form class="user_edit_info settings" method="post" enctype="multipart/form-data" action="/!avatar_upload/[url:[username]]">
+<form class="user_edit_info settings" method="post" enctype="multipart/form-data" action="/!avatar_upload/[url:[html:[UserName]]]">
   <h2>[const:hdrAvatar]</h2>
   <input type="file" class="browse" name="avatar">
   <input type="hidden" name="ticket" value="[Ticket]">
   <input type="submit" name="submit" class="button" value="[const:btnUpload]">
 </form>
 
-<form class="user_edit_info settings" method="post" action="/!setskin/[url:[username]]">
+<form class="user_edit_info settings" method="post" action="/!setskin/[url:[html:[UserName]]]">
   <h2>[const:hdrLang]</h2>
   <select class="userskin" name="user_lang">
     <option value="0" [case:[Lang]|selected="selected"|]>[const:sDefault]</option>

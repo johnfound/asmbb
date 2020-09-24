@@ -22,8 +22,9 @@
 
 <div class="post">
   <div class="search_info">
-    <img  width="32" height="32" class="unread" [case:[Unread]|src="[special:skin]/_images/onepost_gray.svg" alt="Rd">|src="[special:skin]/_images/onepost.svg" alt="URd">]    <a class="user_name" href="/!userinfo/[url:[UserName]]">[UserName]</a>
-    <img class="smallavatar" src="/!avatar/[url:[username]]?v=[AVer]" alt="(ツ)">
+    <img  width="32" height="32" class="unread" [case:[Unread]|src="[special:skin]/_images/onepost_gray.svg" alt="Rd">|src="[special:skin]/_images/onepost.svg" alt="URd">]
+    <a class="user_name" href="/!userinfo/[url:[html:[UserName]]]">[usr:[UserName]]</>
+    <img class="smallavatar" src="/!avatar/[url:[html:[UserName]]]?v=[AVer]" alt="(ツ)">
     <div class="changed">[PostTime]</div>
   </div>
   <div class="post_thread">

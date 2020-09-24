@@ -16,8 +16,8 @@
 ]
 
 <tr>
-  <td class="nick"><a href="/!userinfo/[url:[nick]]">[nick]</a></td>
-  <td class="avatar"><img src="/!avatar/[url:[nick]]?v=[av_time]" alt=":)"></td>
+  <td class="nick"><a href="/!userinfo/[url:[html:[UserName]]]">[usr:[UserName]]</a></td>
+  <td class="avatar"><img src="/!avatar/[url:[html:[UserName]]]?v=[av_time]" alt="(ツ)"></td>
   <td>[case:[Skin]|default|[Skin]]</td>
   <td>[PostCount]</td>
   <td>[case:[fRegister]|[const:ttlLong]|[RegisterStr]]</td>

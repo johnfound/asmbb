@@ -191,8 +191,8 @@
     [case:[special:userid]
       |<a class="btn" href="/!login">[const:btnLogin]</a>
        [case:[special:canregister]||<a class="btn" href="/!register">[const:btnRegister]</a>]
-      |<form method="post" action="/!logout"><button class="btn" name="logout" type="submit" title="[special:username]">[const:btnLogout]</button></form>
-      <a class="btn" href="/!userinfo/[url:[special:username]]" title="[special:username]">[const:btnProfile]</a>
+      |<form method="post" action="/!logout"><button class="btn" name="logout" type="submit" title="[enc:[special:username]]">[const:btnLogout]</button></form>
+      <a class="btn" href="/!userinfo/[url:[special:username]]" title="[enc:[special:username]]">[const:btnProfile]</a>
     ]
   </header>
 

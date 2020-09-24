@@ -27,8 +27,8 @@
     <div class="changed">[PostTime]</div>
   </div>
   <div class="post_text">
-    <span class="nickname">[UserName]</span>
-    <img width="64" height="64" class="avatar" src="/!avatar/[url:[username]]?v=[AVer]" alt="(ツ)">
+    <span class="nickname">[usr:[UserName]]</span>
+    <img width="64" height="64" class="avatar" src="/!avatar/[url:[html:[UserName]]]?v=[AVer]" alt="(ツ)">
     <article>
       <pre>[content]</pre>
     </article>

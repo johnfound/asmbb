@@ -24,10 +24,9 @@
 <div class="post" id="[case:[rowid]|current|[rowid]]">
   <div class="post_text">
     <a class="user_name"
-      [case:[EditUser]|
-        title="[PostUser] profile." href="/!userinfo/[url:[PostUser]]"><span class="nickname">[PostUser]</span><img width="128" height="128" class="avatar" alt="(ツ)" src="/!avatar/[url:[PostUser]]?v=[AVerP]">|
-        title="[EditUser] profile." href="/!userinfo/[url:[EditUser]]"><span class="nickname">[EditUser]</span><img width="128" height="128" class="avatar" alt="(ツ)" src="/!avatar/[url:[EditUser]]?v=[AVerE]">
-      ]
+      [case:[editUserID]|
+        title="[PostUser] profile." href="/!userinfo/[url:[html:[PostUser]]]"><span class="nickname">[usr:[PostUser]]</span><img width="128" height="128" class="avatar" alt="(ツ)" src="/!avatar/[url:[html:[PostUser]]]?v=[AVerP]">|
+        title="[EditUser] profile." href="/!userinfo/[url:[html:[EditUser]]]"><span class="nickname">[usr:[EditUser]]</span><img width="128" height="128" class="avatar" alt="(ツ)" src="/!avatar/[url:[html:[EditUser]]]?v=[AVerE]">]
     </a>
     <article>
       [html:[[case:[format]|minimag:[include:minimag_suffix.tpl]|bbcode:][Content]]]
@@ -37,7 +36,7 @@
   <div class="post_info">
     <div class="last_edit">
       [case:[rowid]|<a href="#current">#current</a>|<a href="#[rowid]">#[rowid]</a>]
-      [case:[EditUser]|[const:tCreated] <a href="/!userinfo/[url:[PostUser]]">[PostUser]</a>|[const:tEdited] <a href="/!userinfo/[url:[EditUser]]">[EditUser]</a>]
+      [case:[editUserID]|[const:tCreated] <a href="/!userinfo/[url:[html:[PostUser]]]">[usr:[PostUser]]</a>|[const:tEdited] <a href="/!userinfo/[url:[html:[EditUser]]]">[usr:[EditUser]]</a>]
     </div>
     <div class="edit_tools">
       [case:[rowid]||<a class="btn round" title="[const:ttlRestore]"  href="/[rowid]/!restore">
