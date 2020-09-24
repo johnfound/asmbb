@@ -44,9 +44,15 @@ div.threads_list {
   padding: 8px;
   font-weight: bold !important;
   margin: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 
-  * {
-    font-weight: normal;
+  & > * {
+    & > * {
+      font-weight: normal;
+    }
+    margin: 0px 4px;
   }
 }
 

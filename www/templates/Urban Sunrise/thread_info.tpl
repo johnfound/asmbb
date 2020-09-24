@@ -41,7 +41,7 @@
   [equ:Posters=Participants]
   [equ:Invited=Invités]
   [equ:Tags=Mots-clés]
-  [equ:Rating=Rating]
+  [equ:Rating=Évaluation]
 |
   [equ:ttlPinned=Angeheftetes Thema]
   [equ:ttlLimited=Beschränktes Thema]
@@ -52,7 +52,7 @@
   [equ:Posters=Teilnehmer]
   [equ:Invited=Eingeladen]
   [equ:Tags=Tags]
-  [equ:Rating=Rating]
+  [equ:Rating=Bewertung]
 ]
 
 
