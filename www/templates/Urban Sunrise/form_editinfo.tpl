@@ -14,6 +14,7 @@
   [equ:pAttach=Attach files]
   [equ:pVote=Voting]
   [equ:pAdmin=Administrator]
+
   [equ:hdrAvatar=Avatar: <span class="small">(.png only; Maximal size: 10KB; Size: 128x128px)</span>]
   [equ:hdrLang=Interface language:]
   [equ:hdrSkin=Forum skin:]
@@ -45,6 +46,7 @@
   [equ:pAttach=Прикачане на файлове]
   [equ:pVote=Гласуване]
   [equ:pAdmin=Администратор]
+
   [equ:hdrAvatar=Снимка: <span class="small">(само .png; Максимален размер: 10KB; Размер: 128x128px)</span>]
   [equ:hdrLang=Език на интерфейса:]
   [equ:hdrSkin=Тема на форума:]
@@ -76,6 +78,7 @@
   [equ:pAttach=Прикреплять файлы]
   [equ:pVote=Голосовать]
   [equ:pAdmin=Администратор]
+
   [equ:hdrAvatar=Аватар: <span class="small">(только .png; Максимальный размер: 10KB; Размер: 128x128px)</span>]
   [equ:hdrLang=Язык интерфейса:]
   [equ:hdrSkin=Тема оформления:]
@@ -105,8 +108,9 @@
   [equ:pChat=Tchat]
   [equ:pDownload=Télécharger des fichiers]
   [equ:pAttach=Joindre des fichiers]
-  [equ:pVote=Voting]
+  [equ:pVote=Vote]
   [equ:pAdmin=Administrateur]
+
   [equ:hdrAvatar=Avatar:<span class="small">(.png uniquement; Taille maximale: 10KB; Dimensions: 128x128px)</span>]
   [equ:hdrLang=Langue de l'interface:]
   [equ:hdrSkin=Thème:]
@@ -136,8 +140,9 @@
   [equ:pChat=Chatten]
   [equ:pDownload=Dateien herunterladen]
   [equ:pAttach=Dateien anhängen]
-  [equ:pVote=Voting]
+  [equ:pVote=Abstimmung]
   [equ:pAdmin=Administrator]
+
   [equ:hdrAvatar=Avatar: <span class="small">(nur .png; Größe höchstens: 10KB; Abmessungen: 128x128px)</span>]
   [equ:hdrLang=Sprache der Oberfläche:]
   [equ:hdrSkin=Skin des Forums:]

@@ -1,5 +1,5 @@
-C The\svoting\sis\sworking\sin\sall\sskins\snow.
-D 2020-09-24T10:03:06.276
+C The\ssettings\sdialog\sand\suser\spermissings\sediting\spage\s-\sadded\svoting\spermission.
+D 2020-09-24T10:36:49.525
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -501,7 +501,7 @@ F www/templates/Modern/error_html_end.tpl e5ea7fb2ae849c3efc29d2aace455ce605e7ac
 F www/templates/Modern/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
 F www/templates/Modern/form_edit.tpl 7457cdeb8763f5c4116c32e44988bd1eb1e7c9fb
 F www/templates/Modern/form_edit_thread.tpl 35a84b7a1be4dab89de64d71861d8453b29ad449
-F www/templates/Modern/form_editinfo.tpl 151edbde6a27c11caa2679088196bffb276161e5
+F www/templates/Modern/form_editinfo.tpl 5c4ddbe6cd8981ed89b54c19159e9d7ec559cfc8
 F www/templates/Modern/form_login.tpl 5325450df57cfe97b8280f9ac9a485da78266f39
 F www/templates/Modern/form_new_post.tpl 60ef9cb4921eb57e8f92e755b137c9159864aaca
 F www/templates/Modern/form_new_thread.tpl 50f95f0411d63652e1cb47591505611c7d4b4829
@@ -509,7 +509,7 @@ F www/templates/Modern/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449
 F www/templates/Modern/form_register.tpl 97482aa6d96f3664f0b4dd4e15a5701fc6b76d62
 F www/templates/Modern/form_reset_password.tpl d615d96f021f1313d2993f42f4db30db0e534da8
 F www/templates/Modern/form_reset_request.tpl 40eccfc2673ae7ad3ff37b90cb77f676f51cd5cf
-F www/templates/Modern/form_settings.tpl 41827dc33229bab73d751383cfefe2efe9934452
+F www/templates/Modern/form_settings.tpl fa61d919ce18b061cbde3836ebc62b137c4b1e8e
 F www/templates/Modern/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Modern/form_sqlite_console.tpl e7018d30d3293f01cf6d159cad260413e27511c5
 F www/templates/Modern/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
@@ -546,7 +546,7 @@ F www/templates/Modern/threadlist.js bff866739ecbd63dfd73a32e31927f9a0eb82b9b l
 F www/templates/Modern/threadnew.less 5bbc07889598f870fa4a24519087d36e02382e57
 F www/templates/Modern/toaster.less a914584382f86f8fe00aadf160499c9df9816040
 F www/templates/Modern/userinfo.less 7e90979a174c347d337637c6e08500d5da35db44
-F www/templates/Modern/userinfo.tpl a922b525303c11318bab49a56317a722914d7352
+F www/templates/Modern/userinfo.tpl 3aa4335365e4b555e553feb7da0ffe879d4f785e
 F www/templates/Modern/users_online.less a807d20a84ba5d3c0a0a4e201ce006c638a39cb5
 F www/templates/Modern/userslist.less cd1902ebd82281d362dcbd8d227bccd3d03274ab
 F www/templates/Modern/userslist_ftr.tpl 125a168e24b2bd38aadb84cbb5f87f316b073c41
@@ -625,7 +625,7 @@ F www/templates/Urban\sSunrise/error_html_start.tpl 53ee357916bacab74bb7f9b63dc2
 F www/templates/Urban\sSunrise/file-browse.js f24eef322b130b2715410431ea4199679de5f65b
 F www/templates/Urban\sSunrise/form_edit.tpl 35447dc2e14aaec631768e00cb39cc2c41c803d6
 F www/templates/Urban\sSunrise/form_edit_thread.tpl 235f47cd3758d3cd0208d7ece47e5f6e44f54877
-F www/templates/Urban\sSunrise/form_editinfo.tpl 6d3872d55d68463810a04170dfa0e8d161645645
+F www/templates/Urban\sSunrise/form_editinfo.tpl 67a548660ae43947d0d2e45b3d41747f3d644954
 F www/templates/Urban\sSunrise/form_login.tpl fe8b409f221a5553ee0f40bde655fa3cb276485f
 F www/templates/Urban\sSunrise/form_new_post.tpl ca1db190891014690cc4efd8afe492a66f0d3ebe
 F www/templates/Urban\sSunrise/form_new_thread.tpl fe634f528fe69f75acfd65b4dec356a57278075d
@@ -633,7 +633,7 @@ F www/templates/Urban\sSunrise/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09
 F www/templates/Urban\sSunrise/form_register.tpl 02cc15121365375ffe92866cfe46ae944ef1855b
 F www/templates/Urban\sSunrise/form_reset_password.tpl d9aa084867bfc75045a93db88af361770a960158
 F www/templates/Urban\sSunrise/form_reset_request.tpl 2670304557d27ff156db4652a360a9044b415c7e
-F www/templates/Urban\sSunrise/form_settings.tpl 056f7a0ca82e1987bf34e91f63f68513637c1913
+F www/templates/Urban\sSunrise/form_settings.tpl aad4b6426e4b113c8433e0b3eef39f4f4f7435b6
 F www/templates/Urban\sSunrise/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Urban\sSunrise/form_sqlite_console.tpl 04720cf7c2be67a3ec0922a734eb58b6739c66b3
 F www/templates/Urban\sSunrise/help-bbcode.txt 6732933421f6641562759d73997cbf611b9bc59b
@@ -773,7 +773,7 @@ F www/templates/Wasp/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
 F www/templates/Wasp/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
 F www/templates/Wasp/form_edit.tpl 960e2204cb967b3c2b7af8c1e66019db5a812b17
 F www/templates/Wasp/form_edit_thread.tpl eacb39e161ed4bf47fbe8bb0690a4e01b34f3162
-F www/templates/Wasp/form_editinfo.tpl 5ac8b3dc88164100c5d4d412db610536eef0389f
+F www/templates/Wasp/form_editinfo.tpl 6ec33b63c5bbed4b5bc86066b05fa9017b95f50b
 F www/templates/Wasp/form_login.tpl 9d2c28ae6dc5b44de5ca20d9734402b34ce697a4
 F www/templates/Wasp/form_new_post.tpl 00b9572e505ce6b8b675b45ac09f05bc0a8090cd
 F www/templates/Wasp/form_new_thread.tpl 6e5f82f34c601e89e2f20f37020e55797b2ffe6e
@@ -781,7 +781,7 @@ F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e44992
 F www/templates/Wasp/form_register.tpl 25cdeffa395f90e248b383ee85390f9395cef8d3
 F www/templates/Wasp/form_reset_password.tpl 4b1ca1f5cdf5bb2ea7f0620722393e8324a97fa0
 F www/templates/Wasp/form_reset_request.tpl 45298eaa3544ec492eb9ca6e4f482fe30378a0e0
-F www/templates/Wasp/form_settings.tpl a4f94b22b41e057a7358481758d2ff55f2da71a3
+F www/templates/Wasp/form_settings.tpl 7242f97c9dee3ed23c55911c1bec135c50a60130
 F www/templates/Wasp/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Wasp/form_sqlite_console.tpl 7c492fd0663a1f999e88186f0af74f87bcd04a25
 F www/templates/Wasp/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
@@ -925,7 +925,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 8ef4aef83b0d27f00122889d2d8e92f3b5958347
-R 4e38be85ea497297f87445ad30547f97
+P 93010fe8f076d9949583fc109437f25cd7f59b61
+R 608cd1c8a97ba5ac9361234a29bb305a
 U johnfound
-Z 9b5e7ad77d8831dbc992404c0e018c6d
+Z b0c9ac94baeb77efa55f17f5686482cc

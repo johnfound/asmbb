@@ -154,7 +154,7 @@
   [equ:pChat=Tchat]
   [equ:pDownload=Télécharger des fichiers]
   [equ:pAttach=Joindre des fichiers]
-  [equ:pVote=Voting]
+  [equ:pVote=Vote]
   [equ:pAdmin=Administrateur]
 
   [equ:ttlSettings=Paramètres du forum]
@@ -201,7 +201,7 @@
   [equ:pChat=Chatten]
   [equ:pDownload=Dateien herunterladen]
   [equ:pAttach=Dateien anhängen]
-  [equ:pVote=Voting]
+  [equ:pVote=Abstimmung]
   [equ:pAdmin=Administrator]
 
   [equ:ttlSettings=Einstellungen der Forenengine]
