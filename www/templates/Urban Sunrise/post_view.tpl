@@ -54,9 +54,9 @@
       #[id]
     </a>
 
-    <img class="avatar" alt="(ツ)" src="/!avatar/[url:[UserName]]?v=[AVer]">
+    <img class="avatar" alt="(ツ)" src="/!avatar/[UserName]?v=[AVer]">
 
-    [case:[UserID]|<span|<a href="/!userinfo/[url:[UserName]]" class="user_name">
+    [case:[UserID]|<span|<a href="/!userinfo/[UserName]" class="user_name">
     [usr:[UserName]][case:[UserID]|</span>|</a>]
 
     <div>[case:[editUserID]|[const:tCreated]|[const:tEdited] <a href="/!userinfo/[url:[EditUser]]">[usr:[EditUser]]</a>], [const:tRead]</div>

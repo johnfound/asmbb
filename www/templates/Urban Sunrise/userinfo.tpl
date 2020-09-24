@@ -4,7 +4,7 @@
 [css:settings.css]
 
   <div class="user_desc post-text">
-    <img class="profile_avatar" src="/!avatar/[url:[username]]?v=[AVer]" alt="(ツ)">
+    <img class="profile_avatar" src="/!avatar/[username]?v=[AVer]" alt="(ツ)">
     <h1>[usr:[username]]</h1>
     [html:[minimag:[user_desc]]]
   </div>

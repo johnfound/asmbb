@@ -125,6 +125,8 @@ begin
 
         BenchmarkStart .render2
 
+        mov     [.fEncode], 1
+
         mov     edx, [.pText]
         test    edx, edx
         jnz     .text_ok
@@ -201,8 +203,6 @@ begin
         call    .build_hash_table       ; creates a hash table for the SQL statement field names.
 
 .hash_ok:
-        mov     [.fEncode], 1
-
         or      eax, -1
         push    eax
 
