@@ -1,5 +1,5 @@
-C New\s[special:canvote]\sparameter\sin\sthe\stemplate\srender.\sShow\svoting\sbuttons\sonly\sfor\sthose\shaving\svoting\spermissions.\sOnly\sthe\sowner\sand\sthe\sadministrator\scan\sedit\sthread\sattributes\s-\stitle\sand\sthe\stags.
-D 2020-09-25T06:18:37.734
+C New\spost\snotifications.
+D 2020-09-25T08:46:08.247
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -57,7 +57,7 @@ F source/migration2.sql fe978700e39265c6680b69ea8cbfb5444cfdce63
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
 F source/phpbb.sql 6820a2092cc30a774c44d770055b37b66bdbfaf0
 F source/phpbb_pm.sql f88eaf899e72d4e99f367cb654b41695da2231d5
-F source/post.asm 36d504e78dde80c990a2d4c3fcf9bebd8afdcae4
+F source/post.asm 33a94b286df40c52a0ba0ec8eafbe76775b35e4e
 F source/post_data.asm 79fb813775e3bafe6cb314c50a99484e4f0dc211
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
@@ -84,7 +84,7 @@ F source/statistics.sql b854e249807878dcd87c5e16dde801114639308c
 F source/tests/Test1.tpl 3787fb082cb7f6404ff4631fd6ca67ed14c7beac
 F source/tests/test_templates.asm 9fbe778c983448663d18c9cc2cc3cd9d0107e93b
 F source/tests/test_templates.fpr 0b6d692c0d55f91a6e310f622a6fe2c49c06ddf9
-F source/text_constants.asm f0f98dde7ef5c3d80dc49258c72ad405176275f9
+F source/text_constants.asm 4cf8d35c9cfc22bde974b577a9893ebcfd07d2f2
 F source/thread_attr.sql 96f479d9e4ab2a93221b81be1bbb8a8ba6e277f3
 F source/threadcount.sql 69756c80de82b1912e3def69f9551f3f68884514
 F source/threadinfo.sql 3adb203468e7bdda2bd759fb6eacdbe73d7a3775
@@ -610,7 +610,7 @@ F www/templates/Urban\sSunrise/autocomplete.js 7f821fe4b74d465ef6042714c91ced568
 F www/templates/Urban\sSunrise/chat.js af2f7194df2c16f49ae8b77bf014f160f2984385
 F www/templates/Urban\sSunrise/chat.less 7e3affa9b2e5a2826cd61bb77f484c0df1b8f190
 F www/templates/Urban\sSunrise/chat.tpl 5141a052cd4911ab8af4a380bc25614d41050b7d
-F www/templates/Urban\sSunrise/common.less 286827907770543a0bdcc0da5ee6c58f73acab6b
+F www/templates/Urban\sSunrise/common.less 58b6bd1baaf9656e56038e8c1db15ec682d47a80
 F www/templates/Urban\sSunrise/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Urban\sSunrise/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001
 F www/templates/Urban\sSunrise/debug.less 9a989f4670bb3d584f60c57d50af9fbf9bf75117
@@ -926,7 +926,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P a27d1f1429f0879fad0a20f8a2ff41edace08eaf
-R 11e53b7a33b8c9a8620698854f9a6322
+P 74874646848ede8b0e2ad589f086149c2742b099
+R 59f04c8d840a7ed6d6e20234555cf23f
 U johnfound
-Z 9178dadddcda85944bc785c4c7825a10
+Z 033ceae1bfeb9ce8454741739dab1228

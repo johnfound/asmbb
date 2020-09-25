@@ -155,8 +155,8 @@ cActivityChat           mtext   EN: " entered the chat.",               \
                                 FR: " est entré dans le chat.",         \
                                 DE: " hat den Chat betreten."
 
-cNewPost                mtext   EN: "New post",               \
-                                BG: "Нов пост",                   \
-                                RU: "Новый пост",                    \
-                                FR: "New post",         \
-                                DE: "New post"
+cActivityNewPost        mtext   EN: " wrote a new post. ",              \
+                                BG: " написа мнение. ",                  \
+                                RU: " написал мнение. ",                 \
+                                FR: " wrote a new post. ",              \
+                                DE: " wrote a new post. "
