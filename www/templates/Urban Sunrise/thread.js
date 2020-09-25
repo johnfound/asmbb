@@ -22,10 +22,11 @@
     var all = document.getElementsByClassName(cl);
 
     for (var i=0; i<all.length; i++) {
-      all[i].innerText = ev.rating;
+      all^[i^].innerText = ev.rating;
     };
   }
 
+  [case:[special:canvote]||
   function OnVote(host, inc) {
     var http = new XMLHttpRequest();
 
@@ -38,15 +39,15 @@
 
         var all = Array.from(document.getElementsByClassName("voted"));
         for (var i=0; i<all.length; i++) {
-          all[i].classList.remove("voted");
+          all^[i^].classList.remove("voted");
         };
 
         var ret = this.responseText;
 
-        if ( (ret !== "vote_0") && (ret === "vote_up" || ret === "vote_dn") ) {
+        if ( (ret !== "vote_0") && (ret === "vote_up" ^|^| ret === "vote_dn") ) {
           var all = Array.from(document.getElementsByClassName(ret));
           for (var i=0; i<all.length; i++) {
-            all[i].classList.add("voted");
+            all^[i^].classList.add("voted");
           };
         }
       }
@@ -58,6 +59,7 @@
     var p = "vote=" + inc;
     http.send(p);
   }
+  ]
 
 </script>
 

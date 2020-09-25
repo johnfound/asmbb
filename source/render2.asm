@@ -72,6 +72,7 @@ PHashTable tableSpecial, tpl_func,                              \
         "candel",      RenderTemplate.sp_candelete,             \ ; 1/0 no encoding
         "canchat",     RenderTemplate.sp_canchat,               \ ; 1/0 no encoding
         "canupload",   RenderTemplate.sp_canupload,             \ ; 1/0 no encoding
+        "canvote",     RenderTemplate.sp_canvote,               \ ; 1/0 no encoding
         "referer",     RenderTemplate.sp_referer,               \ ; 1/0 no encoding
         "unreadLAT",   RenderTemplate.sp_unreadLAT,             \
         "unread",      RenderTemplate.sp_unread,                \
@@ -1693,6 +1694,10 @@ endl
 
 .sp_canupload:
         mov     eax, permAttach
+        jmp     .one_permission
+
+.sp_canvote:
+        mov     eax, permVote or permAdmin
         jmp     .one_permission
 
 .sp_canchat:

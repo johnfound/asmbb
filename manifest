@@ -1,5 +1,5 @@
-C Small\sdesign\sfix.
-D 2020-09-24T11:47:35.873
+C New\s[special:canvote]\sparameter\sin\sthe\stemplate\srender.\sShow\svoting\sbuttons\sonly\sfor\sthose\shaving\svoting\spermissions.\sOnly\sthe\sowner\sand\sthe\sadministrator\scan\sedit\sthread\sattributes\s-\stitle\sand\sthe\stags.
+D 2020-09-25T06:18:37.734
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -38,10 +38,10 @@ F source/chat.asm 46e64d22841349e2935e8c62681f2f47cad786a0
 F source/commands.asm 31b74510aa8602e3ac76bea8980018f0560bd4d4
 F source/create.sql c9c864ca420b736194f16270d55eecca852c3f15
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
-F source/edit.asm 0f10d9cb2f59983f70204cf9a4c827b02be3ba1a
+F source/edit.asm ae0ee6dae716ed4b4b8b6cc0e087a0c72bbeb80e
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm 0711c8da15baf58a1d7f43700c30b79600fc8c26
-F source/engine.fpr 6a8f11c14bfafc2fe44330cf1bcdcff03910c7c3
+F source/engine.fpr d1d2504cbc0ac4ea1aab33afc5c09fabeaa40d4e
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 81f60b545fb3f7a184f6f6075f9a4e7ce31b7a0a
@@ -67,7 +67,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm 0a8d49e4c2feb878aad9fd08e17e58afdbd271b2
+F source/render2.asm 2a4fbc278950d29e8a57cc20ffc2f9cea5065a69
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 60acccb553021d13c932470672aec7a3d943443d
 F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
@@ -522,7 +522,7 @@ F www/templates/Modern/nav_categories.tpl 913db6d39408ea09f80f91b55325a6cef4efeb
 F www/templates/Modern/nav_history.tpl 3070c075ad08d5c86a1e0b0fa298279bce6ff09f
 F www/templates/Modern/nav_list.tpl af661dc8fce469443c9ad8abc53232d32cdb4ecd
 F www/templates/Modern/nav_search.tpl 36f648367e02be54e00a69480af8accdae01d3b6
-F www/templates/Modern/nav_thread.tpl 78da09e7c77024c8b64f3a5a5bb75b2e0839fe13
+F www/templates/Modern/nav_thread.tpl ff0ea9000b579d9dbef7d11913f579105cce6eca
 F www/templates/Modern/nav_userslist.tpl 3c19066e46a70e4f6a234f9c037a2b7e28914688
 F www/templates/Modern/one_category.tpl f327eecc1652faf49b08b8090f8602b58eda3829
 F www/templates/Modern/one_user.tpl c9cdff93ed53375482f0707f22235d67ff3deba6
@@ -651,7 +651,7 @@ F www/templates/Urban\sSunrise/nav_categories.tpl c04334bde3272eed0ceeb558cb640a
 F www/templates/Urban\sSunrise/nav_history.tpl 20332cc80d34a9c4fe360cc5559d98f0537900c2
 F www/templates/Urban\sSunrise/nav_list.tpl cb440a2c3860302344fdc735a241ee9d8468b4a3
 F www/templates/Urban\sSunrise/nav_search.tpl c5abc05e0defefe48c8d79167638f0e65b805948
-F www/templates/Urban\sSunrise/nav_thread.tpl 36edfda9d2cdf831cb8275354358b81858ad99c0
+F www/templates/Urban\sSunrise/nav_thread.tpl 42002e959dcd0be907488b517fc59c14272ecf49
 F www/templates/Urban\sSunrise/nav_userslist.tpl f589aae323b62e3ee2de91251c3bbcce11e597d1
 F www/templates/Urban\sSunrise/one_category.tpl 221b1f24f1fd8949cdfabca65f2e7fcbb48303fd
 F www/templates/Urban\sSunrise/one_user.tpl f7ab1004f85bb05547443c30346faad2da648829
@@ -668,7 +668,7 @@ F www/templates/Urban\sSunrise/settings.less bf5853436cdf02aabfd8e721b677517d30a
 F www/templates/Urban\sSunrise/skin_variables.lsi 78974d8372551ed85a981703a612ca20dacdf9f0
 F www/templates/Urban\sSunrise/sqlite.less 660b247ef2a036462dd4aeae6d92f54881fda877
 F www/templates/Urban\sSunrise/statistics.tpl 99126ca5d255a737e3d5baf8911168ea3bb1d26c
-F www/templates/Urban\sSunrise/thread.js 697257bc1088e2c9eb4b1e9a1b178f3c2ef84b68
+F www/templates/Urban\sSunrise/thread.js 7da434cbe9cc7aa24bd54a24e77710e72f9b2ef1
 F www/templates/Urban\sSunrise/thread_info.tpl 2ce052b1db68cdc834483fe7e49072720b8d5a17
 F www/templates/Urban\sSunrise/thread_list.less 0fc3d401b2059046026623e95009bb102f7f0812
 F www/templates/Urban\sSunrise/threadlist.js 182da973af013e5729b62fb4ff58fc6a140f957f
@@ -795,7 +795,7 @@ F www/templates/Wasp/nav_categories.tpl a132b6d7a2351b6d7fabfdb7c821dfb7228c0ac2
 F www/templates/Wasp/nav_history.tpl 7d7b20a16288e53f745d28fe97cf43244b9bb29d
 F www/templates/Wasp/nav_list.tpl ad2924ff9cfd565d3cc00d11f71d86cbeca45a1d
 F www/templates/Wasp/nav_search.tpl 94348341523bd79e3919d36b9a7072ca1da82e27
-F www/templates/Wasp/nav_thread.tpl 58c6a3c2e24e7c672707c2ed000e3d2f86680408
+F www/templates/Wasp/nav_thread.tpl 017b1baa338126d7270d1dfcc67a9e34ae4ca6f3
 F www/templates/Wasp/nav_userslist.tpl b25e53dad0dab74e40c295c207593dd929900c06
 F www/templates/Wasp/navigation.less 2f90cd79a1f1c2453e542125421f5ea0634781b9
 F www/templates/Wasp/one_category.tpl 28da1952be772af4b86dc09161e96927291346de
@@ -814,7 +814,7 @@ F www/templates/Wasp/settings.less de9396e5eafb2f88a57886f3ff131c810e444f2d
 F www/templates/Wasp/skin_variables.lsi 05a574ad988e0a5dac28e438e17de81ab39cd7a6
 F www/templates/Wasp/sqlite.less f4a2edc06c2c1410f5d78ad1ea298439251482af
 F www/templates/Wasp/statistics.tpl a7fc0b7ba293fdb718c92c051c4f05e67e3c7067
-F www/templates/Wasp/thread.js eaaa62bef7109b7939386fdc7395d2125e9eff1e
+F www/templates/Wasp/thread.js 4b5f8513e2ab953df226d6056479aef230e9c60b
 F www/templates/Wasp/thread_info.tpl 1eac8dc2e8b03473ec3b10e6aa115aea3e62feb0
 F www/templates/Wasp/thread_list.less 926590c1434fd9976c092d123f67e24667f3f2d6
 F www/templates/Wasp/threadlist.js 182da973af013e5729b62fb4ff58fc6a140f957f
@@ -926,7 +926,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 6d640c725f9fcb896d565fb8c89f51071b7759ef
-R 27d02b15c6fb3797911fc8a8527dd4e1
+P a27d1f1429f0879fad0a20f8a2ff41edace08eaf
+R 11e53b7a33b8c9a8620698854f9a6322
 U johnfound
-Z ec62450178a6971e961cefd63e925e06
+Z 9178dadddcda85944bc785c4c7825a10
