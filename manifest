@@ -1,5 +1,5 @@
-C Attempt\sto\sfix\sa\sCSS\sbug...
-D 2020-09-25T13:42:39.648
+C Temporary\sremove\sthe\sthread-rating\sfiltering\sfor\sthe\shome\spage.
+D 2020-10-01T15:56:41.836
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
@@ -86,10 +86,10 @@ F source/tests/test_templates.asm 9fbe778c983448663d18c9cc2cc3cd9d0107e93b
 F source/tests/test_templates.fpr 0b6d692c0d55f91a6e310f622a6fe2c49c06ddf9
 F source/text_constants.asm 4cf8d35c9cfc22bde974b577a9893ebcfd07d2f2
 F source/thread_attr.sql 96f479d9e4ab2a93221b81be1bbb8a8ba6e277f3
-F source/threadcount.sql 69756c80de82b1912e3def69f9551f3f68884514
+F source/threadcount.sql 7c3d3751f3de5e33b3f70f6fd82eae001003c65b
 F source/threadinfo.sql 3adb203468e7bdda2bd759fb6eacdbe73d7a3775
 F source/threadlist.asm 9fd5edef7fb2be6af687280fbb2dda43a57b0075
-F source/threadlist.sql a7d166cbe8e8ae0f7995daa530de29c4fab9f247
+F source/threadlist.sql a86195b66436be33972211dcfe0720a3098f2d88
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
 F source/userinfo.asm 010a2ba73acd014cd558c39aae3b9915266dc9e3
@@ -926,7 +926,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 2ad4cc7c6da2f05ceac44c33d9dac6ebbda334e8
-R 310044bdd93e439d10428e34f9fb8fbe
+P d71ca0e421a9e294d4b003e1e9c24a7d07ab6838
+R 2ea35e63be515bd84e0a1995b564b68e
 U johnfound
-Z e1534ecdf51c1fdc55ed3e0b99c0cd02
+Z 75994cf06ff0594e0078d996ab60aa24
