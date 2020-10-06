@@ -254,10 +254,12 @@ function OnActivity(e) {
   if ( ! act.robot ) {
     if (Activities[act.userid] !== act.activity) {
       Activities[act.userid] = act.activity;
+      var timeout = ActivityTimeout;
+      if (act.type === "post") { timeout *= 10 };
       var toast = new Toast(
           {
             content: decodeURIComponent(act.activity),
-            timeout: ActivityTimeout,
+            timeout: timeout,
             position: TosterAlign,
             type: 'info'
           }, 0);

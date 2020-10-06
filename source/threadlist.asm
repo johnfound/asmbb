@@ -28,7 +28,7 @@ begin
 
 .read_ok:
         stdcall LogUserActivity, esi, uaThreadList, 0
-        stdcall AddActivitySimple, cActivityList, esi
+        stdcall AddActivitySimple, cActivityList, atBrowsing, esi
 
 ; make the title
 

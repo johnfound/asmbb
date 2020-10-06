@@ -71,7 +71,7 @@ endp
 
 
 
-proc AddActivitySimple, .i18nString, .pSpecial
+proc AddActivitySimple, .i18nString, .actType, .pSpecial
 begin
         pushad
 
@@ -84,7 +84,7 @@ begin
 
         stdcall UserNameLink, esi
         stdcall StrCat, eax, [edi]
-        stdcall AddActivity, eax, [esi+TSpecialParams.userID], edx
+        stdcall AddActivity, eax, [.actType], [esi+TSpecialParams.userID], edx
         stdcall StrDel, eax
 
         popad
@@ -96,7 +96,23 @@ endp
 cTrue text 'true'
 cFalse text 'false'
 
-proc AddActivity, .hHTML, .idUser, .fBot
+atBrowsing = 0
+atReading  = 1
+atChatting = 2
+atPosting  = 3
+atEnter    = 4
+atLeave    = 5
+
+cBrowsingType text "browse"
+cReadingType  text "read"
+cChattingType text "chat"
+cPostingType  text "post"
+cEnterType    text "enter"
+cLeaveType    text "leave"
+cReserved1    text "res1"
+cReserved2    text "res2"
+
+proc AddActivity, .hHTML, .actType, .idUser, .fBot
 begin
         cmp     [ThreadCnt], MAX_THREAD_CNT/2
         jge     .exit
@@ -109,6 +125,10 @@ begin
         stdcall StrURLEncode, [.hHTML]
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax
+        stdcall StrCat, ebx, txt '", "type": "'
+        mov     eax, [.actType]
+        and     eax, $7
+        stdcall StrCat, ebx, [.types + 4*eax]
         stdcall StrCat, ebx, txt '", "robot": '
         mov     eax, cTrue
         cmp     [.fBot], 0
@@ -129,6 +149,9 @@ begin
 
 .exit:
         return
+
+.types dd cBrowsingType, cReadingType, cChattingType, cPostingType, cEnterType, cLeaveType, cReserved1, cReserved2
+
 endp
 
 

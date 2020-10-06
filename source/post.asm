@@ -558,7 +558,7 @@ endl
         stdcall StrCat, ebx, txt '/!by_id">▶</a>'
 
         mov     eax, [.pSpecial]
-        stdcall AddActivity, ebx, [eax+TSpecialParams.userID] ; fBot flag from the stack.
+        stdcall AddActivity, ebx, atPosting, [eax+TSpecialParams.userID] ; fBot flag from the stack.
         stdcall StrDel, ebx
 
 ; then redirect the user to the new post.
