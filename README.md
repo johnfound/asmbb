@@ -19,7 +19,7 @@ AsmBB is highly secure forum engine.
 In fact, so far, there is no major security issues and
 only several minor issues, already fixed.
 
-In addition, AsmBB can use encripted database, this way, protecting the forum information even
+Also, AsmBB can use encripted database, this way, protecting the forum information even
 in cases of very serious server security breaches.
 
 AsmBB is open source project, distributed under the terms of EUPL-1.1 license.
