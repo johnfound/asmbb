@@ -1,6 +1,7 @@
-C Adaptation\sof\sall\sskins\sto\sthe\snickname\sspoofing\sprotection.\sRemoved\ssome\snot\sused\scode\sin\srender2.asm
-D 2020-08-28T09:07:57.172
+C Added\sREADME.md\sfile.
+D 2020-10-09T19:07:04.952
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
+F README.md a499839b10e03acbdc84fa10a5abb1efec319693
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
 F install/create_release.sh b5721dd1b6252dd9b363258ca069b10c15202f51 x
@@ -908,7 +909,8 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P e1eb1fcc2f6bb9bb9acf59321ec6270dc902d144
-R 17b353b61600c12ca62c61a5b8543089
+P da644e02e5e193ae8875350d1b6abbd8eef73149
+Q +0c12c8f2473653d6b96eacd05269beb9a6e92a99
+R 24390a6f6e781061995c8a26276dd53a
 U johnfound
-Z 774fb010d1ab81b8d1bcd551bac3d3cc
+Z 8d34de58f538089a34371f4e3720be30
