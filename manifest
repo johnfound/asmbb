@@ -1,6 +1,7 @@
-C Precise\sclassification\sof\sthe\sactivity\sevents\spassed\sto\sthe\sfront-end.
-D 2020-10-06T13:05:40.785
+C Added\sREADME.md\sfile.
+D 2020-10-09T19:04:35.703
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
+F README.md a499839b10e03acbdc84fa10a5abb1efec319693
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
 F install/create_release.sh b5721dd1b6252dd9b363258ca069b10c15202f51 x
@@ -926,7 +927,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P d90f027f0bd7cd25ac465e2f092fb0149f8c0f4e
-R 2b4641132a5e4ed0dc1b6680432c38b9
+P 0a9a864e07607b33bfd733ac9a345cfc73bbf7c4
+R d177a2314043283449deaca6167eec94
 U johnfound
-Z 712016fbf649bbf658494d962280876d
+Z 348a749881e7bd85a4a926fc4b79becd
