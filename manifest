@@ -1,7 +1,7 @@
-C Added\sREADME.md\sfile.
-D 2020-10-09T19:07:04.952
+C Edits\son\sREADME.
+D 2020-10-09T19:27:07.283
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
-F README.md a499839b10e03acbdc84fa10a5abb1efec319693
+F README.md bdcdcfd768c39aa79b29f1ed4bce47075d53148d
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
 F install/create_release.sh b5721dd1b6252dd9b363258ca069b10c15202f51 x
@@ -909,8 +909,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P da644e02e5e193ae8875350d1b6abbd8eef73149
-Q +0c12c8f2473653d6b96eacd05269beb9a6e92a99
-R 24390a6f6e781061995c8a26276dd53a
+P c176ec030c0365265a2884da0096b17c72d8b422
+R f82da77b53bf1d074a037cd8eb434934
 U johnfound
-Z 8d34de58f538089a34371f4e3720be30
+Z eee5d0a12c9b944d30667ded8ef40a18

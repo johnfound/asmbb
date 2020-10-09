@@ -10,7 +10,8 @@ AsmBB is high performance and lightweight web application.
 It can work on a really weak web server and in the same time to serve huge 
 amount of visitors without lags and delays.
 
-AsmBB uses SQLite as a back-end storage database and FastCGI interface to the web server.
+AsmBB uses [SQLite](https://sqlite.org) with [SQLeet](https://github.com/resilar/sqleet) extension
+as a back-end storage database and FastCGI interface to the web server.
 
 In addition, because of the very few dependencies and the very aggressive testing,
 AsmBB is highly secure forum engine. 
@@ -23,11 +24,9 @@ in cases of very serious server security breaches.
 
 AsmBB is open source project, distributed under the terms of EUPL-1.1 license.
 
-The source code is managed by a fossil-scm repository at address:
+The source code is managed by a [fossil-scm](https://fossil-scm.org/) repository at address: [https://asm32.info/fossil/asmbb/]
 
-               https://asm32.info/fossil/asmbb/
-
-There is a read-only mirror on GitHub as well.
+There is a read-only [mirror on GitHub](https://github.com/johnfound/asmbb) as well.
 
 ## Recuirements
 
