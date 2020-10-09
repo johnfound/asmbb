@@ -1,7 +1,7 @@
-C Better\sREADME.md
-D 2020-10-09T19:28:37.527
+C Fixed\stypo.
+D 2020-10-09T19:30:14.793
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
-F README.md 648a57d4f06fc99f685d17034923ece14cff5627
+F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
 F install/create_release.sh b5721dd1b6252dd9b363258ca069b10c15202f51 x
@@ -909,7 +909,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 6317b2b8cfd6d913e8eb8c383d1e89b8de41132e
-R 275acb395ff129133a259c11a2816957
+P e8f1be30e84633bdec088ebef5b0d9cca90af37f
+R e2e60b95be027dde3cf70309b2ec684d
 U johnfound
-Z cc59f0b9e2583f12d068c238a9e1a6a5
+Z d056c97d9ab32adbb477ef1bef597cdc
