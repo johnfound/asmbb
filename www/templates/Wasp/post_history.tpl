@@ -23,15 +23,15 @@
 
 <div class="post">
   <div class="user_info">
-    [case:[EditUser]|
-      <a class="user_name" href="/!userinfo/[url:[PostUser]]">[PostUser]</a><div class="avatar"><img class="avatar" alt="(ツ)" src="/!avatar/[url:[PostUser]]?v=[AVerP]"></div>|
-      <a class="user_name" href="/!userinfo/[url:[EditUser]]">[EditUser]</a><div class="avatar"><img class="avatar" alt="(ツ)" src="/!avatar/[url:[EditUser]]?v=[AVerE]"></div>]
+    [case:[editUserID]|
+      <a class="user_name" href="/!userinfo/[url:[html:[PostUser]]]">[usr:[PostUser]]</a><div class="avatar"><img class="avatar" alt="(ツ)" src="/!avatar/[url:[html:[PostUser]]]?v=[AVerP]"></div>|
+      <a class="user_name" href="/!userinfo/[url:[html:[EditUser]]]">[usr:[EditUser]]</a><div class="avatar"><img class="avatar" alt="(ツ)" src="/!avatar/[url:[html:[EditUser]]]?v=[AVerE]"></div>]
   </div>
   <div class="post_text">
     <div class="post_info">
       <div class="last_edit">
         [case:[rowid]|<a href="#current">#current</a>|<a href="#[rowid]">#[rowid]</a>]
-        [case:[EditUser]|[const:tCreated] <a href="/!userinfo/[url:[PostUser]]">[PostUser]</a>|[const:tEdited] <a href="/!userinfo/[url:[EditUser]]">[EditUser]</a>]
+        [case:[editUserID]|[const:tCreated] <a href="/!userinfo/[url:[html:[PostUser]]]">[usr:[PostUser]]</a>|[const:tEdited] <a href="/!userinfo/[url:[html:[EditUser]]]">[usr:[EditUser]]</a>]
       </div>
       <div class="edit_tools">
         [case:[rowid]||<a title="[const:ttlRestore]"  href="/[rowid]/!restore"><img src="[special:skin]/_images/restore.svg" alt="Restore"></a>]

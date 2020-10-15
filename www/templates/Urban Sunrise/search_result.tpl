@@ -29,8 +29,8 @@
       #[rowid]
     </a>
 
-    <img class="avatar" src="/!avatar/[url:[UserName]]?v=[AVer]" alt="(ツ)">
-    <p><a class="user_name" href="/!userinfo/[url:[UserName]]">[usr:[UserName]]</a>; [const:tThread]: <a href="../[case:[special:thread]|[Slug]/|]">[Caption]</a>; [PostTime]</p>
+    <img class="avatar" src="/!avatar/[url:[html:[UserName]]]?v=[AVer]" alt="(ツ)">
+    <p><a class="user_name" href="/!userinfo/[url:[html:[UserName]]]">[usr:[UserName]]</a>; [const:tThread]: <a href="../[case:[special:thread]|[Slug]/|]">[Caption]</a>; [PostTime]</p>
   </div>
   <div class="post-text">
     <pre>[content]</pre>

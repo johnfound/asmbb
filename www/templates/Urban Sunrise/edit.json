@@ -15,9 +15,9 @@
   <div class="post">
     <div class="post-header">
       <a href="#preview">#preview</a>
-      <img class="avatar" alt="(ツ)" src="/!avatar/[url:[UserName]]">
+      <img class="avatar" alt="(ツ)" src="/!avatar/[url:[html:[UserName]]]">
 
-      <a class="user_name">[UserName]</a>
+      <a class="user_name">[usr:[UserName]]</a>
     </div>
 
     <article class="post-text">

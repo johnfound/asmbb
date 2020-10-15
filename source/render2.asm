@@ -72,6 +72,7 @@ PHashTable tableSpecial, tpl_func,                              \
         "candel",      RenderTemplate.sp_candelete,             \ ; 1/0 no encoding
         "canchat",     RenderTemplate.sp_canchat,               \ ; 1/0 no encoding
         "canupload",   RenderTemplate.sp_canupload,             \ ; 1/0 no encoding
+        "canvote",     RenderTemplate.sp_canvote,               \ ; 1/0 no encoding
         "referer",     RenderTemplate.sp_referer,               \ ; 1/0 no encoding
         "unreadLAT",   RenderTemplate.sp_unreadLAT,             \
         "unread",      RenderTemplate.sp_unread,                \
@@ -125,22 +126,6 @@ begin
 
         BenchmarkStart .render2
 
-        xor     eax, eax
-
-        lea     edi, [.tblFields]
-        mov     ecx, 256 * sizeof.TFieldSlot / 4
-        rep stosd
-
-        lea     edi, [.tblConst]
-        mov     ecx, 256 * sizeof.TConstSlot / 4
-        rep stosd
-
-        cmp     [.sqlite_statement], eax
-        je      .hash_ok
-
-        call    .build_hash_table       ; creates a hash table for the SQL statement field names.
-
-.hash_ok:
         mov     [.fEncode], 1
 
         mov     edx, [.pText]
@@ -184,9 +169,10 @@ begin
         stdcall FileOpenAccess, ebx, faReadOnly
         stdcall StrDel, ebx
         mov     ebx, eax
-        jc      .exit
+        jc      .exit                   ; missing file.
 
         stdcall FileSize, ebx
+
         push    eax
         stdcall TextSetGapSize, edx, eax
 
@@ -199,7 +185,25 @@ begin
 
         stdcall FileClose, ebx
 
+
 .start_render:
+
+        xor     eax, eax
+
+        lea     edi, [.tblFields]
+        mov     ecx, 256 * sizeof.TFieldSlot / 4
+        rep stosd
+
+        lea     edi, [.tblConst]
+        mov     ecx, 256 * sizeof.TConstSlot / 4
+        rep stosd
+
+        cmp     [.sqlite_statement], eax
+        je      .hash_ok
+
+        call    .build_hash_table       ; creates a hash table for the SQL statement field names.
+
+.hash_ok:
         or      eax, -1
         push    eax
 
@@ -539,6 +543,8 @@ begin
         je      .char_quote
         cmp     al, '&'
         je      .char_amp
+        cmp     al, '|'
+        je      .char_vert
 
         stosb
         inc     ebx
@@ -553,6 +559,13 @@ begin
         add     [edx+TText.GapBegin], ebx
 
         jmp     .loop
+
+.char_vert:
+        mov     dword [edi], '&ver'
+        mov     word [edi+4], 't;'
+        add     edi, 6
+        add     ebx, 6
+        jmp     .next_encode
 
 
 .char_less_than:
@@ -769,6 +782,8 @@ endl
         je      .enc_quote
         cmp     al, '&'
         je      .enc_amp
+        cmp     al, '|'
+        je      .enc_vert
 
         mov     [edx+edi], al
         inc     edi
@@ -800,6 +815,13 @@ endl
         mov     dword [edx+edi], '&amp'
         mov     byte [edx+edi+4], ';'
         add     edi, 5
+        jmp     .enc_loop
+
+.enc_vert:
+        call    .space_for_enc
+        mov     dword [edx+edi], '&ver'
+        mov     word  [edx+edi+4], 't;'
+        add     edi, 6
         jmp     .enc_loop
 
 .end_scan:
@@ -1672,6 +1694,10 @@ endl
 
 .sp_canupload:
         mov     eax, permAttach
+        jmp     .one_permission
+
+.sp_canvote:
+        mov     eax, permVote or permAdmin
         jmp     .one_permission
 
 .sp_canchat:

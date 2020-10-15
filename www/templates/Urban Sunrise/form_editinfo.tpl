@@ -12,7 +12,9 @@
   [equ:pChat=Chat]
   [equ:pDownload=Download files]
   [equ:pAttach=Attach files]
+  [equ:pVote=Voting]
   [equ:pAdmin=Administrator]
+
   [equ:hdrAvatar=Avatar: <span class="small">(.png only; Maximal size: 10KB; Size: 128x128px)</span>]
   [equ:hdrLang=Interface language:]
   [equ:hdrSkin=Forum skin:]
@@ -42,7 +44,9 @@
   [equ:pChat=Използване на чата]
   [equ:pDownload=Сваляне на файлове]
   [equ:pAttach=Прикачане на файлове]
+  [equ:pVote=Гласуване]
   [equ:pAdmin=Администратор]
+
   [equ:hdrAvatar=Снимка: <span class="small">(само .png; Максимален размер: 10KB; Размер: 128x128px)</span>]
   [equ:hdrLang=Език на интерфейса:]
   [equ:hdrSkin=Тема на форума:]
@@ -72,7 +76,9 @@
   [equ:pChat=Чат]
   [equ:pDownload=Скачивать файлы]
   [equ:pAttach=Прикреплять файлы]
+  [equ:pVote=Голосовать]
   [equ:pAdmin=Администратор]
+
   [equ:hdrAvatar=Аватар: <span class="small">(только .png; Максимальный размер: 10KB; Размер: 128x128px)</span>]
   [equ:hdrLang=Язык интерфейса:]
   [equ:hdrSkin=Тема оформления:]
@@ -102,7 +108,9 @@
   [equ:pChat=Tchat]
   [equ:pDownload=Télécharger des fichiers]
   [equ:pAttach=Joindre des fichiers]
+  [equ:pVote=Vote]
   [equ:pAdmin=Administrateur]
+
   [equ:hdrAvatar=Avatar:<span class="small">(.png uniquement; Taille maximale: 10KB; Dimensions: 128x128px)</span>]
   [equ:hdrLang=Langue de l'interface:]
   [equ:hdrSkin=Thème:]
@@ -132,7 +140,9 @@
   [equ:pChat=Chatten]
   [equ:pDownload=Dateien herunterladen]
   [equ:pAttach=Dateien anhängen]
+  [equ:pVote=Abstimmung]
   [equ:pAdmin=Administrator]
+
   [equ:hdrAvatar=Avatar: <span class="small">(nur .png; Größe höchstens: 10KB; Abmessungen: 128x128px)</span>]
   [equ:hdrLang=Sprache der Oberfläche:]
   [equ:hdrSkin=Skin des Forums:]
@@ -150,7 +160,7 @@
   [equ:btnChangeEmail=E-Mail-Adresse ändern]
 ]
 
-<form class="user_edit_info settings" method="post" action="/!userinfo/[url:[username]]">
+<form class="user_edit_info settings" method="post" action="/!userinfo/[url:[html:[UserName]]]">
   <h2>[const:hdrDesc]</h2>
   <textarea class="user_desc" name="user_desc">[user_desc]</textarea>
   [case:[special:isadmin]||
@@ -167,6 +177,7 @@
   <li><input type="checkbox" [user_perm8]  name="user_perm" id="up8"  value="256"><label for="up8">[const:pChat]</label></li>
   <li><input type="checkbox" [user_perm9]  name="user_perm" id="up9"  value="512"><label for="up9">[const:pDownload]</label></li>
   <li><input type="checkbox" [user_perm10] name="user_perm" id="up10" value="1024"><label for="up10">[const:pAttach]</label></li>
+  <li><input type="checkbox" [user_perm11] name="user_perm" id="up11" value="2048"><label for="up11">[const:pVote]</label></li>
   <li><input type="checkbox" [user_perm31] name="user_perm" id="up31" value="$80000000"><label for="up31">[const:pAdmin]</label></li>
   </ul>
   ]
@@ -174,7 +185,7 @@
   <div class="navigation3 btn-bar"><input type="submit" name="save" class="btn" value="[const:btnSave]"></div>
 </form>
 
-<form class="user_edit_info settings" method="post" enctype="multipart/form-data" action="/!avatar_upload/[url:[username]]">
+<form class="user_edit_info settings" method="post" enctype="multipart/form-data" action="/!avatar_upload/[url:[html:[UserName]]]">
   <h2>[const:hdrAvatar]</h2>
 
   <div class="file-browse">
@@ -187,7 +198,7 @@
   <div class="navigation3 btn-bar"><input type="submit" name="submit" class="btn" value="[const:btnUpload]"></div>
 </form>
 
-<form class="user_edit_info settings" method="post" action="/!setskin/[url:[username]]">
+<form class="user_edit_info settings" method="post" action="/!setskin/[url:[html:[UserName]]]">
   <h2>[const:hdrLang]</h2>
   <select class="settings" name="user_lang">
     <option value="0" [case:[Lang]|selected="selected"|]>[const:sDefault]</option>

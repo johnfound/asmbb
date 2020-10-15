@@ -37,13 +37,14 @@ html {
 }
 
 body {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+
+  margin: 0;
+  min-height: 100vh;
+
   background-color: @clLightGray;
   color: @clBlack;
-  padding: 0;
-  margin: 0;
-  min-height: 100vh; //~"calc( 100vh - 12px)";
-  display: flex;
-  flex-direction: column;
 }
 
 body.limited {
@@ -697,6 +698,7 @@ body > footer {
 
   font-size: 0.9 * @FontSize;
   clear: both;
+  height: auto;
 
   p {
     margin: 4px 0px 0px 0px;

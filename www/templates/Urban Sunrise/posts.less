@@ -23,6 +23,33 @@ h1.thread_caption {
   .btn {
     background-color: @clYellow;
   }
+
+  .vote {
+    float: right;
+    display: flex;
+    align-items: center;
+
+    span {
+      margin: 0px 1ch;
+      display: inline-block;
+      min-width: 5ch;
+      text-align: right;
+    }
+
+    button {
+      background-color: @clDarkGray;
+      svg {
+        stroke: @clWhite;
+      }
+    }
+
+    .voted {
+      background-color: @clYellow;
+      svg {
+        stroke: @clDarkGray;
+      }
+    }
+  }
 }
 
 

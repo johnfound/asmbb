@@ -9,6 +9,7 @@
   [equ:Invited=Invited: ]
   [equ:Tags=Tags: ]
   [equ:unread=unread]
+  [equ:Rating=Rating]
 |
   [equ:ttlPinned=Забодена отгоре]
   [equ:ttlLimited=Тема с ограничен достъп]
@@ -20,6 +21,7 @@
   [equ:Invited=Поканени: ]
   [equ:Tags=Тагове: ]
   [equ:unread=непрочетен[case:[Unread]|и|о|и]]
+  [equ:Rating=Рейтинг]
 |
   [equ:ttlPinned=Прикрепленная на верху]
   [equ:ttlLimited=Тема ограниченным доступом]
@@ -31,6 +33,7 @@
   [equ:Invited=Приглашенные: ]
   [equ:Tags=Ярлыки: ]
   [equ:unread=непрочитанн[case:[Unread]|ых|ое|ых]]
+  [equ:Rating=Рейтинг]
 |
   [equ:ttlPinned=Sujet épinglé]
   [equ:ttlLimited=Sujet à accès limité]
@@ -42,6 +45,7 @@
   [equ:Invited=Invités: ]
   [equ:Tags=Mots-clés: ]
   [equ:unread=non-lu[case:[Unread]|s||s]]
+  [equ:Rating=Évaluation]
 |
   [equ:ttlPinned=Angeheftetes Thema]
   [equ:ttlLimited=Beschränktes Thema]
@@ -53,6 +57,7 @@
   [equ:Invited=Eingeladen: ]
   [equ:Tags=Tags: ]
   [equ:unread=ungelesene]
+  [equ:Rating=Bewertung]
 ]
 
 <div class="thread_summary">
@@ -88,4 +93,5 @@
   <label><input type="checkbox" class="collapseit"><ul class="small comma posters">[const:Posters][html:[Posters]]</ul></label>
   [case:[limited]||<label><input type="checkbox" class="collapseit"><ul class="small comma invited">[const:Invited][html:[Invited]]</ul></label>]
   [case:[ThreadTags]||<ul class="small comma thread_tags">[const:Tags][html:[ThreadTags]]</ul>]
+  <div class="thread_tags">[const:Rating]: <span id="thread_rating[id]">[Rating]</span></div>
 </div>

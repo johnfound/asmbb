@@ -4,7 +4,7 @@ from
 [case:[special:variant]|
     threads
   where
-    limited = 0
+    limited = 0 -- and Rating > -5
 |
     LimitedAccessThreads
   where

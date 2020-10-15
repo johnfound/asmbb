@@ -7,6 +7,7 @@ select
   t.PostCount,
   t.ReadCount,
   t.Limited,
+  t.Rating,
   (select group_concat('<li><a href="/!userinfo/'||url_encode(nick)||'">'||html_encode(nick)||'</a></li>','')
    from ( select nick from ThreadPosters left join Users on userID = id where threadID = s.threadid order by firstPost limit 10)) as Posters,
 [case:[special:limited]|
@@ -25,7 +26,7 @@ from (
   from
     threads
   where
-    limited = 0
+    limited = 0 -- and Rating > -5
   order by
     LastChanged desc
 |

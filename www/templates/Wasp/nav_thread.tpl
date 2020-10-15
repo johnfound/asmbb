@@ -63,5 +63,22 @@
 [caption]
 [case:[special:canedit]||<a href="!edit_thread" title="[const:ttlEditThread]"><img src="[special:skin]/_images/edit.svg" alt="[const:altEdit]"></a>]
 [case:[special:limited]|<a href="!feed" title="[const:rssfeed]"><img src="[special:skin]/_images/rss.svg" alt="RSS"></a>|]
+
+  <div class="vote">
+    <span class="thread_rating[id]">[Rating]</span>
+    [case:[special:canvote]||
+      <button class="icon_btn vote_dn [case:[VoteStatus]|voted|]" onclick="OnVote(this, -1)">
+        <svg width="16" height="16" version="1.1" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" style="stroke-width:2">
+         <line x1="2" x2="14" y1="8" y2="8" />
+        </svg>
+      </button>
+      <button class="icon_btn vote_up [case:[VoteStatus]|||voted]" onclick="OnVote(this, 1)">
+        <svg width="16" height="16" version="1.1" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" style="stroke-width:2            ">
+         <line x1="0" x2="16" y1="8" y2="8" />
+         <line x1="8" x2="8" y1="0" y2="16" />
+        </svg>
+      </button>
+    ]
+  </div>
 </h1>
 <ul class="thread_tags">[special:threadtags=[id]]</ul>

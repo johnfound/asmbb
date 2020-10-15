@@ -7,6 +7,7 @@
   [equ:tViews=[case:[ReadCount]|views|view|views]]
   [equ:Posters=Participants: ]
   [equ:Invited=Invited: ]
+  [equ:Rating=Rating]
 |
   [equ:ttlPinned=Забодена отгоре]
   [equ:ttlLimited=Тема с ограничен достъп]
@@ -16,6 +17,7 @@
   [equ:tViews=преглед[case:[ReadCount]|а||а]]
   [equ:Posters=Участници: ]
   [equ:Invited=Поканени: ]
+  [equ:Rating=Рейтинг]
 |
   [equ:ttlPinned=Прикрепленная на верху]
   [equ:ttlLimited=Тема ограниченным доступом]
@@ -25,6 +27,7 @@
   [equ:tViews=просмотр[case:[ReadCount]|ов||ов]]
   [equ:Posters=Участники: ]
   [equ:Invited=Приглашенные: ]
+  [equ:Rating=Рейтинг]
 |
   [equ:ttlPinned=Sujet épinglé]
   [equ:ttlLimited=Sujet à accès limité]
@@ -34,6 +37,7 @@
   [equ:tViews=vue[case:[ReadCount]|s||s]]
   [equ:Posters=Participants: ]
   [equ:Invited=Invités: ]
+  [equ:Rating=Évaluation]
 |
   [equ:ttlPinned=Angeheftetes Thema]
   [equ:ttlLimited=Beschränktes Thema]
@@ -43,6 +47,7 @@
   [equ:tViews=[case:[ReadCount]|Ansichten|Ansicht|Ansichten]]
   [equ:Posters=Teilnehmer: ]
   [equ:Invited=Eingeladen: ]
+  [equ:Rating=Bewertung]
 ]
 
 <div class="thread_summary">
@@ -61,6 +66,7 @@
     <span class="small">[TimeChanged]</span>
   </div>
   <div class="col_cnt">
-    [ReadCount]<br>[const:tViews]
+    [ReadCount] [const:tViews]<br>
+    [const:Rating]: <span id="thread_rating[id]">[Rating]</span>
   </div>
 </div>

@@ -13,6 +13,7 @@
   [equ:pChat=Chat]
   [equ:pDownload=Download files]
   [equ:pAttach=Attach files]
+  [equ:pVote=Voting]
   [equ:pAdmin=Administrator]
 
   [equ:ttlSettings=Forum engine settings]
@@ -59,6 +60,7 @@
   [equ:pChat=Използване на чата]
   [equ:pDownload=Сваляне на файлове]
   [equ:pAttach=Прикачане на файлове]
+  [equ:pVote=Гласуване]
   [equ:pAdmin=Администратор]
 
   [equ:ttlSettings=Настройки на форума]
@@ -105,6 +107,7 @@
   [equ:pChat=Чат]
   [equ:pDownload=Скачивать файлы]
   [equ:pAttach=Прикреплять файлы]
+  [equ:pVote=Голосовать]
   [equ:pAdmin=Администратор]
 
   [equ:ttlSettings=Настройки форума]
@@ -151,6 +154,7 @@
   [equ:pChat=Tchat]
   [equ:pDownload=Télécharger des fichiers]
   [equ:pAttach=Joindre des fichiers]
+  [equ:pVote=Vote]
   [equ:pAdmin=Administrateur]
 
   [equ:ttlSettings=Paramètres du forum]
@@ -197,6 +201,7 @@
   [equ:pChat=Chatten]
   [equ:pDownload=Dateien herunterladen]
   [equ:pAttach=Dateien anhängen]
+  [equ:pVote=Abstimmung]
   [equ:pAdmin=Administrator]
 
   [equ:ttlSettings=Einstellungen der Forenengine]
@@ -298,6 +303,7 @@
         <li><input type="checkbox" [user_perm8]  name="user_perm" id="up8"  value="256"><label for="up8">[const:pChat]</label></li>
         <li><input type="checkbox" [user_perm9]  name="user_perm" id="up9"  value="512"><label for="up9">[const:pDownload]</label></li>
         <li><input type="checkbox" [user_perm10] name="user_perm" id="up10" value="1024"><label for="up10">[const:pAttach]</label></li>
+        <li><input type="checkbox" [user_perm11] name="user_perm" id="up11" value="2048"><label for="up11">[const:pVote]</label></li>
         <li><input type="checkbox" [user_perm31] name="user_perm" id="up31" value="$80000000"><label for="up31">[const:pAdmin]</label></li>
       </ul>
       <h3>[const:ttlPermGuests]:</h3>

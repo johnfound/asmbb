@@ -212,7 +212,7 @@ CREATE VIRTUAL TABLE PostFTS using fts5(
   Caption,
   slug,
   User,
-  Tags, prefix="1 2 3", tokenize='porter unicode61 remove_diacritics 1'
+  Tags, prefix="1 2 3", tokenize="porter unicode61 remove_diacritics 2 tokenchars '!""#$%&''()*+,-./:;<=>?@[\]^_`{|}~'"
 );
 
 insert into PostFTS (
@@ -268,3 +268,17 @@ where
   g.addr in (select distinct remoteIP from userlog where userid = (select id from users where nick ="SOMEUSERNAME"))
 order by
   gr.time;
+
+
+
+-- Reports the users entering throuth the given IP address.
+
+select
+  userid,
+  nick
+from
+  userlog left join users on id = userid
+where
+  (remoteIP >> 24 & 255)||'.'||(remoteIP >> 16 & 255)||'.'||(remoteIP >> 8 & 255)||'.'||(remoteIP & 255) = 'AA.BB.CC.DD'
+group by
+  userid;

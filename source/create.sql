@@ -110,7 +110,8 @@ create table Threads (
   Pinned      integer default 0,
   PostCount   integer default 0,
   ReadCount   integer default 0,
-  Limited     integer default 0
+  Limited     integer default 0,
+  Rating      integer default 0
 );
 
 create index idxThreadsPinnedLastChangedLimited on threads (Limited, Pinned desc, Lastchanged desc);
@@ -126,6 +127,29 @@ create table ThreadPosters (
 
 create unique index idxThreadPosters on ThreadPosters(threadID, userID);
 create index idxThreadPostersOrder on ThreadPosters(threadid, firstPost, userid);
+
+
+create table ThreadVoters (
+  threadID integer references Threads(id) on delete cascade on update cascade,
+  userID   integer references Users(id) on delete cascade on update cascade,
+  Vote     integer
+);
+
+create unique index idxThreadVoters on ThreadVoters(threadID, userID);
+
+create trigger ThreadVotersAU after update on ThreadVoters begin
+  update Threads set Rating = Rating - old.Vote + new.Vote where id = new.threadID;
+end;
+
+create trigger ThreadVotersAD after delete on ThreadVoters begin
+  update Threads set Rating = Rating - old.Vote where id = old.threadID;
+end;
+
+create trigger ThreadVotersAI after insert on ThreadVoters begin
+  update Threads set Rating = Rating + new.Vote where id = new.threadID;
+end;
+
+
 
 
 create table ThreadsHistory (
@@ -206,7 +230,14 @@ create table PostsHistory (
 
 create unique index idxPostsHistory on PostsHistory(postID, Content);
 
-CREATE VIRTUAL TABLE PostFTS using fts5(Content, Caption, slug, User, Tags, prefix="1 2 3", tokenize='porter unicode61 remove_diacritics 1');
+CREATE VIRTUAL TABLE PostFTS using fts5(
+  Content,
+  Caption,
+  slug,
+  User,
+  Tags, prefix="1 2 3", tokenize="porter unicode61 remove_diacritics 2 tokenchars '!""#$%&''()*+,-./:;<=>?@[\]^_`{|}~'"
+);
+
 
 CREATE TRIGGER PostsAI AFTER INSERT ON Posts BEGIN
   insert into PostFTS(rowid, Content, Caption, slug, user, tags) VALUES (

@@ -67,9 +67,9 @@
 
 <div class="post [case:[unread]||unread]" id="[id]">
   <div class="post_text">
-    [case:[UserID]||<a class="user_name" title="[UserName] profile." href="/!userinfo/[url:[UserName]]">]
+    [case:[UserID]||<a class="user_name" title="[UserName] profile." href="/!userinfo/[url:[html:[UserName]]]">]
       <span class="nickname">[usr:[UserName]]</span>
-      <img width="96" height="96" class="avatar" alt="(ツ)" src="/!avatar/[url:[UserName]]?v=[AVer]">
+      <img width="96" height="96" class="avatar" alt="(ツ)" src="/!avatar/[url:[html:[UserName]]]?v=[AVer]">
     [case:[UserID]||</a>]
     <article>
       [html:[[case:[format]|minimag:[include:minimag_suffix.tpl]|bbcode:][Content]]]
@@ -82,7 +82,7 @@
   <div class="post_info">
     <a href="#[id]">#[id]</a>
     <div class="last_edit">
-      [case:[EditUser]|[const:tCreated]|[const:tEdited] <a href="/!userinfo/[url:[EditUser]]">[usr:[EditUser]]</a>], [const:tRead]
+      [case:[editUserID]|[const:tCreated]|[const:tEdited] <a href="/!userinfo/[url:[html:[EditUser]]]">[usr:[EditUser]]</a>], [const:tRead]
     </div>
     <div class="edit_tools">
       [case:[special:canpost]||<a class="btn round" title="[const:ttlQuote]" href="[id]/!post">

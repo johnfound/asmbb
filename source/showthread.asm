@@ -8,7 +8,7 @@ sqlCheckAccess   text "select not count() or sum(userID = ?2) from LimitedAccess
 sqlGetPostCount  text "select PostCount from threads where id = ?1"
 
 ; IMPORTANT: userID is needed because of [special:canedit] template statement!
-sqlGetThreadInfo text "select T.id, T.caption, (select userID from Posts where threadID=T.id order by id limit 1) as UserID, Limited from Threads T where T.slug = ?1"
+sqlGetThreadInfo StripText "threadinfo.sql"
 
 sqlIncReadCount  text "update PostCNT set Count = Count + 1 where postid in ("
 sqlSetPostsRead  text "delete from UnreadPosts where UserID = ?1 and PostID in ("
@@ -85,6 +85,7 @@ begin
 
         stdcall StrPtr, [esi+TSpecialParams.thread]
         cinvoke sqliteBindText, [.stmt2], 1, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteBindInt, [.stmt2], 2, [esi+TSpecialParams.userID]
 
         cinvoke sqliteStep, [.stmt2]
         cmp     eax, SQLITE_ROW
@@ -128,7 +129,9 @@ begin
         jz      .limited_not_for_you
 
 .have_access:
-        stdcall TextCat, edi, txt '<div class="thread">'
+        stdcall RenderTemplate, edi, "thread.js", [.stmt2], esi
+
+        stdcall TextCat, eax, txt '<div class="thread">'
         stdcall RenderTemplate, edx, "nav_thread.tpl", [.stmt2], esi
         mov     edi, eax
 
@@ -220,7 +223,7 @@ begin
         stdcall StrDel, eax
         stdcall StrCat, ebx, txt '</a>'
 
-        stdcall AddActivity, ebx, [esi+TSpecialParams.userID] ; fBot flag from the stack.
+        stdcall AddActivity, ebx, atReading, [esi+TSpecialParams.userID] ; fBot flag from the stack.
         stdcall StrDel, ebx
 
 .notifications_ok:
@@ -441,7 +444,7 @@ endp
 
 
 
-sqlGetThreadID text "select P.ThreadID, T.Slug, T.Limited from Posts P left join Threads T on P.threadID = T.id where P.id = ?"
+sqlGetThreadForPost text "select P.ThreadID, T.Slug, T.Limited from Posts P left join Threads T on P.threadID = T.id where P.id = ?"
 
 sqlGetThePostIndex text "select count() from Posts p where threadID = ?1 and id < ?2"
 
@@ -465,7 +468,7 @@ begin
 ; get the thread ID and slug
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadID, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadForPost, -1, eax, 0
 
         cinvoke sqliteBindInt, [.stmt], 1, [.postID]
 

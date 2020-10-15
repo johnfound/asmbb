@@ -539,8 +539,31 @@ endl
 
         cinvoke sqliteFinalize, [.stmt]
 
+; Here the post has been written. Notify the users for the new post.
+
+        stdcall UserNameLink, [.pSpecial]
+        mov     ebx, eax
+        push    edx             ; see below the AddActivity call
+
+        mov     eax, DEFAULT_UI_LANG
+        stdcall GetParam, "default_lang", gpInteger
+        stdcall StrCat, ebx, [cActivityNewPost + 8*eax]
+
+        stdcall StrCat, ebx, txt '<a href="/'
+
+        stdcall NumToStr, esi, ntsDec or ntsUnsigned
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+
+        stdcall StrCat, ebx, txt '/!by_id">▶</a>'
+
         mov     eax, [.pSpecial]
-        stdcall StrRedirectToPost, esi, eax
+        stdcall AddActivity, ebx, atPosting, [eax+TSpecialParams.userID] ; fBot flag from the stack.
+        stdcall StrDel, ebx
+
+; then redirect the user to the new post.
+
+        stdcall StrRedirectToPost, esi, [.pSpecial]
         stdcall TextMakeRedirect, edi, eax
         stdcall StrDel, eax
 

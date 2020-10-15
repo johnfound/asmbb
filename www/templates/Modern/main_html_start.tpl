@@ -250,7 +250,7 @@
 
   [case:[special:userid]
       |<a class="btn" href="/!login/">[const:Login]</a> [case:[special:canregister]||<a class="btn" href="/!register/">[const:Register]</a>]
-      |<form method="POST" action="/!logout"><input class="btn" type="submit" name="logout" value="[const:Logout] ([special:username])"></form>
+      |<form method="POST" action="/!logout"><input class="btn" type="submit" name="logout" value="[const:Logout] ([enc:[special:username]])"></form>
       <a class="btn" href="/!userinfo/[url:[special:username]]">[const:Profile]</a>
   ]
 

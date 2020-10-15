@@ -24,6 +24,36 @@ h1.thread_caption {
       font-size: 16px;
     }
   }
+
+  .vote {
+    float: right;
+    display: flex;
+    align-items: center;
+
+    span {
+      margin: 0px 1ch;
+      display: inline-block;
+      min-width: 5ch;
+      text-align: right;
+    }
+
+    button {
+      background-color: @clDarkBG;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      svg {
+        stroke: @clDarkFG;
+      }
+    }
+
+    .voted {
+      background-color: @clButtonBG;
+      svg {
+        stroke: @clButtonFG;
+      }
+    }
+  }
 }
 
 .thread_tags {

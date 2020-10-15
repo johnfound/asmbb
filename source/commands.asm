@@ -18,6 +18,8 @@ permChat        = 256
 permDownload    = 512           ; Can download the attached files.
 permAttach      = 1024          ; Can attach/edit/delete files to posts.
 
+permVote        = 2048          ; Can vote for threads rating.
+
 permAdmin       = $80000000
 
 
@@ -99,6 +101,7 @@ PHashTable tablePreCommands, tpl_func,                  \
 
 
 PHashTable tablePostCommands, tpl_func,                 \
+        "!vote",            Vote,                       \
         "!markread",        MarkThreadRead,             \
         "!unread",          GotoFirstUnread,            \
         "!post",            PostUserMessage,            \

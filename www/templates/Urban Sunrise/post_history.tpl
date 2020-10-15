@@ -20,11 +20,11 @@
   [equ:ttlRestore=Beitrag auf diese Version zurücksetzen.]
 ]
 
-[case:[EditUser]|
-  [equ:ttlUser=[PostUser]]
+[case:[editUserID]|
+  [equ:ttlUser=[html:[PostUser]]]
   [equ:averUser=[AVerP]]
 |
-  [equ:ttlUser=[EditUser]]
+  [equ:ttlUser=[html:[EditUser]]]
   [equ:averUser=[AVerE]]
 ]
 
@@ -35,9 +35,9 @@
 
     <img class="avatar" alt="(ツ)" src="/!avatar/[url:[const:ttlUser]]?v=[const:averUser]">
 
-    <a href="/!userinfo/[url:[const:ttlUser]]" class="user_name">[const:ttlUser]</a>
+    <a href="/!userinfo/[url:[const:ttlUser]]" class="user_name">[usr:[const:ttlUser]]</a>
 
-    <div>[case:[EditUser]|[const:tCreated]|[const:tEdited]] <a href="/!userinfo/[url:[const:ttlUser]]">[const:ttlUser]</a></div>
+    <div>[case:[editUserID]|[const:tCreated]|[const:tEdited]] <a href="/!userinfo/[url:[const:ttlUser]]">[usr:[const:ttlUser]]</a></div>
 
     <div class="spacer"></div>
 

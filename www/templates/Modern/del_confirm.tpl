@@ -10,11 +10,11 @@ Delete [case:[cnt_thread]| |post and thread|post]|
 Supprimer le [case:[cnt_thread]| |sujet et le message|message]|
 [case:[cnt_thread]| |Beitrag und Thema|Beitrag] löschen]?</h1>
     [case:[special:lang]|
-<p>Do you <b>really</b> want to delete the post written by <b>"[UserName]"</b>?</p>|
-<p><b>Наистина</b> ли искате да изтриете мнението на <b>"[UserName]"</b>?</p>|
-<p>Вы <b>действительно</b> хотите удалить мнение <b>"[UserName]"</b>?</p>|
-<p>Voulez-vous <b>vraiment</b> supprimer le message écrit par <b>"[UserName]"</b>?</p>|
-<p>Wollen Sie <b>wirklich</b> den Beitrag von <b>"[UserName]"</b> löschen?</p>]
+<p>Do you <b>really</b> want to delete the post written by <b>"[usr:[UserName]]"</b>?</p>|
+<p><b>Наистина</b> ли искате да изтриете мнението на <b>"[usr:[UserName]]"</b>?</p>|
+<p>Вы <b>действительно</b> хотите удалить мнение <b>"[usr:[UserName]]"</b>?</p>|
+<p>Voulez-vous <b>vraiment</b> supprimer le message écrit par <b>"[usr:[UserName]]"</b>?</p>|
+<p>Wollen Sie <b>wirklich</b> den Beitrag von <b>"[usr:[UserName]]"</b> löschen?</p>]
     <div class="post_preview">
       <div class="post_text">
         <article>

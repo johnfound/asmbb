@@ -35,9 +35,9 @@
   [equ:ttlSeen=Zuletzt gesehen]
 ]
 
-<a class="oneuser" href="/!userinfo/[url:[nick]]">
-    <div class="nick">[nick]</div>
-    <img class="avatar" src="/!avatar/[url:[nick]]?v=[av_time]" alt=":)">
+<a class="oneuser" href="/!userinfo/[url:[html:[UserName]]]">
+    <div class="nick">[usr:[UserName]]</div>
+    <img class="avatar" src="/!avatar/[url:[html:[UserName]]]?v=[av_time]" alt=":)">
     <div><span>[const:ttlSkin]: </span>[case:[Skin]|default|[Skin]]</div>
     <div><span>[const:ttlPostCnt]: </span>[PostCount]</div>
     <div class="small"><span>[const:ttlRegist]: </span>[case:[fRegister]|[const:ttlLong]|[RegisterStr]]</div>

@@ -22,10 +22,10 @@
   </div>
   <div class="post_sum">
     <div class="avatar">
-      <img class="smallavatar" src="/!avatar/[url:[username]]?v=[AVer]">
+      <img class="smallavatar" src="/!avatar/[url:[html:[UserName]]]?v=[AVer]">
     </div>
     <pre>[content]</pre>
     <a class="block_link" href="../[rowid]/!by_id">[const:tMore]</a>
   </div>
-  <div class="user_name">Posted by: <a href="/!userinfo/[url:[UserName]]">[UserName]</a></div>
+  <div class="user_name">Posted by: <a href="/!userinfo/[url:[html:[UserName]]]">[usr:[UserName]]</a></div>
 </div>

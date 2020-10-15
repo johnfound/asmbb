@@ -131,12 +131,41 @@ span.nickname {
   border-radius: @Radius;
   box-shadow: @Shadow;
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   font-size: 24px;
   a {
     margin: 0px 0px 0px @marginX;
     svg {
       margin: 0px;
+    }
+  }
+
+  .vote {
+    float: right;
+    display: flex;
+    align-items: center;
+
+    span {
+      margin: 0px 1ch;
+      display: inline-block;
+      min-width: 5ch;
+      text-align: right;
+    }
+
+    button {
+      background-color: @clButtonBG;
+      margin-left: 4px;
+      svg {
+        stroke: @clButtonFG;
+      }
+    }
+
+    .voted {
+      background-color: @clButtonActiveBG;
+      svg {
+        stroke: @clButtonActiveFG;
+      }
     }
   }
 }

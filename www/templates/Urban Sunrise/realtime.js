@@ -174,7 +174,7 @@ var ActivityTimeout = 5000;
 var MessageTimeout = 15000;
 var StartTime = -1;
 
-var WantEvents = 0x0c;
+var WantEvents = 0x0c;       // evUserActivity or evMessage
 var listSourceEvents = [];
 
 var Activities = {};
@@ -248,16 +248,17 @@ listSourceEvents.push(
 
 
 
-
 function OnActivity(e) {
   var act = JSON.parse(e.data);
   if ( ! act.robot ) {
     if (Activities[act.userid] !== act.activity) {
       Activities[act.userid] = act.activity;
+      var timeout = ActivityTimeout;
+      if (act.type === "post") { timeout *= 10 };
       var toast = new Toast(
           {
             content: decodeURIComponent(act.activity),
-            timeout: ActivityTimeout,
+            timeout: timeout,
             position: TosterAlign,
             type: 'info'
           }, 0);
