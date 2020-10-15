@@ -90,25 +90,27 @@ input.settings, select.settings {
   font-size: @FontSize;
   outline: none;
   margin: 4px 0px;
-  border: 1px solid @clGray;
 
   background-color: @clWhite;
   color: @clBlack;
   width: 100%;
-  &:focus {
-    border: 1px solid @clYellow;
-  }
 }
+
+input.number {
+  flex-grow: 0 !important;
+  font-size: @FontSize;
+  outline: none;
+  margin: 4px 4px 4px 0px;
+  width: 6ch;
+  text-align: right;
+}
+
 
 textarea.settings {
   width: 100%;
   white-space: pre;
   resize: vertical;
   padding: @margin/2;
-  border: 1px solid @clGray;
-  &:focus {
-    border: 1px solid @clYellow;
-  }
 }
 
 

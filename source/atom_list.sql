@@ -21,5 +21,5 @@ from
 where
   limited = 0
 order by
-  LastChanged desc
+  (Pinned > 1) desc, LastChanged desc
 limit ?1;

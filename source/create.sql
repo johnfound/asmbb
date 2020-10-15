@@ -114,9 +114,8 @@ create table Threads (
   Rating      integer default 0
 );
 
-create index idxThreadsPinnedLastChangedLimited on threads (Limited, Pinned desc, Lastchanged desc);
-create index idxThreadsPinnedLastChanged on Threads (Pinned desc, Lastchanged desc);  -- needed for the old threadlist sql!
-create index idxThreadsLimitedLastChanged on Threads(Limited, LastChanged desc);
+
+create index idxThreadsLimitedPinnedLastChanged on threads (Limited, (Pinned > 1) desc, LastChanged desc);
 create index idxThreadsSlug on Threads (Slug);
 
 create table ThreadPosters (

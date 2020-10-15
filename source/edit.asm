@@ -536,9 +536,9 @@ begin
         test    eax, eax
         jz      .pinned_ok
 
-        stdcall StrDel, eax
-        xor     eax, eax
-        inc     eax
+        push    eax
+        stdcall StrToNumEx, eax
+        stdcall StrDel ; from the stack
 
 .pinned_ok:
         mov     [.pinned], eax

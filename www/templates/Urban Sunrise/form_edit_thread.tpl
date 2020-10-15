@@ -6,7 +6,7 @@
   [equ:phTitle=Thread title]
   [equ:ttlTags=Tags: <span class="small">(max 3, comma delimited, no spaces)</span>]
   [equ:phTags=some tags here]
-  [equ:ttlPin=Pin the thread on top]
+  [equ:ttlPin=Important thread, rank]
   [equ:ttlLimited=Limited access thread]
   [equ:ttlInvited=Invited users (comma separated list)]
   [equ:btnSubmit=Submit]
@@ -16,7 +16,7 @@
   [equ:phTitle=Заглавие на темата]
   [equ:ttlTags=Тагове: <span class="small">(макс. 3, разделени със запетаи, без шпации)</span>]
   [equ:phTags=някакви тагове тук]
-  [equ:ttlPin=Дръж темата най-отгоре]
+  [equ:ttlPin=Важна тема ранг.]
   [equ:ttlLimited=Тема с ограничен достъп]
   [equ:ttlInvited=Поканени в темата (разделени със запетаи)]
   [equ:btnSubmit=Запиши]
@@ -26,7 +26,7 @@
   [equ:phTitle=Название темы]
   [equ:ttlTags=Ярлыки: <span class="small">(макс. 3, через запятую, без пробелов)</span>]
   [equ:phTags=теги пишутся здесь]
-  [equ:ttlPin=Закрепить наверху]
+  [equ:ttlPin=Важная тема, ранг]
   [equ:ttlLimited=Тема с ограниченным доступом]
   [equ:ttlInvited=Приглашенные участники (список через запятую)]
   [equ:btnSubmit=Записать]
@@ -36,7 +36,7 @@
   [equ:phTitle=Titre du sujet]
   [equ:ttlTags=Mots-clés: <span class="small">(3 maximum, séparés par une virgule t sans espace)</span>]
   [equ:phTags=quelques mots-clés]
-  [equ:ttlPin=Épingler ce sujet]
+  [equ:ttlPin=Sujet important, classement]
   [equ:ttlLimited=Sujet restreint]
   [equ:ttlInvited=Inviter des utilisateurs (séparés par une virgule)]
   [equ:btnSubmit=Soumettre]
@@ -46,7 +46,7 @@
   [equ:phTitle=Titel des Themas]
   [equ:ttlTags=Tags: <span class="small">(max. 3, durch Kommas getrennt, keine Leerzeichen)</span>]
   [equ:phTags=hier einige Tags]
-  [equ:ttlPin=Das Thema oben anheften]
+  [equ:ttlPin=Wichtiges Thema, Rang]
   [equ:ttlLimited=Thema mit beschränktem Zugang]
   [equ:ttlInvited=Eingeladene Mitglieder (durch Kommas getrennt)]
   [equ:btnSubmit=Absenden]
@@ -74,9 +74,9 @@
   <h3>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</h3>
   <input class="settings" type="text" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
 
-  <div class="checkbox">
-  [case:[special:isadmin]||<input type="checkbox" id="pinned" name="pinned" value="1" [case:[Pinned]||checked]><label for="pinned">[const:ttlPin]</label>]
-  </div>
+  [case:[special:isadmin]||
+    <h3><input class="number" type="text" value="[Pinned]" name="pinned"> [const:ttlPin]</h3>
+  ]
 
   <div class="dropdown checkbox">
     <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]>
