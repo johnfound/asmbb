@@ -1,5 +1,5 @@
-C Added\sREADME.md\sfile.
-D 2020-10-09T19:04:35.703
+C Use\sgrid\sfor\sthe\sbody\slayout\sof\sthe\s"Urban\sSunrise"\stheme.
+D 2020-10-15T12:50:00.617
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md a499839b10e03acbdc84fa10a5abb1efec319693
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -611,7 +611,7 @@ F www/templates/Urban\sSunrise/autocomplete.js 7f821fe4b74d465ef6042714c91ced568
 F www/templates/Urban\sSunrise/chat.js af2f7194df2c16f49ae8b77bf014f160f2984385
 F www/templates/Urban\sSunrise/chat.less 7e3affa9b2e5a2826cd61bb77f484c0df1b8f190
 F www/templates/Urban\sSunrise/chat.tpl 5141a052cd4911ab8af4a380bc25614d41050b7d
-F www/templates/Urban\sSunrise/common.less 01b2db6c2b2acf8f6a87fa77c70208a9a4c4a208
+F www/templates/Urban\sSunrise/common.less 5de103fd96aeff7542a96c39c36fcefba055eaec
 F www/templates/Urban\sSunrise/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Urban\sSunrise/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001
 F www/templates/Urban\sSunrise/debug.less 9a989f4670bb3d584f60c57d50af9fbf9bf75117
@@ -927,7 +927,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 0a9a864e07607b33bfd733ac9a345cfc73bbf7c4
-R d177a2314043283449deaca6167eec94
+P 0c12c8f2473653d6b96eacd05269beb9a6e92a99
+R 501fc259bf616da180d7e81edb275e57
 U johnfound
-Z 348a749881e7bd85a4a926fc4b79becd
+Z 83f01ebc589624c696a4c72d0ddf9a9d
