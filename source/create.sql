@@ -116,7 +116,6 @@ create table Threads (
 
 
 create index idxThreadsLimitedPinnedLastChanged on threads (Limited, (Pinned > 1) desc, LastChanged desc);
-create index idxThreadsSlug on Threads (Slug);
 
 create table ThreadPosters (
   firstPost   integer references Posts(id) on delete cascade on update cascade,

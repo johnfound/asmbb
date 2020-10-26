@@ -1,5 +1,5 @@
-C Implement\spinned\sthreads\sof\sdifferent\srank.
-D 2020-10-15T16:46:14.198
+C Don't\sshow\slinks\sto\sthe\sLAT\sin\sthe\susers\sonline\slist.
+D 2020-10-26T20:49:47.090
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -37,7 +37,7 @@ F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm 931a8f7c9335462e79502e2b580016623bfeeff7
 F source/commands.asm 31b74510aa8602e3ac76bea8980018f0560bd4d4
-F source/create.sql 7dec3eebb19d63af363db5baed08b6bd13cd200d
+F source/create.sql 651198c3a4cbacc4c84bcb570e44681f5184b44d
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 097489a8a33810ef4dbaa8f98143cc5ee6c50e8b
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
@@ -96,7 +96,7 @@ F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
 F source/userinfo.asm 010a2ba73acd014cd558c39aae3b9915266dc9e3
 F source/userinfo.sql 51174039802a2af4eac412deb9d36b27fd1ade8a
 F source/users_online.asm a730d7a2a7af9604c20523307b6a516c6be5af43
-F source/users_online.sql 615346c705099d4fed2fe5ea985efa429156075c
+F source/users_online.sql 053a69c4fa8146ad5dfbaa2f0200dd717f61e0c1
 F source/userslist.asm ad6c2bc2cc22ef3dc7202c0310754ef1d5afabb3
 F source/userslist.sql e4b2f4dfbc0e4911c07985a67d6d36384698111b
 F source/util.sql e346fefbfd8214e204527aa3a88c766de5d1f9b8
@@ -461,27 +461,6 @@ F www/templates/Modern/_images/source/toolbar/underlined.svg 8601f9059e769127dad
 F www/templates/Modern/_images/source/toolbar/wink.svg 61a5c40a45f315fc71ab05f70ce01740f5dbb503
 F www/templates/Modern/activation_email_subject.tpl fbe97e27a9a6cf59c9d590233479925d2836552c
 F www/templates/Modern/activation_email_text.tpl 20d2ce60e7df3923651b8cda1a38ce0d260eaf92
-F www/templates/Modern/activity0.tpl c91e8781a391ee4e8a7b99a015a86f123958061f
-F www/templates/Modern/activity1.tpl 0c61809a8d656d8322c68857bca119ea025845a2
-F www/templates/Modern/activity10.tpl 840045afa04bcc615c29a3e95c0b657ae9b2860a
-F www/templates/Modern/activity11.tpl 615ab0fbba523ec765804917dabe3c76f847e4f6
-F www/templates/Modern/activity12.tpl a07261fb42321b259826782f2548da188e02d189
-F www/templates/Modern/activity13.tpl 051346b5cb21da0d9adaa225eddb028f5ee83480
-F www/templates/Modern/activity14.tpl 90fcd95496e6a8758716383a13e7aa9797e57526
-F www/templates/Modern/activity15.tpl f421a9f214aa75493e819377efff9a854db142e2
-F www/templates/Modern/activity16.tpl bdca79d39c2efe87deb81e51f98460f0a115fc7d
-F www/templates/Modern/activity17.tpl 21d5668413ba7cc822b737bad70aa2429bd39c36
-F www/templates/Modern/activity18.tpl e889e1978671d419e079a6f7f202449500c605e7
-F www/templates/Modern/activity19.tpl fc63dbc03856fb87a7610e6e421be0375b9c6209
-F www/templates/Modern/activity2.tpl 8bbf74807152c4737832a44a4b71008daf22cbff
-F www/templates/Modern/activity20.tpl b094b4805c181f7c51505bc2037d5979df589b55
-F www/templates/Modern/activity3.tpl 278b5fbcde2c55ce10382691f4434b129782f234
-F www/templates/Modern/activity4.tpl 9f15b1c30d34caf705fd8f9b9df2e9fb9e2d954a
-F www/templates/Modern/activity5.tpl ebc215b4ccbb057bffdaa16538473757c5879691
-F www/templates/Modern/activity6.tpl 8183551cc7d489d3fef5f42dba5d275ce1120278
-F www/templates/Modern/activity7.tpl e25bb04eb0b2e06619095bc1f2165d989fb93460
-F www/templates/Modern/activity8.tpl 312c9c2b7443e8c135a1ad8124d0415d780fffc9
-F www/templates/Modern/activity9.tpl 9f354c2dd3b3a9d3c171e7230a88aaf3b074b848
 F www/templates/Modern/atom_entry_post.tpl b909b679b9c4ea1723cf9ca5827c2fba527bf589 l
 F www/templates/Modern/atom_entry_thread.tpl d6f76cb18d5e725a3708a966e9e8720ca643a239 l
 F www/templates/Modern/atom_start.tpl d47f23ad78f9717598c748c2b37f812d56a4ccdb l
@@ -738,7 +717,7 @@ F www/templates/Wasp/activity0.tpl c91e8781a391ee4e8a7b99a015a86f123958061f
 F www/templates/Wasp/activity1.tpl 0c61809a8d656d8322c68857bca119ea025845a2
 F www/templates/Wasp/activity10.tpl 840045afa04bcc615c29a3e95c0b657ae9b2860a
 F www/templates/Wasp/activity11.tpl 615ab0fbba523ec765804917dabe3c76f847e4f6
-F www/templates/Wasp/activity12.tpl a07261fb42321b259826782f2548da188e02d189
+F www/templates/Wasp/activity12.tpl 83d33d069df67035926d2235b0a895f4f6fdc22c
 F www/templates/Wasp/activity13.tpl 051346b5cb21da0d9adaa225eddb028f5ee83480
 F www/templates/Wasp/activity14.tpl 90fcd95496e6a8758716383a13e7aa9797e57526
 F www/templates/Wasp/activity15.tpl f421a9f214aa75493e819377efff9a854db142e2
@@ -750,8 +729,8 @@ F www/templates/Wasp/activity2.tpl 8bbf74807152c4737832a44a4b71008daf22cbff
 F www/templates/Wasp/activity20.tpl b094b4805c181f7c51505bc2037d5979df589b55
 F www/templates/Wasp/activity3.tpl 278b5fbcde2c55ce10382691f4434b129782f234
 F www/templates/Wasp/activity4.tpl 9f15b1c30d34caf705fd8f9b9df2e9fb9e2d954a
-F www/templates/Wasp/activity5.tpl ebc215b4ccbb057bffdaa16538473757c5879691
-F www/templates/Wasp/activity6.tpl 8183551cc7d489d3fef5f42dba5d275ce1120278
+F www/templates/Wasp/activity5.tpl 9de7748a3730f3244cbfb10347f6a7f0de47dad8
+F www/templates/Wasp/activity6.tpl 27cae99fb2361fdac51f9ab25fc037550ad91e9d
 F www/templates/Wasp/activity7.tpl e25bb04eb0b2e06619095bc1f2165d989fb93460
 F www/templates/Wasp/activity8.tpl 312c9c2b7443e8c135a1ad8124d0415d780fffc9
 F www/templates/Wasp/activity9.tpl 9f354c2dd3b3a9d3c171e7230a88aaf3b074b848
@@ -927,7 +906,10 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 84e300a3b7f36f0f726ba599ba8944781c9047fc
-R e4bd1ff82339484eff0596e843c50a34
+P 072c21edcbadbc514a023c85ebd28bd9d5e815fb
+R 9c3b98abaa7503e35ad5bac10358af98
+T *branch * LATbug
+T *sym-LATbug *
+T -sym-trunk *
 U johnfound
-Z 27bef5b5719315b699f80144a7cd4d65
+Z bd856525c43e0e522b2af815d594d520
