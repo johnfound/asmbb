@@ -1,5 +1,5 @@
-C empty\scommit
-D 2020-10-26T21:15:18.447
+C Create\snew\sbranch\snamed\s"LATbug2"
+D 2020-10-26T21:20:56.276
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -906,7 +906,10 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 7be3ff8d0c4899f9e56be1f3d11f3caf41ae00ec
+P 7ca5d27564c269342120bcd7050e08a5680cc330
 R 9c3b98abaa7503e35ad5bac10358af98
+T *branch * LATbug2
+T *sym-LATbug2 *
+T -sym-LATbug *
 U johnfound
-Z 90573f641e06bc1bd38882aaf13e5946
+Z be72c027202aabb109831c5c63a59a30
