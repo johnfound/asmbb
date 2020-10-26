@@ -1,1 +1,0 @@
-<a href="/!chat">[case:[special:lang]|Chatting|В чата|В чате|En tchat|Im Chat].</a>
