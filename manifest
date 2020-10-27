@@ -1,5 +1,5 @@
-C \s\ssymlinks
-D 2020-10-26T22:33:59.553
+C Some\soptimizations\sfor\sthe\susers_online\squery.\sHide,\sthe\sprivate\sdetails.\sRelated\sstyling.
+D 2020-10-27T11:55:20.776
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -37,7 +37,7 @@ F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm 931a8f7c9335462e79502e2b580016623bfeeff7
 F source/commands.asm 31b74510aa8602e3ac76bea8980018f0560bd4d4
-F source/create.sql 651198c3a4cbacc4c84bcb570e44681f5184b44d
+F source/create.sql 605509cea93f7bd5006d35bea53779d58aab791a
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 097489a8a33810ef4dbaa8f98143cc5ee6c50e8b
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
@@ -75,7 +75,7 @@ F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm 3123d67b30fd4e86b0716cf0a6387e9c8b0fc91c
 F source/settings.sql 066cc77197d5fae94fb27c2bd72aabb2c4b85d8a
-F source/showthread.asm 20974bc3cec7bd948eeae542b99be4df991ccede
+F source/showthread.asm d611650014b8378d66b439b61c75b4911d5ce59c
 F source/showthread.sql 1ee08ed9c69a07ca5c60fc639e73333405e14d37
 F source/sqlite3.asm df3a5ea387f60d719fd83c33411b8151ad1a6d77
 F source/sqlite_console.asm 0090f97aebfd05dec748b3b98e7d43fba65b0064
@@ -96,7 +96,7 @@ F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
 F source/userinfo.asm 010a2ba73acd014cd558c39aae3b9915266dc9e3
 F source/userinfo.sql 51174039802a2af4eac412deb9d36b27fd1ade8a
 F source/users_online.asm a730d7a2a7af9604c20523307b6a516c6be5af43
-F source/users_online.sql 053a69c4fa8146ad5dfbaa2f0200dd717f61e0c1
+F source/users_online.sql 108357df59731f8f084321670cb08fbaa3d18cd8
 F source/userslist.asm ad6c2bc2cc22ef3dc7202c0310754ef1d5afabb3
 F source/userslist.sql e4b2f4dfbc0e4911c07985a67d6d36384698111b
 F source/util.sql e346fefbfd8214e204527aa3a88c766de5d1f9b8
@@ -677,7 +677,7 @@ F www/templates/Urban\sSunrise/threadnew.less 5a4763e82b7635a7288925cd86cb785b92
 F www/templates/Urban\sSunrise/toaster.less 9f202e1b25a46eadbd672bf37a0185a84bf856a4
 F www/templates/Urban\sSunrise/userinfo.less 3f513169b2ebedd5cb4787877587e50d7ccf8ea6
 F www/templates/Urban\sSunrise/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
-F www/templates/Urban\sSunrise/users_online.less 1965f5016a3cbb2fe1f3d403d245fc42b7fdb898
+F www/templates/Urban\sSunrise/users_online.less a7a2e133904e06c2f37db40f3605784a6a1ead65
 F www/templates/Urban\sSunrise/userslist.less ec1e6eef4a20099688911201883ec818733fc43e
 F www/templates/Urban\sSunrise/userslist_ftr.tpl cdf4bf8f51f450a842d85ab41a089e05a2e12f73
 F www/templates/Urban\sSunrise/userslist_hdr.tpl 79c5b28322e9c0f587ed0f81ac451fe12d38235f
@@ -927,7 +927,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 7ca5d27564c269342120bcd7050e08a5680cc330
-R 3924b55c4f90be557faa5cedb18bb88a
+P 9d9759970e8d69a63b10e6325274d7816028cc19
+R 77ba6d8f9ba83bb71acf80794cbbd398
 U johnfound
-Z ecf87fc09c3bc0bfa8590a8916d548c4
+Z d3c0ef401161644d27100cbd9dbd5822

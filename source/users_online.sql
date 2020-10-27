@@ -2,7 +2,7 @@ select
   (select nick from Users where id = U.userID) as nick,
   Activity,
   Param,
-  strftime('%H:%M:%S', max(time), 'unixepoch') as Time,
+  strftime('%H:%M:%S', max(U.time), 'unixepoch') as Time,
   remoteIP,
   Client,
   case when Activity in (5, 6, 12) then
@@ -21,4 +21,4 @@ where
   time > strftime('%s', 'now')-300
 
 group by U.userid, remoteIP, Client
-order by time desc;
+order by U.time desc;

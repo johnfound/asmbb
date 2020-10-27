@@ -48,7 +48,16 @@ table.users_table td {
   padding: @margin/2 @margin;
   text-align: left;
   vertical-align: middle;
-  overflow: hidden;
+  overflow: visible hidden;
+
+  span {
+    background-color: @clRed;
+    color: @clWhite;
+    padding: 0 4px;
+    transform: rotate(-12deg);
+    display: inline-block;
+    font-weight: bold;
+  }
 }
 
 
