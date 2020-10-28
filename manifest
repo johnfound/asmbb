@@ -1,5 +1,5 @@
-C Some\soptimizations\sfor\sthe\susers_online\squery.\sHide,\sthe\sprivate\sdetails.\sRelated\sstyling.
-D 2020-10-27T11:55:20.776
+C Don't\screate\sadditional\sindices\son\sUserLog\sbecause\sthey\sruins\sthe\sperformance.
+D 2020-10-28T07:45:30.509
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -37,7 +37,7 @@ F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm 931a8f7c9335462e79502e2b580016623bfeeff7
 F source/commands.asm 31b74510aa8602e3ac76bea8980018f0560bd4d4
-F source/create.sql 605509cea93f7bd5006d35bea53779d58aab791a
+F source/create.sql a68ebb8563b05a089feda322342151029c1726ac
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 097489a8a33810ef4dbaa8f98143cc5ee6c50e8b
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
@@ -927,7 +927,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 9d9759970e8d69a63b10e6325274d7816028cc19
-R 77ba6d8f9ba83bb71acf80794cbbd398
+P e72809fde8a3357ccc1dd894dfa96a0942705494
+R e6cec8373a1d51ca348dd3734d872c4a
 U johnfound
-Z d3c0ef401161644d27100cbd9dbd5822
+Z efeb81c3ac557473b31b783af0c746b9
