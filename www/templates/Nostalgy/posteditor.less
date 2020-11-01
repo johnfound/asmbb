@@ -1,0 +1,185 @@
+@import "skin_variables.lsi";
+
+@media (max-width: 600px) {
+  body {
+    overflow-y: hidden !important;
+    overflow-x: auto;
+  }
+  header, footer, .global-row, .attribution, .vspacer {
+    display: none !important;
+  }
+  .editor {
+    height: 100vh !important;
+    margin: 0 !important;
+  }
+  #editor-window:target {
+    z-index: 10000;
+  }
+  #preview {
+    background-color: @clLightGray;
+    margin: 0 !important;
+    padding: @margin;
+    display: flex;
+    flex-direction: column;
+    &:target {
+      z-index: 10000;
+    }
+  }
+  #preview-switch {
+    display: flex !important;
+  }
+}
+
+@media (orientation: landscape) {
+  body {
+    width: 50%;
+    margin: 0 @margin 0 auto !important;
+  }
+
+  .editor {
+    width: ~"calc( 50% - 3*@{margin})" !important;
+    left: @margin;
+    top: @margin;
+    bottom: @margin;
+  }
+}
+
+
+@media (orientation: portrait) {
+  body {
+    height: 50vh;
+    margin: 0 0 50vh 0 !important;    //@margin @margin 50vh @margin !important;
+  }
+
+  .editor {
+    height: ~"calc( 50% - 4*@{margin})";
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: ~"calc( 100vh - @{margin})";
+  & > * {
+    margin-left: @margin !important;
+    margin-right: @margin !important;
+    width: auto !important;
+  }
+}
+
+.thread {
+  flex-grow: 1;
+}
+
+.header > *:not(#forum-header) {
+  display: none !important;
+}
+
+.editor {
+  background-color: @clWhite;
+  color: @clDarkGray;
+  padding: @margin;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+
+  * {
+    overscroll-behavior: none;
+  }
+
+  svg {
+    fill: @clDarkGray;
+  }
+
+  p {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+
+.thread_editor {
+  color: @clBlack;
+  display: flex;
+  flex-direction: column;
+}
+
+#preview-switch {
+  display: none;
+}
+
+
+#source {
+  flex-grow: 1;
+  margin: 0;
+  resize: none;
+  padding: @margin/2;
+}
+
+#editform {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  textarea {
+    font-size: @FontSizeMono;
+    font-family: @FontMonospace;
+  }
+}
+
+
+.attach_del {
+  overflow: auto;
+  flex-grow: 1;
+  background-color: inherit;
+  color: inherit;
+  table {
+    width: 100%;
+  }
+}
+
+
+.editgroup {
+  display: flex;
+  margin: @margin/2 0;
+  align-items: end;
+
+  & > * {
+    margin: 0px @margin/2;
+    &:first-child {
+      margin-left: 0px;
+    }
+    &:last-child {
+      margin-right: 0px;
+    }
+    input, textarea {
+      width: 100%;
+      margin: 0px !important;
+    }
+    textarea {
+      height: 15em;
+    }
+    flex-grow: 1;
+    & > * {
+      display: block;
+    }
+  }
+}
+
+
+.post {
+  flex-basis: auto !important;
+}
+
+
+.help {
+  font-size: 10px;
+  overflow: auto !important;
+}

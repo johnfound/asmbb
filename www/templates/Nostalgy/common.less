@@ -1,0 +1,202 @@
+@import "skin_variables.lsi";
+
+* {
+//  border: 1px solid green;
+  box-sizing: border-box;
+//  margin: 0;
+  padding: 0;
+}
+
+#header {
+  max-width: @globMaxWidth;
+  margin: 0 auto;
+  overflow: auto;
+  text-align: center;
+}
+
+
+.layout {
+  max-width: @globMaxWidth;
+  margin: 0 auto;
+  overflow: auto;
+}
+
+#layout-table {
+  border-spacing: 0;
+  width: 100%;
+  > tbody > tr > td, > tr > td {
+    padding: @margin/2;
+    &:first-of-type {
+      padding-left: 0;
+    }
+    &:last-of-type {
+      padding-right: 0;
+    }
+  }
+}
+
+#content {
+ vertical-align: top;
+ width: 100%;
+}
+
+table.toolbar {
+  white-space: nowrap;
+  border-spacing: 0;
+  width: 100%;
+  tr {
+    vertical-align: baseline;
+  }
+
+  > tbody > tr > td, > tr > td {
+    padding: @margin/2;
+    &:first-of-type {
+      padding-left: 0;
+    }
+    &:last-of-type {
+      padding-right: 0;
+    }
+    & > * {
+      width: 100%;
+    }
+  }
+}
+
+td.spacer {
+  width: 100%;
+}
+
+
+.linkbar {
+  overflow: auto;
+}
+
+
+img {
+  border: none;
+  vertical-align: middle;
+}
+
+a, a:visited {
+  color: blue;
+}
+
+form {
+  display: inline;
+}
+
+
+input {
+  vertical-align: middle;
+}
+
+
+button {
+  padding: 1px 0 0 0;
+  margin: 0 0 1px 0;
+  display: inline;
+  > img {
+    vertical-align: middle;
+  }
+}
+
+
+ul.linelist {
+  display: inline;
+  padding: 0;
+}
+
+.comma > li {
+  display: inline;
+  padding-right: 0px;
+}
+
+.comma > li > *::after {
+  content: ', ';
+  display: inline-block;
+  text-decoration: none;
+}
+
+.comma > li:last-child > *::after {
+  content: '';
+}
+
+
+span.ntf {
+  padding: 3px;
+  display: inline-block;
+  vertical-align: sub;
+  font-size: 12px;
+  color: @clRed;
+  &::before {
+   content: '(';
+  }
+  &::after {
+   content: ')';
+  }
+}
+
+
+
+// THE TAGLIST
+
+#taglist {
+  vertical-align: top;
+  text-align: justify;
+  hyphens: auto;
+  width: 200px;
+
+  img {
+    vertical-align: middle;
+  }
+}
+
+a.taglink {
+  display:inline;
+  min-width: 16px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: blue;
+  vertical-align: middle;
+  &:visited {
+    color: blue;
+  }
+}
+
+a.current_tag {
+  border: 1px solid @clRed;
+}
+
+.tagsize00 { font-size: 0.40*25px }
+.tagsize01 { font-size: 0.40*25px }
+.tagsize02 { font-size: 0.40*25px }
+.tagsize03 { font-size: 0.40*25px }
+.tagsize04 { font-size: 0.40*25px }
+.tagsize05 { font-size: 0.47*25px }
+.tagsize06 { font-size: 0.54*25px }
+.tagsize07 { font-size: 0.59*25px }
+.tagsize08 { font-size: 0.64*25px }
+.tagsize09 { font-size: 0.69*25px }
+.tagsize10 { font-size: 0.73*25px }
+.tagsize11 { font-size: 0.76*25px }
+.tagsize12 { font-size: 0.79*25px }
+.tagsize13 { font-size: 0.82*25px }
+.tagsize14 { font-size: 0.84*25px }
+.tagsize15 { font-size: 0.86*25px }
+.tagsize16 { font-size: 0.88*25px }
+.tagsize17 { font-size: 0.90*25px }
+.tagsize18 { font-size: 0.91*25px }
+.tagsize19 { font-size: 0.92*25px }
+.tagsize20 { font-size: 0.94*25px }
+.tagsize21 { font-size: 0.94*25px }
+.tagsize22 { font-size: 0.95*25px }
+.tagsize23 { font-size: 0.96*25px }
+.tagsize24 { font-size: 0.97*25px }
+.tagsize25 { font-size: 0.97*25px }
+.tagsize26 { font-size: 0.98*25px }
+.tagsize27 { font-size: 0.98*25px }
+.tagsize28 { font-size: 0.99*25px }
+.tagsize29 { font-size: 0.99*25px }
+.tagsize30 { font-size: 0.99*25px }
+.tagsize31 { font-size: 1.00*25px }
+.tagsize32 { font-size: 1.00*25px }

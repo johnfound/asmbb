@@ -1,0 +1,34 @@
+@FontMain:      Noto Sans, Open Sans, Liberation Sans, Arial, Helvetica, sans-serif;
+@FontMonospace: Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace;
+@FontEmoji:     "Noto Color Emoji", "Noto Sans Symbols2 Regular", emoji;
+
+@FontSize:      13px;
+@FontSizeMono:  13px;
+
+
+@FontHeader: "Noto Sans ExtraBold", "Arial Black", "Helvetica Black", sans-serif;
+
+@globMaxWidth: 1280px;
+@globMargin: @margin auto;
+
+@margin: 16px;
+
+@msgBoxWidth: 800px;
+
+@clYellow: #FFCD42;                     // == hsl(44, 100%, 63%);
+@clRed: #D92626;                        // == hsl(0, 70%, 50%);
+@clLightRed: #FF666E;                   // == hsl(357, 100%, 70%);
+
+
+@clBlack: #000000;                      // == hsl(0, 0%, 0%);
+@clDarkGray: #505050;                   // == hsl(0, 0%, 31%);
+@clDarkOnDark: #606060;                 // == hsl(0, 0%, 37.5%);
+@clMiddleGray: #808080;                 // == hsl(0, 0%, 50%);
+@clGray: #c0c0c0;                       // == hsl(0, 0%, 75%);
+@clLightGray: #eeeeee;                  // == hsl(0, 0%, 93%);
+@clWhite: #ffffff;                      // == hsl(0, 0%, 100%);
+@clViolet: #ff80ff;                     // == hsl(300, 100%, 75%);
+
+@clGreen: green;
+
+@buttonHeight: 24px;

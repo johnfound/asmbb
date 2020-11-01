@@ -1,0 +1,11 @@
+#!/bin/sh
+
+rsvg-convert -o search.png _source/search.svg
+rsvg-convert -o all-tags.png _source/all-tags.svg
+rsvg-convert -o bell.png _source/bell.svg
+rsvg-convert -o bell2.png _source/bell2.svg
+rsvg-convert -o pinned.png _source/pinned.svg
+rsvg-convert -o go-last.png _source/go-last.svg
+rsvg-convert -o go-unread.png _source/go-unread.svg
+rsvg-convert -o mark-read.png _source/mark-read.svg
+rsvg-convert -o rss.png _source/rss.svg

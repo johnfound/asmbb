@@ -1,0 +1,90 @@
+@import "skin_variables.lsi";
+
+div.login {
+  width: var(--globWidth);
+  max-width: @globMaxWidth;
+  margin: @globMargin;
+  clear: both;
+
+  .btn {
+    background-color: @clYellow;
+    color: @clBlack;
+  }
+
+  article {
+    background-color: @clWhite;
+    color: @clBlack;
+    padding: 2*@margin;
+    margin: 2*@margin 0;
+
+    p {
+      color: black;
+      margin: 16px;
+    }
+
+    a {
+      color: @clRed;
+    }
+  }
+
+  & > form {
+    width: @msgBoxWidth;
+    flex-shrink: 0;
+    padding: 16px;
+    background: @clWhite;
+    color: @clBlack;
+    margin: 4*@margin auto;
+
+    h1 {
+      margin-top: 0;
+      margin-bottom: 2*@margin;
+      padding: @margin/2;
+
+      color: @clDarkGray;
+      background-color: @clYellow;
+      font-weight: normal;
+      font-size: 1.2*@FontSize;
+      font-variant: small-caps;
+      text-align: center;
+    }
+
+    h3 {
+      font-size: @FontSize;
+      font-weight: normal;
+      margin: @margin 0px 0px 0px;
+      color: inherit;
+    }
+
+    input^[type="text"^], input^[type="password"^], input^[type="email"^] {
+      width: 100%;
+    }
+  }
+}
+
+
+.checkbox > input[type=checkbox] + label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    color: @clBlack;
+}
+
+
+#submit {
+  position: absolute;
+  z-index: -1;
+  left: -10000px;
+  &:focus + label {
+
+  }
+}
+
+.pi_nick, .pi_pass, .pi_tick, .pi_email {
+  margin: 0px;
+  padding: 0px;
+}
+
+.pi_tick, .pi_email {
+  display: none;
+}

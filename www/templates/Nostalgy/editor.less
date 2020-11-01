@@ -1,0 +1,171 @@
+@import "skin_variables.lsi";
+
+@toolIconHeight: 20px;
+
+.editbtn {
+  display: inline-flex;
+  width: @buttonHeight;
+  height: @buttonHeight;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  cursor: pointer;
+  &:hover {
+    background-color: @clRed;
+    svg {
+      fill: @clWhite;
+    }
+  }
+
+  svg {
+    fill: @clWhite;
+  }
+}
+
+
+.toolbar {
+  display: flex;
+//  flex-grow: 1;
+  position: relative;
+  margin: 0;
+  padding-right: 80px;
+
+  section {
+    background: @clDarkGray;
+    flex-grow: 9999;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 4px;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+
+  & > input {
+    position: absolute;
+    opacity: 0;
+    left: -100000px;
+    & + label {
+      -webkit-user-select: none; /* Safari 3.1+ */
+      -moz-user-select: none; /* Firefox 2+ */
+      -ms-user-select: none; /* IE 10+ */
+      user-select: none; /* Standard syntax */
+
+      display: flex;
+
+      padding: 0px 8px;
+      margin: 0px;
+      font-size: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      color: black;
+
+      position: absolute;
+      right: 0px;
+      height: 50%;
+      width: 80px;
+
+      span {
+        align-self: center;
+      }
+
+      &:hover {
+        background: @clLightGray;
+      }
+
+      & + section {
+        display: none;
+      }
+    }
+
+    &:focus + label {
+      border-right: 4px solid @clRed;
+      z-index: 1;
+    }
+
+    &:checked + label {
+      background: @clDarkGray;
+      color: @clWhite;
+
+      & + section {
+        display: flex;
+      }
+    }
+  }
+}
+
+#emolib {
+  font-size: 20px;
+  font-family: @FontEmoji;
+  overflow-y: scroll;
+  overflow-x: auto;
+  position: absolute;
+  width: auto;
+  max-width: ~"calc( 100vw - 28px )";
+  height: 200px;
+  resize: vertical;
+  left: 4px;
+  top: ~"calc( 100% - 4px )";
+  background-color: @clWhite;
+  color: black;
+  border: 1px solid @clGray;
+  z-index: 10000;
+  white-space: pre;
+  a {
+    cursor: pointer;
+    display: inline-block;
+    margin: @margin;
+    width: @buttonHeight;
+    height: @buttonHeight;
+    overflow: hidden;
+    &:hover {
+      background-color: @clRed;
+      box-shadow: 1px 1px 3px @clMiddleGray;
+    }
+  }
+}
+
+.emo-btn-bar {
+  background-color: @clDarkGray;
+  color: @clWhite;
+  margin: 0;
+  align-self: stretch;
+  flex-shrink: 0;
+  flex-grow: 1;
+  display: flex;
+  align-items: end !important;
+  padding: 4px;
+}
+
+
+@media (pointer: fine) {
+  .emo-btn-bar:hover #emolib {
+    display: block !important;
+  }
+}
+
+
+.emo-btn {
+  cursor: pointer;
+  height: @buttonHeight !important;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  align-self: center;
+
+  font-family: @FontEmoji;
+  font-size: 16px;
+
+  &:hover {
+    background-color: @clRed;
+  }
+
+  &>svg {
+    fill: @clWhite;
+  }
+}
+

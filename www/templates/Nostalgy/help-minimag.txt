@@ -1,0 +1,297 @@
+## Paragraphs
+
+The paragraphs are separated by empty line or by starting a block element like block quote, source code or similar.
+
+## Inline formatting:
+
+The text can be formatted by enclosing with the specified symbols:
+
+`*Bold text*` = *Bold text*
+
+`/Italic text/` = /Italic text/
+
+`_Underlined text_` = _Underlined text_
+
+`-Strikedthrough-` = -Strikedthrough-
+
+ `Monospaced inline text`  = `Monospaced inline text`
+
+`_*/The formats can be combined/*_` = _*/The formats can be combined/*_
+
+## Headers
+
+The headers are formatted by starting the line with `#` symbol(s), then whitespace and then the header text.
+There should be an empty line, after the header.
+The number of "#" symbols sets the level of the header.
+From 1 to 6:
+;begin nohighlight
+# H1 header
+
+## H2 header
+
+### H3 header
+
+#### H4 header
+
+##### H5 header
+
+###### H6 header
+
+####### Regular paragraph.
+;end
+
+# H1 header
+
+## H2 header
+
+### H3 header
+
+#### H4 header
+
+##### H5 header
+
+###### H6 header
+
+####### Regular paragraph.
+
+
+## Links:
+
+;ulist
+* Label type links:
+
+The link labels are defined following way, starting from the first column of the line:
+;begin nohighlight
+ [AsmBB site] https://board.asm32.info/
+;end
+
+The label can be used in the text following way:
+
+;begin nohighlight
+  Visit [AsmBB site] for details.
+;end
+
+The link text can be changed by adding the prefered text in another square brackets, directly after the label:
+
+;begin nohighlight
+  Visit the [AsmBB site][fastest forum in the world].
+;end
+
+The above examples, rendered:
+
+;quote Example
+Visit [AsmBB site] for details.
+
+Visit the [AsmBB site][fastest forum in the world].
+;end
+
+The defined label can be used multiple times, before or after the definition line.
+
+[AsmBB site] https://board.asm32.info/
+
+
+* Inline links:
+
+Instead of defining label, the link URL can be specified directly in the text, enclosed in square brackets. Optionally a different link text can be added in another square brackets:
+
+;begin nohighlight
+  Visit [https://board.asm32.info] for details.
+
+  Visit the [https://board.asm32.info][fastest forum in the world].
+;end
+
+;quote Example
+  Visit [https://board.asm32.info] for details.
+
+  Visit the [https://board.asm32.info][fastest forum in the world].
+;end
+
+* Image and media links:
+
+The image, video and sound links are defined the same way as the normal links. With the difference, that the label/URL should be preceded with a symbol defining the type of the media:
+
+"?" for the inline image, "!" for the block image and "$" for a media type link - video or audio file.
+
+There are several predefined links for the forum emoticons:
+
+`[?:-)], [?:)] or [?smile]`=[?:)]
+
+`[?:-D], [?:D] or [lol]`=[?:-D]
+
+`[?rofl]`=[?rofl]
+
+`[?;-)] [?;)] [wink]`=[?;-)]
+
+`[?:-P] or [?:P]`=[?:-P]
+
+`[?:-(], [?:(] or [sad]`=[?:-(]
+
+`[?:'-(], [?:'(] or [cry]`=[?:'-(]
+
+`[?>:-(], [?>:(] or [angry]`=[?>:-(]
+
+Notice, that the type symbol should be included only in the place where the image is used.
+The label definition should not contain type symbols. You can use the same label with different type symbols.
+For example the above smile emoticon as a block: `[!:-)]` = [!:-)]
+
+;end ulist
+
+## Block quote:
+
+The block quote definition:
+;begin nohighlight
+ ;quote QUOTE LABEL
+ QUOTE TEXT
+ ;end
+;end
+
+;quote QUOTE LABEL
+QUOTE TEXT
+;end
+
+Block quotes can contain other formatting elements and can be nested.
+
+## Source code block:
+
+The source code blocks are created following way:
+
+;begin nohighlight
+ ;begin LANG
+   SomeSourceCode();
+ ;end
+;end
+
+The LANG (optional) is the language of the source. It is needed for the syntax highlighting, but the
+[https://highlightjs.org/][used library] can autodetect the languages pretty well.
+
+If "nohighlight" is specified for the language, the block is not highlighted at all.
+
+## Horizontal ruler
+
+Defined by semicolon at the first column, followed by at least 3 minus symbols:
+
+;begin nohighlight
+ ;----------------
+;end
+
+;quote Example
+;-----------------
+;end
+
+## Lists
+
+The lists are block elements, defined by the keywords `ulist` for the unordered list and `olist` for ordered list.
+
+The list item elements are defined by asterisk symbol on the first column, followed by the text of the item.
+
+The following paragraphs belongs to the current list item.
+
+The lists can be nested freely:
+
+;begin nohighlight
+ ;ulist
+ * Bullet item 1
+ ;olist
+ * Num item 1
+
+ * Num item 2
+ ;end
+ * Bullet item 2
+ ;ulist
+ * Nested bullet item.
+
+ * Another nested bullet item.
+ ;end
+ ;end
+;end
+
+;ulist
+* Bullet item 1
+;olist
+* Num item 1
+
+* Num item 2
+;end
+* Bullet item 2
+;ulist
+* Nested bullet item.
+
+* Another nested bullet item.
+;end
+;end
+
+
+## Spoiler element
+
+The spoiler is an element with initially hiden content that can be expanded by the reader if he wants to read the content.
+
+;begin nohighlight
+ ;spoiler SPOILER TITLE
+ SPOILER CONTENT
+ ;end
+;end
+
+;spoiler SPOILER TITLE
+SPOILER CONTENT
+;end
+
+The spoiler can contain any nested elements.
+
+
+## Tables
+
+The tables are started by the keyword `;table` at the beginning of the line. The rows are separated by `;------` preceded by an empty line
+(in order to finish the last paragraph) and every paragraph in the row is a separate table cell.
+
+If you start the paragraph in the table with "#" - it will be formatted as a table header.
+
+You can use inline formatting, images and links inside the table cells. See the example:
+
+;begin nohighlight
+ ;table
+ # Header 0,0
+
+ # Header 0,1
+
+ # Header 0,2
+
+ ;-----------------
+ Cell with [https://board.asm32.info][link] 1,0
+
+ Cell with inline /*formatting*/ 1,1
+
+ Cell 1,2
+
+ ;-----------------
+ Cell 2,0
+
+ Cell with inline image: [?;-)] 2,1
+
+ Cell with block image: [!;-)] 2,2
+ ;end
+;end
+
+;table
+# Header 0,0
+
+# Header 0,1
+
+# Header 0,2
+
+;-----------------
+Cell with [https://board.asm32.info][link] 1,0
+
+Cell with inline /*formatting*/ 1,1
+
+Cell 1,2
+
+;-----------------
+Cell 2,0
+
+Cell with inline image: [?;-)] 2,1
+
+Cell with block image: [!;-)] 2,2
+;end
+
+
+;-----------------------

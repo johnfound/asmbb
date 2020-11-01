@@ -1,0 +1,204 @@
+@import "skin_variables.lsi";
+
+.toast-container {
+    position: fixed;
+    width: 500px;
+    max-width: 90%;
+    z-index: 999999;
+    display: block;
+    div {
+      display: block !important;
+    }
+}
+
+.toast-container.top-right {
+    top: 0;
+    right: 0;
+}
+
+.toast-container.top-left {
+    top: 0;
+    left: 0;
+}
+
+.toast-container.bottom-left {
+    bottom: 0;
+    left: 0;
+}
+
+.toast-container.bottom-right {
+    bottom: 0;
+    right: 0;
+}
+
+.toast-container.centered {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.toast-container.top-center {
+    top: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+.toast-container.bottom-center {
+    bottom: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+.toast-container.left-center {
+    top: 50%;
+    left: 0;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.toast-container.right-center {
+    top: 50%;
+    right: 0;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+
+.toast {
+    position: relative;
+    min-width: 150px;
+    margin: @margin;
+    padding: 4px;
+    background-color: @clDarkGray;
+    color: @clWhite;
+    font-size: 12px;
+    line-height: 20px;
+    cursor: pointer;
+    opacity: 0;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    transition: all 0.2s;
+    -webkit-transform: translateY(25%);
+    -moz-transform: translateY(25%);
+    transform: translateY(25%);
+    overflow: hidden;
+    -webkit-animation: _tvisible 0.2s forwards;
+    -moz-animation: _tvisible 0.2s forwards;
+    animation: _tvisible 0.2s forwards;
+    z-index: 1;
+    border: 1px solid @clWhite;
+
+
+
+    a:not(:hover) {
+      text-decoration: none;
+    }
+
+    img {
+      vertical-align: middle;
+    }
+
+    &.info {
+        background-color: @clGray;
+        color: @clBlack;
+        a {
+          color: @clRed;
+        }
+    }
+
+    &.success {
+        background-color: green;
+    }
+
+    &.caution {
+        background-color: peru;
+    }
+
+    &.warning {
+        background-color: darkred;
+    }
+
+    &.chat {
+      a {
+        display: block;
+        color: @clWhite;
+        text-decoration: none;
+      }
+      background-color: @clDarkOnDark;
+      color: @clWhite;
+      .user {
+        color: @clYellow;
+        font-weight: bold;
+      }
+      .fake_user {
+        color: @clViolet;
+      }
+      > .toast-content svg {
+        fill: @clYellow;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+
+    .user {
+      display: inline;
+    }
+}
+
+
+@-webkit-keyframes _tvisible {
+    to {
+        opacity: 1;
+        -webkit-transform: translateY(0);
+    }
+}
+
+@-moz-keyframes _tvisible {
+    to {
+        opacity: 1;
+        -moz-transform: translateY(0);
+    }
+}
+
+@keyframes _tvisible {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.toast.is-hiding {
+  -webkit-animation: _thiding 1s forwards;
+  -moz-animation: _thiding 1s forwards;
+  animation: _thiding 1s forwards;
+}
+
+
+.toast-close {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+  cursor: pointer;
+  svg {
+    position: relative;
+    vertical-align: top;
+    line {
+      fill: none;
+      stroke-linecap: round;
+      stroke-width: 3px;
+      stroke: white;
+    }
+  }
+}
+
