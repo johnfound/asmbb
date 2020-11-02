@@ -191,16 +191,18 @@ function disconnect() {
 
 
 function connect() {
-  var indicator  = document.getElementById("notiStroked");
+  var indicator  = document.getElementById("indicator");
 
   if (source) disconnect();
 
   if (getCookie("notificationsDisabled")) {
-    indicator.style.visibility = "visible";
+    indicator.src = ActiveSkin + "/_images/bell2.png";
+    indicator.alt = "🔕";
     return;
   }
 
-  indicator.style.visibility = "hidden";
+  indicator.src = ActiveSkin + "/_images/bell.png";
+  indicator.alt = "🔔";
   source = new EventSource("/!events?events=" + WantEvents);
   StartTime = Date.now()/1000;
   listSourceEvents.forEach( function(value) { source.addEventListener(value.event, value.handler) } );

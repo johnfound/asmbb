@@ -14,9 +14,7 @@
     Jetzt <a href="/!users_online" title="Letzte Aktivitäten der Besucher.">online</a>: [special:visitors]
   ]
   </p>
-  <br>
   [special:stats]
-  <br>
   <p>[case:[special:lang]|Page processing time|Време за обработка на страницата|Время обработки страницы|Page chargée en|Seite verarbeitet in]: [special:timestamp] ms</p>
 </footer>
 

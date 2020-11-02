@@ -9,3 +9,7 @@ rsvg-convert -o go-last.png _source/go-last.svg
 rsvg-convert -o go-unread.png _source/go-unread.svg
 rsvg-convert -o mark-read.png _source/mark-read.svg
 rsvg-convert -o rss.png _source/rss.svg
+rsvg-convert -o edit.png _source/edit.svg
+rsvg-convert -o quote.png _source/quote.svg
+rsvg-convert -o del.png _source/del.svg
+rsvg-convert -o history.png _source/history.svg

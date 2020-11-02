@@ -1,6 +1,5 @@
-@FontMain:      Noto Sans, Open Sans, Liberation Sans, Arial, Helvetica, sans-serif;
-@FontMonospace: Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace;
-@FontEmoji:     "Noto Color Emoji", "Noto Sans Symbols2 Regular", emoji;
+@FontMain:      serif;
+@FontMonospace: monospace;
 
 @FontSize:      13px;
 @FontSizeMono:  13px;

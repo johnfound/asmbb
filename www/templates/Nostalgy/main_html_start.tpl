@@ -193,7 +193,7 @@
      <table class="toolbar"><tr>
        <td><input type="search" name="s" placeholder="[case:[special:lang]|text search|търсене на текст|поиск текста|recherche de texte|Textsuche]" value="[special:search]" size="40">
        <td><input type="search" name="u" placeholder="[case:[special:lang]|user search|потребител|пользователь|recherche d'utilisateur|Benutzersuche]" value="[special:usearch]" size="20">
-       <td><button type="submit" title="[case:[special:lang]|Search|Търсене|Поиск|Rechercher|Suchen]"><img alt=">" width="24" height="24" src="[special:skin]/_images/search.png"></button>
+       <td><button type="submit" title="[case:[special:lang]|Search|Търсене|Поиск|Rechercher|Suchen]"><img alt="🔍" width="24" height="24" src="[special:skin]/_images/search.png"></button>
      </table>
    </form>
  </div>
@@ -205,7 +205,7 @@
 
       [case:[special:canchat]||<td class="jsonly"><a class="btn" href="/!chat" accesskey="c">[const:btnChat]</a>]
 
-      <td class="jsonly"><a class="btn img-btn" onclick="switchNotificationCookie();" title="[const:ttlNotifications]"><img width="16" height="16" src="[special:skin]/_images/bell.png"></a>
+      <td class="jsonly"><a class="btn img-btn" onclick="switchNotificationCookie();" title="[const:ttlNotifications]"><img id="indicator" width="16" height="16" alt="🔔" src="[special:skin]/_images/bell.png"></a>
 
       <td class="spacer">
 
@@ -220,6 +220,6 @@
 
   <table id="layout-table"><tr>
     <td id="taglist" lang="en">
-      <a href="/[case:[special:limited]||(o)/]" title="[const:ttlAllThreads]"><img width="24" height="24" src="[special:skin]/_images/all-tags.png"></a>
+      <a href="/[case:[special:limited]||(o)/]" title="[const:ttlAllThreads]" class="taglink [case:[special:dir]|current_tag|]"><img width="24" height="24" alt="∀" src="[special:skin]/_images/all-tags.png"></a>
       [special:alltags]
       <td id="content">

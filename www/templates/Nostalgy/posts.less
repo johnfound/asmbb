@@ -3,7 +3,6 @@
 /* Thread view styles */
 
 div.thread {
-  width: var(--globWidth);
   max-width: @globMaxWidth;
   margin: @globMargin;
 }
@@ -17,37 +16,20 @@ h1.thread_caption {
   text-align: center;
   overflow-wrap: anywhere;
   hyphens: auto;
-  background-color: @clGray;
-  color: @clRed;
-
-  .btn {
-    background-color: @clYellow;
-  }
 
   .vote {
     float: right;
-    display: flex;
-    align-items: center;
-
     span {
       margin: 0px 1ch;
       display: inline-block;
       min-width: 5ch;
       text-align: right;
     }
-
-    button {
-      background-color: @clDarkGray;
-      svg {
-        stroke: @clWhite;
-      }
+    .vote_up, .vote_dn {
+      cursor: pointer;
     }
-
     .voted {
-      background-color: @clYellow;
-      svg {
-        stroke: @clDarkGray;
-      }
+      color: @clRed;
     }
   }
 }
@@ -61,16 +43,6 @@ h1.thread_caption {
     display:inline;
     text-align: left;
     white-space: nowrap;
-
-    color: @clDarkGray;
-    text-decoration: none;
-
-    a {
-      color: inherit;
-      &:not(:hover) {
-        text-decoration: none;
-      }
-    }
 
     &:before {
       content: '#';
@@ -91,68 +63,38 @@ div.current_version {
 
 .post {
   margin: 2*@margin 0;
-
-  a {
-    color: @clRed;
-    &:not(:hover) {
-      text-decoration: none;
-    }
-  }
 }
 
 
 .post-header {
-  display: flex;
-  margin: 0px;
-  align-items: start;
-  color: @clDarkGray;
-
-  background-color: @clGray;
-  height: 32px;
-  padding: @margin/2;
-  line-height: 16px;
 
   > * {
     margin: @margin/2;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    flex-shrink: 10;
-    > svg {
-      fill: @clYellow;
-      vertical-align: bottom;
-    }
   }
 
   .btn {
-    background-color: @clYellow;
-    color: @clBlack;
     margin: 0 @margin/2;
-    svg {
-      fill: @clDarkGray;
-    }
   }
 
   img.avatar {
     width: 48px;
     height: 48px;
     line-height: 40px;
-    background-color: @clYellow;
-    color: @clDarkGray;
     text-align: center;
     font-size: 24px;
     border-radius: 50%;
     margin-top: 0;
-    flex-shrink: 0;
+    vertical-align: top;
   }
 
   a.user_name {
     font-family: @FontMonospace;
-    color: @clBlack;
     font-weight: bold;
     flex-shrink: 0;
     u {
-      color: @clRed;
       min-width: 2ch;
       text-align: center;
       display: inline-block;
@@ -166,11 +108,11 @@ div.current_version {
 
 .post-text {
   margin: 0;
-  padding: 2*@margin 4*@margin !important;
+  padding: 0 2*@margin;
 
   background-color: @clWhite;
   color: @clBlack;
-//  overflow: auto !important;
+
   display: block !important;
 }
 

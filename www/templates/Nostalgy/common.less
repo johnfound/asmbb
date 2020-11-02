@@ -1,5 +1,9 @@
 @import "skin_variables.lsi";
 
+html {
+  font-family: serif;
+}
+
 * {
 //  border: 1px solid green;
   box-sizing: border-box;
@@ -90,6 +94,10 @@ input {
   vertical-align: middle;
 }
 
+.img-btn {
+  text-decoration: none;
+  color: blue;
+}
 
 button {
   padding: 1px 0 0 0;
@@ -144,8 +152,7 @@ span.ntf {
   vertical-align: top;
   text-align: justify;
   hyphens: auto;
-  width: 200px;
-
+  width: 20%;
   img {
     vertical-align: middle;
   }
@@ -165,6 +172,8 @@ a.taglink {
 
 a.current_tag {
   border: 1px solid @clRed;
+  padding: 4px;
+  display: inline-block;
 }
 
 .tagsize00 { font-size: 0.40*25px }

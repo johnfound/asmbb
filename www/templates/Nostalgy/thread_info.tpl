@@ -5,9 +5,7 @@
   [equ:tPosts=post[case:[PostCount]|s||s]]
   [equ:ttlMark=Mark thread read]
   [equ:tViews=view[case:[ReadCount]|s||s]]
-  [equ:Posters=Participants]
   [equ:Invited=Invited]
-  [equ:Tags=Tags]
   [equ:Rating=Rating]
 |
   [equ:ttlPinned=Забодена отгоре]
@@ -16,9 +14,7 @@
   [equ:tPosts=съобщени[case:[PostCount]|я|е|я]]
   [equ:ttlMark=Маркирай темата като прочетена]
   [equ:tViews=преглед[case:[ReadCount]|а||а]]
-  [equ:Posters=Участници]
   [equ:Invited=Поканени]
-  [equ:Tags=Тагове]
   [equ:Rating=Рейтинг]
 |
   [equ:ttlPinned=Прикрепленная на верху]
@@ -27,9 +23,7 @@
   [equ:tPosts=сообщени[case:[PostCount]|й|е|й]]
   [equ:ttlMark=Отметить тему прочитанной]
   [equ:tViews=просмотр[case:[ReadCount]|ов||ов]]
-  [equ:Posters=Участники]
   [equ:Invited=Приглашенные]
-  [equ:Tags=Ярлыки]
   [equ:Rating=Рейтинг]
 |
   [equ:ttlPinned=Sujet épinglé]
@@ -38,9 +32,7 @@
   [equ:tPosts=post[case:[PostCount]|s||s]]
   [equ:ttlMark=Marquer le sujet comme lu]
   [equ:tViews=vue[case:[ReadCount]|s||s]]
-  [equ:Posters=Participants]
   [equ:Invited=Invités]
-  [equ:Tags=Mots-clés]
   [equ:Rating=Évaluation]
 |
   [equ:ttlPinned=Angeheftetes Thema]
@@ -49,39 +41,29 @@
   [equ:tPosts=Beitr[case:[PostCount]|äge|ag|äge]]
   [equ:ttlMark=Thema als gelesen kennzeichnen]
   [equ:tViews=[case:[ReadCount]|Ansichten|Ansicht|Ansichten]]
-  [equ:Posters=Teilnehmer]
   [equ:Invited=Eingeladen]
-  [equ:Tags=Tags]
   [equ:Rating=Bewertung]
 ]
 
+  <table class="toolbar"><tr>
 
-  <p>[case:[Pinned]||<img width="24" height="24" title="[const:ttlPinned]" alt="(!)" src="[special:skin]/_images/pinned.png">]
+
+  <td><div>[case:[Pinned]||<img width="24" height="24" title="[const:ttlPinned]" alt="📢" src="[special:skin]/_images/pinned.png">]
     <a class="thread-link" href="[Slug]/">[Caption]</a>
     <span class="unread-info">
       <a href="[Slug]/!unread" title="[const:ttlUnread]">
       [case:[Unread]|<img width="13" height="13" alt="►" src="[special:skin]/_images/go-last.png">|<img width="16" height="16" alt="★" src="[special:skin]/_images/go-unread.png"> ( [Unread] unread )
-    </a><a href="[Slug]/!markread" title="[const:ttlMark]"><img width="12" height="12" alt="Х" src="[special:skin]/_images/mark-read.png">
+    </a><a class="btn img-btn" href="[Slug]/!markread" title="[const:ttlMark]"><img width="12" height="12" alt="Х" src="[special:skin]/_images/mark-read.png">
       ]
-    </a></span>
-  </p>
-
-  <p>[PostCount] [const:tPosts] | [ReadCount] [const:tViews] | [const:Rating]: <span id="thread_rating[id]">[Rating]</span> | [TimeChanged]</p>
-
-  <ul class="comma linelist">
-    [const:Posters]:
-    [html:[Posters]]
-  </ul>
-  <br>
-
+    </a></span></div>
+  <td class="spacer">
   [case:[limited]||
   <ul class="comma linelist">
     [const:Invited]:
     [html:[Invited]]
   </ul>
-  <br>
   ]
 
-  <ul class="comma linelist">[const:Tags]: [html:[ThreadTags]]</ul>
+  <td> [TimeChanged], [PostCount] [const:tPosts]
 
-<hr>
+  </table>
