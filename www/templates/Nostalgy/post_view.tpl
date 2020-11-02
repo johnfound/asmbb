@@ -48,7 +48,7 @@
 <div class="post" id="[id]">
   <table class="toolbar post-header"><tr>
     <td><a href="#[id]">
-      [case:1[Unread]||<img width="16" height="16" alt="★" src="[special:skin]/_images/go-unread.png">]
+      [case:[Unread]||<img width="16" height="16" alt="★" src="[special:skin]/_images/go-unread.png">]
       #[id]
     </a>
 

@@ -45,25 +45,18 @@
   [equ:Rating=Bewertung]
 ]
 
-  <table class="toolbar"><tr>
-
-
-  <td><div>[case:[Pinned]||<img width="24" height="24" title="[const:ttlPinned]" alt="📢" src="[special:skin]/_images/pinned.png">]
+  <p>[case:[Pinned]||<img width="24" height="24" title="[const:ttlPinned]" alt="📢" src="[special:skin]/_images/pinned.png">]
     <a class="thread-link" href="[Slug]/">[Caption]</a>
     <span class="unread-info">
       <a href="[Slug]/!unread" title="[const:ttlUnread]">
       [case:[Unread]|<img width="13" height="13" alt="►" src="[special:skin]/_images/go-last.png">|<img width="16" height="16" alt="★" src="[special:skin]/_images/go-unread.png"> ( [Unread] unread )
     </a><a class="btn img-btn" href="[Slug]/!markread" title="[const:ttlMark]"><img width="12" height="12" alt="Х" src="[special:skin]/_images/mark-read.png">
       ]
-    </a></span></div>
-  <td class="spacer">
+    </a></span>
   [case:[limited]||
   <ul class="comma linelist">
     [const:Invited]:
     [html:[Invited]]
   </ul>
+  <hr>
   ]
-
-  <td> [TimeChanged], [PostCount] [const:tPosts]
-
-  </table>
