@@ -227,7 +227,7 @@
        <path d="m23 9.34a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
       </svg>
     </label>
-    <div id="emolib">[raw:all-emoji.txt]</div>
+    <div id="emolib">^[raw:all-emoji.txt^]</div>
   </div>
 
   [case:[special:markup=0]|<section><input name="format" value="1" type="hidden"></section>|

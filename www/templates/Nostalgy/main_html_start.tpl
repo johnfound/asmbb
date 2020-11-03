@@ -151,6 +151,7 @@
   </script>
 
 <body>
+
  [case:[special:limited]||<b>Limited</b>]
 
  <div id="header">[special:header]</div>
@@ -220,6 +221,6 @@
 
   <table id="layout-table"><tr>
     <td id="taglist" lang="en">
-      <a href="/[case:[special:limited]||(o)/]" title="[const:ttlAllThreads]" class="taglink [case:[special:dir]|current_tag|]"><img width="24" height="24" alt="∀" src="[special:skin]/_images/all-tags.png"></a>
+      <a href="/[case:[special:limited]||(o)/]" title="[const:ttlAllThreads]" class="taglink [case:[special:dir]|current_tag|]"><img width="24" height="24" alt="∀" src="[special:skin]/_images/[case:[special:dir]|all-tags-red.png|all-tags.png]"></a>
       [special:alltags]
       <td id="content">

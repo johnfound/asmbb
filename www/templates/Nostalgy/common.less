@@ -44,10 +44,12 @@ html {
  width: 100%;
 }
 
+
 table.toolbar {
   white-space: nowrap;
   border-spacing: 0;
   width: 100%;
+  margin: 0 0 @margin 0;
   tr {
     vertical-align: baseline;
   }
@@ -68,6 +70,13 @@ table.toolbar {
 
 td.spacer {
   width: 100%;
+}
+
+.page_row {
+  margin: @margin -@margin/4;
+  > * {
+    padding: 0 @margin/4;
+  }
 }
 
 
@@ -159,11 +168,8 @@ span.ntf {
 }
 
 a.taglink {
-  display:inline;
-  min-width: 16px;
   text-transform: uppercase;
   text-decoration: none;
-  color: blue;
   vertical-align: middle;
   &:visited {
     color: blue;
@@ -171,9 +177,8 @@ a.taglink {
 }
 
 a.current_tag {
-  border: 1px solid @clRed;
+  color: @clRed !important;
   padding: 4px;
-  display: inline-block;
 }
 
 .tagsize00 { font-size: 0.40*25px }

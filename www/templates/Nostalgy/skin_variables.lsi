@@ -1,5 +1,6 @@
 @FontMain:      serif;
 @FontMonospace: monospace;
+@FontEmoji:     emoji;
 
 @FontSize:      13px;
 @FontSizeMono:  13px;
