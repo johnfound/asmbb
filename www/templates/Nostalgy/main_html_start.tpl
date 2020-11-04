@@ -180,9 +180,9 @@
        <td><a class="btn" href="/!register">[const:btnRegister]</a>
      ]
  |
-   <td><a href="/!userinfo/[url:[special:username]]" title="[enc:[special:username]]">[const:btnProfile]</a>
+   <td><form method="get" action="/!userinfo/[url:[special:username]]"><button type="submit" title="[enc:[special:username]]">[const:btnProfile]</button></form>
 
-   <td><form id="logoutform" method="post" action="/!logout"><input for="logoutform" type="submit" name="logout" title="[enc:[special:username]]" value="[const:btnLogout]"></form>
+   <td><form id="logoutform" method="post" action="/!logout"><button type="submit" name="logout" title="[enc:[special:username]]">[const:btnLogout]</button></form>
  ]
  </table>
  </div>
