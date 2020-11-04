@@ -152,16 +152,14 @@
 
 <body>
 
- [case:[special:limited]||<b>Limited</b>]
-
  <div id="header">[special:header]</div>
  <div class="layout">
 
    <table class="toolbar"><tr>
 
    [case:[special:userid]||
-   <td><a href="/[case:[special:dir]||[special:dir]/]" title="[const:ttlPublic]" accesskey="p">[const:btnPublic][special:unread]</a>
-   <td><a href="/(o)/[case:[special:dir]||[special:dir]/]" title="[const:ttlLimited]" accesskey="l">[const:btnLimited][special:unreadLAT]</a>]
+   <td><a class="[case:[special:limited]|current|]" href="/[case:[special:dir]||[special:dir]/]" title="[const:ttlPublic]" accesskey="p">[const:btnPublic][special:unread]</a>
+   <td><a class="[case:[special:limited]||current]" href="/(o)/[case:[special:dir]||[special:dir]/]" title="[const:ttlLimited]" accesskey="l">[const:btnLimited][special:unreadLAT]</a>]
    <td class="spacer">
 
    <td>
@@ -220,7 +218,9 @@
   </div>
 
   <table id="layout-table"><tr>
-    <td id="taglist" lang="en">
-      <a href="/[case:[special:limited]||(o)/]" title="[const:ttlAllThreads]" class="taglink [case:[special:dir]|current_tag|]"><img width="24" height="24" alt="∀" src="[special:skin]/_images/[case:[special:dir]|all-tags-red.png|all-tags.png]"></a>
-      [special:alltags]
-      <td id="content">
+    <td class="taglist">
+      <div class="taglist" lang="end">
+        <a href="/[case:[special:limited]||(o)/]" title="[const:ttlAllThreads]" class="taglink [case:[special:dir]|current_tag|]"><img width="24" height="24" alt="∀" src="[special:skin]/_images/[case:[special:dir]|all-tags-red.png|all-tags.png]"></a>
+        [special:alltags]
+      </div>
+    <td id="content">

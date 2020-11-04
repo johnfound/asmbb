@@ -5,9 +5,7 @@ html {
 }
 
 * {
-//  border: 1px solid green;
   box-sizing: border-box;
-//  margin: 0;
   padding: 0;
 }
 
@@ -22,25 +20,16 @@ html {
 .layout {
   max-width: @globMaxWidth;
   margin: 0 auto;
-  overflow: auto;
 }
 
 #layout-table {
   border-spacing: 0;
   width: 100%;
-  > tbody > tr > td, > tr > td {
-    padding: @margin/2;
-    &:first-of-type {
-      padding-left: 0;
-    }
-    &:last-of-type {
-      padding-right: 0;
-    }
-  }
 }
 
 #content {
  vertical-align: top;
+ padding: @margin/2 0 @margin/2 @margin;
  width: 100%;
 }
 
@@ -90,8 +79,13 @@ img {
   vertical-align: middle;
 }
 
-a, a:visited {
-  color: blue;
+//a, a:visited {
+//  color: blue;
+//}
+
+a.current {
+  color: @clRed !important;
+  font-weight: bold;
 }
 
 form {
@@ -157,11 +151,16 @@ span.ntf {
 
 // THE TAGLIST
 
-#taglist {
+td.taglist {
+  vertical-align: top;
+}
+
+div.taglist {
   vertical-align: top;
   text-align: justify;
   hyphens: auto;
-  width: 20%;
+  background-color: @clLightGray;
+  padding: @margin;
   img {
     vertical-align: middle;
   }
@@ -170,15 +169,17 @@ span.ntf {
 a.taglink {
   text-transform: uppercase;
   text-decoration: none;
-  vertical-align: middle;
-  &:visited {
-    color: blue;
-  }
+  display: block;
+  text-align: right;
+//  margin: 4px 0;
+//  &:visited {
+//    color: blue;
+//  }
 }
 
 a.current_tag {
   color: @clRed !important;
-  padding: 4px;
+  font-weight: bold;
 }
 
 .tagsize00 { font-size: 0.40*25px }
