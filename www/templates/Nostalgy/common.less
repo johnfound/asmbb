@@ -9,6 +9,7 @@ html {
   padding: 0;
 }
 
+
 #header {
   max-width: @globMaxWidth;
   margin: 0 auto;
@@ -25,12 +26,14 @@ html {
 #layout-table {
   border-spacing: 0;
   width: 100%;
+  table-layout: fixed;
+  margin: @margin 0;
 }
 
 #content {
  vertical-align: top;
- padding: @margin/2 0 @margin/2 @margin;
- width: 100%;
+ padding: 0 0 0 @margin;
+ width: 80%;
 }
 
 
@@ -38,13 +41,21 @@ table.toolbar {
   white-space: nowrap;
   border-spacing: 0;
   width: 100%;
-  margin: 0 0 @margin 0;
+  margin: @margin 0;
   tr {
     vertical-align: baseline;
   }
 
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
   > tbody > tr > td, > tr > td {
-    padding: @margin/2;
+    padding: 0 @margin/2;
     &:first-of-type {
       padding-left: 0;
     }
@@ -56,6 +67,7 @@ table.toolbar {
     }
   }
 }
+
 
 td.spacer {
   width: 100%;
@@ -83,7 +95,22 @@ a {
   color: blue;
 }
 
-a.current, .current_page {
+button {
+  display: inline-block;
+  padding: 1px 4px 0 4px;
+  margin: 0 0 1px 0;
+  color: black;
+  text-decoration: none;
+  > img {
+    vertical-align: middle;
+  }
+}
+
+button, input, select {
+  height: 35px;
+}
+
+.current, .current_page, .current_tag {
   color: @clRed !important;
   font-weight: bold;
 }
@@ -101,16 +128,6 @@ input {
   text-decoration: none;
   color: blue;
 }
-
-button {
-  padding: 1px 0 0 0;
-  margin: 0 0 1px 0;
-  display: inline;
-  > img {
-    vertical-align: middle;
-  }
-}
-
 
 ul.linelist {
   display: inline;
@@ -153,10 +170,7 @@ span.ntf {
 
 td.taglist {
   vertical-align: top;
-}
-
-div.taglist {
-  vertical-align: top;
+  width: 20%;
   text-align: justify;
   hyphens: auto;
   background-color: @clLightGray;
@@ -166,21 +180,12 @@ div.taglist {
   }
 }
 
+
 a.taglink {
-//  text-transform: uppercase;
+  text-transform: uppercase;
   text-decoration: none;
-//  display: block;
-//  text-align: justify;
-//  margin: 4px 0;
-//  &:visited {
-//    color: blue;
-//  }
 }
 
-a.current_tag {
-  color: @clRed !important;
-  font-weight: bold;
-}
 
 .tagsize00 { font-size: 0.40*25px }
 .tagsize01 { font-size: 0.40*25px }

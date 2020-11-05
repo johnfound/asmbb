@@ -1,5 +1,5 @@
-C Buttons\sfor\sthe\sUI\sinterface.
-D 2020-11-04T21:21:39.589
+C Work...
+D 2020-11-05T03:23:52.821
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -600,7 +600,7 @@ F www/templates/Nostalgy/autocomplete.js 7f821fe4b74d465ef6042714c91ced568d7ef6d
 F www/templates/Nostalgy/chat.js af2f7194df2c16f49ae8b77bf014f160f2984385
 F www/templates/Nostalgy/chat.less 7e3affa9b2e5a2826cd61bb77f484c0df1b8f190
 F www/templates/Nostalgy/chat.tpl 5141a052cd4911ab8af4a380bc25614d41050b7d
-F www/templates/Nostalgy/common.less 96ddafcf7bdb5ecad0444c3e17bd7fbae419b32f
+F www/templates/Nostalgy/common.less 28396fa1362fe071ca0403c374d113ea76c872cf
 F www/templates/Nostalgy/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Nostalgy/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001
 F www/templates/Nostalgy/debug.less 9a989f4670bb3d584f60c57d50af9fbf9bf75117
@@ -633,12 +633,12 @@ F www/templates/Nostalgy/highlight.js b4a380fb43186d51a405fb185067120657f243f2
 F www/templates/Nostalgy/highlight.less fba68624d1b34a5543fe0bf4b2af2ac1ddf65e74
 F www/templates/Nostalgy/login.less e2c9b06104a775ae1abcc63bdc69f71b4662b870
 F www/templates/Nostalgy/main_html_end.tpl 859ee81cc6c85344b33ad15533bc5402feeebd4d
-F www/templates/Nostalgy/main_html_start.tpl 997b4adb2d95688817e08bfc78873f7c160fb3dd
+F www/templates/Nostalgy/main_html_start.tpl 2cc8ad909fd66428ef8859b856d9b7a7b8daa2d4
 F www/templates/Nostalgy/markdown.less 36a461db674ff11bcbb5a08576e25579d79d5b41
 F www/templates/Nostalgy/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
 F www/templates/Nostalgy/nav_categories.tpl c04334bde3272eed0ceeb558cb640a15a41b39e8
 F www/templates/Nostalgy/nav_history.tpl 20332cc80d34a9c4fe360cc5559d98f0537900c2
-F www/templates/Nostalgy/nav_list.tpl 0e2de1862a8dbf97547780e882bea1eab34524ec
+F www/templates/Nostalgy/nav_list.tpl 1d7b13893d25bbbf5117310f975bf6ca9cfc2fce
 F www/templates/Nostalgy/nav_search.tpl c5abc05e0defefe48c8d79167638f0e65b805948
 F www/templates/Nostalgy/nav_thread.tpl ce4c4f771d3fd7cd8e7e5d005ed12f62540579ae
 F www/templates/Nostalgy/nav_userslist.tpl f589aae323b62e3ee2de91251c3bbcce11e597d1
@@ -1044,7 +1044,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P c1359c4597ad376c40ae8312e65bd8ffefe50740
-R f2bf647fe2962cff197993cfbc8a10e2
+P 32ba31582c53f3313684c2c6afa152dbf0ccaad6
+R eed638d61ad5642644dd9f933fd5327f
 U johnfound
-Z 2e9d036499f6af31153f8d59d1c39342
+Z fbe1224a69b6dcaddf7ad78972d7fcab

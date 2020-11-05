@@ -19,6 +19,12 @@
 
 
 <table class="toolbar"><tr>
-  [case:[special:userid]|<td><a class="btn" href="/!login">[const:btnNewThread]</a></td>|<td><a class="btn" href="!markread">[const:btnMarkRead]</a></td><td><a class="btn" href="!post">[const:btnNewThread]</a></td>]
-  <td class="spacer"></td>
-</tr></table>
+  [case:[special:userid]
+    |
+      <td><a href="/!login"><button>[const:btnNewThread]</button></a>
+    |
+      <td><a href="!markread"><button>[const:btnMarkRead]</button></a>
+      <td><a class="btn" href="!post"><button>[const:btnNewThread]</button></a>
+  ]
+  <td class="spacer">
+</table>

@@ -119,7 +119,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
   <noscript>
-    <style> .jsonly { display: none !important } </style>
+    <style> .jsonly { display: none !important; width: 0; } </style>
   </noscript>
 
   [special:allstyles]
@@ -155,11 +155,11 @@
  <div id="header">[special:header]</div>
  <div class="layout">
 
-   <table class="toolbar"><tr>
+  <table class="toolbar"><tr>
 
    [case:[special:userid]||
-   <td><a class="[case:[special:limited]|current|]" href="/[case:[special:dir]||[special:dir]/]" title="[const:ttlPublic]" accesskey="p">[const:btnPublic][special:unread]</a>
-   <td><a class="[case:[special:limited]||current]" href="/(o)/[case:[special:dir]||[special:dir]/]" title="[const:ttlLimited]" accesskey="l">[const:btnLimited][special:unreadLAT]</a>]
+   <td><form method="get" action="/[case:[special:dir]||[special:dir]/]"> <button type="submit" title="[const:ttlPublic]" accesskey="p" class="[case:[special:limited]|current|]">[const:btnPublic][special:unread]</button></form>
+   <td><form method="get" action="/(o)/[case:[special:dir]||[special:dir]/]"><button type="submit" title="[const:ttlLimited]" accesskey="l" class="[case:[special:limited]||current]">[const:btnLimited][special:unreadLAT]</button></form>]
    <td class="spacer">
 
    <td>
@@ -175,52 +175,47 @@
 
 
  [case:[special:userid]|
-   <td><a class="btn" href="/!login">[const:btnLogin]</a>
+   <td><a href="/!login"><button>[const:btnLogin]</button></a>
      [case:[special:canregister]||
-       <td><a class="btn" href="/!register">[const:btnRegister]</a>
+       <td><a href="/!register"><button>[const:btnRegister]</button></a>
      ]
  |
    <td><form method="get" action="/!userinfo/[url:[special:username]]"><button type="submit" title="[enc:[special:username]]">[const:btnProfile]</button></form>
 
    <td><form id="logoutform" method="post" action="/!logout"><button type="submit" name="logout" title="[enc:[special:username]]">[const:btnLogout]</button></form>
  ]
- </table>
- </div>
+  </table>
 
- <div class="layout">
-   <form action="[case:[special:cmdtype]||/|../]!search/" method="get" >
-     <table class="toolbar"><tr>
-       <td><input type="search" name="s" placeholder="[case:[special:lang]|text search|търсене на текст|поиск текста|recherche de texte|Textsuche]" value="[special:search]" size="40">
-       <td><input type="search" name="u" placeholder="[case:[special:lang]|user search|потребител|пользователь|recherche d'utilisateur|Benutzersuche]" value="[special:usearch]" size="20">
-       <td><button type="submit" title="[case:[special:lang]|Search|Търсене|Поиск|Rechercher|Suchen]"><img alt="🔍" width="24" height="24" src="[special:skin]/_images/search.png"></button>
-     </table>
-   </form>
- </div>
-
-<div class="layout">
-  <div class="linkbar">
+  <form action="[case:[special:cmdtype]||/|../]!search/" method="get" >
     <table class="toolbar"><tr>
-      <td><a class="btn" href="/!categories">[const:btnCats]</a>
-
-      [case:[special:canchat]||<td class="jsonly"><a class="btn" href="/!chat" accesskey="c">[const:btnChat]</a>]
-
-      <td class="jsonly"><a class="btn img-btn" onclick="switchNotificationCookie();" title="[const:ttlNotifications]"><img id="indicator" width="16" height="16" alt="🔔" src="[special:skin]/_images/bell.png"></a>
-
-      <td class="spacer">
-
-      [case:[special:isadmin] | |
-        <td><a class="btn" href="/!settings" accesskey="s">[const:btnSettings]</a>
-        <td><a class="btn" href="/!sqlite" accesskey="k">[const:btnConsole]</a>
-        <td><a class="btn" href="/!debuginfo">Debug info</a>
-      ]
-      [case:[special:limited]|<td><a class="btn img-btn" href="!feed" title="[const:rssfeed]"><img width="16" height="16" src="[special:skin]/_images/rss.png"></a>|]
+      <td width="50%"><input type="search" name="s" placeholder="[case:[special:lang]|text search|търсене на текст|поиск текста|recherche de texte|Textsuche]" value="[special:search]" size="40">
+      <td width="50%"><input type="search" name="u" placeholder="[case:[special:lang]|user search|потребител|пользователь|recherche d'utilisateur|Benutzersuche]" value="[special:usearch]" size="20">
+      <td><button type="submit" title="[case:[special:lang]|Search|Търсене|Поиск|Rechercher|Suchen]"><img alt="🔍" width="24" height="24" src="[special:skin]/_images/search.png"></button>
     </table>
-  </div>
+  </form>
+
+  <table class="toolbar"><tr>
+    <td><a href="/!categories"><button>[const:btnCats]</button></a>
+
+    [case:[special:canchat]||<td class="jsonly"><a href="/!chat" accesskey="c"><button>[const:btnChat]</button></a>]
+
+    <td class="jsonly"><a class="btn img-btn" onclick="switchNotificationCookie();" title="[const:ttlNotifications]"><button><img id="indicator" width="16" height="16" alt="🔔" src="[special:skin]/_images/bell.png"></button></a>
+
+    <td class="spacer">
+
+  [case:[special:isadmin] | |
+    <td><a href="/!settings" accesskey="s"><button>[const:btnSettings]</button></a>
+    <td><a href="/!sqlite" accesskey="k"><button>[const:btnConsole]</button></a>
+    <td><a href="/!debuginfo"><button>Debug info</button></a>
+  ]
+  [case:[special:limited]|
+    <td><a href="!feed" title="[const:rssfeed]"><button><img width="16" height="16" src="[special:skin]/_images/rss.png"></button></a>|]
+  </table>
 
   <table id="layout-table"><tr>
-    <td class="taglist">
-      <div class="taglist" lang="end">
+    <td class="taglist" lang="end">
         <a href="/[case:[special:limited]||(o)/]" title="[const:ttlAllThreads]" class="taglink [case:[special:dir]|current_tag|]"><img width="24" height="24" alt="∀" src="[special:skin]/_images/[case:[special:dir]|all-tags-red.png|all-tags.png]"></a>
         [special:alltags]
-      </div>
+
     <td id="content">
+
