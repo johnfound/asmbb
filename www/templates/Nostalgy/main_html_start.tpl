@@ -119,7 +119,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
   <noscript>
-    <style> .jsonly { display: none !important; width: 0; } </style>
+    <style>
+      .jsonly { display: none !important; width: 0; }
+    </style>
   </noscript>
 
   [special:allstyles]
@@ -151,12 +153,10 @@
   </script>
 
 <body>
-
-
  <div class="layout">
 
   <div id="header">
-    <table class="toolbar first"><tr>
+    <table class="toolbar first dark-btns"><tr>
 
    [case:[special:userid]||
      <td><a class="[case:[special:limited]|current|]" href="/[case:[special:dir]||[special:dir]/]" title="[const:ttlPublic]" accesskey="p">[const:btnPublic][case:[special:unread]|| <span class="ntf">([special:unread])</span>]</a>
@@ -171,7 +171,7 @@
            [special:skins=[special:skincookie]]
          </select>
          <noscript>
-           <input type="submit" value="Go">
+           <input class="submit" type="submit" value="Go">
          </noscript>
        </form>
 
@@ -182,20 +182,20 @@
        ]
    |
      <td><a href="/!userinfo/[url:[special:username]]" title="[enc:[special:username]]">[const:btnProfile]</a>
-     <td><form method="post" action="/!logout"><input type="submit" name="logout" title="[enc:[special:username]]" value="[const:btnLogout]"></form>
+     <td><form method="post" action="/!logout"><input class="submit" type="submit" name="logout" title="[enc:[special:username]]" value="[const:btnLogout]"></form>
    ]
     </table>
     <form action="[case:[special:cmdtype]||/|../]!search/" method="get" >
-      <table class="toolbar"><tr>
+      <table class="toolbar dark-btns"><tr>
         <td><input class="inp-text" type="search" name="s" placeholder="[case:[special:lang]|text search|търсене на текст|поиск текста|recherche de texte|Textsuche]" value="[special:search]" size="40">
         <td><input class="inp-text" type="search" name="u" placeholder="[case:[special:lang]|user search|потребител|пользователь|recherche d'utilisateur|Benutzersuche]" value="[special:usearch]" size="20">
-        <td><button type="submit" title="[case:[special:lang]|Search|Търсене|Поиск|Rechercher|Suchen]"><img alt="🔍" width="24" height="24" src="[special:skin]/_images/search.png"></button>
+        <td style="width: 24px; padding-left:2px;"><input class="inp-img" type="image" width="24" height="24" alt="🔍" src="[special:skin]/_images/search.png" title="[case:[special:lang]|Search|Търсене|Поиск|Rechercher|Suchen]">
       </table>
     </form>
   </div>
 
   <br>
-  <table class="toolbar"><tr>
+  <table class="toolbar dark-btns"><tr>
     <td><a href="/!categories">[const:btnCats]</a>
 
     [case:[special:canchat]||<td class="jsonly"><a href="/!chat" accesskey="c">[const:btnChat]</a>]
