@@ -1,12 +1,25 @@
 @import "skin_variables.lsi";
 
-html {
-  font-family: serif;
+@font-face {
+  font-family: 'Noto Sans Symbols2 Regular';
+  src: url('/templates/_fonts/NotoSansSymbols2-Regular.ttf');
 }
 
 * {
   box-sizing: border-box;
   padding: 0;
+}
+
+html {
+  font-family: @FontMain;
+  font-size: @FontSize;
+}
+
+body {
+  min-height: 100vh;
+
+  background-color: @clLightGray;
+  color: @clBlack;
 }
 
 
@@ -31,9 +44,9 @@ html {
 }
 
 #content {
- vertical-align: top;
- padding: 0 0 0 @margin;
- width: 80%;
+  vertical-align: top;
+  padding: 0 0 0 @margin;
+  width: 85%;
 }
 
 
@@ -41,21 +54,56 @@ table.toolbar {
   white-space: nowrap;
   border-spacing: 0;
   width: 100%;
-  margin: @margin 0;
+  margin: 0;
+
   tr {
     vertical-align: baseline;
   }
 
-  &:first-child {
-    margin-top: 0;
+  td.spacer {
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    overflow: visible;
+    * {
+      margin: 0;
+    }
   }
 
-  &:last-child {
-    margin-bottom: 0;
+  button {
+    background-color: @clDarkGray;
+    color: @clWhite;
+    border: 1px solid @clDarkGray;
+  }
+
+  a {
+    display: block;
+    line-height: 24px;
+    height: 24px;
+    padding: 0px @margin;
+
+    background-color: @clDarkGray;
+    color: @clWhite;
+
+    text-decoration: none;
+
+    & > img {
+      vertical-align: text-bottom;
+    }
+
+    span.ntf {
+      color: @clWhite;
+    }
+
+    &.current {
+      background-color: @clRed !important;
+      color: @clWhite;
+    }
   }
 
   > tbody > tr > td, > tr > td {
-    padding: 0 @margin/2;
+    padding: 0 @margin/4;
+    vertical-align: middle;
     &:first-of-type {
       padding-left: 0;
     }
@@ -68,13 +116,22 @@ table.toolbar {
   }
 }
 
-
-td.spacer {
-  width: 100%;
+.first {
+  margin-bottom: @margin !important;
 }
 
+.last {
+  margin-top: @margin !important;
+}
+
+#header {
+  background-color: @clYellow;
+  padding: @margin;
+}
+
+
 .page_row {
-  margin: @margin -@margin/4;
+  margin: @margin 0;
   > * {
     padding: 0 @margin/4;
   }
@@ -88,29 +145,26 @@ td.spacer {
 
 img {
   border: none;
-  vertical-align: middle;
 }
 
 a {
-  color: blue;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 button {
-  display: inline-block;
-  padding: 1px 4px 0 4px;
-  margin: 0 0 1px 0;
-  color: black;
-  text-decoration: none;
   > img {
     vertical-align: middle;
   }
 }
 
 button, input, select {
-  height: 35px;
+  height: 24px;
 }
 
-.current, .current_page, .current_tag {
+.current_page, .current_tag {
   color: @clRed !important;
   font-weight: bold;
 }
@@ -124,10 +178,12 @@ input {
   vertical-align: middle;
 }
 
-.img-btn {
-  text-decoration: none;
-  color: blue;
+.inp-text {
+  background-color: @clWhite;
+  padding: 0 @margin;
+  border: none;
 }
+
 
 ul.linelist {
   display: inline;
@@ -151,17 +207,8 @@ ul.linelist {
 
 
 span.ntf {
-  padding: 3px;
-  display: inline-block;
-  vertical-align: sub;
   font-size: 12px;
   color: @clRed;
-  &::before {
-   content: '(';
-  }
-  &::after {
-   content: ')';
-  }
 }
 
 
@@ -170,11 +217,19 @@ span.ntf {
 
 td.taglist {
   vertical-align: top;
-  width: 20%;
+  width: 15%;
   text-align: justify;
   hyphens: auto;
-  background-color: @clLightGray;
+
+  background-color: @clDarkGray;
+  color: @clWhite;
+
   padding: @margin;
+
+  a {
+    color: @clWhite;
+  }
+
   img {
     vertical-align: middle;
   }
@@ -183,7 +238,6 @@ td.taglist {
 
 a.taglink {
   text-transform: uppercase;
-  text-decoration: none;
 }
 
 

@@ -1,6 +1,6 @@
-@FontMain:      serif;
-@FontMonospace: monospace;
-@FontEmoji:     emoji;
+@FontMain:      "Noto Sans Regular", "Open Sans", "Liberation Sans", Arial, Helvetica, sans-serif;
+@FontMonospace: Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace;
+@FontEmoji:     "Noto Color Emoji", "Noto Sans Symbols2 Regular", emoji;
 
 @FontSize:      13px;
 @FontSizeMono:  13px;
@@ -11,7 +11,7 @@
 @globMaxWidth: 1280px;
 @globMargin: @margin auto;
 
-@margin: 16px;
+@margin: 8px;
 
 @msgBoxWidth: 800px;
 

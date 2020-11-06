@@ -3,19 +3,74 @@
 table.thread-info {
   width: 100%;
   border-spacing: 0;
-  img {
-    vertical-align: text-bottom;
-    text-decoration: none;
-  }
-  td {
-    padding: @margin/2 0;
-  }
-  td.details {
-    white-space: nowrap;
-  }
+  table-layout: fixed;
+  margin: @margin 0;
 }
 
 
 .thread-link {
   font-size: 1.2em;
+}
+
+.tsi-link {
+  width: 80%;
+  padding: @margin;
+  vertical-align: top;
+
+  background-color: @clWhite;
+
+  p {
+    margin: 0 0 @margin 0;
+
+    img {
+      vertical-align: text-bottom;
+      text-decoration: none;
+    }
+
+    & > a {
+      font-size: 16px;
+      font-weight: bold;
+      color: @clBlack;
+    }
+  }
+}
+
+.tsi-stat {
+  width: 20%;
+  padding: @margin;
+  vertical-align: top;
+  text-align: center;
+  color: @clMiddleGray;
+
+  background-color: @clWhite;
+  p {
+    margin: 0;
+  }
+}
+
+.tsi-tags {
+  background-color: @clGray;
+  color: @clWhite;
+  vertical-align: top;
+  padding: @margin/4 @margin;
+  text-transform: uppercase;
+  a {
+    color: @clWhite;
+  }
+}
+
+.gray {
+  color: @clMiddleGray;
+  a {
+    color: @clMiddleGray;
+  }
+}
+
+.unread-info {
+  img {
+    vertical-align: baseline !important;
+  }
+  a {
+    color: @clRed;
+  }
 }

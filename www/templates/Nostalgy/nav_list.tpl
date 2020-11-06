@@ -21,10 +21,10 @@
 <table class="toolbar"><tr>
   [case:[special:userid]
     |
-      <td><a href="/!login"><button>[const:btnNewThread]</button></a>
+      <td><a href="/!login">[const:btnNewThread]</a>
     |
-      <td><a href="!markread"><button>[const:btnMarkRead]</button></a>
-      <td><a class="btn" href="!post"><button>[const:btnNewThread]</button></a>
+      <td><a href="!markread">[const:btnMarkRead]</a>
+      <td><a class="btn" href="!post">[const:btnNewThread]</a>
   ]
   <td class="spacer">
 </table>

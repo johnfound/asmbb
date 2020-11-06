@@ -152,64 +152,65 @@
 
 <body>
 
- <div id="header">[special:header]</div>
+
  <div class="layout">
 
-  <table class="toolbar"><tr>
+  <div id="header">
+    <table class="toolbar first"><tr>
 
    [case:[special:userid]||
-   <td><form method="get" action="/[case:[special:dir]||[special:dir]/]"> <button type="submit" title="[const:ttlPublic]" accesskey="p" class="[case:[special:limited]|current|]">[const:btnPublic][special:unread]</button></form>
-   <td><form method="get" action="/(o)/[case:[special:dir]||[special:dir]/]"><button type="submit" title="[const:ttlLimited]" accesskey="l" class="[case:[special:limited]||current]">[const:btnLimited][special:unreadLAT]</button></form>]
-   <td class="spacer">
+     <td><a class="[case:[special:limited]|current|]" href="/[case:[special:dir]||[special:dir]/]" title="[const:ttlPublic]" accesskey="p">[const:btnPublic][case:[special:unread]|| <span class="ntf">([special:unread])</span>]</a>
+     <td><a class="[case:[special:limited]||current]" href="/(o)/[case:[special:dir]||[special:dir]/]" title="[const:ttlLimited]" accesskey="l">[const:btnLimited][special:unreadLAT]</a>
+   ]
+     <td class="spacer"><div>[special:header]</div>
 
-   <td>
-     <form method="post" action="/!skincookie">
-       <select name="skin" onchange="this.form.submit()">
-         <option value="0">(Default)</option>
-         [special:skins=[special:skincookie]]
-       </select>
-       <noscript>
-         <input type="submit" value="Go">
-       </noscript>
-     </form>
+     <td>
+       <form method="post" action="/!skincookie">
+         <select name="skin" onchange="this.form.submit()">
+           <option value="0">(Default)</option>
+           [special:skins=[special:skincookie]]
+         </select>
+         <noscript>
+           <input type="submit" value="Go">
+         </noscript>
+       </form>
 
-
- [case:[special:userid]|
-   <td><a href="/!login"><button>[const:btnLogin]</button></a>
-     [case:[special:canregister]||
-       <td><a href="/!register"><button>[const:btnRegister]</button></a>
-     ]
- |
-   <td><form method="get" action="/!userinfo/[url:[special:username]]"><button type="submit" title="[enc:[special:username]]">[const:btnProfile]</button></form>
-
-   <td><form id="logoutform" method="post" action="/!logout"><button type="submit" name="logout" title="[enc:[special:username]]">[const:btnLogout]</button></form>
- ]
-  </table>
-
-  <form action="[case:[special:cmdtype]||/|../]!search/" method="get" >
-    <table class="toolbar"><tr>
-      <td width="50%"><input type="search" name="s" placeholder="[case:[special:lang]|text search|търсене на текст|поиск текста|recherche de texte|Textsuche]" value="[special:search]" size="40">
-      <td width="50%"><input type="search" name="u" placeholder="[case:[special:lang]|user search|потребител|пользователь|recherche d'utilisateur|Benutzersuche]" value="[special:usearch]" size="20">
-      <td><button type="submit" title="[case:[special:lang]|Search|Търсене|Поиск|Rechercher|Suchen]"><img alt="🔍" width="24" height="24" src="[special:skin]/_images/search.png"></button>
+   [case:[special:userid]|
+     <td><a href="/!login">[const:btnLogin]</a>
+       [case:[special:canregister]||
+         <td><a href="/!register">[const:btnRegister]</a>
+       ]
+   |
+     <td><a href="/!userinfo/[url:[special:username]]" title="[enc:[special:username]]">[const:btnProfile]</a>
+     <td><form method="post" action="/!logout"><input type="submit" name="logout" title="[enc:[special:username]]" value="[const:btnLogout]"></form>
+   ]
     </table>
-  </form>
+    <form action="[case:[special:cmdtype]||/|../]!search/" method="get" >
+      <table class="toolbar"><tr>
+        <td><input class="inp-text" type="search" name="s" placeholder="[case:[special:lang]|text search|търсене на текст|поиск текста|recherche de texte|Textsuche]" value="[special:search]" size="40">
+        <td><input class="inp-text" type="search" name="u" placeholder="[case:[special:lang]|user search|потребител|пользователь|recherche d'utilisateur|Benutzersuche]" value="[special:usearch]" size="20">
+        <td><button type="submit" title="[case:[special:lang]|Search|Търсене|Поиск|Rechercher|Suchen]"><img alt="🔍" width="24" height="24" src="[special:skin]/_images/search.png"></button>
+      </table>
+    </form>
+  </div>
 
+  <br>
   <table class="toolbar"><tr>
-    <td><a href="/!categories"><button>[const:btnCats]</button></a>
+    <td><a href="/!categories">[const:btnCats]</a>
 
-    [case:[special:canchat]||<td class="jsonly"><a href="/!chat" accesskey="c"><button>[const:btnChat]</button></a>]
+    [case:[special:canchat]||<td class="jsonly"><a href="/!chat" accesskey="c">[const:btnChat]</a>]
 
-    <td class="jsonly"><a class="btn img-btn" onclick="switchNotificationCookie();" title="[const:ttlNotifications]"><button><img id="indicator" width="16" height="16" alt="🔔" src="[special:skin]/_images/bell.png"></button></a>
+    <td class="jsonly"><a class="btn img-btn" onclick="switchNotificationCookie();" title="[const:ttlNotifications]"><img id="indicator" width="16" height="16" alt="🔔" src="[special:skin]/_images/bell.png"></a>
 
     <td class="spacer">
 
   [case:[special:isadmin] | |
-    <td><a href="/!settings" accesskey="s"><button>[const:btnSettings]</button></a>
-    <td><a href="/!sqlite" accesskey="k"><button>[const:btnConsole]</button></a>
-    <td><a href="/!debuginfo"><button>Debug info</button></a>
+    <td><a href="/!settings" accesskey="s">[const:btnSettings]</a>
+    <td><a href="/!sqlite" accesskey="k">[const:btnConsole]</a>
+    <td><a href="/!debuginfo">Debug info</a>
   ]
   [case:[special:limited]|
-    <td><a href="!feed" title="[const:rssfeed]"><button><img width="16" height="16" src="[special:skin]/_images/rss.png"></button></a>|]
+    <td><a href="!feed" title="[const:rssfeed]"><img width="16" height="16" src="[special:skin]/_images/rss.png"></a>|]
   </table>
 
   <table id="layout-table"><tr>
