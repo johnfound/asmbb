@@ -71,6 +71,14 @@ div.current_version {
 
 
 .post-header {
+  width: 100%;
+  height: 32px;
+  background-color: @clGray;
+  color: @clBlack;
+
+  td {
+    vertical-align: top;
+  }
 
   > * {
     margin: @margin/2;
@@ -88,6 +96,7 @@ div.current_version {
     border-radius: 50%;
     margin-top: 0;
     vertical-align: top;
+    background-color: @clWhite;
   }
 
   a.user_name {
@@ -109,6 +118,7 @@ div.current_version {
 .post-text {
   margin: 0;
   padding: 0 2*@margin;
+  border: 1px solid @clWhite;
 
   background-color: @clWhite;
   color: @clBlack;

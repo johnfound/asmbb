@@ -46,26 +46,21 @@
 ]
 
 <div class="post" id="[id]">
-  <table class="toolbar post-header"><tr>
-    <td><a href="#[id]">
-      [case:[Unread]||<img width="16" height="16" alt="★" src="[special:skin]/_images/go-unread.png">]
-      #[id]
-    </a>
-
-    <td><div><img class="avatar" alt="(ツ)" src="/!avatar/[url:[html:[UserName]]]?v=[AVer]"></div>
-
-    <td>[case:[UserID]|<span|<a href="/!userinfo/[url:[html:[UserName]]]" class="user_name">
+  <div class="post-header">
+    <a href="#[id]">[case:[Unread]||<img width="16" height="16" alt="★" src="[special:skin]/_images/go-unread.png">]#[id]</a>
+    <img class="avatar" alt="(ツ)" src="/!avatar/[url:[html:[UserName]]]?v=[AVer]">
+    [case:[UserID]|<span|<a href="/!userinfo/[url:[html:[UserName]]]" class="user_name">
     [usr:[UserName]][case:[UserID]|</span>|</a>]
 
-    <td><div>[case:[editUserID]|[const:tCreated]|[const:tEdited] <a href="/!userinfo/[url:[html:[EditUser]]]">[usr:[html:[EditUser]]]</a>], [const:tRead]</div>
+    [case:[editUserID]|[const:tCreated]|[const:tEdited] <a href="/!userinfo/[url:[html:[EditUser]]]">[usr:[html:[EditUser]]]</a>], [const:tRead]
 
-    <td class="spacer">
-
-    <td><a title="[const:ttlQuote]" href="[case:[special:userid]|/!login|[id]/!post]" class="btn img-btn"><img width="16" height="16" alt="Quote" src="[special:skin]/_images/quote.png"></a>
-    [case:[special:canedit]| |<td><a title="[const:ttlEdit]" href="[id]/!edit" class="btn img-btn"><img width="16" height="16" alt="Edit" src="[special:skin]/_images/edit.png"></a>]
-    [case:[special:candel] | |<td><a title="[const:ttlDel]" href="[id]/!del" class="btn img-btn"><img width="16" height="16" alt="Delete" src="[special:skin]/_images/del.png"></a>]
-    [case:[HistoryFlag]||[case:[special:isadmin]| |<td><a title="[const:ttlHist]" href="/[id]/!history" class="btn img-btn"><img width="16" height="16" alt="History" src="[special:skin]/_images/history.png"></a>]]
-  </table>
+    <table class="toolbar light-btns compact" style="display: inline-table;"><tr>
+      <td><a title="[const:ttlQuote]" href="[case:[special:userid]|/!login|[id]/!post]" class="btn img-btn"><img width="16" height="16" alt="Quote" src="[special:skin]/_images/quote.png"></a>
+      [case:[special:canedit]| |<td><a title="[const:ttlEdit]" href="[id]/!edit" class="btn img-btn"><img width="16" height="16" alt="Edit" src="[special:skin]/_images/edit.png"></a>]
+      [case:[special:candel] | |<td><a title="[const:ttlDel]" href="[id]/!del" class="btn img-btn"><img width="16" height="16" alt="Delete" src="[special:skin]/_images/del.png"></a>]
+      [case:[HistoryFlag]||[case:[special:isadmin]| |<td><a title="[const:ttlHist]" href="/[id]/!history" class="btn img-btn"><img width="16" height="16" alt="History" src="[special:skin]/_images/history.png"></a>]]
+    </table>
+  </div>
 
   <article class="post-text">
     [html:[[case:[format]|minimag:[include:minimag_suffix.tpl]|bbcode:][Content]]]

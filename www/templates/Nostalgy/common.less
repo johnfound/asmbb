@@ -48,6 +48,20 @@ body {
   width: 85%;
 }
 
+table.compact {
+  width: auto !important;
+}
+
+
+td.spacer {
+  width: 100%;
+  text-align: center;
+  vertical-align: middle;
+  overflow: visible;
+  * {
+    margin: 0;
+  }
+}
 
 table.toolbar {
   white-space: nowrap;
@@ -57,16 +71,6 @@ table.toolbar {
 
   tr {
     vertical-align: baseline;
-  }
-
-  td.spacer {
-    width: 100%;
-    text-align: center;
-    vertical-align: middle;
-    overflow: visible;
-    * {
-      margin: 0;
-    }
   }
 
   button {
@@ -83,15 +87,38 @@ table.toolbar {
     display: inline-block;
   }
 
-  a, input.submit {
+  a, input.submit, input.inp-img {
     border: none;
     height: 24px;
     line-height: 24px;
-    padding: 0 @margin;
+    padding: 0 @margin/2;
 
     text-decoration: none;
     font-family: @FontMain;
     font-size: @FontSize;
+
+    &::-moz-focus-inner {
+      border: 0;
+      outline: 0;
+    }
+
+    &:focus {
+      outline: 1px dotted @clBlack;
+      outline-offset: 2px;
+    }
+
+    &:focus-within {
+      outline: 1px dotted @clBlack;
+      outline-offset: 2px;
+    }
+
+    &:hover {
+      box-shadow: 1px 1px 3px @clMiddleGray;
+    }
+
+    &:active {
+      box-shadow: -1px -1px 3px @clMiddleGray;
+    }
 
     img {
       margin-top: 4px;
@@ -240,6 +267,7 @@ input {
   background-color: @clDarkGray;
   color: @clWhite;
   height: 24px;
+  padding: 0 !important;
 }
 
 
