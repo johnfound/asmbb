@@ -1,5 +1,14 @@
 @import "skin_variables.lsi";
 
+/*
+table {
+  border: 1px solid green;
+  td {
+    border: 1px solid red;
+  }
+}
+*/
+
 @font-face {
   font-family: 'Noto Sans Symbols2 Regular';
   src: url('/templates/_fonts/NotoSansSymbols2-Regular.ttf');
@@ -24,10 +33,15 @@ body {
 
 
 #header {
+  background-color: @clYellow;
+  padding: 0 @margin;
   max-width: @globMaxWidth;
   margin: 0 auto;
   overflow: auto;
   text-align: center;
+  * {
+    margin: 0;
+  }
 }
 
 
@@ -44,7 +58,7 @@ body {
 
 #content {
   vertical-align: top;
-  padding: 0 0 0 @margin;
+  padding: 0 @margin 0 0;
   width: 85%;
 }
 
@@ -138,7 +152,7 @@ table.toolbar {
   }
 
   > tbody > tr > td, > tr > td {
-    padding: 0 @margin/4;
+    padding: 0 @margin/2;
     vertical-align: middle;
     &:first-of-type {
       padding-left: 0;
@@ -147,6 +161,12 @@ table.toolbar {
       padding-right: 0;
     }
   }
+}
+
+
+td.vspace {
+  line-height: 0px;
+  font-size: 0px;
 }
 
 .dark-btns {
@@ -172,21 +192,39 @@ table.toolbar {
   margin-top: @margin !important;
 }
 
-#header {
-  background-color: @clYellow;
-  padding: @margin;
-}
-
 
 .page_row {
   margin: @margin 0;
   > a {
-    padding: 0 @margin;
     background-color: @clYellow;
     color: @clBlack;
+    line-height: 18px;
+
+    &::-moz-focus-inner {
+      border: 0;
+      outline: 0;
+    }
+
+    &:focus {
+      outline: 1px dotted @clBlack;
+      outline-offset: 2px;
+    }
+
+    &:focus-within {
+      outline: 1px dotted @clBlack;
+      outline-offset: 2px;
+    }
+
+    &:hover {
+      box-shadow: 1px 1px 3px @clMiddleGray;
+      text-decoration: none;
+    }
+
+    &:active {
+      box-shadow: -1px -1px 3px @clMiddleGray;
+    }
   }
   > .current_page {
-    padding: 0 @margin;
     background-color: @clRed;
     color: @clWhite;
     font-weight: bold;
@@ -245,6 +283,7 @@ select {
   color: @clRed !important;
   font-weight: bold;
 }
+
 
 form {
   display: inline;
@@ -311,13 +350,13 @@ td.taglist {
   text-align: justify;
   hyphens: auto;
 
-  background-color: @clDarkGray;
-  color: @clWhite;
+  background-color: @clWhite;
+  color: @clMiddleGray;
 
   padding: @margin;
 
   a {
-    color: @clWhite;
+    color: @clMiddleGray;
   }
 
   img {

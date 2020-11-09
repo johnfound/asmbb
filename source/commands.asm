@@ -795,7 +795,7 @@ begin
         cmp     ecx, [.current]
         jne     .current_ok
 
-        stdcall StrCat, edi, '<span class="current_page">'
+        stdcall StrCat, edi, '<span class="current_page">&nbsp;'
         jmp     .link_ok
 
 .current_ok:
@@ -816,7 +816,7 @@ begin
         stdcall StrCat, edi, [.suffix]
 
 .close_href:
-        stdcall StrCat, edi, txt '">'
+        stdcall StrCat, edi, txt '">&nbsp;'
 .link_ok:
         stdcall StrCat, edi, eax
         stdcall StrDel, eax
@@ -824,11 +824,11 @@ begin
         cmp     ecx, [.current]
         jne     .current_ok2
 
-        stdcall StrCat, edi, '</span> '
+        stdcall StrCat, edi, '&nbsp;</span> '
         jmp     .next
 
 .current_ok2:
-        stdcall StrCat, edi, txt "</a> "
+        stdcall StrCat, edi, txt "&nbsp;</a> "
 
 .next:
         inc     ecx
@@ -839,7 +839,7 @@ begin
         test    esi, esi
         jz      .next
 
-        stdcall StrCat, edi, '<span class="page_hole">....</span>'
+        stdcall StrCat, edi, '<span class="page_hole">....</span> '
 
         xor     esi, esi
         jmp     .next

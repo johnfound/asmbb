@@ -4,18 +4,20 @@
 
 div.thread {
   max-width: @globMaxWidth;
-  margin: @globMargin;
+  margin: 0;
 }
 
 
 
 h1.thread_caption {
   font-size: 1.5rem;
-  margin: 8px 0px;
+  margin: 0 0 8px 0px;
   clear:both;
   text-align: center;
   overflow-wrap: anywhere;
   hyphens: auto;
+  background-color: @clGray;
+  color: @clRed;
 
   .vote {
     float: right;
@@ -30,6 +32,8 @@ h1.thread_caption {
     }
     .vote_up, .vote_dn {
       cursor: pointer;
+      color: @clBlack;
+      text-decoration: none;
     }
     .voted {
       color: @clRed;
@@ -66,18 +70,24 @@ div.current_version {
 
 .post {
   margin: @margin 0;
-  border-top: 1px solid lightgray;
 }
 
 
 .post-header {
   width: 100%;
-  height: 32px;
   background-color: @clGray;
   color: @clBlack;
+  border-collapse: collapse;
 
   td {
     vertical-align: top;
+    background-color: @clGray;
+    padding: 0 @margin;
+    line-height: 22px;
+  }
+
+  td.b {
+    background-color: @clWhite;
   }
 
   > * {
@@ -93,22 +103,25 @@ div.current_version {
     line-height: 40px;
     text-align: center;
     font-size: 24px;
-    border-radius: 50%;
     margin-top: 0;
-    vertical-align: top;
-    background-color: @clWhite;
+    vertical-align: middle;
+    background-color: @clYellow;
   }
 
-  a.user_name {
-    font-family: @FontMonospace;
-    font-weight: bold;
-    flex-shrink: 0;
-    u {
-      min-width: 2ch;
-      text-align: center;
-      display: inline-block;
-      text-decoration: none;
-      border-bottom: 2px dotted @clRed;
+  a {
+    color: @clRed;
+    &.user_name {
+      font-family: @FontMonospace;
+      font-weight: bold;
+      flex-shrink: 0;
+      color: @clBlack;
+      u {
+        min-width: 2ch;
+        text-align: center;
+        display: inline-block;
+        text-decoration: none;                          //underline 1px dotted @clRed;
+        border-bottom: 2px dotted @clRed;
+      }
     }
   }
 
@@ -117,9 +130,9 @@ div.current_version {
 
 .post-text {
   margin: 0;
-  padding: 0 2*@margin;
-  border: 1px solid @clWhite;
+  padding: 0 2*@margin 2*@margin 2*@margin;
 
+  border: 1px solid @clWhite;
   background-color: @clWhite;
   color: @clBlack;
 

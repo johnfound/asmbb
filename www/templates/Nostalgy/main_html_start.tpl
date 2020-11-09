@@ -155,47 +155,57 @@
 <body>
  <div class="layout">
 
-  <div id="header">
-    <table class="toolbar first dark-btns"><tr>
 
+   <table id="header" class="toolbar first dark-btns">
+     <tr>
+       <td rowspan="3"><div>[special:header]</div>
+       <td class="vspace"><img width="8" height="8" src="[special:skin]/_images/empty.png">
+       <td>
+       <td>
+       <td>
+     <tr>
+       <td class="spacer">
+         <form action="[case:[special:cmdtype]||/|../]!search/" method="get" >
+           <table class="toolbar dark-btns"><tr>
+             <td><input class="inp-text" type="search" name="s" placeholder="[case:[special:lang]|text search|търсене на текст|поиск текста|recherche de texte|Textsuche]" value="[special:search]" size="40">
+             <td><input class="inp-text" type="search" name="u" placeholder="[case:[special:lang]|user search|потребител|пользователь|recherche d'utilisateur|Benutzersuche]" value="[special:usearch]" size="20">
+             <td style="width: 24px; padding-left:2px;"><input class="inp-img" type="image" width="24" height="24" alt="🔍" src="[special:skin]/_images/search.png" title="[case:[special:lang]|Search|Търсене|Поиск|Rechercher|Suchen]">
+           </table>
+         </form>
+
+       <td>
+         <form method="post" action="/!skincookie">
+           <select name="skin" onchange="this.form.submit()">
+             <option value="0">(Default)</option>
+             [special:skins=[special:skincookie]]
+           </select>
+           <noscript>
+             <input class="submit" type="submit" value="Go">
+           </noscript>
+         </form>
+
+     [case:[special:userid]|
+       <td><a href="/!login">[const:btnLogin]</a>
+         [case:[special:canregister]||
+           <td><a href="/!register">[const:btnRegister]</a>
+         ]
+     |
+       <td><a href="/!userinfo/[url:[special:username]]" title="[enc:[special:username]]">[const:btnProfile]</a>
+       <td><form method="post" action="/!logout"><input class="submit" type="submit" name="logout" title="[enc:[special:username]]" value="[const:btnLogout]"></form>
+     ]
+     <tr>
+       <td class="vspace"><img width="8" height="8" src="[special:skin]/_images/empty.png">
+       <td>
+       <td>
+       <td>
+   </table>
+
+  <table class="toolbar dark-btns"><tr>
    [case:[special:userid]||
      <td><a class="[case:[special:limited]|current|]" href="/[case:[special:dir]||[special:dir]/]" title="[const:ttlPublic]" accesskey="p">[const:btnPublic][case:[special:unread]|| <span class="ntf">([special:unread])</span>]</a>
      <td><a class="[case:[special:limited]||current]" href="/(o)/[case:[special:dir]||[special:dir]/]" title="[const:ttlLimited]" accesskey="l">[const:btnLimited][special:unreadLAT]</a>
    ]
-     <td class="spacer"><div>[special:header]</div>
 
-     <td>
-       <form method="post" action="/!skincookie">
-         <select name="skin" onchange="this.form.submit()">
-           <option value="0">(Default)</option>
-           [special:skins=[special:skincookie]]
-         </select>
-         <noscript>
-           <input class="submit" type="submit" value="Go">
-         </noscript>
-       </form>
-
-   [case:[special:userid]|
-     <td><a href="/!login">[const:btnLogin]</a>
-       [case:[special:canregister]||
-         <td><a href="/!register">[const:btnRegister]</a>
-       ]
-   |
-     <td><a href="/!userinfo/[url:[special:username]]" title="[enc:[special:username]]">[const:btnProfile]</a>
-     <td><form method="post" action="/!logout"><input class="submit" type="submit" name="logout" title="[enc:[special:username]]" value="[const:btnLogout]"></form>
-   ]
-    </table>
-    <form action="[case:[special:cmdtype]||/|../]!search/" method="get" >
-      <table class="toolbar dark-btns"><tr>
-        <td><input class="inp-text" type="search" name="s" placeholder="[case:[special:lang]|text search|търсене на текст|поиск текста|recherche de texte|Textsuche]" value="[special:search]" size="40">
-        <td><input class="inp-text" type="search" name="u" placeholder="[case:[special:lang]|user search|потребител|пользователь|recherche d'utilisateur|Benutzersuche]" value="[special:usearch]" size="20">
-        <td style="width: 24px; padding-left:2px;"><input class="inp-img" type="image" width="24" height="24" alt="🔍" src="[special:skin]/_images/search.png" title="[case:[special:lang]|Search|Търсене|Поиск|Rechercher|Suchen]">
-      </table>
-    </form>
-  </div>
-
-  <br>
-  <table class="toolbar dark-btns"><tr>
     <td><a href="/!categories">[const:btnCats]</a>
 
     [case:[special:canchat]||<td class="jsonly"><a href="/!chat" accesskey="c">[const:btnChat]</a>]
@@ -214,9 +224,5 @@
   </table>
 
   <table id="layout-table"><tr>
-    <td class="taglist" lang="end">
-        <a href="/[case:[special:limited]||(o)/]" title="[const:ttlAllThreads]" class="taglink [case:[special:dir]|current_tag|]"><img width="24" height="24" alt="∀" src="[special:skin]/_images/[case:[special:dir]|all-tags-red.png|all-tags.png]"></a>
-        [special:alltags]
-
     <td id="content">
 

@@ -32,10 +32,8 @@
 </a>]
 <div class="vote jsonly">
   <span class="thread_rating[id]">[Rating]</span>
-  [case:[special:canvote]||
-    <a class="vote_dn [case:[VoteStatus]|voted|]" onclick="OnVote(this, -1)">▼</a>
-    <a class="vote_up [case:[VoteStatus]|||voted]" onclick="OnVote(this, 1)">▲</a>
-  ]
+  [case:[special:canvote]||<a class="vote_dn [case:[VoteStatus]|voted|]" onclick="OnVote(this, -1)">▼</a>
+  [case:[special:canvote]||<a class="vote_up [case:[VoteStatus]|||voted]" onclick="OnVote(this, 1)">▲</a>]
 </div>
 </h1>
 <ul class="thread_tags">[special:threadtags=[id]]</ul>

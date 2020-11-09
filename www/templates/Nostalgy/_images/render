@@ -14,3 +14,4 @@ rsvg-convert -o edit.png _source/edit.svg
 rsvg-convert -o quote.png _source/quote.svg
 rsvg-convert -o del.png _source/del.svg
 rsvg-convert -o history.png _source/history.svg
+rsvg-convert -o empty.png _source/empty.svg
