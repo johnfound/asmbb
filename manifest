@@ -1,5 +1,5 @@
-C More\scompatibility\swith\sDillo.
-D 2020-11-09T12:03:53.304
+C Footer\sand\smore\spretty\sdesign\sand\scompatibility...
+D 2020-11-09T21:00:56.151
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -570,7 +570,7 @@ F www/templates/Nostalgy/_images/_source/search.svg 0eb3634f084893eee7171f64cc25
 F www/templates/Nostalgy/_images/chatemoticons 6f2fb8dfd71252d2cdbe7b9b1d330c5859872e31 l
 F www/templates/Nostalgy/_images/drop-down.png 9b6f8997dd14107ff294360b44e108c4aa61aed3
 F www/templates/Nostalgy/_images/emoticons 6f2fb8dfd71252d2cdbe7b9b1d330c5859872e31 l
-F www/templates/Nostalgy/_images/render a15415cf547d6ef3685efc23150823b8aa48a2ca x
+F www/templates/Nostalgy/_images/render ae7b7281228a7640dde73da498547bec37ee1483 x
 F www/templates/Nostalgy/activation_email_subject.tpl e0bd685144e72197dd0034b068e82d7604f926d2 l
 F www/templates/Nostalgy/activation_email_text.tpl 50d1d6b7fe42736e334ab6870d7cc72e9085889d l
 F www/templates/Nostalgy/activity0.tpl 66800be0587fffe32c9acf83029cb8fc7ac74332 l
@@ -602,7 +602,7 @@ F www/templates/Nostalgy/autocomplete.js 7f821fe4b74d465ef6042714c91ced568d7ef6d
 F www/templates/Nostalgy/chat.js af2f7194df2c16f49ae8b77bf014f160f2984385
 F www/templates/Nostalgy/chat.less 7e3affa9b2e5a2826cd61bb77f484c0df1b8f190
 F www/templates/Nostalgy/chat.tpl 5141a052cd4911ab8af4a380bc25614d41050b7d
-F www/templates/Nostalgy/common.less 5c6c73148b4335be531a99afc6f2f53e16d0b600
+F www/templates/Nostalgy/common.less 002993b59cc2f9693e3d3faa88b74e942e19c650
 F www/templates/Nostalgy/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Nostalgy/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001
 F www/templates/Nostalgy/debug.less 9a989f4670bb3d584f60c57d50af9fbf9bf75117
@@ -634,29 +634,29 @@ F www/templates/Nostalgy/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700
 F www/templates/Nostalgy/highlight.js b4a380fb43186d51a405fb185067120657f243f2
 F www/templates/Nostalgy/highlight.less fba68624d1b34a5543fe0bf4b2af2ac1ddf65e74
 F www/templates/Nostalgy/login.less e2c9b06104a775ae1abcc63bdc69f71b4662b870
-F www/templates/Nostalgy/main_html_end.tpl 8cb8251856e2f3922632ea0bb92fc15937495c22
-F www/templates/Nostalgy/main_html_start.tpl 3dd3cbce688ecde6ccfc0d78dea35365633dc258
-F www/templates/Nostalgy/markdown.less 36a461db674ff11bcbb5a08576e25579d79d5b41
+F www/templates/Nostalgy/main_html_end.tpl 2ff5929306e7f5e8c78e3db12f76c88cda934189
+F www/templates/Nostalgy/main_html_start.tpl 91d88cbe6cc0300ac2bd9ed6b5b03d6a23c7a948
+F www/templates/Nostalgy/markdown.less 882a41015683aff88d6fb122ed44e6823f55f52b
 F www/templates/Nostalgy/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
 F www/templates/Nostalgy/nav_categories.tpl c04334bde3272eed0ceeb558cb640a15a41b39e8
 F www/templates/Nostalgy/nav_history.tpl 20332cc80d34a9c4fe360cc5559d98f0537900c2
 F www/templates/Nostalgy/nav_list.tpl 96e5e84af9e6db120e33f6fbc39e7a52bf96de1f
 F www/templates/Nostalgy/nav_search.tpl c5abc05e0defefe48c8d79167638f0e65b805948
-F www/templates/Nostalgy/nav_thread.tpl f1ae7f9766427333c946b947329f7dd70676708d
+F www/templates/Nostalgy/nav_thread.tpl b7d0d45c98ddb2fb7761115bdc0f13e61f8be7d9
 F www/templates/Nostalgy/nav_userslist.tpl f589aae323b62e3ee2de91251c3bbcce11e597d1
 F www/templates/Nostalgy/one_category.tpl 221b1f24f1fd8949cdfabca65f2e7fcbb48303fd
 F www/templates/Nostalgy/one_user.tpl f7ab1004f85bb05547443c30346faad2da648829
 F www/templates/Nostalgy/post_history.tpl cff7cf6427e8c428824dcb301fd345e26d3a704a
-F www/templates/Nostalgy/post_view.tpl fd24c424aa435283fd06f061119deff114a2c248
+F www/templates/Nostalgy/post_view.tpl 0b8fa4ed076448391f828af1d8b54eec94362a4c
 F www/templates/Nostalgy/posteditor.less af2d688c4445e9c333d411f20af8ee860519a302
-F www/templates/Nostalgy/posts.less d998aa1e6b7e1eaa538b7e34a5ed86c8c5e7ae99
+F www/templates/Nostalgy/posts.less a2eb1156b231c9050be98b60a92ef239b49dbb28
 F www/templates/Nostalgy/preview.tpl ba5115cd32e2aec85386342da04c3e557e836525
 F www/templates/Nostalgy/realtime.js e171f014a78b58310514cf4153a0b0a6011598df
 F www/templates/Nostalgy/restore_confirm.tpl 52a9c63c3575dc9a740886776c4dc6c2e0a07efe
 F www/templates/Nostalgy/search.less 0bcaf20f6012fe18db4ecdad203032fc082678df
 F www/templates/Nostalgy/search_result.tpl ae0d46617af84efc2ae3701ed18718f5fcf99a7e
 F www/templates/Nostalgy/settings.less 0e5a471a7313f34710bfc1a9b4d9aef50af9be23
-F www/templates/Nostalgy/skin_variables.lsi 62fad2b66326a5905f0972189bca32ce0409d79b
+F www/templates/Nostalgy/skin_variables.lsi f98916b0687ec1a0d499cebbc1c8398b875a2db2
 F www/templates/Nostalgy/sqlite.less 660b247ef2a036462dd4aeae6d92f54881fda877
 F www/templates/Nostalgy/statistics.tpl 99126ca5d255a737e3d5baf8911168ea3bb1d26c
 F www/templates/Nostalgy/thread.js 7da434cbe9cc7aa24bd54a24e77710e72f9b2ef1
@@ -1046,7 +1046,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 5c1de1f2d7a73fcd8984acb27cbf33b9f4ef18a2
-R e4fdbba173c9952f6c86fa7e0b72b3ad
+P 5fa33450250857dd9fce3bc5fb1bc2996af766c1
+R 5d020cc95c6f60e97eab9e53ffbe01d6
 U johnfound
-Z a1b34b8c39de48f076be3abe6c6008c1
+Z d252fbe2b0e868dfdd791b5c1b7c22f1

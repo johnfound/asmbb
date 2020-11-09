@@ -1,11 +1,7 @@
-    <td class="taglist" lang="end">
-        <a href="/[case:[special:limited]||(o)/]" title="[const:ttlAllThreads]" class="taglink [case:[special:dir]|current_tag|]"><img width="24" height="24" alt="∀" src="[special:skin]/_images/[case:[special:dir]|all-tags-red.png|all-tags.png]"></a>
-        [special:alltags]
-
 </table>
 </div>
 
-<footer class="layout">
+<footer>
   <p>[case:[special:lang]|
     <a href="/!users_online" title="Recent activities of the visitors.">Online</a> now: [special:visitors]
   |
@@ -18,8 +14,10 @@
     Jetzt <a href="/!users_online" title="Letzte Aktivitäten der Besucher.">online</a>: [special:visitors]
   ]
   </p>
+  <br>
   [special:stats]
-  <p>[case:[special:lang]|Page processing time|Време за обработка на страницата|Время обработки страницы|Page chargée en|Seite verarbeitet in]: [special:timestamp] ms</p>
+  <br>
+  <p>[case:[special:lang]|Page processing time|Време за обработка на страницата|Время обработки страницы|Page chargée en|Seite verarbeitet in]: [special:timestamp] ms  </p>
 </footer>
 
 <div class="attribution layout">

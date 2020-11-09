@@ -10,7 +10,7 @@ div.thread {
 
 
 h1.thread_caption {
-  font-size: 1.5rem;
+  font-size: 20px;
   margin: 0 0 8px 0px;
   clear:both;
   text-align: center;
@@ -50,6 +50,11 @@ h1.thread_caption {
     display:inline;
     text-align: left;
     white-space: nowrap;
+    color: @clBlack;
+
+    a {
+      color: @clBlack;
+    }
 
     &:before {
       content: '#';
@@ -82,7 +87,7 @@ div.current_version {
   td {
     vertical-align: top;
     background-color: @clGray;
-    padding: 0 @margin;
+    padding: 0 @margin/2;
     line-height: 22px;
   }
 
@@ -97,15 +102,16 @@ div.current_version {
     text-overflow: ellipsis;
   }
 
-  img.avatar {
-    width: 48px;
-    height: 48px;
-    line-height: 40px;
-    text-align: center;
-    font-size: 24px;
-    margin-top: 0;
-    vertical-align: middle;
+  .avatar {
     background-color: @clYellow;
+    img {
+      width: 48px;
+      height: 48px;
+      line-height: 40px;
+      text-align: center;
+      font-size: 24px;
+      vertical-align: middle;
+    }
   }
 
   a {
@@ -130,13 +136,11 @@ div.current_version {
 
 .post-text {
   margin: 0;
-  padding: 0 2*@margin 2*@margin 2*@margin;
+  padding: 0 @margin @margin @margin;
 
   border: 1px solid @clWhite;
   background-color: @clWhite;
   color: @clBlack;
-
-  display: block !important;
 }
 
 

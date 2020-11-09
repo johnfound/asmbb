@@ -11,7 +11,7 @@
 @globMaxWidth: 1280px;
 @globMargin: @margin auto;
 
-@margin: 8px;
+@margin: 16px;
 
 @msgBoxWidth: 800px;
 

@@ -159,7 +159,7 @@
    <table id="header" class="toolbar first dark-btns">
      <tr>
        <td rowspan="3"><div>[special:header]</div>
-       <td class="vspace"><img width="8" height="8" src="[special:skin]/_images/empty.png">
+       <td class="vspace"><div style="width: 16px; line-height: 16px;">&nbsp;</div>
        <td>
        <td>
        <td>
@@ -169,7 +169,7 @@
            <table class="toolbar dark-btns"><tr>
              <td><input class="inp-text" type="search" name="s" placeholder="[case:[special:lang]|text search|търсене на текст|поиск текста|recherche de texte|Textsuche]" value="[special:search]" size="40">
              <td><input class="inp-text" type="search" name="u" placeholder="[case:[special:lang]|user search|потребител|пользователь|recherche d'utilisateur|Benutzersuche]" value="[special:usearch]" size="20">
-             <td style="width: 24px; padding-left:2px;"><input class="inp-img" type="image" width="24" height="24" alt="🔍" src="[special:skin]/_images/search.png" title="[case:[special:lang]|Search|Търсене|Поиск|Rechercher|Suchen]">
+             <td><div class="inp-img"><input type="image" width="24" height="24" alt="🔍" src="[special:skin]/_images/search.png" title="[case:[special:lang]|Search|Търсене|Поиск|Rechercher|Suchen]"></div>
            </table>
          </form>
 
@@ -194,7 +194,7 @@
        <td><form method="post" action="/!logout"><input class="submit" type="submit" name="logout" title="[enc:[special:username]]" value="[const:btnLogout]"></form>
      ]
      <tr>
-       <td class="vspace"><img width="8" height="8" src="[special:skin]/_images/empty.png">
+       <td class="vspace"><div style="width: 16px; line-height: 16px;">&nbsp;</div>
        <td>
        <td>
        <td>
@@ -224,5 +224,9 @@
   </table>
 
   <table id="layout-table"><tr>
+    <td lang="en">
+      <div class="taglist">
+        <a href="/[case:[special:limited]||(o)/]" title="[const:ttlAllThreads]" class="taglink [case:[special:dir]|current_tag|]"><img width="24" height="24" alt="∀" src="[special:skin]/_images/[case:[special:dir]|all-tags-red.png|all-tags.png]"></a>
+        [special:alltags]
+      </div>
     <td id="content">
-

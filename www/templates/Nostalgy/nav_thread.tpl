@@ -28,7 +28,7 @@
 <h1 class="thread_caption">
 [caption]
 [case:[special:canedit]||<a href="!edit_thread" title="[const:ttlEditThread]" class="btn img-btn">
-  <img width="16" height="16" alt="✎" src="[special:skin]/_images/edit.png">
+  <img width="16" height="16" alt="✎" src="[special:skin]/_images/edit.png?1">
 </a>]
 <div class="vote jsonly">
   <span class="thread_rating[id]">[Rating]</span>

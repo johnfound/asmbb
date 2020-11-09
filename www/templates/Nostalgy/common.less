@@ -39,8 +39,32 @@ body {
   margin: 0 auto;
   overflow: auto;
   text-align: center;
-  * {
+  h1 {
     margin: 0;
+    font-size: 40px;
+  }
+  td > div {
+    padding-right: @margin/2 + @margin/4
+  }
+}
+
+
+footer {
+  background-color: @clGray;
+  color: @clBlack;
+
+  max-width: @globMaxWidth;
+  margin: @margin auto;
+  padding: @margin/2 @margin;
+
+  line-height: 1rem;
+
+  p {
+    margin: @margin/4 0;
+  }
+
+  a {
+    color: @clRed;
   }
 }
 
@@ -54,16 +78,22 @@ body {
   border-spacing: 0;
   width: 100%;
   margin: @margin 0;
+  td {
+    vertical-align: top;
+  }
 }
 
 #content {
   vertical-align: top;
-  padding: 0 @margin 0 0;
+  padding: 0 0 0 @margin;
   width: 85%;
 }
 
 table.compact {
   width: auto !important;
+  a {
+    padding: 0 4px !important;
+  }
 }
 
 
@@ -152,7 +182,7 @@ table.toolbar {
   }
 
   > tbody > tr > td, > tr > td {
-    padding: 0 @margin/2;
+    padding: 0 @margin/4;
     vertical-align: middle;
     &:first-of-type {
       padding-left: 0;
@@ -167,6 +197,9 @@ table.toolbar {
 td.vspace {
   line-height: 0px;
   font-size: 0px;
+  img {
+    background-color: white;
+  }
 }
 
 .dark-btns {
@@ -306,6 +339,7 @@ input {
   background-color: @clDarkGray;
   color: @clWhite;
   height: 24px;
+  width: 24px;
   padding: 0 !important;
 }
 
@@ -344,9 +378,12 @@ span.ntf {
 }
 
 
-td.taglist {
-  vertical-align: top;
-  width: 15%;
+.taglist {
+  position: sticky;
+  top: 0;
+  max-height: 100vh;
+  overflow: auto;
+
   text-align: justify;
   hyphens: auto;
 
