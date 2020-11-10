@@ -26,5 +26,4 @@
       <td><a href="!markread">[const:btnMarkRead]</a>
       <td><a class="btn" href="!post">[const:btnNewThread]</a>
   ]
-  <td class="spacer">
 </table>

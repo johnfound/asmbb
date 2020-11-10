@@ -39,9 +39,7 @@
 
 <div class="thread_tags">[special:threadtags=[id]]</div>
 
-<div class="navigation3 btn-bar">
 <table class="toolbar light-btns"><tr>
   <td><a href="..">[const:btnList]</a>
   <td>[case:[special:userid]|<a href="/!login">[const:btnNewPost]</a>|<a href="!post">[const:btnNewPost]</a>]
-  <td class="spacer">
 </tr></table>

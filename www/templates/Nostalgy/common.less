@@ -210,6 +210,9 @@ td.vspace {
 }
 
 .light-btns {
+  width: auto !important;
+  margin: 0 0 @margin 0 !important;
+  float: left;
   a, input.submit {
     background-color: @clYellow;
     color: @clBlack;
@@ -227,11 +230,15 @@ td.vspace {
 
 
 .page_row {
-  margin: @margin 0;
+  margin: 0;
+  float: right;
   > a {
     background-color: @clYellow;
     color: @clBlack;
-    line-height: 18px;
+    line-height: 24px;
+    min-width: 24px;
+    display: inline-block;
+    text-align: center;
 
     &::-moz-focus-inner {
       border: 0;
@@ -261,10 +268,16 @@ td.vspace {
     background-color: @clRed;
     color: @clWhite;
     font-weight: bold;
+    line-height: 24px;
+    min-width: 24px;
+    display: inline-block;
+    text-align: center;
   }
   > .page_hole {
     line-height: 24px;
+    min-width: 24px;
     display: inline-block;
+    text-align: center;
   }
 }
 
