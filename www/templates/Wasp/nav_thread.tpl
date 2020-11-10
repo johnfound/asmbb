@@ -81,4 +81,4 @@
     ]
   </div>
 </h1>
-<ul class="thread_tags">[special:threadtags=[id]]</ul>
+<div class="thread_tags">[special:threadtags=[id]]</div>

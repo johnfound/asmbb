@@ -2669,7 +2669,7 @@ begin
         cmp     eax, SQLITE_ROW
         jne     .end_thread_tags
 
-        stdcall StrCat, ebx, txt '<li><a '
+        stdcall StrCat, ebx, txt '<a '
 
         cinvoke sqliteColumnText, [.stmt], 1
         test    eax, eax
@@ -2690,15 +2690,19 @@ begin
         stdcall StrEncodeHTML, eax
 
         stdcall StrCat, ebx, eax
-        stdcall StrCat, ebx, txt '/">'
+        stdcall StrCat, ebx, txt '/">#'
         stdcall StrCat, ebx, eax
-        stdcall StrCat, ebx, txt '</a></li>'
+        stdcall StrCat, ebx, txt '</a>, '
         stdcall StrDel, eax
 
         jmp     .thread_tag_loop
 
 .end_thread_tags:
-
+        stdcall StrLen, ebx
+        sub     eax, 2
+        js      @f
+        stdcall StrTrim, ebx, eax
+@@:
         cinvoke sqliteFinalize, [.stmt]
 
         mov     [esp+4*regEAX], ebx

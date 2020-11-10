@@ -23,3 +23,7 @@ echo "Compile Modern/"
 cd ../"Urban Sunrise"
 echo "Compile Urban Sunrise/"
 ./compile_styles.sh
+
+cd ../Nostalgy
+echo "Compile Nostalgy/"
+./compile_styles.sh

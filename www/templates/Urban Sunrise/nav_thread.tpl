@@ -50,7 +50,7 @@
   ]
 </div>
 </h1>
-<ul class="thread_tags">[special:threadtags=[id]]</ul>
+<div class="thread_tags">[special:threadtags=[id]]</div>
 
 <div class="navigation3 btn-bar">
   <a class="btn" href="..">[const:btnList]</a>

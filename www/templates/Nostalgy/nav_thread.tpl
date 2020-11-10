@@ -36,7 +36,8 @@
   [case:[special:canvote]||<a class="vote_up [case:[VoteStatus]|||voted]" onclick="OnVote(this, 1)">▲</a>]
 </div>
 </h1>
-<ul class="thread_tags">[special:threadtags=[id]]</ul>
+
+<div class="thread_tags">[special:threadtags=[id]]</div>
 
 <div class="navigation3 btn-bar">
 <table class="toolbar light-btns"><tr>

@@ -184,25 +184,7 @@ span.nickname {
   * {
     font-weight: bold;
     user-select: all;
-  }
-
-  li {
-    display: inline-block;
-    list-style: none;
-
-    a:before {
-      content: "#";
-    }
-
-    &::after {
-      content: ', ';
-      text-decoration: none;
-      margin-right: 4px;
-    }
-
-    &:last-child::after {
-      content: ' ';
-    }
+    color: @clArticleFG;
   }
 }
 

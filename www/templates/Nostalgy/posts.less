@@ -44,25 +44,10 @@ h1.thread_caption {
 
 .thread_tags {
   margin: @margin 0;
+  a {
 
-  li {
-
-    display:inline;
-    text-align: left;
     white-space: nowrap;
     color: @clBlack;
-
-    a {
-      color: @clBlack;
-    }
-
-    &:before {
-      content: '#';
-    }
-
-    &:not(:last-child):after {
-      content: ', ';
-    }
   }
 }
 

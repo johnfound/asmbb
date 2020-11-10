@@ -55,30 +55,12 @@ h1.thread_caption {
 
 .thread_tags {
   margin: @margin 0;
+  color: @clDarkGray;
 
-  li {
-
-    display:inline;
+  a {
     text-align: left;
     white-space: nowrap;
-
     color: @clDarkGray;
-    text-decoration: none;
-
-    a {
-      color: inherit;
-      &:not(:hover) {
-        text-decoration: none;
-      }
-    }
-
-    &:before {
-      content: '#';
-    }
-
-    &:not(:last-child):after {
-      content: ', ';
-    }
   }
 }
 
