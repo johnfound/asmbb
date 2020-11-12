@@ -216,20 +216,6 @@
 
 <div class="toolbar">
 
-  <div class="dropdown emo-btn-bar">
-    <input id="emo-drop-down" type="checkbox">
-    <label for="emo-drop-down" class="emo-btn">
-      <svg version="1.1" width="18" height="18" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-       <path d="m31.5 16a15.5 15.5 0 01-15.5 15.5 15.5 15.5 0 01-15.5-15.5 15.5 15.5 0 0115.5-15.5 15.5 15.5 0 0115.5 15.5z" style="fill:url(#a) !important;stroke-linecap:round;stroke-linejoin:round;stroke:#000"/>
-       <path d="m17 20.2a11.4 8.84 2.04 01-12-8.49 11.4 8.84 2.04 0110.7-9.19 11.4 8.84 2.04 0112 8.49 11.4 8.84 2.04 01-10.7 9.19z" style="fill:url(#b) !important;stroke-width:1"/>
-       <path d="m7 16c0 6.66 4.39 8.87 8.84 8.87 4.42 0 8.9-2.22 8.9-8.87" style="fill:none !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1"/>
-       <path d="m14 9.34a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
-       <path d="m23 9.34a2.22 2.22 0 01-2.22 2.22 2.22 2.22 0 01-2.22-2.22 2.22 2.22 0 012.22-2.22 2.22 2.22 0 012.22 2.22z" style="fill:#000 !important;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1px"/>
-      </svg>
-    </label>
-    <div id="emolib">^[raw:all-emoji.txt^]</div>
-  </div>
-
   [case:[special:markup=0]|<section><input name="format" value="1" type="hidden"></section>|
   [case:[special:markup=0]||[case:[special:markup=1]||
   <input id="mark0" name="format" type="radio" [case:[format]|checked|] value="0">

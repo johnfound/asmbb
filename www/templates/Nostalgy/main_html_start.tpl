@@ -224,9 +224,8 @@
   </table>
 
   <table id="layout-table"><tr>
-    <td lang="en">
-      <div class="taglist">
+    <td class="taglist" lang="en">
         <a href="/[case:[special:limited]||(o)/]" title="[const:ttlAllThreads]" class="taglink [case:[special:dir]|current_tag|]"><img width="24" height="24" alt="∀" src="[special:skin]/_images/[case:[special:dir]|all-tags-red.png|all-tags.png]"></a>
         [special:alltags]
-      </div>
+
     <td id="content">

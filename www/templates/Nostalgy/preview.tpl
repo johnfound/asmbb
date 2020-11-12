@@ -1,5 +1,6 @@
 [css:markdown.css]
 
+<td>
 <div id="preview" class="thread">
   <div class="navigation3 btn-bar" id="preview-switch">
     <a class="btn" href="#editor-window">Editor</a>
@@ -28,3 +29,7 @@
     </article>
   </div>
 </div>
+
+</table>
+
+

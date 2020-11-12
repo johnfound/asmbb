@@ -35,8 +35,8 @@ body {
 #header {
   background-color: @clYellow;
   padding: 0 @margin;
-  max-width: @globMaxWidth;
-  margin: 0 auto;
+//  max-width: @globMaxWidth;
+//  margin: 0 auto;
   overflow: auto;
   text-align: center;
   h1 {
@@ -230,15 +230,18 @@ td.vspace {
 
 
 .page_row {
-  margin: 0;
+  margin: 0 0 @margin 0;
   float: right;
+  text-align: right;
+  > * {
+    padding: 4px;
+    line-height: 24px;
+    min-width: 24px;
+  }
+
   > a {
     background-color: @clYellow;
     color: @clBlack;
-    line-height: 24px;
-    min-width: 24px;
-    display: inline-block;
-    text-align: center;
 
     &::-moz-focus-inner {
       border: 0;
@@ -268,16 +271,6 @@ td.vspace {
     background-color: @clRed;
     color: @clWhite;
     font-weight: bold;
-    line-height: 24px;
-    min-width: 24px;
-    display: inline-block;
-    text-align: center;
-  }
-  > .page_hole {
-    line-height: 24px;
-    min-width: 24px;
-    display: inline-block;
-    text-align: center;
   }
 }
 
@@ -460,3 +453,10 @@ a.taglink {
 .tagsize30 { font-size: 0.99*25px }
 .tagsize31 { font-size: 1.00*25px }
 .tagsize32 { font-size: 1.00*25px }
+
+
+.attribution {
+  a {
+    color: @clRed;
+  }
+}

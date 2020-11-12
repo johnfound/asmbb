@@ -91,17 +91,60 @@
   [equ:MultiFiles= ausgewählte Dateien.]
 ]
 
+<script src="[special:skin]/highlight.js"></script>
+<script src="[special:skin]/editors.js"></script>
+<script src="[special:skin]/file-browse.js"></script>
+<script src="[special:skin]/autocomplete.js"></script>
+
+
+<table id="editor-layout"><tr>
+<td>
+  <form id="editform" action="!post" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
+    <input type="hidden" name="ticket" value="[Ticket]" >
+    <table class="toolbar dark-imgs"><tr>
+      <td><input class="btn" id="preview-btn" formaction="!post#preview" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
+      <td><input class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]" title="[const:hintSubmit]">
+      <td class="spacer">
+      <td><a id="btn-close" class="btn img-btn" href="."><img src="[special:skin]/_images/close.png"></a>
+    </table>
+
+    <table class="edit-group toolbar">
+      <tr>
+        <td>
+          <p>[const:ttlTitle]:
+          <p><input class="inp-text" type="text" value="[caption]" placeholder="[const:ttlTitle]" name="title" id="inp-title" autofocus required>
+        <td>
+          <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]
+          <p><input class="inp-text" type="text" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
+      <tr>
+        <td colspan="2">
+          <label for="lat-thread"><input type="checkbox" id="lat-thread" name="limited" value="1" [case:[limited]||checked]>[const:ttlLimited]</label>
+      <tr>
+        <td colspan="2">
+          <p>[const:ttlInvited]:
+          <p><input class="inp-text" type="text" id="invited" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
+
+  [case:[special:canupload]||
+      <tr>
+        <td>
+          <p>[const:ttlAttach]:</p>
+          <input type="file" placeholder="[const:phSelect]" id="input-file-browse" name="attach" multiple="multiple" data-multiselect="[const:MultiFiles]">
+  ]
+
+    </table>
+
+    <p>[const:ttlPost]:</p>
+    <textarea rows="20" name="source" id="source" placeholder="[const:phText]" required>[source]</textarea>
+
+  </form>
+
+
+[case:0||
+
 <div id="editor-window" class="editor">
   <div class="navigation3 btn-bar">
-      <input form="editform" type="hidden" name="ticket" value="[Ticket]" >
-      <input form="editform" class="btn" id="preview-btn" formaction="!post#preview" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
-      <input form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]" title="[const:hintSubmit]">
       <div class="spacer"></div>
-      <a id="btn-close" class="btn img-btn" href=".">
-        <svg version="1.1" width="12" height="12" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-           <rect transform="rotate(45)" x=".635" y="-1.53" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
-           <rect transform="rotate(135)" x="-10.7" y="-12.8" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
-        </svg>
+
       </a>
   </div>
   <form id="editform" action="!post" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
@@ -111,41 +154,10 @@
       <label for="tab1">[const:ttlEditorTab]</label>
       <section>
         <div class="editgroup">
-          <div>
-            <p>[const:ttlTitle]:</p>
-            <input type="text" value="[caption]" placeholder="[const:ttlTitle]" name="title" autofocus required>
-          </div>
-          <div>
-            <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</p>
-            <input type="text" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
-          </div>
         </div>
-        <div class="checkbox">
-          <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]><label for="limited">[const:ttlLimited]</label>
-          <div class="editgroup" id="users_invited">
-            <div>
-              <p>[const:ttlInvited]:</p>
-              <input type="text" id="invited" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
-            </div>
-          </div>
-        </div>
-  [case:[special:canupload]||
-        <div class="editgroup">
-          <div>
-            <p>[const:ttlAttach]:</p>
-            <div class="file-browse">
-              <label for="input-file-browse" id="browse-txt"></label>
-              <input type="file" placeholder="[const:phSelect]" id="input-file-browse" name="attach" multiple="multiple" data-multiselect="[const:MultiFiles]">
-              <label id="browse-btn" class="btn" for="input-file-browse">Browse</label>
-            </div>
-          </div>
-        </div>
-  ]
-        <p>[const:ttlPost]:</p>
 
         [include:edit_toolbar.tpl]
 
-        <textarea name="source" id="source" placeholder="[const:phText]" required>[source]</textarea>
       </section>
 
       [case:[special:markup=0]||
@@ -203,8 +215,5 @@
   </form>
 </div>
 
+]
 
-<script src="[special:skin]/highlight.js"></script>
-<script src="[special:skin]/editors.js"></script>
-<script src="[special:skin]/file-browse.js"></script>
-<script src="[special:skin]/autocomplete.js"></script>

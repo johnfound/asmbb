@@ -61,7 +61,9 @@
   [equ:hintSubmit=Strg+S zum Absenden]
 ]
 
-<div id="editor-window" class="editor">
+<table id="editor-window" class="editor">
+<tr>
+<td>
   <div class="navigation3 btn-bar">
       <input form="editform" type="hidden" name="ticket" value="[Ticket]" >
       <input form="editform" class="btn" formaction="!post#preview" id="preview-btn" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">

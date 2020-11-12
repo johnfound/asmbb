@@ -1,5 +1,38 @@
 @import "skin_variables.lsi";
 
+.layout {
+  max-width: none !important;
+}
+
+
+.taglist, footer {
+  display: none;
+}
+
+#content {
+  padding: 0 !important;
+}
+
+#editor-layout {
+  width: 100%;
+  > tbody > tr > td, > tr > td {
+    width: 50%;
+  }
+}
+
+.edit-group {
+  width: 100%;
+}
+
+#source {
+  width: 100%;
+  background-color: @clWhite;
+  color: @clBlack;
+}
+
+
+/*
+
 @media (max-width: 600px) {
   body {
     overflow-y: hidden !important;
@@ -183,3 +216,6 @@ body {
   font-size: 10px;
   overflow: auto !important;
 }
+
+
+*/
