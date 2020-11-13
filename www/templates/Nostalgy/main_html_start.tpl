@@ -220,7 +220,7 @@
     <td><a href="/!debuginfo">Debug info</a>
   ]
   [case:[special:limited]|
-    <td><a href="!feed" title="[const:rssfeed]"><img width="16" height="16" src="[special:skin]/_images/rss.png"></a>|]
+    <td><a class="img-btn" href="!feed" title="[const:rssfeed]"><img width="16" height="16" src="[special:skin]/_images/rss.png"></a>|]
   </table>
 
   <table id="layout-table"><tr>

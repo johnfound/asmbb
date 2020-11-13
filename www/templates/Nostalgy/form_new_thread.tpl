@@ -101,11 +101,11 @@
 <td>
   <form id="editform" action="!post" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
     <input type="hidden" name="ticket" value="[Ticket]" >
-    <table class="toolbar dark-imgs"><tr>
-      <td><input class="btn" id="preview-btn" formaction="!post#preview" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
-      <td><input class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]" title="[const:hintSubmit]">
+    <table class="toolbar light-btns"><tr>
+      <td><input class="submit" type="submit" id="preview-btn" formaction="!post#preview" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
+      <td><input class="submit" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]" title="[const:hintSubmit]">
       <td class="spacer">
-      <td><a id="btn-close" class="btn img-btn" href="."><img src="[special:skin]/_images/close.png"></a>
+      <td><a class="img-btn" href="."><img width="16" height="16" src="[special:skin]/_images/close.png"></a>
     </table>
 
     <table class="edit-group toolbar">
@@ -118,7 +118,7 @@
           <p><input class="inp-text" type="text" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
       <tr>
         <td colspan="2">
-          <label for="lat-thread"><input type="checkbox" id="lat-thread" name="limited" value="1" [case:[limited]||checked]>[const:ttlLimited]</label>
+          <p><label><input class="inp-check" type="checkbox" name="limited" value="1" [case:[limited]||checked]>[const:ttlLimited]</label>
       <tr>
         <td colspan="2">
           <p>[const:ttlInvited]:
@@ -126,9 +126,9 @@
 
   [case:[special:canupload]||
       <tr>
-        <td>
+        <td colspan="2">
           <p>[const:ttlAttach]:</p>
-          <input type="file" placeholder="[const:phSelect]" id="input-file-browse" name="attach" multiple="multiple" data-multiselect="[const:MultiFiles]">
+          <p><input class="inp-file" type="file" placeholder="[const:phSelect]" id="input-file-browse" name="attach" multiple="multiple" data-multiselect="[const:MultiFiles]">
   ]
 
     </table>

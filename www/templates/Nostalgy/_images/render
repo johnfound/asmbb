@@ -17,4 +17,4 @@ rsvg-convert -o history.png _source/history.svg
 # rsvg-convert -o empty.png _source/empty.svg
 rsvg-convert -o close.png _source/close.svg
 
-optipng -o7 -strip all ./*.png
+# optipng -o7 -strip all ./*.png
