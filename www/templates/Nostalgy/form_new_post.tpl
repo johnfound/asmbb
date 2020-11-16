@@ -61,22 +61,63 @@
   [equ:hintSubmit=Strg+S zum Absenden]
 ]
 
-<table id="editor-window" class="editor">
-<tr>
+<table id="editor-layout"><tr>
 <td>
-  <div class="navigation3 btn-bar">
-      <input form="editform" type="hidden" name="ticket" value="[Ticket]" >
-      <input form="editform" class="btn" formaction="!post#preview" id="preview-btn" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
-      <input form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]" title="[const:hintSubmit]">
-      <div class="spacer"></div>
-      <a class="btn img-btn" href="[case:[special:page]|./|!by_id]">
-        <svg version="1.1" width="12" height="12" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-           <rect transform="rotate(45)" x=".635" y="-1.53" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
-           <rect transform="rotate(135)" x="-10.7" y="-12.8" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
-        </svg>
-      </a>
-  </div>
   <form id="editform" action="!post" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
+    <input type="hidden" name="ticket" value="[Ticket]" >
+    <table class="toolbar light-btns"><tr>
+      <td><input class="submit" type="submit" id="preview-btn" formaction="!post#preview" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
+      <td><input class="submit" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]" title="[const:hintSubmit]">
+      <td class="spacer">
+      <td><a class="img-btn" href="."><img width="16" height="16" src="[special:skin]/_images/close.png"></a>
+
+      [case:[special:markup=0]|<input name="format" value="1" type="hidden">|[case:[special:markup=1]||
+      <tr><td colspan="4"><p><label><input class="inp-check" name="format" type="radio" [case:[format]|checked|] value="0">MiniMag</label>
+      ]]
+      [case:[special:markup=1]|<input name="format" value="0" type="hidden">|[case:[special:markup=0]||
+      <label><input class="inp-check" name="format" type="radio" [case:[format]||checked] value="1">BBcode</label>
+      ]]
+
+  [case:[special:canupload]||
+      <tr>
+        <td colspan="4">
+          <p>[const:ttlAttach]:</p>
+          <p><input class="inp-file" type="file" placeholder="[const:phSelect]" id="input-file-browse" name="attach" multiple="multiple" data-multiselect="[const:MultiFiles]">
+  ]
+    </table>
+
+    <p>[const:ttlPost]:</p>
+    <textarea rows="20" name="source" id="source" placeholder="[const:phText]" required>[source]</textarea>
+  </form>
+
+[case:[special:markup=0]||
+  <details>
+    <summary>MiniMag formatting</summary>
+    <section class="post post-text help">
+      [html:
+        [minimag:
+          [include:minimag_suffix.tpl]
+          [raw:help-minimag.txt]
+        ]
+      ]
+    </section>
+  </details>
+]
+
+[case:[special:markup=1]||
+  <details>
+    <summary>BBCode formatting</summary>
+      <section class="post post-text help">
+        [html:
+          [bbcode:
+            [raw:help-bbcode.txt]
+          ]
+        ]
+      </section>
+  </details>
+]
+
+[case:0||
     <div class="dropdown tabbed-form">
 
       <input id="tab1" name="tabselector" type="radio" value="0" checked>
@@ -94,6 +135,7 @@
           </div>
         </div>
         ]
+
 
         <p>[const:ttlPost]:</p>
         [include:edit_toolbar.tpl]
@@ -154,8 +196,7 @@
     </div>
   </form>
 </div>
-
+]
 
 <script src="[special:skin]/highlight.js"></script>
 <script src="[special:skin]/editors.js"></script>
-<script src="[special:skin]/file-browse.js"></script>

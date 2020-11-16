@@ -131,7 +131,7 @@ table.toolbar {
     display: inline-block;
   }
 
-  a, input.submit, input.inp-img {
+  a, input.submit, input.inp-img, label.btn {
     border: none;
     height: 24px;
     line-height: 24px;
@@ -206,20 +206,23 @@ td.vspace {
 }
 
 .dark-btns {
-  a, input.submit {
+  a, input.submit, input.inp-img, label.btn {
     background-color: @clDarkGray;
     color: @clWhite;
   }
 }
 
 .light-btns {
-  width: auto !important;
-  margin: 0 0 @margin 0 !important;
-  float: left;
-  a, input.submit {
+  a, input.submit, input.inp-img, label.btn {
     background-color: @clYellow;
     color: @clBlack;
   }
+}
+
+.float-toolbar {
+  width: auto !important;
+  margin: 0 0 @margin 0 !important;
+  float: left;
 }
 
 

@@ -91,11 +91,6 @@
   [equ:MultiFiles= ausgewählte Dateien.]
 ]
 
-<script src="[special:skin]/highlight.js"></script>
-<script src="[special:skin]/editors.js"></script>
-<script src="[special:skin]/file-browse.js"></script>
-<script src="[special:skin]/autocomplete.js"></script>
-
 
 <table id="editor-layout"><tr>
 <td>
@@ -106,6 +101,13 @@
       <td><input class="submit" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]" title="[const:hintSubmit]">
       <td class="spacer">
       <td><a class="img-btn" href="."><img width="16" height="16" src="[special:skin]/_images/close.png"></a>
+
+      [case:[special:markup=0]|<input name="format" value="1" type="hidden">|[case:[special:markup=1]||
+      <tr><td colspan="4"><p><label><input class="inp-check" name="format" type="radio" [case:[format]|checked|] value="0">MiniMag</label>
+      ]]
+      [case:[special:markup=1]|<input name="format" value="0" type="hidden">|[case:[special:markup=0]||
+      <label><input class="inp-check" name="format" type="radio" [case:[format]||checked] value="1">BBcode</label>
+      ]]
     </table>
 
     <table class="edit-group toolbar">
@@ -139,69 +141,23 @@
   </form>
 
 
-[case:0||
-
-<div id="editor-window" class="editor">
-  <div class="navigation3 btn-bar">
-      <div class="spacer"></div>
-
-      </a>
-  </div>
-  <form id="editform" action="!post" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
-    <div class="dropdown tabbed-form">
-
-      <input id="tab1" name="tabselector" type="radio" value="0" checked>
-      <label for="tab1">[const:ttlEditorTab]</label>
-      <section>
-        <div class="editgroup">
-        </div>
-
-        [include:edit_toolbar.tpl]
-
-      </section>
-
-      [case:[special:markup=0]||
-      <input id="tab2" name="tabselector" type="radio" value="1">
-      <label for="tab2">
-        <svg version="1.1" width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-          <path d="m16 0a16 16 0 00-16 16 16 16 0 0016 16 16 16 0 0016-16 16 16 0
-                   00-16-16zm.154 6c2.13 0 3.8.503 5.01 1.51 1.22.998 1.83 2.38 1.83
-                   4.14 0 .904-.198 1.72-.594 2.43-.386.718-1.11 1.47-2.18
-                   2.27l-1.03.77c-.611.457-1.07.919-1.37 1.38-.296.466-.459.978-.486
-                   1.54h-3.6c.0539-.951.311-1.8.77-2.54.467-.746 1.15-1.44 2.05-2.1.961-.69
-                   1.64-1.3 2.04-1.82.395-.531.594-1.12.594-1.76
-                   0-.821-.262-1.47-.783-1.94-.512-.476-1.24-.715-2.2-.715-.907
-                   0-1.67.276-2.29.826-.611.55-.97 1.28-1.08 2.18l-3.84-.168c.243-1.89.992-3.37
-                   2.25-4.42 1.26-1.05 2.89-1.58 4.9-1.58zm-2.52 16.2h3.89v3.78h-3.89v-3.78z"/>
-        </svg>
-        MiniMag
-      </label>
-      <section class="post post-text help">
-        [html:
-          [minimag:
-            [include:minimag_suffix.tpl]
-            [raw:help-minimag.txt]
-          ]
+[case:[special:markup=0]||
+  <details>
+    <summary>MiniMag formatting</summary>
+    <section class="post post-text help">
+      [html:
+        [minimag:
+          [include:minimag_suffix.tpl]
+          [raw:help-minimag.txt]
         ]
-      </section>
       ]
+    </section>
+  </details>
+]
 
-      [case:[special:markup=1]||
-      <input id="tab3" name="tabselector" type="radio" value="2">
-      <label for="tab3">
-        <svg version="1.1" width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-          <path d="m16 0a16 16 0 00-16 16 16 16 0 0016 16 16 16 0 0016-16 16 16 0
-                   00-16-16zm.154 6c2.13 0 3.8.503 5.01 1.51 1.22.998 1.83 2.38 1.83
-                   4.14 0 .904-.198 1.72-.594 2.43-.386.718-1.11 1.47-2.18
-                   2.27l-1.03.77c-.611.457-1.07.919-1.37 1.38-.296.466-.459.978-.486
-                   1.54h-3.6c.0539-.951.311-1.8.77-2.54.467-.746 1.15-1.44 2.05-2.1.961-.69
-                   1.64-1.3 2.04-1.82.395-.531.594-1.12.594-1.76
-                   0-.821-.262-1.47-.783-1.94-.512-.476-1.24-.715-2.2-.715-.907
-                   0-1.67.276-2.29.826-.611.55-.97 1.28-1.08 2.18l-3.84-.168c.243-1.89.992-3.37
-                   2.25-4.42 1.26-1.05 2.89-1.58 4.9-1.58zm-2.52 16.2h3.89v3.78h-3.89v-3.78z"/>
-        </svg>
-        BBCode
-      </label>
+[case:[special:markup=1]||
+  <details>
+    <summary>BBCode formatting</summary>
       <section class="post post-text help">
         [html:
           [bbcode:
@@ -209,11 +165,9 @@
           ]
         ]
       </section>
-      ]
-
-    </div>
-  </form>
-</div>
-
+  </details>
 ]
 
+<script src="[special:skin]/highlight.js"></script>
+<script src="[special:skin]/editors.js"></script>
+<script src="[special:skin]/autocomplete.js"></script>

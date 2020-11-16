@@ -18,7 +18,7 @@
 ]
 
 
-<table class="toolbar light-btns"><tr>
+<table class="toolbar light-btns float-toolbar"><tr>
   [case:[special:userid]
     |
       <td><a href="/!login">[const:btnNewThread]</a>

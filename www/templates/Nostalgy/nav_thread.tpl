@@ -39,7 +39,7 @@
 
 <div class="thread_tags">[special:threadtags=[id]]</div>
 
-<table class="toolbar light-btns"><tr>
+<table class="toolbar light-btns float-toolbar"><tr>
   <td><a href="..">[const:btnList]</a>
   <td>[case:[special:userid]|<a href="/!login">[const:btnNewPost]</a>|<a href="!post">[const:btnNewPost]</a>]
 </tr></table>
