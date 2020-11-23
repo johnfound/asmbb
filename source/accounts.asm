@@ -817,11 +817,11 @@ endp
 
 
 
-sqlBegin      text  "begin transaction;"
+sqlBegin      text  "begin"
 sqlActivate   text  "insert into Users ( nick, passHash, salt, status, email, Register ) select nick, passHash, salt, ?1, email, time_reg from WaitingActivation where a_secret = ?2"
 sqlDeleteWait text  "delete from WaitingActivation where a_secret = ?1"
 sqlCheckType  text  "select operation from WaitingActivation where a_secret = ?1"
-sqlCommit     text  "commit transaction"
+sqlCommit     text  "commit"
 sqlRollback   text  "rollback"
 
 sqlUpdateUserEmail text "update users set email = (select email from WaitingActivation where a_secret = ?1) where nick = (select nick from WaitingActivation where a_secret = ?1)"

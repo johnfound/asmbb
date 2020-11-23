@@ -54,5 +54,10 @@
 
 <div class="navigation3 btn-bar">
   <a class="btn" href="..">[const:btnList]</a>
-  [case:[special:userid]|<a class="btn" href="/!login">[const:btnNewPost]</a>|<a class="btn" href="!post">[const:btnNewPost]</a>]
+  [case:[special:userid]|
+    <a class="btn" href="/!login">[const:btnNewPost]</a>|
+    <form method="post" action="!post">
+      <button type="submit" name="submit" value="newpost" class="btn">[const:btnNewPost]</button>
+    </form>
+  ]
 </div>

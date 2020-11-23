@@ -104,7 +104,7 @@ PHashTable tablePostCommands, tpl_func,                 \
         "!vote",            Vote,                       \
         "!markread",        MarkThreadRead,             \
         "!unread",          GotoFirstUnread,            \
-        "!post",            PostUserMessage,            \
+        "!post",            CreateDraftPost,            \
         "!edit",            EditUserMessage,            \
         "!edit_thread",     EditThreadAttr,             \
         "!del",             DeletePost,                 \
@@ -164,6 +164,8 @@ begin
 
         stdcall StrURLEncode2, eax
         mov     [.special.userSkinURL], eax
+
+        OutputValue "POST data address: ", [.pPost2], 16, 8
 
         cmp     [.pPost2], 0
         je      .post_ok

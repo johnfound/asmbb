@@ -1,5 +1,5 @@
-C Work\son\spost\seditors.
-D 2020-11-16T03:28:14.398
+C Attempt\sto\suse\sonly\sone\seditor\stemplate\sfor\sall\sediting\sneeds.
+D 2020-11-23T15:35:16.817
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -24,7 +24,7 @@ F source/TestsWithTags.sql 6384a56d553e36aa1c54cdb61a147bb2806e3e9d
 F source/ToDo.txt 78c2a566e37fc37db78b799f5ac100bed383c182
 F source/Win32/sqleet.inc d3fe767bb10368a936112e35df3e734c32161b2d
 F source/Win32/sqlite3.inc f941d1cebec53d2bddbd071f4a2fef6d1a80b7f2
-F source/accounts.asm 51169bf843cb7d4527c5751d83ea4898369a4a06
+F source/accounts.asm 89f94909d709eec112b76eb13912f2d944c616ec
 F source/alltags.sql aa3093196f8c5132f8e763f2a80fbe977a878687
 F source/alltags2.sql e4a0d5084be7a45f5e30ab46b7985f49c797f86a
 F source/atom_list.sql db8ca9992635d22d58bdcdf3a80d94a23c382362
@@ -36,13 +36,13 @@ F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm 931a8f7c9335462e79502e2b580016623bfeeff7
-F source/commands.asm 607d4d459300c9121f6227ea9f9b945c82db8451
-F source/create.sql a68ebb8563b05a089feda322342151029c1726ac
+F source/commands.asm f72160f00b1cabd3e1ee40a816eff1a0b8a6755f
+F source/create.sql b9e460891dc128dd5314ef0868612e64cd451149
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
-F source/edit.asm 097489a8a33810ef4dbaa8f98143cc5ee6c50e8b
+F source/edit.asm 4e1c767bb24fedfa7f98396699699a8ae47af6bd
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm 0711c8da15baf58a1d7f43700c30b79600fc8c26
-F source/engine.fpr 40bbb30f38595a1d0659114bad0427f0e8e211c0
+F source/engine.fpr f7ab6dda3d2dd94574d8bb492b76b2e9e43959ef
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 81f60b545fb3f7a184f6f6075f9a4e7ce31b7a0a
@@ -58,8 +58,8 @@ F source/migration2.sql fe978700e39265c6680b69ea8cbfb5444cfdce63
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
 F source/phpbb.sql 6820a2092cc30a774c44d770055b37b66bdbfaf0
 F source/phpbb_pm.sql f88eaf899e72d4e99f367cb654b41695da2231d5
-F source/post.asm 470ccda07e3a7a44ca41b75307b69e7625d06bc4
-F source/post_data.asm 79fb813775e3bafe6cb314c50a99484e4f0dc211
+F source/post.asm ac1d02a27bd3af95baa1a0b6ca55be5b98813fb1
+F source/post_data.asm b10801515cc931bdff60359666cc359af4dd32c6
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
 F source/realtime.asm 9b433d13804f1a04b94b20fdf1d95a253b58cd98
@@ -773,7 +773,7 @@ F www/templates/Urban\sSunrise/nav_categories.tpl c04334bde3272eed0ceeb558cb640a
 F www/templates/Urban\sSunrise/nav_history.tpl 20332cc80d34a9c4fe360cc5559d98f0537900c2
 F www/templates/Urban\sSunrise/nav_list.tpl cb440a2c3860302344fdc735a241ee9d8468b4a3
 F www/templates/Urban\sSunrise/nav_search.tpl c5abc05e0defefe48c8d79167638f0e65b805948
-F www/templates/Urban\sSunrise/nav_thread.tpl 12d51129954885639023ac2735c8c5173d3b0002
+F www/templates/Urban\sSunrise/nav_thread.tpl 315b5a8735ca505b69ed89f7affce34fcee486fd
 F www/templates/Urban\sSunrise/nav_userslist.tpl f589aae323b62e3ee2de91251c3bbcce11e597d1
 F www/templates/Urban\sSunrise/one_category.tpl 221b1f24f1fd8949cdfabca65f2e7fcbb48303fd
 F www/templates/Urban\sSunrise/one_user.tpl f7ab1004f85bb05547443c30346faad2da648829
@@ -1048,7 +1048,10 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 3b78a0d69e123e2cde4251f6d8af9b43f546d733
-R a29be973087383bb14b2467f07ccd90f
+P c6c056ddbcfb420d56f44a551938d8b34384cec6
+R c5a8a16255db5a7cc4f46d31cbae361e
+T *branch * OneEditor
+T *sym-OneEditor *
+T -sym-NostalgySkin *
 U johnfound
-Z 6d5d076edceedd452072d0f19be8e802
+Z a162cd341c0eea65e721fbc555f6d5ce

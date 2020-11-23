@@ -1,6 +1,170 @@
-LIMIT_POST_LENGTH = 16*1024
-LIMIT_POST_CAPTION = 512
-LIMIT_TAG_DESCRIPTION = 1024
+sqlBeginImmediate  text "begin immediate"
+sqlCreateDraftPost text "insert into Posts( ThreadID, UserID, anon, DraftID, PostTime, Content, format) values ((select id from threads where slug = ?1), ?2, ?3, (select id from sessions where sid = ?4), strftime('%s','now'), NULL, ?5)"
+
+proc CreateDraftPost, .pSpecial
+.stmt   dd ?
+.postID dd ?
+begin
+        pushad
+
+        mov     esi, [.pSpecial]
+
+        cmp     [esi+TSpecialParams.post_array], 0
+        je      .bad_request                            ; only post requests!
+
+        cmp     [esi+TSpecialParams.session], 0
+        je      .bad_request
+
+; check the permissions
+        mov     eax, permThreadStart
+        cmp     [esi+TSpecialParams.thread], 0
+        je      .perm_ok
+
+        mov     eax, permPost
+
+.perm_ok:
+        or      eax, permAdmin
+
+        test    [esi+TSpecialParams.userStatus], eax
+        jz      .error_wrong_permissions
+
+; start the transaction.
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBeginImmediate, sqlBeginImmediate.length, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     ebx, SQLITE_DONE
+        jne     .error_write_database
+
+; create the new post.
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCreateDraftPost, sqlCreateDraftPost.length, eax, 0
+
+        cmp     [esi+TSpecialParams.thread], 0
+        je      .thread_ok
+
+; threadID
+        stdcall StrPtr, [esi+TSpecialParams.thread]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
+.thread_ok:
+        mov     eax, [esi+TSpecialParams.userID]
+        test    eax, eax
+        jz      .user_anon
+
+; userID
+        cinvoke sqliteBindInt, [.stmt], 2, eax
+        jmp     .user_ok
+
+.user_anon:
+; Anon preliminary name
+        stdcall StrPtr, [esi+TSpecialParams.userName]
+        cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
+
+.user_ok:
+; session ID
+        stdcall StrPtr, [esi+TSpecialParams.session]
+        cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
+
+        stdcall GetDefaultFormat, esi
+        cinvoke sqliteBindInt, [.stmt], 5, eax
+
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
+        cinvoke sqliteFinalize, [.stmt]
+        cmp     ebx, SQLITE_DONE
+        jne     .error_rollback
+
+; get the created post ID
+        cinvoke sqliteLastInsertRowID, [hMainDatabase]
+        mov     [.postID], eax
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCommit, sqlCommit.length
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     ebx, SQLITE_DONE
+        jne     .error_write_database
+
+; the post is created, redirect to the post editor.
+
+        stdcall StrDupMem, txt "/"
+        mov     ebx, eax
+
+        cmp     [esi+TSpecialParams.Limited], 0
+        je      .limited_ok
+
+        stdcall StrCat, ebx, txt '(o)/'
+
+.limited_ok:
+        mov     eax, [esi+TSpecialParams.thread]
+        test    eax, eax
+        jz      .thread_ok2
+
+        stdcall StrCat, ebx, eax
+        stdcall StrCat, ebx, txt "/"
+
+.thread_ok2:
+
+        stdcall NumToStr, [.postID], ntsDec or ntsUnsigned
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+        stdcall StrCat, ebx, txt "/!edit"
+
+        OutputValue "New post created:", [.postID], 10, -1
+
+.finish:
+        stdcall TextMakeRedirect, 0, ebx
+        stdcall StrDel, ebx
+
+        mov     [esp+4*regEAX], edi
+        stc
+        popad
+        return
+
+.error_rollback:
+        cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
+
+.error_write_database:
+        stdcall StrDupMem, txt "/!message/error_cant_write/"
+        mov     ebx, eax
+        jmp     .finish
+
+.error_wrong_permissions:
+        stdcall StrDupMem, txt "/!message/error_cant_post"
+        mov     ebx, eax
+        jmp     .finish
+
+.bad_request:
+        stdcall TextCreate, sizeof.TText
+        stdcall AppendError, eax, "400 Bad Request", esi
+        mov     [esp+4*regEAX], edx
+        stc
+        popad
+        return
+
+
+endp
+
+
+
+
+; Needs more complex processing in order to support user preferences default format...
+
+proc GetDefaultFormat, .pSpecial
+begin
+        xor     eax, eax
+        stdcall GetParam, "default_format", gpInteger
+        return
+endp
+
+
+
+
 
 cNewPostForm   text "form_new_post.tpl"
 cNewThreadForm text "form_new_thread.tpl"

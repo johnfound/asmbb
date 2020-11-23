@@ -193,6 +193,7 @@ create table Posts (
   id          integer primary key autoincrement,
   threadID    integer references Threads(id) on delete cascade,
   userID      integer references Users(id) on delete cascade,
+  draftID     integer references Sessions(id) on delete cascade on update cascade,
   anon        text,
   postTime    integer,
   editUserID  integer default NULL references Users(id) on delete cascade,
