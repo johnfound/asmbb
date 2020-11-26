@@ -16,12 +16,10 @@ end if
 
 
 
-proc DumpPostArray, .pSpecial
+proc DumpPostArray2, .pPostArray
 begin
         pushad
-        mov     esi, [.pSpecial]
-
-        mov     edx, [esi+TSpecialParams.post_array]
+        mov     edx, [.pPostArray]
         xor     ecx, ecx
 
 .loop:

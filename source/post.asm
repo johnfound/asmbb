@@ -16,19 +16,30 @@ begin
         je      .bad_request
 
 ; check the permissions
-        mov     eax, permThreadStart
-        cmp     [esi+TSpecialParams.thread], 0
-        je      .perm_ok
-
         mov     eax, permPost
+        cmp     [esi+TSpecialParams.thread], 0
+        jne     .mask_ok
 
-.perm_ok:
+;check the LAT
+        cmp     [esi+TSpecialParams.Limited], 0
+        je      .not_lat
+
+        stdcall CheckLimitedAccess, [esi+TSpecialParams.thread], [esi+TSpecialParams.userID]
+        jnz     .have_permission
+
+.not_lat:
+        mov     eax, permThreadStart
+
+.mask_ok:
         or      eax, permAdmin
 
         test    [esi+TSpecialParams.userStatus], eax
         jz      .error_wrong_permissions
 
+.have_permission:
+
 ; start the transaction.
+
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBeginImmediate, sqlBeginImmediate.length, eax, 0
         cinvoke sqliteStep, [.stmt]
@@ -82,7 +93,7 @@ begin
         mov     [.postID], eax
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCommit, sqlCommit.length
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCommit, sqlCommit.length, eax, 0
         cinvoke sqliteStep, [.stmt]
         mov     ebx, eax
         cinvoke sqliteFinalize, [.stmt]
@@ -146,8 +157,6 @@ begin
         stc
         popad
         return
-
-
 endp
 
 

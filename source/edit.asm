@@ -172,8 +172,12 @@ begin
         stdcall StrCat, [esi+TSpecialParams.page_title], [cEditingPageTitle+8*eax]
 
         cinvoke sqliteColumnText, [.stmt], 1
+        test    eax, eax
+        jz      .thread_ok
+
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
 
+.thread_ok:
 ; deal with the attachments:
 
         cmp     [esi+TSpecialParams.post_array], 0

@@ -1,11 +1,18 @@
 [css:posts.css]
 [css:posteditor.css]
+[css:settings.css]
 [css:threadnew.css]
 [css:markdown.css]
 [css:highlight.css]
 
 [case:[special:lang]|
   [equ:Caption=Thread title]
+  [equ:ttlTags=Tags: <span class="small">(max 3, comma delimited, no spaces)</span>]
+  [equ:phTags=some tags here]
+  [equ:ttlPin=Important thread, rank]
+  [equ:ttlLimited=Limited access thread]
+  [equ:ttlInvited=Invited users (comma separated list)]
+
   [equ:Content=Post content]
   [equ:btnPreview=Preview]
   [equ:btnSubmit=Submit]
@@ -20,6 +27,12 @@
   [equ:phSelect=Select file(s) to attach]
 |
   [equ:Caption=Заглавие на темата]
+  [equ:ttlTags=Тагове: <span class="small">(макс. 3, разделени със запетаи, без шпации)</span>]
+  [equ:phTags=някакви тагове тук]
+  [equ:ttlPin=Важна тема ранг]
+  [equ:ttlLimited=Тема с ограничен достъп]
+  [equ:ttlInvited=Поканени в темата (разделени със запетаи)]
+
   [equ:Content=Съдържание на поста]
   [equ:btnPreview=Преглед]
   [equ:btnSubmit=Публикувай]
@@ -34,6 +47,12 @@
   [equ:phSelect=Избери файл(ове) за прикачане]
 |
   [equ:Caption=Название темы]
+  [equ:ttlTags=Ярлыки: <span class="small">(макс. 3, через запятую, без пробелов)</span>]
+  [equ:phTags=теги пишутся здесь]
+  [equ:ttlPin=Важная тема, ранг]
+  [equ:ttlLimited=Тема с ограниченным доступом]
+  [equ:ttlInvited=Приглашенные участники (список через запятую)]
+
   [equ:Content=Содержание поста]
   [equ:btnPreview=Просмотр]
   [equ:btnSubmit=Отправить]
@@ -48,6 +67,12 @@
   [equ:phSelect=Выберите файл(ы) для вложения]
 |
   [equ:Caption=Titre du sujet]
+  [equ:ttlTags=Mots-clés: <span class="small">(3 maximum, séparés par une virgule t sans espace)</span>]
+  [equ:phTags=quelques mots-clés]
+  [equ:ttlPin=Sujet important, classement]
+  [equ:ttlLimited=Sujet restreint]
+  [equ:ttlInvited=Inviter des utilisateurs (séparés par une virgule)]
+
   [equ:Content=Contenu du message]
   [equ:btnPreview=Prévisualiser]
   [equ:btnSubmit=Soumettre]
@@ -62,6 +87,12 @@
   [equ:phSelect=Joindre un fichier]
 |
   [equ:Caption=Titel des Themas]
+  [equ:ttlTags=Tags: <span class="small">(max. 3, durch Kommas getrennt, keine Leerzeichen)</span>]
+  [equ:phTags=hier einige Tags]
+  [equ:ttlPin=Wichtiges Thema, Rang]
+  [equ:ttlLimited=Thema mit beschränktem Zugang]
+  [equ:ttlInvited=Eingeladene Mitglieder (durch Kommas getrennt)]
+
   [equ:Content=Inhalt des Beitrags]
   [equ:btnPreview=Vorschau]
   [equ:btnSubmit=Absenden]
@@ -97,6 +128,27 @@
       <input id="tab0" name="tabselector" type="radio" value="0" checked>
       <label for="tab0">[const:tabText]</label>
       <section>
+        [case:[special:thread]|
+          <p>[const:Caption]:</p>
+          <input class="settings" type="text" value="[caption]" name="title" autofocus>
+
+          <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</p>
+          <input class="settings" type="text" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
+
+          [case:[special:isadmin]||
+            <p><input class="number" type="text" value="[Pinned]" name="pinned"> [const:ttlPin]
+          ]
+
+          <div class="dropdown checkbox">
+            <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]>
+            <label for="limited" style="outline: none;" >[const:ttlLimited]</label>
+            <div id="users_invited">
+              <p>[const:ttlInvited]:</p>
+              <input class="settings" id="invited" type="text" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
+            </div>
+          </div>
+        |]
+
         <p>[const:Content]:</p>
         [include:edit_toolbar.tpl]
         <textarea name="source" id="source" required>[source]</textarea>

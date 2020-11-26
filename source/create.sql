@@ -280,7 +280,7 @@ CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
   );
 END;
 
-CREATE TRIGGER PostsAU AFTER UPDATE OF Content, editTime, editUserID, threadID, format ON Posts BEGIN
+CREATE TRIGGER PostsAU AFTER UPDATE OF Content, editTime, editUserID, threadID, format ON Posts when old.Content is not NULL BEGIN
   update PostFTS set
     rowid = new.id,
     Content = new.Content,

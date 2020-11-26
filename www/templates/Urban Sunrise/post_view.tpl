@@ -56,7 +56,7 @@
 
     <img class="avatar" alt="(ツ)" src="/!avatar/[url:[html:[UserName]]]?v=[AVer]">
 
-    [case:[UserID]|<span|<a href="/!userinfo/[url:[html:[UserName]]]" class="user_name">
+    [case:[UserID]|<span|<a href="/!userinfo/[url:[html:[UserName]]]"] class="user_name">
     [usr:[UserName]][case:[UserID]|</span>|</a>]
 
     <div>[case:[editUserID]|[const:tCreated]|[const:tEdited] <a href="/!userinfo/[url:[html:[EditUser]]]">[usr:[html:[EditUser]]]</a>], [const:tRead]</div>
