@@ -2,11 +2,13 @@ LIMIT_POST_LENGTH = 16*1024
 LIMIT_POST_CAPTION = 512
 LIMIT_TAG_DESCRIPTION = 1024
 
-sqlReadPost    text "select P.id, T.caption, P.content as source, format, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
-sqlEditedPost  text "select P.id, T.caption, ?3 as source, ?5 as format, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
+sqlReadPost     text "select P.id, T.caption, P.content as source, format, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
+sqlEditedPost   text "select P.id, T.caption, ?3 as source, ?5 as format, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
 
-sqlSavePost    text "update Posts set content = ?1, format = ?5, editUserID = ?4, editTime = strftime('%s','now'), draftID = NULL where id = ?3"
-sqlGetPostUser text "select userID, threadID from Posts where id = ?"
+sqlCreateThread text "insert into Threads(Slug, Caption, LastChanged, Pinned, Limited) values (?1, ?2, strftime('%s','now'), ?3, ?4)"
+sqlSavePost     text "update Posts set content = ?1, format = ?5, editUserID = ?4, editTime = strftime('%s','now'), draftID = NULL, threadID = ?6 where id = ?3"
+
+sqlGetPostUser  text "select userID, threadID from Posts where id = ?"
 
 
 proc EditUserMessage, .pSpecial
@@ -237,7 +239,7 @@ begin
         jc      .error_bad_ticket
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBegin, sqlBegin.length, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBeginImmediate, sqlBeginImmediate.length, eax, 0
         cinvoke sqliteStep, [.stmt]
         mov     ebx, eax
         cinvoke sqliteFinalize, [.stmt]
@@ -245,12 +247,26 @@ begin
         cmp     ebx, SQLITE_DONE
         jne     .end_save               ; the transaction does not begin.
 
+; create new thread if not exists!
+
+        cmp     [.threadID], 0
+        jne     .save_post
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCreateThread, sqlCreateThread.length, eax, 0
+
+.....        cinvoke sqliteBindInt
+
+
+
+.save_post:
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSavePost, sqlSavePost.length, eax, 0
 
         cinvoke sqliteBindInt, [.stmt], 3, [esi+TSpecialParams.page_num]
         cinvoke sqliteBindInt, [.stmt], 4, [esi+TSpecialParams.userID]
         cinvoke sqliteBindInt, [.stmt], 5, [.format]
+        cinvoke sqliteBindInt, [.stmt], 6, [.threadID]
 
         mov     eax, LIMIT_POST_LENGTH
         stdcall GetParam, 'max_post_length', gpInteger

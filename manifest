@@ -1,5 +1,5 @@
-C Work\son\sthe\s!edit\sand\s!post\scommands.
-D 2020-11-26T14:53:48.568
+C work
+D 2020-11-27T06:47:48.921
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -37,9 +37,9 @@ F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm 931a8f7c9335462e79502e2b580016623bfeeff7
 F source/commands.asm f72160f00b1cabd3e1ee40a816eff1a0b8a6755f
-F source/create.sql 8c1564a2e8e740d59d7512d27c4860c611165a83
+F source/create.sql 3a332ac14f438a00240834f81396df907649e53d
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
-F source/edit.asm eb0537175b0bec93b9b341906068765f09383a90
+F source/edit.asm ac3d28882ce058fce75db45e1cfad68921c6cec0
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm 0711c8da15baf58a1d7f43700c30b79600fc8c26
 F source/engine.fpr f7ab6dda3d2dd94574d8bb492b76b2e9e43959ef
@@ -1048,7 +1048,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 3e8677368a2d0a27ed7b617ff1d80b63e34afe99
-R b3454c63c7659e1ac5a9e169cd841701
+P f086d33825df8af005b463c937810833c9718949
+R a84e5fa7cbc65e7e34ff1e0311041b61
 U johnfound
-Z e1443bb37a3eccdfff4ef28f38c13e41
+Z 31cc2cfe6f2c01c30fea69dcae5696c0
