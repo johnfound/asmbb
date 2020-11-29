@@ -130,7 +130,7 @@
       <section>
         [case:[special:thread]|
           <p>[const:Caption]:</p>
-          <input class="settings" type="text" value="[caption]" name="title" autofocus>
+          <input class="settings" type="text" value="[caption]" name="caption" autofocus>
 
           <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</p>
           <input class="settings" type="text" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">

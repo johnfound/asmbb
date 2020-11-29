@@ -283,13 +283,9 @@ endl
 
 
 .change_status:
-        stdcall GetPostString, [esi+TSpecialParams.post_array], "status", 0
-        test    eax, eax
-        jz      .finish
+        stdcall GetPostInt, [esi+TSpecialParams.post_array], "status", 0
+        jc      .finish
 
-        push    eax
-        stdcall StrToNumEx, eax
-        stdcall StrDel ; from the stack
         stdcall SetEventUserStatus, edi, eax
         jmp     .finish
 endp

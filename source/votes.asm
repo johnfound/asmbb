@@ -71,13 +71,9 @@ begin
 
         mov     edi, respVoteBadRequest
 
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt 'vote', 0
+        stdcall GetPostInt, [esi+TSpecialParams.post_array], txt 'vote', 0
         test    eax, eax
         jz      .finish
-
-        push    eax
-        stdcall StrToNumEx, eax
-        stdcall StrDel ; from the stack
 
         cdq
         neg     eax

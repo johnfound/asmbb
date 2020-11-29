@@ -649,3 +649,20 @@ begin
 .finish:
         return
 endp
+
+
+proc GetPostInt, .post_array, .name, .default
+begin
+        mov     eax, [.default]
+
+        stdcall ValueByName, [.post_array], [.name]
+        jc      .finish
+
+        cmp     eax, $c0000000
+        jb      .finish
+
+        stdcall StrToNumEx, eax
+
+.finish:
+        return
+endp

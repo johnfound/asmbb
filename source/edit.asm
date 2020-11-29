@@ -17,10 +17,14 @@ proc EditUserMessage, .pSpecial
 .source   dd ?
 .ticket   dd ?
 .format   dd ?
+.caption  dd ?
+.slug     dd ?
+.tags     dd ?
 
 .res      dd ?
 .threadID dd ?
 .userID   dd ?
+.pinned   dd ?
 
 .softPreview dd ?
 
@@ -33,7 +37,12 @@ begin
         mov     [.source], ebx
         mov     [.ticket], ebx
         mov     [.format], ebx
+        mov     [.caption], ebx
+        mov     [.slug], ebx
+        mov     [.tags], ebx
+
         mov     [.softPreview], ebx
+        mov     [.pinned], ebx
 
         mov     esi, [.pSpecial]
 
@@ -99,21 +108,31 @@ begin
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "source", 0
         mov     [.source], eax
 
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "format", 0
+        stdcall GetPostInt, [esi+TSpecialParams.post_array], txt "format", 0
+        mov     [.format], eax
+
+; the threads parameters if any...
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "caption", 0
+        mov     [.caption], eax
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "tags", 0
+        mov     [.tags], eax
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "pinned", 0
         test    eax, eax
-        jz      .format_ok
+        jz      .pin_ok
 
         push    eax
         stdcall StrToNumEx, eax
         stdcall StrDel ; from the stack
 
-.format_ok:
-        mov     [.format], eax
+.pin_ok:
+        mov     [.pinned], eax
 
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "submit", 0
-        stdcall StrDel, eax
-        test    eax, eax
-        jnz     .save_post_and_exit
+
+        stdcall ValueByName, [esi+TSpecialParams.post_array], txt "submit"
+        jnc     .save_post_and_exit
 
         stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
         mov     ebx, eax
@@ -247,15 +266,21 @@ begin
         cmp     ebx, SQLITE_DONE
         jne     .end_save               ; the transaction does not begin.
 
-; create new thread if not exists!
-
         cmp     [.threadID], 0
         jne     .save_post
+
+; create new thread if not exists!
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], "caption", 0
+        test    eax, eax
+;        jz      .error
+
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCreateThread, sqlCreateThread.length, eax, 0
 
-.....        cinvoke sqliteBindInt
+
+;.....        cinvoke sqliteBindInt
 
 
 
@@ -325,6 +350,9 @@ begin
 .finish:
         stdcall StrDel, [.source]
         stdcall StrDel, [.ticket]
+        stdcall StrDel, [.caption]
+        stdcall StrDel, [.slug]
+        stdcall StrDel, [.tags]
         mov     [esp+4*regEAX], edi
         popad
         return
@@ -383,8 +411,8 @@ proc EditThreadAttr, .pSpecial
 .slug     dd ?
 .tags     dd ?
 .invited  dd ?
-.pinned   dd ?
 
+.pinned   dd ?
 .fLimited dd ?
 
 .threadID dd ?
@@ -547,23 +575,12 @@ begin
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "invited", 0
         mov     [.invited], eax
 
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "limited", txt "0"
-        push    eax
-        stdcall StrToNumEx, eax
-        stdcall StrDel ; from the stack
+        stdcall GetPostInt, [esi+TSpecialParams.post_array], txt "limited", 0
         mov     [.fLimited], eax
 
 ; Get the pinned
 
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "pinned", 0
-        test    eax, eax
-        jz      .pinned_ok
-
-        push    eax
-        stdcall StrToNumEx, eax
-        stdcall StrDel ; from the stack
-
-.pinned_ok:
+        stdcall GetPostInt, [esi+TSpecialParams.post_array], txt "pinned", 0
         mov     [.pinned], eax
 
 ; Now we have all the data prepared, so start the thread update in a transaction.

@@ -22,6 +22,7 @@
   [equ:btnRevert=Zurücksetzen]
 ]
 
+<div>
 <div class="console">
   <form id="editform" action="/!sqlite/#sql_result" method="post">
     <p>[const:ttlStmt]:</p>
@@ -35,3 +36,4 @@
   </form>
 </div>
 [html:[result]]
+</div>

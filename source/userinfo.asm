@@ -573,22 +573,14 @@ begin
 
 ; save user language
 
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "user_lang", 0
-
-        push    eax
-        stdcall StrToNumEx, eax
-        stdcall StrDel ; from the stack
+        stdcall GetPostInt, [esi+TSpecialParams.post_array], txt "user_lang", 0
 
         dec     eax
-        js      .def_lang        ; set default language as NULL!
+        js      .lang_ok        ; set default language as NULL!
         cmp     eax, MAX_UI_LANG
-        ja      .def_lang
+        ja      .lang_ok
 
         cinvoke sqliteBindInt, [.stmt], 3, eax
-        jmp     .lang_ok
-
-.def_lang:
-        cinvoke sqliteBindNull, [.stmt], 3
 
 .lang_ok:
 ; save skin name
@@ -602,15 +594,9 @@ begin
         stdcall StrTrim, ebx, eax
 
         stdcall StrPtr, ebx
-        cmp     byte [eax], "0"
-        jne     .bind_skin
-        cmp     [eax+string.len], 1
-        jne     .bind_skin
+        cmp     word [eax], "0"
+        je      .bind_user              ; NULL is default skin!
 
-        cinvoke sqliteBindNull, [.stmt], 1              ; default skin!
-        jmp     .bind_user
-
-.bind_skin:
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
 .bind_user:

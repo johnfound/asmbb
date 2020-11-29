@@ -1,5 +1,5 @@
-C work
-D 2020-11-27T06:47:48.921
+C GetPostInt\sprocedure\simplemented\sfor\seasy\sprocessing\sof\sthe\sinteger\spost\sparameters.\sWork\son\sthe\sunified\seditor\scode.\sNot\sfinished,\snot\sworking.
+D 2020-11-29T20:36:13.601
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -35,11 +35,11 @@ F source/attachments.asm 6843dd5b449b1394ae9c6f2b6bc44ed561f9a913
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
-F source/chat.asm 931a8f7c9335462e79502e2b580016623bfeeff7
+F source/chat.asm b4ec671ce3e02bd6d683311900081a0256b88ebc
 F source/commands.asm f72160f00b1cabd3e1ee40a816eff1a0b8a6755f
 F source/create.sql 3a332ac14f438a00240834f81396df907649e53d
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
-F source/edit.asm ac3d28882ce058fce75db45e1cfad68921c6cec0
+F source/edit.asm 77da435ce8b4be15c24a193f9f4195c7bdfea17f
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm 0711c8da15baf58a1d7f43700c30b79600fc8c26
 F source/engine.fpr f7ab6dda3d2dd94574d8bb492b76b2e9e43959ef
@@ -59,7 +59,7 @@ F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
 F source/phpbb.sql 6820a2092cc30a774c44d770055b37b66bdbfaf0
 F source/phpbb_pm.sql f88eaf899e72d4e99f367cb654b41695da2231d5
 F source/post.asm 90c6f2bc235db45d432566085915bb85aba9409e
-F source/post_data.asm b10801515cc931bdff60359666cc359af4dd32c6
+F source/post_data.asm a220b1e678391f17606152b5d2a0af28c6175a1f
 F source/postdebug.asm 6179ee3071ca477ededc0f0d0efaeaf982c054f8
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
 F source/realtime.asm 9b433d13804f1a04b94b20fdf1d95a253b58cd98
@@ -93,7 +93,7 @@ F source/threadlist.asm fd6dc9e977a54586fc9d4e1b2a4c57a93da3b1f8
 F source/threadlist.sql 175fc3c2b0219dec68d77bc6ca63af5c6b852cd8
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
-F source/userinfo.asm 010a2ba73acd014cd558c39aae3b9915266dc9e3
+F source/userinfo.asm fb2b6e143878bc71fb696611dc8caca3e764fb87
 F source/userinfo.sql 51174039802a2af4eac412deb9d36b27fd1ade8a
 F source/users_online.asm a730d7a2a7af9604c20523307b6a516c6be5af43
 F source/users_online.sql 108357df59731f8f084321670cb08fbaa3d18cd8
@@ -101,7 +101,7 @@ F source/userslist.asm ad6c2bc2cc22ef3dc7202c0310754ef1d5afabb3
 F source/userslist.sql e4b2f4dfbc0e4911c07985a67d6d36384698111b
 F source/util.sql e346fefbfd8214e204527aa3a88c766de5d1f9b8
 F source/version.asm bc87e5fe2b5905a1fa3a5c5854a440632f3c1e77
-F source/votes.asm fb9dba27fa630fd866539e026b4e5d77a44ca2e1
+F source/votes.asm b0207c537f1fa70d52d300b4071aac8933d68417
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/.nginx/fastcgi.conf 635d54729b084483347b15cdd35e82866ee86c19
 F www/.nginx/mime.types 5779f6632f02c522615639eedd57a92cce27c791
@@ -746,7 +746,7 @@ F www/templates/Urban\sSunrise/error.less 43f5b23eace778d249411d453321ec6d16d4f3
 F www/templates/Urban\sSunrise/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
 F www/templates/Urban\sSunrise/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
 F www/templates/Urban\sSunrise/file-browse.js f24eef322b130b2715410431ea4199679de5f65b
-F www/templates/Urban\sSunrise/form_edit.tpl af97d34e2bf59d17f23694e2335bde4309f962c3
+F www/templates/Urban\sSunrise/form_edit.tpl 39b1c53f8ca0d6dba948471797caf359c1e693ad
 F www/templates/Urban\sSunrise/form_edit_thread.tpl 5a945545cbe5479ce0c6cb3cbaae2ead78e74a4f
 F www/templates/Urban\sSunrise/form_editinfo.tpl 67a548660ae43947d0d2e45b3d41747f3d644954
 F www/templates/Urban\sSunrise/form_login.tpl fe8b409f221a5553ee0f40bde655fa3cb276485f
@@ -758,14 +758,14 @@ F www/templates/Urban\sSunrise/form_reset_password.tpl d9aa084867bfc75045a93db88
 F www/templates/Urban\sSunrise/form_reset_request.tpl 2670304557d27ff156db4652a360a9044b415c7e
 F www/templates/Urban\sSunrise/form_settings.tpl aad4b6426e4b113c8433e0b3eef39f4f4f7435b6
 F www/templates/Urban\sSunrise/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
-F www/templates/Urban\sSunrise/form_sqlite_console.tpl 04720cf7c2be67a3ec0922a734eb58b6739c66b3
+F www/templates/Urban\sSunrise/form_sqlite_console.tpl a96586590b90e145c3d35f4aae77b939a4ced597
 F www/templates/Urban\sSunrise/help-bbcode.txt 6732933421f6641562759d73997cbf611b9bc59b
 F www/templates/Urban\sSunrise/help-minimag.txt fc7edb304e4d3d6ade4dd77361b178cb7706a402
 F www/templates/Urban\sSunrise/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
 F www/templates/Urban\sSunrise/highlight.js b4a380fb43186d51a405fb185067120657f243f2
 F www/templates/Urban\sSunrise/highlight.less fba68624d1b34a5543fe0bf4b2af2ac1ddf65e74
 F www/templates/Urban\sSunrise/login.less e2c9b06104a775ae1abcc63bdc69f71b4662b870
-F www/templates/Urban\sSunrise/main_html_end.tpl 05bb25b9490ce93732628c937860db787c516c46
+F www/templates/Urban\sSunrise/main_html_end.tpl 2ec114b9db3841c799022c04daae80ffaf7e7850
 F www/templates/Urban\sSunrise/main_html_start.tpl 7f74b33ed9a6c6ee0a295d25eee18e59a7d836eb
 F www/templates/Urban\sSunrise/markdown.less 36a461db674ff11bcbb5a08576e25579d79d5b41
 F www/templates/Urban\sSunrise/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
@@ -1048,7 +1048,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P f086d33825df8af005b463c937810833c9718949
-R a84e5fa7cbc65e7e34ff1e0311041b61
+P 22cf7b7513db0cc26a16192270c34ae56a45f409
+R 32bf38402baa721fed21e4673e3f3013
 U johnfound
-Z 31cc2cfe6f2c01c30fea69dcae5696c0
+Z 888cb3b703562fe0016364195a1f9fd3
