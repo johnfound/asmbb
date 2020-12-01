@@ -20,6 +20,7 @@
   [equ:hintPreview=Ctrl+Enter for preview]
   [equ:hintSubmit=Ctrl+S for submit]
   [equ:Attach=Attach file(s)]
+  [equ:tabThread=Thread]
   [equ:tabText=Text]
   [equ:tabAttach=Attachments]
   [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
@@ -40,6 +41,7 @@
   [equ:hintPreview=Ctrl+Enter за преглед]
   [equ:hintSubmit=Ctrl+S за публикуване]
   [equ:Attach=Прикачи файл(ове)]
+  [equ:tabThread=Тема]
   [equ:tabText=Текст]
   [equ:tabAttach=Файлове]
   [equ:FileLimit=(брой ≤ 10, размер ≤ 1MB)]
@@ -60,6 +62,7 @@
   [equ:hintPreview=Ctrl+Enter для предварительного просмотра]
   [equ:hintSubmit=Ctrl+S чтобы отправить]
   [equ:Attach=Прикрепить файл(ы)]
+  [equ:tabThread=Тема]
   [equ:tabText=Текст]
   [equ:tabAttach=Вложения]
   [equ:FileLimit=(количество ≤ 10, размер ≤ 1MB)]
@@ -80,6 +83,7 @@
   [equ:hintPreview=Ctrl+Entrée pour prévisualiser]
   [equ:hintSubmit=Ctrl+S pour soumettre]
   [equ:Attach=Pièce(s) jointe(s)]
+  [equ:tabThread=Sujet]
   [equ:tabText=Texte]
   [equ:tabAttach=Pièces jointes]
   [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
@@ -100,6 +104,7 @@
   [equ:hintPreview=Strg+Eingabe für eine Vorschau]
   [equ:hintSubmit=Strg+S zum Absenden]
   [equ:Attach=Datei(en) anhängen]
+  [equ:tabThread=Thema]
   [equ:tabText=Text]
   [equ:tabAttach=Anhänge]
   [equ:FileLimit=(Anzahl ≤ 10, Größe ≤ 1MB)]
@@ -126,7 +131,7 @@
     <div class="dropdown tabbed-form">
 
       <input id="tab0" name="tabselector" type="radio" value="0" checked>
-      <label for="tab0">[const:tabText]</label>
+      <label for="tab0">[const:tabThread]</label>
       <section>
         [case:[special:thread]|
           <p>[const:Caption]:</p>
@@ -148,14 +153,19 @@
             </div>
           </div>
         |]
+      </section>
 
+
+      <input id="tab1" name="tabselector" type="radio" value="1" checked>
+      <label for="tab1">[const:tabText]</label>
+      <section>
         <p>[const:Content]:</p>
         [include:edit_toolbar.tpl]
         <textarea name="source" id="source" required>[source]</textarea>
       </section>
 
-      <input id="tab1" name="tabselector" type="radio" value="1">
-      <label for="tab1">[const:tabAttach]</label>
+      <input id="tab2" name="tabselector" type="radio" value="2">
+      <label for="tab2">[const:tabAttach]</label>
       <section>
         [case:[special:canupload]||<p>[const:Attach]: <span class="small">[const:FileLimit]</span></p>
 
@@ -174,8 +184,8 @@
       </section>
 
       [case:[special:markup=0]||
-      <input id="tab2" name="tabselector" type="radio" value="2">
-      <label for="tab2">
+      <input id="tab3" name="tabselector" type="radio" value="3">
+      <label for="tab3">
         <svg version="1.1" width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
           <path d="m16 0a16 16 0 00-16 16 16 16 0 0016 16 16 16 0 0016-16 16 16 0
                    00-16-16zm.154 6c2.13 0 3.8.503 5.01 1.51 1.22.998 1.83 2.38 1.83
@@ -200,8 +210,8 @@
       ]
 
       [case:[special:markup=1]||
-      <input id="tab3" name="tabselector" type="radio" value="3">
-      <label for="tab3">
+      <input id="tab4" name="tabselector" type="radio" value="4">
+      <label for="tab4">
         <svg version="1.1" width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
           <path d="m16 0a16 16 0 00-16 16 16 16 0 0016 16 16 16 0 0016-16 16 16 0
                    00-16-16zm.154 6c2.13 0 3.8.503 5.01 1.51 1.22.998 1.83 2.38 1.83
