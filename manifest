@@ -1,5 +1,5 @@
-C Thread\seditor\sin\sseparate\stab.
-D 2020-12-01T03:58:49.398
+C Work\son\sthe\sOneEditor\scode.\sNot\sfinished,\snot\sworking.
+D 2020-12-23T06:47:17.663
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -16,6 +16,7 @@ F musl_sqlite/build 15f908024e2c26daf092f49c5217e4cc6e34cbfc x
 F source/Documents/FastCGI\sSpecification.html e2fc06a5abf1b3505c665e108ce3ad28b636095a
 F source/Documents/futex.pdf 3297d3e1739a7b294fa0c96ba6d59bae7170c6b9
 F source/Documents/rfc7578.txt 5dff43151910fe753f8649b08d650137f07a96ff
+F source/EditPost.sql ffee7ec136a4c5c01ed39f5d71e8bc131445e467
 F source/Linux/sqleet.inc 7cd50841e9b5e3c9626a32aee0c1c6e8aad5a4e4
 F source/Linux/sqlite3.inc d718ceb6e9ab4c242f0adb24541ea69ffbc3bc91
 F source/ResetPassword.asm 0d71fb80660d8ed7780a0fdfc16ae568519d1ca1
@@ -39,10 +40,10 @@ F source/chat.asm b4ec671ce3e02bd6d683311900081a0256b88ebc
 F source/commands.asm f72160f00b1cabd3e1ee40a816eff1a0b8a6755f
 F source/create.sql 3a332ac14f438a00240834f81396df907649e53d
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
-F source/edit.asm 77da435ce8b4be15c24a193f9f4195c7bdfea17f
+F source/edit.asm fe71844a234334e6dae23d9d1aad8a17e995bd63
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm 0711c8da15baf58a1d7f43700c30b79600fc8c26
-F source/engine.fpr f7ab6dda3d2dd94574d8bb492b76b2e9e43959ef
+F source/engine.fpr 20dd02957fe5b6ba8c6e548a177e56965500416d
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 81f60b545fb3f7a184f6f6075f9a4e7ce31b7a0a
@@ -1048,7 +1049,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 7705d4e4bac154214c6a132bd5636f18ca3de0f2
-R 2f906892006561f12dea7b8376d65c2f
+P 45e886f3fa77ec06e91ca4536d2d1fd414d5c898
+R 867430e2655e69c5b8d312010532a8cb
 U johnfound
-Z cb7ba3688d465fe37520b973a0e70af5
+Z b758c42f11668545bc89dc8ffd86906f

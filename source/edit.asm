@@ -12,19 +12,29 @@ sqlGetPostUser  text "select userID, threadID from Posts where id = ?"
 
 
 proc EditUserMessage, .pSpecial
-.stmt dd ?
 
-.source   dd ?
-.ticket   dd ?
-.format   dd ?
-.caption  dd ?
-.slug     dd ?
-.tags     dd ?
+.stmt        dd ?
 
-.res      dd ?
-.threadID dd ?
-.userID   dd ?
-.pinned   dd ?
+.postID      dd ?
+
+.EditThread  dd ?       ; flag. TRUE if the post is the first post in the thread or the thread does not exists. FALSE elsewhere.
+
+.caption     dd ?       ; thread caption
+.tags        dd ?       ; comma separated list of the thread tags. If EditThread == TRUE else 0
+.pinned      dd ?       ; thread pin rank.
+.limited     dd ?       ; boolead flag TRUE if the thread is LAT
+.invited     dd ?       ; comma separated list of the users invited to the thread (if limited == TRUE)
+
+.source      dd ?       ; the source code of the post.
+.format      dd ?       ; the markup format of the post.
+
+.ticket      dd ?       ; the editing ticked of the form.
+
+.slug        dd ?
+
+.res         dd ?
+.threadID    dd ?
+.userID      dd ?
 
 .softPreview dd ?
 
@@ -99,8 +109,6 @@ begin
         DebugMsg "POST request."
 
 ; ok, get the action then:
-
-;        stdcall DumpPostArray, esi
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "ticket", 0
         mov     [.ticket], eax
