@@ -437,6 +437,24 @@ create table Tickets (
 create index idxTickets_time on Tickets(time);
 
 
+create table FloodTrack (
+  time integer,
+  UserID integer,
+  UserName text,
+  unique (UserID, UserName)
+);
+
+
+create table Flooders (
+  expires  integer,
+  UserID   integer,
+  UserName text,
+  Level    integer detault 0,
+  unique (UserID, UserName)
+);
+
+
+
 create table Messages (
   id     text primary key,
   msg    text,

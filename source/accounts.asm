@@ -1468,10 +1468,8 @@ begin
 
         mov     edi, eax
         stdcall CheckTicket, edi, [esi+TSpecialParams.session]
-        pushf
         stdcall ClearTicket3, edi
         stdcall StrDel, edi
-        popf
         jc      .bad_parameter
 
 
@@ -1649,10 +1647,8 @@ begin
 
         mov     edi, eax
         stdcall CheckTicket, edi, [esi+TSpecialParams.session]
-        pushf
         stdcall ClearTicket3, edi
         stdcall StrDel, edi
-        popf
         jc      .bad_parameter
 
         stdcall GetPostString, ebx, txt "password", 0

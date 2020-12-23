@@ -111,10 +111,8 @@ begin
 
         mov     ebx, eax
         stdcall CheckTicket, ebx, [esi+TSpecialParams.session]
-        pushf
         stdcall ClearTicket3, ebx
         stdcall StrDel, ebx
-        popf
         jc      .perm_not_ok
 
         cinvoke sqliteFinalize, [.stmt]

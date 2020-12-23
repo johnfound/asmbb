@@ -277,10 +277,8 @@ begin
 
         mov     ebx, eax
         stdcall CheckTicket, ebx, [esi+TSpecialParams.session]
-        pushf
         stdcall ClearTicket3, ebx
         stdcall StrDel, ebx
-        popf
         jc      .for_admins_only
 
         lea     eax, [.stmt]

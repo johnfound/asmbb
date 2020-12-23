@@ -426,10 +426,8 @@ begin
         mov     ebx, eax
 
         stdcall CheckTicket, ebx, [esi+TSpecialParams.session]
-        pushf
         stdcall ClearTicket3, ebx
         stdcall StrDel, ebx
-        popf
         jc      .permissions_fail
 
 
@@ -561,10 +559,8 @@ begin
 
         mov     ebx, eax
         stdcall CheckTicket, ebx, [esi+TSpecialParams.session]
-        pushf
         stdcall ClearTicket3, ebx
         stdcall StrDel, ebx
-        popf
         jc      .permissions_fail
 
         lea     eax, [.stmt]
