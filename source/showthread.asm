@@ -198,10 +198,10 @@ begin
 
 ; Send activity events... if the thread is not LAT!
 
+        stdcall LogUserActivity, esi, uaReadingThread, 0
+
         cmp     [esi+TSpecialParams.Limited], 0
         jne     .notifications_ok
-
-        stdcall LogUserActivity, esi, uaReadingThread, 0
 
         stdcall UserNameLink, esi
         mov     ebx, eax
