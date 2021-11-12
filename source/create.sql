@@ -439,19 +439,19 @@ create index idxTickets_time on Tickets(time);
 
 create table FloodTrack (
   time integer,
-  UserID integer,
-  UserName text,
-  unique (UserID, UserName)
+  UserID integer
 );
+
+create index idxFloodTrack on FloodTrack(time desc, UserID);
 
 
 create table Flooders (
   expires  integer,
   UserID   integer,
   UserName text,
-  Level    integer detault 0,
-  unique (UserID, UserName)
+  Level    integer detault 0
 );
+
 
 
 
