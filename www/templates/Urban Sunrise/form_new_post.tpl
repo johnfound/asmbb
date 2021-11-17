@@ -15,6 +15,7 @@
   [equ:btnRevert=Revert]
   [equ:hintPreview=Ctrl+Enter for preview]
   [equ:hintSubmit=Ctrl+S for submit]
+  [equ:lblAfter=after: ]
 |
   [equ:btnNewPost=Отговор]
   [equ:ttlPost=Съобщение]
@@ -26,6 +27,7 @@
   [equ:btnRevert=Отказ]
   [equ:hintPreview=Ctrl+Enter за преглед]
   [equ:hintSubmit=Ctrl+S за публикуване]
+  [equ:lblAfter=след: ]
 |
   [equ:btnNewPost=Ответить]
   [equ:ttlPost=Текст сообщения]
@@ -37,6 +39,7 @@
   [equ:btnRevert=Отказ]
   [equ:hintPreview=Ctrl+Enter для предварительного просмотра]
   [equ:hintSubmit=Ctrl+S чтобы отправить]
+  [equ:lblAfter=через: ]
 |
   [equ:btnNewPost=Répondre]
   [equ:ttlPost=Contenu du message]
@@ -48,6 +51,7 @@
   [equ:btnRevert=Annuler]
   [equ:hintPreview=Ctrl+Entrée pour prévisualiser]
   [equ:hintSubmit=Ctrl+S pour soumettre]
+  [equ:lblAfter=après: ]
 |
   [equ:btnNewPost=Antworten]
   [equ:ttlPost=Inhalt des Beitrags]
@@ -59,13 +63,17 @@
   [equ:btnRevert=Zurücksetzen]
   [equ:hintPreview=Strg+Eingabe für eine Vorschau]
   [equ:hintSubmit=Strg+S zum Absenden]
+  [equ:lblAfter=nach: ]
 ]
 
 <div id="editor-window" class="editor">
   <div class="navigation3 btn-bar">
       <input form="editform" type="hidden" name="ticket" value="[Ticket]" >
       <input form="editform" class="btn" formaction="!post#preview" id="preview-btn" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
-      <input form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]" title="[const:hintSubmit]">
+      <button form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" title="[const:hintSubmit]">
+        [const:btnSubmit]
+        [case:[special:wait2post]||<span id="remains"> ([const:lblAfter]<span id="remval">[special:wait2post]</span> s)</span>]
+      </button>
       <div class="spacer"></div>
       <a class="btn img-btn" href="[case:[special:page]|./|!by_id]">
         <svg version="1.1" width="12" height="12" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">

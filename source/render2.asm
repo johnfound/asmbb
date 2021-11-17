@@ -64,6 +64,7 @@ PHashTable tableSpecial, tpl_func,                              \
         "variant",     RenderTemplate.sp_variant,               \ ; 0 = "/"; 1 = "/(o)/"; 2 = "/some_tag/"; 3 = "/(o)/some_tag/"
         "thread",      RenderTemplate.sp_thread,                \ ; Needs encoding!
         "permissions", RenderTemplate.sp_permissions,           \ ; NUMBER, no encoding
+        "wait2post",   RenderTemplate.sp_time_to_post,          \ ; NUMBER, no encoding
         "isadmin",     RenderTemplate.sp_isadmin,               \ ; 1/0 no encoding
         "canregister", RenderTemplate.sp_canregister,           \ ; 1/0 no encoding
         "canpost",     RenderTemplate.sp_canpost,               \ ; 1/0 no encoding
@@ -1616,6 +1617,24 @@ endl
 
 .sp_permissions:
         mov     eax, [ebx+TSpecialParams.userStatus]
+        jmp     .special_int
+
+.sp_time_to_post:
+        push    edx
+        stdcall GetTime
+        sub     eax, dword [ebx+TSpecialParams.userLastPostTime]
+        sbb     edx, dword [ebx+TSpecialParams.userLastPostTime + 4]
+        jnz     .wait_ok
+
+        sub     eax, [ebx+TSpecialParams.userPostInterval]
+        neg     eax
+        jns     .end_wait2post
+
+.wait_ok:
+        xor     eax, eax
+
+.end_wait2post:
+        pop     edx
         jmp     .special_int
 
 

@@ -30,6 +30,9 @@
   [equ:btnUpload=Upload]
   [equ:btnChangePass=Change password]
   [equ:btnChangeEmail=Change email]
+  [equ:hdrInterval=Minimal post interval [s]:]
+  [equ:hdrIncrement=Post interval increment [s]:]
+  [equ:hdrMaxLen=Maximal post length (0 = unlimited):]
 |
   [equ:hdrDesc=Описание: <span class="small">(форматиран текст)</span>]
   [equ:hdrPermissions=Права на потребителяя:]
@@ -62,6 +65,9 @@
   [equ:btnUpload=Качване]
   [equ:btnChangePass=Смяна на паролата]
   [equ:btnChangeEmail=Смяна на адреса]
+  [equ:hdrInterval=Минимално време между два поста [s]:]
+  [equ:hdrIncrement=Автоматична промяна на времето [s]:]
+  [equ:hdrMaxLen=Максимална дължина на пост (0 = неограничена):]
 |
   [equ:hdrDesc=Описание потребителя: <span class="small">(форматированный текст)</span>]
   [equ:hdrPermissions=Права пользователя:]
@@ -94,6 +100,9 @@
   [equ:btnUpload=Загрузить]
   [equ:btnChangePass=Изменить пароль]
   [equ:btnChangeEmail=Изменить e-mail]
+  [equ:hdrInterval=Минимальное время между два поста [s]:]
+  [equ:hdrIncrement=Изменение интервала [s]:]
+  [equ:hdrMaxLen=Максимальная длина поста (0 = неограниченная):]
 |
   [equ:hdrDesc=Description de l'utilisateur: <span class="small">(Texte formaté)</span>]
   [equ:hdrPermissions=Autorisations utilisateur:]
@@ -126,6 +135,9 @@
   [equ:btnUpload=Télécharger]
   [equ:btnChangePass=Sauvergarder]
   [equ:btnChangeEmail=Sauvegarder]
+  [equ:hdrInterval=Minimal post interval [s]:]
+  [equ:hdrIncrement=Post interval increment [s]:]
+  [equ:hdrMaxLen=Maximal post length (0 = unlimited):]
 |
   [equ:hdrDesc=Benutzerbeschreibung: <span class="small">(Formatierter Text)</span>]
   [equ:hdrPermissions= Benutzerbefugnisse:]
@@ -158,6 +170,9 @@
   [equ:btnUpload=Hochladen]
   [equ:btnChangePass=Passwort ändern]
   [equ:btnChangeEmail=E-Mail-Adresse ändern]
+  [equ:hdrInterval=Minimal post interval:]
+  [equ:hdrIncrement=Post interval increment:]
+  [equ:hdrMaxLen=Maximal post length (0 = unlimited):]
 ]
 
 <form class="user_edit_info settings" method="post" action="/!userinfo/[url:[html:[UserName]]]">
@@ -180,6 +195,12 @@
   <li><input type="checkbox" [user_perm11] name="user_perm" id="up11" value="2048"><label for="up11">[const:pVote]</label></li>
   <li><input type="checkbox" [user_perm31] name="user_perm" id="up31" value="$80000000"><label for="up31">[const:pAdmin]</label></li>
   </ul>
+  <h2>[const:hdrInterval]</h2>
+  <input type="text" value="[PostInterval]" name="interval" class="settings" autocomplete="off">
+  <h2>[const:hdrIncrement]</h2>
+  <input type="text" value="[PostIntervalInc]" name="increment" class="settings" autocomplete="off">
+  <h2>[const:hdrMaxLen]</h2>
+  <input type="text" value="[MaxPostLen]" name="maxpostlen" class="settings" autocomplete="off">
   ]
   <input type="hidden" name="ticket" value="[Ticket]">
   <div class="navigation3 btn-bar"><input type="submit" name="save" class="btn" value="[const:btnSave]"></div>

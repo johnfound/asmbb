@@ -145,6 +145,15 @@ begin
 
         mov     eax, LIMIT_POST_LENGTH
         stdcall GetParam, 'max_post_length', gpInteger
+
+        mov     ecx, [esi+TSpecialParams.userMaxPostLen]
+        test    ecx, ecx
+        jz      .max_len_ok
+
+        cmp     eax, ecx
+        cmovg   eax, ecx
+
+.max_len_ok:
         stdcall StrByteUtf8, [.source], eax
         stdcall StrTrim, [.source], eax
 
@@ -161,6 +170,21 @@ begin
         stdcall StrDel ; from the stack
         mov     [.iFormat], eax
 
+; check the post interval limits
+
+        mov     ecx, [esi+TSpecialParams.userPostInterval]
+        test    ecx, ecx
+        jz      .interval_ok
+
+        stdcall GetTime
+        sub     eax, dword [esi+TSpecialParams.userLastPostTime]
+        sbb     edx, dword [esi+TSpecialParams.userLastPostTime + 4]
+        jnz     .show_edit_form
+
+        cmp     eax, ecx
+        jl      .show_edit_form
+
+.interval_ok:
 ; ok, get the action then:
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "submit", 0
@@ -642,7 +666,6 @@ endl
         mov     [edi+TText.GapEnd], eax
         stdcall TextMakeRedirect, edi, "/!message/error_bad_ticket"
         jmp     .finish_clear
-
 endp
 
 

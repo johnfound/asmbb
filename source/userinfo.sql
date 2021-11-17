@@ -43,7 +43,11 @@ select
   case when (status & 0x10000000) then 'checked' end user_perm28,
   case when (status & 0x20000000) then 'checked' end user_perm29,
   case when (status & 0x40000000) then 'checked' end user_perm30,
-  case when (status & 0x80000000) then 'checked' end user_perm31
+  case when (status & 0x80000000) then 'checked' end user_perm31,
+
+  PostInterval,
+  PostIntervalInc,
+  MaxPostLen
 
 from users u
 where nick = ?1

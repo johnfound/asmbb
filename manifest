@@ -1,5 +1,5 @@
-C Merged\swith\sthe\sLATbug\sthread\sin\sorder\sto\sfix\sa\sLAT\sactivity\snotifications.
-D 2021-11-12T14:22:25.262
+C Some\smoderation\stools.\sSofter\sthan\sbanhammer.\s;)
+D 2021-11-17T14:05:51.465
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -36,13 +36,13 @@ F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm 931a8f7c9335462e79502e2b580016623bfeeff7
-F source/commands.asm 31b74510aa8602e3ac76bea8980018f0560bd4d4
-F source/create.sql a68ebb8563b05a089feda322342151029c1726ac
+F source/commands.asm cf7738eb98f47cce711cf56df1822196bbb6d53a
+F source/create.sql 5d0a3d221cee5c23949b13c02f7820007232bd38
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 097489a8a33810ef4dbaa8f98143cc5ee6c50e8b
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm 0711c8da15baf58a1d7f43700c30b79600fc8c26
-F source/engine.fpr d1d2504cbc0ac4ea1aab33afc5c09fabeaa40d4e
+F source/engine.fpr 10419279cdd257e6e4ca56bce169a0085ca86113
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 81f60b545fb3f7a184f6f6075f9a4e7ce31b7a0a
@@ -55,10 +55,11 @@ F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
 F source/migratePosts.sql 92b037bfd56c741fe1cf1d992f383cde22346fc1
 F source/migration1.sql fe97ef3b5046a916f0215336a8a56ea4c8a3b98a
 F source/migration2.sql fe978700e39265c6680b69ea8cbfb5444cfdce63
+F source/migration3.sql 0d43e675bad926a464c989676b4751acb35aa7fc
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
 F source/phpbb.sql 6820a2092cc30a774c44d770055b37b66bdbfaf0
 F source/phpbb_pm.sql f88eaf899e72d4e99f367cb654b41695da2231d5
-F source/post.asm 470ccda07e3a7a44ca41b75307b69e7625d06bc4
+F source/post.asm a064bb911f768596c8401eef82439dc62f9ace0e
 F source/post_data.asm 79fb813775e3bafe6cb314c50a99484e4f0dc211
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
@@ -68,7 +69,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm 2a4fbc278950d29e8a57cc20ffc2f9cea5065a69
+F source/render2.asm 33344333e66190bba03a0cccb8173cebf938307b
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 60acccb553021d13c932470672aec7a3d943443d
 F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
@@ -94,7 +95,7 @@ F source/threadlist.sql a25e59f044fd3de27332e842c00f2a454e086d01
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
 F source/userinfo.asm 010a2ba73acd014cd558c39aae3b9915266dc9e3
-F source/userinfo.sql 51174039802a2af4eac412deb9d36b27fd1ade8a
+F source/userinfo.sql 9ff9ad7eff9e0d40b4e39b22306e6e7718913b4e
 F source/users_online.asm a730d7a2a7af9604c20523307b6a516c6be5af43
 F source/users_online.sql 108357df59731f8f084321670cb08fbaa3d18cd8
 F source/userslist.asm ad6c2bc2cc22ef3dc7202c0310754ef1d5afabb3
@@ -620,17 +621,17 @@ F www/templates/Urban\sSunrise/delete.less 397589f431219056581591243e48548d43fb8
 F www/templates/Urban\sSunrise/edit.json 50e4b6cf7214a042d740feb81faadf8790f31465
 F www/templates/Urban\sSunrise/edit_toolbar.tpl 3f18db7549b9f247fb24c4ec4bbcf130103ab069
 F www/templates/Urban\sSunrise/editor.less be05f1f1838a634d2159e70c27ca74ba078face2
-F www/templates/Urban\sSunrise/editors.js 62b24fad2427dfb5e525534e6cfd07e0a62d8a75
+F www/templates/Urban\sSunrise/editors.js 961f0aa0a28288bb82cccfa6ca0d68086ce478e4
 F www/templates/Urban\sSunrise/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Urban\sSunrise/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
 F www/templates/Urban\sSunrise/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
 F www/templates/Urban\sSunrise/file-browse.js f24eef322b130b2715410431ea4199679de5f65b
 F www/templates/Urban\sSunrise/form_edit.tpl 35447dc2e14aaec631768e00cb39cc2c41c803d6
 F www/templates/Urban\sSunrise/form_edit_thread.tpl 5a945545cbe5479ce0c6cb3cbaae2ead78e74a4f
-F www/templates/Urban\sSunrise/form_editinfo.tpl 67a548660ae43947d0d2e45b3d41747f3d644954
+F www/templates/Urban\sSunrise/form_editinfo.tpl c05379d760537a9d643953a43d07392fde9138fd
 F www/templates/Urban\sSunrise/form_login.tpl fe8b409f221a5553ee0f40bde655fa3cb276485f
-F www/templates/Urban\sSunrise/form_new_post.tpl ca1db190891014690cc4efd8afe492a66f0d3ebe
-F www/templates/Urban\sSunrise/form_new_thread.tpl dff57e79eafed1ad3a9ad98c45da598e919f187e
+F www/templates/Urban\sSunrise/form_new_post.tpl 1f9be171769e45bab5335e0707ab67268ef7b31b
+F www/templates/Urban\sSunrise/form_new_thread.tpl 270f847f90c3a2cef8fdca71c106781f7b4a516a
 F www/templates/Urban\sSunrise/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/Urban\sSunrise/form_register.tpl 02cc15121365375ffe92866cfe46ae944ef1855b
 F www/templates/Urban\sSunrise/form_reset_password.tpl d9aa084867bfc75045a93db88af361770a960158
@@ -927,7 +928,10 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 072c21edcbadbc514a023c85ebd28bd9d5e815fb 43d31409adf24118fa3564f13aa1ce9d02587236
-R e6cec8373a1d51ca348dd3734d872c4a
+P 32fe845a59efc4aeef0dd5e86097c1e54cebd9a6
+R 9d0f1839b10b57dcf77ee784a625d8f6
+T *branch * banhammer
+T *sym-banhammer *
+T -sym-trunk *
 U johnfound
-Z c9feb0dc68207fdb644e94e529109edf
+Z 3c1ae02714f9efc1f232efad3a985ab1
