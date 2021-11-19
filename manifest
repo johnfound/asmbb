@@ -1,5 +1,5 @@
-C Some\smoderation\stools.\sSofter\sthan\sbanhammer.\s;)
-D 2021-11-17T14:05:51.465
+C Display\sand\sediting\sof\sthe\snew\suser\sparameters.
+D 2021-11-19T14:34:20.657
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -94,7 +94,7 @@ F source/threadlist.asm fd6dc9e977a54586fc9d4e1b2a4c57a93da3b1f8
 F source/threadlist.sql a25e59f044fd3de27332e842c00f2a454e086d01
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
-F source/userinfo.asm 010a2ba73acd014cd558c39aae3b9915266dc9e3
+F source/userinfo.asm ff69b7f6c5ff14e42ef0981d735b3e16e17cb3d6
 F source/userinfo.sql 9ff9ad7eff9e0d40b4e39b22306e6e7718913b4e
 F source/users_online.asm a730d7a2a7af9604c20523307b6a516c6be5af43
 F source/users_online.sql 108357df59731f8f084321670cb08fbaa3d18cd8
@@ -628,7 +628,7 @@ F www/templates/Urban\sSunrise/error_html_start.tpl 53ee357916bacab74bb7f9b63dc2
 F www/templates/Urban\sSunrise/file-browse.js f24eef322b130b2715410431ea4199679de5f65b
 F www/templates/Urban\sSunrise/form_edit.tpl 35447dc2e14aaec631768e00cb39cc2c41c803d6
 F www/templates/Urban\sSunrise/form_edit_thread.tpl 5a945545cbe5479ce0c6cb3cbaae2ead78e74a4f
-F www/templates/Urban\sSunrise/form_editinfo.tpl c05379d760537a9d643953a43d07392fde9138fd
+F www/templates/Urban\sSunrise/form_editinfo.tpl 312cfde6ee180b77dbb7ef7f340b71d4eb324653
 F www/templates/Urban\sSunrise/form_login.tpl fe8b409f221a5553ee0f40bde655fa3cb276485f
 F www/templates/Urban\sSunrise/form_new_post.tpl 1f9be171769e45bab5335e0707ab67268ef7b31b
 F www/templates/Urban\sSunrise/form_new_thread.tpl 270f847f90c3a2cef8fdca71c106781f7b4a516a
@@ -928,10 +928,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 32fe845a59efc4aeef0dd5e86097c1e54cebd9a6
-R 9d0f1839b10b57dcf77ee784a625d8f6
-T *branch * banhammer
-T *sym-banhammer *
-T -sym-trunk *
+P a00ebb8c8d423ee1df26220e756e54a8fa5dd8a9
+R d4671e63a319c233d8cad171e7bb77e9
 U johnfound
-Z 3c1ae02714f9efc1f232efad3a985ab1
+Z cdfcd01f1496de8983698a39c3175c5c

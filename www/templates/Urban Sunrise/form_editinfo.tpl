@@ -196,11 +196,11 @@
   <li><input type="checkbox" [user_perm31] name="user_perm" id="up31" value="$80000000"><label for="up31">[const:pAdmin]</label></li>
   </ul>
   <h2>[const:hdrInterval]</h2>
-  <input type="text" value="[PostInterval]" name="interval" class="settings" autocomplete="off">
+  <input type="text" value="[PostInterval]" name="PostInterval" class="settings" autocomplete="off">
   <h2>[const:hdrIncrement]</h2>
-  <input type="text" value="[PostIntervalInc]" name="increment" class="settings" autocomplete="off">
+  <input type="text" value="[PostIntervalInc]" name="PostIntervalInc" class="settings" autocomplete="off">
   <h2>[const:hdrMaxLen]</h2>
-  <input type="text" value="[MaxPostLen]" name="maxpostlen" class="settings" autocomplete="off">
+  <input type="text" value="[MaxPostLen]" name="MaxPostLen" class="settings" autocomplete="off">
   ]
   <input type="hidden" name="ticket" value="[Ticket]">
   <div class="navigation3 btn-bar"><input type="submit" name="save" class="btn" value="[const:btnSave]"></div>
