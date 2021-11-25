@@ -187,6 +187,21 @@ begin
         stdcall GetParam, "user_perm", gpInteger
         stdcall BindSQLBits, [.stmt], eax, 200, txt 'checked'
 
+; Default users limits
+
+        mov     eax, NEW_USER_POST_INTERVAL
+        stdcall GetParam, txt "nu_post_interval", gpInteger
+        cinvoke sqliteBindInt, [.stmt], 40, eax
+
+        mov     eax, NEW_USER_POST_INTERVAL_INC
+        stdcall GetParam, txt "nu_post_interval_inc", gpInteger
+        cinvoke sqliteBindInt, [.stmt], 41, eax
+
+        xor     eax, eax
+        stdcall GetParam, txt "nu_max_post_length", gpInteger
+        cinvoke sqliteBindInt, [.stmt], 42, eax
+
+
 ; Default guests permissions:
 
         xor     eax, eax
@@ -451,6 +466,20 @@ begin
 
         stdcall SetParamInt, txt "anon_perm", eax
         jc      .error_write
+
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "post_interval", NEW_USER_POST_INTERVAL
+        stdcall SetParamInt, txt "nu_post_interval", eax
+        jc      .error_write
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "post_interval_inc", NEW_USER_POST_INTERVAL_INC
+        stdcall SetParamInt, txt "nu_post_interval_inc", eax
+        jc      .error_write
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], "max_post_length", 0
+        stdcall SetParamInt, txt "nu_max_post_length", eax
+        jc      .error_write
+
 
 ; everything is OK
 

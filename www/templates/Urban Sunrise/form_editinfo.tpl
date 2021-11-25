@@ -31,7 +31,7 @@
   [equ:btnChangePass=Change password]
   [equ:btnChangeEmail=Change email]
   [equ:hdrInterval=Minimal post interval [s]:]
-  [equ:hdrIncrement=Post interval increment [s]:]
+  [equ:hdrIncrement=Post interval increment [s/post]:]
   [equ:hdrMaxLen=Maximal post length (0 = unlimited):]
 |
   [equ:hdrDesc=Описание: <span class="small">(форматиран текст)</span>]
@@ -65,8 +65,8 @@
   [equ:btnUpload=Качване]
   [equ:btnChangePass=Смяна на паролата]
   [equ:btnChangeEmail=Смяна на адреса]
-  [equ:hdrInterval=Минимално време между два поста [s]:]
-  [equ:hdrIncrement=Автоматична промяна на времето [s]:]
+  [equ:hdrInterval=Минимално време между постовете [s]:]
+  [equ:hdrIncrement=Автоматична промяна на времето [s/пост]:]
   [equ:hdrMaxLen=Максимална дължина на пост (0 = неограничена):]
 |
   [equ:hdrDesc=Описание потребителя: <span class="small">(форматированный текст)</span>]
@@ -100,8 +100,8 @@
   [equ:btnUpload=Загрузить]
   [equ:btnChangePass=Изменить пароль]
   [equ:btnChangeEmail=Изменить e-mail]
-  [equ:hdrInterval=Минимальное время между два поста [s]:]
-  [equ:hdrIncrement=Изменение интервала [s]:]
+  [equ:hdrInterval=Минимальное время между публикациями [s]:]
+  [equ:hdrIncrement=Изменение интервала [s/post]:]
   [equ:hdrMaxLen=Максимальная длина поста (0 = неограниченная):]
 |
   [equ:hdrDesc=Description de l'utilisateur: <span class="small">(Texte formaté)</span>]
@@ -136,7 +136,7 @@
   [equ:btnChangePass=Sauvergarder]
   [equ:btnChangeEmail=Sauvegarder]
   [equ:hdrInterval=Minimal post interval [s]:]
-  [equ:hdrIncrement=Post interval increment [s]:]
+  [equ:hdrIncrement=Post interval increment [s/post]:]
   [equ:hdrMaxLen=Maximal post length (0 = unlimited):]
 |
   [equ:hdrDesc=Benutzerbeschreibung: <span class="small">(Formatierter Text)</span>]
@@ -170,8 +170,8 @@
   [equ:btnUpload=Hochladen]
   [equ:btnChangePass=Passwort ändern]
   [equ:btnChangeEmail=E-Mail-Adresse ändern]
-  [equ:hdrInterval=Minimal post interval:]
-  [equ:hdrIncrement=Post interval increment:]
+  [equ:hdrInterval=Minimal post interval [s]:]
+  [equ:hdrIncrement=Post interval increment [s/post]:]
   [equ:hdrMaxLen=Maximal post length (0 = unlimited):]
 ]
 

@@ -214,7 +214,7 @@ endl
 
 
 ; max post length
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "MaxPosLen", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "MaxPostLen", 0
         test    eax, eax
         jz      .user_perm_fin
 

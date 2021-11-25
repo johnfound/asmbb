@@ -88,4 +88,8 @@ select
   ?27 as embeded_css,
   ?28 as Ticket,
   ?29 as tabselector,
-  ?30 as default_lang
+  ?30 as default_lang,
+
+  ?40 as post_interval,
+  ?41 as post_interval_inc,
+  ?42 as max_post_length

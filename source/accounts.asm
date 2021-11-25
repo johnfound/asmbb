@@ -7,6 +7,8 @@ MAX_PASS_LENGTH = 1024
 
 PERSISTENT_MAX_AGE equ "31536000"       ; 1 year persistent cookie.
 
+NEW_USER_POST_INTERVAL          = 300   ; 5 minutes initial interval.
+NEW_USER_POST_INTERVAL_INC      = -1    ; 300 posts to unlimited access.
 
 
 uopCreateAccount = 0
@@ -457,7 +459,6 @@ endp
 
 
 
-
 ;sqlCheckMinInterval text "select (strftime('%s','now') - time_reg) as delta from WaitingActivation where (ip_from = ?) and ( delta>30 ) order by time_reg desc limit 1"
 sqlRegisterUser    text "insert or replace into WaitingActivation (nick, passHash, salt, email, ip_from, time_reg, time_email, a_secret, operation) values (?1, ?2, ?3, ?4, ?5, strftime('%s','now'), NULL, ?6, ?7)"
 sqlCheckUserExists text "select 1 from Users where nick = ? or email = ? limit 1"
@@ -818,7 +819,7 @@ endp
 
 
 sqlBegin      text  "begin transaction;"
-sqlActivate   text  "insert into Users ( nick, passHash, salt, status, email, Register ) select nick, passHash, salt, ?1, email, time_reg from WaitingActivation where a_secret = ?2"
+sqlActivate   text  "insert into Users ( nick, passHash, salt, status, email, Register, PostInterval, PostIntervalInc, MaxPostLen ) select nick, passHash, salt, ?1, email, time_reg, ?2, ?3, ?4 from WaitingActivation where a_secret = ?5"
 sqlDeleteWait text  "delete from WaitingActivation where a_secret = ?1"
 sqlCheckType  text  "select operation from WaitingActivation where a_secret = ?1"
 sqlCommit     text  "commit transaction"
@@ -900,8 +901,20 @@ begin
 
         cinvoke sqliteBindInt, [.stmt], 1, eax
 
+        mov     eax, NEW_USER_POST_INTERVAL
+        stdcall GetParam, "nu_post_interval", gpInteger
+        cinvoke sqliteBindInt, [.stmt], 2, eax
+
+        mov     eax, NEW_USER_POST_INTERVAL_INC
+        stdcall GetParam, "nu_post_interval_inc", gpInteger
+        cinvoke sqliteBindInt, [.stmt], 3, eax
+
+        xor     eax, eax
+        stdcall GetParam, "nu_max_post_length", gpInteger
+        cinvoke sqliteBindInt, [.stmt], 4, eax
+
         stdcall StrPtr, ebx
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteBindText, [.stmt], 5, eax, [eax+string.len], SQLITE_STATIC
         cinvoke sqliteStep, [.stmt]
 
         cmp     eax, SQLITE_DONE

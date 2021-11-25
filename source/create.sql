@@ -30,6 +30,9 @@ insert into Params values ('forum_header', '<h1 style="font-weight: 800">AsmBB</
 </b>
 '
 );
+insert into Params values ('nu_post_interval', 0);
+insert into Params values ('nu_post_interval_inc', 0);
+insert into Params values ('nu_max_post_length', 0);
 
 create table Guests (
   addr     integer primary key not null,

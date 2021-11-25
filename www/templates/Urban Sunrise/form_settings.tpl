@@ -15,6 +15,9 @@
   [equ:pAttach=Attach files]
   [equ:pVote=Voting]
   [equ:pAdmin=Administrator]
+  [equ:ttlInterval=Minimal post interval [s]]
+  [equ:ttlIntervalInc=Post interval increment [s/post]]
+  [equ:ttlMaxPostLength=Maximal post length (0 == unlimited)]
 
   [equ:ttlSettings=Forum engine settings]
   [equ:btnSave=Save]
@@ -62,6 +65,9 @@
   [equ:pAttach=Прикачане на файлове]
   [equ:pVote=Гласуване]
   [equ:pAdmin=Администратор]
+  [equ:ttlInterval=Минимално време за постване [s]]
+  [equ:ttlIntervalInc=Време за постване промяна [s/post]]
+  [equ:ttlMaxPostLength=Максимална дължина на поста (0 == неограничена)]
 
   [equ:ttlSettings=Настройки на форума]
   [equ:btnSave=Запиши]
@@ -109,6 +115,9 @@
   [equ:pAttach=Прикреплять файлы]
   [equ:pVote=Голосовать]
   [equ:pAdmin=Администратор]
+  [equ:ttlInterval=Minimal post interval]
+  [equ:ttlIntervalInc=Post interval increment]
+  [equ:ttlMaxPostLength=Maximal post length]
 
   [equ:ttlSettings=Настройки форума]
   [equ:btnSave=Запись]
@@ -156,6 +165,9 @@
   [equ:pAttach=Joindre des fichiers]
   [equ:pVote=Vote]
   [equ:pAdmin=Administrateur]
+  [equ:ttlInterval=Minimal post interval]
+  [equ:ttlIntervalInc=Post interval increment]
+  [equ:ttlMaxPostLength=Maximal post length]
 
   [equ:ttlSettings=Paramètres du forum]
   [equ:btnSave=Écrire]
@@ -203,6 +215,9 @@
   [equ:pAttach=Dateien anhängen]
   [equ:pVote=Abstimmung]
   [equ:pAdmin=Administrator]
+  [equ:ttlInterval=Minimal post interval]
+  [equ:ttlIntervalInc=Post interval increment]
+  [equ:ttlMaxPostLength=Maximal post length]
 
   [equ:ttlSettings=Einstellungen der Forenengine]
   [equ:btnSave=Speichern]
@@ -300,6 +315,12 @@
         <li><input type="checkbox" [user_perm11] name="user_perm" id="up11" value="2048"><label for="up11">[const:pVote]</label></li>
         <li><input type="checkbox" [user_perm31] name="user_perm" id="up31" value="$80000000"><label for="up31">[const:pAdmin]</label></li>
       </ul>
+      <h3>[const:ttlInterval]:</h3>
+      <input type="text" value="[post_interval]" name="post_interval" class="settings" maxlength="256">
+      <h3>[const:ttlIntervalInc]:</h3>
+      <input type="text" value="[post_interval_inc]" name="post_interval_inc" class="settings" maxlength="256">
+      <h3>[const:ttlMaxPostLength]:</h3>
+      <input type="text" value="[max_post_length]" name="max_post_length" class="settings" maxlength="256">
       <h3>[const:ttlPermGuests]:</h3>
       <ul class="checkboxes checkbox">
         <li><input type="checkbox" [anon_perm0]  name="anon_perm" id="ap0"  value="1"><label for="ap0">[const:pRegister]</label></li>
