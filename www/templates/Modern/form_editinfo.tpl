@@ -1,4 +1,3 @@
-
 [case:[special:lang]|
   [equ:hdrDesc=User description: <span class="small">(Formatted text)</span>]
   [equ:hdrPermissions= User permissions:]
@@ -31,6 +30,9 @@
   [equ:btnUpload=Upload]
   [equ:btnChangePass=Change password]
   [equ:btnChangeEmail=Change email]
+  [equ:hdrInterval=Minimal post interval [s]:]
+  [equ:hdrIncrement=Post interval increment [s/post]:]
+  [equ:hdrMaxLen=Maximal post length (0 = unlimited):]
 |
   [equ:hdrDesc=Описание: <span class="small">(форматиран текст)</span>]
   [equ:hdrPermissions=Права на потребителяя:]
@@ -63,6 +65,9 @@
   [equ:btnUpload=Качване]
   [equ:btnChangePass=Смяна на паролата]
   [equ:btnChangeEmail=Смяна на адреса]
+  [equ:hdrInterval=Минимално време между постовете [s]:]
+  [equ:hdrIncrement=Автоматична промяна на времето [s/пост]:]
+  [equ:hdrMaxLen=Максимална дължина на пост (0 = неограничена):]
 |
   [equ:hdrDesc=Описание потребителя: <span class="small">(форматированный текст)</span>]
   [equ:hdrPermissions=Права пользователя:]
@@ -95,6 +100,9 @@
   [equ:btnUpload=Загрузить]
   [equ:btnChangePass=Изменить пароль]
   [equ:btnChangeEmail=Изменить e-mail]
+  [equ:hdrInterval=Минимальное время между публикациями [s]:]
+  [equ:hdrIncrement=Изменение интервала [s/post]:]
+  [equ:hdrMaxLen=Максимальная длина поста (0 = неограниченная):]
 |
   [equ:hdrDesc=Description de l'utilisateur: <span class="small">(Texte formaté)</span>]
   [equ:hdrPermissions=Autorisations utilisateur:]
@@ -127,6 +135,9 @@
   [equ:btnUpload=Télécharger]
   [equ:btnChangePass=Sauvergarder]
   [equ:btnChangeEmail=Sauvegarder]
+  [equ:hdrInterval=Intervalle minimal de message [s]:]
+  [equ:hdrIncrement=Incrément d'intervalle de messages [s/post]:]
+  [equ:hdrMaxLen=Longueur maximale du message (0 = illimitée):]
 |
   [equ:hdrDesc=Benutzerbeschreibung: <span class="small">(Formatierter Text)</span>]
   [equ:hdrPermissions= Benutzerbefugnisse:]
@@ -159,9 +170,12 @@
   [equ:btnUpload=Hochladen]
   [equ:btnChangePass=Passwort ändern]
   [equ:btnChangeEmail=E-Mail-Adresse ändern]
+  [equ:hdrInterval=Mindestnachrichtenintervall [s]:]
+  [equ:hdrIncrement=Nachrichtenintervallinkrement  [s/post]:]
+  [equ:hdrMaxLen=Maximale Nachrichtenlänge (0 = unbegrenzt):]
 ]
 
-<form class="user_edit_info" method="post" action="/!userinfo/[url:[html:[UserName]]">
+<form class="user_edit_info" method="post" action="/!userinfo/[url:[html:[UserName]]]">
   <h2>[const:hdrDesc]</h2>
   <textarea class="user_desc" name="user_desc">[user_desc]</textarea>
   [case:[special:isadmin]||
@@ -181,6 +195,12 @@
   <li><input type="checkbox" [user_perm11] name="user_perm" id="up11" value="2048"><label for="up11">[const:pVote]</label></li>
   <li><input type="checkbox" [user_perm31] name="user_perm" id="up31" value="$80000000"><label for="up31">[const:pAdmin]</label></li>
   </ul>
+  <h2>[const:hdrInterval]</h2>
+  <input type="text" value="[PostInterval]" name="PostInterval" class="settings" autocomplete="off">
+  <h2>[const:hdrIncrement]</h2>
+  <input type="text" value="[PostIntervalInc]" name="PostIntervalInc" class="settings" autocomplete="off">
+  <h2>[const:hdrMaxLen]</h2>
+  <input type="text" value="[MaxPostLen]" name="MaxPostLen" class="settings" autocomplete="off">
   ]
   <input type="hidden" name="ticket" value="[Ticket]">
   <input type="submit" name="save" class="btn button" value="[const:btnSave]">

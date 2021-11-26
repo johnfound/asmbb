@@ -467,12 +467,11 @@ begin
         stdcall SetParamInt, txt "anon_perm", eax
         jc      .error_write
 
-
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "post_interval", NEW_USER_POST_INTERVAL
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "post_interval", sNEW_USER_POST_INTERVAL
         stdcall SetParamInt, txt "nu_post_interval", eax
         jc      .error_write
 
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "post_interval_inc", NEW_USER_POST_INTERVAL_INC
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "post_interval_inc", sNEW_USER_POST_INTERVAL_INC
         stdcall SetParamInt, txt "nu_post_interval_inc", eax
         jc      .error_write
 
@@ -633,11 +632,8 @@ begin
 
 .error_write:
         push    eax
-
         cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
-
         inc     [.error]
-
         pop     eax
         jmp     .end_save
 

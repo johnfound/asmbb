@@ -9,6 +9,8 @@ PERSISTENT_MAX_AGE equ "31536000"       ; 1 year persistent cookie.
 
 NEW_USER_POST_INTERVAL          = 300   ; 5 minutes initial interval.
 NEW_USER_POST_INTERVAL_INC      = -1    ; 300 posts to unlimited access.
+sNEW_USER_POST_INTERVAL     text "300"
+sNEW_USER_POST_INTERVAL_INC text "-1"
 
 
 uopCreateAccount = 0

@@ -18,6 +18,7 @@
   [equ:btnPreview=Preview]
   [equ:btnSubmit=Submit]
   [equ:btnRevert=Revert]
+  [equ:lblAfter=after: ]
 |
   [equ:btnList=Списък теми]
   [equ:ttlTitle=Заглавие]
@@ -33,6 +34,7 @@
   [equ:btnPreview=Преглед]
   [equ:btnSubmit=Запис]
   [equ:btnRevert=Отказ]
+  [equ:lblAfter=след: ]
 |
   [equ:btnList=Список тем]
   [equ:ttlTitle=Название темы]
@@ -48,6 +50,7 @@
   [equ:btnPreview=Преглед]
   [equ:btnSubmit=Записать]
   [equ:btnRevert=Отказ]
+  [equ:lblAfter=через: ]
 |
   [equ:btnList=Liste des sujets]
   [equ:ttlTitle=Titre]
@@ -63,6 +66,7 @@
   [equ:btnPreview=Prévisualiser]
   [equ:btnSubmit=Poster]
   [equ:btnRevert=Annuler]
+  [equ:lblAfter=après: ]
 |
   [equ:btnList=Liste der Themen]
   [equ:ttlTitle=Titel]
@@ -78,6 +82,7 @@
   [equ:btnPreview=Vorschau]
   [equ:btnSubmit=Absenden]
   [equ:btnRevert=Zurücksetzen]
+  [equ:lblAfter=nach: ]
 ]
 
 <div class="new_editor">
@@ -107,7 +112,10 @@
     </div>
     <div class="panel">
       <input type="submit" name="preview" value="[const:btnPreview]" >
-      <input type="submit" name="submit" value="[const:btnSubmit]" >
+      <button type="submit" name="submit">
+        [const:btnSubmit]
+        [case:[special:wait2post]||<span id="remains"> ([const:lblAfter]<span id="remval">[special:wait2post]</span> s)</span>]
+      </button>
       <input type="hidden" name="ticket" value="[Ticket]" >
       <input type="reset" value="[const:btnRevert]" >
     </div>
