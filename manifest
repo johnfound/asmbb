@@ -1,5 +1,5 @@
-C Fixed\sbug\swith\sthe\sinvalid\sforms\swrite\sprocess.\sImplementing\sthe\snew\sfeatures\sin\sthe\sdifferent\sskins.
-D 2021-11-26T20:36:27.723
+C The\sfinal\supdates\sof\sthe\sskins.
+D 2021-11-29T15:03:56.894
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -55,7 +55,7 @@ F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
 F source/migratePosts.sql 92b037bfd56c741fe1cf1d992f383cde22346fc1
 F source/migration1.sql fe97ef3b5046a916f0215336a8a56ea4c8a3b98a
 F source/migration2.sql fe978700e39265c6680b69ea8cbfb5444cfdce63
-F source/migration3.sql 0d43e675bad926a464c989676b4751acb35aa7fc
+F source/migration3.sql deddb3b4995f9b8d5ee559980517555aeb383135
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
 F source/phpbb.sql 6820a2092cc30a774c44d770055b37b66bdbfaf0
 F source/phpbb_pm.sql f88eaf899e72d4e99f367cb654b41695da2231d5
@@ -511,7 +511,7 @@ F www/templates/Modern/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449
 F www/templates/Modern/form_register.tpl 97482aa6d96f3664f0b4dd4e15a5701fc6b76d62
 F www/templates/Modern/form_reset_password.tpl d615d96f021f1313d2993f42f4db30db0e534da8
 F www/templates/Modern/form_reset_request.tpl 40eccfc2673ae7ad3ff37b90cb77f676f51cd5cf
-F www/templates/Modern/form_settings.tpl fa61d919ce18b061cbde3836ebc62b137c4b1e8e
+F www/templates/Modern/form_settings.tpl c149bb100f652cdc7914b928b5e11563d30d7f95
 F www/templates/Modern/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Modern/form_sqlite_console.tpl e7018d30d3293f01cf6d159cad260413e27511c5
 F www/templates/Modern/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
@@ -628,7 +628,7 @@ F www/templates/Urban\sSunrise/error_html_start.tpl 53ee357916bacab74bb7f9b63dc2
 F www/templates/Urban\sSunrise/file-browse.js f24eef322b130b2715410431ea4199679de5f65b
 F www/templates/Urban\sSunrise/form_edit.tpl 35447dc2e14aaec631768e00cb39cc2c41c803d6
 F www/templates/Urban\sSunrise/form_edit_thread.tpl 5a945545cbe5479ce0c6cb3cbaae2ead78e74a4f
-F www/templates/Urban\sSunrise/form_editinfo.tpl fb9a6e864eb0f25370ca5a463735959736a244c6
+F www/templates/Urban\sSunrise/form_editinfo.tpl a0fcead0c9121c214ebe813fa4b737934670133c
 F www/templates/Urban\sSunrise/form_login.tpl fe8b409f221a5553ee0f40bde655fa3cb276485f
 F www/templates/Urban\sSunrise/form_new_post.tpl 1f9be171769e45bab5335e0707ab67268ef7b31b
 F www/templates/Urban\sSunrise/form_new_thread.tpl 270f847f90c3a2cef8fdca71c106781f7b4a516a
@@ -636,7 +636,7 @@ F www/templates/Urban\sSunrise/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09
 F www/templates/Urban\sSunrise/form_register.tpl 02cc15121365375ffe92866cfe46ae944ef1855b
 F www/templates/Urban\sSunrise/form_reset_password.tpl d9aa084867bfc75045a93db88af361770a960158
 F www/templates/Urban\sSunrise/form_reset_request.tpl 2670304557d27ff156db4652a360a9044b415c7e
-F www/templates/Urban\sSunrise/form_settings.tpl 0cd15f44efbea6ed0b3a84ac05b32190d9be664d
+F www/templates/Urban\sSunrise/form_settings.tpl f15234f584871cba5a228851ce7b2435033f627f
 F www/templates/Urban\sSunrise/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Urban\sSunrise/form_sqlite_console.tpl 04720cf7c2be67a3ec0922a734eb58b6739c66b3
 F www/templates/Urban\sSunrise/help-bbcode.txt 6732933421f6641562759d73997cbf611b9bc59b
@@ -784,7 +784,7 @@ F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e44992
 F www/templates/Wasp/form_register.tpl 25cdeffa395f90e248b383ee85390f9395cef8d3
 F www/templates/Wasp/form_reset_password.tpl 4b1ca1f5cdf5bb2ea7f0620722393e8324a97fa0
 F www/templates/Wasp/form_reset_request.tpl 45298eaa3544ec492eb9ca6e4f482fe30378a0e0
-F www/templates/Wasp/form_settings.tpl 7242f97c9dee3ed23c55911c1bec135c50a60130
+F www/templates/Wasp/form_settings.tpl e932cfe8a5a693ea777c2a6902e9e1ae2631f98d
 F www/templates/Wasp/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Wasp/form_sqlite_console.tpl 7c492fd0663a1f999e88186f0af74f87bcd04a25
 F www/templates/Wasp/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
@@ -928,7 +928,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 4c1a2be4a254c97e311121faf34512c53dff1924
-R 57e700b40e4375ec814efab155348d5a
+P 7a5ff5cadc543615959d8a1534e424cf6f9f93ad
+R 02cfbf4ddd8e96e2b518458a262ed6c1
 U johnfound
-Z 3a2d34088b9068d9c2b34d73637b9666
+Z 0e9c24794deb36cb07d105bc0aa3ce80

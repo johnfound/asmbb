@@ -22,3 +22,7 @@ CREATE TRIGGER PostsAI AFTER INSERT ON Posts BEGIN
   update Counters set val = val + 1 where id = 'posts';
   update Tags set PostCnt = PostCnt + 1 where Tags.tag in (select tag from ThreadTags where ThreadID = new.ThreadID);
 END;
+
+insert into Params values ('nu_post_interval', 0);
+insert into Params values ('nu_post_interval_inc', 0);
+insert into Params values ('nu_max_post_length', 0);

@@ -135,9 +135,9 @@
   [equ:btnUpload=Télécharger]
   [equ:btnChangePass=Sauvergarder]
   [equ:btnChangeEmail=Sauvegarder]
-  [equ:hdrInterval=Minimal post interval [s]:]
-  [equ:hdrIncrement=Post interval increment [s/post]:]
-  [equ:hdrMaxLen=Maximal post length (0 = unlimited):]
+  [equ:hdrInterval=Intervalle minimal de message [s]:]
+  [equ:hdrIncrement=Incrément d'intervalle de messages [s/post]:]
+  [equ:hdrMaxLen=Longueur maximale du message (0 = illimitée):]
 |
   [equ:hdrDesc=Benutzerbeschreibung: <span class="small">(Formatierter Text)</span>]
   [equ:hdrPermissions= Benutzerbefugnisse:]
@@ -170,9 +170,9 @@
   [equ:btnUpload=Hochladen]
   [equ:btnChangePass=Passwort ändern]
   [equ:btnChangeEmail=E-Mail-Adresse ändern]
-  [equ:hdrInterval=Minimal post interval [s]:]
-  [equ:hdrIncrement=Post interval increment [s/post]:]
-  [equ:hdrMaxLen=Maximal post length (0 = unlimited):]
+  [equ:hdrInterval=Mindestnachrichtenintervall [s]:]
+  [equ:hdrIncrement=Nachrichtenintervallinkrement  [s/post]:]
+  [equ:hdrMaxLen=Maximale Nachrichtenlänge (0 = unbegrenzt):]
 ]
 
 <form class="user_edit_info settings" method="post" action="/!userinfo/[url:[html:[UserName]]]">
