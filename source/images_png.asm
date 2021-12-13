@@ -151,7 +151,10 @@ begin
         bswap   eax
         mov     ecx, eax                ; chunk length in bytes
         lea     edx, [eax+4]
-        lea     eax, [esi+edx]
+
+        mov     eax, esi
+        add     eax, edx
+        jc      .error_unexpected_end
 
         cmp     eax, [.pEnd]
         jae     .error_unexpected_end

@@ -1,5 +1,5 @@
-C The\sfinal\supdates\sof\sthe\sskins.
-D 2021-11-29T15:03:56.894
+C Fixed\sstupid\sbug\sin\sthe\savatar\simage\sprocessing.
+D 2021-12-13T21:42:04.293
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -48,7 +48,7 @@ F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 81f60b545fb3f7a184f6f6075f9a4e7ce31b7a0a
 F source/history.asm ada7d1d9956f99bd48a3021eace283a0a76758c8
 F source/http.asm 1d6405bf48b523b735b12f8167deafe1ac081936
-F source/images_png.asm cb69d9eafb85f6e61c526a3dcff4c7f2c3f4ebd6
+F source/images_png.asm e7a1ebbb61de60efac0ff2ebf675bf23f66a0e11
 F source/messages.asm f1f350f40073680e2ed26e007312987ef9eb327f
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
@@ -928,7 +928,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 7a5ff5cadc543615959d8a1534e424cf6f9f93ad
-R 02cfbf4ddd8e96e2b518458a262ed6c1
+P 17159fb1b780e4339f01d89c84a857a2ff8e6df1
+R 108598a2e89efa6423bb83902e6e5b8b
 U johnfound
-Z 0e9c24794deb36cb07d105bc0aa3ce80
+Z d306a53682f41836e4c226a9c9f767ab
