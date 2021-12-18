@@ -1,5 +1,5 @@
-C Fixed\sstupid\sbug\sin\sthe\savatar\simage\sprocessing.
-D 2021-12-13T21:42:04.293
+C New\susers\sstart\swith\spause,\swhen\sspecified.
+D 2021-12-18T19:37:59.150
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -24,7 +24,8 @@ F source/TestsWithTags.sql 6384a56d553e36aa1c54cdb61a147bb2806e3e9d
 F source/ToDo.txt 78c2a566e37fc37db78b799f5ac100bed383c182
 F source/Win32/sqleet.inc d3fe767bb10368a936112e35df3e734c32161b2d
 F source/Win32/sqlite3.inc f941d1cebec53d2bddbd071f4a2fef6d1a80b7f2
-F source/accounts.asm e7a505d7d6256543a0b8befb1b4b713b51007f08
+F source/accounts.asm 3b3ce2b20f7feccb113bb9f090e70c5ef9ff48e5
+F source/activate.sql 74181604d711d2d949104ea96c58e712def322ab
 F source/alltags.sql aa3093196f8c5132f8e763f2a80fbe977a878687
 F source/alltags2.sql e4a0d5084be7a45f5e30ab46b7985f49c797f86a
 F source/atom_list.sql db8ca9992635d22d58bdcdf3a80d94a23c382362
@@ -42,7 +43,7 @@ F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 097489a8a33810ef4dbaa8f98143cc5ee6c50e8b
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm 0711c8da15baf58a1d7f43700c30b79600fc8c26
-F source/engine.fpr 10419279cdd257e6e4ca56bce169a0085ca86113
+F source/engine.fpr 7d062218a4f308240f2a7fa16accf73e6ce06c02
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 81f60b545fb3f7a184f6f6075f9a4e7ce31b7a0a
@@ -928,7 +929,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 17159fb1b780e4339f01d89c84a857a2ff8e6df1
-R 108598a2e89efa6423bb83902e6e5b8b
+P afbc5133004e1c1635a02ea960bd3db0e9139765
+R 0cfb90cca11953c04adaadb913ddac5a
 U johnfound
-Z d306a53682f41836e4c226a9c9f767ab
+Z f5057e7dd206e85f69cf8578b87be254
