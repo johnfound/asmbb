@@ -1,5 +1,5 @@
-C New\susers\sstart\swith\spause,\swhen\sspecified.
-D 2021-12-18T19:37:59.150
+C Source\sformatting\sand\ssmall\sfix\sin\sthe\sminimag\shelp\sfile.
+D 2022-01-18T20:24:31.125
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -60,7 +60,7 @@ F source/migration3.sql deddb3b4995f9b8d5ee559980517555aeb383135
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
 F source/phpbb.sql 6820a2092cc30a774c44d770055b37b66bdbfaf0
 F source/phpbb_pm.sql f88eaf899e72d4e99f367cb654b41695da2231d5
-F source/post.asm a064bb911f768596c8401eef82439dc62f9ace0e
+F source/post.asm 5661634626eec8f479458bf397b36b312848694c
 F source/post_data.asm 79fb813775e3bafe6cb314c50a99484e4f0dc211
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
@@ -641,7 +641,7 @@ F www/templates/Urban\sSunrise/form_settings.tpl f15234f584871cba5a228851ce7b243
 F www/templates/Urban\sSunrise/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Urban\sSunrise/form_sqlite_console.tpl 04720cf7c2be67a3ec0922a734eb58b6739c66b3
 F www/templates/Urban\sSunrise/help-bbcode.txt 6732933421f6641562759d73997cbf611b9bc59b
-F www/templates/Urban\sSunrise/help-minimag.txt fc7edb304e4d3d6ade4dd77361b178cb7706a402
+F www/templates/Urban\sSunrise/help-minimag.txt df1cafbf3d21a66ad16ee8042f05dd7a50eca39d
 F www/templates/Urban\sSunrise/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
 F www/templates/Urban\sSunrise/highlight.js b4a380fb43186d51a405fb185067120657f243f2
 F www/templates/Urban\sSunrise/highlight.less fba68624d1b34a5543fe0bf4b2af2ac1ddf65e74
@@ -929,7 +929,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P afbc5133004e1c1635a02ea960bd3db0e9139765
-R 0cfb90cca11953c04adaadb913ddac5a
+P 36c85c790bbb462517906b4d54f00ed2b7b363e9
+R 753584cc72d37f3e9b6df0b2274e5f7d
 U johnfound
-Z f5057e7dd206e85f69cf8578b87be254
+Z c983b252e52ebf1ae232a7b91c5cb7e0
