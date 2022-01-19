@@ -1,3 +1,17 @@
+struct TchunkIHDR
+  .Width        dd ?
+  .Height       dd ?
+  .BitDepth     db ?
+  .ColorType    db ?
+  .Compression  db ?
+  .Filter       db ?
+  .Interlaced   db ?
+ends
+
+pngCTPalette  = 1
+pngCTColor    = 2
+pngCTAlpha    = 4
+
 
 
 proc SanitizeImagePng, .pPNGImage, .Size, .width, .height

@@ -18,6 +18,8 @@ LINUX_INTERPRETER equ './ld-musl-i386.so'
 
 @BinaryType console, compact
 
+LIB_MODE equ NOGUI
+
 options.ShowSkipped = 0
 options.ShowSizes = 0
 

@@ -1,5 +1,5 @@
-C Source\sformatting\sand\ssmall\sfix\sin\sthe\sminimag\shelp\sfile.
-D 2022-01-18T20:24:31.125
+C The\ssource\swas\sadapted\sto\sthe\slatest\sFreshLib\schanges.\sAlso\sit\scompiles\sfaster\sthis\sway.
+D 2022-01-19T09:31:46.508
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -42,14 +42,14 @@ F source/create.sql 4293156cd057cb889ec3240b5ad4a3055af96020
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 097489a8a33810ef4dbaa8f98143cc5ee6c50e8b
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
-F source/engine.asm 0711c8da15baf58a1d7f43700c30b79600fc8c26
+F source/engine.asm 82c71f1f23fcce0956980164f9fc6163026c3960
 F source/engine.fpr 7d062218a4f308240f2a7fa16accf73e6ce06c02
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 81f60b545fb3f7a184f6f6075f9a4e7ce31b7a0a
 F source/history.asm ada7d1d9956f99bd48a3021eace283a0a76758c8
 F source/http.asm 1d6405bf48b523b735b12f8167deafe1ac081936
-F source/images_png.asm e7a1ebbb61de60efac0ff2ebf675bf23f66a0e11
+F source/images_png.asm 6926d2212dc3dc1a4098850203527d2a993b41ad
 F source/messages.asm f1f350f40073680e2ed26e007312987ef9eb327f
 F source/messages_bg.sql 8c99ff48af58ce994536c8081a16dd94d9bca825
 F source/messages_en.sql 978b347823cee29f6e0e0131c169883b9a606948
@@ -929,7 +929,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 36c85c790bbb462517906b4d54f00ed2b7b363e9
-R 753584cc72d37f3e9b6df0b2274e5f7d
+P 6ee3f5ab6be510e17ff1baa66c1bee508d299eb0
+R f626c5404480b9470f9ad8b34aaea604
 U johnfound
-Z c983b252e52ebf1ae232a7b91c5cb7e0
+Z 5e28e8aed9332f6a9f566c1d49dd5ee2
