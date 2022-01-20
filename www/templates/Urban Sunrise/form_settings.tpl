@@ -215,8 +215,8 @@
   [equ:pAttach=Dateien anhängen]
   [equ:pVote=Abstimmung]
   [equ:pAdmin=Administrator]
-  [equ:ttlInterval=Mindestnachrichtenintervall [s]]
-  [equ:ttlIntervalInc=Nachrichtenintervallinkrement  [s/post]]
+  [equ:ttlInterval=Zeit zwischen zwei Beiträgen [Sek.]]
+  [equ:ttlIntervalInc=Zusätzliche Verzögerung bei weiteren Beiträgen [Sek./Beitrag]]
   [equ:ttlMaxPostLength=Maximale Nachrichtenlänge (0 = unbegrenzt)]
 
   [equ:ttlSettings=Einstellungen der Forenengine]

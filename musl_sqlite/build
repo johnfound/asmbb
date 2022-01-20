@@ -149,6 +149,7 @@ gcc -m32 -Os -shared -fno-stack-protector -mpreferred-stack-boundary=2 -march=x8
     -DSQLITE_OMIT_AUTHORIZATION                                                         \
     -DSQLITE_THREADSAFE=1                                                               \
     -DSQLITE_ENABLE_STAT4                                                               \
+    -DHAVE_USLEEP                                                                       \
 ./sqlite3.c -o ./libsqlite3.so                                                          \
 || { echo >&2 "Error: Can't compile SQLite."; exit 4; }
 

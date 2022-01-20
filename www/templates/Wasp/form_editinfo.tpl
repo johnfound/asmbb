@@ -171,8 +171,8 @@
   [equ:btnUpload=Hochladen]
   [equ:btnChangePass=Passwort ändern]
   [equ:btnChangeEmail=E-Mail-Adresse ändern]
-  [equ:hdrInterval=Mindestnachrichtenintervall [s]:]
-  [equ:hdrIncrement=Nachrichtenintervallinkrement  [s/post]:]
+  [equ:hdrInterval=Zeit zwischen zwei Beiträgen [Sek.]:]
+  [equ:hdrIncrement=Zusätzliche Verzögerung bei weiteren Beiträgen [Sek./Beitrag]:]
   [equ:hdrMaxLen=Maximale Nachrichtenlänge (0 = unbegrenzt):]
 ]
 
