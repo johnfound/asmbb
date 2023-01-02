@@ -270,7 +270,7 @@ CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
   insert or ignore into ThreadPosters(firstPost, threadID, userID) select min(id), threadid, userid from posts where threadid = old.threadid and userid = old.userid;
 
   update Users set PostCount = PostCount - 1 where Users.id = old.UserID;
-  update Threads set PostCount = PostCount - 1 where id = old.threadID;
+  update Threads set PostCount = PostCount - 1, LastChanged = (select max(P.postTime) from posts as P where P.threadID = old.threadID) where id = old.threadID;
   update Counters set val = val - 1 where id = 'posts';
   update Tags set PostCnt = PostCnt - 1 where Tags.tag in (select tag from threadtags where threadid = old.threadid);
 

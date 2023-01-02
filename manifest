@@ -1,5 +1,5 @@
-C Added\sHAVE_USLEEP\sto\sthe\sSQLite\sbuilding\sscript.\sFixed\sgerman\stranslation.\sthanks\sto\s\\o/.
-D 2022-01-20T08:36:18.281
+C After\sdeletion\sof\sthe\spost,\supdate\sthe\sLastChanged\sfield\sof\sthe\srespective\sthread.\sImplemented\sin\sthe\sdatabase\strigger,\sso\sit\sworks\sregardless\sof\s\nhow\sthe\spost\swas\sdeleted.
+D 2023-01-02T19:54:39.143
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -38,7 +38,7 @@ F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm 931a8f7c9335462e79502e2b580016623bfeeff7
 F source/commands.asm cf7738eb98f47cce711cf56df1822196bbb6d53a
-F source/create.sql 4293156cd057cb889ec3240b5ad4a3055af96020
+F source/create.sql a96ba388a1222ef6d84caf7640ec035e33bf8614
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 097489a8a33810ef4dbaa8f98143cc5ee6c50e8b
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
@@ -101,7 +101,7 @@ F source/users_online.asm a730d7a2a7af9604c20523307b6a516c6be5af43
 F source/users_online.sql 108357df59731f8f084321670cb08fbaa3d18cd8
 F source/userslist.asm ad6c2bc2cc22ef3dc7202c0310754ef1d5afabb3
 F source/userslist.sql e4b2f4dfbc0e4911c07985a67d6d36384698111b
-F source/util.sql e346fefbfd8214e204527aa3a88c766de5d1f9b8
+F source/util.sql c811be0ccdd2877eb45b3b843b418a5e83eac560
 F source/version.asm bc87e5fe2b5905a1fa3a5c5854a440632f3c1e77
 F source/votes.asm fb9dba27fa630fd866539e026b4e5d77a44ca2e1
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
@@ -929,7 +929,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 42b4bf25137cf180deeeba9a6268b420cc9ec5c5
-R 7b2af4fa384029372392d0e22cd206a1
+P ea4f7ddf5b0e22550586cf44bca6a268634b12f3
+R 0a5db73f009a6d223730a8170aebf97b
 U johnfound
-Z c1af8912b04039565b307aaa3519348b
+Z 7f453e10cc736617e3823a8665b72843

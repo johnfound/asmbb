@@ -282,3 +282,8 @@ where
   (remoteIP >> 24 & 255)||'.'||(remoteIP >> 16 & 255)||'.'||(remoteIP >> 8 & 255)||'.'||(remoteIP & 255) = 'AA.BB.CC.DD'
 group by
   userid;
+
+
+-- Fixes the threads last changed after deleted posts. Can be executed on all threads if without the where clause. But maybe is slow.
+
+update threads as T set LastChanged = (select max(PostTime) from posts as p where p.threadid=T.id) where T.id = ?;
