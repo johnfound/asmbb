@@ -614,6 +614,10 @@ Is not a place for you.
 Go elsewhere now.
 ','Closed forum!','<a href="https://duckduckgo.com">A good place to start</a>');
 
+insert into Messages VALUES ('error_too_early','Simple, deep, and still.
+The old masters were patient.
+Without desires.','Try to do it later!',NULL);
+
 
 create table ScratchPad (
   name   text primary key not null,

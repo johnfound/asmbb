@@ -19,6 +19,7 @@
   [equ:ttlInterval=Minimal post interval [s]]
   [equ:ttlIntervalInc=Post interval increment [s/post]]
   [equ:ttlMaxPostLength=Maximal post length (0 = unlimited)]
+  [equ:ttlActivationTime=Minimal activation time [s]]
 
   [equ:ttlSettings=Forum engine settings]
   [equ:btnSave=Save]
@@ -69,6 +70,7 @@
   [equ:ttlInterval=Минимално време между постовете [s]]
   [equ:ttlIntervalInc=Автоматична промяна на времето [s/пост]]
   [equ:ttlMaxPostLength=Максимална дължина на пост (0 = неограничена)]
+  [equ:ttlActivationTime=Минимално време за активация [s]]
 
   [equ:ttlSettings=Настройки на форума]
   [equ:btnSave=Запиши]
@@ -119,6 +121,7 @@
   [equ:ttlInterval=Минимальное время между публикациями [s]]
   [equ:ttlIntervalInc=Изменение интервала [s/post]]
   [equ:ttlMaxPostLength=Максимальная длина поста (0 = неограниченная)]
+  [equ:ttlActivationTime=Минимальное время для активации [s]]
 
   [equ:ttlSettings=Настройки форума]
   [equ:btnSave=Запись]
@@ -169,6 +172,7 @@
   [equ:ttlInterval=Intervalle minimal de message [s]]
   [equ:ttlIntervalInc=Incrément d'intervalle de messages [s/post]]
   [equ:ttlMaxPostLength=Longueur maximale du message (0 = illimitée)]
+  [equ:ttlActivationTime=Temps d'activation minimal [s]]
 
   [equ:ttlSettings=Paramètres du forum]
   [equ:btnSave=Écrire]
@@ -219,6 +223,7 @@
   [equ:ttlInterval=Zeit zwischen zwei Beiträgen [Sek.]]
   [equ:ttlIntervalInc=Zusätzliche Verzögerung bei weiteren Beiträgen [Sek./Beitrag]]
   [equ:ttlMaxPostLength=Maximale Nachrichtenlänge (0 = unbegrenzt)]
+  [equ:ttlActivationTime=Minimale Aktivierungszeit [s]]
 
   [equ:ttlSettings=Einstellungen der Forenengine]
   [equ:btnSave=Speichern]
@@ -335,6 +340,8 @@
         <li><input type="checkbox" [anon_perm8]  name="anon_perm" id="ap8"  value="256"><label for="ap8">[const:pChat]</label></li>
         <li><input type="checkbox" [anon_perm9]  name="anon_perm" id="ap9"  value="512"><label for="ap9">[const:pDownload]</label></li>
       </ul>
+      <h3>[const:ttlActivationTime]:</h3>
+      <input type="text" value="[activate_min_interval]" name="activate_min_interval" class="settings" maxlength="256">
     </section>
 
     <input id="tab4" name="tabselector" type="radio" value="3" [case:[tabselector]||||checked|]>

@@ -823,7 +823,7 @@ endp
 sqlBegin      text  "begin transaction;"
 sqlActivate   StripText 'activate.sql', SQL
 sqlDeleteWait text  "delete from WaitingActivation where a_secret = ?1"
-sqlCheckType  text  "select operation from WaitingActivation where a_secret = ?1"
+sqlCheckType  text  "select operation, time_reg, time_email from WaitingActivation where a_secret = ?1"
 sqlCommit     text  "commit transaction"
 sqlRollback   text  "rollback"
 
@@ -833,6 +833,9 @@ sqlUpdateUserEmail text "update users set email = (select email from WaitingActi
 proc ActivateAccount, .pSpecial
 .stmt dd ?
 .type dd ?
+.min_time dd ?
+.time_reg   dq ?
+.time_email dq ?
 begin
         pushad
 
@@ -869,6 +872,14 @@ begin
         cinvoke sqliteColumnInt, [.stmt], 0    ; the operation
         mov     [.type], eax
 
+        cinvoke sqliteColumnInt64, [.stmt], 1  ; the time of the operation.
+        mov     dword [.time_reg], eax
+        mov     dword [.time_reg+4], edx
+
+        cinvoke sqliteColumnInt64, [.stmt], 2  ; the time of the operation.
+        mov     dword [.time_email], eax
+        mov     dword [.time_email+4], edx
+
         cinvoke sqliteFinalize, [.stmt]
 
         cmp     [.type], uopCreateAccount
@@ -894,7 +905,19 @@ begin
 ; insert new user
 
 .insert_new_user:
+        stdcall GetParam, 'activate_min_interval', gpInteger
+        jc      .time_ok
+        mov     ecx, eax
 
+        stdcall GetTime
+        sub     eax, dword [.time_reg]
+        sbb     edx, dword [.time_reg+4]
+        jnz     .error_too_early
+
+        sub     ecx, eax
+        jg      .error_too_early
+
+.time_ok:
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlActivate, sqlActivate.length, eax, 0
 
@@ -969,7 +992,6 @@ begin
 
 
 .rollback:
-
         cinvoke sqliteFinalize, [.stmt]         ; finalize the bad statement.
 
 ; rollback transaction
@@ -979,7 +1001,31 @@ begin
         stdcall TextMakeRedirect, 0, "/!message/bad_secret"
         jmp     .finish
 
+.error_too_early:
+
+; rollback transaction and then make a special minimal size page in order to wait for activation.
+        push    ecx
+        cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
+        pop     ecx
+
+        stdcall TextCreate, sizeof.TText
+        mov     edx, eax
+
+        stdcall TextAddString, edx, [edx+TText.GapBegin], cActivatePage1
+
+        stdcall NumToStr, ecx, ntsDec or ntsUnsigned
+        stdcall TextAddString, edx, [edx+TText.GapBegin], eax
+        stdcall StrDel, eax
+
+        stdcall TextAddString, edx, [edx+TText.GapBegin], cActivatePage2
+        mov     edi, edx
+        jmp     .finish
 endp
+
+cActivatePage1 text 'Content-type: text/html; charset=utf-8', 13, 10, 13, 10,           \
+                    '<!DOCTYPE html><html><head><script>setInterval(function(){a=document.getElementById("t"); t=a.innerHTML; if (t>0) a.innerHTML=t-1; else location.reload()},1000);</script>', \
+                    '<body><p>Activation after <b id="t">'
+cActivatePage2 text '</b> seconds. Wait!'
 
 
 

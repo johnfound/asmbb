@@ -1,5 +1,5 @@
-C After\sdeletion\sof\sthe\spost,\supdate\sthe\sLastChanged\sfield\sof\sthe\srespective\sthread.\sImplemented\sin\sthe\sdatabase\strigger,\sso\sit\sworks\sregardless\sof\s\nhow\sthe\spost\swas\sdeleted.
-D 2023-01-02T19:54:39.143
+C Implemented\stime\slimitation\sfor\snew\susers\sregistration.\sIt\sslowsdown\sthe\sattacks\sbased\son\smass\suser\sregistration\son\ssettings\swith\sfree\sregistration.
+D 2023-01-09T14:40:51.233
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -24,7 +24,7 @@ F source/TestsWithTags.sql 6384a56d553e36aa1c54cdb61a147bb2806e3e9d
 F source/ToDo.txt 78c2a566e37fc37db78b799f5ac100bed383c182
 F source/Win32/sqleet.inc d3fe767bb10368a936112e35df3e734c32161b2d
 F source/Win32/sqlite3.inc f941d1cebec53d2bddbd071f4a2fef6d1a80b7f2
-F source/accounts.asm 3b3ce2b20f7feccb113bb9f090e70c5ef9ff48e5
+F source/accounts.asm 2b5a20a3fd57ea11e38b626ddbeb86d915565325
 F source/activate.sql 74181604d711d2d949104ea96c58e712def322ab
 F source/alltags.sql aa3093196f8c5132f8e763f2a80fbe977a878687
 F source/alltags2.sql e4a0d5084be7a45f5e30ab46b7985f49c797f86a
@@ -38,7 +38,7 @@ F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm 931a8f7c9335462e79502e2b580016623bfeeff7
 F source/commands.asm cf7738eb98f47cce711cf56df1822196bbb6d53a
-F source/create.sql a96ba388a1222ef6d84caf7640ec035e33bf8614
+F source/create.sql 73afce595f20388afc7d1b70f984307bf4705f6f
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 097489a8a33810ef4dbaa8f98143cc5ee6c50e8b
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
@@ -75,8 +75,8 @@ F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 60acccb553021d13c932470672aec7a3d943443d
 F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
-F source/settings.asm 3a9f1c3a6d2ec9c647b5ced11c51fe9f39547f98
-F source/settings.sql 7f16fe2bbebedf71de5a8754dd9a2586045bce1b
+F source/settings.asm 33953fde4165465797c4e5669193b531d488eb8c
+F source/settings.sql ff928ed121b03f05814aab6800f54b954250e00d
 F source/showthread.asm d611650014b8378d66b439b61c75b4911d5ce59c
 F source/showthread.sql 1ee08ed9c69a07ca5c60fc639e73333405e14d37
 F source/sqlite3.asm df3a5ea387f60d719fd83c33411b8151ad1a6d77
@@ -512,7 +512,7 @@ F www/templates/Modern/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449
 F www/templates/Modern/form_register.tpl 97482aa6d96f3664f0b4dd4e15a5701fc6b76d62
 F www/templates/Modern/form_reset_password.tpl d615d96f021f1313d2993f42f4db30db0e534da8
 F www/templates/Modern/form_reset_request.tpl 40eccfc2673ae7ad3ff37b90cb77f676f51cd5cf
-F www/templates/Modern/form_settings.tpl 3ac7e599e9bb6fc7a75cc57cf9ba4da08a188170
+F www/templates/Modern/form_settings.tpl 8356d2ebcf9af0368d57b4f60ce2d265fad3edc2
 F www/templates/Modern/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Modern/form_sqlite_console.tpl e7018d30d3293f01cf6d159cad260413e27511c5
 F www/templates/Modern/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
@@ -637,7 +637,7 @@ F www/templates/Urban\sSunrise/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09
 F www/templates/Urban\sSunrise/form_register.tpl 02cc15121365375ffe92866cfe46ae944ef1855b
 F www/templates/Urban\sSunrise/form_reset_password.tpl d9aa084867bfc75045a93db88af361770a960158
 F www/templates/Urban\sSunrise/form_reset_request.tpl 2670304557d27ff156db4652a360a9044b415c7e
-F www/templates/Urban\sSunrise/form_settings.tpl 9ce59e5820081cf0ef4ef8145ccb64942595a6a7
+F www/templates/Urban\sSunrise/form_settings.tpl 2082be18e6821d88fdc83c0e0bc05c5eebf2a58e
 F www/templates/Urban\sSunrise/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Urban\sSunrise/form_sqlite_console.tpl 04720cf7c2be67a3ec0922a734eb58b6739c66b3
 F www/templates/Urban\sSunrise/help-bbcode.txt 6732933421f6641562759d73997cbf611b9bc59b
@@ -667,7 +667,7 @@ F www/templates/Urban\sSunrise/realtime.js 648ea897679114afadaff7f78b311ccf96262
 F www/templates/Urban\sSunrise/restore_confirm.tpl 52a9c63c3575dc9a740886776c4dc6c2e0a07efe
 F www/templates/Urban\sSunrise/search.less 0bcaf20f6012fe18db4ecdad203032fc082678df
 F www/templates/Urban\sSunrise/search_result.tpl ae0d46617af84efc2ae3701ed18718f5fcf99a7e
-F www/templates/Urban\sSunrise/settings.less 0e5a471a7313f34710bfc1a9b4d9aef50af9be23
+F www/templates/Urban\sSunrise/settings.less 517aaa0c2e66248d269608f0374afe1431e75fcd
 F www/templates/Urban\sSunrise/skin_variables.lsi 78974d8372551ed85a981703a612ca20dacdf9f0
 F www/templates/Urban\sSunrise/sqlite.less 660b247ef2a036462dd4aeae6d92f54881fda877
 F www/templates/Urban\sSunrise/statistics.tpl 99126ca5d255a737e3d5baf8911168ea3bb1d26c
@@ -785,7 +785,7 @@ F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e44992
 F www/templates/Wasp/form_register.tpl 25cdeffa395f90e248b383ee85390f9395cef8d3
 F www/templates/Wasp/form_reset_password.tpl 4b1ca1f5cdf5bb2ea7f0620722393e8324a97fa0
 F www/templates/Wasp/form_reset_request.tpl 45298eaa3544ec492eb9ca6e4f482fe30378a0e0
-F www/templates/Wasp/form_settings.tpl fed4159756ef258267b00880fa55c9c0a38b9f57
+F www/templates/Wasp/form_settings.tpl c9ba18bebb4155ca8ee135f0a99b0fcff4e0bd9f
 F www/templates/Wasp/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Wasp/form_sqlite_console.tpl 7c492fd0663a1f999e88186f0af74f87bcd04a25
 F www/templates/Wasp/help_new_thread.tpl 3aab94692d3b4a273f955ba697a7f7af700991ec
@@ -929,7 +929,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P ea4f7ddf5b0e22550586cf44bca6a268634b12f3
-R 0a5db73f009a6d223730a8170aebf97b
+P ad09d3cdc78913cd22eea07e6efc30bf121455f2
+R fea7cc0e91a44c82848e5c4e97cb2fb8
 U johnfound
-Z 7f453e10cc736617e3823a8665b72843
+Z ee5f41258cbd6cf2ab041671436baac4

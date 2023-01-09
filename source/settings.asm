@@ -201,6 +201,10 @@ begin
         stdcall GetParam, txt "nu_max_post_length", gpInteger
         cinvoke sqliteBindInt, [.stmt], 42, eax
 
+        xor     eax, eax
+        stdcall GetParam, txt "activate_min_interval", gpInteger
+        cinvoke sqliteBindInt, [.stmt], 43, eax
+
 
 ; Default guests permissions:
 
@@ -477,6 +481,10 @@ begin
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], "max_post_length", 0
         stdcall SetParamInt, txt "nu_max_post_length", eax
+        jc      .error_write
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], "activate_min_interval", 0
+        stdcall SetParamInt, txt "activate_min_interval", eax
         jc      .error_write
 
 

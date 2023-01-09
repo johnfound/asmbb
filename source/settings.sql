@@ -92,4 +92,5 @@ select
 
   ?40 as post_interval,
   ?41 as post_interval_inc,
-  ?42 as max_post_length
+  ?42 as max_post_length,
+  ?43 as activate_min_interval
