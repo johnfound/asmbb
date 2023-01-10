@@ -444,7 +444,7 @@ endp
 
 
 
-sqlGetThreadForPost text "select P.ThreadID, T.Slug, T.Limited from Posts P left join Threads T on P.threadID = T.id where P.id = ?"
+sqlGetThreadForPost text "select P.ThreadID, T.Slug, T.Limited from Posts P left join Threads T on P.threadID = T.id left join LimitedAccessThreads LT on LT.threadid = P.threadid where P.id = ?1 and (LT.userid is null or LT.userid=?2)"
 
 sqlGetThePostIndex text "select count() from Posts p where threadID = ?1 and id < ?2"
 
@@ -471,6 +471,7 @@ begin
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadForPost, -1, eax, 0
 
         cinvoke sqliteBindInt, [.stmt], 1, [.postID]
+        cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.userID]
 
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
