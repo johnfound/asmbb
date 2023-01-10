@@ -550,6 +550,7 @@ begin
         return
 
 .error:
+        stdcall StrCat, edi, "!message/cant_read/"
         cinvoke sqliteFinalize, [.stmt]
         jmp     .finish
 

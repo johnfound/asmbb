@@ -1,5 +1,5 @@
-C Fixed\sminor\ssecurity\sissue\swith\sthe\sLAT\sprocessing\sby\sthe\s"!by_id"\scommand.
-D 2023-01-10T09:31:04.774
+C This\sway\sis\sbetter.
+D 2023-01-10T09:31:52.487
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -77,7 +77,7 @@ F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm 33953fde4165465797c4e5669193b531d488eb8c
 F source/settings.sql ff928ed121b03f05814aab6800f54b954250e00d
-F source/showthread.asm a46ddfabb6514dc8f417bb241fcefeba164cbcb4
+F source/showthread.asm 2c029fc6140672bd618adf335645eeddf0268681
 F source/showthread.sql 1ee08ed9c69a07ca5c60fc639e73333405e14d37
 F source/sqlite3.asm df3a5ea387f60d719fd83c33411b8151ad1a6d77
 F source/sqlite_console.asm 0090f97aebfd05dec748b3b98e7d43fba65b0064
@@ -929,7 +929,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P cf55f569c7899009186b7110fe1c3dcf4f2ea678
-R 2d53bb14bfc4ce786a651fad553adb60
+P 0c67a884bf7125a7f9b0e234524f5f6f5eb2b954
+R cb73cb9ed834e7f4fbdf91bac8a737ee
 U johnfound
-Z aea3bdc81b506c17c32164abaaeb2d05
+Z 19b5b87658824cf6ea5e716a53aa7579
