@@ -404,6 +404,8 @@ begin
         jns     .last_result
 
         inc     ebx
+        cmp     ebx, [edx+TText.Length]
+        cmova   ebx, [edx+TText.Length]
         mov     [edx+TText.GapEnd], ebx
         jmp     .loop_dec
 
@@ -412,7 +414,12 @@ begin
         sub     eax, [edx+TText.GapEnd]
         add     eax, [edx+TText.GapBegin]
         stdcall TextMoveGap, edx, eax
-        inc     [edx+TText.GapEnd]
+
+        mov     eax, [edx+TText.GapEnd]
+        inc     eax
+        cmp     eax, [edx+TText.Length]
+        cmova   eax, [edx+TText.Length]
+        mov     [edx+TText.GapEnd], eax
         jmp     .loop_dec
 
 
@@ -1239,11 +1246,11 @@ endl
 
         push    eax     ; name length
         inc     esi
-        push    esi     ; name start.
+        push    esi     ; name start ofs.
 
         lea     esi, [esi+eax+1]        ; points at the start of the value
 
-        stdcall StrExtract, edx ; remaining arguments from the stack
+        stdcall StrExtractMem, edx ; remaining arguments from the stack.
         mov     ebx, eax
 
         mov     eax, ecx        ; the hash value.
@@ -1279,7 +1286,8 @@ endl
 .slot_ok:
         mov     eax, [esp+4*regECX]
         sub     eax, esi
-        stdcall StrExtract, edx, esi, eax
+
+        stdcall StrExtractMem, edx, esi, eax
         mov     [edi + TConstSlot.hValue], eax
 
 .end_equ:
@@ -1306,7 +1314,7 @@ endl
         sub     ecx, esi
         jle     .end_const
 
-        stdcall StrExtract, edx, esi, ecx       ; the name
+        stdcall StrExtractMem, edx, esi, ecx       ; the name
         mov     ebx, eax
 
         stdcall StrPearsonHash, ebx, tpl_func
