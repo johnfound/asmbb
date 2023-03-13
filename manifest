@@ -1,5 +1,5 @@
-C Fixed\sbuffer\soverflow\sbug\sin\srender2.asm\s(thanks\sto\sthe\snew\sMUSL\smemory\sallocator,\sthat\scrashes\son\srealloc\scall\sif\sone\sbyte\safter\sthe\smemory\sblock\sis\s<>\s0)\s\n\nThe\sbuild\sscript\sis\smoved\sback\sto\sthe\sSQLite\s(without\sencription)\sbecause\sSQLeet\sis\sprobably\sdead.\sWill\ssearch\sfor\sanother\sencription\slibrary.
-D 2023-01-11T20:53:37.637
+C Fixed\sXSS\sbug\sin\sthe\schat\sbackend.\sFixed\s2\smore\sXSS\sbugs,\sbut\sin\sFreshLibDev.\sUpdate\sthe\slibrary!
+D 2023-03-13T12:11:48.398
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -12,7 +12,7 @@ F install/unpack.tar.gz 17da32119ae2cc9bb3a57f2ce59dc489e542ca59
 F install/unpack/.htaccess efa046601aad51a87da0946b4eecadcc0d234c15
 F install/unpack/unpack.sh 4443f580fe76faffa7015e6e4b73b22f6290f4a0 x
 F musl_sqlite/README 46ab7567ba9efea4d58e5d8e8c01610155a78c02
-F musl_sqlite/build 90a856539495db5bb1b7e2629644d41d5d4b3488 x
+F musl_sqlite/build 16cc9288d9ec5a8dc084f8d119e1749ad29cf9d7 x
 F source/Documents/FastCGI\sSpecification.html e2fc06a5abf1b3505c665e108ce3ad28b636095a
 F source/Documents/futex.pdf 3297d3e1739a7b294fa0c96ba6d59bae7170c6b9
 F source/Documents/rfc7578.txt 5dff43151910fe753f8649b08d650137f07a96ff
@@ -36,7 +36,7 @@ F source/attachments.asm 6843dd5b449b1394ae9c6f2b6bc44ed561f9a913
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
-F source/chat.asm 931a8f7c9335462e79502e2b580016623bfeeff7
+F source/chat.asm e867460b1254a192a93388df423855385bb9f01a
 F source/commands.asm cf7738eb98f47cce711cf56df1822196bbb6d53a
 F source/create.sql 73afce595f20388afc7d1b70f984307bf4705f6f
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
@@ -929,7 +929,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 616a3b145d440e58122b934e70bae29c1f605461
-R edda4b74e7429df7b58c339f522b32a7
+P 4c91cddaec90fb74632e886d099d66a6dc6652d6
+R 49c1af17eacee372ef1fccabb7faf993
 U johnfound
-Z f3516ced1c1448b4eeed616dea3b60af
+Z 65a24d88488e82bb0d9da01d93309d14
