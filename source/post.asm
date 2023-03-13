@@ -265,7 +265,9 @@ begin
         je      .title_new_thread
 
         stdcall StrCat, [esi+TSpecialParams.page_title], [cPostingInTitle+8*eax]
-        stdcall StrCat, [esi+TSpecialParams.page_title], [.caption]
+        stdcall StrEncodeHTML, [.caption]
+        stdcall StrCat, [esi+TSpecialParams.page_title], eax
+        stdcall StrDel, eax
         jmp     .title_set
 
 .title_new_thread:

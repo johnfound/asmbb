@@ -699,18 +699,8 @@ begin
 
         mov     esi, [.pSpecial]
         cmp     [esi+TSpecialParams.post_array], 0
-        jne     .get_post
-
-        mov     eax, [esi+TSpecialParams.cmd_list]
-        cmp     [eax+TArray.count], 0
         je      .set_default
 
-        mov     ebx, [eax+TArray.array]
-        test    ebx, ebx
-        jz      .set_default
-        jmp     .set_cookie
-
-.get_post:
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "skin", 0
         mov     ebx, eax
         test    eax, eax
@@ -719,9 +709,9 @@ begin
         stdcall StrCompNoCase, ebx, txt "0"
         jc      .default_free
 
-; now, set session cookie.
+        stdcall StrCleanCtrl, ebx
 
-.set_cookie:
+; now, set session cookie.
         stdcall TextCat, edi, "Set-Cookie: skin="
         stdcall TextCat, edx, ebx
         stdcall TextCat, edx, "; HttpOnly; Path=/; "
@@ -746,5 +736,45 @@ begin
         mov     [esp+4*regEAX], edi
         stc
         popad
+        return
+endp
+
+
+
+proc StrCleanCtrl, .hString
+begin
+        push    esi edi eax ecx edx
+
+        stdcall StrPtr, [.hString]
+        jc      .finish
+
+        mov     ecx, [eax+string.len]
+        lea     edx, [eax+string.len]
+        mov     esi, eax
+        mov     edi, eax
+
+        jecxz   .endcopy
+
+.loop:
+        lodsb
+        cmp     al, ' '
+        jae     .store
+
+        dec     dword [edx]
+        jmp     .next
+
+.store:
+        stosb
+
+.next:
+        dec     ecx
+        jnz     .loop
+
+.endcopy:
+        xor     eax, eax
+        stosd
+
+.finish:
+        pop     edx ecx eax edi esi
         return
 endp

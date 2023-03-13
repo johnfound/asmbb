@@ -1,5 +1,5 @@
-C Fixed\sXSS\sbug\sin\sthe\schat\sbackend.\sFixed\s2\smore\sXSS\sbugs,\sbut\sin\sFreshLibDev.\sUpdate\sthe\slibrary!
-D 2023-03-13T12:11:48.398
+C Two\smore\sXSS\sbugs\sfixed\sone\sin\sthe\s!post\sand\sone\sin\s!skincookie\sprocessing.\sThanks\sto\sthe\shxp\sCTF\scontext\sand\sZeyu\ssolution.\s:)
+D 2023-03-13T20:08:57.141
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -60,7 +60,7 @@ F source/migration3.sql deddb3b4995f9b8d5ee559980517555aeb383135
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
 F source/phpbb.sql 6820a2092cc30a774c44d770055b37b66bdbfaf0
 F source/phpbb_pm.sql f88eaf899e72d4e99f367cb654b41695da2231d5
-F source/post.asm 5661634626eec8f479458bf397b36b312848694c
+F source/post.asm cf131d792a5013f1193c9c9fc9d1363b849120da
 F source/post_data.asm 79fb813775e3bafe6cb314c50a99484e4f0dc211
 F source/postdebug.asm 68d2c115514988638c720b23d9d9f5bc3571df36
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
@@ -95,7 +95,7 @@ F source/threadlist.asm fd6dc9e977a54586fc9d4e1b2a4c57a93da3b1f8
 F source/threadlist.sql a25e59f044fd3de27332e842c00f2a454e086d01
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
-F source/userinfo.asm d712cfd9571a4b3e0489a15d8acc4df8735c52df
+F source/userinfo.asm 5a5734af7750cd08ac96a426593b38589cbddea0
 F source/userinfo.sql 9ff9ad7eff9e0d40b4e39b22306e6e7718913b4e
 F source/users_online.asm a730d7a2a7af9604c20523307b6a516c6be5af43
 F source/users_online.sql 108357df59731f8f084321670cb08fbaa3d18cd8
@@ -929,7 +929,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 4c91cddaec90fb74632e886d099d66a6dc6652d6
-R 49c1af17eacee372ef1fccabb7faf993
+P 32430196f6c9fea9a987f914888659f8a0399646
+R c771be0f8a29ac4ebfd6dc918b4a70aa
 U johnfound
-Z 65a24d88488e82bb0d9da01d93309d14
+Z c8c19c1320b4112d794312083144fe0c
