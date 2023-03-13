@@ -118,8 +118,6 @@ begin
         stdcall StrDel, eax
 
 .page_ok:
-        mov     [esi+TSpecialParams.page_title], ebx
-
         test    [esi+TSpecialParams.userStatus], permAdmin      ; the admins have always access, but not the morerators!
         jnz     .have_access
 

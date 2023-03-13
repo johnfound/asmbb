@@ -78,7 +78,9 @@ begin
         mov     eax, [esi+TSpecialParams.userLang]
         stdcall StrCat, [esi+TSpecialParams.page_title], [cUserProfileTitle+8*eax]
         cinvoke sqliteColumnText, [.stmt], 2
+        stdcall StrEncodeHTML, eax
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
+        stdcall StrDel, eax
 
         stdcall TextCat, edi, txt '<div class="user_profile">'
         stdcall RenderTemplate, edx, "userinfo.tpl", [.stmt], esi
