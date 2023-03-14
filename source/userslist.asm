@@ -237,6 +237,7 @@ begin
         cmp     [esi+TArray.count], 0
         je      .cmd_ok
 
+; Some sanitizing here?
         stdcall StrCat, ebx, [esi+TArray.array]
 
 .cmd_ok:

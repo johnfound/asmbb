@@ -499,6 +499,10 @@ begin
         cmp     [esi+TSpecialParams.userID], 0
         jne     .error_trick
 
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
+        jne     .error_trick
+
         test    [esi+TSpecialParams.userStatus], permLogin      ; For the guests, permLogin == permRegister
         jz      .error_closed_registration
 

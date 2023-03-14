@@ -23,6 +23,10 @@ begin
         test    [esi+TSpecialParams.userStatus], permAdmin
         jz      .for_admins_only
 
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
+        jne     .for_admins_only
+
         stdcall LogUserActivity, esi, uaAdminThings, 0
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], "source", 0

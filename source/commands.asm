@@ -151,6 +151,10 @@ begin
         mov     ecx, sizeof.TSpecialParams / 4
         rep stosd
 
+if defined options.DebugWeb & options.DebugWeb
+        stdcall DumpKeyValueArray, [.pParams2]
+end if
+
         mov     eax, [.start_time]
         mov     [.special.start_time], eax
 
@@ -1990,6 +1994,35 @@ begin
 
 .not_found:
         clc
+        popad
+        return
+endp
+
+
+
+; Checks HTTP_SEC_FETCH_MODE header in order to prevent XSS attacks.
+
+secError = 0
+secNavigate = 1
+secOther = 2
+
+proc CheckSecMode, .pSpecial
+begin
+        pushad
+        xor     ebx, ebx
+        mov     esi, [.pSpecial]
+
+        stdcall ValueByName, esi, "HTTP_SEC_FETCH_MODE"
+        jc      .finish
+
+        inc     ebx
+        stdcall StrCompNoCase, eax, "navigate"
+        jc      .finish
+
+        inc     ebx
+
+.finish:
+        mov     [esp+4*regEAX], ebx
         popad
         return
 endp
