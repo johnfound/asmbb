@@ -114,21 +114,21 @@ The image, video and sound links are defined the same way as the normal links. W
 
 There are several predefined links for the forum emoticons:
 
-`[?:-)], [?:)] or [?smile]`=[?:)]
+`[?:-)], [?:)] or [?smile]` = [?:)]
 
-`[?:-D], [?:D] or [lol]`=[?:-D]
+`[?:-D], [?:D] or [?lol]` = [?:-D]
 
-`[?rofl]`=[?rofl]
+`[?rofl]` = [?rofl]
 
-`[?;-)] [?;)] [wink]`=[?;-)]
+`[?;-)] [?;)] [?wink]` = [?;-)]
 
-`[?:-P] or [?:P]`=[?:-P]
+`[?:-P] or [?:P]` = [?:-P]
 
-`[?:-(], [?:(] or [sad]`=[?:-(]
+`[?:-(], [?:(] or [?sad]` = [?:-(]
 
-`[?:'-(], [?:'(] or [cry]`=[?:'-(]
+`[?:'-(], [?:'(] or [?cry]` = [?:'-(]
 
-`[?>:-(], [?>:(] or [angry]`=[?>:-(]
+`[?>:-(], [?>:(] or [?angry]` = [?>:-(]
 
 Notice, that the type symbol should be included only in the place where the image is used.
 The label definition should not contain type symbols. You can use the same label with different type symbols.

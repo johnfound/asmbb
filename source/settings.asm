@@ -23,6 +23,10 @@ begin
         test    [esi+TSpecialParams.userStatus], permAdmin
         jz      .for_admins_only
 
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
+        jne     .for_admins_only
+
         stdcall LogUserActivity, esi, uaAdminThings, 0
 
         cmp     [esi+TSpecialParams.post_array], 0
@@ -186,6 +190,25 @@ begin
         xor     eax, eax
         stdcall GetParam, "user_perm", gpInteger
         stdcall BindSQLBits, [.stmt], eax, 200, txt 'checked'
+
+; Default users limits
+
+        mov     eax, NEW_USER_POST_INTERVAL
+        stdcall GetParam, txt "nu_post_interval", gpInteger
+        cinvoke sqliteBindInt, [.stmt], 40, eax
+
+        mov     eax, NEW_USER_POST_INTERVAL_INC
+        stdcall GetParam, txt "nu_post_interval_inc", gpInteger
+        cinvoke sqliteBindInt, [.stmt], 41, eax
+
+        xor     eax, eax
+        stdcall GetParam, txt "nu_max_post_length", gpInteger
+        cinvoke sqliteBindInt, [.stmt], 42, eax
+
+        xor     eax, eax
+        stdcall GetParam, txt "activate_min_interval", gpInteger
+        cinvoke sqliteBindInt, [.stmt], 43, eax
+
 
 ; Default guests permissions:
 
@@ -452,6 +475,23 @@ begin
         stdcall SetParamInt, txt "anon_perm", eax
         jc      .error_write
 
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "post_interval", sNEW_USER_POST_INTERVAL
+        stdcall SetParamInt, txt "nu_post_interval", eax
+        jc      .error_write
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "post_interval_inc", sNEW_USER_POST_INTERVAL_INC
+        stdcall SetParamInt, txt "nu_post_interval_inc", eax
+        jc      .error_write
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], "max_post_length", 0
+        stdcall SetParamInt, txt "nu_max_post_length", eax
+        jc      .error_write
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], "activate_min_interval", 0
+        stdcall SetParamInt, txt "activate_min_interval", eax
+        jc      .error_write
+
+
 ; everything is OK
 
         lea     eax, [.stmt]
@@ -604,11 +644,8 @@ begin
 
 .error_write:
         push    eax
-
         cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
-
         inc     [.error]
-
         pop     eax
         jmp     .end_save
 

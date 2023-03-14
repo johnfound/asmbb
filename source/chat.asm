@@ -55,9 +55,13 @@ begin
         stdcall StrDel, eax
 @@:
         stdcall StrCat, edi, txt '", "originalname": "'
-
         cinvoke sqliteColumnText, [.stmt], 3
+        test    eax, eax
+        jz      @f
+        stdcall StrEncodeJS, eax
         stdcall StrCat, edi, eax
+        stdcall StrDel, eax
+@@:
         stdcall StrCat, edi, txt '", "text": "'
         cinvoke sqliteColumnText, [.stmt], 4
         stdcall StrEncodeJS, eax
@@ -344,7 +348,6 @@ begin
         stdcall StrCat, edi, eax
         stdcall StrDel, eax
         stdcall StrCat, edi, txt ', "user": "'
-
         cmp     [.user], 0
         je      @f
         stdcall StrEncodeJS, [.user]
@@ -352,8 +355,10 @@ begin
         stdcall StrDel, eax
 @@:
         stdcall StrCat, edi, txt '", "originalname": "'
+        stdcall StrEncodeJS, [.original]
+        stdcall StrCat, edi, eax
+        stdcall StrDel, eax
 
-        stdcall StrCat, edi, [.original]
         stdcall StrCat, edi, txt '", "text": "'
         stdcall StrEncodeJS, [.text]
         stdcall StrCat, edi, eax

@@ -1,3 +1,17 @@
+struct TchunkIHDR
+  .Width        dd ?
+  .Height       dd ?
+  .BitDepth     db ?
+  .ColorType    db ?
+  .Compression  db ?
+  .Filter       db ?
+  .Interlaced   db ?
+ends
+
+pngCTPalette  = 1
+pngCTColor    = 2
+pngCTAlpha    = 4
+
 
 
 proc SanitizeImagePng, .pPNGImage, .Size, .width, .height
@@ -151,7 +165,10 @@ begin
         bswap   eax
         mov     ecx, eax                ; chunk length in bytes
         lea     edx, [eax+4]
-        lea     eax, [esi+edx]
+
+        mov     eax, esi
+        add     eax, edx
+        jc      .error_unexpected_end
 
         cmp     eax, [.pEnd]
         jae     .error_unexpected_end

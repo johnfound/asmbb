@@ -12,6 +12,7 @@
   [equ:btnSubmit=Submit]
   [equ:hintPreview=Ctrl+Enter for preview]
   [equ:hintSubmit=Ctrl+S for submit]
+  [equ:lblAfter=after: ]
 |
   [equ:btnThread=Тема]
   [equ:ttlTitle=Заглавие на темата]
@@ -22,6 +23,7 @@
   [equ:btnSubmit=Запис]
   [equ:hintPreview=Ctrl+Enter за преглед]
   [equ:hintSubmit=Ctrl+S за запис]
+  [equ:lblAfter=след: ]
 |
   [equ:btnThread=Тема]
   [equ:ttlTitle=Название темы]
@@ -32,6 +34,7 @@
   [equ:btnSubmit=Записать]
   [equ:hintPreview=Ctrl+Enter для предварительного просмотра]
   [equ:hintSubmit=Ctrl+S чтобы записать]
+  [equ:lblAfter=через: ]
 |
   [equ:btnThread=Sujet]
   [equ:ttlTitle=Titre du sujet]
@@ -42,6 +45,7 @@
   [equ:btnSubmit=Poster]
   [equ:hintPreview=Ctrl+Entrée pour prévisualiser]
   [equ:hintSubmit=Ctrl+S pour soumettre]
+  [equ:lblAfter=après: ]
 |
   [equ:btnThread=Thema]
   [equ:ttlTitle=Titel des Themas]
@@ -52,13 +56,17 @@
   [equ:btnSubmit=Absenden]
   [equ:hintPreview=Strg+Eingabe für eine Vorschau]
   [equ:hintSubmit=Strg+S zum Absenden]
+  [equ:lblAfter=nach: ]
 ]
 
 <div class="editor">
   <div class="ui">
     <input form="editform" type="hidden" name="ticket" value="[Ticket]" >
     <input form="editform" class="btn" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
-    <input form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]"  title="[const:hintSubmit]">
+    <button form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" title="[const:hintSubmit]">
+      [const:btnSubmit]
+      [case:[special:wait2post]||<span id="remains"> ([const:lblAfter]<span id="remval">[special:wait2post]</span> s)</span>]
+    </button>
     <div class="spacer"></div>
     <a class="btn round" href="[case:[special:page]|./|!by_id]"><svg version="1.1" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
        <rect transform="rotate(45)" x=".635" y="-1.53" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
@@ -117,6 +125,18 @@ document.onkeydown = function(e) {
 
   if (stop) e.preventDefault();
 };
+
+var timer = setInterval(function(){
+  var val = document.getElementById("remval");
+  if (val) {
+    var time = val.innerHTML;
+    if (time > 0) {
+      val.innerHTML = time - 1;
+    } else {
+      document.getElementById("remains").hidden = true;
+    }
+  }
+}, 1000);
 
 
 </script>

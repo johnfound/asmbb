@@ -169,7 +169,9 @@ begin
         stdcall StrCat, [esi+TSpecialParams.page_title], [cEditingPageTitle+8*eax]
 
         cinvoke sqliteColumnText, [.stmt], 1
+        stdcall StrEncodeHTML, eax
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
+        stdcall StrDel, eax
 
 ; deal with the attachments:
 
@@ -465,7 +467,9 @@ begin
         stdcall StrCat, [esi+TSpecialParams.page_title], [cEditingThreadTitle+8*eax]
 
         cinvoke sqliteColumnText, [.stmt], 1    ; Thread caption.
+        stdcall StrEncodeHTML, eax
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
+        stdcall StrDel, eax
 
         stdcall RenderTemplate, edi, "form_edit_thread.tpl", [.stmt], esi
         mov     edi, eax

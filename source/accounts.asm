@@ -7,6 +7,10 @@ MAX_PASS_LENGTH = 1024
 
 PERSISTENT_MAX_AGE equ "31536000"       ; 1 year persistent cookie.
 
+NEW_USER_POST_INTERVAL          = 300   ; 5 minutes initial interval.
+NEW_USER_POST_INTERVAL_INC      = -1    ; 300 posts to unlimited access.
+sNEW_USER_POST_INTERVAL     text "300"
+sNEW_USER_POST_INTERVAL_INC text "-1"
 
 
 uopCreateAccount = 0
@@ -457,7 +461,6 @@ endp
 
 
 
-
 ;sqlCheckMinInterval text "select (strftime('%s','now') - time_reg) as delta from WaitingActivation where (ip_from = ?) and ( delta>30 ) order by time_reg desc limit 1"
 sqlRegisterUser    text "insert or replace into WaitingActivation (nick, passHash, salt, email, ip_from, time_reg, time_email, a_secret, operation) values (?1, ?2, ?3, ?4, ?5, strftime('%s','now'), NULL, ?6, ?7)"
 sqlCheckUserExists text "select 1 from Users where nick = ? or email = ? limit 1"
@@ -494,6 +497,10 @@ begin
 
         mov     esi, [.pSpecial]
         cmp     [esi+TSpecialParams.userID], 0
+        jne     .error_trick
+
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
         jne     .error_trick
 
         test    [esi+TSpecialParams.userStatus], permLogin      ; For the guests, permLogin == permRegister
@@ -818,9 +825,9 @@ endp
 
 
 sqlBegin      text  "begin transaction;"
-sqlActivate   text  "insert into Users ( nick, passHash, salt, status, email, Register ) select nick, passHash, salt, ?1, email, time_reg from WaitingActivation where a_secret = ?2"
+sqlActivate   StripText 'activate.sql', SQL
 sqlDeleteWait text  "delete from WaitingActivation where a_secret = ?1"
-sqlCheckType  text  "select operation from WaitingActivation where a_secret = ?1"
+sqlCheckType  text  "select operation, time_reg, time_email from WaitingActivation where a_secret = ?1"
 sqlCommit     text  "commit transaction"
 sqlRollback   text  "rollback"
 
@@ -830,6 +837,9 @@ sqlUpdateUserEmail text "update users set email = (select email from WaitingActi
 proc ActivateAccount, .pSpecial
 .stmt dd ?
 .type dd ?
+.min_time dd ?
+.time_reg   dq ?
+.time_email dq ?
 begin
         pushad
 
@@ -866,6 +876,14 @@ begin
         cinvoke sqliteColumnInt, [.stmt], 0    ; the operation
         mov     [.type], eax
 
+        cinvoke sqliteColumnInt64, [.stmt], 1  ; the time of the operation.
+        mov     dword [.time_reg], eax
+        mov     dword [.time_reg+4], edx
+
+        cinvoke sqliteColumnInt64, [.stmt], 2  ; the time of the operation.
+        mov     dword [.time_email], eax
+        mov     dword [.time_email+4], edx
+
         cinvoke sqliteFinalize, [.stmt]
 
         cmp     [.type], uopCreateAccount
@@ -891,7 +909,19 @@ begin
 ; insert new user
 
 .insert_new_user:
+        stdcall GetParam, 'activate_min_interval', gpInteger
+        jc      .time_ok
+        mov     ecx, eax
 
+        stdcall GetTime
+        sub     eax, dword [.time_reg]
+        sbb     edx, dword [.time_reg+4]
+        jnz     .error_too_early
+
+        sub     ecx, eax
+        jg      .error_too_early
+
+.time_ok:
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlActivate, sqlActivate.length, eax, 0
 
@@ -900,8 +930,20 @@ begin
 
         cinvoke sqliteBindInt, [.stmt], 1, eax
 
+        mov     eax, NEW_USER_POST_INTERVAL
+        stdcall GetParam, "nu_post_interval", gpInteger
+        cinvoke sqliteBindInt, [.stmt], 2, eax
+
+        mov     eax, NEW_USER_POST_INTERVAL_INC
+        stdcall GetParam, "nu_post_interval_inc", gpInteger
+        cinvoke sqliteBindInt, [.stmt], 3, eax
+
+        xor     eax, eax
+        stdcall GetParam, "nu_max_post_length", gpInteger
+        cinvoke sqliteBindInt, [.stmt], 4, eax
+
         stdcall StrPtr, ebx
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteBindText, [.stmt], 5, eax, [eax+string.len], SQLITE_STATIC
         cinvoke sqliteStep, [.stmt]
 
         cmp     eax, SQLITE_DONE
@@ -954,7 +996,6 @@ begin
 
 
 .rollback:
-
         cinvoke sqliteFinalize, [.stmt]         ; finalize the bad statement.
 
 ; rollback transaction
@@ -964,7 +1005,31 @@ begin
         stdcall TextMakeRedirect, 0, "/!message/bad_secret"
         jmp     .finish
 
+.error_too_early:
+
+; rollback transaction and then make a special minimal size page in order to wait for activation.
+        push    ecx
+        cinvoke sqliteExec, [hMainDatabase], sqlRollback, 0, 0, 0
+        pop     ecx
+
+        stdcall TextCreate, sizeof.TText
+        mov     edx, eax
+
+        stdcall TextAddString, edx, [edx+TText.GapBegin], cActivatePage1
+
+        stdcall NumToStr, ecx, ntsDec or ntsUnsigned
+        stdcall TextAddString, edx, [edx+TText.GapBegin], eax
+        stdcall StrDel, eax
+
+        stdcall TextAddString, edx, [edx+TText.GapBegin], cActivatePage2
+        mov     edi, edx
+        jmp     .finish
 endp
+
+cActivatePage1 text 'Content-type: text/html; charset=utf-8', 13, 10, 13, 10,           \
+                    '<!DOCTYPE html><html><head><script>setInterval(function(){a=document.getElementById("t"); t=a.innerHTML; if (t>0) a.innerHTML=t-1; else location.reload()},1000);</script>', \
+                    '<body><p>Activation after <b id="t">'
+cActivatePage2 text '</b> seconds. Wait!'
 
 
 

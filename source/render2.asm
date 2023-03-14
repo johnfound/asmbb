@@ -64,6 +64,7 @@ PHashTable tableSpecial, tpl_func,                              \
         "variant",     RenderTemplate.sp_variant,               \ ; 0 = "/"; 1 = "/(o)/"; 2 = "/some_tag/"; 3 = "/(o)/some_tag/"
         "thread",      RenderTemplate.sp_thread,                \ ; Needs encoding!
         "permissions", RenderTemplate.sp_permissions,           \ ; NUMBER, no encoding
+        "wait2post",   RenderTemplate.sp_time_to_post,          \ ; NUMBER, no encoding
         "isadmin",     RenderTemplate.sp_isadmin,               \ ; 1/0 no encoding
         "canregister", RenderTemplate.sp_canregister,           \ ; 1/0 no encoding
         "canpost",     RenderTemplate.sp_canpost,               \ ; 1/0 no encoding
@@ -403,6 +404,8 @@ begin
         jns     .last_result
 
         inc     ebx
+        cmp     ebx, [edx+TText.Length]
+        cmova   ebx, [edx+TText.Length]
         mov     [edx+TText.GapEnd], ebx
         jmp     .loop_dec
 
@@ -411,7 +414,12 @@ begin
         sub     eax, [edx+TText.GapEnd]
         add     eax, [edx+TText.GapBegin]
         stdcall TextMoveGap, edx, eax
-        inc     [edx+TText.GapEnd]
+
+        mov     eax, [edx+TText.GapEnd]
+        inc     eax
+        cmp     eax, [edx+TText.Length]
+        cmova   eax, [edx+TText.Length]
+        mov     [edx+TText.GapEnd], eax
         jmp     .loop_dec
 
 
@@ -1238,11 +1246,11 @@ endl
 
         push    eax     ; name length
         inc     esi
-        push    esi     ; name start.
+        push    esi     ; name start ofs.
 
         lea     esi, [esi+eax+1]        ; points at the start of the value
 
-        stdcall StrExtract, edx ; remaining arguments from the stack
+        stdcall StrExtractMem, edx ; remaining arguments from the stack.
         mov     ebx, eax
 
         mov     eax, ecx        ; the hash value.
@@ -1278,7 +1286,8 @@ endl
 .slot_ok:
         mov     eax, [esp+4*regECX]
         sub     eax, esi
-        stdcall StrExtract, edx, esi, eax
+
+        stdcall StrExtractMem, edx, esi, eax
         mov     [edi + TConstSlot.hValue], eax
 
 .end_equ:
@@ -1305,7 +1314,7 @@ endl
         sub     ecx, esi
         jle     .end_const
 
-        stdcall StrExtract, edx, esi, ecx       ; the name
+        stdcall StrExtractMem, edx, esi, ecx       ; the name
         mov     ebx, eax
 
         stdcall StrPearsonHash, ebx, tpl_func
@@ -1616,6 +1625,24 @@ endl
 
 .sp_permissions:
         mov     eax, [ebx+TSpecialParams.userStatus]
+        jmp     .special_int
+
+.sp_time_to_post:
+        push    edx
+        stdcall GetTime
+        sub     eax, dword [ebx+TSpecialParams.userLastPostTime]
+        sbb     edx, dword [ebx+TSpecialParams.userLastPostTime + 4]
+        jnz     .wait_ok
+
+        sub     eax, [ebx+TSpecialParams.userPostInterval]
+        neg     eax
+        jns     .end_wait2post
+
+.wait_ok:
+        xor     eax, eax
+
+.end_wait2post:
+        pop     edx
         jmp     .special_int
 
 

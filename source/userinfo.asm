@@ -5,7 +5,7 @@ MAX_SKIN_NAME   = 256
 
 sqlGetFullUserInfo StripText "userinfo.sql", SQL
 sqlUpdateUserDesc   text "update users set user_desc = ?1 where nick = ?2"
-sqlUpdateUserPerm   text "update users set status = ?1 where nick = ?2"
+sqlUpdateUserPerm   text "update users set status = ?1, PostInterval = ?2, PostIntervalInc = ?3, MaxPostLen = ?4 where nick = ?5"
 
 
 proc ShowUserInfo, .pSpecial
@@ -78,7 +78,9 @@ begin
         mov     eax, [esi+TSpecialParams.userLang]
         stdcall StrCat, [esi+TSpecialParams.page_title], [cUserProfileTitle+8*eax]
         cinvoke sqliteColumnText, [.stmt], 2
+        stdcall StrEncodeHTML, eax
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
+        stdcall StrDel, eax
 
         stdcall TextCat, edi, txt '<div class="user_profile">'
         stdcall RenderTemplate, edx, "userinfo.tpl", [.stmt], esi
@@ -130,7 +132,7 @@ begin
 .save_user_info:
 
 locals
-  .user_desc    dd ?
+  .user_desc      dd ?
 endl
 
         and     [.user_desc], 0
@@ -179,19 +181,58 @@ endl
         test    [esi+TSpecialParams.userStatus], permAdmin
         jz      .user_perm_ok
 
-        stdcall GetPostBitmask, txt 'user_perm', esi
-        jc      .user_perm_ok
-
-        mov     edi, eax
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateUserPerm, sqlUpdateUserPerm.length, eax, 0
 
-        cinvoke sqliteBindInt, [.stmt], 1, edi
 
+; user permissions
+        stdcall GetPostBitmask, txt 'user_perm', esi
+        jc      .user_perm_fin
+
+        cinvoke sqliteBindInt, [.stmt], 1, eax
+
+
+; post interval
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "PostInterval", 0
+        test    eax, eax
+        jz      .user_perm_fin
+
+        push    eax
+        stdcall StrToNumEx, eax
+        cinvoke sqliteBindInt, [.stmt], 2, eax
+        stdcall StrDel ; from the stack
+
+
+; post interval increment
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "PostIntervalInc", 0
+        test    eax, eax
+        jz      .user_perm_fin
+
+        push    eax
+        stdcall StrToNumEx, eax
+        cinvoke sqliteBindInt, [.stmt], 3, eax
+        stdcall StrDel ; from the stack
+
+
+; max post length
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "MaxPostLen", 0
+        test    eax, eax
+        jz      .user_perm_fin
+
+        push    eax
+        stdcall StrToNumEx, eax
+        cinvoke sqliteBindInt, [.stmt], 4, eax
+        stdcall StrDel ; from the stack
+
+; user nickname
         stdcall StrPtr, ebx
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteBindText, [.stmt], 5, eax, [eax+string.len], SQLITE_STATIC
+
+; execute query
         cinvoke sqliteStep, [.stmt]
+
+.user_perm_fin:
         cinvoke sqliteFinalize, [.stmt]
 
 .user_perm_ok:
@@ -660,18 +701,8 @@ begin
 
         mov     esi, [.pSpecial]
         cmp     [esi+TSpecialParams.post_array], 0
-        jne     .get_post
-
-        mov     eax, [esi+TSpecialParams.cmd_list]
-        cmp     [eax+TArray.count], 0
         je      .set_default
 
-        mov     ebx, [eax+TArray.array]
-        test    ebx, ebx
-        jz      .set_default
-        jmp     .set_cookie
-
-.get_post:
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "skin", 0
         mov     ebx, eax
         test    eax, eax
@@ -680,9 +711,9 @@ begin
         stdcall StrCompNoCase, ebx, txt "0"
         jc      .default_free
 
-; now, set session cookie.
+        stdcall StrCleanCtrl, ebx
 
-.set_cookie:
+; now, set session cookie.
         stdcall TextCat, edi, "Set-Cookie: skin="
         stdcall TextCat, edx, ebx
         stdcall TextCat, edx, "; HttpOnly; Path=/; "
@@ -707,5 +738,45 @@ begin
         mov     [esp+4*regEAX], edi
         stc
         popad
+        return
+endp
+
+
+
+proc StrCleanCtrl, .hString
+begin
+        push    esi edi eax ecx edx
+
+        stdcall StrPtr, [.hString]
+        jc      .finish
+
+        mov     ecx, [eax+string.len]
+        lea     edx, [eax+string.len]
+        mov     esi, eax
+        mov     edi, eax
+
+        jecxz   .endcopy
+
+.loop:
+        lodsb
+        cmp     al, ' '
+        jae     .store
+
+        dec     dword [edx]
+        jmp     .next
+
+.store:
+        stosb
+
+.next:
+        dec     ecx
+        jnz     .loop
+
+.endcopy:
+        xor     eax, eax
+        stosd
+
+.finish:
+        pop     edx ecx eax edi esi
         return
 endp

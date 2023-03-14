@@ -25,48 +25,52 @@ permAdmin       = $80000000
 
 
 struct TSpecialParams
-  .start_time      dd ?
+  .start_time           dd ?
 
-  .hSocket         dd ?         ; the "low level" request data.
-  .requestID       dd ?         ;
+  .hSocket              dd ?         ; the "low level" request data.
+  .requestID            dd ?         ;
 
-  .fDontFree       dd ?         ; if TRUE, the socket should not be closed after ending of ServeOneRequest procedure.
+  .fDontFree            dd ?         ; if TRUE, the socket should not be closed after ending of ServeOneRequest procedure.
 
 ; request parameters
 
-  .params          dd ?
-  .post_array      dd ?
+  .params               dd ?
+  .post_array           dd ?
 
-  .Limited         dd ?                 ; Flag that the URL contains symbol for LimitedAccessThreads
-  .dir             dd ?                 ; /tag_name/
-  .thread          dd ?                 ; /thread_slug/
-  .page_num        dd ?                 ; /1234 - can be the number of the page, or the ID of a post.
+  .Limited              dd ?                 ; Flag that the URL contains symbol for LimitedAccessThreads
+  .dir                  dd ?                 ; /tag_name/
+  .thread               dd ?                 ; /thread_slug/
+  .page_num             dd ?                 ; /1234 - can be the number of the page, or the ID of a post.
 
-  .cmd_list        dd ?         ; pointer to an array with splitted URL for analizing.
-  .cmd_type        dd ?         ; 0 - no command, 1 - root cmd, 2 - top command
+  .cmd_list             dd ?         ; pointer to an array with splitted URL for analizing.
+  .cmd_type             dd ?         ; 0 - no command, 1 - root cmd, 2 - top command
 
 ; forum global variables.
 
-  .page_title      dd ?
-  .page_header     dd ?
-  .description     dd ?
-  .keywords        dd ?
-  .page_length     dd ?
-  .setupmode       dd ?
-  .pStyles         dd ?
+  .page_title           dd ?
+  .page_header          dd ?
+  .description          dd ?
+  .keywords             dd ?
+  .page_length          dd ?
+  .setupmode            dd ?
+  .pStyles              dd ?
 
 ; logged-in user info.
 
-  .userID          dd ?
-  .userName        dd ?
-  .userStatus      dd ?
+  .userID               dd ?
+  .userName             dd ?
+  .userStatus           dd ?
+  .userPostInterval     dd ?         ; the minimal posting time for this user.
+  .userPostIntervalInc  dd ?         ; the increment for .userPostInterval after every post.
+  .userLastPostTime     dq ?         ; the time of the last post for this user.
+  .userMaxPostLen       dd ?         ; the maximal post length for this user.
 
-  .userLang        dd ?         ; not used right now.
-  .userSkin        dd ?         ; Path, relative to the document_root
-  .userSkinURL     dd ?         ; the same path URL encoded.
-  .session         dd ?
-  .remoteIP        dd ?
-  .remotePort      dd ?
+  .userLang             dd ?
+  .userSkin             dd ?         ; Path, relative to the document_root
+  .userSkinURL          dd ?         ; the same path URL encoded.
+  .session              dd ?
+  .remoteIP             dd ?
+  .remotePort           dd ?
 ends
 
 
@@ -146,6 +150,10 @@ begin
         lea     edi, [.special]
         mov     ecx, sizeof.TSpecialParams / 4
         rep stosd
+
+if defined options.DebugWeb & options.DebugWeb
+        stdcall DumpKeyValueArray, [.pParams2]
+end if
 
         mov     eax, [.start_time]
         mov     [.special.start_time], eax
@@ -859,7 +867,7 @@ endp
 
 
 
-sqlGetSession    text "select S.userID, U.nick, U.status, S.last_seen, U.Skin, U.Lang from sessions S left join users U on U.id = S.userID where S.sid = ?"
+sqlGetSession    text "select S.userID, U.nick, U.status, S.last_seen, U.Skin, U.Lang, U.LastPostTime, U.PostInterval, U.PostIntervalInc, U.MaxPostLen from sessions S left join users U on U.id = S.userID where S.sid = ?"
 sqlGetUserExists text "select 1 from users limit 1"
 SKIN_CHECK_FILE  text "/main_html_start.tpl"
 
@@ -917,7 +925,7 @@ begin
         mov     ebx, eax
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetSession, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetSession, sqlGetSession.length, eax, 0
 
         stdcall StrPtr, ebx
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
@@ -936,6 +944,19 @@ begin
 
         cinvoke sqliteColumnInt, [.stmt], 2
         mov     [edi+TSpecialParams.userStatus], eax
+
+        cinvoke sqliteColumnInt64, [.stmt], 6
+        mov     dword [edi+TSpecialParams.userLastPostTime], eax
+        mov     dword [edi+TSpecialParams.userLastPostTime + 4], edx
+
+        cinvoke sqliteColumnInt, [.stmt], 7
+        mov     [edi+TSpecialParams.userPostInterval], eax
+
+        cinvoke sqliteColumnInt, [.stmt], 8
+        mov     [edi+TSpecialParams.userPostIntervalInc], eax
+
+        cinvoke sqliteColumnInt, [.stmt], 9
+        mov     [edi+TSpecialParams.userMaxPostLen], eax
 
 ; user lang
 
@@ -1973,6 +1994,35 @@ begin
 
 .not_found:
         clc
+        popad
+        return
+endp
+
+
+
+; Checks HTTP_SEC_FETCH_MODE header in order to prevent XSS attacks.
+
+secError = 0
+secNavigate = 1
+secOther = 2
+
+proc CheckSecMode, .pSpecial
+begin
+        pushad
+        xor     ebx, ebx
+        mov     esi, [.pSpecial]
+
+        stdcall ValueByName, esi, "HTTP_SEC_FETCH_MODE"
+        jc      .finish
+
+        inc     ebx
+        stdcall StrCompNoCase, eax, "navigate"
+        jc      .finish
+
+        inc     ebx
+
+.finish:
+        mov     [esp+4*regEAX], ebx
         popad
         return
 endp

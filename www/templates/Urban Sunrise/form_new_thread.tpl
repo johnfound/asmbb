@@ -21,6 +21,7 @@
   [equ:hintSubmit=Ctrl+S for submit]
   [equ:ttlPost=Post content]
   [equ:MultiFiles= files selected.]
+  [equ:lblAfter=after: ]
 |
   [equ:ttlEditorTab=Нова тема]
   [equ:ttlTitle=Заглавие]
@@ -38,6 +39,7 @@
   [equ:hintSubmit=Ctrl+S за запис]
   [equ:ttlPost=Съобщение]
   [equ:MultiFiles= файла са избрани.]
+  [equ:lblAfter=след: ]
 |
   [equ:ttlEditorTab=Новая тема]
   [equ:ttlTitle=Название темы]
@@ -55,6 +57,7 @@
   [equ:hintSubmit=Ctrl+S чтобы записать]
   [equ:ttlPost=Текст сообщения]
   [equ:MultiFiles= выбранные файлы.]
+  [equ:lblAfter=через: ]
 |
   [equ:ttlEditorTab=Nouveau sujet]
   [equ:ttlTitle=Titre]
@@ -72,6 +75,7 @@
   [equ:hintSubmit=Ctrl+S pour soumettre]
   [equ:ttlPost=Contenu du message]
   [equ:MultiFiles= dossiers sélectionnés.]
+  [equ:lblAfter=après: ]
 |
   [equ:ttlEditorTab=Neues Thema]
   [equ:ttlTitle=Titel]
@@ -89,13 +93,17 @@
   [equ:hintSubmit=Strg+S zum Absenden]
   [equ:ttlPost=Inhalt des Beitrags]
   [equ:MultiFiles= ausgewählte Dateien.]
+  [equ:lblAfter=nach: ]
 ]
 
 <div id="editor-window" class="editor">
   <div class="navigation3 btn-bar">
       <input form="editform" type="hidden" name="ticket" value="[Ticket]" >
       <input form="editform" class="btn" id="preview-btn" formaction="!post#preview" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
-      <input form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]" title="[const:hintSubmit]">
+      <button form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" title="[const:hintSubmit]">
+        [const:btnSubmit]
+        <span id="remains">[case:[special:wait2post]|| ([const:lblAfter]<span id="remval">[special:wait2post]</span> s)]</span>
+      </button>
       <div class="spacer"></div>
       <a id="btn-close" class="btn img-btn" href=".">
         <svg version="1.1" width="12" height="12" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">

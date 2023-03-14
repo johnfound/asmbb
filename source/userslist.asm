@@ -45,8 +45,6 @@ begin
         stdcall StrDel, eax
 
 .page_ok:
-        mov     [esi+TSpecialParams.page_title], ebx
-
         stdcall TextCat, edi, txt '<div class="users_list">'
         stdcall RenderTemplate, edx, "nav_userslist.tpl", 0, esi
         mov     edi, eax
@@ -239,6 +237,7 @@ begin
         cmp     [esi+TArray.count], 0
         je      .cmd_ok
 
+; Some sanitizing here?
         stdcall StrCat, ebx, [esi+TArray.array]
 
 .cmd_ok:

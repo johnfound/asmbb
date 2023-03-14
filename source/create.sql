@@ -30,6 +30,9 @@ insert into Params values ('forum_header', '<h1 style="font-weight: 800">AsmBB</
 </b>
 '
 );
+insert into Params values ('nu_post_interval', 0);
+insert into Params values ('nu_post_interval_inc', 0);
+insert into Params values ('nu_max_post_length', 0);
 
 create table Guests (
   addr     integer primary key not null,
@@ -66,7 +69,12 @@ create table Users (
   LastSeen  integer,           -- the time when the user has been last seen by taking some action.
   Lang      text,              -- the language of the user interface.
   Skin      text,              -- the name of the UI skin.
-  PostCount integer default 0  -- Speed optimization in order to not count the posts every time. Need automatic count.
+  PostCount integer default 0,  -- Speed optimization in order to not count the posts every time. Need automatic count.
+
+  LastPostTime    integer default 0,     -- the time of the last post request (posting, editing, chat messages)
+  PostInterval    integer default 0,     -- the minimal allowed post time interval.
+  PostIntervalInc integer default 0,     -- the increment of the PostInterval after every post.
+  MaxPostLen      integer default 0      -- the maximal post length for this user. 0 means not limited.
 );
 
 create index idxUsersRegister on Users(Register);
@@ -250,7 +258,7 @@ CREATE TRIGGER PostsAI AFTER INSERT ON Posts BEGIN
   insert into PostCNT(postid,count) VALUES (new.id, 0);
   insert or ignore into ThreadPosters(firstPost, threadID, userID) values (new.id, new.threadID, new.userID);
 
-  update Users set PostCount = PostCount + 1 where Users.id = new.UserID;
+  update Users set PostCount = PostCount + 1, LastPostTime = strftime('%s', 'now'), PostInterval = max(0, PostInterval + PostIntervalInc) where Users.id = new.UserID;
   update Threads set PostCount = PostCount + 1 where id = new.threadID;
   update Counters set val = val + 1 where id = 'posts';
   update Tags set PostCnt = PostCnt + 1 where Tags.tag in (select tag from ThreadTags where ThreadID = new.ThreadID);
@@ -262,7 +270,7 @@ CREATE TRIGGER PostsAD AFTER DELETE ON Posts BEGIN
   insert or ignore into ThreadPosters(firstPost, threadID, userID) select min(id), threadid, userid from posts where threadid = old.threadid and userid = old.userid;
 
   update Users set PostCount = PostCount - 1 where Users.id = old.UserID;
-  update Threads set PostCount = PostCount - 1 where id = old.threadID;
+  update Threads set PostCount = PostCount - 1, LastChanged = (select max(P.postTime) from posts as P where P.threadID = old.threadID) where id = old.threadID;
   update Counters set val = val - 1 where id = 'posts';
   update Tags set PostCnt = PostCnt - 1 where Tags.tag in (select tag from threadtags where threadid = old.threadid);
 
@@ -605,6 +613,10 @@ insert into Messages VALUES ('closed_registration','This very place
 Is not a place for you.
 Go elsewhere now.
 ','Closed forum!','<a href="https://duckduckgo.com">A good place to start</a>');
+
+insert into Messages VALUES ('error_too_early','Simple, deep, and still.
+The old masters were patient.
+Without desires.','Try to do it later!',NULL);
 
 
 create table ScratchPad (

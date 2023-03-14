@@ -2,13 +2,13 @@ LIMIT_POST_LENGTH = 16*1024
 LIMIT_POST_CAPTION = 512
 LIMIT_TAG_DESCRIPTION = 1024
 
-cNewPostForm   text "form_new_post.tpl"
-cNewThreadForm text "form_new_thread.tpl"
+cNewPostForm     text "form_new_post.tpl"
+cNewThreadForm   text "form_new_thread.tpl"
 
-sqlSelectConst text "select ?1 as slug, ?2 as caption, ?3 as source, ?4 as ticket, ?5 as tags, ?6 as limited, ?7 as invited, ?8 as UserName, ?9 as format"
-sqlGetQuote   text "select U.nick, P.content from Posts P left join Users U on U.id = P.userID where P.id = ?"
+sqlSelectConst   text "select ?1 as slug, ?2 as caption, ?3 as source, ?4 as ticket, ?5 as tags, ?6 as limited, ?7 as invited, ?8 as UserName, ?9 as format"
+sqlGetQuote      text "select U.nick, P.content from Posts P left join Users U on U.id = P.userID where P.id = ?"
 
-sqlInsertPost text "insert into Posts ( ThreadID, UserID, PostTime, Content, format) values (?, ?, strftime('%s','now'), ?, ?)"
+sqlInsertPost    text "insert into Posts ( ThreadID, UserID, PostTime, Content, format) values (?, ?, strftime('%s','now'), ?, ?)"
 sqlUpdateThreads text "update Threads set LastChanged = strftime('%s','now') where id = ?"
 sqlInsertThread  text "insert into Threads ( Caption ) values ( ? )"
 sqlSetThreadSlug text "update Threads set slug = ?1, Limited=?3 where id = ?2"
@@ -145,6 +145,15 @@ begin
 
         mov     eax, LIMIT_POST_LENGTH
         stdcall GetParam, 'max_post_length', gpInteger
+
+        mov     ecx, [esi+TSpecialParams.userMaxPostLen]
+        test    ecx, ecx
+        jz      .max_len_ok
+
+        cmp     eax, ecx
+        cmovg   eax, ecx
+
+.max_len_ok:
         stdcall StrByteUtf8, [.source], eax
         stdcall StrTrim, [.source], eax
 
@@ -161,6 +170,21 @@ begin
         stdcall StrDel ; from the stack
         mov     [.iFormat], eax
 
+; check the post interval limits
+
+        mov     ecx, [esi+TSpecialParams.userPostInterval]
+        test    ecx, ecx
+        jz      .interval_ok
+
+        stdcall GetTime
+        sub     eax, dword [esi+TSpecialParams.userLastPostTime]
+        sbb     edx, dword [esi+TSpecialParams.userLastPostTime + 4]
+        jnz     .show_edit_form
+
+        cmp     eax, ecx
+        jl      .show_edit_form
+
+.interval_ok:
 ; ok, get the action then:
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "submit", 0
@@ -241,7 +265,9 @@ begin
         je      .title_new_thread
 
         stdcall StrCat, [esi+TSpecialParams.page_title], [cPostingInTitle+8*eax]
-        stdcall StrCat, [esi+TSpecialParams.page_title], [.caption]
+        stdcall StrEncodeHTML, [.caption]
+        stdcall StrCat, [esi+TSpecialParams.page_title], eax
+        stdcall StrDel, eax
         jmp     .title_set
 
 .title_new_thread:
@@ -642,7 +668,6 @@ endl
         mov     [edi+TText.GapEnd], eax
         stdcall TextMakeRedirect, edi, "/!message/error_bad_ticket"
         jmp     .finish_clear
-
 endp
 
 

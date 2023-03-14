@@ -911,8 +911,12 @@ endp
 
 
 
-
-
+; Searches a value in KEY-VALUE array.
+; .pArray - pointer to the TArray of key/value pairs
+; .name - string with the key name.
+; Returns:
+;   CF = 0, eax - value string. Don't delete it after use.
+;   CF = 1, eax - not changed! the key not found.
 
 proc ValueByName, .pArray, .name
 begin

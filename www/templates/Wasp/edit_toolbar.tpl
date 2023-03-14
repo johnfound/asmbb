@@ -212,4 +212,19 @@
     };
     target.setSelectionRange(newpos, newpos);
   };
+
+
+var timer = setInterval(function(){
+  var val = document.getElementById("remval");
+  if (val) {
+    var time = val.innerHTML;
+    if (time > 0) {
+      val.innerHTML = time - 1;
+    } else {
+      document.getElementById("remains").hidden = true;
+    }
+  }
+}, 1000);
+
+
 </script>
