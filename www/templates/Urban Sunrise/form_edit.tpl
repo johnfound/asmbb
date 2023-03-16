@@ -3,6 +3,8 @@
 [css:threadnew.css]
 [css:markdown.css]
 [css:highlight.css]
+[css:settings.css]
+
 
 [case:[special:lang]|
   [equ:Caption=Thread title]
@@ -13,11 +15,19 @@
   [equ:hintPreview=Ctrl+Enter for preview]
   [equ:hintSubmit=Ctrl+S for submit]
   [equ:Attach=Attach file(s)]
+  [equ:tabThread=Thread]
   [equ:tabText=Text]
   [equ:tabAttach=Attachments]
   [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
   [equ:MultiFiles= files selected.]
   [equ:phSelect=Select file(s) to attach]
+  [equ:ttlLimited=Limited access thread]
+  [equ:ttlInvited=Invited users (comma separated list)]
+  [equ:ttlTitle=Title]
+  [equ:phTitle=Thread title]
+  [equ:ttlTags=Tags: <span class="small">(max 3, comma delimited, no spaces)</span>]
+  [equ:phTags=some tags here]
+  [equ:ttlPin=Important thread, rank]
 |
   [equ:Caption=Заглавие на темата]
   [equ:Content=Съдържание на поста]
@@ -27,11 +37,17 @@
   [equ:hintPreview=Ctrl+Enter за преглед]
   [equ:hintSubmit=Ctrl+S за публикуване]
   [equ:Attach=Прикачи файл(ове)]
+  [equ:tabThread=Тема]
   [equ:tabText=Текст]
   [equ:tabAttach=Файлове]
   [equ:FileLimit=(брой ≤ 10, размер ≤ 1MB)]
   [equ:MultiFiles= файла са избрани.]
   [equ:phSelect=Избери файл(ове) за прикачане]
+  [equ:ttlTitle=Заглавие]
+  [equ:phTitle=Заглавие на темата]
+  [equ:ttlTags=Тагове: <span class="small">(макс. 3, разделени със запетаи, без шпации)</span>]
+  [equ:phTags=някакви тагове тук]
+  [equ:ttlPin=Важна тема ранг.]
 |
   [equ:Caption=Название темы]
   [equ:Content=Содержание поста]
@@ -41,11 +57,21 @@
   [equ:hintPreview=Ctrl+Enter для предварительного просмотра]
   [equ:hintSubmit=Ctrl+S чтобы отправить]
   [equ:Attach=Прикрепить файл(ы)]
+  [equ:tabThread=Тема]
   [equ:tabText=Текст]
   [equ:tabAttach=Вложения]
   [equ:FileLimit=(количество ≤ 10, размер ≤ 1MB)]
   [equ:MultiFiles= выбранные файлы.]
   [equ:phSelect=Выберите файл(ы) для вложения]
+  [equ:ttlLimited=Тема с ограниченным доступом]
+  [equ:ttlInvited=Приглашенные участники (список через запятую)]
+  [equ:ttlLimited=Тема с ограничен достъп]
+  [equ:ttlInvited=Поканени в темата (разделени със запетаи)]
+  [equ:ttlTitle=Название темы]
+  [equ:phTitle=Название темы]
+  [equ:ttlTags=Ярлыки: <span class="small">(макс. 3, через запятую, без пробелов)</span>]
+  [equ:phTags=теги пишутся здесь]
+  [equ:ttlPin=Важная тема, ранг]
 |
   [equ:Caption=Titre du sujet]
   [equ:Content=Contenu du message]
@@ -55,11 +81,19 @@
   [equ:hintPreview=Ctrl+Entrée pour prévisualiser]
   [equ:hintSubmit=Ctrl+S pour soumettre]
   [equ:Attach=Pièce(s) jointe(s)]
+  [equ:tabThread=Sujet]
   [equ:tabText=Texte]
   [equ:tabAttach=Pièces jointes]
   [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
   [equ:MultiFiles= dossiers sélectionnés.]
   [equ:phSelect=Joindre un fichier]
+  [equ:ttlLimited=Sujet restreint]
+  [equ:ttlInvited=Inviter des utilisateurs (séparés par une virgule)]
+  [equ:ttlTitle=Titre]
+  [equ:phTitle=Titre du sujet]
+  [equ:ttlTags=Mots-clés: <span class="small">(3 maximum, séparés par une virgule t sans espace)</span>]
+  [equ:phTags=quelques mots-clés]
+  [equ:ttlPin=Sujet important, classement]
 |
   [equ:Caption=Titel des Themas]
   [equ:Content=Inhalt des Beitrags]
@@ -69,11 +103,19 @@
   [equ:hintPreview=Strg+Eingabe für eine Vorschau]
   [equ:hintSubmit=Strg+S zum Absenden]
   [equ:Attach=Datei(en) anhängen]
+  [equ:tabThread=Thema]
   [equ:tabText=Text]
   [equ:tabAttach=Anhänge]
   [equ:FileLimit=(Anzahl ≤ 10, Größe ≤ 1MB)]
   [equ:MultiFiles= ausgewählte Dateien.]
   [equ:phSelect=Wählen Sie eine Datei als Anhang aus]
+  [equ:ttlLimited=Thema mit beschränktem Zugang]
+  [equ:ttlInvited=Eingeladene Mitglieder (durch Kommas getrennt)]
+  [equ:ttlTitle=Titel]
+  [equ:phTitle=Titel des Themas]
+  [equ:ttlTags=Tags: <span class="small">(max. 3, durch Kommas getrennt, keine Leerzeichen)</span>]
+  [equ:phTags=hier einige Tags]
+  [equ:ttlPin=Wichtiges Thema, Rang]
 ]
 
 <div class="editor" id="editor-window" onfocus="document.location='#editor-window';">
@@ -97,6 +139,30 @@
       <input id="tab0" name="tabselector" type="radio" value="0" checked>
       <label for="tab0">[const:tabText]</label>
       <section>
+        <div class="editgroup">
+          <div>
+            <p>[const:ttlTitle]:</p>
+            <input class="settings" type="text" value="[caption]" placeholder="[const:phTitle]" name="title" autofocus>
+          </div>
+          <div>
+            <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</p>
+            <input class="settings" type="text" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
+          </div>
+        </div>
+
+        [case:[special:isadmin]||
+         <p><input class="number" type="text" value="[Pinned]" name="pinned"> [const:ttlPin]</p>
+        ]
+
+        <div class="dropdown checkbox">
+          <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]>
+          <label for="limited" style="outline: none;" >[const:ttlLimited]</label>
+          <div id="users_invited">
+            <p>[const:ttlInvited]:</p>
+            <input class="settings" id="invited" type="text" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
+          </div>
+        </div>
+
         <p>[const:Content]:</p>
         [include:edit_toolbar.tpl]
         <textarea name="source" id="source" required>[source]</textarea>

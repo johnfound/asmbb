@@ -1,5 +1,5 @@
-C The\sbanhammer\sbranch\smerged\sto\sthe\strunk.
-D 2023-03-14T18:02:31.551
+C Attempt\sto\screate\sunified\seditor\sfor\snew\sposts\sand\sthreads\sand\sfor\sediting.
+D 2023-03-16T12:07:04.579
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -627,7 +627,7 @@ F www/templates/Urban\sSunrise/error.less 43f5b23eace778d249411d453321ec6d16d4f3
 F www/templates/Urban\sSunrise/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
 F www/templates/Urban\sSunrise/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
 F www/templates/Urban\sSunrise/file-browse.js f24eef322b130b2715410431ea4199679de5f65b
-F www/templates/Urban\sSunrise/form_edit.tpl 35447dc2e14aaec631768e00cb39cc2c41c803d6
+F www/templates/Urban\sSunrise/form_edit.tpl a37e97b68fcdf78c87de20e0ff90d218c2e036fd
 F www/templates/Urban\sSunrise/form_edit_thread.tpl 5a945545cbe5479ce0c6cb3cbaae2ead78e74a4f
 F www/templates/Urban\sSunrise/form_editinfo.tpl e66590e7fd6b77e4927dd6da0d0d1fc8387c161f
 F www/templates/Urban\sSunrise/form_login.tpl fe8b409f221a5553ee0f40bde655fa3cb276485f
@@ -929,7 +929,10 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 32fe845a59efc4aeef0dd5e86097c1e54cebd9a6 216c639c667d1e2e2d72b551ed860c14b555e3f7
-R 6f4a2e15fa5e91d771caf2de6ef07f40
+P c620b11622a8d2ffce8e77c147d249f1cf4358a3
+R 24b5c88e1a0bb456efbfadd4b4a9c7d7
+T *branch * unieditor
+T *sym-unieditor *
+T -sym-trunk *
 U johnfound
-Z ceeb415b1dc3657d14d969e56716b4e5
+Z 14f0af0d5b1d0cf235de10f66f4ac1c4
