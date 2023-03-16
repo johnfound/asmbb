@@ -1,6 +1,8 @@
 
-sqlReadPost    text "select P.id, T.caption, P.content as source, format, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
-sqlEditedPost  text "select P.id, T.caption, ?3 as source, ?5 as format, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
+sqlReadPost    text "select P.id, T.caption, P.content as source, format, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName, T.limited, T.Pinned from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
+sqlEditedPost  text "select P.id, T.caption, ?3 as source, ?5 as format, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName, T.limited, T.Pinned from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
+
+sqlEditedAll   text "select ?1 as EditThread, ?2 as Caption, ?3 as Pinned, ?4 as Limited, ?5 as Invited, ?6 as PostID, ?7 as Source, ?8 as Format, ?9 as UserName, ?10 as Ticket"
 
 sqlSavePost    text "update Posts set content = ?1, format = ?5, editUserID = ?4, editTime = strftime('%s','now') where id = ?3"
 sqlGetPostUser text "select userID, threadID from Posts where id = ?"
@@ -9,12 +11,16 @@ sqlGetPostUser text "select userID, threadID from Posts where id = ?"
 proc EditUserMessage, .pSpecial
 .stmt dd ?
 
+.caption  dd ?
 .source   dd ?
 .ticket   dd ?
 .format   dd ?
 
+.slug     dd ?
+
 .res      dd ?
 .threadID dd ?
+.postID   dd ?
 .userID   dd ?
 
 .softPreview dd ?
@@ -25,6 +31,7 @@ begin
         DebugMsg "Edit user message."
 
         xor     ebx, ebx
+        mov     [.caption], ebx
         mov     [.source], ebx
         mov     [.ticket], ebx
         mov     [.format], ebx
@@ -35,14 +42,49 @@ begin
         stdcall TextCreate, sizeof.TText
         mov     edi, eax
 
-        cmp     [esi+TSpecialParams.page_num], ebx
-        je      .error_post_id
+        mov     eax, [esi+TSpecialParams.page_num]
+        mov     [.postID], eax
 
-; read the userID and threadID for the post.
+        test    eax, eax
+        jnz     .get_user_and_thread
+
+; new post or new thread
+
+        mov     eax, [esi+TSpecialParams.userID]
+        mov     [.userID], eax
+
+        mov     eax, [esi+TSpecialParams.thread]
+        mov     [.slug], eax
+
+        test    eax, eax
+        jz      .new_thread
+
+; get the threadID
 
         lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadID, sqlGetThreadID.length, eax, 0
+        stdcall StrPtr, [.slug]
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .error_missing_post
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        mov     [.threadID], eax
+
+        cinvoke sqliteFinalize, [.stmt]
+        jmp     .check_permissions
+
+.new_thread:
+        mov     [.threadID], eax
+        jmp     .check_permissions
+
+
+; read the userID and threadID for the post.
+.get_user_and_thread:
+        lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetPostUser, -1, eax, 0
-        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.page_num]
+        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
         cinvoke sqliteStep, [.stmt]
 
         cmp     eax, SQLITE_ROW
@@ -57,6 +99,8 @@ begin
         cinvoke sqliteFinalize, [.stmt]
 
 ; check the permissions.
+
+.check_permissions:
 
         test    [esi+TSpecialParams.userStatus], permAdmin                              ; the admin is always allowed to edit!
         jnz     .permissions_ok

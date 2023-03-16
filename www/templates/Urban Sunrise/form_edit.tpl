@@ -43,11 +43,13 @@
   [equ:FileLimit=(брой ≤ 10, размер ≤ 1MB)]
   [equ:MultiFiles= файла са избрани.]
   [equ:phSelect=Избери файл(ове) за прикачане]
+  [equ:ttlLimited=Тема с ограничен достъп]
+  [equ:ttlInvited=Поканени в темата (разделени със запетаи)]
   [equ:ttlTitle=Заглавие]
   [equ:phTitle=Заглавие на темата]
   [equ:ttlTags=Тагове: <span class="small">(макс. 3, разделени със запетаи, без шпации)</span>]
   [equ:phTags=някакви тагове тук]
-  [equ:ttlPin=Важна тема ранг.]
+  [equ:ttlPin=Важна тема, ранг]
 |
   [equ:Caption=Название темы]
   [equ:Content=Содержание поста]
@@ -148,11 +150,14 @@
             <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</p>
             <input class="settings" type="text" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
           </div>
+          <div>
+            [case:[special:isadmin]||
+             <p> [const:ttlPin]:</p>
+             <input type="text" size="6" maxlength="6" value="[Pinned]" name="pinned">
+            ]
+          </div>
         </div>
 
-        [case:[special:isadmin]||
-         <p><input class="number" type="text" value="[Pinned]" name="pinned"> [const:ttlPin]</p>
-        ]
 
         <div class="dropdown checkbox">
           <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]>
