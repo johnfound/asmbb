@@ -24,6 +24,7 @@ proc EditUserMessage, .pSpecial
 .userID   dd ?
 
 .softPreview dd ?
+.fEditThread dd ?
 
 begin
         pushad
@@ -36,6 +37,7 @@ begin
         mov     [.ticket], ebx
         mov     [.format], ebx
         mov     [.softPreview], ebx
+        mov     [.fEditThread], ebx
 
         mov     esi, [.pSpecial]
 
@@ -57,9 +59,16 @@ begin
         mov     [.slug], eax
 
         test    eax, eax
-        jz      .new_thread
+        jnz     .get_thread_id
 
-; get the threadID
+
+; Create new thread, so edit the thread
+
+        inc     [.fEditThread]
+        mov     [.threadID], eax
+        jmp     .check_permissions
+
+.get_thread_id:
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadID, sqlGetThreadID.length, eax, 0
@@ -73,10 +82,6 @@ begin
         mov     [.threadID], eax
 
         cinvoke sqliteFinalize, [.stmt]
-        jmp     .check_permissions
-
-.new_thread:
-        mov     [.threadID], eax
         jmp     .check_permissions
 
 
