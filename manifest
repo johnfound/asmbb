@@ -1,5 +1,5 @@
-C The\sbanhammer\sbranch\smerged\sto\sthe\strunk.
-D 2023-03-14T18:02:31.551
+C Normalize\sthe\spath\sfor\s[include:]\sand\s[raw:]\stemplate\scommands\sin\sorder\sto\sprevent\sdirectory\straversal.\nFix\sa\sdouble\srendering\sbug.\sIt\sremoves\sa\stemplate\sinjection\svulnerability\sand\sactually\sincreases\sthe\sspeed.
+D 2023-03-18T21:53:46.560
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -70,7 +70,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm de9473049ea4f124ee741faebc45d2f74eab0c68
+F source/render2.asm 5642fdd2f498eecf2830d2c9e12452f31dcfd835
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 60acccb553021d13c932470672aec7a3d943443d
 F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
@@ -929,7 +929,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 32fe845a59efc4aeef0dd5e86097c1e54cebd9a6 216c639c667d1e2e2d72b551ed860c14b555e3f7
-R 6f4a2e15fa5e91d771caf2de6ef07f40
+P c620b11622a8d2ffce8e77c147d249f1cf4358a3
+R 2680e114f2ba9cc6eb38d7645310b70b
 U johnfound
-Z ceeb415b1dc3657d14d969e56716b4e5
+Z 19848bb513ac4188362e5e3b7e5f958e
