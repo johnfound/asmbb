@@ -402,7 +402,8 @@ create table Attachments (
   changed  integer,
   file     blob,
   key      blob,        -- the random key for xor encrypting the blob
-  md5sum   text
+  md5sum   text,
+  userID   integer references Users(id) on delete cascade
 );
 
 create index idxAttachments on Attachments(postID);
