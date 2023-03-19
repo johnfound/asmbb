@@ -189,6 +189,8 @@ begin
 
 .start_render:
 
+        push    ecx
+
         xor     eax, eax
 
         lea     edi, [.tblFields]
@@ -205,6 +207,8 @@ begin
         call    .build_hash_table       ; creates a hash table for the SQL statement field names.
 
 .hash_ok:
+        pop     ecx
+
         or      eax, -1
         push    eax
 
@@ -719,7 +723,12 @@ endl
         stdcall StrDel, ebx
         push    eax
 
+        stdcall StrNormalizePath, eax, '/\'
+        jc      .bad_filename
+
         stdcall FileOpenAccess, eax, faReadOnly
+
+.bad_filename:
         stdcall StrDel ; from the stack
         jc      .loop
 
