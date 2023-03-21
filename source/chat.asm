@@ -108,6 +108,12 @@ begin
         cmp     [esi+TSpecialParams.post_array], 0
         jne     .post_new_message
 
+; opening the chat only by navigation
+
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
+        jne     .error_no_permissions
+
         mov     eax, [esi+TSpecialParams.userLang]
         stdcall StrCat, [esi+TSpecialParams.page_title], [cChatTitle+8*eax]
         stdcall LogUserActivity, esi, uaChatting, 0

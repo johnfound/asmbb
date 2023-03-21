@@ -18,6 +18,10 @@ begin
         test    [esi+TSpecialParams.userStatus], permAdmin
         jz      .perm_error
 
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
+        jne     .perm_error
+
         mov     eax, [esi+TSpecialParams.userLang]
         stdcall StrCat, [esi+TSpecialParams.page_title], [cHistoryTitle+8*eax]
 
@@ -116,6 +120,10 @@ begin
         cmp     [esi+TSpecialParams.page_num], edi
         je      .exit                                   ; CF = 0 and EDI=0 ---> error 404
 
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
+        jne     .perm_error
+
         test    [esi+TSpecialParams.userStatus], permAdmin
         jz      .perm_error
 
@@ -180,14 +188,14 @@ begin
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], "ticket", 0
         test    eax, eax
-        jz      .perm_error1
+        jz      .perm_error
 
 
 
         mov     ebx, eax
         stdcall CheckTicket, ebx, [esi+TSpecialParams.session]
         stdcall ClearTicket3, ebx
-        jc      .perm_error2
+        jc      .perm_error
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetPostVersion, sqlGetPostVersion.length, eax, 0
@@ -254,23 +262,9 @@ begin
         cmp     eax, SQLITE_DONE
         je      .restored_ok
 
-;        OutputValue "Error writing SQLite: ", eax, 10, -1
-;
-;        cinvoke sqliteErrMsg, [hMainDatabase]
-;        stdcall FileWriteString, [STDERR], eax
-;        stdcall FileWriteString, [STDERR], cCRLF2
-
         stdcall TextMakeRedirect, edi, "/!message/error_cant_write"
         stc
         jmp     .finalize
-
-.perm_error1:
-        DebugMsg "No ticket get!"
-        jmp      .perm_error
-
-.perm_error2:
-        DebugMsg "Wrong ticket value!"
-        jmp      .perm_error
 
 
 .restored_ok:

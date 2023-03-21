@@ -388,6 +388,11 @@ begin
         cmp     [.source], 0
         je      .show_edit_form
 
+; check the SEC_FETCH_MODE header. Only "navigate" mode is allowed.
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
+        jne     .error_bad_ticket
+
 ; check the ticket
 
         stdcall CheckTicket, [.ticket], [esi+TSpecialParams.session]

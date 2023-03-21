@@ -137,6 +137,10 @@ endl
 
         and     [.user_desc], 0
 
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
+        jne     .permissions_fail
+
         test    [esi+TSpecialParams.userStatus], permAdmin
         jnz     .permissions_ok
 
@@ -435,11 +439,17 @@ begin
         xor     edi, edi
         mov     [.stmt], edi
         mov     [.img_ptr], edi
+
         mov     esi, [.pSpecial]
+
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
+        jne     .exit
 
         mov     edx, [esi+TSpecialParams.cmd_list]
         cmp     [edx+TArray.count], edi
         je      .exit
+
         mov     ebx, [edx+TArray.array]
         test    ebx, ebx
         jz      .exit
@@ -459,6 +469,9 @@ begin
         jnc     .permissions_fail
 
 .permissions_ok:
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
+        jne     .permissions_fail
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], "ticket", 0
         test    eax, eax
@@ -574,11 +587,17 @@ begin
         pushad
 
         xor     edi, edi
+
         mov     esi, [.pSpecial]
+
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
+        jne     .exit
 
         mov     edx, [esi+TSpecialParams.cmd_list]
         cmp     [edx+TArray.count], edi
         je      .exit
+
         mov     ebx, [edx+TArray.array]
         test    ebx, ebx                        ; after text, CF=0!
         jz      .exit

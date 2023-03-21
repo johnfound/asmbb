@@ -667,6 +667,10 @@ begin
 
         mov     esi, [.pSpecial]
 
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
+        jne     .finish
+
         cmp     [esi+TSpecialParams.userID], 0
         je      .finish
 

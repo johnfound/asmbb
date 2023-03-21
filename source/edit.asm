@@ -223,10 +223,9 @@ begin
         cmp     [.source], 0
         je      .end_save
 
-; Empty post - is it normal?
-;        stdcall StrLen, [.source]
-;        cmp     eax, 0
-;        je      .end_save
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
+        jne     .error_bad_ticket
 
         stdcall CheckTicket, [.ticket], [esi+TSpecialParams.session]
         jc      .error_bad_ticket
@@ -491,6 +490,10 @@ begin
 
 
 .save_attributes:
+
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
+        jne     .error_wrong_permissions
 
         stdcall CheckTicket, [.ticket], [esi+TSpecialParams.session]
         jc      .error_bad_ticket
