@@ -26,8 +26,13 @@ begin
         pushad
 
         mov     esi, [.pSpecial]
+
         test    [esi+TSpecialParams.userStatus], permRead or permAdmin
         jz      .error_cant_read
+
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
+        jne     .error_cant_read
 
         stdcall StrNew
         mov     [.query], eax

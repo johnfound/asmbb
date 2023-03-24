@@ -93,13 +93,15 @@ begin
 
 
 .do_login_user:
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
+        jne     .redirect_back_bad_permissions
 
         stdcall ValueByName, [esi+TSpecialParams.post_array], txt "submit.x"
         jc      .redirect_back_bad_permissions
 
         stdcall ValueByName, [esi+TSpecialParams.post_array], txt "submit.y"
         jc      .redirect_back_bad_permissions
-
 
         stdcall GetPostString, ebx, "username", 0
         mov     [.user], eax
@@ -410,6 +412,10 @@ begin
         mov     esi, [.pspecial]
 
         OutputValue "Logout POST parameters: ", [esi+TSpecialParams.post_array], 16, 8
+
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
+        jne     .error_trick                            ; this functions must be invoked only by navigation.
 
         cmp     [esi+TSpecialParams.post_array], 0      ; this function must be invoked only by POST request!
         je      .error_trick
@@ -850,6 +856,10 @@ begin
         cmp     [edx+TArray.count], edi
         je      .exit
 
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
+        jne     .exit
+
         mov     ebx, [edx+TArray.array]
 
 ; begin transaction
@@ -1062,6 +1072,10 @@ begin
         mov     [.secret], eax
 
         mov     esi, [.pSpecial]
+
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
+        jne     .error_trick
 
         mov     edx, [esi+TSpecialParams.cmd_list]
         cmp     [edx+TArray.count], 0
@@ -1527,6 +1541,10 @@ begin
         test    ebx, ebx
         jz      .bad_parameter
 
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
+        jne     .bad_parameter
+
         stdcall GetPostString, ebx, "ticket", 0
         test    eax, eax
         jz      .bad_parameter
@@ -1707,6 +1725,10 @@ begin
         mov     ebx, [esi+TSpecialParams.post_array]
         test    ebx, ebx
         jz      .bad_parameter
+
+        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        cmp     eax, secNavigate
+        jne     .bad_parameter
 
         stdcall GetPostString, ebx, "ticket", 0
         test    eax, eax
