@@ -1,5 +1,5 @@
-C Attempt\sto\screate\sunified\seditor\sfor\snew\sposts\sand\sthreads\sand\sfor\sediting.
-D 2023-03-16T12:07:04.579
+C A\slittle\sbit\sdifferent\sapproach\sto\sthe\sunified\spost/threads\seditor.
+D 2023-03-29T18:19:39.768
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -40,10 +40,11 @@ F source/chat.asm e867460b1254a192a93388df423855385bb9f01a
 F source/commands.asm 7aaea79082e69351e10496fedfb0da6208c3c602
 F source/create.sql 73afce595f20388afc7d1b70f984307bf4705f6f
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
-F source/edit.asm f4d424f95116727b81c668140e0f50b4794a69f6
+F source/edit.asm 6a907978fc71033d61afb2d8e035cac99eb8e85c
+F source/editedpost.sql 71f9986dcb7415e9d5b5925181a0c392627ff5e7
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm 82c71f1f23fcce0956980164f9fc6163026c3960
-F source/engine.fpr 7d062218a4f308240f2a7fa16accf73e6ce06c02
+F source/engine.fpr 7cca45365dd954c9dc0dc4defdd3ecaa380e6f9d
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 3c09da9efa9b6004aec1790f2c453a40a2fed1b5
@@ -64,6 +65,7 @@ F source/post.asm cf131d792a5013f1193c9c9fc9d1363b849120da
 F source/post_data.asm 79fb813775e3bafe6cb314c50a99484e4f0dc211
 F source/postdebug.asm 64cdaacd1e7106cb25bd74796254aace1763e6c3
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
+F source/readpost.sql accd14b2cc68bb858f34ee4934eb1090d7f6af31
 F source/realtime.asm 9b433d13804f1a04b94b20fdf1d95a253b58cd98
 F source/rebuild.sql 9b298f02f19aaac41b6488a28de5509ad16d2697
 F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
@@ -77,7 +79,7 @@ F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
 F source/settings.asm abbfe8351bfd9c8a4ce7aaf7d47f82758189314f
 F source/settings.sql ff928ed121b03f05814aab6800f54b954250e00d
-F source/showthread.asm a049995552de6d4440d5af8e55b0db81d2292e73
+F source/showthread.asm f7f3016e0cdc9532f6755919483c7def6c7b52eb
 F source/showthread.sql 1ee08ed9c69a07ca5c60fc639e73333405e14d37
 F source/sqlite3.asm df3a5ea387f60d719fd83c33411b8151ad1a6d77
 F source/sqlite_console.asm 621393f45e968f1a3bc36cc70f58620d5db947e1
@@ -627,7 +629,7 @@ F www/templates/Urban\sSunrise/error.less 43f5b23eace778d249411d453321ec6d16d4f3
 F www/templates/Urban\sSunrise/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
 F www/templates/Urban\sSunrise/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
 F www/templates/Urban\sSunrise/file-browse.js f24eef322b130b2715410431ea4199679de5f65b
-F www/templates/Urban\sSunrise/form_edit.tpl a37e97b68fcdf78c87de20e0ff90d218c2e036fd
+F www/templates/Urban\sSunrise/form_edit.tpl eaff3bc719b888eba17275e9fc69b9c8f99101ba
 F www/templates/Urban\sSunrise/form_edit_thread.tpl 5a945545cbe5479ce0c6cb3cbaae2ead78e74a4f
 F www/templates/Urban\sSunrise/form_editinfo.tpl e66590e7fd6b77e4927dd6da0d0d1fc8387c161f
 F www/templates/Urban\sSunrise/form_login.tpl fe8b409f221a5553ee0f40bde655fa3cb276485f
@@ -675,7 +677,7 @@ F www/templates/Urban\sSunrise/thread.js 7da434cbe9cc7aa24bd54a24e77710e72f9b2ef
 F www/templates/Urban\sSunrise/thread_info.tpl 2ce052b1db68cdc834483fe7e49072720b8d5a17
 F www/templates/Urban\sSunrise/thread_list.less 0fc3d401b2059046026623e95009bb102f7f0812
 F www/templates/Urban\sSunrise/threadlist.js 182da973af013e5729b62fb4ff58fc6a140f957f
-F www/templates/Urban\sSunrise/threadnew.less 5a4763e82b7635a7288925cd86cb785b92ba9bef
+F www/templates/Urban\sSunrise/threadnew.less 7f7bbbdfa2c5053bfdd965a51eb211c95f395672
 F www/templates/Urban\sSunrise/toaster.less 9f202e1b25a46eadbd672bf37a0185a84bf856a4
 F www/templates/Urban\sSunrise/userinfo.less 3f513169b2ebedd5cb4787877587e50d7ccf8ea6
 F www/templates/Urban\sSunrise/userinfo.tpl 6e18bdb4553c2d935c139c26195253cb6ee91922 l
@@ -929,10 +931,10 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P c620b11622a8d2ffce8e77c147d249f1cf4358a3
-R 24b5c88e1a0bb456efbfadd4b4a9c7d7
-T *branch * unieditor
-T *sym-unieditor *
-T -sym-trunk *
+P f9948c39dbd1decfd43e8a68b307e106936ccf3e
+R 4ac655f56bfeda0b119faa6cb4d4fc3b
+T *branch * unieditor2
+T *sym-unieditor2 *
+T -sym-unieditor *
 U johnfound
-Z 14f0af0d5b1d0cf235de10f66f4ac1c4
+Z ceb44c64aef8445e0331fa647583ce30

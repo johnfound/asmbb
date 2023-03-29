@@ -22,7 +22,7 @@
   [equ:MultiFiles= files selected.]
   [equ:phSelect=Select file(s) to attach]
   [equ:ttlLimited=Limited access thread]
-  [equ:ttlInvited=Invited users (comma separated list)]
+  [equ:ttlInvited=Invited users <span class="small">(comma separated list)</span>]
   [equ:ttlTitle=Title]
   [equ:phTitle=Thread title]
   [equ:ttlTags=Tags: <span class="small">(max 3, comma delimited, no spaces)</span>]
@@ -43,11 +43,13 @@
   [equ:FileLimit=(брой ≤ 10, размер ≤ 1MB)]
   [equ:MultiFiles= файла са избрани.]
   [equ:phSelect=Избери файл(ове) за прикачане]
+  [equ:ttlLimited=Тема с ограничен достъп]
+  [equ:ttlInvited=Поканени в темата <span class="small">(разделени със запетаи)</span>]
   [equ:ttlTitle=Заглавие]
   [equ:phTitle=Заглавие на темата]
   [equ:ttlTags=Тагове: <span class="small">(макс. 3, разделени със запетаи, без шпации)</span>]
   [equ:phTags=някакви тагове тук]
-  [equ:ttlPin=Важна тема ранг.]
+  [equ:ttlPin=Важна тема, ранг]
 |
   [equ:Caption=Название темы]
   [equ:Content=Содержание поста]
@@ -64,9 +66,7 @@
   [equ:MultiFiles= выбранные файлы.]
   [equ:phSelect=Выберите файл(ы) для вложения]
   [equ:ttlLimited=Тема с ограниченным доступом]
-  [equ:ttlInvited=Приглашенные участники (список через запятую)]
-  [equ:ttlLimited=Тема с ограничен достъп]
-  [equ:ttlInvited=Поканени в темата (разделени със запетаи)]
+  [equ:ttlInvited=Приглашенные участники <span class="small">(список через запятую)</span>]
   [equ:ttlTitle=Название темы]
   [equ:phTitle=Название темы]
   [equ:ttlTags=Ярлыки: <span class="small">(макс. 3, через запятую, без пробелов)</span>]
@@ -88,7 +88,7 @@
   [equ:MultiFiles= dossiers sélectionnés.]
   [equ:phSelect=Joindre un fichier]
   [equ:ttlLimited=Sujet restreint]
-  [equ:ttlInvited=Inviter des utilisateurs (séparés par une virgule)]
+  [equ:ttlInvited=Inviter des utilisateurs <span class="small">(séparés par une virgule)</span>]
   [equ:ttlTitle=Titre]
   [equ:phTitle=Titre du sujet]
   [equ:ttlTags=Mots-clés: <span class="small">(3 maximum, séparés par une virgule t sans espace)</span>]
@@ -110,7 +110,7 @@
   [equ:MultiFiles= ausgewählte Dateien.]
   [equ:phSelect=Wählen Sie eine Datei als Anhang aus]
   [equ:ttlLimited=Thema mit beschränktem Zugang]
-  [equ:ttlInvited=Eingeladene Mitglieder (durch Kommas getrennt)]
+  [equ:ttlInvited=Eingeladene Mitglieder <span class="small">(durch Kommas getrennt)</span>]
   [equ:ttlTitle=Titel]
   [equ:phTitle=Titel des Themas]
   [equ:ttlTags=Tags: <span class="small">(max. 3, durch Kommas getrennt, keine Leerzeichen)</span>]
@@ -139,27 +139,27 @@
       <input id="tab0" name="tabselector" type="radio" value="0" checked>
       <label for="tab0">[const:tabText]</label>
       <section>
-        <div class="editgroup">
-          <div>
-            <p>[const:ttlTitle]:</p>
-            <input class="settings" type="text" value="[caption]" placeholder="[const:phTitle]" name="title" autofocus>
+        <div style="[case:[EditThread]|display: none|position: relative]">
+          <div class="editgroup">
+            <div>
+              <p>[const:ttlTitle]:</p>
+              <input class="settings" type="text" value="[caption]" placeholder="[const:phTitle]" name="title" autofocus>
+            </div>
+            <div>
+              <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</p>
+              <input class="settings" type="text" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
+            </div>
           </div>
-          <div>
-            <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</p>
-            <input class="settings" type="text" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
-          </div>
-        </div>
 
-        [case:[special:isadmin]||
-         <p><input class="number" type="text" value="[Pinned]" name="pinned"> [const:ttlPin]</p>
-        ]
+          [case:[special:isadmin]||<p>[const:ttlPin]: <input class="number" type="text" value="[Pinned]" name="pinned"></p>]
 
-        <div class="dropdown checkbox">
-          <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]>
-          <label for="limited" style="outline: none;" >[const:ttlLimited]</label>
-          <div id="users_invited">
-            <p>[const:ttlInvited]:</p>
-            <input class="settings" id="invited" type="text" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
+          <div class="dropdown checkbox">
+            <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]>
+            <label for="limited" style="outline: none;" >[const:ttlLimited]</label>
+            <div id="users_invited">
+              <p>[const:ttlInvited]:</p>
+              <input class="settings" id="invited" type="text" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
+            </div>
           </div>
         </div>
 
@@ -245,5 +245,4 @@
 <script src="[special:skin]/highlight.js"></script>
 <script src="[special:skin]/editors.js"></script>
 <script src="[special:skin]/file-browse.js"></script>
-
-
+<script src="[special:skin]/autocomplete.js"></script>

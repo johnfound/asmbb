@@ -1,6 +1,6 @@
 
-sqlReadPost    text "select P.id, T.caption, P.content as source, format, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
-sqlEditedPost  text "select P.id, T.caption, ?3 as source, ?5 as format, ?2 as Ticket, (select nick from users U where U.id = ?4) as UserName from Posts P left join Threads T on T.id = P.threadID where P.id = ?1"
+sqlReadPost    StripText "readpost.sql", SQL
+sqlEditedPost  StripText "editedpost.sql", SQL
 
 sqlSavePost    text "update Posts set content = ?1, format = ?5, editUserID = ?4, editTime = strftime('%s','now') where id = ?3"
 sqlGetPostUser text "select userID, threadID from Posts where id = ?"
@@ -169,9 +169,12 @@ begin
         stdcall StrCat, [esi+TSpecialParams.page_title], [cEditingPageTitle+8*eax]
 
         cinvoke sqliteColumnText, [.stmt], 1
+        test    eax, eax
+        jz      @f
         stdcall StrEncodeHTML, eax
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
         stdcall StrDel, eax
+@@:
 
 ; deal with the attachments:
 
