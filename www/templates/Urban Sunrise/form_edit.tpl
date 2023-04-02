@@ -176,7 +176,7 @@
         <div class="editgroup">
           <div class="file-browse">
             <label for="input-file-browse" id="browse-txt" data-empty="[const:phSelect]"></label>
-            <input type="file" placeholder="[const:phSelect]" id="input-file-browse" name="attach" multiple="multiple" data-multiselect="[const:MultiFiles]">
+            <input type="file" placeholder="[const:phSelect]" id="input-file-browse" name="attach" multiple="multiple" data-multiselect="[const:MultiFiles]" oninput="previewIt();">
             <label id="browse-btn" class="btn" for="input-file-browse">Browse</label>
           </div>
         </div>

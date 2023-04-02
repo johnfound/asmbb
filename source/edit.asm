@@ -219,10 +219,12 @@ begin
 
         cinvoke sqliteBindInt, [.stmt], 7, [.pinned]
 
-        stdcall StrPtr, [.source]
-        cinvoke sqliteBindText, [.stmt], 8, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteBindInt, [.stmt], 8, [.fLimited]
 
-        cinvoke sqliteBindInt, [.stmt], 9, [.format]
+        stdcall StrPtr, [.source]
+        cinvoke sqliteBindText, [.stmt], 9, eax, [eax+string.len], SQLITE_STATIC
+
+        cinvoke sqliteBindInt, [.stmt], 10, [.format]
 
 .parameters_ok:
         cinvoke sqliteStep, [.stmt]
@@ -245,11 +247,8 @@ begin
         cmp     [esi+TSpecialParams.post_array], 0
         je      .attch_ok
 
-        cinvoke sqliteColumnInt, [.stmt], 5     ; postID
-        mov     ebx, eax
-
-        stdcall DelAttachments, ebx, esi
-        stdcall WriteAttachments, ebx, esi
+        stdcall DelAttachments, [esi+TSpecialParams.page_num], esi
+        stdcall WriteAttachments, [esi+TSpecialParams.page_num], esi
 
 .attch_ok:
         shr     [.softPreview], 1
@@ -426,6 +425,10 @@ begin
 
 .finish:
 ; delete all temp strings
+        stdcall StrDel, [.caption]
+        stdcall StrDel, [.slug]
+        stdcall StrDel, [.tags]
+        stdcall StrDel, [.invited]
         stdcall StrDel, [.source]
         stdcall StrDel, [.ticket]
 

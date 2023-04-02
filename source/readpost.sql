@@ -17,6 +17,7 @@ select
       where threadid = P.threadID
   ) as invited,
   T.Pinned,
+  T.Limited,
 
 -- Post fields
 

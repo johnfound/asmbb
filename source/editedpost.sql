@@ -6,12 +6,13 @@ select
   ?5 as Tags,
   ?6 as Invited,
   ?7 as Pinned,
+  ?8 as Limited,
 
 -- Post fields
 
   P.id,
-  ?8 as Source,
-  ?9 as Format,
+  ?9 as Source,
+  ?10 as Format,
 
 -- User fields
 
