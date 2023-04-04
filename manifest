@@ -1,5 +1,5 @@
-C Automatic\spreview\son\sfiles\supload.\sAdd\sLimited\sfield\sto\sthe\sSQL\squeries.
-D 2023-04-02T23:02:40.132
+C Apply\sthe\spost\sinterval\slimits\sin\s!edit.\sDelete\sthe\sredundant\stemplates.
+D 2023-04-04T10:00:33.110
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -40,11 +40,11 @@ F source/chat.asm e867460b1254a192a93388df423855385bb9f01a
 F source/commands.asm 7aaea79082e69351e10496fedfb0da6208c3c602
 F source/create.sql 73afce595f20388afc7d1b70f984307bf4705f6f
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
-F source/edit.asm de26c9314a6afef1f0344572654b4620f408697f
+F source/edit.asm 944ff6ab9791b1226421ad16dfa24ff50b29ca5c
 F source/editedpost.sql b0e04b212754882e34bd2d047f2ad23fd2c4aae2
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm 82c71f1f23fcce0956980164f9fc6163026c3960
-F source/engine.fpr 7cca45365dd954c9dc0dc4defdd3ecaa380e6f9d
+F source/engine.fpr c3662a4ee4a4b662ab52ed3c2cef1ced225eb128
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 3c09da9efa9b6004aec1790f2c453a40a2fed1b5
@@ -61,7 +61,7 @@ F source/migration3.sql deddb3b4995f9b8d5ee559980517555aeb383135
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
 F source/phpbb.sql 6820a2092cc30a774c44d770055b37b66bdbfaf0
 F source/phpbb_pm.sql f88eaf899e72d4e99f367cb654b41695da2231d5
-F source/post.asm cf131d792a5013f1193c9c9fc9d1363b849120da
+F source/post.asm af62fc6649cbeb61ead867b352615cadbba3f9e7
 F source/post_data.asm 77a9f2a64c21e55774e613d77837361967f589d9
 F source/postdebug.asm 64cdaacd1e7106cb25bd74796254aace1763e6c3
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
@@ -90,7 +90,6 @@ F source/tests/Test1.tpl 3787fb082cb7f6404ff4631fd6ca67ed14c7beac
 F source/tests/test_templates.asm 9fbe778c983448663d18c9cc2cc3cd9d0107e93b
 F source/tests/test_templates.fpr 0b6d692c0d55f91a6e310f622a6fe2c49c06ddf9
 F source/text_constants.asm 4cf8d35c9cfc22bde974b577a9893ebcfd07d2f2
-F source/thread_attr.sql 96f479d9e4ab2a93221b81be1bbb8a8ba6e277f3
 F source/threadcount.sql 897aa66b52dbe48ed09391442d3b288c36cbabff
 F source/threadinfo.sql 3adb203468e7bdda2bd759fb6eacdbe73d7a3775
 F source/threadlist.asm fd6dc9e977a54586fc9d4e1b2a4c57a93da3b1f8
@@ -630,11 +629,8 @@ F www/templates/Urban\sSunrise/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a
 F www/templates/Urban\sSunrise/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
 F www/templates/Urban\sSunrise/file-browse.js f24eef322b130b2715410431ea4199679de5f65b
 F www/templates/Urban\sSunrise/form_edit.tpl 0a4ee5888a3f777f5beeea8d3f727a9cf0a601d9
-F www/templates/Urban\sSunrise/form_edit_thread.tpl 5a945545cbe5479ce0c6cb3cbaae2ead78e74a4f
 F www/templates/Urban\sSunrise/form_editinfo.tpl e66590e7fd6b77e4927dd6da0d0d1fc8387c161f
 F www/templates/Urban\sSunrise/form_login.tpl fe8b409f221a5553ee0f40bde655fa3cb276485f
-F www/templates/Urban\sSunrise/form_new_post.tpl 1f9be171769e45bab5335e0707ab67268ef7b31b
-F www/templates/Urban\sSunrise/form_new_thread.tpl 270f847f90c3a2cef8fdca71c106781f7b4a516a
 F www/templates/Urban\sSunrise/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
 F www/templates/Urban\sSunrise/form_register.tpl 02cc15121365375ffe92866cfe46ae944ef1855b
 F www/templates/Urban\sSunrise/form_reset_password.tpl d9aa084867bfc75045a93db88af361770a960158
@@ -931,7 +927,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P db37e07250741e754ea6c1f81c6d7b78d775d66c
-R b4865727e6c2873fdb45fe92084b7ee4
+P f52047583bcff5ebe4e6bd038e9dace4c415caf8
+R 1d64eabf6450082bc9756bfa3f36ab8e
 U johnfound
-Z d5062a2b7db6095f4492984e7f51ed86
+Z ebb9586e793c73f8196ab258a35cc0d7

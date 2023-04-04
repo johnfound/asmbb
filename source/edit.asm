@@ -156,6 +156,22 @@ begin
         stdcall GetPostInt, [esi+TSpecialParams.post_array], txt "format", 0
         mov     [.format], eax
 
+; check the post interval limits
+
+        mov     ecx, [esi+TSpecialParams.userPostInterval]
+        test    ecx, ecx
+        jz      .interval_ok
+
+        stdcall GetTime
+        sub     eax, dword [esi+TSpecialParams.userLastPostTime]
+        sbb     edx, dword [esi+TSpecialParams.userLastPostTime + 4]
+        jnz     .show_edit_form
+
+        cmp     eax, ecx
+        jl      .show_edit_form
+
+.interval_ok:
+
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "submit", 0
         stdcall StrDel, eax
         test    eax, eax
@@ -483,11 +499,67 @@ endp
 
 
 
+
+
 proc EditThreadAttr, .pSpecial
 
 .stmt dd ?
 
 begin
+        pushad
 
+        mov     esi, [.pSpecial]
+
+        stdcall TextCreate, sizeof.TText
+        mov     edi, eax        ; the result string!
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadID, sqlGetThreadID.length , eax, 0
+
+        mov     eax, [esi+TSpecialParams.thread]
+        test    eax, eax
+        jz      .error_missing_thread
+
+        stdcall StrPtr, eax
+        cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .error_missing_thread
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        mov     ebx, eax
+
+        cinvoke sqliteFinalize, [.stmt]
+
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlThreadFirstPost, sqlThreadFirstPost.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, ebx
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        jne     .error_missing_thread
+
+        cinvoke sqliteColumnInt, [.stmt], 0     ; postID
+        mov     ebx, eax
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        stdcall NumToStr, ebx, ntsDec or ntsUnsigned
+        stdcall StrCat, eax, txt "/!edit"
+        push    eax
+
+        stdcall TextMakeRedirect, edi, eax
+        stdcall StrDel ; from the stack
+        jmp     .finish
+
+
+.error_missing_thread:
+        cinvoke sqliteFinalize, [.stmt]
+        stdcall TextMakeRedirect, edi, "/!message/error_thread_not_exists/"
+
+.finish:
+        stc
+        mov     [esp+4*regEAX], edi
+        popad
         return
 endp

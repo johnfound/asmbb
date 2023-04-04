@@ -2,35 +2,20 @@ LIMIT_POST_LENGTH = 16*1024
 LIMIT_POST_CAPTION = 512
 LIMIT_TAG_DESCRIPTION = 1024
 
-cNewPostForm     text "form_new_post.tpl"
-cNewThreadForm   text "form_new_thread.tpl"
 
-sqlSelectConst   text "select ?1 as slug, ?2 as caption, ?3 as source, ?4 as ticket, ?5 as tags, ?6 as limited, ?7 as invited, ?8 as UserName, ?9 as format"
 sqlGetQuote      text "select U.nick, P.content from Posts P left join Users U on U.id = P.userID where P.id = ?"
 
-sqlInsertPost    text "insert into Posts ( ThreadID, UserID, PostTime, Content, format) values (?, ?, strftime('%s','now'), ?, ?)"
-sqlUpdateThreads text "update Threads set LastChanged = strftime('%s','now') where id = ?"
-sqlInsertThread  text "insert into Threads ( Caption ) values ( ? )"
-sqlSetThreadSlug text "update Threads set slug = ?1, Limited=?3 where id = ?2"
+sqlInsertThread  text "insert into Threads ( Limited ) values ( ?1 )"
+sqlInsertPost    text "insert into Posts ( ThreadID, UserID, Content, format) values (?1, ?2, ?3, ?4)"
 
 
 proc PostUserMessage, .pSpecial
 .stmt  dd ?
 .stmt2 dd ?
 
-.slug     dd ?
-
-.caption  dd ?
-.tags     dd ?
+.threadID dd ?
 .fLimited dd ?
 .iFormat  dd ?
-.invited  dd ?
-.count    dd ?
-
-.source   dd ?
-.ticket   dd ?
-
-.softPreview dd ?
 
 begin
         pushad
@@ -41,19 +26,10 @@ begin
         mov     [.fLimited], eax
 
         xor     eax, eax
-        mov     [.softPreview], eax
-        mov     [.slug], eax
-        mov     [.source], eax
-        mov     [.caption], eax
-        mov     [.tags], eax
-        mov     [.invited], eax
-        mov     [.ticket], eax
-        mov     [.stmt], eax
-        mov     [.stmt2], eax
+        mov     [.threadID], eax
 
         stdcall GetParam, txt "default_format", gpInteger       ; eax must == 0 before this call.
         mov     [.iFormat], eax
-
 
         stdcall TextCreate, sizeof.TText
         mov     edi, eax
@@ -74,117 +50,28 @@ begin
 
         stdcall LogUserActivity, esi, uaWritingPost, 0
 
-; get the additional post/thread parameters
-
         cmp     [esi+TSpecialParams.thread], 0
-        jne     .get_caption_from_thread
+        je      .thread_ok
 
-
-        cmp     [esi+TSpecialParams.post_array], 0
-        je      .show_edit_form
-
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "title", 0
-        mov     [.caption], eax
-        test    eax, eax
-        jz      .title_ok
-
-        stdcall StrByteUtf8, [.caption], LIMIT_POST_CAPTION
-        stdcall StrTrim, [.caption], eax
-
-.title_ok:
-
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "tags", 0
-;        stdcall UniqueTagList, eax, [esi+TSpecialParams.dir]
-        mov     [.tags], eax
-
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "limited", txt "0"
-        push    eax
-        stdcall StrToNumEx, eax
-        stdcall StrDel ; from the stack
-        mov     [.fLimited], eax
-
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "invited", 0
-        mov     [.invited], eax
-
-        jmp     .thread_ok
-
-
-.get_caption_from_thread:
+; get existing thread ID
 
         lea     eax, [.stmt]
-
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, sqlGetThreadInfo.length, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadID, sqlGetThreadID.length, eax, 0
 
         stdcall StrPtr, [esi+TSpecialParams.thread]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
-
         cmp     eax, SQLITE_ROW
         jne     .error_thread_not_exists
 
-        cinvoke sqliteColumnText, [.stmt], 1
-        stdcall StrDupMem, eax
-        mov     [.caption], eax
+        cinvoke sqliteColumnInt, [.stmt], 0
+        mov     [.threadID], eax
 
         cinvoke sqliteFinalize, [.stmt]
 
 .thread_ok:
 
-; get the ticket if any
-
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "ticket", 0
-        mov     [.ticket], eax
-
-; get the source
-
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "source", 0
-        mov     [.source], eax
-        test    eax, eax
-        jz      .source_ok2
-
-        mov     eax, LIMIT_POST_LENGTH
-        stdcall GetParam, 'max_post_length', gpInteger
-
-        mov     ecx, [esi+TSpecialParams.userMaxPostLen]
-        test    ecx, ecx
-        jz      .max_len_ok
-
-        cmp     eax, ecx
-        cmovg   eax, ecx
-
-.max_len_ok:
-        stdcall StrByteUtf8, [.source], eax
-        stdcall StrTrim, [.source], eax
-
-.source_ok2:
-
-; get the format.
-
-        stdcall NumToStr, [.iFormat], ntsUnsigned or ntsDec
-        push    eax
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "format", eax
-        push    eax
-        stdcall StrToNumEx, eax
-        stdcall StrDel ; from the stack
-        stdcall StrDel ; from the stack
-        mov     [.iFormat], eax
-
-; check the post interval limits
-
-        mov     ecx, [esi+TSpecialParams.userPostInterval]
-        test    ecx, ecx
-        jz      .interval_ok
-
-        stdcall GetTime
-        sub     eax, dword [esi+TSpecialParams.userLastPostTime]
-        sbb     edx, dword [esi+TSpecialParams.userLastPostTime + 4]
-        jnz     .show_edit_form
-
-        cmp     eax, ecx
-        jl      .show_edit_form
-
-.interval_ok:
 ; ok, get the action then:
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "submit", 0
