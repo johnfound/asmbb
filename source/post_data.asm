@@ -656,6 +656,10 @@ begin
         stdcall ValueByName, [.post_array], [.name]
         jc      .finish
 
+        cmp     eax, $c0000000
+        cmovb   eax, [.default]
+        jb      .finish
+
         stdcall StrToNumEx, eax
 
 .finish:

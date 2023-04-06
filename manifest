@@ -1,5 +1,5 @@
-C Apply\sthe\spost\sinterval\slimits\sin\s!edit.\sDelete\sthe\sredundant\stemplates.
-D 2023-04-04T10:00:33.110
+C Fixed\sGetPostInt.\sSome\swork\son\s!post.
+D 2023-04-06T20:00:37.965
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -61,8 +61,8 @@ F source/migration3.sql deddb3b4995f9b8d5ee559980517555aeb383135
 F source/newfts.sql c3c6af06c950fe7051c8893a4a829e0e7e4cc7b1
 F source/phpbb.sql 6820a2092cc30a774c44d770055b37b66bdbfaf0
 F source/phpbb_pm.sql f88eaf899e72d4e99f367cb654b41695da2231d5
-F source/post.asm af62fc6649cbeb61ead867b352615cadbba3f9e7
-F source/post_data.asm 77a9f2a64c21e55774e613d77837361967f589d9
+F source/post.asm a099360a9830a522f5756aac11bf0c12974f022b
+F source/post_data.asm e5b4d57dd287332f7a7dd033685c64657fd210f1
 F source/postdebug.asm 64cdaacd1e7106cb25bd74796254aace1763e6c3
 F source/posthistory.sql 74ed4e8bf538fb8660998925cd9877a290db352f
 F source/readpost.sql 696f04ba6176026bb9ce300d35581370fad06b9e
@@ -927,7 +927,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P f52047583bcff5ebe4e6bd038e9dace4c415caf8
-R 1d64eabf6450082bc9756bfa3f36ab8e
+P 4f4adb603259085ae7804c50cd1bb70ba1477be8
+R 63a65725d50f7f9accc5a889a4a7c264
 U johnfound
-Z ebb9586e793c73f8196ab258a35cc0d7
+Z 0ea68bcdfa474ef441c085bd9647ae90

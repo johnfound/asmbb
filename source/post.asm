@@ -79,7 +79,7 @@ begin
         test    eax, eax
         jnz     .create_post_and_exit
 
-        cmp     [.source], 0
+;        cmp     [.source], 0
         jne     .show_edit_form
 
         mov     ebx, [esi+TSpecialParams.page_num]
@@ -114,17 +114,17 @@ begin
 
 .do_quote:
         stdcall StrDupMem       ; argument from the stack
-        mov     [.source], eax          ; [.source] should be 0 at this point!!!
+;        mov     [.source], eax          ; [.source] should be 0 at this point!!!
 
         cinvoke sqliteColumnText, [.stmt], 0    ; the user nick name.
-        stdcall StrCat, [.source], eax
+;        stdcall StrCat, [.source], eax
 
-        stdcall StrCat, [.source]       ; the second argument from the stack.
+;        stdcall StrCat, [.source]       ; the second argument from the stack.
 
         cinvoke sqliteColumnText, [.stmt], 1
-        stdcall StrCat, [.source], eax
+;        stdcall StrCat, [.source], eax
 
-        stdcall StrCat, [.source]       ; the second argument from the stack.
+;        stdcall StrCat, [.source]       ; the second argument from the stack.
 
 .finalize_quote:
 
@@ -143,16 +143,16 @@ begin
         stdcall StrDel, eax
         jnc     .js_preview_ok
 
-        inc     [.softPreview]
+;        inc     [.softPreview]
 
 .js_preview_ok:
         mov     eax, [esi+TSpecialParams.userLang]
 
-        cmp     [.caption], 0
+;        cmp     [.caption], 0
         je      .title_new_thread
 
         stdcall StrCat, [esi+TSpecialParams.page_title], [cPostingInTitle+8*eax]
-        stdcall StrEncodeHTML, [.caption]
+;        stdcall StrEncodeHTML, [.caption]
         stdcall StrCat, [esi+TSpecialParams.page_title], eax
         stdcall StrDel, eax
         jmp     .title_set
@@ -163,17 +163,17 @@ begin
 
 .title_set:
 
-        cmp     [.ticket], 0
+;        cmp     [.ticket], 0
         jne     .ticket_ok
 
         stdcall SetUniqueTicket, [esi+TSpecialParams.session]
         jc      .error_bad_ticket
 
-        mov     [.ticket], eax
+;        mov     [.ticket], eax
 
 .ticket_ok:
-        lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectConst, sqlSelectConst.length, eax, 0
+;        lea     eax, [.stmt]
+;        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSelectConst, sqlSelectConst.length, eax, 0
 
         cmp     [esi+TSpecialParams.thread], 0
         je      .slug_ok
@@ -183,36 +183,36 @@ begin
 
 .slug_ok:
 
-        cmp     [.caption], 0
+;        cmp     [.caption], 0
         je      .caption_ok
 
-        stdcall StrPtr, [.caption]
+;        stdcall StrPtr, [.caption]
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 
 .caption_ok:
 
-        cmp     [.source], 0
+;        cmp     [.source], 0
         je      .source_ok
 
-        stdcall StrPtr, [.source]
+;        stdcall StrPtr, [.source]
         cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
 
 .source_ok:
 
-        stdcall StrPtr, [.ticket]
+;        stdcall StrPtr, [.ticket]
         cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
 
-        cmp     [.tags], 0
+;        cmp     [.tags], 0
         je      .tags_zero
 
-        stdcall StrPtr, [.tags]
+;        stdcall StrPtr, [.tags]
         cinvoke sqliteBindText, [.stmt], 5, eax, [eax+string.len], SQLITE_STATIC
 
 .tags_zero:
 
         cinvoke sqliteBindInt, [.stmt], 6, [.fLimited]
 
-        stdcall StrPtr, [.invited]
+;        stdcall StrPtr, [.invited]
         test    eax, eax
         jz      .invited_ok
 
@@ -232,7 +232,7 @@ begin
         cinvoke sqliteStep, [.stmt]
 
 ; is it request from JS?
-        shr     [.softPreview], 1
+;        shr     [.softPreview], 1
         jnc     .render_all
 
         stdcall TextAddStr2, edi, 0, cHeadersJSON, cHeadersJSON.length
@@ -246,11 +246,11 @@ begin
 
 
 .render_all:
-        mov     ecx, cNewThreadForm
+;        mov     ecx, cNewThreadForm
         cmp     [esi+TSpecialParams.thread], 0
         je      .make_form
 
-        mov     ecx, cNewPostForm
+;        mov     ecx, cNewPostForm
 
 .make_form:
 
@@ -269,15 +269,15 @@ begin
 
 .create_post_and_exit:
 
-        cmp     [.caption], 0
+;        cmp     [.caption], 0
         je      .show_edit_form
 
-        cmp     [.source], 0
+;        cmp     [.source], 0
         je      .show_edit_form
 
 ; check the ticket
 
-        stdcall CheckTicket, [.ticket], [esi+TSpecialParams.session]
+;        stdcall CheckTicket, [.ticket], [esi+TSpecialParams.session]
         jc      .error_bad_ticket
 
 ; begin transaction!
@@ -294,7 +294,7 @@ begin
         je      .new_thread
 
         stdcall StrDup, [esi+TSpecialParams.thread]
-        mov     [.slug], eax
+;        mov     [.slug], eax
 
         jmp     .post_in_thread
 
@@ -303,14 +303,10 @@ begin
 
 .new_thread:
 
-locals
-  .threadID dd ?
-endl
-
         DebugMsg "Create new thread"
 
-        stdcall StrSlugify, [.caption]
-        mov     [.slug], eax
+;        stdcall StrSlugify, [.caption]
+;        mov     [.slug], eax
 
         stdcall StrLen, eax
         test    eax, eax
@@ -319,10 +315,10 @@ endl
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertThread, sqlInsertThread.length, eax, 0
 
-        cmp     [.caption], 0
+;        cmp     [.caption], 0
         je      .rollback
 
-        stdcall StrPtr, [.caption]
+;        stdcall StrPtr, [.caption]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
@@ -337,17 +333,17 @@ endl
 
         stdcall NumToStr, eax, ntsDec or ntsUnsigned
 
-        stdcall StrCat, [.slug], txt "."
-        stdcall StrCat, [.slug], eax
+;        stdcall StrCat, [.slug], txt "."
+;        stdcall StrCat, [.slug], eax
         stdcall StrDel, eax
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetThreadSlug, sqlSetThreadSlug.length, eax, 0
+;        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSetThreadSlug, sqlSetThreadSlug.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 2, [.threadID]
 
         cinvoke sqliteBindInt, [.stmt], 3, [.fLimited]
 
-        stdcall StrPtr, [.slug]
+;        stdcall StrPtr, [.slug]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
@@ -360,12 +356,12 @@ endl
 
 ; here process the tags
 
-        stdcall SaveThreadTags, [.tags], [esi+TSpecialParams.dir], [.threadID]
+;        stdcall SaveThreadTags, [.tags], [esi+TSpecialParams.dir], [.threadID]
 
         DebugMsg "Thread is created. Write invited."
 
 ; Process invited users for the limited access thread:
-        stdcall SaveInvited, [.fLimited], [.invited], [esi+TSpecialParams.userName], [.threadID]
+;        stdcall SaveInvited, [.fLimited], [.invited], [esi+TSpecialParams.userName], [.threadID]
 
 .post_in_thread:
 
@@ -374,7 +370,7 @@ endl
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadInfo, sqlGetThreadInfo.length, eax, 0
 
-        stdcall StrPtr, [.slug]
+;        stdcall StrPtr, [.slug]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
@@ -394,12 +390,12 @@ endl
         cinvoke sqliteBindInt, [.stmt], 1, ebx
         cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.userID]
 
-        cmp     [.source], 0
+;        cmp     [.source], 0
         je      .error_invalid_content
 
 ; bind the source
 
-        stdcall StrPtr, [.source]
+;        stdcall StrPtr, [.source]
 
         mov     ecx, [eax+string.len]
         test    ecx, ecx
@@ -429,7 +425,7 @@ endl
 ; Update thread LastChanged
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateThreads, sqlUpdateThreads.length, eax, 0
+;        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateThreads, sqlUpdateThreads.length, eax, 0
 
         cinvoke sqliteBindInt, [.stmt], 1, ebx
         cinvoke sqliteStep, [.stmt]
@@ -482,16 +478,16 @@ endl
 
 .finish_clear:
         mov     eax, [.pSpecial]
-        stdcall ClearTicket3, [.ticket]
+;        stdcall ClearTicket3, [.ticket]
         stc
 
 .finish:
-        stdcall StrDel, [.slug]
-        stdcall StrDel, [.source]
-        stdcall StrDel, [.caption]
-        stdcall StrDel, [.tags]
-        stdcall StrDel, [.invited]
-        stdcall StrDel, [.ticket]
+;        stdcall StrDel, [.slug]
+;        stdcall StrDel, [.source]
+;        stdcall StrDel, [.caption]
+;        stdcall StrDel, [.tags]
+;        stdcall StrDel, [.invited]
+;        stdcall StrDel, [.ticket]
 
         mov     [esp+4*regEAX], edi
         popad
