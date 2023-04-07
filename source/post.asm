@@ -3,10 +3,14 @@ LIMIT_POST_CAPTION = 512
 LIMIT_TAG_DESCRIPTION = 1024
 
 
-sqlGetQuote      text "select U.nick, P.content from Posts P left join Users U on U.id = P.userID where P.id = ?"
+sqlGetQuote      text "select U.nick, P.content, P.format from Posts P left join Users U on U.id = P.userID where P.id = ?"
 
 sqlInsertThread  text "insert into Threads ( Limited ) values ( ?1 )"
 sqlInsertPost    text "insert into Posts ( ThreadID, UserID, Content, format) values (?1, ?2, ?3, ?4)"
+
+sqlCheckForDrafts text "select P.id as PostID, T.ID as ThreadID, T.Caption, T.slug, T.LastChanged from posts left join threads T on P.threadid = T.id where P.userID = ?1 and P.postTime is null"
+sqlDelDraftPost   text "delete from posts where id = ?1"
+sqlDelDraftThread text "delete from threads where id = ?1"
 
 
 proc PostUserMessage, .pSpecial
@@ -71,6 +75,28 @@ begin
         cinvoke sqliteFinalize, [.stmt]
 
 .thread_ok:
+
+        cmp     [esi+TSpecialParams.post_array], 0
+        jne     .execute_post_request
+
+; check for draft
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckForDrafts, sqlCheckForDrafts.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.userID]
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_ROW
+        je      .show_form
+
+
+; create the post/thread and redirect to the editor.
+
+.create_post_and_edit:
+
+
+
+
+.execute_post_request:
 
 ; ok, get the action then:
 
