@@ -18,6 +18,14 @@ proc PostUserMessage, .pSpecial
 .stmt2 dd ?
 
 .threadID dd ?
+.postID   dd ?
+
+.draftPostID    dd ?
+.draftThreadID  dd ?
+.draftNewThread dd ?
+
+.source   dd ?
+
 .fLimited dd ?
 .iFormat  dd ?
 
@@ -52,8 +60,6 @@ begin
         test    [esi+TSpecialParams.userStatus], eax
         jz      .error_wrong_permissions
 
-        stdcall LogUserActivity, esi, uaWritingPost, 0
-
         cmp     [esi+TSpecialParams.thread], 0
         je      .thread_ok
 
@@ -76,41 +82,113 @@ begin
 
 .thread_ok:
 
-        cmp     [esi+TSpecialParams.post_array], 0
-        jne     .execute_post_request
-
-; check for draft
+; check for existing draft
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckForDrafts, sqlCheckForDrafts.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.userID]
         cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
         cmp     eax, SQLITE_ROW
-        je      .show_form
+        jne     .finalize_check_drafts
+
+        cinvoke sqliteColumnInt, [.stmt], 0
+        mov     [.draftPostID], eax
+
+        cinvoke sqliteColumnInt, [.stmt], 1
+        mov     [.draftThreadID], eax
+
+        cinvoke sqliteColumnType, [.stmt], 4    ; LastChanged
+        cmp     eax, SQLITE_NULL
+        jne     @f
+        inc     [.draftNewThread]
+@@:
+        cmp     [esi+TSpecialParams.post_array], 0
+        je      .show_form_dialog
+
+.finalize_check_drafts:
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     [esi+TSpecialParams.post_array], 0
+        je      .create_post_and_edit
+
+
+.execute_post_request:
+
+; ok, get the action:
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt 'ticket', 0
+        push    eax
+
+        stdcall CheckTicket, eax, [esi+TSpecialParams.session]
+        stdcall StrDel ; from the stack
+        jc      .error_bad_ticket
+
+
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "submit", 0
+        push    eax
+
+        test    eax, eax
+        jz      .cancel_action
+
+        stdcall StrCompNoCase, eax, txt "delete"
+        jc      .delete_draft
+
+        stdcall StrCompNoCase, eax, txt "editdraft"
+        jc      .edit_draft
+
+
+.cancel_action:
+; redirect to back.
+
+        stdcall GetBackLink, esi
+        push    eax
+
+        stdcall TextMakeRedirect, edi, eax
+        stdcall StrDel ; from the stack
+
+        jmp     .finish_clear
+
+.edit_draft:
+
+        jmp     .finish_clear
+
+
+.delete_draft:
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlDelDraftPost, sqlDelDraftPost.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.draftPostID]
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     ebx, SQLITE_DONE
+        jne     .error_thread_not_exists
+
+        cmp     [.draftNewThread], 0
+        je      .create_post_and_edit
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlDelDraftThread, sqlDelDraftThread.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.draftThreadID]
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     ebx, SQLITE_DONE
+        jne     .error_thread_not_exists
 
 
 ; create the post/thread and redirect to the editor.
 
 .create_post_and_edit:
 
-
-
-
-.execute_post_request:
-
-; ok, get the action then:
-
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "submit", 0
-        stdcall StrDel, eax
-        test    eax, eax
-        jnz     .create_post_and_exit
-
-;        cmp     [.source], 0
-        jne     .show_edit_form
+        stdcall LogUserActivity, esi, uaWritingPost, 0
 
         mov     ebx, [esi+TSpecialParams.page_num]
         test    ebx, ebx
-        jz      .show_edit_form
+        jz      .quote_ok
 
 ; get the quoted text
 
@@ -140,24 +218,112 @@ begin
 
 .do_quote:
         stdcall StrDupMem       ; argument from the stack
-;        mov     [.source], eax          ; [.source] should be 0 at this point!!!
+        mov     [.source], eax          ; [.source] should be 0 at this point!!!
 
         cinvoke sqliteColumnText, [.stmt], 0    ; the user nick name.
-;        stdcall StrCat, [.source], eax
+        stdcall StrCat, [.source], eax
 
-;        stdcall StrCat, [.source]       ; the second argument from the stack.
+        stdcall StrCat, [.source]       ; the second argument from the stack.
 
         cinvoke sqliteColumnText, [.stmt], 1
-;        stdcall StrCat, [.source], eax
+        stdcall StrCat, [.source], eax
 
-;        stdcall StrCat, [.source]       ; the second argument from the stack.
+        stdcall StrCat, [.source]       ; the second argument from the stack.
 
 .finalize_quote:
 
         cinvoke sqliteFinalize, [.stmt]
 
 
-.show_edit_form:
+.quote_ok:
+
+; now, create the new post and if needed a new thread.
+
+; begin transaction!
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBegin, sqlBegin.length, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_DONE
+        jne     .rollback
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     [.threadID], 0
+        jne     .post_in_thread
+
+; create new thread, from the post data
+
+        DebugMsg "Create new thread"
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertThread, sqlInsertThread.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.fLimited]
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_DONE
+        jne     .rollback
+
+        cinvoke sqliteFinalize, [.stmt]
+
+        cinvoke sqliteLastInsertRowID, [hMainDatabase]
+        mov     [.threadID], eax
+
+        cmp     [esi+TSpecialParams.dir], 0
+        je      .tags_ok
+
+; here process the tags
+        DebugMsg "Thread is created. Write the tags"
+        stdcall SaveThreadTags, 0, [esi+TSpecialParams.dir], [.threadID]
+
+.tags_ok:
+; Process invited users for the limited access thread:
+        DebugMsg "Thread is created. Write invited."
+        stdcall SaveInvited, [.fLimited], 0, [esi+TSpecialParams.userName], [.threadID]
+
+.post_in_thread:
+        DebugMsg "Post in this thread."
+
+; insert new post
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlInsertPost, sqlInsertPost.length, eax, 0
+
+        cinvoke sqliteBindInt, [.stmt], 1, [.threadID]
+        cinvoke sqliteBindInt, [.stmt], 2, [esi+TSpecialParams.userID]
+
+        stdcall StrPtr, [.source]
+        test    eax, eax
+        jz      @f
+        cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
+@@:
+        cinvoke sqliteBindInt, [.stmt], 4, [.iFormat]
+
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_DONE
+        jne     .rollback
+
+        cinvoke sqliteFinalize, [.stmt]
+        cinvoke sqliteLastInsertRowID, [hMainDatabase]
+        mov     [.postID], eax
+
+; commit transaction
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCommit, sqlCommit.length, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        cmp     eax, SQLITE_DONE
+        jne     .rollback
+
+        cinvoke sqliteFinalize, [.stmt]
+
+; redirect to the editor
+
+        stdcall TextMakeRedirect, edi, txt "!edit"
+        jmp     .finish_clear
+
+
+
+.show_form_dialog:
         stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
         mov     ebx, eax
 
@@ -295,11 +461,14 @@ begin
 
 .create_post_and_exit:
 
+
+
+
 ;        cmp     [.caption], 0
-        je      .show_edit_form
+;        je      .show_edit_form
 
 ;        cmp     [.source], 0
-        je      .show_edit_form
+;        je      .show_edit_form
 
 ; check the ticket
 
@@ -389,7 +558,7 @@ begin
 ; Process invited users for the limited access thread:
 ;        stdcall SaveInvited, [.fLimited], [.invited], [esi+TSpecialParams.userName], [.threadID]
 
-.post_in_thread:
+;.post_in_thread:
 
         DebugMsg "Post in this thread."
 
