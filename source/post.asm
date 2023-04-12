@@ -8,7 +8,7 @@ sqlGetQuote      text "select U.nick, P.content, P.format from Posts P left join
 sqlInsertThread  text "insert into Threads ( Limited ) values ( ?1 )"
 sqlInsertPost    text "insert into Posts ( ThreadID, UserID, Content, format) values (?1, ?2, ?3, ?4)"
 
-sqlCheckForDrafts text "select P.id as PostID, T.ID as ThreadID, T.Caption, T.slug, T.LastChanged, ?2 as Ticket from posts left join threads T on P.threadid = T.id where P.userID = ?1 and P.postTime is null"
+sqlCheckForDrafts text "select P.id as PostID, T.ID as ThreadID, T.Caption, T.slug, T.LastChanged, ?2 as Ticket from posts P left join threads T on P.threadid = T.id where P.userID = ?1 and P.postTime is null"
 sqlDelDraftPost   text "delete from posts where id = ?1"
 sqlDelDraftThread text "delete from threads where id = ?1"
 
@@ -42,6 +42,7 @@ begin
         mov     [.postID], eax
         mov     [.draftPostID], eax
         mov     [.draftThreadID], eax
+        mov     [.draftNewThread], eax
         mov     [.source], eax
         mov     [.ticket], eax
         mov     [.iFormat], eax
@@ -98,6 +99,10 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckForDrafts, sqlCheckForDrafts.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [esi+TSpecialParams.userID]
+
+        stdcall StrPtr, [.ticket]
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
+
         cinvoke sqliteStep, [.stmt]
         mov     ebx, eax
         cmp     eax, SQLITE_ROW
@@ -128,6 +133,8 @@ begin
 
 ; ok, get the action:
 
+;        stdcall DumpPostArray, esi
+
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt 'ticket', 0
         push    eax
 
@@ -135,7 +142,7 @@ begin
         stdcall StrDel ; from the stack
         jc      .error_bad_ticket
 
-        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "submit", 0
+        stdcall GetPostString, [esi+TSpecialParams.post_array], txt "action", 0
         push    eax
 
         test    eax, eax
@@ -144,28 +151,29 @@ begin
         stdcall StrCompNoCase, eax, txt "delete"
         jc      .delete_draft
 
-        stdcall StrCompNoCase, eax, txt "editdraft"
+        stdcall StrCompNoCase, eax, txt "edit"
         jc      .edit_draft
 
 
 .cancel_action:
 ; redirect to back.
-
-        stdcall GetBackLink, esi
-        push    eax
-
-        stdcall TextMakeRedirect, edi, eax
         stdcall StrDel ; from the stack
 
+        stdcall TextMakeRedirect, edi, txt "." ;; eax
         jmp     .finish_clear
 
 
 .edit_draft:
+        stdcall StrDel ; from the stack
 
+        push    [.draftPostID]
+
+.redirect_to_editor:
         stdcall StrDupMem, txt "/"
         mov     ebx, eax
 
-        stdcall NumToStr, [.postID], ntsDec or ntsUnsigned
+        pop     eax
+        stdcall NumToStr, eax, ntsDec or ntsUnsigned
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax
 
@@ -175,6 +183,7 @@ begin
 
 
 .delete_draft:
+        stdcall StrDel ; from the stack
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlDelDraftPost, sqlDelDraftPost.length, eax, 0
@@ -353,13 +362,13 @@ begin
 
 ; redirect to the editor
 
-        stdcall TextMakeRedirect, edi, txt "!edit"
-        jmp     .finish_clear
+        push    [.postID]
+        jmp     .redirect_to_editor
 
 
 .show_form_dialog:
 
-        stdcall RenderTemplate, edi, txt "form_draft_exists.tpl", [.stmt], esi
+        stdcall RenderTemplate, edi, txt "form_draft_dlg.tpl", [.stmt], esi
         mov     edi, eax
 
         cinvoke sqliteFinalize, [.stmt]

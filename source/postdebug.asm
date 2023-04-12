@@ -30,7 +30,13 @@ begin
 
         stdcall FileWriteString, [STDERR], [edx+TArray.array + 8*ecx]
         stdcall FileWriteString, [STDERR], txt ' : '
+
+        mov     eax, [edx+TArray.array + 8*ecx + 4]
+        test    eax, eax
+        jz      .value_ok
         stdcall FileWriteString, [STDERR], [edx+TArray.array + 8*ecx + 4]
+
+.value_ok:
         stdcall FileWriteString, [STDERR], <txt 13, 10>
 
         inc     ecx
