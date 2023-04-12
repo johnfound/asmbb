@@ -39,6 +39,12 @@ begin
 
         xor     eax, eax
         mov     [.threadID], eax
+        mov     [.postID], eax
+        mov     [.draftPostID], eax
+        mov     [.draftThreadID], eax
+        mov     [.source], eax
+        mov     [.ticket], eax
+        mov     [.iFormat], eax
 
         stdcall GetParam, txt "default_format", gpInteger       ; eax must == 0 before this call.
         mov     [.iFormat], eax
