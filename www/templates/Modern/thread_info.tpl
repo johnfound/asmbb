@@ -1,4 +1,5 @@
 [case:[special:lang]|
+  [equ:ttlNewThread=New thread... Not published yet.]
   [equ:ttlPinned=Pinned thread]
   [equ:ttlLimited=Limited access thread]
   [equ:ttlUnread=Go to first unread]
@@ -11,6 +12,7 @@
   [equ:unread=unread]
   [equ:Rating=Rating]
 |
+  [equ:ttlNewThread=Нова тема... Все още непубликувана.]
   [equ:ttlPinned=Забодена отгоре]
   [equ:ttlLimited=Тема с ограничен достъп]
   [equ:ttlUnread=Към първото непрочетено]
@@ -23,6 +25,7 @@
   [equ:unread=непрочетен[case:[Unread]|и|о|и]]
   [equ:Rating=Рейтинг]
 |
+  [equ:ttlNewThread=Новая тема... Пока не опубликована.]
   [equ:ttlPinned=Прикрепленная на верху]
   [equ:ttlLimited=Тема ограниченным доступом]
   [equ:ttlUnread=К первому непрочитанному]
@@ -35,6 +38,7 @@
   [equ:unread=непрочитанн[case:[Unread]|ых|ое|ых]]
   [equ:Rating=Рейтинг]
 |
+  [equ:ttlNewThread=Nouveau sujet... Pas encore publié.]
   [equ:ttlPinned=Sujet épinglé]
   [equ:ttlLimited=Sujet à accès limité]
   [equ:ttlUnread=Allez au premier non-lu]
@@ -47,6 +51,7 @@
   [equ:unread=non-lu[case:[Unread]|s||s]]
   [equ:Rating=Évaluation]
 |
+  [equ:ttlNewThread=Neues Thema... Noch nicht publiziert.]
   [equ:ttlPinned=Angeheftetes Thema]
   [equ:ttlLimited=Beschränktes Thema]
   [equ:ttlUnread=Springe zum ersten ungelesenen Beitrag]
@@ -61,6 +66,10 @@
 ]
 
 <div class="thread_summary">
+
+  [case:[LastChanged]|
+    <h2 class="unpublished">[const:ttlNewThread]</h2>
+  |
   <h2>
 
 [case:[Pinned]||<svg viewBox="0 -4 24 24" width="24" height="24" style="overflow:visible" xmlns="http://www.w3.org/2000/svg">
@@ -94,4 +103,5 @@
   [case:[limited]||<label><input type="checkbox" class="collapseit"><ul class="small comma invited">[const:Invited][html:[Invited]]</ul></label>]
   [case:[ThreadTags]||<ul class="small comma thread_tags">[const:Tags][html:[ThreadTags]]</ul>]
   <div class="thread_tags">[const:Rating]: <span id="thread_rating[id]">[Rating]</span></div>
+  ]
 </div>

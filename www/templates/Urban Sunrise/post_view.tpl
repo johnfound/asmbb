@@ -1,4 +1,5 @@
 [case:[special:lang]|
+  [equ:ttlUnpublished=New post... Not published yet.]
   [equ:tPosts=Posts]
   [equ:tCreated=Created [PostTime]]
   [equ:tEdited=Last edited: [EditTime] by]
@@ -8,6 +9,7 @@
   [equ:ttlDel=Delete this post]
   [equ:ttlHist=Show the post history]
 |
+  [equ:ttlUnpublished=Нов пост... Все още непубликуван.]
   [equ:tPosts=Постове]
   [equ:tCreated=Създадено на [PostTime]]
   [equ:tEdited=Последно редактирано на [EditTime] от]
@@ -17,6 +19,7 @@
   [equ:ttlDel=Изтрий това съобщение]
   [equ:ttlHist=Покажи историята на измененията]
 |
+  [equ:ttlUnpublished=Новый пост... Пока не опубликован.]
   [equ:tPosts=Посты]
   [equ:tCreated=Создано [PostTime]]
   [equ:tEdited=Отредактировано [EditTime], участником]
@@ -26,6 +29,7 @@
   [equ:ttlDel=Удалить сообщение]
   [equ:ttlHist=Показать историю изменений]
 |
+  [equ:ttlUnpublished=Nouveau message... Pas encore publié.]
   [equ:tPosts=Messages]
   [equ:tCreated=Crée le: [PostTime]]
   [equ:tEdited=Édité le: [EditTime] by]
@@ -35,6 +39,7 @@
   [equ:ttlDel=Supprimer ce message]
   [equ:ttlHist=Montrer l'historique du message]
 |
+  [equ:ttlUnpublished=Neuer Post... Noch nicht publiziert.]
   [equ:tPosts=Posts]
   [equ:tCreated=Erstellt am [PostTime]]
   [equ:tEdited=Zuletzt geändert: [EditTime] von]
@@ -59,6 +64,7 @@
     [case:[UserID]|<span|<a href="/!userinfo/[url:[html:[UserName]]]" class="user_name">
     [usr:[UserName]][case:[UserID]|</span>|</a>]
 
+  [case:[Unpublished]|
     <div>[case:[editUserID]|[const:tCreated]|[const:tEdited] <a href="/!userinfo/[url:[html:[EditUser]]]">[usr:[html:[EditUser]]]</a>], [const:tRead]</div>
 
     <div class="spacer"></div>
@@ -98,10 +104,15 @@
        <path d="m16 2c-6.08 0-11 4.92-11 11 0 6.08 4.92 11 11 11 6.08 0 11-4.92 11-11 0-6.08-4.92-11-11-11zm-1 2h2v8h6v2h-6v1.5h-2v-1.5h-1.5v-2h1.5z"/>
       </svg>
     </a>]]
+  |]
   </div>
 
   <article class="post-text">
+   [case:[Unpublished]|
     [html:[[case:[format]|minimag:[include:minimag_suffix.tpl]|bbcode:][Content]]]
+   |
+    <h2 class="unpublished">[const:ttlUnpublished]</h2>
+   ]
 
   </article>
 

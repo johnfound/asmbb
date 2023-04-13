@@ -106,3 +106,5 @@
 @clActivityBG: #105289;
 @clActivityFG: white;
 @clActivityLink: white;
+
+@clNotPublished: #a0a0a0;

@@ -105,6 +105,8 @@
 @clChatUser: @clPrimary0;
 @clFakeUser: @clSecondary20;
 
+@clNotPublished: #a0a0a0;
+
 @marginX: 8px;
 @marginY: 8px;
 

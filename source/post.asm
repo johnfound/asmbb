@@ -896,7 +896,7 @@ endp
 
 
 
-
+; Not implemented personalized notifications. ;)
 proc SendNewPostNotifications, .postID, .threadSlug, .threadCaption, .forUser
 begin
 
