@@ -223,9 +223,10 @@ begin
 
 .floop:
         shr     eax, 1
+        jc      .format_ok
+
         lea     ecx, [ecx+1]
-        jz      .format_ok
-        jnc     .floop
+        jnz     .floop
 
 .format_ok:
         mov     [.iFormat], ecx
@@ -247,8 +248,8 @@ begin
         cinvoke sqliteColumnInt, [.stmt], 2     ; format.
         mov     [.iFormat], eax
 
-        cmp     eax, 1  ; MiniMag
-        je      .minimag_quote
+        test    eax, eax  ; MiniMag
+        jz      .minimag_quote
 
 ;.bbcode_quote:
         pushx   txt "[/quote]", 13, 10

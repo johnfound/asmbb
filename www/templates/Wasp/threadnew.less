@@ -12,27 +12,6 @@ div.edit_groupR {
   padding-left: 8px;
 }
 
-div.new_editor {
-  label {
-    display: block;
-    color: @clColor1FG;
-    font-weight: bold;
-    margin: 4px 0px 8px 0px;
-  }
-
-  input[type="edit"] {
-    display: block;
-    width: 100%;
-    padding: 4px;
-    margin-bottom: 8px;
-    border: @borderEdit;
-    outline-style: none;
-
-    background-color: @clEditorBG;
-    color: @clEditorFG;
-  }
-}
-
 #users_invited {
   display: none;
 }
@@ -43,7 +22,7 @@ div.new_editor {
 
 #autocomplete {
   display: none;
-  position: fixed;
+  position: absolute;
   background-color: @clDarkBG;
   border: @borderEdit;
   color: @clDarkFG;
@@ -51,6 +30,7 @@ div.new_editor {
   margin: 0;
   overflow: auto;
   max-height: 20 * @LineH;
+  z-index: 1000;
   li {
     list-style: none;
     cursor: pointer;

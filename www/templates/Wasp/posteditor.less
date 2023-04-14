@@ -13,6 +13,25 @@ div.editor {
   background-color: @clFormBG;
   display: flex;
   flex-direction: column;
+
+  label {
+    display: block;
+    color: @clColor1FG;
+    font-weight: bold;
+    margin: 4px 0px 8px 0px;
+  }
+
+  input[type="edit"] {
+    display: block;
+    width: 100%;
+    padding: 4px;
+    margin-bottom: 8px;
+    border: @borderEdit;
+    outline-style: none;
+
+    background-color: @clEditorBG;
+    color: @clEditorFG;
+  }
 }
 
 

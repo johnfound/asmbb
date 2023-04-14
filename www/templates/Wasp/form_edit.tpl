@@ -1,9 +1,17 @@
 [css:navigation.css]
 [css:posts.css]
 [css:posteditor.css]
+[css:postnew.css]
+[css:threadnew.css]
 
 [case:[special:lang]|
   [equ:Caption=Thread title]
+  [equ:ttlTitle=Title]
+  [equ:phTitle=Thread title]
+  [equ:ttlTags=Tags: <span class="small">(max 3, comma delimited, no spaces)</span>]
+  [equ:phTags=some tags here]
+  [equ:ttlLimited=Limited access thread]
+  [equ:ttlInvited=Invited users (comma separated list)]
   [equ:Content=Post content]
   [equ:btnPreview=Preview]
   [equ:hintPreview=Ctrl+Enter for preview]
@@ -15,6 +23,12 @@
   [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
 |
   [equ:Caption=Заглавие на темата]
+  [equ:ttlTitle=Заглавие]
+  [equ:phTitle=Заглавие на темата]
+  [equ:ttlTags=Тагове: <span class="small">(макс. 3, разделени със запетаи, без шпации)</span>]
+  [equ:phTags=някакви тагове тук]
+  [equ:ttlLimited=Тема с ограничен достъп]
+  [equ:ttlInvited=Поканени в темата (разделени със запетаи)]
   [equ:Content=Съдържание на поста]
   [equ:btnPreview=Преглед]
   [equ:hintPreview=Ctrl+Enter за преглед]
@@ -26,6 +40,12 @@
   [equ:FileLimit=(брой ≤ 10, размер ≤ 1MB)]
 |
   [equ:Caption=Название темы]
+  [equ:ttlTitle=Название темы]
+  [equ:phTitle=Название темы]
+  [equ:ttlTags=Ярлыки: <span class="small">(макс. 3, через запятую, без пробелов)</span>]
+  [equ:phTags=теги пишутся здесь]
+  [equ:ttlLimited=Тема с ограниченным доступом]
+  [equ:ttlInvited=Приглашенные участники (список через запятую)]
   [equ:Content=Содержание поста]
   [equ:btnPreview=Просмотр]
   [equ:hintPreview=Ctrl+Enter для предварительного просмотра]
@@ -37,6 +57,12 @@
   [equ:FileLimit=(количество ≤ 10, размер ≤ 1MB)]
 |
   [equ:Caption=Titre du sujet]
+  [equ:ttlTitle=Titre]
+  [equ:phTitle=Titre du sujet]
+  [equ:ttlTags=Mots-clés: <span class="small">(3 maximum, séparés par une virgule t sans espace)</span>]
+  [equ:phTags=quelques mots-clés]
+  [equ:ttlLimited=Sujet à accès limité]
+  [equ:ttlInvited=Inviter des utilisateurs (séparés par une virgule)]
   [equ:Content=Contenu du message]
   [equ:btnPreview=Prévisualiser]
   [equ:hintPreview=Ctrl+Entrée pour prévisualiser]
@@ -48,6 +74,12 @@
   [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
 |
   [equ:Caption=Titel des Themas]
+  [equ:ttlTitle=Titel]
+  [equ:phTitle=Titel des Themas]
+  [equ:ttlTags=Tags: <span class="small">(max. 3, durch Kommas getrennt, keine Leerzeichen)</span>]
+  [equ:phTags=hier einige Tags]
+  [equ:ttlLimited=Thema mit beschränktem Zugriff]
+  [equ:ttlInvited=Eingeladene Mitglieder (durch Kommas getrennt)]
   [equ:Content=Inhalt des Beitrags]
   [equ:btnPreview=Vorschau]
   [equ:hintPreview=Strg+Eingabe für eine Vorschau]
@@ -65,8 +97,25 @@
     <a class="ui right" href="!by_id"><img src="[special:skin]/_images/close.svg" alt="Close" height="16"></a>
   </div>
   <form id="editform" action="!edit" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
+  [case:[EditThread]|
     <p>[const:Caption]:</p>
     <h1 class="fakeedit">[caption]</h1>
+  |
+    <div style="position:relative;">
+      <div class="edit_groupL">
+        <p>[const:ttlTitle]:</p>
+        <input type="edit" value="[caption]" placeholder="[const:ttlTitle]" name="title" autofocus>
+      </div><div class="edit_groupR">
+        <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</p>
+        <input type="edit" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
+      </div>
+      <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]><label for="limited">[const:ttlLimited]</label>
+      <div id="users_invited">
+        <p>[const:ttlInvited]:</p>
+        <input id="invited" type="edit" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
+      </div>
+    </div>
+    ]
     <div class="tabbed">
       <input id="rad1" name="tabselector" type="radio" checked>
       <label for="rad1">[const:tabText]</label>
@@ -94,6 +143,7 @@
   </form>
 </div>
 
+<script src="[special:skin]/autocomplete.js"></script>
 
 <script>
 dragElement(document.getElementById("editor"),document.getElementById("draghere") );
@@ -181,3 +231,5 @@ document.onkeydown = function(e) {
 
 
 </script>
+
+
