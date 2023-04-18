@@ -21,13 +21,25 @@ div.editor {
     margin: 4px 0px 8px 0px;
   }
 
-  input[type="edit"] {
+  input[type="text"] {
     display: block;
     width: 100%;
     padding: 4px;
     margin-bottom: 8px;
     border: @borderEdit;
     outline-style: none;
+
+    background-color: @clEditorBG;
+    color: @clEditorFG;
+  }
+
+  input[type="number"] {
+    display: inline;
+    padding: 4px;
+    margin-bottom: 8px;
+    border: @borderEdit;
+    outline-style: none;
+    width: 8ch;
 
     background-color: @clEditorBG;
     color: @clEditorFG;
@@ -56,7 +68,7 @@ div.editor:hover {
 #draghere {
   background-color: @clSeparator;
   padding: 2px;
-  margin: 0px 0px -8px 0px;
+  margin: 0px 0px 4px 0px;
 }
 
 h1.fakeedit {
@@ -82,15 +94,22 @@ textarea.editor {
   flex-grow: 1;
   resize: none;
 
-  font-family: "Liberation Mono", "Courier New", monospaced;
+  font-family: @FontMonospace;
   background-color: @clEditorBG;
+  color: @clEditorFG;
+  border: @borderEdit;
 }
 
 input[type="file"] {
-  background-color: @clEditorBG;
-  color: @clEditorFG;
+  display: block;
+  width: 100%;
+  padding: 4px;
   margin-bottom: 8px;
   border: @borderEdit;
+  outline-style: none;
+
+  background-color: @clEditorBG;
+  color: @clEditorFG;
 }
 
 
@@ -99,5 +118,49 @@ input[type="file"] {
   flex-grow: 1;
   table {
     width: 100%;
+  }
+}
+
+
+
+div.edit_groupL {
+  display: inline-block;
+  width: 50%;
+  padding-right: 8px;
+}
+
+div.edit_groupR {
+  display: inline-block;
+  width: 50%;
+  padding-left: 8px;
+}
+
+#users_invited {
+  display: none;
+}
+
+#limited:checked ~ #users_invited {
+  display: block;
+}
+
+#autocomplete {
+  display: none;
+  position: absolute;
+  background-color: @clDarkBG;
+  border: @borderEdit;
+  color: @clDarkFG;
+  padding: 4px;
+  margin: 0;
+  overflow: auto;
+  max-height: 20 * @LineH;
+  z-index: 1000;
+  li {
+    list-style: none;
+    cursor: pointer;
+    &:focus {
+      background-color: @clCurrentTagBG;
+      color: @clCurrentTagFG;
+      outline: none;
+    }
   }
 }

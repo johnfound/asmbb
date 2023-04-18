@@ -1,8 +1,6 @@
 [css:navigation.css]
 [css:posts.css]
 [css:posteditor.css]
-[css:postnew.css]
-[css:threadnew.css]
 
 [case:[special:lang]|
   [equ:Caption=Thread title]
@@ -21,6 +19,7 @@
   [equ:tabText=Text]
   [equ:tabAttach=Attachments]
   [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
+  [equ:ttlPin=Important thread, rank]
 |
   [equ:Caption=Заглавие на темата]
   [equ:ttlTitle=Заглавие]
@@ -38,6 +37,8 @@
   [equ:tabText=Текст]
   [equ:tabAttach=Файлове]
   [equ:FileLimit=(брой ≤ 10, размер ≤ 1MB)]
+  [equ:ttlPin=Дръж темата най-отгоре]
+  [equ:ttlPin=Важна тема, ранг]
 |
   [equ:Caption=Название темы]
   [equ:ttlTitle=Название темы]
@@ -55,6 +56,7 @@
   [equ:tabText=Текст]
   [equ:tabAttach=Вложения]
   [equ:FileLimit=(количество ≤ 10, размер ≤ 1MB)]
+  [equ:ttlPin=Важная тема, ранг]
 |
   [equ:Caption=Titre du sujet]
   [equ:ttlTitle=Titre]
@@ -72,6 +74,7 @@
   [equ:tabText=Texte]
   [equ:tabAttach=Pièces jointes]
   [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
+  [equ:ttlPin=Sujet important, classement]
 |
   [equ:Caption=Titel des Themas]
   [equ:ttlTitle=Titel]
@@ -89,6 +92,7 @@
   [equ:tabText=Text]
   [equ:tabAttach=Anhänge]
   [equ:FileLimit=(Anzahl ≤ 10, Größe ≤ 1MB)]
+  [equ:ttlPin=Wichtiges Thema, Rang]
 ]
 
 <div class="editor" id="editor">
@@ -98,21 +102,21 @@
   </div>
   <form id="editform" action="!edit" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
   [case:[EditThread]|
-    <p>[const:Caption]:</p>
-    <h1 class="fakeedit">[caption]</h1>
+        <input type="hidden" value="[caption]" name="title">
   |
-    <div style="position:relative;">
+    <div>
       <div class="edit_groupL">
         <p>[const:ttlTitle]:</p>
-        <input type="edit" value="[caption]" placeholder="[const:ttlTitle]" name="title" autofocus>
+        <input type="text" value="[caption]" placeholder="[const:ttlTitle]" name="title" autofocus>
       </div><div class="edit_groupR">
         <p>[const:ttlTags] [case:[special:dir]| |+ "[special:dir]"]</p>
-        <input type="edit" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
+        <input type="text" value="[tags]" name="tags" id="tags" placeholder="[const:phTags]" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!tagmatch/">
       </div>
+      [case:[special:isadmin]||<p><input class="settings" type="number" min="0" max="5" value="[Pinned]" name="pinned"> [const:ttlPin].</p>]
       <input type="checkbox" id="limited" name="limited" value="1" [case:[limited]||checked]><label for="limited">[const:ttlLimited]</label>
       <div id="users_invited">
         <p>[const:ttlInvited]:</p>
-        <input id="invited" type="edit" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
+        <input id="invited" type="text" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
       </div>
     </div>
     ]

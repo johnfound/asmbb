@@ -1,1 +1,0 @@
-../Wasp/form_edit_thread.tpl

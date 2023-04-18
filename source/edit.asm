@@ -225,21 +225,32 @@ begin
         cinvoke sqliteBindInt, [.stmt], 3, [.threadID]
 
         stdcall StrPtr, [.caption]
+        test    eax, eax
+        jz      @f
         cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_STATIC
+@@:
 
         stdcall StrPtr, [.tags]
+        test    eax, eax
+        jz      @f
         cinvoke sqliteBindText, [.stmt], 5, eax, [eax+string.len], SQLITE_STATIC
+@@:
 
         stdcall StrPtr, [.invited]
+        test    eax, eax
+        jz      @f
         cinvoke sqliteBindText, [.stmt], 6, eax, [eax+string.len], SQLITE_STATIC
+@@:
 
         cinvoke sqliteBindInt, [.stmt], 7, [.pinned]
 
         cinvoke sqliteBindInt, [.stmt], 8, [.fLimited]
 
         stdcall StrPtr, [.source]
+        test    eax, eax
+        jz      @f
         cinvoke sqliteBindText, [.stmt], 9, eax, [eax+string.len], SQLITE_STATIC
-
+@@:
         cinvoke sqliteBindInt, [.stmt], 10, [.format]
 
 .parameters_ok:

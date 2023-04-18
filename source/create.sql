@@ -228,7 +228,7 @@ create table PostsHistory (
   threadID   integer,
   userID     integer,
   anon       text,
-  postTime   integer,
+  postTime   integer not null,
   editUserID integer,
   editTime   integer,
   format     integer,

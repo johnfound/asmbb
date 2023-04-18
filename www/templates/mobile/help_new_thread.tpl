@@ -1,1 +1,0 @@
-../Wasp/help_new_thread.tpl
