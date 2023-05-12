@@ -15,6 +15,9 @@ sqlSavePost       text "update Posts set content = ?2, format = ?3, ", \
                        "editTime   = case when postTime is null then null else strftime('%s','now') end ", \
                        "where id = ?1"
 
+sqlCreateThread   text "insert into Threads(userID, slug, caption, LastChanged, Limited, Pinned) values (?1, ?2, ?3, strftime('%s','now'), ?4, ?5, ?6)"
+sqlCreatePost     text "insert into Posts(threadID, userID, postTime, format, content) values (?1, ?2, strftime('%s','now'), ?3, ?4)"
+
 sqlThreadFirstPost text "select id from Posts where threadid = ?1 order by rowid limit 1"
 
 

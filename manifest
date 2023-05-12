@@ -1,5 +1,5 @@
-C Some\sfiles\sremoved\sfrom\sthe\sproject.
-D 2023-04-25T20:27:26.302
+C The\searly\screation\sis\snot\sa\sgood\sidea.\sWill\stry\sanother\sway.
+D 2023-05-12T14:35:37.122
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -38,9 +38,9 @@ F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm e867460b1254a192a93388df423855385bb9f01a
 F source/commands.asm 7aaea79082e69351e10496fedfb0da6208c3c602
-F source/create.sql 09613aef63612dddc38371920db9e3ef784edcef
+F source/create.sql b0fbabedff2dfd902a9f4c945f2037b7c96f197a
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
-F source/edit.asm 76206d81ddf8f439e7ec5fd49cb20111ca81b977
+F source/edit.asm 20ba0bee0f838782178788e6aef8eb5566a5bb22
 F source/editedpost.sql b0e04b212754882e34bd2d047f2ad23fd2c4aae2
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm 5e76c9796ba882797ee516c8beeab6fe78474c4d
@@ -902,7 +902,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 315ea0689bc1bd7befa8c56cbb9d5a0e08e8cd9d
-R e1be0e333f1c5ca4e2c8a6e3a5b7f7f9
+P 596506f57c9eb2cfb0816ee89f37fee07d0209c3
+R 07c3b76ed85754abb7f5da0d3d18d9d3
 U johnfound
-Z 5db5f4013da55ec6d86b9ab6f87fa90c
+Z fdaceff219afcb0d7fd0af7f2a60488c
