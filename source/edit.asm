@@ -651,19 +651,6 @@ begin
         popad
         return
 
-.error_invalid_caption:
-
-        stdcall TextMakeRedirect, edi, "/!message/error_invalid_caption/"
-        jmp     .finish_clear
-
-
-.error_post_id:
-
-        stdcall AppendError, edi, "404 Not Found", esi
-        mov     edi, edx
-        stc
-        jmp     .finish
-
 
 .error_bad_ticket:
 

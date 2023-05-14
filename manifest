@@ -1,5 +1,5 @@
-C Forgotten\schange.
-D 2023-05-14T19:11:51.781
+C Some\sdead\scode\sremoved\sand\seditor\sform\sfixed.
+D 2023-05-14T19:24:54.357
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -40,7 +40,7 @@ F source/chat.asm e867460b1254a192a93388df423855385bb9f01a
 F source/commands.asm 5020cc0acb0c6696b1e3eb4781e9b738787c13e6
 F source/create.sql 31cae1c48c419bfb976cd57da015d2a11a4a4c17
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
-F source/edit.asm 24dee46df9ef3fd2412d26ac92fcbda2300e0af7
+F source/edit.asm 09a34aca6a3e3fc1fda76e439118600b671f0f78
 F source/editedpost.sql 77e7ac0d4d76a4e8aa540233909373b3d3679933
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm 85d215a7b9e4412fafac9be6c86cc768ef477020
@@ -613,7 +613,7 @@ F www/templates/Urban\sSunrise/error.less 43f5b23eace778d249411d453321ec6d16d4f3
 F www/templates/Urban\sSunrise/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
 F www/templates/Urban\sSunrise/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
 F www/templates/Urban\sSunrise/file-browse.js f24eef322b130b2715410431ea4199679de5f65b
-F www/templates/Urban\sSunrise/form_edit.tpl 42805aad1516f6c3ca9acc3407c5faa66f7c5edd
+F www/templates/Urban\sSunrise/form_edit.tpl 0a465dbbcb443b3f091d70878edf3cdf1ac7bfd9
 F www/templates/Urban\sSunrise/form_editinfo.tpl e66590e7fd6b77e4927dd6da0d0d1fc8387c161f
 F www/templates/Urban\sSunrise/form_login.tpl fe8b409f221a5553ee0f40bde655fa3cb276485f
 F www/templates/Urban\sSunrise/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
@@ -899,7 +899,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P ced7105e5244480198ca394727febac9c890120a
-R 83c901a2b61e86f289c9b9c473ea9a8f
+P c8fb84770dca3ae7a17c970a228ecdb3c3fb76bb
+R 80fc7ed625e12ea626de9b3c5cf71c30
 U johnfound
-Z 12b0a6f2285071a2ab45a605201cd3a3
+Z 8bbcc2bdb085400a64d07c1586a98314
