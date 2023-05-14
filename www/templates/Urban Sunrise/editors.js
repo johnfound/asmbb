@@ -31,15 +31,13 @@ function previewIt(e) {
 
         focus.focus();
       }
-      if (e) {
-        document.getElementById("source").focus();
-        browseEdt.value = null;
-        browseEdt.onchange();
-      }
+      if (e) document.getElementById("source").focus();
     };
 
     var formData = new FormData(form);
     xhr.send(formData);
+    browseEdt.value = null;
+    browseEdt.onchange();
     document.location = "#preview";
   }
 }

@@ -407,8 +407,9 @@ create table Attachments (
 );
 
 create index idxAttachments on Attachments(postID);
-create index idxAttachments2 on Attachments(userID);
+create index idxAttachmentsCombined on Attachments(postID, userID);
 create unique index idxAttachmentsUnique on Attachments(postID, md5sum);
+create unique index idxAttachmentsUnique2 on Attachments(userID, md5sum);
 
 create table AttachCnt (
   fileID integer references Attachments(id) on delete cascade,

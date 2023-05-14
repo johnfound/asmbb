@@ -186,7 +186,7 @@ endp
 
 
 
-sqlAttach text "insert into Attachments(postID, userID, filename, file, changed, md5sum, key) values (?1, ?2, ?3, ?4, strftime('%s','now'), ?5, ?6)"
+sqlAttach text "insert into Attachments(userID, filename, file, changed, md5sum, key) values (?1, ?2, ?3, strftime('%s','now'), ?4, ?5)"
 sqlAttachCnt text "select count() from Attachments where (postid is not null and postid = ?1) or (postid is null and userid = ?2)"
 
 proc WriteAttachments, .postID, .userID, .pSpecial
@@ -258,20 +258,15 @@ begin
         cmp     eax, [.max_size]
         ja      .next
 
-        cmp     [.postID], 0     ; if postid == 0, set NULL for the parameter.
-        je      @f
-        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
-@@:
-
-        cinvoke sqliteBindInt, [.stmt], 2, [.userID]
+        cinvoke sqliteBindInt, [.stmt], 1, [.userID]
 
         stdcall StrPtr, [esi+TPostFileItem.filename]
-        cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
+        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 
         stdcall DataMD5, [esi+TPostFileItem.data], [esi+TPostFileItem.size]
         push    eax
         stdcall StrPtr, eax
-        cinvoke sqliteBindText, [.stmt], 5, eax, [eax+string.len], SQLITE_TRANSIENT
+        cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_TRANSIENT
         stdcall StrDel ; from the stack
 
 ;        DebugMsg "MD4 computed."
@@ -286,8 +281,8 @@ begin
 
 ;        DebugMsg "File encrypted."
 
-        cinvoke sqliteBindBlob, [.stmt], 4, [esi+TPostFileItem.data], [esi+TPostFileItem.size], SQLITE_STATIC
-        cinvoke sqliteBindBlob, [.stmt], 6, edi, 256, SQLITE_STATIC
+        cinvoke sqliteBindBlob, [.stmt], 3, [esi+TPostFileItem.data], [esi+TPostFileItem.size], SQLITE_STATIC
+        cinvoke sqliteBindBlob, [.stmt], 5, edi, 256, SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
 

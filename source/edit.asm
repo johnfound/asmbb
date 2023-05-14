@@ -6,7 +6,7 @@ LIMIT_TAG_DESCRIPTION = 1024
 sqlReadPost    StripText "readpost.sql", SQL
 sqlEditedPost  StripText "editedpost.sql", SQL
 
-sqlGetPostUser    text "select userID, nick, threadID from Posts P left join users U on U.id = P.userID where P.id = ?1"
+sqlGetPostUser    text "select userID, nick, threadID, (?1 = (select id from posts where threadid = P.threadid order by rowid limit 1)) as ThreadEdit from Posts P left join users U on U.id = P.userID where P.id = ?1"
 
 sqlUpdatePinned         text "update threads set pinned = ?2 where id = ?1"
 sqlUpdateThreadChanged  text "update Threads set LastChanged = strftime('%s','now') where id = ?1"
@@ -15,7 +15,7 @@ sqlUpdateThreadChanged  text "update Threads set LastChanged = strftime('%s','no
 sqlCreatePost     text "insert into Posts(threadID, userID, postTime, format, content) values (?1, ?2, strftime('%s','now'), ?3, ?4)"
 sqlSavePost       text "update Posts set content = ?4, format = ?3, editUserID = ?2, editTime = strftime('%s','now') where id = ?1"
 
-sqlCreateThread   text "insert into Threads(userID, slug, caption, LastChanged, Limited) values (?1, ?2, ?3, strftime('%s','now'), ?4)"
+sqlCreateThread   text "insert into Threads(userID) values (?1)"
 sqlSaveThreadAttr text "update threads set slug = ?2, Caption = ?3, LastChanged = strftime('%s','now'), Limited = ?4 where id = ?1"
 
 sqlThreadFirstPost text "select id from Posts where threadid = ?1 order by rowid limit 1"
@@ -76,6 +76,7 @@ begin
         mov     edi, eax
 
         mov     ebx, [esi+TSpecialParams.page_num]
+
         stdcall StrCompNoCase, [esi+TSpecialParams.cmd], txt "!edit"
         jnc     .quote
 
@@ -142,18 +143,16 @@ begin
 
         mov     [.fEditThread], 1       ; default edit thread on new post/new thread.
 
-        mov     eax, [esi+TSpecialParams.thread]        ; the thread slug
-        test    eax, eax
-        jz      .check_permissions
+        cmp     [esi+TSpecialParams.thread], 0        ; the thread slug
+        je      .check_permissions
 
 ; new post in existing thread
 
-        stdcall StrDup, eax
-        mov     [.slug], eax
+        DebugMsg "New post in existing thread."
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadID, -1, eax, 0
-        stdcall StrPtr, [.slug]
+        stdcall StrPtr, [esi+TSpecialParams.thread]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
@@ -188,6 +187,9 @@ begin
 
         cinvoke sqliteColumnInt, [.stmt], 2
         mov     [.threadID], eax
+
+        cinvoke sqliteColumnInt, [.stmt], 3
+        mov     [.fEditThread], eax
 
         cinvoke sqliteFinalize, [.stmt]
 
@@ -255,26 +257,8 @@ begin
         je      .caption_ok
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "title", 0
-        test    eax, eax
-        jz      .error_invalid_caption
 
         xchg    eax, [.caption]
-        stdcall StrDel, eax
-
-        stdcall StrByteUtf8, [.caption], LIMIT_POST_CAPTION
-        stdcall StrTrim, [.caption], eax
-
-        stdcall StrSlugify, [.caption]
-        xchg    eax, [.slug]
-        stdcall StrDel, eax
-
-        stdcall StrLen, [.slug]
-        test    eax, eax
-        jz      .error_invalid_caption
-
-        stdcall NumToStr, [.threadID], ntsDec or ntsUnsigned
-        stdcall StrCat, [.slug], txt "."
-        stdcall StrCat, [.slug], eax
         stdcall StrDel, eax
 
 .caption_ok:
@@ -344,12 +328,15 @@ begin
         mov     [.ticket], eax
 
 .ticket_ok:
-        mov     ecx, sqlReadPost
+        mov     ecx, sqlEditedPost
 
         cmp     [esi+TSpecialParams.post_array], 0
+        jne     .sql_ok
+
+        cmp     [.postID], 0
         je      .sql_ok
 
-        mov     ecx, sqlEditedPost
+        mov     ecx, sqlReadPost
 
 .sql_ok:
         lea     eax, [.stmt]
@@ -360,10 +347,15 @@ begin
         stdcall StrPtr, [.ticket]
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
 
+        cmp     [.postID], 0
+        je      .new_post_sql
+
         cmp     [esi+TSpecialParams.post_array], 0
         je      .parameters_ok
 
 ; Parameters only for sqlEditedPost
+
+.new_post_sql:
 
         cinvoke sqliteBindInt, [.stmt], 3, [.threadID]
 
@@ -457,11 +449,23 @@ begin
 .save_post_and_exit:
 
         cmp     [.source], 0
-        je      .end_save
+        je      .show_edit_form
 
         stdcall CheckTicket, [.ticket], [esi+TSpecialParams.session]
         jc      .error_bad_ticket
 
+; check the caption and create a slug
+
+        cmp     [.fEditThread], 0
+        je      @f
+
+        cmp     [.caption], 0
+        je      .show_edit_form
+
+        stdcall StrByteUtf8, [.caption], LIMIT_POST_CAPTION
+        stdcall StrTrim, [.caption], eax
+
+@@:
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlBegin, sqlBegin.length, eax, 0
         cinvoke sqliteStep, [.stmt]
@@ -470,10 +474,10 @@ begin
 
         cinvoke sqliteFinalize, [.stmt]
 
-; save the thread attributes
-
         cmp     [.fEditThread], 0
         je      .thread_ok
+
+; save the thread attributes
 
         cmp     [.threadID], 0
         jne     .save_thread_attr
@@ -483,15 +487,6 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCreateThread, sqlCreateThread.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [.userID]
-
-        stdcall StrPtr, [.slug]
-        cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
-
-        stdcall StrPtr, [.caption]
-        cinvoke sqliteBindText, [.stmt], 3, eax, [eax+string.len], SQLITE_STATIC
-
-        cinvoke sqliteBindInt, [.stmt], 4, [.fLimited]
-
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_DONE
         jne     .error_write
@@ -500,9 +495,17 @@ begin
 
         cinvoke sqliteLastInsertRowID, [hMainDatabase]
         mov     [.threadID], eax
-        jmp     .save_tags
 
 .save_thread_attr:
+
+        stdcall StrSlugify, [.caption]
+        mov     [.slug], eax
+
+        stdcall NumToStr, [.threadID], ntsDec or ntsUnsigned
+        stdcall StrCat, [.slug], txt "."
+        stdcall StrCat, [.slug], eax
+        stdcall StrDel, eax
+
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlSaveThreadAttr, sqlSaveThreadAttr.length, eax, 0
 
@@ -596,13 +599,12 @@ begin
         cinvoke sqliteLastInsertRowID, [hMainDatabase]
         mov     [.postID], eax
 
-        stdcall UpdateAttachmentsPost, [.postID], [.userID]
-
 .postid_ok:
 ; deal with the attachments.
 
         stdcall DelAttachments, [.postID], [.userID], esi
         stdcall WriteAttachments, [.postID], [.userID], esi
+        stdcall UpdateAttachmentsPost, [.postID], [.userID]
 
 ; update the last changed time of the thread.
 

@@ -243,6 +243,6 @@
 </div>
 
 <script src="[special:skin]/highlight.js"></script>
-<script src="[special:skin]/editors.js"></script>
 <script src="[special:skin]/file-browse.js"></script>
+<script src="[special:skin]/editors.js"></script>
 <script src="[special:skin]/autocomplete.js"></script>

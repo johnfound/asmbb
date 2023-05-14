@@ -922,7 +922,9 @@ endl
 
 ; ...................................................................
 
-sqlGetAttachments text "select id, filename, length(file), strftime('%d.%m.%Y', changed, 'unixepoch'), count, md5sum from Attachments left join AttachCnt on fileid = id where postID = ?1"
+sqlGetAttachments text "select id, filename, length(file), strftime('%d.%m.%Y', changed, 'unixepoch'), count, md5sum ", \
+                       "from Attachments left join AttachCnt on fileid = id ",  \
+                       "where (postID is not null and postID = ?1) or (postID is null and userID = ?2)"
 
 .cmd_attachments:
 ; here esi points to the ":" char of the "attachments" command, ecx at the end "]" and edi at the start "["
@@ -953,6 +955,9 @@ endl
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetAttachments, sqlGetAttachments.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, ebx
+
+        mov     eax, [.pSpecial]
+        cinvoke sqliteBindInt, [.stmt], 2, [eax+TSpecialParams.userID]
 
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW

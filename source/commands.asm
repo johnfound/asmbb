@@ -43,7 +43,7 @@ struct TSpecialParams
   .page_num             dd ?                 ; /1234 - can be the number of the page, or the ID of a post.
 
   .cmd_list             dd ?         ; pointer to an array with splitted URL for analizing.
-  .cmd                  dd ?         ; The command string. It is a copy of the cmd_list item. Don't free.
+  .cmd                  dd ?         ; The command string.
   .cmd_type             dd ?         ; 0 - no command, 1 - root cmd, 2 - top command
 
 ; forum global variables.
@@ -406,6 +406,7 @@ end if
         stdcall StrDel, [.special.session]
         stdcall StrDel, [.special.dir]
         stdcall StrDel, [.special.thread]
+        stdcall StrDel, [.special.cmd]
         stdcall StrDel, [.special.page_title]
         stdcall StrDel, [.special.page_header]
         stdcall StrDel, [.special.description]
@@ -528,8 +529,6 @@ end if
 
         stdcall SearchInHashTable, eax, tablePreCommands
         jnc     .is_it_command2
-
-        stdcall StrDel, eax
         jmp     .exec_command
 
 .is_it_tag:
@@ -582,7 +581,6 @@ end if
         mov     [.special.cmd_type], 2
 
         stdcall SearchInHashTable, eax, tablePostCommands
-        stdcall StrDel, eax
         jc      .exec_command
         jmp     .error404
 

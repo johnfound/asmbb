@@ -1,1 +1,0 @@
-../Wasp/form_draft_dlg.tpl
