@@ -15,8 +15,7 @@ select
   ?4 as Slug,
   exists (select 1 from UnreadPosts UP where UP.UserID = ?5 and UP.PostID = P.id) as Unread,
   exists (select 1 from PostsHistory PH where PH.postID = P.id) as HistoryFlag,
-  PC.count as ReadCount,
-  (P.postTime is null) as Unpublished
+  PC.count as ReadCount
 
 from
   Posts P

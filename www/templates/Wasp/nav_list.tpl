@@ -47,7 +47,7 @@
 <div class="ui">
   <a class="ui left" href="/!categories">[const:btnCats]</a>
   [case:[special:userid]  | |<a class="ui left" href="!markread">[const:btnMarkRead]</a>]
-  [case:[special:canstart]| |<a class="ui left" href="!post">[const:btnNewThread]</a>]
+  [case:[special:canstart]| |<a class="ui left" href="!edit">[const:btnNewThread]</a>]
   [case:[special:canchat] | |<a class="ui left" href="/!chat">[const:btnChat]</a>]
   <span class="spacer"></span>
   [case:[special:isadmin] | |

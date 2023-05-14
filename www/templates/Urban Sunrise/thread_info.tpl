@@ -1,5 +1,4 @@
 [case:[special:lang]|
-  [equ:ttlNewThread=New thread... Not published yet.]
   [equ:ttlPinned=Pinned thread]
   [equ:ttlLimited=Limited access thread]
   [equ:ttlUnread=[case:[Unread]|Go to last message|Go to first unread]]
@@ -11,8 +10,7 @@
   [equ:Tags=Tags]
   [equ:Rating=Rating]
 |
-  [equ:ttlNewThread=Нова тема... Все още непубликувана.]
-  [equ:ttlPinned=Забодена отгоре]
+  [equ:ttlPinned=Закрепена отгоре]
   [equ:ttlLimited=Тема с ограничен достъп]
   [equ:ttlUnread=[case:[Unread]|Към последното|Към първото непрочетено]]
   [equ:tPosts=съобщени[case:[PostCount]|я|е|я]]
@@ -23,7 +21,6 @@
   [equ:Tags=Тагове]
   [equ:Rating=Рейтинг]
 |
-  [equ:ttlNewThread=Новая тема... Пока не опубликована.]
   [equ:ttlPinned=Прикрепленная на верху]
   [equ:ttlLimited=Тема ограниченным доступом]
   [equ:ttlUnread=[case:[Unread]|В край темы|К первому непрочитанному]]
@@ -35,7 +32,6 @@
   [equ:Tags=Ярлыки]
   [equ:Rating=Рейтинг]
 |
-  [equ:ttlNewThread=Nouveau sujet... Pas encore publié.]
   [equ:ttlPinned=Sujet épinglé]
   [equ:ttlLimited=Sujet à accès limité]
   [equ:ttlUnread=[case:[Unread]|Pas de messages non-lus|Allez au premier non-lu]]
@@ -47,7 +43,6 @@
   [equ:Tags=Mots-clés]
   [equ:Rating=Évaluation]
 |
-  [equ:ttlNewThread=Neues Thema... Noch nicht publiziert.]
   [equ:ttlPinned=Angeheftetes Thema]
   [equ:ttlLimited=Beschränktes Thema]
   [equ:ttlUnread=[case:[Unread]|Keine ungelesenen Beiträge|Springe zum ersten ungelesenen Beitrag]]
@@ -63,11 +58,6 @@
 
 <div class="thread-summary">
   <div class="ts-info">
-  [case:[LastChanged]|
-    <div class="tsi-link">
-      <h2>[const:ttlNewThread]</h2>
-    </div>
-  |
     <div class="tsi-link">
       <p[case:[Pinned]|>| title="[const:ttlPinned]">
         <svg class="svg-yellow" width="24" height="24" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -115,7 +105,6 @@
       <p>[const:Rating]: <span id="thread_rating[id]">[Rating]</span>
       <p>[TimeChanged]</p>
     </div>
-  ]
   </div>
 
   <div class="ts-tags">

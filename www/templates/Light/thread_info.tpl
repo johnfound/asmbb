@@ -1,5 +1,4 @@
 [case:[special:lang]|
-  [equ:ttlNewThread=New thread... Not published yet.]
   [equ:ttlPinned=Pinned thread]
   [equ:ttlLimited=Limited access thread]
   [equ:ttlUnread=[case:[Unread]|No unread messages|Go to first unread]]
@@ -10,7 +9,6 @@
   [equ:Invited=Invited: ]
   [equ:Rating=Rating]
 |
-  [equ:ttlNewThread=Нова тема... Все още непубликувана.]
   [equ:ttlPinned=Забодена отгоре]
   [equ:ttlLimited=Тема с ограничен достъп]
   [equ:ttlUnread=[case:[Unread]|Няма нови съобщения|Към първото непрочетено]]
@@ -21,7 +19,6 @@
   [equ:Invited=Поканени: ]
   [equ:Rating=Рейтинг]
 |
-  [equ:ttlNewThread=Новая тема... Пока не опубликована.]
   [equ:ttlPinned=Прикрепленная на верху]
   [equ:ttlLimited=Тема ограниченным доступом]
   [equ:ttlUnread=[case:[Unread]|Нет новых сообщений|К первому непрочитанному]]
@@ -32,7 +29,6 @@
   [equ:Invited=Приглашенные: ]
   [equ:Rating=Рейтинг]
 |
-  [equ:ttlNewThread=Nouveau sujet... Pas encore publié.]
   [equ:ttlPinned=Sujet épinglé]
   [equ:ttlLimited=Sujet à accès limité]
   [equ:ttlUnread=[case:[Unread]|Pas de messages non-lus|Allez au premier non-lu]]
@@ -43,7 +39,6 @@
   [equ:Invited=Invités: ]
   [equ:Rating=Évaluation]
 |
-  [equ:ttlNewThread=Neues Thema... Noch nicht publiziert.]
   [equ:ttlPinned=Angeheftetes Thema]
   [equ:ttlLimited=Beschränktes Thema]
   [equ:ttlUnread=[case:[Unread]|Keine ungelesenen Beiträge|Springe zum ersten ungelesenen Beitrag]]
@@ -59,11 +54,6 @@
       [case:[Pinned]||<img class="pinned" src="[special:skin]/_images/pinned.png" alt="!" title="[const:ttlPinned]">]
       [case:[limited]||<img height="32" width="32" class="unread" src="[special:skin]/_images/limited.svg" alt="#" title="[const:ttlLimited]">]
       [case:[Unread]||<a href="[Slug]/!unread">]<img height="32" width="32" class="unread" src="[special:skin]/_images/posts[case:[Unread]|_gray|].svg" alt="[case:[Unread]||&gt;]" title="[const:ttlUnread]">[case:[Unread]||</a>]
-  [case:[LastChanged]|
-    <div class="thread_link">
-      <h2>[const:ttlNewThread]</h2>
-    </div>
-  |
   <div class="thread_link">
     <a class="thread_link" href="[Slug]/">[Caption]</a><br>
     <label><input type="checkbox" class="collapseit"><ul class="small comma posters">[const:Posters][html:[Posters]]</ul></label>
@@ -79,5 +69,4 @@
     [ReadCount] [const:tViews]<br>
     [const:Rating]: <span id="thread_rating[id]">[Rating]</span>
   </div>
-  ]
 </div>

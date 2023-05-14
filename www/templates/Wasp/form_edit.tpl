@@ -98,7 +98,7 @@
 <div class="editor" id="editor">
   <div class="ui" id="draghere">
     <span class="spacer"></span>
-    <a class="ui right" href="!by_id"><img src="[special:skin]/_images/close.svg" alt="Close" height="16"></a>
+    <a class="ui right" href="[case:[id]|[case:[special:page]|.|!by_id]|!by_id]"><img src="[special:skin]/_images/close.svg" alt="Close" height="16"></a>
   </div>
   <form id="editform" action="!edit" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
   [case:[EditThread]|

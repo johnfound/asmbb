@@ -51,7 +51,7 @@
 
 <div class="ui">
   <a class="ui left" href="../">The thread</a>
-  <a class="ui left" href="!by_id">Back</a>
+  <a class="ui left" href="[case:[id]|[case:[special:page]|.|!by_id]|!by_id]">Back</a>
 </div>
 
 <form id="editform" action="!edit#preview" onsubmit="previewIt(event)" method="post" enctype="multipart/form-data">

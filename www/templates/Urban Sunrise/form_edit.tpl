@@ -125,7 +125,7 @@
       <input form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]" title="[const:hintSubmit]">
       <input form="editform" class="btn" type="reset" value="[const:btnRevert]" >
       <div class="spacer"></div>
-      <a class="btn img-btn" href=".">
+      <a class="btn img-btn" href="[case:[id]|[case:[special:page]|.|!by_id]|!by_id]">
         <svg version="1.1" width="12" height="12" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
            <rect transform="rotate(45)" x=".635" y="-1.53" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
            <rect transform="rotate(135)" x="-10.7" y="-12.8" width="21.4" height="3.05" rx="1.53" ry="1.53"/>

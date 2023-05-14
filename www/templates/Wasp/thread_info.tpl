@@ -1,5 +1,4 @@
 [case:[special:lang]|
-  [equ:ttlNewThread=New thread... Not published yet.]
   [equ:ttlPinned=Pinned thread]
   [equ:ttlLimited=Limited access thread]
   [equ:ttlUnread=[case:[Unread]|No unread messages|Go to first unread]]
@@ -11,8 +10,7 @@
   [equ:Tags=Tags: ]
   [equ:Rating=Rating]
 |
-  [equ:ttlNewThread=Нова тема... Все още непубликувана.]
-  [equ:ttlPinned=Забодена отгоре]
+  [equ:ttlPinned=Закрепена отгоре]
   [equ:ttlLimited=Тема с ограничен достъп]
   [equ:ttlUnread=[case:[Unread]|Няма нови съобщения|Към първото непрочетено]]
   [equ:tPosts=съобщени[case:[PostCount]|я|е|я]]
@@ -23,7 +21,6 @@
   [equ:Tags=Тагове: ]
   [equ:Rating=Рейтинг]
 |
-  [equ:ttlNewThread=Новая тема... Пока не опубликована.]
   [equ:ttlPinned=Прикрепленная на верху]
   [equ:ttlLimited=Тема ограниченным доступом]
   [equ:ttlUnread=[case:[Unread]|Нет новых сообщений|К первому непрочитанному]]
@@ -35,7 +32,6 @@
   [equ:Tags=Ярлыки: ]
   [equ:Rating=Рейтинг]
 |
-  [equ:ttlNewThread=Nouveau sujet... Pas encore publié.]
   [equ:ttlPinned=Sujet épinglé]
   [equ:ttlLimited=Sujet à accès limité]
   [equ:ttlUnread=[case:[Unread]|Pas de messages non-lus|Allez au premier non-lu]]
@@ -47,7 +43,6 @@
   [equ:Tags=Mots-clés: ]
   [equ:Rating=Évaluation]
 |
-  [equ:ttlNewThread=Neues Thema... Noch nicht publiziert.]
   [equ:ttlPinned=Angeheftetes Thema]
   [equ:ttlLimited=Beschränktes Thema]
   [equ:ttlUnread=[case:[Unread]|Keine ungelesenen Beiträge|Springe zum ersten ungelesenen Beitrag]]
@@ -72,11 +67,6 @@
     <div class="unread_cnt">[ReadCount] [const:tViews]</div>
     <div class="changed">[TimeChanged]</div>
   </div>
-  [case:[LastChanged]|
-    <div class="thread_link">
-      <h2>[const:ttlNewThread]</h2>
-    </div>
-  |
   <div class="thread_right">
     <div class="thread_link">
       <a class="thread_link" href="[Slug]/">[Caption]</a><br>
@@ -85,5 +75,4 @@
     </div>
     <div class="small thread_tags"><span>[const:Rating]: </span><span id="thread_rating[id]">[Rating]</span>[case:[ThreadTags]|| ^| <ul class="comma">[const:Tags][html:[ThreadTags]]</ul>]</div>
   </div>
-  ]
 </div>

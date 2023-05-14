@@ -1,5 +1,4 @@
 [case:[special:lang]|
-  [equ:ttlUnpublished=New post... Not published yet.]
   [equ:tPosts=Posts]
   [equ:tCreated=Created [PostTime]]
   [equ:tEdited=Last edited: [EditTime] by]
@@ -13,7 +12,6 @@
   [equ:altDel=Del]
   [equ:altHist=History]
 |
-  [equ:ttlUnpublished=Нов пост... Все още непубликуван.]
   [equ:tPosts=Постове]
   [equ:tCreated=Създадено на [PostTime]]
   [equ:tEdited=Последно редактирано на [EditTime] от]
@@ -27,7 +25,6 @@
   [equ:altDel=Изтрий]
   [equ:altHist=История]
 |
-  [equ:ttlUnpublished=Новый пост... Пока не опубликован.]
   [equ:tPosts=Посты]
   [equ:tCreated=Создано [PostTime]]
   [equ:tEdited=Отредактировано [EditTime], участником]
@@ -41,7 +38,6 @@
   [equ:altDel=Удалить]
   [equ:altHist=История]
 |
-  [equ:ttlUnpublished=Nouveau message... Pas encore publié.]
   [equ:tPosts=Messages]
   [equ:tCreated=Crée le: [PostTime]]
   [equ:tEdited=Édité le: [EditTime] by]
@@ -55,7 +51,6 @@
   [equ:altDel=Supprimer]
   [equ:altHist=Historique]
 |
-  [equ:ttlUnpublished=Neuer Post... Noch nicht publiziert.]
   [equ:tPosts=Posts]
   [equ:tCreated=Erstellt am [PostTime]]
   [equ:tEdited=Zuletzt geändert: [EditTime] von]
@@ -77,19 +72,14 @@
       <img width="96" height="96" class="avatar" alt="(ツ)" src="/!avatar/[url:[html:[UserName]]]?v=[AVer]">
     [case:[UserID]||</a>]
     <article>
-    [case:[Unpublished]|
       [html:[[case:[format]|minimag:[include:minimag_suffix.tpl]|bbcode:][Content]]]
 
       <div class="attachments">
         [attachments:[id]]
       </div>
-    |
-      <h2 class="unpublished">[const:ttlUnpublished]</h2>
-    ]
     </article>
   </div>
 
-  [case:[Unpublished]|
   <div class="post_info">
     <a href="#[id]">#[id]</a>
     <div class="last_edit">
@@ -126,6 +116,5 @@
         </svg>
       </a>]]
     </div>
-   |]
   </div>
 </div>
