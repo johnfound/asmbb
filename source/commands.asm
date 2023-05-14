@@ -43,6 +43,7 @@ struct TSpecialParams
   .page_num             dd ?                 ; /1234 - can be the number of the page, or the ID of a post.
 
   .cmd_list             dd ?         ; pointer to an array with splitted URL for analizing.
+  .cmd                  dd ?         ; The command string. It is a copy of the cmd_list item. Don't free.
   .cmd_type             dd ?         ; 0 - no command, 1 - root cmd, 2 - top command
 
 ; forum global variables.
@@ -108,8 +109,9 @@ PHashTable tablePostCommands, tpl_func,                 \
         "!vote",            Vote,                       \
         "!markread",        MarkThreadRead,             \
         "!unread",          GotoFirstUnread,            \
-        "!post",            PostUserMessage,            \
+\;        "!post",            PostUserMessage,            \
         "!edit",            EditUserMessage,            \
+        "!quote",           EditUserMessage,            \
         "!edit_thread",     EditThreadAttr,             \
         "!del",             DeletePost,                 \
         "!by_id",           PostByID,                   \
@@ -521,6 +523,7 @@ end if
         pop     eax
         jne     .is_it_tag
 
+        mov     [.special.cmd], eax
         mov     [.special.cmd_type], 1
 
         stdcall SearchInHashTable, eax, tablePreCommands
@@ -575,6 +578,7 @@ end if
         jne     .bad_command
 
 .is_it_command2:
+        mov     [.special.cmd], eax
         mov     [.special.cmd_type], 2
 
         stdcall SearchInHashTable, eax, tablePostCommands

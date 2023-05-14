@@ -10,24 +10,15 @@ select
 
 -- Post fields
 
-  P.id,
+  ?1 as id,
   ?9 as Source,
   ?10 as Format,
 
 -- User fields
 
-  U.nick as UserName,
+  ?11 as UserName,
 
 -- Common flags and data
 
-  ?1 = (select id from Posts where threadid = P.threadid order by rowid limit 1) as EditThread,
+  ?12 as EditThread,
   ?2 as Ticket
-
-from
-  Posts P
-
-left join
-  Users U on U.id = P.userID
-
-where
-  P.id = ?1
