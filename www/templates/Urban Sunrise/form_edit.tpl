@@ -28,6 +28,7 @@
   [equ:ttlTags=Tags: <span class="small">(max 3, comma delimited, no spaces)</span>]
   [equ:phTags=some tags here]
   [equ:ttlPin=Important thread, rank]
+  [equ:lblAfter=after: ]
 |
   [equ:Caption=Заглавие на темата]
   [equ:Content=Съдържание на поста]
@@ -50,6 +51,7 @@
   [equ:ttlTags=Тагове: <span class="small">(макс. 3, разделени със запетаи, без шпации)</span>]
   [equ:phTags=някакви тагове тук]
   [equ:ttlPin=Важна тема, ранг]
+  [equ:lblAfter=след: ]
 |
   [equ:Caption=Название темы]
   [equ:Content=Содержание поста]
@@ -72,6 +74,7 @@
   [equ:ttlTags=Ярлыки: <span class="small">(макс. 3, через запятую, без пробелов)</span>]
   [equ:phTags=теги пишутся здесь]
   [equ:ttlPin=Важная тема, ранг]
+  [equ:lblAfter=через: ]
 |
   [equ:Caption=Titre du sujet]
   [equ:Content=Contenu du message]
@@ -94,6 +97,7 @@
   [equ:ttlTags=Mots-clés: <span class="small">(3 maximum, séparés par une virgule t sans espace)</span>]
   [equ:phTags=quelques mots-clés]
   [equ:ttlPin=Sujet important, classement]
+  [equ:lblAfter=après: ]
 |
   [equ:Caption=Titel des Themas]
   [equ:Content=Inhalt des Beitrags]
@@ -116,13 +120,19 @@
   [equ:ttlTags=Tags: <span class="small">(max. 3, durch Kommas getrennt, keine Leerzeichen)</span>]
   [equ:phTags=hier einige Tags]
   [equ:ttlPin=Wichtiges Thema, Rang]
+  [equ:lblAfter=nach: ]
 ]
 
 <div class="editor" id="editor-window" onfocus="document.location='#editor-window';">
   <div class="navigation3 btn-bar">
       <input form="editform" type="hidden" name="ticket" value="[Ticket]" >
       <input form="editform" class="btn" id="preview-btn" formaction="!edit#preview" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
-      <input form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" value="[const:btnSubmit]" title="[const:hintSubmit]">
+
+      <button form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" title="[const:hintSubmit]">
+        [const:btnSubmit]&nbsp;
+        [case:[special:wait2post]||<span id="remains">[const:lblAfter]<span id="remval">[special:wait2post]</span> s</span>]
+      </button>
+
       <input form="editform" class="btn" type="reset" value="[const:btnRevert]" >
       <div class="spacer"></div>
       <a class="btn img-btn" href="[case:[id]|[case:[special:page]|.|!by_id]|!by_id]">
@@ -165,7 +175,7 @@
 
         <p>[const:Content]:</p>
         [include:edit_toolbar.tpl]
-        <textarea name="source" id="source" required>[source]</textarea>
+        <textarea name="source" id="source">[source]</textarea>
       </section>
 
       <input id="tab1" name="tabselector" type="radio" value="1">

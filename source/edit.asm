@@ -138,6 +138,9 @@ begin
         mov     eax, [esi+TSpecialParams.userID]
         mov     [.userID], eax
 
+        test    eax, eax
+        jz      .error_wrong_permissions
+
         stdcall StrDup, [esi+TSpecialParams.userName]
         mov     [.userName], eax
 
@@ -290,10 +293,10 @@ begin
         stdcall GetTime
         sub     eax, dword [esi+TSpecialParams.userLastPostTime]
         sbb     edx, dword [esi+TSpecialParams.userLastPostTime + 4]
-        jnz     .show_edit_form
+        jnz     .do_not_save
 
         cmp     eax, ecx
-        jl      .show_edit_form
+        jl      .do_not_save
 
 .interval_ok:
 
@@ -301,6 +304,9 @@ begin
         stdcall StrDel, eax
         test    eax, eax
         jnz     .save_post_and_exit
+
+
+.do_not_save:
 
         stdcall ValueByName, [esi+TSpecialParams.params], "QUERY_STRING"
         mov     ebx, eax
@@ -450,6 +456,10 @@ begin
 
         cmp     [.source], 0
         je      .show_edit_form
+
+        stdcall StrLen, [.source]
+        test    eax, eax
+        jz      .show_edit_form
 
         stdcall CheckTicket, [.ticket], [esi+TSpecialParams.session]
         jc      .error_bad_ticket

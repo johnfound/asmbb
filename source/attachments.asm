@@ -383,7 +383,7 @@ endp
 
 
 
-sqlUpdateAttach text "update Attachments set postID = ?1 where postID is null and userID = ?2"
+sqlUpdateAttach text "update Attachments set postID = ?1, userID = null where postID is null and userID = ?2"
 
 proc UpdateAttachmentsPost, .postID, .userID
 .stmt dd ?

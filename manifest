@@ -1,5 +1,5 @@
-C Removed\sthe\ssupport\sfor\sunpublished\sposts\sin\sthe\stemplates.\sThe\s!post\scommand\sreplaced\swith\s!edit\sand\s!quote.
-D 2023-05-14T23:07:48.838
+C Fixed\ssome\sproblems\swith\sthe\sattached\sfiles\sduring\sediting.\sTemplates\sadapted\sto\sthe\snew\sbackend.
+D 2023-05-15T17:18:56.956
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -32,7 +32,7 @@ F source/atom_list.sql db8ca9992635d22d58bdcdf3a80d94a23c382362
 F source/atom_one_thread.sql 32da01bccec3dc4f86463f355a476028bc0632de
 F source/atom_tag_list.sql a22f6ff17e4e8517efdbf5aad59f707391a17b0e
 F source/atomfeed.asm 9ef462830c29252ee7a88b512fb9d3ae782238ee
-F source/attachments.asm 9c30195b8877ccdd940719f007ba6393de490e03
+F source/attachments.asm 93286ab58dca4e611ad2300752b12e84715d6a19
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
@@ -40,11 +40,11 @@ F source/chat.asm e867460b1254a192a93388df423855385bb9f01a
 F source/commands.asm 5020cc0acb0c6696b1e3eb4781e9b738787c13e6
 F source/create.sql 31cae1c48c419bfb976cd57da015d2a11a4a4c17
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
-F source/edit.asm 09a34aca6a3e3fc1fda76e439118600b671f0f78
+F source/edit.asm 8bbc6450d98c49beaff608c795b1a4a2b3caae49
 F source/editedpost.sql 77e7ac0d4d76a4e8aa540233909373b3d3679933
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm 85d215a7b9e4412fafac9be6c86cc768ef477020
-F source/engine.fpr 385b6e7ca9f10ac7d2457c2d56c6dac31e0cd875
+F source/engine.fpr d0582a2d808385f26e975a364e6acfeaee6707f4
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 3c09da9efa9b6004aec1790f2c453a40a2fed1b5
@@ -71,7 +71,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm 40c8431fd0f98d70cd1d2059bd3d37e8a4042717
+F source/render2.asm 9c5a6aaa27ac7e535495b589e3ae965190e17583
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm 60acccb553021d13c932470672aec7a3d943443d
 F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
@@ -605,7 +605,7 @@ F www/templates/Urban\sSunrise/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a0
 F www/templates/Urban\sSunrise/debug.less 9a989f4670bb3d584f60c57d50af9fbf9bf75117
 F www/templates/Urban\sSunrise/del_confirm.tpl 436aab0b68443d9fcac87dd9844ad917e405e94f
 F www/templates/Urban\sSunrise/delete.less 397589f431219056581591243e48548d43fb8507
-F www/templates/Urban\sSunrise/edit.json 50e4b6cf7214a042d740feb81faadf8790f31465
+F www/templates/Urban\sSunrise/edit.json a0ed89f3ed322b449973e11c06809a93f3d70045
 F www/templates/Urban\sSunrise/edit_toolbar.tpl 3f18db7549b9f247fb24c4ec4bbcf130103ab069
 F www/templates/Urban\sSunrise/editor.less be05f1f1838a634d2159e70c27ca74ba078face2
 F www/templates/Urban\sSunrise/editors.js 904e6ef0fbd1641fe4c8754644048330b4c0dd50
@@ -613,7 +613,7 @@ F www/templates/Urban\sSunrise/error.less 43f5b23eace778d249411d453321ec6d16d4f3
 F www/templates/Urban\sSunrise/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
 F www/templates/Urban\sSunrise/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
 F www/templates/Urban\sSunrise/file-browse.js f24eef322b130b2715410431ea4199679de5f65b
-F www/templates/Urban\sSunrise/form_edit.tpl 2443d9e5b639d851d5d50064fac55f8ffcdbcbd4
+F www/templates/Urban\sSunrise/form_edit.tpl b62f85cd55e9d8c65f00c6962499befb71006704
 F www/templates/Urban\sSunrise/form_editinfo.tpl e66590e7fd6b77e4927dd6da0d0d1fc8387c161f
 F www/templates/Urban\sSunrise/form_login.tpl fe8b409f221a5553ee0f40bde655fa3cb276485f
 F www/templates/Urban\sSunrise/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
@@ -630,7 +630,7 @@ F www/templates/Urban\sSunrise/highlight.less fba68624d1b34a5543fe0bf4b2af2ac1dd
 F www/templates/Urban\sSunrise/login.less e2c9b06104a775ae1abcc63bdc69f71b4662b870
 F www/templates/Urban\sSunrise/main_html_end.tpl 05bb25b9490ce93732628c937860db787c516c46
 F www/templates/Urban\sSunrise/main_html_start.tpl 7f74b33ed9a6c6ee0a295d25eee18e59a7d836eb
-F www/templates/Urban\sSunrise/markdown.less 36a461db674ff11bcbb5a08576e25579d79d5b41
+F www/templates/Urban\sSunrise/markdown.less 4b0c1316f7974410839ce5586d96d7461b1cb975
 F www/templates/Urban\sSunrise/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
 F www/templates/Urban\sSunrise/nav_categories.tpl c04334bde3272eed0ceeb558cb640a15a41b39e8
 F www/templates/Urban\sSunrise/nav_history.tpl 20332cc80d34a9c4fe360cc5559d98f0537900c2
@@ -644,7 +644,7 @@ F www/templates/Urban\sSunrise/post_history.tpl cff7cf6427e8c428824dcb301fd345e2
 F www/templates/Urban\sSunrise/post_view.tpl a018f053fc153c0094778a7cf2494088986636a2
 F www/templates/Urban\sSunrise/posteditor.less af2d688c4445e9c333d411f20af8ee860519a302
 F www/templates/Urban\sSunrise/posts.less 0e60ec6a3fb39ebacd2dee2a3176e2dfc1134e01
-F www/templates/Urban\sSunrise/preview.tpl ba5115cd32e2aec85386342da04c3e557e836525
+F www/templates/Urban\sSunrise/preview.tpl baecbd1019fa802621cc1f03a8a1f2ece84cf240
 F www/templates/Urban\sSunrise/realtime.js 648ea897679114afadaff7f78b311ccf96262018
 F www/templates/Urban\sSunrise/restore_confirm.tpl 52a9c63c3575dc9a740886776c4dc6c2e0a07efe
 F www/templates/Urban\sSunrise/search.less 0bcaf20f6012fe18db4ecdad203032fc082678df
@@ -751,13 +751,13 @@ F www/templates/Wasp/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001
 F www/templates/Wasp/debug.less 028000816d3504bdb2cf7c9813bbb3300aa2fdc5
 F www/templates/Wasp/del_confirm.tpl b08b56a733acd5f3cfe588a4b274e2a802354ff9
 F www/templates/Wasp/delete.less 253a0f549e132a9d55ae56fe399a8929eabb4a29
-F www/templates/Wasp/edit.json d710222dd7c70d319dd522d6be724018a826620d
+F www/templates/Wasp/edit.json df59aa8125ed6e78d15c56261b403a57c34cca7f
 F www/templates/Wasp/edit_toolbar.tpl 6fa0acd8120c2943349209a3f836b2652ff2e88b
 F www/templates/Wasp/editor.less a10e7a93ebc53c9612c385f149e70e7fe2683327
 F www/templates/Wasp/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Wasp/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
 F www/templates/Wasp/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
-F www/templates/Wasp/form_edit.tpl cb00e30fc3b4cbde69a627bd593e2779884b9131
+F www/templates/Wasp/form_edit.tpl 6894ba3f0305a4f51c273f9f521b81b1cb52f19f
 F www/templates/Wasp/form_editinfo.tpl 8a97f474a2748f20195d38f4221c94e52b9b3efd
 F www/templates/Wasp/form_login.tpl 9d2c28ae6dc5b44de5ca20d9734402b34ce697a4
 F www/templates/Wasp/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
@@ -770,7 +770,7 @@ F www/templates/Wasp/form_sqlite_console.tpl 7c492fd0663a1f999e88186f0af74f87bcd
 F www/templates/Wasp/login.less b854c20c711dffeec158f044c59cbcf72a3161d5
 F www/templates/Wasp/main_html_end.tpl 53de7f6314a3460448c7d8988eb132d82b2d763c
 F www/templates/Wasp/main_html_start.tpl a5474789a3a873a19cbb53196c385f95a23b803f
-F www/templates/Wasp/markdown.less 2c5dcdaa57443cf918431d433ee116cbdc0cfaeb
+F www/templates/Wasp/markdown.less d1887d974044e8cefa032fd17d2a4badc8377f8e
 F www/templates/Wasp/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
 F www/templates/Wasp/nav_categories.tpl a132b6d7a2351b6d7fabfdb7c821dfb7228c0ac2
 F www/templates/Wasp/nav_history.tpl 7d7b20a16288e53f745d28fe97cf43244b9bb29d
@@ -785,7 +785,7 @@ F www/templates/Wasp/post_history.tpl be3237e704ca54ab0d6f6837292475be4977ddb1
 F www/templates/Wasp/post_view.tpl e321d2d407cdc2aeb508032be48568d25dac23ae
 F www/templates/Wasp/posteditor.less 6ddfa16f22d72fe5d3f712e33140f9956c70153a
 F www/templates/Wasp/posts.less a3c7bf9e263b5185a5e53f606df7b3e7baf4ec92
-F www/templates/Wasp/preview.tpl e4af582a2e1d97578e3edc78025bee34c99deb1f
+F www/templates/Wasp/preview.tpl 4108076ed902104f888f7091a5edc65aa00f071c
 F www/templates/Wasp/realtime.js 91552328938d9b2e6642430930cd3e6393d25da2
 F www/templates/Wasp/restore_confirm.tpl 51628410ec4a3753bc384fd0c733e059aba965c4
 F www/templates/Wasp/search.less b34f1251689d901618c53115ac9c25a2c75f094a
@@ -863,7 +863,7 @@ F www/templates/mobile/form_sqlite_console.tpl b90d0e298e5cc10782bafbe2e403cceb3
 F www/templates/mobile/login.less 4af417eb9ae51e7d5691cba96a93ef5a9fd79dd2 l
 F www/templates/mobile/main_html_end.tpl d8b3ec3c2cdc952fcab6638d4147ee7e9cd2ba96 l
 F www/templates/mobile/main_html_start.tpl b93c0043a09f7ef6614707de05a8b45f8af6b33f l
-F www/templates/mobile/markdown.less adadc46fdcf3764a5a914d979f7e6f591d5c92ce
+F www/templates/mobile/markdown.less 40821ea8e09c70513415505bb9f80c4856dba46e
 F www/templates/mobile/minimag_suffix.tpl f3a1414972a13590a7c984b53b6fd2ddd3a47f3a l
 F www/templates/mobile/nav_categories.tpl f7d6f653d7de3ea424b62ebae575e3c5c1f4d98b l
 F www/templates/mobile/nav_history.tpl ac180ed4422e7ee62e4421a19c1ee7d69a72e503 l
@@ -899,7 +899,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 761c8072abde3037327f37a8445a99f725b4f274
-R a5a2e53408a686c46fd8e3166032dc89
+P 06a6ea4d722fe67cae6603336ee3441ec702304b
+R 338baa54cfba49204bd5725793544226
 U johnfound
-Z 40d6f6103d3ae8bc49deeb9461c94d9c
+Z 343231b2fc7dff2102848585feec2706

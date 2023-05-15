@@ -23,7 +23,7 @@
     <article class="post-text">
         [html:[[case:[format]|minimag:[include:minimag_suffix.tpl]|bbcode:][source]]]
         <div class="attachments">
-          [attachments:[id]]
+          [attach_preview:[id]]
         </div>
     </article>
   </div>

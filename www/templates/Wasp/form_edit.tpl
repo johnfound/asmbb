@@ -20,6 +20,7 @@
   [equ:tabAttach=Attachments]
   [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
   [equ:ttlPin=Important thread, rank]
+  [equ:lblAfter=after: ]
 |
   [equ:Caption=Заглавие на темата]
   [equ:ttlTitle=Заглавие]
@@ -39,6 +40,7 @@
   [equ:FileLimit=(брой ≤ 10, размер ≤ 1MB)]
   [equ:ttlPin=Дръж темата най-отгоре]
   [equ:ttlPin=Важна тема, ранг]
+  [equ:lblAfter=след: ]
 |
   [equ:Caption=Название темы]
   [equ:ttlTitle=Название темы]
@@ -57,6 +59,7 @@
   [equ:tabAttach=Вложения]
   [equ:FileLimit=(количество ≤ 10, размер ≤ 1MB)]
   [equ:ttlPin=Важная тема, ранг]
+  [equ:lblAfter=через: ]
 |
   [equ:Caption=Titre du sujet]
   [equ:ttlTitle=Titre]
@@ -75,6 +78,7 @@
   [equ:tabAttach=Pièces jointes]
   [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
   [equ:ttlPin=Sujet important, classement]
+  [equ:lblAfter=après: ]
 |
   [equ:Caption=Titel des Themas]
   [equ:ttlTitle=Titel]
@@ -93,6 +97,7 @@
   [equ:tabAttach=Anhänge]
   [equ:FileLimit=(Anzahl ≤ 10, Größe ≤ 1MB)]
   [equ:ttlPin=Wichtiges Thema, Rang]
+  [equ:lblAfter=nach: ]
 ]
 
 <div class="editor" id="editor">
@@ -141,7 +146,10 @@
 
     <div class="panel">
       <input type="submit" name="preview" value="[const:btnPreview]" onclick="this.form.cmd='preview'" title="[const:hintPreview]">
-      <input type="submit" name="submit" value="[const:btnSubmit]" onclick="this.form.cmd='submit'" title="[const:hintSubmit]" >
+      <button form="editform" type="submit" name="submit" onclick="this.form.cmd='submit'" title="[const:hintSubmit]">
+        [const:btnSubmit]&nbsp;
+        [case:[special:wait2post]||<span id="remains">[const:lblAfter]<span id="remval">[special:wait2post]</span> s</span>]
+      </button>
       <input type="hidden" name="ticket" value="[Ticket]" >
     </div>
   </form>
@@ -192,12 +200,13 @@ function dragElement(elmnt, hdr) {
 
 
 function previewIt(e) {
+  if ((e == undefined) || (e.target.cmd === "preview")) {
+    if (e) e.preventDefault();
 
-  if (e.target.cmd === "preview") {
-    e.preventDefault();
+    var form = document.getElementById("editform");
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "!edit?cmd=preview");
+    xhr.open("POST", form.action + "?cmd=preview");
 
     xhr.onload = function(event){
       if (event.target.status === 200) {
@@ -205,15 +214,19 @@ function previewIt(e) {
         var attch = document.getElementById("attachments");
         var resp = JSON.parse(event.target.response);
 
+        var focus = document.activeElement;
+
+        if (attch) attch.innerHTML = resp.attach_del;
         prv.innerHTML = resp.preview;
-        attch.innerHTML = resp.attach_del;
+
+        focus.focus();
       }
-      document.getElementById("browse").value = '';
-      document.getElementById("source").focus();
+      if (e) document.getElementById("source").focus();
     };
 
-    var formData = new FormData(document.getElementById("editform"));
+    var formData = new FormData(form);
     xhr.send(formData);
+    document.location = "#preview";
   }
 }
 

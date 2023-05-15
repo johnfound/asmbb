@@ -30,6 +30,7 @@ PHashTable tableRenderCmd, tpl_func,                      \
         'bbcode:',      RenderTemplate.cmd_bbcode,        \   ; HTML, no encoding.
         'html:',        RenderTemplate.cmd_html,          \   ; HTML, disables the encoding.
         'attachments:', RenderTemplate.cmd_attachments,   \   ; HTML, no encoding.
+        'attach_preview:', RenderTemplate.cmd_attach_preview, \   ; HTML, no encoding.
         'attach_edit:', RenderTemplate.cmd_attachedit,    \   ; HTML, no encoding.
         'url:',         RenderTemplate.cmd_url,           \   ; Needs encoding!
         'json:',        RenderTemplate.cmd_json,          \   ; No encoding.
@@ -922,9 +923,13 @@ endl
 
 ; ...................................................................
 
-sqlGetAttachments text "select id, filename, length(file), strftime('%d.%m.%Y', changed, 'unixepoch'), count, md5sum ", \
-                       "from Attachments left join AttachCnt on fileid = id ",  \
-                       "where (postID is not null and postID = ?1) or (postID is null and userID = ?2)"
+sqlGetAllAttachments text "select id, filename, length(file), strftime('%d.%m.%Y', changed, 'unixepoch'), count, md5sum ", \
+                          "from Attachments left join AttachCnt on fileid = id ",  \
+                          "where (postID is not null and postID = ?1) or (postID is null and userID = ?2)"
+
+sqlGetAttachments    text "select id, filename, length(file), strftime('%d.%m.%Y', changed, 'unixepoch'), count, md5sum ", \
+                          "from Attachments left join AttachCnt on fileid = id ",  \
+                          "where postID = ?1"
 
 .cmd_attachments:
 ; here esi points to the ":" char of the "attachments" command, ecx at the end "]" and edi at the start "["
@@ -937,9 +942,11 @@ locals
   .count      dd ?
   .md5sum     dd ?
   .fEdit      dd ?
+  .fAll       dd ?
 endl
 
         mov     [.fEdit], 0
+        mov     [.fAll], 0
 
 .do_attachments:
 
@@ -952,13 +959,23 @@ endl
         mov     edi, edx
         mov     esi, [.pSpecial]
 
+        mov     edx, sqlGetAttachments
+        cmp     [.fAll], 0
+        je      @f
+        mov     edx, sqlGetAllAttachments
+@@:
+
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetAttachments, sqlGetAttachments.length, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], edx, -1, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, ebx
+
+        cmp     [.fAll], 0
+        je      @f
 
         mov     eax, [.pSpecial]
         cinvoke sqliteBindInt, [.stmt], 2, [eax+TSpecialParams.userID]
 
+@@:
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
         jne     .end_of_attachments
@@ -1063,8 +1080,13 @@ endl
 
 .cmd_attachedit:
         mov     [.fEdit], 1
+        mov     [.fAll], 1
         jmp     .do_attachments
 
+.cmd_attach_preview:
+        mov     [.fEdit], 0
+        mov     [.fAll], 1
+        jmp     .do_attachments
 
 ; ...................................................................
 ; here esi points to ":" of the "css:" command. edi points to the start "[" and ecx points to the end "]"
