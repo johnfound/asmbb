@@ -173,32 +173,23 @@
           </div>
         </div>
 
+        [case:[special:canupload]||<p>[const:Attach]: <span class="small">[const:FileLimit]</span></p>
+
+        <div class="file-browse">
+          <label for="input-file-browse" id="browse-txt" data-empty="[const:phSelect]"></label>
+          <input type="file" placeholder="[const:phSelect]" id="input-file-browse" name="attach" multiple="multiple" data-multiselect="[const:MultiFiles]" oninput="previewIt();">
+          <label id="browse-btn" class="btn" for="input-file-browse">Browse</label>
+        </div>
+        ]
+
+
         <p>[const:Content]:</p>
         [include:edit_toolbar.tpl]
         <textarea name="source" id="source">[source]</textarea>
       </section>
 
-      <input id="tab1" name="tabselector" type="radio" value="1">
-      <label for="tab1">[const:tabAttach]</label>
-      <section>
-        [case:[special:canupload]||<p>[const:Attach]: <span class="small">[const:FileLimit]</span></p>
-
-        <div class="editgroup">
-          <div class="file-browse">
-            <label for="input-file-browse" id="browse-txt" data-empty="[const:phSelect]"></label>
-            <input type="file" placeholder="[const:phSelect]" id="input-file-browse" name="attach" multiple="multiple" data-multiselect="[const:MultiFiles]" oninput="previewIt();">
-            <label id="browse-btn" class="btn" for="input-file-browse">Browse</label>
-          </div>
-        </div>
-
-        <div id="attachments" class="attach_del">
-          [attach_edit:[id]]
-        </div>
-
-      </section>
-
       [case:[special:markup=0]||
-      <input id="tab2" name="tabselector" type="radio" value="2">
+      <input id="tab2" name="tabselector" type="radio" value="1">
       <label for="tab2">
         <svg version="1.1" width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
           <path d="m16 0a16 16 0 00-16 16 16 16 0 0016 16 16 16 0 0016-16 16 16 0
@@ -224,7 +215,7 @@
       ]
 
       [case:[special:markup=1]||
-      <input id="tab3" name="tabselector" type="radio" value="3">
+      <input id="tab3" name="tabselector" type="radio" value="2">
       <label for="tab3">
         <svg version="1.1" width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
           <path d="m16 0a16 16 0 00-16 16 16 16 0 0016 16 16 16 0 0016-16 16 16 0

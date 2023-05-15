@@ -30,7 +30,6 @@ PHashTable tableRenderCmd, tpl_func,                      \
         'bbcode:',      RenderTemplate.cmd_bbcode,        \   ; HTML, no encoding.
         'html:',        RenderTemplate.cmd_html,          \   ; HTML, disables the encoding.
         'attachments:', RenderTemplate.cmd_attachments,   \   ; HTML, no encoding.
-        'attach_preview:', RenderTemplate.cmd_attach_preview, \   ; HTML, no encoding.
         'attach_edit:', RenderTemplate.cmd_attachedit,    \   ; HTML, no encoding.
         'url:',         RenderTemplate.cmd_url,           \   ; Needs encoding!
         'json:',        RenderTemplate.cmd_json,          \   ; No encoding.
@@ -942,11 +941,9 @@ locals
   .count      dd ?
   .md5sum     dd ?
   .fEdit      dd ?
-  .fAll       dd ?
 endl
 
         mov     [.fEdit], 0
-        mov     [.fAll], 0
 
 .do_attachments:
 
@@ -960,7 +957,7 @@ endl
         mov     esi, [.pSpecial]
 
         mov     edx, sqlGetAttachments
-        cmp     [.fAll], 0
+        cmp     [.fEdit], 0
         je      @f
         mov     edx, sqlGetAllAttachments
 @@:
@@ -969,7 +966,7 @@ endl
         cinvoke sqlitePrepare_v2, [hMainDatabase], edx, -1, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, ebx
 
-        cmp     [.fAll], 0
+        cmp     [.fEdit], 0
         je      @f
 
         mov     eax, [.pSpecial]
@@ -1023,7 +1020,7 @@ endl
         cmp     [.fEdit], 0
         je      .edit_ok2
 
-        stdcall TextIns, edx, txt '<td class="delcheck"><input type="checkbox" autocomplete="off" name="attch_del" id="attch'
+        stdcall TextIns, edx, txt '<td class="delcheck"><input type="checkbox" form="editform" autocomplete="off" name="attch_del" id="attch'
         stdcall TextIns, edx, [.fileid]
         stdcall TextIns, edx, txt '" value="'
         stdcall TextIns, edx, [.fileid]
@@ -1080,12 +1077,6 @@ endl
 
 .cmd_attachedit:
         mov     [.fEdit], 1
-        mov     [.fAll], 1
-        jmp     .do_attachments
-
-.cmd_attach_preview:
-        mov     [.fEdit], 0
-        mov     [.fAll], 1
         jmp     .do_attachments
 
 ; ...................................................................

@@ -11,7 +11,7 @@
       <article>
         [html:[[case:[format]|minimag:[include:minimag_suffix.tpl]|bbcode:][source]]]
         <div class="attachments">
-          [attach_preview:[id]]
+          [attach_edit:[id]]
         </div>
       </article>
     </div>

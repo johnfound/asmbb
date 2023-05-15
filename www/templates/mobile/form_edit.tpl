@@ -58,12 +58,10 @@
     <p>[const:Caption]:</p>
     <h1 class="fakeedit">[caption]</h1>
     [include:edit_toolbar.tpl]
-        <p>[const:Content]:</p>
+    <p></p>
+    [case:[special:canupload]||<p>[const:Attach]: <span class="small">[const:FileLimit]</span></p><input id="browse" type="file" placeholder="Select file to attach" name="attach" multiple="multiple">]
+    <p>[const:Content]:</p>
     <textarea class="editor" name="source" id="source">[source]</textarea>
-        [case:[special:canupload]||<p>[const:Attach]: <span class="small">[const:FileLimit]</span></p><input id="browse" type="file" placeholder="Select file to attach" name="attach" multiple="multiple">]
-    <div id="attachments" class="attach_del">
-      [attach_edit:[id]]
-    </div>
     <div class="panel">
       <input type="submit" name="preview" value="[const:btnPreview]" onclick="this.form.cmd='preview'" title="[const:hintPreview]">
       <input type="submit" name="submit" value="[const:btnSubmit]" onclick="this.form.cmd='submit'" title="[const:hintSubmit]" >
@@ -95,6 +93,7 @@ function previewIt(e) {
 
     var formData = new FormData(document.getElementById("editform"));
     xhr.send(formData);
+    document.getElementById("browse").value = null;
   }
 }
 

@@ -16,8 +16,6 @@
   [equ:btnSubmit=Submit]
   [equ:hintSubmit=Ctrl+S for submit]
   [equ:Attach=Attach file(s)]
-  [equ:tabText=Text]
-  [equ:tabAttach=Attachments]
   [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
   [equ:ttlPin=Important thread, rank]
   [equ:lblAfter=after: ]
@@ -35,8 +33,6 @@
   [equ:btnSubmit=Публикувай]
   [equ:hintSubmit=Ctrl+S за публикуване]
   [equ:Attach=Прикачи файл(ове)]
-  [equ:tabText=Текст]
-  [equ:tabAttach=Файлове]
   [equ:FileLimit=(брой ≤ 10, размер ≤ 1MB)]
   [equ:ttlPin=Дръж темата най-отгоре]
   [equ:ttlPin=Важна тема, ранг]
@@ -55,8 +51,6 @@
   [equ:btnSubmit=Отправить]
   [equ:hintSubmit=Ctrl+S чтобы отправить]
   [equ:Attach=Прикрепить файл(ы)]
-  [equ:tabText=Текст]
-  [equ:tabAttach=Вложения]
   [equ:FileLimit=(количество ≤ 10, размер ≤ 1MB)]
   [equ:ttlPin=Важная тема, ранг]
   [equ:lblAfter=через: ]
@@ -74,8 +68,6 @@
   [equ:btnSubmit=Soumettre]
   [equ:hintSubmit=Ctrl+S pour soumettre]
   [equ:Attach=Pièce(s) jointe(s)]
-  [equ:tabText=Texte]
-  [equ:tabAttach=Pièces jointes]
   [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
   [equ:ttlPin=Sujet important, classement]
   [equ:lblAfter=après: ]
@@ -93,8 +85,6 @@
   [equ:btnSubmit=Absenden]
   [equ:hintSubmit=Strg+S zum Absenden]
   [equ:Attach=Datei(en) anhängen]
-  [equ:tabText=Text]
-  [equ:tabAttach=Anhänge]
   [equ:FileLimit=(Anzahl ≤ 10, Größe ≤ 1MB)]
   [equ:ttlPin=Wichtiges Thema, Rang]
   [equ:lblAfter=nach: ]
@@ -103,7 +93,7 @@
 <div class="editor" id="editor">
   <div class="ui" id="draghere">
     <span class="spacer"></span>
-    <a class="ui right" href="[case:[id]|[case:[special:page]|.|!by_id]|!by_id]"><img src="[special:skin]/_images/close.svg" alt="Close" height="16"></a>
+    <a id="btn-close" class="ui right" href="[case:[id]|[case:[special:page]|.|!by_id]|!by_id]"><img src="[special:skin]/_images/close.svg" alt="Close" height="16"></a>
   </div>
   <form id="editform" action="!edit" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
   [case:[EditThread]|
@@ -124,25 +114,18 @@
         <input id="invited" type="text" value="[invited]" name="invited" oninput="OnKeyboard(this)" onkeydown="EditKeyDown(event, this)" getlist="/!usersmatch/">
       </div>
     </div>
-    ]
-    <div class="tabbed">
-      <input id="rad1" name="tabselector" type="radio" checked>
-      <label for="rad1">[const:tabText]</label>
-      <section>
-        [include:edit_toolbar.tpl]
-        <p>[const:Content]:</p>
-        <textarea class="editor" name="source" id="source">[source]</textarea>
-      </section>
+  ]
 
-      <input id="rad2" name="tabselector" type="radio">
-      <label for="rad2">[const:tabAttach]</label>
-      <section>
-        [case:[special:canupload]||<p>[const:Attach]: <span class="small">[const:FileLimit]</span></p><input id="browse" type="file" placeholder="Select file to attach" name="attach" multiple="multiple">]
-        <div id="attachments" class="attach_del">
-          [attach_edit:[id]]
-        </div>
-      </section>
-    </div>
+    [include:edit_toolbar.tpl]
+    <p></p>
+
+  <div>
+    [case:[special:canupload]||<p>[const:Attach]: <span class="small">[const:FileLimit]</span></p><input id="browse" type="file" placeholder="Select file to attach" name="attach" multiple="multiple">]
+  </div>
+
+    <p>[const:Content]:</p>
+
+    <textarea class="editor" name="source" id="source">[source]</textarea>
 
     <div class="panel">
       <input type="submit" name="preview" value="[const:btnPreview]" onclick="this.form.cmd='preview'" title="[const:hintPreview]">
@@ -226,6 +209,8 @@ function previewIt(e) {
 
     var formData = new FormData(form);
     xhr.send(formData);
+
+    document.getElementById("browse").value = null;
     document.location = "#preview";
   }
 }
@@ -233,12 +218,13 @@ function previewIt(e) {
 document.onkeydown = function(e) {
   var key = e.which || e.keyCode;
   var frm = document.getElementById("editform");
+  var btnclose = document.getElementById("btn-close");
   var stop = true;
 
   if (e.ctrlKey && key == 13) {
     frm.preview.click();
   } else if (key == 27) {
-    window.location.href = "!by_id";
+    btnclose.click();
   } else if (e.ctrlKey && key == 83) {
     frm.submit.click();
   } else stop = false;

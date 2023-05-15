@@ -6,6 +6,7 @@ LIMIT_TAG_DESCRIPTION = 1024
 sqlReadPost    StripText "readpost.sql", SQL
 sqlEditedPost  StripText "editedpost.sql", SQL
 
+sqlGetThreadAttr  text "select id, caption from threads where slug = ?1"
 sqlGetPostUser    text "select userID, nick, threadID, (?1 = (select id from posts where threadid = P.threadid order by rowid limit 1)) as ThreadEdit from Posts P left join users U on U.id = P.userID where P.id = ?1"
 
 sqlUpdatePinned         text "update threads set pinned = ?2 where id = ?1"
@@ -154,15 +155,21 @@ begin
         DebugMsg "New post in existing thread."
 
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadID, -1, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetThreadAttr, -1, eax, 0
+
         stdcall StrPtr, [esi+TSpecialParams.thread]
         cinvoke sqliteBindText, [.stmt], 1, eax, [eax+string.len], SQLITE_STATIC
+
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
         jne     .error_missing_post
 
         cinvoke sqliteColumnInt, [.stmt], 0
         mov     [.threadID], eax
+
+        cinvoke sqliteColumnText, [.stmt], 1
+        stdcall StrDupMem, eax
+        mov     [.caption], eax
 
         cinvoke sqliteFinalize, [.stmt]
 

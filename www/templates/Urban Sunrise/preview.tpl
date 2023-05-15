@@ -4,7 +4,7 @@
   <div class="navigation3 btn-bar" id="preview-switch">
     <a class="btn" href="#editor-window">Editor</a>
     <div class="spacer"></div>
-    <a id="btn-close" class="btn img-btn" href="[case:[special:page]|./|!by_id]">
+    <a id="btn-close" class="btn img-btn" href="[case:[id]|[case:[special:page]|.|!by_id]|!by_id]">
       <svg version="1.1" width="12" height="12" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
          <rect transform="rotate(45)" x=".635" y="-1.53" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
          <rect transform="rotate(135)" x="-10.7" y="-12.8" width="21.4" height="3.05" rx="1.53" ry="1.53"/>
@@ -22,9 +22,9 @@
 
     <article class="post-text">
         [html:[[case:[format]|minimag:[include:minimag_suffix.tpl]|bbcode:][source]]]
-        <div class="attachments">
-          [attach_preview:[id]]
-        </div>
     </article>
+    <div class="attachments">
+      [attach_edit:[id]]
+    </div>
   </div>
 </div>
