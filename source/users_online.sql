@@ -11,7 +11,8 @@ select
     else
       '<a href="/' || Param || '/">' || (select html_encode(Caption) from Threads where slug = cast(Param as text)) || '</a>'
     end
-  end as Link
+  end as Link,
+  max(rowid)
 from
 
   UserLog U

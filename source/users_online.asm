@@ -227,6 +227,9 @@ begin
 
 .client_ok:
         cinvoke sqliteStep, [.stmt]
+
+        OutputValue "Log user activity result: ", eax, 10, -1
+
         cinvoke sqliteFinalize, [.stmt]
 
         cinvoke sqliteExec, [hMainDatabase], sqlClipHistory, 0, 0, 0
