@@ -1,1 +1,0 @@
-../Wasp/activity6.tpl

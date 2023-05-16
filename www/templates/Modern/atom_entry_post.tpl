@@ -1,1 +1,0 @@
-../Wasp/atom_entry_post.tpl
