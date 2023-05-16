@@ -1,5 +1,5 @@
-C Fixed\sthe\sbroken\s"quote"\scommand.
-D 2023-05-16T09:51:42.412
+C Removed\ssome\scommented\scode.
+D 2023-05-16T19:59:18.880
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -37,7 +37,7 @@ F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm e867460b1254a192a93388df423855385bb9f01a
-F source/commands.asm 5020cc0acb0c6696b1e3eb4781e9b738787c13e6
+F source/commands.asm 50759f52eee83cef2cc4491dafb3966da36bbbfe
 F source/create.sql 31cae1c48c419bfb976cd57da015d2a11a4a4c17
 F source/delete.asm 61b26bcb0d32288d8b5e56ef9d7d4acadacb62d5
 F source/edit.asm 0bfe5735468282e709dd066abcfcf2d189618e3b
@@ -765,7 +765,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P c9aa15d7357e5c64d615efbaddeb9386da7e6bc4
-R ae27e8bdefcba86e550324e51c135963
+P 07d60e1f655e2746eb833207ec0d1682cf77c49f
+R 2947b16f0b607987ceb12d9925a4249a
 U johnfound
-Z 932d01fcc547bc6896fbc49eae8c37ee
+Z f575c94f14e63478c88147f34a2ba44e

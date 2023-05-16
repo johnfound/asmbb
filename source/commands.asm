@@ -109,7 +109,6 @@ PHashTable tablePostCommands, tpl_func,                 \
         "!vote",            Vote,                       \
         "!markread",        MarkThreadRead,             \
         "!unread",          GotoFirstUnread,            \
-\;        "!post",            PostUserMessage,            \
         "!edit",            EditUserMessage,            \
         "!quote",           EditUserMessage,            \
         "!edit_thread",     EditThreadAttr,             \
