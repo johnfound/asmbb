@@ -44,6 +44,7 @@ PHashTable tableSpecial, tpl_func,                              \
         "version",     RenderTemplate.sp_version,               \ ; no encoding
         "sqliteversion", RenderTemplate.sp_sqlite_version,      \ ; no encoding
         "cmdtype",     RenderTemplate.sp_cmdtype,               \ ; 0/1/2 no encoding
+        "cmd",         RenderTemplate.sp_cmd,                   \ ; Needs encoding.
         "stats",       RenderTemplate.sp_stats,                 \ ; HTML no encoding
         "timestamp",   RenderTemplate.sp_timestamp,             \ ; NUMBER no encoding
         "title",       RenderTemplate.sp_title,                 \ ; Controlled source, no encoding
@@ -1632,6 +1633,10 @@ endl
 .sp_cmdtype:
         mov     eax, [ebx+TSpecialParams.cmd_type]
         jmp     .special_int
+
+.sp_cmd:
+        mov     eax, [ebx+TSpecialParams.cmd]
+        jmp     .special_string
 
 .sp_page:
         mov     eax, [ebx+TSpecialParams.page_num]

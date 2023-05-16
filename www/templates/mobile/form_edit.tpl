@@ -54,7 +54,7 @@
   <a class="ui left" href="[case:[id]|[case:[special:page]|.|!by_id]|!by_id]">Back</a>
 </div>
 
-<form id="editform" action="!edit#preview" onsubmit="previewIt(event)" method="post" enctype="multipart/form-data">
+<form id="editform" action="[special:cmd]#preview" onsubmit="previewIt(event)" method="post" enctype="multipart/form-data">
     <p>[const:Caption]:</p>
     <h1 class="fakeedit">[caption]</h1>
     [include:edit_toolbar.tpl]

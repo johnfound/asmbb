@@ -143,7 +143,7 @@
       </a>
   </div>
 
-  <form id="editform" action="!edit" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
+  <form id="editform" action="[special:cmd]" method="post" onsubmit="previewIt(event)" enctype="multipart/form-data">
     <div class="dropdown tabbed-form">
 
       <input id="tab0" name="tabselector" type="radio" value="0" checked>
