@@ -2011,11 +2011,11 @@ secError = 0
 secNavigate = 1
 secOther = 2
 
-proc CheckSecMode, .pSpecial
+proc CheckSecMode, .params
 begin
         pushad
         xor     ebx, ebx
-        mov     esi, [.pSpecial]
+        mov     esi, [.params]
 
         stdcall ValueByName, esi, "HTTP_SEC_FETCH_MODE"
         jc      .finish

@@ -279,7 +279,7 @@ begin
         test    [edx+TSpecialParams.userStatus], permAdmin
         jz      .error_for_admins_only
 
-        stdcall CheckSecMode, [esi+TSpecialParams.params]
+        stdcall CheckSecMode, [edx+TSpecialParams.params]
         cmp     eax, secNavigate
         jne     .error_for_admins_only
 

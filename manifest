@@ -1,5 +1,5 @@
-C Merged\swith\sunieditor2\sbranch.
-D 2023-05-17T15:04:36.079
+C Bug\sin\s!debuginfo\sfixed.\sv3.0RC\sanounced.
+D 2023-05-17T18:13:15.030
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -37,13 +37,13 @@ F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm d91554dc6be9579f600697f2ebabb09cadd7e264
-F source/commands.asm 29c002614d17ca9b8cca78680e59698386d9a6bf
+F source/commands.asm 8a8c7defaaf36ed00574d2073153ffaedf7f3ddf
 F source/create.sql 36e2ca6e0d6edab283f6cad6db869541ca306d3e
 F source/delete.asm e0e9e38c5e1cb40b48e3a4670542a4dc37e0ec72
 F source/edit.asm 5681c515d78b074b4494a535987287491a750e8f
 F source/editedpost.sql 77e7ac0d4d76a4e8aa540233909373b3d3679933
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
-F source/engine.asm c15014fdc8a7bb5946d1f10aa80f4a7e8568f357
+F source/engine.asm b8a7c632edcffe6d93a4fb9a4a1a551b29c2d0e1
 F source/engine.fpr 37d56c5053a3b52de2a29e740c98105367f57ab0
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
@@ -102,7 +102,7 @@ F source/users_online.sql 6090615229cf0b82966d80ece2e400206759d5d3
 F source/userslist.asm 63449cb92692245f961ab70177b1982dec4ec843
 F source/userslist.sql e4b2f4dfbc0e4911c07985a67d6d36384698111b
 F source/util.sql c811be0ccdd2877eb45b3b843b418a5e83eac560
-F source/version.asm bc87e5fe2b5905a1fa3a5c5854a440632f3c1e77
+F source/version.asm c4683a9eac4cd2b50c46051d7f4b51b622c58760
 F source/votes.asm fb9dba27fa630fd866539e026b4e5d77a44ca2e1
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/.nginx/fastcgi.conf 635d54729b084483347b15cdd35e82866ee86c19
@@ -765,7 +765,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 0ae1a653c69265282ab73c673896d4c2745458cf d497f85104e02c955db2381a61dd414864771973
-R 1d9d5ce3586c3393c2a80a6ee035c2b2
+P d8c75d8f5bc847672aaa3e9e54e1e50d42b268a6
+R c70a4edd29f2d26a7b5f09ff4e82cf22
 U johnfound
-Z 4c35c948953e3447379f1f770008a7ca
+Z e551aff4b987c65eae8412bdba146f6c
