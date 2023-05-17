@@ -4,6 +4,7 @@ select
   t.Caption,
   [case:[special:variant]|(t.Pinned > 1)|0|t.Pinned] as Pinned,
   fuzzytime(LastChanged) as TimeChanged,
+  LastChanged,
   t.PostCount,
   t.ReadCount,
   t.Limited,

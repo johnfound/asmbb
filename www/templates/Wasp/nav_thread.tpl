@@ -52,7 +52,7 @@
 <div class="ui">
   <a class="ui left" href="/!categories">[const:btnCats]</a>
   <a class="ui left" href="..">[const:btnList]</a>
-  [case:[special:canpost]| |<a class="ui left" href="!post">[const:btnNewPost]</a>]
+  [case:[special:canpost]| |<a class="ui left" href="!edit">[const:btnNewPost]</a>]
   <span class="spacer"></span>
   [case:[special:isadmin] | |
     <a class="ui right" href="/!settings[special:urltag]">[const:btnSettings]</a>

@@ -54,5 +54,5 @@
 
 <div class="navigation3 btn-bar">
   <a class="btn" href="..">[const:btnList]</a>
-  [case:[special:userid]|<a class="btn" href="/!login">[const:btnNewPost]</a>|<a class="btn" href="!post">[const:btnNewPost]</a>]
+  [case:[special:userid]|<a class="btn" href="/!login">[const:btnNewPost]</a>|<a class="btn" href="!edit">[const:btnNewPost]</a>]
 </div>

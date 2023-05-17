@@ -186,10 +186,10 @@ endp
 
 
 
-sqlAttach text "insert into Attachments(postID, filename, file, changed, md5sum, key) values (?1, ?2, ?3, strftime('%s','now'), ?4, ?5)"
-sqlAttachCnt text "select count() from Attachments where postid = ?1"
+sqlAttach text "insert into Attachments(userID, filename, file, changed, md5sum, key) values (?1, ?2, ?3, strftime('%s','now'), ?4, ?5)"
+sqlAttachCnt text "select count() from Attachments where (postid is not null and postid = ?1) or (postid is null and userid = ?2)"
 
-proc WriteAttachments, .postID, .pSpecial
+proc WriteAttachments, .postID, .userID, .pSpecial
 .stmt dd ?
 .max_size dd ?
 .max_count dd ?
@@ -215,19 +215,19 @@ begin
         stdcall GetParam, "max_attachment_size", gpInteger
         mov     [.max_size], eax
 
-        OutputValue "Max attachment size:", eax, 10, -1
+;        OutputValue "Max attachment size:", eax, 10, -1
 
         mov     eax, MAX_ATTACHMENT_COUNT
         stdcall GetParam, "max_attachment_count", gpInteger
         mov     [.max_count], eax
 
-        OutputValue "Max attachment count:", eax, 10, -1
-
-        OutputValue "Post ID = ", [.postID], 10, -1
+;        OutputValue "Max attachment count:", eax, 10, -1
+;        OutputValue "Post ID = ", [.postID], 10, -1
 
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlAttachCnt, sqlAttachCnt.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [.postID]
+        cinvoke sqliteBindInt, [.stmt], 2, [.userID]
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
         jne     .error_finalize
@@ -236,7 +236,7 @@ begin
         mov     ebx, eax
         cinvoke sqliteFinalize, [.stmt]
 
-        OutputValue "Attachment count now:", eax, 10, -1
+;        OutputValue "Attachment count now:", eax, 10, -1
 
         sub     [.max_count], ebx
         jle     .error_limits
@@ -258,7 +258,7 @@ begin
         cmp     eax, [.max_size]
         ja      .next
 
-        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
+        cinvoke sqliteBindInt, [.stmt], 1, [.userID]
 
         stdcall StrPtr, [esi+TPostFileItem.filename]
         cinvoke sqliteBindText, [.stmt], 2, eax, [eax+string.len], SQLITE_STATIC
@@ -269,23 +269,22 @@ begin
         cinvoke sqliteBindText, [.stmt], 4, eax, [eax+string.len], SQLITE_TRANSIENT
         stdcall StrDel ; from the stack
 
-        DebugMsg "MD4 computed."
+;        DebugMsg "MD4 computed."
 
         stdcall GetRandomBytes, 256
         jc      .clear
         mov     edi, eax
 
-        DebugMsg "Encription key created."
+;        DebugMsg "Encription key created."
 
         stdcall XorMemory, [esi+TPostFileItem.data], [esi+TPostFileItem.size], edi, 256
 
-        DebugMsg "File encripted."
+;        DebugMsg "File encrypted."
 
         cinvoke sqliteBindBlob, [.stmt], 3, [esi+TPostFileItem.data], [esi+TPostFileItem.size], SQLITE_STATIC
         cinvoke sqliteBindBlob, [.stmt], 5, edi, 256, SQLITE_STATIC
 
         cinvoke sqliteStep, [.stmt]
-        OutputValue "Write file SQL return: ", eax, 10, -1
 
         stdcall FreeMem, edi
 
@@ -324,7 +323,7 @@ endp
 
 
 
-proc DelAttachments, .postID, .pSpecial
+proc DelAttachments, .postID, .userID, .pSpecial
 begin
         pushad
         mov     esi, [.pSpecial]
@@ -348,7 +347,7 @@ begin
         stdcall StrToNumEx, eax
         jc      .loop
 
-        stdcall __DelOneFile, [.postID], eax
+        stdcall __DelOneFile, [.postID], [.userID], eax
         jmp     .loop
 
 .finish:
@@ -358,9 +357,9 @@ endp
 
 
 
-sqlDelFile text "delete from Attachments where id = ?1 and postid = ?2"
+sqlDelFile text "delete from Attachments where id = ?1 and ((postid is not null and postid = ?2) or (postid is null and userid = ?3))"
 
-proc __DelOneFile, .postID, .fileID
+proc __DelOneFile, .postID, .userID, .fileID
 .stmt dd ?
 begin
         pushad
@@ -368,13 +367,42 @@ begin
         lea     eax, [.stmt]
         cinvoke sqlitePrepare_v2, [hMainDatabase], sqlDelFile, sqlDelFile.length, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, [.fileID]
+
+        cmp     [.postID], 0
+        je      @f
         cinvoke sqliteBindInt, [.stmt], 2, [.postID]
+@@:
+        cinvoke sqliteBindInt, [.stmt], 3, [.userID]
         cinvoke sqliteStep, [.stmt]
         cinvoke sqliteFinalize, [.stmt]
 
         popad
         return
 endp
+
+
+
+
+sqlUpdateAttach text "update Attachments set postID = ?1, userID = null where postID is null and userID = ?2"
+
+proc UpdateAttachmentsPost, .postID, .userID
+.stmt dd ?
+begin
+        pushad
+
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlUpdateAttach, sqlUpdateAttach.length, eax, 0
+        cinvoke sqliteBindInt, [.stmt], 1, [.postID]
+        cinvoke sqliteBindInt, [.stmt], 2, [.userID]
+        cinvoke sqliteStep, [.stmt]
+        cinvoke sqliteFinalize, [.stmt]
+
+        popad
+        return
+endp
+
+
+
 
 
 

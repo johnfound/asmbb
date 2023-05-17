@@ -398,6 +398,7 @@ create index idxUnreadPostsPostID on UnreadPosts(PostID);
 create table Attachments (
   id       integer primary key autoincrement,
   postID   integer references Posts(id) on delete cascade,
+  userID   integer references Users(id) on delete cascade,
   filename text,
   changed  integer,
   file     blob,
@@ -406,7 +407,9 @@ create table Attachments (
 );
 
 create index idxAttachments on Attachments(postID);
+create index idxAttachmentsCombined on Attachments(postID, userID);
 create unique index idxAttachmentsUnique on Attachments(postID, md5sum);
+create unique index idxAttachmentsUnique2 on Attachments(userID, md5sum);
 
 create table AttachCnt (
   fileID integer references Attachments(id) on delete cascade,

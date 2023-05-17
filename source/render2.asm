@@ -44,6 +44,7 @@ PHashTable tableSpecial, tpl_func,                              \
         "version",     RenderTemplate.sp_version,               \ ; no encoding
         "sqliteversion", RenderTemplate.sp_sqlite_version,      \ ; no encoding
         "cmdtype",     RenderTemplate.sp_cmdtype,               \ ; 0/1/2 no encoding
+        "cmd",         RenderTemplate.sp_cmd,                   \ ; Needs encoding.
         "stats",       RenderTemplate.sp_stats,                 \ ; HTML no encoding
         "timestamp",   RenderTemplate.sp_timestamp,             \ ; NUMBER no encoding
         "title",       RenderTemplate.sp_title,                 \ ; Controlled source, no encoding
@@ -931,7 +932,13 @@ endl
 
 ; ...................................................................
 
-sqlGetAttachments text "select id, filename, length(file), strftime('%d.%m.%Y', changed, 'unixepoch'), count, md5sum from Attachments left join AttachCnt on fileid = id where postID = ?1"
+sqlGetAllAttachments text "select id, filename, length(file), strftime('%d.%m.%Y', changed, 'unixepoch'), count, md5sum ", \
+                          "from Attachments left join AttachCnt on fileid = id ",  \
+                          "where (postID is not null and postID = ?1) or (postID is null and userID = ?2)"
+
+sqlGetAttachments    text "select id, filename, length(file), strftime('%d.%m.%Y', changed, 'unixepoch'), count, md5sum ", \
+                          "from Attachments left join AttachCnt on fileid = id ",  \
+                          "where postID = ?1"
 
 .cmd_attachments:
 ; here esi points to the ":" char of the "attachments" command, ecx at the end "]" and edi at the start "["
@@ -959,10 +966,23 @@ endl
         mov     edi, edx
         mov     esi, [.pSpecial]
 
+        mov     edx, sqlGetAttachments
+        cmp     [.fEdit], 0
+        je      @f
+        mov     edx, sqlGetAllAttachments
+@@:
+
         lea     eax, [.stmt]
-        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlGetAttachments, sqlGetAttachments.length, eax, 0
+        cinvoke sqlitePrepare_v2, [hMainDatabase], edx, -1, eax, 0
         cinvoke sqliteBindInt, [.stmt], 1, ebx
 
+        cmp     [.fEdit], 0
+        je      @f
+
+        mov     eax, [.pSpecial]
+        cinvoke sqliteBindInt, [.stmt], 2, [eax+TSpecialParams.userID]
+
+@@:
         cinvoke sqliteStep, [.stmt]
         cmp     eax, SQLITE_ROW
         jne     .end_of_attachments
@@ -1010,7 +1030,7 @@ endl
         cmp     [.fEdit], 0
         je      .edit_ok2
 
-        stdcall TextIns, edx, txt '<td class="delcheck"><input type="checkbox" autocomplete="off" name="attch_del" id="attch'
+        stdcall TextIns, edx, txt '<td class="delcheck"><input type="checkbox" form="editform" autocomplete="off" name="attch_del" id="attch'
         stdcall TextIns, edx, [.fileid]
         stdcall TextIns, edx, txt '" value="'
         stdcall TextIns, edx, [.fileid]
@@ -1068,7 +1088,6 @@ endl
 .cmd_attachedit:
         mov     [.fEdit], 1
         jmp     .do_attachments
-
 
 ; ...................................................................
 ; here esi points to ":" of the "css:" command. edi points to the start "[" and ecx points to the end "]"
@@ -1623,6 +1642,10 @@ endl
 .sp_cmdtype:
         mov     eax, [ebx+TSpecialParams.cmd_type]
         jmp     .special_int
+
+.sp_cmd:
+        mov     eax, [ebx+TSpecialParams.cmd]
+        jmp     .special_string
 
 .sp_page:
         mov     eax, [ebx+TSpecialParams.page_num]

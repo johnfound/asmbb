@@ -83,7 +83,7 @@
         [case:[editUserID]|[const:tCreated]|[const:tEdited] <a href="/!userinfo/[url:[html:[EditUser]]]">[usr:[EditUser]]</a>], [const:tRead]
       </div>
       <div class="edit_tools">
-        [case:[special:canpost]| |<a title="[const:ttlQuote]" href="[id]/!post"><img src="[special:skin]/_images/quote.svg" alt="[const:altQuote]"></a>]
+        [case:[special:canpost]| |<a title="[const:ttlQuote]" href="[id]/!quote"><img src="[special:skin]/_images/quote.svg" alt="[const:altQuote]"></a>]
         [case:[special:canedit]| |<a title="[const:ttlEdit]" href="[id]/!edit"><img src="[special:skin]/_images/edit.svg" alt="[const:altEdit]"></a>]
         [case:[special:candel] | |<a title="[const:ttlDel]" href="[id]/!del"><img src="[special:skin]/_images/del.svg" alt="[const:altDel]"></a>]
         [case:[HistoryFlag]||[case:[special:isadmin]| |<a title="[const:ttlHist]" href="/[id]/!history"><img src="[special:skin]/_images/history.svg" alt="[const:altHist]"></a>]]

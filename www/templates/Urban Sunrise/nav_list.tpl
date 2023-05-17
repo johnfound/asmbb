@@ -19,5 +19,5 @@
 
 
 <div class="navigation3 btn-bar">
-  [case:[special:userid]|<a class="btn" href="/!login">[const:btnNewThread]</a>|<a class="btn" href="!markread">[const:btnMarkRead]</a><a class="btn" href="!post">[const:btnNewThread]</a>]
+  [case:[special:userid]|<a class="btn" href="/!login">[const:btnNewThread]</a>|<a class="btn" href="!markread">[const:btnMarkRead]</a><a class="btn" href="!edit">[const:btnNewThread]</a>]
 </div>

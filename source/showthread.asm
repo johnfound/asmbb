@@ -479,6 +479,9 @@ begin
         mov     ebx, eax
 
         cinvoke sqliteColumnText, [.stmt], 1
+        test    eax, eax
+        jz      .error2
+
         stdcall StrDupMem, eax
         mov     [.slug], eax
 
@@ -549,8 +552,15 @@ begin
 
 .error:
         stdcall StrCat, edi, "!message/cant_read/"
+
+.err_finalize:
         cinvoke sqliteFinalize, [.stmt]
         jmp     .finish
+
+.error2:
+        stdcall StrCat, edi, "!message/error_post_not_exists/"
+        jmp     .err_finalize
+
 
 endp
 

@@ -20,12 +20,13 @@ div.alone {
   display: flex;
 }
 
-a.ui {
+a.ui, button.ui {
   display: inline-flex;
   padding: 4px;
   background-color: @clButtonBG;
   color: @clButtonFG;
   text-decoration: none;
+  border: none;
   border-radius: @borderNavRad;
   flex-shrink: 0;
   position: relative;
@@ -78,7 +79,7 @@ a.ui2 {
   }
 }
 
-a.ui:hover, a.ui:active {
+a.ui:hover, a.ui:active, button.ui:hover, button.ui.active {
   background-color: @clButtonActiveBG !important;
   color: @clButtonActiveFG !important;
   border-radius: @borderNavRad;

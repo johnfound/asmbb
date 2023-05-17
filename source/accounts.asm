@@ -830,11 +830,11 @@ endp
 
 
 
-sqlBegin      text  "begin transaction;"
+sqlBegin      text  "begin"
 sqlActivate   StripText 'activate.sql', SQL
 sqlDeleteWait text  "delete from WaitingActivation where a_secret = ?1"
 sqlCheckType  text  "select operation, time_reg, time_email from WaitingActivation where a_secret = ?1"
-sqlCommit     text  "commit transaction"
+sqlCommit     text  "commit"
 sqlRollback   text  "rollback"
 
 sqlUpdateUserEmail text "update users set email = (select email from WaitingActivation where a_secret = ?1) where nick = (select nick from WaitingActivation where a_secret = ?1)"

@@ -10,7 +10,7 @@
   [equ:Tags=Tags]
   [equ:Rating=Rating]
 |
-  [equ:ttlPinned=Забодена отгоре]
+  [equ:ttlPinned=Закрепена отгоре]
   [equ:ttlLimited=Тема с ограничен достъп]
   [equ:ttlUnread=[case:[Unread]|Към последното|Към първото непрочетено]]
   [equ:tPosts=съобщени[case:[PostCount]|я|е|я]]
@@ -57,7 +57,6 @@
 
 
 <div class="thread-summary">
-
   <div class="ts-info">
     <div class="tsi-link">
       <p[case:[Pinned]|>| title="[const:ttlPinned]">
@@ -100,10 +99,9 @@
           [html:[Invited]]
         </ul>
       </div>]
-
     </div>
     <div class="tsi-stat">
-      <p>[PostCount] [const:tPosts] | [ReadCount] [const:tViews]</p>
+      <p>[PostCount] [const:tPosts] ^| [ReadCount] [const:tViews]</p>
       <p>[const:Rating]: <span id="thread_rating[id]">[Rating]</span>
       <p>[TimeChanged]</p>
     </div>

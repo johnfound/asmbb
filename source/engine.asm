@@ -34,6 +34,8 @@ options.DebugSQLite = 1
 options.DebugWebSSE = 0         ; debug server sent events - creates a command "!echo_events" for debugging SSE.
 options.Benchmark = 0
 
+options.AlignStackExt = 0
+
 ;HeapManager  equ ASM
 ;LinuxThreads equ native
 
@@ -63,7 +65,6 @@ include "post_data.asm"
 include "threadlist.asm"
 include "showthread.asm"
 include "search.asm"
-include "post.asm"
 include "edit.asm"
 include "delete.asm"
 include "userinfo.asm"

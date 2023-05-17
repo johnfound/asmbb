@@ -10,7 +10,7 @@
   [equ:Tags=Tags: ]
   [equ:Rating=Rating]
 |
-  [equ:ttlPinned=Забодена отгоре]
+  [equ:ttlPinned=Закрепена отгоре]
   [equ:ttlLimited=Тема с ограничен достъп]
   [equ:ttlUnread=[case:[Unread]|Няма нови съобщения|Към първото непрочетено]]
   [equ:tPosts=съобщени[case:[PostCount]|я|е|я]]

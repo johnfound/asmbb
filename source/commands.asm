@@ -43,6 +43,7 @@ struct TSpecialParams
   .page_num             dd ?                 ; /1234 - can be the number of the page, or the ID of a post.
 
   .cmd_list             dd ?         ; pointer to an array with splitted URL for analizing.
+  .cmd                  dd ?         ; The command string.
   .cmd_type             dd ?         ; 0 - no command, 1 - root cmd, 2 - top command
 
 ; forum global variables.
@@ -108,8 +109,8 @@ PHashTable tablePostCommands, tpl_func,                 \
         "!vote",            Vote,                       \
         "!markread",        MarkThreadRead,             \
         "!unread",          GotoFirstUnread,            \
-        "!post",            PostUserMessage,            \
         "!edit",            EditUserMessage,            \
+        "!quote",           EditUserMessage,            \
         "!edit_thread",     EditThreadAttr,             \
         "!del",             DeletePost,                 \
         "!by_id",           PostByID,                   \
@@ -404,6 +405,7 @@ end if
         stdcall StrDel, [.special.session]
         stdcall StrDel, [.special.dir]
         stdcall StrDel, [.special.thread]
+        stdcall StrDel, [.special.cmd]
         stdcall StrDel, [.special.page_title]
         stdcall StrDel, [.special.page_header]
         stdcall StrDel, [.special.description]
@@ -521,12 +523,11 @@ end if
         pop     eax
         jne     .is_it_tag
 
+        mov     [.special.cmd], eax
         mov     [.special.cmd_type], 1
 
         stdcall SearchInHashTable, eax, tablePreCommands
         jnc     .is_it_command2
-
-        stdcall StrDel, eax
         jmp     .exec_command
 
 .is_it_tag:
@@ -575,10 +576,10 @@ end if
         jne     .bad_command
 
 .is_it_command2:
+        mov     [.special.cmd], eax
         mov     [.special.cmd_type], 2
 
         stdcall SearchInHashTable, eax, tablePostCommands
-        stdcall StrDel, eax
         jc      .exec_command
         jmp     .error404
 
