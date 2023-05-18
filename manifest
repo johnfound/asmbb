@@ -1,5 +1,5 @@
-C Bug\sin\s!debuginfo\sfixed.\sv3.0RC\sanounced.
-D 2023-05-17T18:13:15.030
+C Direct\spaste\simages\sin\sthe\seditor.
+D 2023-05-18T17:39:12.033
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -474,7 +474,7 @@ F www/templates/Urban\sSunrise/delete.less 397589f431219056581591243e48548d43fb8
 F www/templates/Urban\sSunrise/edit.json 03bb980f7cb86361df3b92f9efeac35f08be212b
 F www/templates/Urban\sSunrise/edit_toolbar.tpl 3f18db7549b9f247fb24c4ec4bbcf130103ab069
 F www/templates/Urban\sSunrise/editor.less be05f1f1838a634d2159e70c27ca74ba078face2
-F www/templates/Urban\sSunrise/editors.js 904e6ef0fbd1641fe4c8754644048330b4c0dd50
+F www/templates/Urban\sSunrise/editors.js acab81f2d842fedc2fbba622a9339fa75ef055f4
 F www/templates/Urban\sSunrise/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Urban\sSunrise/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
 F www/templates/Urban\sSunrise/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
@@ -765,7 +765,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P d8c75d8f5bc847672aaa3e9e54e1e50d42b268a6
-R c70a4edd29f2d26a7b5f09ff4e82cf22
+P 4f398654d1ae74d331d194e3eec177a39963f6c2
+R da09efc5d7a0d27b285e971454be44f8
 U johnfound
-Z e551aff4b987c65eae8412bdba146f6c
+Z c5c03fa402b1f3c2f413b4c42d29da34

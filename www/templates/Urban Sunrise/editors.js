@@ -42,7 +42,17 @@ function previewIt(e) {
   }
 }
 
-//window.addEventListener('load', function() { previewIt(); document.location="#editor-window"; });
+
+
+document.onpaste = function(e) {
+  if (e.clipboardData.files.length !== 0) {
+    browseEdt.files = e.clipboardData.files;
+    browseEdt.onchange();
+    previewIt();
+    e.preventDefault();
+  };
+};
+
 
 
 // Form keyboard hot keys.
