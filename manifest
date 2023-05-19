@@ -1,5 +1,5 @@
-C Better\smobile\sbehavior\sof\sUrban\sSunrise\sskin.\sFixed\sbug\sin\sthe\seditor.\sUpdate\sof\sthe\sbuild\sand\srelease\sscripts.
-D 2023-05-19T09:56:09.537
+C Restored\sthe\sforgotten\s(from\s!post)\suser\snotification\sabout\snew\spost.
+D 2023-05-19T12:10:04.396
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -40,7 +40,7 @@ F source/chat.asm d91554dc6be9579f600697f2ebabb09cadd7e264
 F source/commands.asm 8a8c7defaaf36ed00574d2073153ffaedf7f3ddf
 F source/create.sql 36e2ca6e0d6edab283f6cad6db869541ca306d3e
 F source/delete.asm e0e9e38c5e1cb40b48e3a4670542a4dc37e0ec72
-F source/edit.asm fa8c44975a75c6f097a748892b1b2afc901fa7e9
+F source/edit.asm 6918ba3948a09e7df4ceb66e23eb094af342e433
 F source/editedpost.sql 77e7ac0d4d76a4e8aa540233909373b3d3679933
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm b8a7c632edcffe6d93a4fb9a4a1a551b29c2d0e1
@@ -765,7 +765,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P ea749b5cc233e0c39435fc9c17a94d30ffc777c4 31e354d564b46e2249827556811fc77ff7870eef
-R 280c9675e4291055e0294ed02a9381ff
+P 3ff2b94398eab80caeb441e5c9cd80d43bc33d32
+R baa4674ad247435441266ed33f2a1e15
 U johnfound
-Z 39610b7514134a7c9c1e9e9d34c414f1
+Z 3a15821220863affa7b9907fc6195a46

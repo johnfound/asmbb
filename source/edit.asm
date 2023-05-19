@@ -54,6 +54,7 @@ proc EditUserMessage, .pSpecial
 ; Other attributes
 
 .fEditThread dd ?
+.fNewPostNotify dd ?
 
 .ticket      dd ?
 
@@ -633,6 +634,7 @@ begin
 
         cinvoke sqliteLastInsertRowID, [hMainDatabase]
         mov     [.postID], eax
+        inc     [.fNewPostNotify]
 
 .postid_ok:
 ; deal with the attachments.
@@ -661,6 +663,32 @@ begin
         jne     .error_write
 
         cinvoke sqliteFinalize, [.stmt]
+
+; Here the post has been written. If it was a new post, notify the users about it..
+
+        cmp     [.fNewPostNotify], 0
+        je      .end_save
+
+        stdcall UserNameLink, [.pSpecial]
+        mov     ebx, eax
+        push    edx             ; see below the AddActivity call
+
+        mov     eax, DEFAULT_UI_LANG
+        stdcall GetParam, "default_lang", gpInteger
+        stdcall StrCat, ebx, [cActivityNewPost + 8*eax]
+
+        stdcall StrCat, ebx, txt '<a href="/'
+
+        stdcall NumToStr, [.postID], ntsDec or ntsUnsigned
+        stdcall StrCat, ebx, eax
+        stdcall StrDel, eax
+
+        stdcall StrCat, ebx, txt '/!by_id">▶</a>'
+
+        mov     eax, [.pSpecial]
+        stdcall AddActivity, ebx, atPosting, [eax+TSpecialParams.userID] ; fBot flag from the stack.
+        stdcall StrDel, ebx
+
 
 .end_save:
         stdcall StrRedirectToPost, [.postID], esi
