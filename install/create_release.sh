@@ -24,8 +24,8 @@ echo "Compile MoLight theme styles..."
 cd ../MoLight/
 ./compile_styles.sh
 
-echo "Compile Modern theme styles..."
-cd ../Modern/
+echo "Compile Urban Sunrise theme styles..."
+cd ../Urban\ Sunrise/
 ./compile_styles.sh
 
 popd

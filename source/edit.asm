@@ -169,6 +169,10 @@ begin
 
         cinvoke sqliteColumnText, [.stmt], 1
         stdcall StrDupMem, eax
+
+        stdcall StrClipSpacesR, eax
+        stdcall StrClipSpacesL, eax
+
         mov     [.caption], eax
 
         cinvoke sqliteFinalize, [.stmt]
@@ -267,8 +271,14 @@ begin
         je      .caption_ok
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], txt "title", 0
+        test    eax, eax
+        jz      .clip_caption_ok
 
-        xchg    eax, [.caption]
+        stdcall StrClipSpacesR, eax
+        stdcall StrClipSpacesL, eax
+
+.clip_caption_ok:
+        xchg    [.caption], eax
         stdcall StrDel, eax
 
 .caption_ok:
@@ -478,6 +488,10 @@ begin
 
         cmp     [.caption], 0
         je      .show_edit_form
+
+        stdcall StrLen, [.caption]
+        test    eax, eax
+        jz      .show_edit_form
 
         stdcall StrByteUtf8, [.caption], LIMIT_POST_CAPTION
         stdcall StrTrim, [.caption], eax

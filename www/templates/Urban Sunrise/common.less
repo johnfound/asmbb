@@ -37,8 +37,8 @@ html {
 }
 
 body {
-  display: grid;
-  grid-template-rows: auto auto 1fr auto;
+  display: flex;
+  flex-direction: column;
 
   margin: 0;
   min-height: 100vh;
@@ -655,7 +655,7 @@ div.page_row {
   margin: 0 -@margin/2 1.5*@margin -@margin/2;
   flex-wrap: wrap;
   font-size: 12px;
-  justify-content: end;
+  justify-content: start;
   float: right;
   > * {
     margin: @margin/2;
