@@ -1,10 +1,10 @@
-C Direct\spaste\simages\sin\sthe\seditor.
-D 2023-05-18T17:39:12.033
+C Better\smobile\sbehavior\sof\sUrban\sSunrise\sskin.\sFixed\sbug\sin\sthe\seditor.\sUpdate\sof\sthe\sbuild\sand\srelease\sscripts.
+D 2023-05-19T09:56:09.537
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
-F install/create_release.sh b5721dd1b6252dd9b363258ca069b10c15202f51 x
+F install/create_release.sh ff8c47c7e2d9520feab1f96f376950de8d26d53d x
 F install/exclude.txt 467c30b4dd05b31dfbfe95812d9ad730b4ead243
 F install/install.txt 64615f21455976e432bda238c6d4282fc561e340
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
@@ -12,7 +12,7 @@ F install/unpack.tar.gz 17da32119ae2cc9bb3a57f2ce59dc489e542ca59
 F install/unpack/.htaccess efa046601aad51a87da0946b4eecadcc0d234c15
 F install/unpack/unpack.sh 4443f580fe76faffa7015e6e4b73b22f6290f4a0 x
 F musl_sqlite/README 46ab7567ba9efea4d58e5d8e8c01610155a78c02
-F musl_sqlite/build 64214e9a0a6918311c4eb313a45197c1cf4d3c64 x
+F musl_sqlite/build 36daba330543a1a23ad162bc5ae063be2230ab5d x
 F source/Documents/FastCGI\sSpecification.html e2fc06a5abf1b3505c665e108ce3ad28b636095a
 F source/Documents/futex.pdf 3297d3e1739a7b294fa0c96ba6d59bae7170c6b9
 F source/Documents/rfc7578.txt 5dff43151910fe753f8649b08d650137f07a96ff
@@ -40,7 +40,7 @@ F source/chat.asm d91554dc6be9579f600697f2ebabb09cadd7e264
 F source/commands.asm 8a8c7defaaf36ed00574d2073153ffaedf7f3ddf
 F source/create.sql 36e2ca6e0d6edab283f6cad6db869541ca306d3e
 F source/delete.asm e0e9e38c5e1cb40b48e3a4670542a4dc37e0ec72
-F source/edit.asm 5681c515d78b074b4494a535987287491a750e8f
+F source/edit.asm fa8c44975a75c6f097a748892b1b2afc901fa7e9
 F source/editedpost.sql 77e7ac0d4d76a4e8aa540233909373b3d3679933
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm b8a7c632edcffe6d93a4fb9a4a1a551b29c2d0e1
@@ -465,7 +465,7 @@ F www/templates/Urban\sSunrise/autocomplete.js 7f821fe4b74d465ef6042714c91ced568
 F www/templates/Urban\sSunrise/chat.js af2f7194df2c16f49ae8b77bf014f160f2984385
 F www/templates/Urban\sSunrise/chat.less 7e3affa9b2e5a2826cd61bb77f484c0df1b8f190
 F www/templates/Urban\sSunrise/chat.tpl 5141a052cd4911ab8af4a380bc25614d41050b7d
-F www/templates/Urban\sSunrise/common.less 4ab4079b7975c0e001792a37be2031469d07198e
+F www/templates/Urban\sSunrise/common.less bf5be3df21c985f556c3622e5519ba24a54c06a9
 F www/templates/Urban\sSunrise/compile_styles.sh 3e46c82fed51ce7766a7549c7e99ce49ebf52e63 x
 F www/templates/Urban\sSunrise/crypto.tpl 4930aee3c23ceb58a56e45f2a5667d90db63a001
 F www/templates/Urban\sSunrise/debug.less 9a989f4670bb3d584f60c57d50af9fbf9bf75117
@@ -521,7 +521,7 @@ F www/templates/Urban\sSunrise/sqlite.less 660b247ef2a036462dd4aeae6d92f54881fda
 F www/templates/Urban\sSunrise/statistics.tpl 99126ca5d255a737e3d5baf8911168ea3bb1d26c
 F www/templates/Urban\sSunrise/thread.js 7da434cbe9cc7aa24bd54a24e77710e72f9b2ef1
 F www/templates/Urban\sSunrise/thread_info.tpl 8ce36a174d03067fc61145fa152d4a7cdda25fcc
-F www/templates/Urban\sSunrise/thread_list.less f8b0e4bb7355896b06f3d2efd38bc6fdabf2193f
+F www/templates/Urban\sSunrise/thread_list.less 53ca6a3326fd6c301e0230255e351cce42827cd9
 F www/templates/Urban\sSunrise/threadlist.js 182da973af013e5729b62fb4ff58fc6a140f957f
 F www/templates/Urban\sSunrise/threadnew.less 7f7bbbdfa2c5053bfdd965a51eb211c95f395672
 F www/templates/Urban\sSunrise/toaster.less 9f202e1b25a46eadbd672bf37a0185a84bf856a4
@@ -765,7 +765,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 4f398654d1ae74d331d194e3eec177a39963f6c2
-R da09efc5d7a0d27b285e971454be44f8
+P ea749b5cc233e0c39435fc9c17a94d30ffc777c4 31e354d564b46e2249827556811fc77ff7870eef
+R 280c9675e4291055e0294ed02a9381ff
 U johnfound
-Z c5c03fa402b1f3c2f413b4c42d29da34
+Z 39610b7514134a7c9c1e9e9d34c414f1

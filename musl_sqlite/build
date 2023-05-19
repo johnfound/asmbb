@@ -134,10 +134,11 @@ EOT
 
 echo "Compiling SQLite ..."
 
-gcc -m32 -Os -shared -fno-stack-protector -mpreferred-stack-boundary=2 -march=x86-64    \
+gcc -m32 -Os -shared -fno-stack-protector -mpreferred-stack-boundary=2 -march=x86-64 -msse4.2 -maes \
     -fno-omit-frame-pointer                                                             \
     -specs musl/musl-gcc.specs                                                          \
     -DSQLITE_DEFAULT_MEMSTATUS=0                                                        \
+    -DSQLITE_USER_AUTHENTICATION=0                                                      \
     -DSQLITE_LIKE_DOESNT_MATCH_BLOBS                                                    \
     -DSQLITE_MAX_EXPR_DEPTH=0                                                           \
     -DSQLITE_OMIT_DEPRECATED                                                            \
