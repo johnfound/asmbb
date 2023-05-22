@@ -1,5 +1,5 @@
-C Relax\sthe\sSec-Fetch-Mode\schecks\sin\sorder\sto\sbe\scompatible\swith\sthe\solder\sbrowsers.
-D 2023-05-22T12:58:41.892
+C One\smore\srelaxed\ssecurity\scheck.
+D 2023-05-22T18:46:02.492
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -36,7 +36,7 @@ F source/attachments.asm 93286ab58dca4e611ad2300752b12e84715d6a19
 F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
-F source/chat.asm d91554dc6be9579f600697f2ebabb09cadd7e264
+F source/chat.asm 7a7d0745ccfd43aa47560e482ee13c78cf58db01
 F source/commands.asm 74c661d4d4174bc0f2155cd275bcb7a1f7aed63a
 F source/create.sql 36e2ca6e0d6edab283f6cad6db869541ca306d3e
 F source/delete.asm 1f698bac7ef4838d343d2c915af7895e9ce142e7
@@ -765,7 +765,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 26dc6447f88aa1fb75b48352af4ddffc62a3b42e
-R 4f747f61a653f967db783003f3d8a7ee
+P 5b139ec3dae3d2c012b764b0aef7bdb4c5ebf7a6
+R 5f89d0f9102ead61fd3e222b050fa9d4
 U johnfound
-Z 3c5613c1fcfd307827689474aa13328f
+Z 0b67ce61adf027f4220b7fac1d86ff6f

@@ -112,7 +112,7 @@ begin
 
         stdcall CheckSecMode, [esi+TSpecialParams.params]
         cmp     eax, secNavigate
-        jne     .error_no_permissions
+        ja      .error_no_permissions
 
         mov     eax, [esi+TSpecialParams.userLang]
         stdcall StrCat, [esi+TSpecialParams.page_title], [cChatTitle+8*eax]
