@@ -481,7 +481,7 @@ begin
 
         stdcall CheckSecMode, [esi+TSpecialParams.params]
         cmp     eax, secNavigate
-        jne     .error_bad_ticket
+        ja      .error_bad_ticket
 
         stdcall CheckTicket, [.ticket], [esi+TSpecialParams.session]
         jc      .error_bad_ticket

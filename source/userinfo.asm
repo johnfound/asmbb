@@ -139,7 +139,7 @@ endl
 
         stdcall CheckSecMode, [esi+TSpecialParams.params]
         cmp     eax, secNavigate
-        jne     .permissions_fail
+        ja      .permissions_fail
 
         test    [esi+TSpecialParams.userStatus], permAdmin
         jnz     .permissions_ok
@@ -444,7 +444,7 @@ begin
 
         stdcall CheckSecMode, [esi+TSpecialParams.params]
         cmp     eax, secNavigate
-        jne     .exit
+        ja      .exit
 
         mov     edx, [esi+TSpecialParams.cmd_list]
         cmp     [edx+TArray.count], edi
@@ -471,7 +471,7 @@ begin
 .permissions_ok:
         stdcall CheckSecMode, [esi+TSpecialParams.params]
         cmp     eax, secNavigate
-        jne     .permissions_fail
+        ja      .permissions_fail
 
         stdcall GetPostString, [esi+TSpecialParams.post_array], "ticket", 0
         test    eax, eax
@@ -592,7 +592,7 @@ begin
 
         stdcall CheckSecMode, [esi+TSpecialParams.params]
         cmp     eax, secNavigate
-        jne     .exit
+        ja      .exit
 
         mov     edx, [esi+TSpecialParams.cmd_list]
         cmp     [edx+TArray.count], edi

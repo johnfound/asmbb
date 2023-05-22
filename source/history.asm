@@ -20,7 +20,7 @@ begin
 
         stdcall CheckSecMode, [esi+TSpecialParams.params]
         cmp     eax, secNavigate
-        jne     .perm_error
+        ja      .perm_error
 
         mov     eax, [esi+TSpecialParams.userLang]
         stdcall StrCat, [esi+TSpecialParams.page_title], [cHistoryTitle+8*eax]
@@ -122,7 +122,7 @@ begin
 
         stdcall CheckSecMode, [esi+TSpecialParams.params]
         cmp     eax, secNavigate
-        jne     .perm_error
+        ja      .perm_error
 
         test    [esi+TSpecialParams.userStatus], permAdmin
         jz      .perm_error

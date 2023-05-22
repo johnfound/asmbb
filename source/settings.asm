@@ -25,7 +25,7 @@ begin
 
         stdcall CheckSecMode, [esi+TSpecialParams.params]
         cmp     eax, secNavigate
-        jne     .for_admins_only
+        ja      .for_admins_only
 
         stdcall LogUserActivity, esi, uaAdminThings, 0
 

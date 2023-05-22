@@ -670,7 +670,7 @@ begin
 
         stdcall CheckSecMode, [esi+TSpecialParams.params]
         cmp     eax, secNavigate
-        jne     .finish
+        ja      .finish
 
         cmp     [esi+TSpecialParams.userID], 0
         je      .finish

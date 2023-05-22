@@ -281,7 +281,7 @@ begin
 
         stdcall CheckSecMode, [edx+TSpecialParams.params]
         cmp     eax, secNavigate
-        jne     .error_for_admins_only
+        ja      .error_for_admins_only
 
         stdcall TextCreate, sizeof.TText
         stdcall ListSQLiteStatus, eax, edx

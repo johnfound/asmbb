@@ -256,7 +256,7 @@ begin
 
         stdcall CheckSecMode, [esi+TSpecialParams.params]
         cmp     eax, secNavigate
-        jne     .error_cant_read
+        ja      .error_cant_read
 
         mov     eax, [esi+TSpecialParams.userLang]
         stdcall StrCat, [esi+TSpecialParams.page_title], [cUsersOnlineTitle+8*eax]

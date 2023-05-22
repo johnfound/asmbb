@@ -95,7 +95,7 @@ begin
 .do_login_user:
         stdcall CheckSecMode, [esi+TSpecialParams.params]
         cmp     eax, secNavigate
-        jne     .redirect_back_bad_permissions
+        ja      .redirect_back_bad_permissions
 
         stdcall ValueByName, [esi+TSpecialParams.post_array], txt "submit.x"
         jc      .redirect_back_bad_permissions
@@ -415,7 +415,7 @@ begin
 
         stdcall CheckSecMode, [esi+TSpecialParams.params]
         cmp     eax, secNavigate
-        jne     .error_trick                            ; this functions must be invoked only by navigation.
+        ja      .error_trick                            ; this functions must be invoked only by navigation.
 
         cmp     [esi+TSpecialParams.post_array], 0      ; this function must be invoked only by POST request!
         je      .error_trick
@@ -507,7 +507,7 @@ begin
 
         stdcall CheckSecMode, [esi+TSpecialParams.params]
         cmp     eax, secNavigate
-        jne     .error_trick
+        ja      .error_trick
 
         test    [esi+TSpecialParams.userStatus], permLogin      ; For the guests, permLogin == permRegister
         jz      .error_closed_registration
@@ -858,7 +858,7 @@ begin
 
         stdcall CheckSecMode, [esi+TSpecialParams.params]
         cmp     eax, secNavigate
-        jne     .exit
+        ja      .exit
 
         mov     ebx, [edx+TArray.array]
 
@@ -1075,7 +1075,7 @@ begin
 
         stdcall CheckSecMode, [esi+TSpecialParams.params]
         cmp     eax, secNavigate
-        jne     .error_trick
+        ja      .error_trick
 
         mov     edx, [esi+TSpecialParams.cmd_list]
         cmp     [edx+TArray.count], 0
@@ -1543,7 +1543,7 @@ begin
 
         stdcall CheckSecMode, [esi+TSpecialParams.params]
         cmp     eax, secNavigate
-        jne     .bad_parameter
+        ja      .bad_parameter
 
         stdcall GetPostString, ebx, "ticket", 0
         test    eax, eax
@@ -1728,7 +1728,7 @@ begin
 
         stdcall CheckSecMode, [esi+TSpecialParams.params]
         cmp     eax, secNavigate
-        jne     .bad_parameter
+        ja      .bad_parameter
 
         stdcall GetPostString, ebx, "ticket", 0
         test    eax, eax

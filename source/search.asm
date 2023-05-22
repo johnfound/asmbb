@@ -32,7 +32,7 @@ begin
 
         stdcall CheckSecMode, [esi+TSpecialParams.params]
         cmp     eax, secNavigate
-        jne     .error_cant_read
+        ja      .error_cant_read
 
         stdcall StrNew
         mov     [.query], eax

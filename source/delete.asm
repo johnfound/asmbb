@@ -58,7 +58,7 @@ begin
 
         stdcall CheckSecMode, [esi+TSpecialParams.params]
         cmp     eax, secNavigate
-        jne     .perm_not_ok
+        ja      .perm_not_ok
 
         test    [esi+TSpecialParams.userStatus], permAdmin              ; the admin is always right!
         jnz     .perm_ok

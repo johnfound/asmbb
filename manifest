@@ -1,5 +1,5 @@
-C Restored\sthe\sforgotten\s(from\s!post)\suser\snotification\sabout\snew\spost.
-D 2023-05-19T12:10:04.396
+C Relax\sthe\sSec-Fetch-Mode\schecks\sin\sorder\sto\sbe\scompatible\swith\sthe\solder\sbrowsers.
+D 2023-05-22T12:58:41.892
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -24,7 +24,7 @@ F source/TestsWithTags.sql 6384a56d553e36aa1c54cdb61a147bb2806e3e9d
 F source/ToDo.txt 78c2a566e37fc37db78b799f5ac100bed383c182
 F source/Win32/sqleet.inc d3fe767bb10368a936112e35df3e734c32161b2d
 F source/Win32/sqlite3.inc f941d1cebec53d2bddbd071f4a2fef6d1a80b7f2
-F source/accounts.asm 00a0535e92ef0ce87d218feb7567ef9966d2e7e9
+F source/accounts.asm eb16affd669f817d803364cafd376fbe1cc9bd63
 F source/activate.sql 74181604d711d2d949104ea96c58e712def322ab
 F source/alltags.sql aa3093196f8c5132f8e763f2a80fbe977a878687
 F source/alltags2.sql e4a0d5084be7a45f5e30ab46b7985f49c797f86a
@@ -37,18 +37,18 @@ F source/benchmark.asm 805e9bb6a982764e844df79eefd8d8b8d9bea82c
 F source/categories.asm d21e1b8adb89ed69c0d29867993482997b0fc38e
 F source/categories.sql 95dd79e898cf75b62daeb7edd00f383df433b0d4
 F source/chat.asm d91554dc6be9579f600697f2ebabb09cadd7e264
-F source/commands.asm 8a8c7defaaf36ed00574d2073153ffaedf7f3ddf
+F source/commands.asm 74c661d4d4174bc0f2155cd275bcb7a1f7aed63a
 F source/create.sql 36e2ca6e0d6edab283f6cad6db869541ca306d3e
-F source/delete.asm e0e9e38c5e1cb40b48e3a4670542a4dc37e0ec72
-F source/edit.asm 6918ba3948a09e7df4ceb66e23eb094af342e433
+F source/delete.asm 1f698bac7ef4838d343d2c915af7895e9ce142e7
+F source/edit.asm b563f3d4a5b5c38008ebd21c52613be30fc04343
 F source/editedpost.sql 77e7ac0d4d76a4e8aa540233909373b3d3679933
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
-F source/engine.asm b8a7c632edcffe6d93a4fb9a4a1a551b29c2d0e1
+F source/engine.asm 20db83d838819421a871c696c52bdbb592f180e3
 F source/engine.fpr 37d56c5053a3b52de2a29e740c98105367f57ab0
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 3c09da9efa9b6004aec1790f2c453a40a2fed1b5
-F source/history.asm 26670fec02cf1a2a4e32bdd77bc5917da3000acd
+F source/history.asm ff91bf90cd5f7d329d871f137fd46f72dafdb34c
 F source/http.asm 1d6405bf48b523b735b12f8167deafe1ac081936
 F source/images_png.asm 6926d2212dc3dc1a4098850203527d2a993b41ad
 F source/messages.asm f1f350f40073680e2ed26e007312987ef9eb327f
@@ -73,15 +73,15 @@ F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
 F source/render2.asm 7f3e3af8864f0d7e67c5101c8c509d1f4f7f77fd
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
-F source/search.asm ed915bff2b39c36b58aed204bfbfc5db815a04f2
+F source/search.asm b81a659403bcb55013b7c57fbf9c3c77d792f870
 F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
 F source/search_cnt.sql b099847b74bae7161c36bf210619c10d8b1ed5f3
-F source/settings.asm abbfe8351bfd9c8a4ce7aaf7d47f82758189314f
+F source/settings.asm 1ca20ebf14747dbe17cfe41dccab95f8ed751ad6
 F source/settings.sql ff928ed121b03f05814aab6800f54b954250e00d
 F source/showthread.asm f7f3016e0cdc9532f6755919483c7def6c7b52eb
 F source/showthread.sql 1ee08ed9c69a07ca5c60fc639e73333405e14d37
 F source/sqlite3.asm df3a5ea387f60d719fd83c33411b8151ad1a6d77
-F source/sqlite_console.asm 621393f45e968f1a3bc36cc70f58620d5db947e1
+F source/sqlite_console.asm f7d4bcda06d75a4ddac11ad5e33dbd8fc3af3daa
 F source/sse_service.asm ae22ec3e6913f2abe6655478703a41b03b324d13
 F source/statistics.asm 8574bead31291bdaf459a032659cb41bc34883d3
 F source/statistics.sql b854e249807878dcd87c5e16dde801114639308c
@@ -95,9 +95,9 @@ F source/threadlist.asm fd6dc9e977a54586fc9d4e1b2a4c57a93da3b1f8
 F source/threadlist.sql 349f918f8944b788f90ab3fab489e68ebffffd44
 F source/timeproc.asm 34958ce31b5eba616f47d04d0f4c5b4aad811408
 F source/undelete.sql 71f34593d80b94c336330bb3016e15bcd4105b8e
-F source/userinfo.asm 746cccdbdfcde1b36afabfb62ce763f19efd3b85
+F source/userinfo.asm 77e78a7c1804e0bc434cb00583953b0eb3a2ee80
 F source/userinfo.sql 9ff9ad7eff9e0d40b4e39b22306e6e7718913b4e
-F source/users_online.asm 37b18d0ca92a9ee681dd97df6ee8e370cf7bb11c
+F source/users_online.asm 7c36c9b1875ddea41a6b59e96f938cdd74ae3ea7
 F source/users_online.sql 6090615229cf0b82966d80ece2e400206759d5d3
 F source/userslist.asm 63449cb92692245f961ab70177b1982dec4ec843
 F source/userslist.sql e4b2f4dfbc0e4911c07985a67d6d36384698111b
@@ -765,7 +765,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 3ff2b94398eab80caeb441e5c9cd80d43bc33d32
-R baa4674ad247435441266ed33f2a1e15
+P 26dc6447f88aa1fb75b48352af4ddffc62a3b42e
+R 4f747f61a653f967db783003f3d8a7ee
 U johnfound
-Z 3a15821220863affa7b9907fc6195a46
+Z 3c5613c1fcfd307827689474aa13328f
