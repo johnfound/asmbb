@@ -30,6 +30,7 @@ function previewIt(e) {
         highlightIt(prv);
 
         focus.focus();
+        fixVideos();
       }
       if (e) document.getElementById("source").focus();
     };

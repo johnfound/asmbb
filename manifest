@@ -1,5 +1,5 @@
-C One\smore\srelaxed\ssecurity\scheck.
-D 2023-05-22T18:46:02.492
+C The\sfirst\sattempt\sto\ssupport\sembeded\svideos\sfrom\sYouTube\sand\sVimeo.\s\nEntirely\sfront-end\simplementation\scompatible\swith\sthe\sMiniMag\sand\sBBCode\svideo\sformattings.
+D 2023-05-29T16:58:11.908
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -44,7 +44,7 @@ F source/edit.asm b563f3d4a5b5c38008ebd21c52613be30fc04343
 F source/editedpost.sql 77e7ac0d4d76a4e8aa540233909373b3d3679933
 F source/encryption.asm dd3ee571750e773308627b13ce54f77fe508e5bb
 F source/engine.asm 20db83d838819421a871c696c52bdbb592f180e3
-F source/engine.fpr 37d56c5053a3b52de2a29e740c98105367f57ab0
+F source/engine.fpr b4c17d18407e620faddb5bc52fc89fadcfe71c5e
 F source/exponential_scaling.ods 4a15fbca3a85b002400cb2a15c21c13e190b1f48
 F source/exponential_scaling.txt 4895cd4542afa457f050768ba643808ca00423ba
 F source/fcgi.asm 3c09da9efa9b6004aec1790f2c453a40a2fed1b5
@@ -474,12 +474,13 @@ F www/templates/Urban\sSunrise/delete.less 397589f431219056581591243e48548d43fb8
 F www/templates/Urban\sSunrise/edit.json 03bb980f7cb86361df3b92f9efeac35f08be212b
 F www/templates/Urban\sSunrise/edit_toolbar.tpl 3f18db7549b9f247fb24c4ec4bbcf130103ab069
 F www/templates/Urban\sSunrise/editor.less be05f1f1838a634d2159e70c27ca74ba078face2
-F www/templates/Urban\sSunrise/editors.js acab81f2d842fedc2fbba622a9339fa75ef055f4
+F www/templates/Urban\sSunrise/editors.js 21a842a95a7f749f90b6aec954e59f20c0bf4f48
+F www/templates/Urban\sSunrise/embeded.js 08c613b6084445b719a4d42024754a954dd9c35b
 F www/templates/Urban\sSunrise/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Urban\sSunrise/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
 F www/templates/Urban\sSunrise/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
 F www/templates/Urban\sSunrise/file-browse.js f24eef322b130b2715410431ea4199679de5f65b
-F www/templates/Urban\sSunrise/form_edit.tpl 2f9c42e3b49c3b02bc8a7dc3d97ff31e2525a030
+F www/templates/Urban\sSunrise/form_edit.tpl dc80b6dc2e1bafadd8caaae0d782286060ad630b
 F www/templates/Urban\sSunrise/form_editinfo.tpl e66590e7fd6b77e4927dd6da0d0d1fc8387c161f
 F www/templates/Urban\sSunrise/form_login.tpl fe8b409f221a5553ee0f40bde655fa3cb276485f
 F www/templates/Urban\sSunrise/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
@@ -496,7 +497,7 @@ F www/templates/Urban\sSunrise/highlight.less fba68624d1b34a5543fe0bf4b2af2ac1dd
 F www/templates/Urban\sSunrise/login.less e2c9b06104a775ae1abcc63bdc69f71b4662b870
 F www/templates/Urban\sSunrise/main_html_end.tpl 05bb25b9490ce93732628c937860db787c516c46
 F www/templates/Urban\sSunrise/main_html_start.tpl 7f74b33ed9a6c6ee0a295d25eee18e59a7d836eb
-F www/templates/Urban\sSunrise/markdown.less 4b0c1316f7974410839ce5586d96d7461b1cb975
+F www/templates/Urban\sSunrise/markdown.less 31df770db75abfcc9dbcaadbb1089644238436aa
 F www/templates/Urban\sSunrise/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
 F www/templates/Urban\sSunrise/nav_categories.tpl c04334bde3272eed0ceeb558cb640a15a41b39e8
 F www/templates/Urban\sSunrise/nav_history.tpl 20332cc80d34a9c4fe360cc5559d98f0537900c2
@@ -519,7 +520,7 @@ F www/templates/Urban\sSunrise/settings.less 517aaa0c2e66248d269608f0374afe1431e
 F www/templates/Urban\sSunrise/skin_variables.lsi 78974d8372551ed85a981703a612ca20dacdf9f0
 F www/templates/Urban\sSunrise/sqlite.less 660b247ef2a036462dd4aeae6d92f54881fda877
 F www/templates/Urban\sSunrise/statistics.tpl 99126ca5d255a737e3d5baf8911168ea3bb1d26c
-F www/templates/Urban\sSunrise/thread.js 7da434cbe9cc7aa24bd54a24e77710e72f9b2ef1
+F www/templates/Urban\sSunrise/thread.js 6cdc7a28b42590f1cfa66306c7358a2722512607
 F www/templates/Urban\sSunrise/thread_info.tpl 8ce36a174d03067fc61145fa152d4a7cdda25fcc
 F www/templates/Urban\sSunrise/thread_list.less 53ca6a3326fd6c301e0230255e351cce42827cd9
 F www/templates/Urban\sSunrise/threadlist.js 182da973af013e5729b62fb4ff58fc6a140f957f
@@ -765,7 +766,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 5b139ec3dae3d2c012b764b0aef7bdb4c5ebf7a6
-R 5f89d0f9102ead61fd3e222b050fa9d4
+P 10d289fa2e6412f25a29b46ecf2033f535e7058c
+R e2bc0a26e1d8a8059289067fcdaf6e51
 U johnfound
-Z 0b67ce61adf027f4220b7fac1d86ff6f
+Z 81c13e9c02fefb2a7dfaeaf621bbe69e

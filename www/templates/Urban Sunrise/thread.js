@@ -1,4 +1,5 @@
 <script src="[special:skin]/highlight.js"></script>
+<script src="[special:skin]/embeded.js"></script>
 
 <script>
   document.addEventListener('DOMContentLoaded', (event) => {
