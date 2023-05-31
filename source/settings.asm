@@ -527,6 +527,8 @@ begin
         mov     ebx, eax
 
 .rekey:
+        cinvoke sqliteExec, [hMainDatabase], "pragma journal_mode = DELETE", 0, 0, 0
+
         stdcall StrDupMem, "pragma rekey='"
         xchg    ebx, eax
 
@@ -538,7 +540,7 @@ begin
         stdcall StrDel, eax
 
 .pass_ok:
-        stdcall StrCat, ebx, txt "';"
+        stdcall StrCat, ebx, txt "'"
 
         lea     edx, [.stmt]
         stdcall StrPtr, ebx
@@ -550,7 +552,8 @@ begin
         stdcall StrNull, ebx
         stdcall StrDel, ebx
 
-        cinvoke sqliteExec, [hMainDatabase], 'pragma wal_checkpoint(truncate)', 0, 0, 0
+        cinvoke sqliteExec, [hMainDatabase], "pragma journal_mode = WAL", 0, 0, 0
+;        cinvoke sqliteExec, [hMainDatabase], 'pragma wal_checkpoint(truncate)', 0, 0, 0
 
         pop     eax
         cmp     eax, SQLITE_ROW

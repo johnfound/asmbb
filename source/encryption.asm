@@ -87,6 +87,15 @@ begin
         cmp     esi, SQLITE_ROW
         jne     .redirect
 
+        lea     eax, [.stmt]
+        cinvoke sqlitePrepare_v2, [hMainDatabase], sqlCheckEmpty, sqlCheckEmpty.length, eax, 0
+        cinvoke sqliteStep, [.stmt]
+        mov     ebx, eax
+        cinvoke sqliteFinalize, [.stmt]
+
+        cmp     ebx, SQLITE_ROW
+        jne     .redirect
+
         xor     eax, eax
         mov     [fNeedKey], eax
 
