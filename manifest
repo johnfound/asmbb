@@ -1,5 +1,5 @@
-C Some\swork\son\susing\sSQLite3MultipleCiphers\sinstead\sof\sSQLeet.
-D 2023-05-31T17:42:41.699
+C Improved\sthe\sbuild\sscript\sfor\sMUSL\sand\sSQLite.\sNow\sthe\s"SQLite3\sMultiple\sCiphers"\sextension\sis\savailable\sas\san\soption\s(SQLite,\sSQLeet\sand\sSQLite3MC).
+D 2023-06-01T19:02:25.990
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -12,7 +12,7 @@ F install/unpack.tar.gz 17da32119ae2cc9bb3a57f2ce59dc489e542ca59
 F install/unpack/.htaccess efa046601aad51a87da0946b4eecadcc0d234c15
 F install/unpack/unpack.sh 4443f580fe76faffa7015e6e4b73b22f6290f4a0 x
 F musl_sqlite/README 46ab7567ba9efea4d58e5d8e8c01610155a78c02
-F musl_sqlite/build 51cbd444bb18c6b6045835d3074c176dd4801fda x
+F musl_sqlite/build 9a9b2fb9b705b241b720f3241a4c2397cd35c6df x
 F source/Documents/FastCGI\sSpecification.html e2fc06a5abf1b3505c665e108ce3ad28b636095a
 F source/Documents/futex.pdf 3297d3e1739a7b294fa0c96ba6d59bae7170c6b9
 F source/Documents/rfc7578.txt 5dff43151910fe753f8649b08d650137f07a96ff
@@ -766,7 +766,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P c444e030d2548dae0d6dba2ec880bc64112cf53f
-R a8630a785a03bbc814021f65f27a5d35
+P 23e75586eb56579635adf77020c177876118a374
+R 8636cf4c91fd0b9e40b4a13e9efba732
 U johnfound
-Z ee0949a41804a9c777ec250128e39d79
+Z 5db54883d4c431f1d74ba20198baaa58

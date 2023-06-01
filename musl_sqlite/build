@@ -1,11 +1,55 @@
 #!/bin/sh
 
+#uncomment for executing step-by-step
+#set -x
+#trap read debug
+
+
 # Exit codes:
 #
 # 1: missing source archive. can't download
 # 2: broken source archive.
 # 3: compilation of MUSL failed
 # 4: compilation of SQLite failed
+# 5: wrong command line arguments.
+
+
+function Error
+{
+  echo "Usage:"
+  echo "\$build [sqlite|sqleet|sqlitemc]"
+  echo "Default is sqlitemc"
+}
+
+# Handle the command line options
+
+
+sql=2
+
+if [[ $# -gt 1 ]]; then
+  Error
+  exit 5
+else
+  if [[ $# -eq 0 ]]; then
+    echo "Use default library sqlitemc"
+    sql=2
+  else
+    case $1 in
+      sqlite)
+        sql=0;;
+
+      sqleet)
+        sql=1;;
+
+      sqlitemc)
+        sql=2;;
+      *)
+      Error;
+      exit 5
+    esac
+  fi
+fi
+
 
 # First, cleanup from previous builds.
 
@@ -22,43 +66,67 @@ fi
 # First find sqlite3.c file. As an existing file, existing source archive or download from Internet.
 
 if [ -f ./sqlite3.c ]; then
-  echo "Using the existing file sqlite3.c ..."
+  echo "Using the existing file sqlite3.c; The command line arguments are ignored!"
 else
 
-# The following code downloads SQLeet sources for encription support!
-  echo "Downloading latest SQLeet master branch archive..."
-  { wget -q -O - https://github.com/resilar/sqleet/archive/master.tar.gz | tar -xz 2> /dev/null; } || { echo >&2 "Error: Can't download SQLeet sources."; exit 2;}
-  cd ./sqleet-master
-  echo "Building the amalgamation sqlite3.c ..."
-  script/amalgamate.sh < ./sqleet.c > ../sqlite3.c
-  cd ..
-  rm -rf ./sqleet-master/ &
+  case $sql in
+  0)
+    # The following code downloads SQLite sources from the original web site without encryption support!
 
+    if [ ! -f ./sqlite*.zip ] && [ ! -f ./sqlite*.tar.gz ]; then
+      echo "Downloading latest SQLite source archive..."
+      { wget -q -O - https://www.sqlite.org/cgi/src/tarball/sqlite3.tar.gz?r=release | tar -xz 2> /dev/null; } || { echo >&2 "Error: Can't download SQLite sources."; exit 2;}
+      cd ./sqlite3
+      echo "Building the amalgamation sqlite3.c ..."
+      ./configure > /dev/null 2>&1 || { echo >&2 "Error: Can't configure SQLite sources"; exit 4; }
+      make sqlite3.c > /dev/null 2>&1 || { echo >&2 "Error: Can't make sqlite3.c"; exit 4; }
+      cd ..
+      cp ./sqlite3/sqlite3.c ./
+      rm -rf ./sqlite3/ &
+    else
+      if [ -f ./sqlite*.zip ]; then
+        files=( sqlite*.zip )
+        echo "Extracting sqlite from ${files[0]}..."
+        unzip -joq "${files[0]}" *sqlite3.c || { echo >&2 "Error: Broken SQLite source archive."; exit 2; }
+      else
+        files=( sqlite*.tar.gz )
+        echo "Extracting sqlite from ${files[0]}..."
+        tar --wildcards --strip-components 1 -xzf "${files[0]}" */sqlite3.c || { echo >&2 "Error: Broken SQLite source archive."; exit 2; }
+      fi
+    fi
+    ;;
 
-# The following code downloads SQLite sources from the original web site without encryption support!
+  1)
+    # The following code downloads SQLeet sources for encription support!
 
-#  if [ ! -f ./sqlite*.zip ] && [ ! -f ./sqlite*.tar.gz ]; then
-#    echo "Downloading latest SQLite source archive..."
-#    { wget -q -O - https://www.sqlite.org/cgi/src/tarball/sqlite3.tar.gz?r=release | tar -xz 2> /dev/null; } || { echo >&2 "Error: Can't download SQLite sources."; exit 2;}
-#    cd ./sqlite3
-#    echo "Building the amalgamation sqlite3.c ..."
-#    ./configure > /dev/null 2>&1 || { echo >&2 "Error: Can't configure SQLite sources"; exit 4; }
-#    make sqlite3.c > /dev/null 2>&1 || { echo >&2 "Error: Can't make sqlite3.c"; exit 4; }
-#    cd ..
-#    cp ./sqlite3/sqlite3.c ./
-#    rm -rf ./sqlite3/ &
-#  else
-#    if [ -f ./sqlite*.zip ]; then
-#      files=( sqlite*.zip )
-#      echo "Extracting sqlite from ${files[0]}..."
-#      unzip -joq "${files[0]}" *sqlite3.c || { echo >&2 "Error: Broken SQLite source archive."; exit 2; }
-#    else
-#      files=( sqlite*.tar.gz )
-#      echo "Extracting sqlite from ${files[0]}..."
-#      tar --wildcards --strip-components 1 -xzf "${files[0]}" */sqlite3.c || { echo >&2 "Error: Broken SQLite source archive."; exit 2; }
-#    fi
-#  fi
+    echo "Downloading latest SQLeet master branch archive..."
+    { wget -q -O - https://github.com/resilar/sqleet/archive/master.tar.gz | tar -xz 2> /dev/null; } || { echo >&2 "Error: Can't download SQLeet sources."; exit 2;}
+    cd ./sqleet-master
+    echo "Building the amalgamation sqlite3.c ..."
+    script/amalgamate.sh < ./sqleet.c > ../sqlite3.c
+    cd ..
+    rm -rf ./sqleet-master/ &
+    ;;
 
+  2)
+    # Download the latest SQLite3MC and create the amalgamation source code.
+    mkdir sqlitemc
+    cd ./sqlitemc
+    echo "Downloading sources of SQLite3MC from github."
+    { wget -q -O - https://github.com/utelle/SQLite3MultipleCiphers/archive/main.tar.gz | tar -xz --strip-components=1 2> /dev/null; } || { echo >&2 "Error: Can't download SQLiteMC sources."; exit 2;}
+    echo "Create amalgamation."
+    chmod +x scripts/amalgamate.py
+    scripts/amalgamate.py -c scripts/sqlite3mc.c.json -s src/ > /dev/null 2>&1 || { echo >&2 "Error: Can't create SQLite amalgamation sources"; exit 4; }
+    cp sqlite3mc_amalgamation.c ../sqlite3.c
+    cd ..
+    rm -rf ./sqlitemc
+    echo "Done"
+    ;;
+
+  *)
+    Error
+    exit 5
+  esac
 fi
 
 
