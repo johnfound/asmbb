@@ -5,4 +5,5 @@ source
 sources
 _source
 _sources
+Test
 *.gz
