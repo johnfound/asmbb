@@ -139,6 +139,7 @@
 </div>
 
 <script src="[special:skin]/autocomplete.js"></script>
+<script src="[special:skin]/embeded.js"></script>
 
 <script>
 dragElement(document.getElementById("editor"),document.getElementById("draghere") );
@@ -203,6 +204,7 @@ function previewIt(e) {
         prv.innerHTML = resp.preview;
 
         focus.focus();
+        fixVideos();
       }
       if (e) document.getElementById("source").focus();
     };

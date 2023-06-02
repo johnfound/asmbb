@@ -69,6 +69,8 @@
     </div>
 </form>
 
+<script src="[special:skin]/embeded.js"></script>
+
 <script>
 function previewIt(e) {
 
@@ -85,7 +87,8 @@ function previewIt(e) {
         var resp = JSON.parse(event.target.response);
 
         prv.innerHTML = resp.preview;
-        attch.innerHTML = resp.attach_del;
+        if (attch) attch.innerHTML = resp.attach_del;
+        fixVideos();
       }
       document.getElementById("browse").value = '';
       document.getElementById("source").focus();

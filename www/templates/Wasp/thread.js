@@ -1,3 +1,5 @@
+<script src="[special:skin]/embeded.js"></script>
+
 <script>
   WantEvents = WantEvents + 0x40  // + evmThreadRating
 
