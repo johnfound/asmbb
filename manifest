@@ -1,10 +1,10 @@
-C Improved\sthe\sbuild\sscript\sfor\sMUSL\sand\sSQLite.\sNow\sthe\s"SQLite3\sMultiple\sCiphers"\sextension\sis\savailable\sas\san\soption\s(SQLite,\sSQLeet\sand\sSQLite3MC).
-D 2023-06-01T19:02:25.990
+C Call\sbuild\sscript\swith\sargument.
+D 2023-06-02T17:30:48.037
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
 F install/asmbb.tar.gz 73bfc252eb4700250403151211c38c5368d5f834
-F install/create_release.sh ff8c47c7e2d9520feab1f96f376950de8d26d53d x
+F install/create_release.sh ab21d335d8e40819d9678edee874c472e7e785d8 x
 F install/exclude.txt 467c30b4dd05b31dfbfe95812d9ad730b4ead243
 F install/install.txt 64615f21455976e432bda238c6d4282fc561e340
 F install/lighttpd.conf 12fc6f865420a4673e16a9bd7dc4e21886d9ef77
@@ -766,7 +766,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 23e75586eb56579635adf77020c177876118a374
-R 8636cf4c91fd0b9e40b4a13e9efba732
+P f3ed609d6435aaf84367bd618635174a8e5a4df3
+R da29d9a61fde5dba69f5ce46304fa8e3
 U johnfound
-Z 5db54883d4c431f1d74ba20198baaa58
+Z 4f2b42ce16b74bd522202d9ea6b002d7

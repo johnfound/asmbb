@@ -33,7 +33,7 @@ popd
 pushd .
 
 cd ../musl_sqlite/
-./build
+./build sqlitemc
 
 popd
 
