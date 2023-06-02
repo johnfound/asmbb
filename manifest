@@ -1,5 +1,5 @@
-C Embeded\svideo\sprocessing\sin\sall\sskins.
-D 2023-06-02T18:16:00.171
+C Small\sfix\sin\screate_tar.sh
+D 2023-06-02T19:00:53.188
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -677,7 +677,7 @@ F www/templates/Wasp/userslist_ftr.tpl cdf4bf8f51f450a842d85ab41a089e05a2e12f73
 F www/templates/Wasp/userslist_hdr.tpl 79c5b28322e9c0f587ed0f81ac451fe12d38235f
 F www/templates/_fonts/NotoSansSymbols2-Regular.ttf 9d9826dba2d6daea10338e73a5943783d1d00946
 F www/templates/build_styles.sh 68d85c04a9dc66a4714f288a0ffafe376a4ab728 x
-F www/templates/create_tar.sh 3dff58b5eae5af1f7254339cf37e7d8bca01b434 x
+F www/templates/create_tar.sh 21fbbd86e76b39cee1927a798bbe269c12d5b028 x
 F www/templates/mobile/_images 70c26c9bd422a7e59f2dca80d02ec99f39b390fb l
 F www/templates/mobile/activation_email_subject.tpl e0bd685144e72197dd0034b068e82d7604f926d2 l
 F www/templates/mobile/activation_email_text.tpl 50d1d6b7fe42736e334ab6870d7cc72e9085889d l
@@ -770,7 +770,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P ccab2177d6a048bfdf6e65a59d80a95cc1e24fe1
-R 7c78663d023084518b983c579d62f17d
+P 0b1d3f9612c668462165b5983f471ad2bf158712
+R bffd875d8157a81f41a10d7f857b4ea2
 U johnfound
-Z 8af995c09a421755b9b90d2320d4d069
+Z db1c327cd9712a5caf7186f271757f29
