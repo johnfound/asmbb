@@ -3,21 +3,27 @@ function fixVideos() {
   for(var i = all.length-1; i >= 0; i--) {
      var v = all[i];
      var url = new URL(v.childNodes[0].src);
+     var pa = url.pathname.split("/").filter(e =>  e);
 
      var id = "";
      var eu = "";
 
      switch (url.hostname) {
        case "www.youtube.com":
-         id = url.searchParams.get("v");
-         eu = "https://www.youtube.com/embed/";
+         if (pa[0] === 'watch') {
+           id = url.searchParams.get("v");
+           eu = "https://www.youtube.com/embed/";
+         } else if (pa[0] === 'shorts') {
+           id = pa[1];
+           eu = "https://www.youtube.com/embed/";
+         }
          break;
        case "youtu.be":
-         id = url.pathname.replace(/\//, "");
+         id = pa[0];
          eu = "https://www.youtube.com/embed/";
          break;
        case "vimeo.com":
-         id = url.pathname.replace(/\//, "");
+         id = pa[0];
          eu = "https://player.vimeo.com/video/";
          break;
      }

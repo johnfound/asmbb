@@ -1,5 +1,5 @@
-C "Test"\sdirectory\sin\sthe\stemplates\sexcluded\sfrom\sthe\srelease\spackage.
-D 2023-06-02T22:57:06.115
+C Support\sfor\syoutube\sshorts.
+D 2023-06-05T08:07:29.198
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -477,7 +477,7 @@ F www/templates/Urban\sSunrise/edit.json 03bb980f7cb86361df3b92f9efeac35f08be212
 F www/templates/Urban\sSunrise/edit_toolbar.tpl 3f18db7549b9f247fb24c4ec4bbcf130103ab069
 F www/templates/Urban\sSunrise/editor.less be05f1f1838a634d2159e70c27ca74ba078face2
 F www/templates/Urban\sSunrise/editors.js 21a842a95a7f749f90b6aec954e59f20c0bf4f48
-F www/templates/Urban\sSunrise/embeded.js 08c613b6084445b719a4d42024754a954dd9c35b
+F www/templates/Urban\sSunrise/embeded.js 6843c3daf27ded443754bdda2696c1e892636db2
 F www/templates/Urban\sSunrise/error.less 43f5b23eace778d249411d453321ec6d16d4f306
 F www/templates/Urban\sSunrise/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
 F www/templates/Urban\sSunrise/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
@@ -770,7 +770,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P dbf080b611a92a5e25181de2e94bcff46d4bd263
-R c3e1975acd24b9f0450f8e4bd0d2058f
+P 2ebb6a35630c3eba03955e2881f50992eb73649a
+R a07ea9f496f50bd4732b57da1188eaa9
 U johnfound
-Z 0a0cc02e0f3b92161b51448c59cee679
+Z 1ebe181388f6b65d79fc0cdd95b2fb67
