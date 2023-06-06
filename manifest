@@ -1,5 +1,5 @@
-C Proper\sdisplay\sof\sthe\slong\suser\snames.
-D 2023-06-05T13:32:34.456
+C Official\ssource\scode\srelease\sv3.0
+D 2023-06-06T13:24:50.902
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -102,7 +102,7 @@ F source/users_online.sql 6090615229cf0b82966d80ece2e400206759d5d3
 F source/userslist.asm 63449cb92692245f961ab70177b1982dec4ec843
 F source/userslist.sql e4b2f4dfbc0e4911c07985a67d6d36384698111b
 F source/util.sql c811be0ccdd2877eb45b3b843b418a5e83eac560
-F source/version.asm c4683a9eac4cd2b50c46051d7f4b51b622c58760
+F source/version.asm 960394c560dd0ab2ebbfaaa9abb0042f7805551d
 F source/votes.asm fb9dba27fa630fd866539e026b4e5d77a44ca2e1
 F www/.htaccess e47a96e183d9e5ef4e158df22de9130e07dffbcb
 F www/.nginx/fastcgi.conf 635d54729b084483347b15cdd35e82866ee86c19
@@ -770,7 +770,8 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P 9eb978f73b3b0d46ccd0aaad7f9411afd8ea65f9
-R eeae8037054f701da5e3eccda9527bff
+P cac73b56b118a2d3837d9b9178da3081f345559e
+R ecbbcde53094d56e2fdea13047a49066
+T +sym-v3.0 *
 U johnfound
-Z 7415965e70b10bb1325e03269ee91ffd
+Z bac235dc454fba36a6944a7c2098e586
