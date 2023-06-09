@@ -46,7 +46,7 @@
   [equ:btnSubmit=Absenden]
   [equ:hintSubmit=Strg+S zum Absenden]
   [equ:Attach=Datei(en) anhängen]
-  [equ:FileLimit=(count ≤ 10, size ≤ 1MB)]
+  [equ:FileLimit=(Anzahl ≤ 10, Größe ≤ 1MB)]
 ]
 
 <div class="ui">

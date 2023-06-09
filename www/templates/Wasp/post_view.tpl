@@ -51,7 +51,7 @@
   [equ:altDel=Supprimer]
   [equ:altHist=Historique]
 |
-  [equ:tPosts=Posts]
+  [equ:tPosts=Beiträge]
   [equ:tCreated=Erstellt am [PostTime]]
   [equ:tEdited=Zuletzt geändert: [EditTime] von]
   [equ:tRead=gelesen: [ReadCount]-mal]

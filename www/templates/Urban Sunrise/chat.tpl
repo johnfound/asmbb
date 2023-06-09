@@ -24,7 +24,7 @@
   [equ:btnForum=Forum]
   [equ:phNick=Nom d'utilisateur]
   [equ:phText=Tippen Sie hier. Mit Strg+Enter wird die Nachricht gesendet.]
-  [equ:noscript=Chat erfordert aufgrund seiner Beschaffenheit JS. Verwenden Sie stattdessen die Forumsbeiträge.]
+  [equ:noscript=Der Chat erfordert aufgrund seiner Beschaffenheit JavaScript. Verwenden Sie stattdessen Forumsbeiträge.]
 ]
 
 <svg version="1.1" style="position:absolute; width:0px; height:0px;" xmlns="http://www.w3.org/2000/svg">

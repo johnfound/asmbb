@@ -107,7 +107,7 @@
       <li>Zuletzt gesehen am <b>[LastSeen]</b></li>
       <br>
       [case:[user_perm31]||<li>Ist ein <b>Administrator</b></li>]
-      <li>Kann [case:[user_perm0]|<b>nicht</b> |]<b>sich anmelden</b></li>
+      <li>Kann <b>sich [case:[user_perm0]|<b>nicht</b> |]anmelden</b></li>
       <li>Kann [case:[user_perm1]|<b>nicht</b> |]Beiträge <b>lesen</b></li>
       <li>Kann [case:[user_perm9]|<b>nicht</b> |]angehängte Dateien <b>herunterladen</b></li>
 

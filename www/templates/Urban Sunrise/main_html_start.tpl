@@ -99,7 +99,7 @@
   [equ:ttlSearchBtn=Suchen]
   [equ:ttlAllThreads=Alle Themen zeigen]
   [equ:ttlTags=Tags]
-  [equ:ttlNotifications=Off/On the real time notifications]
+  [equ:ttlNotifications=Echtzeitbenachrichtigungen an/aus]
   [equ:btnCats=Kategorien]
   [equ:btnSettings=Einstellungen]
   [equ:btnConsole=SQL-Konsole]

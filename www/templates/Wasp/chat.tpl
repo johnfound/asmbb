@@ -313,6 +313,10 @@ function OnUserChanged (e) {
   [equ:btnForum=Forum]
   [equ:phNick=Nom d'utilisateur]
   [equ:phText=Taper ici]
+|
+  [equ:btnForum=Forum]
+  [equ:phNick=Benutzername]
+  [equ:phText=Hier eingeben]
 ]
 
   <div class="chat">
