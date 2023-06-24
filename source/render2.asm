@@ -3322,20 +3322,20 @@ begin
         stdcall StrDel, eax
 
         cmp     [.split.port], 0
-        je      .add_path
+        je      .fin_host
 
         stdcall StrToNum, [.split.port]
         test    eax, eax
-        js      .add_path
+        js      .fin_host
 
         cmp     eax, $ffff
-        ja      .add_path
+        ja      .fin_host
 
         mov     ecx, eax
 
         stdcall StrLen, [.split.port]
         cmp     eax, edx
-        jne     .add_path
+        jne     .fin_host
 
         stdcall NumToStr, ecx, ntsDec or ntsUnsigned
 
@@ -3343,9 +3343,10 @@ begin
         stdcall StrCat, ebx, eax
         stdcall StrDel, eax
 
-.add_path:
+.fin_host:
         stdcall StrCat, ebx, txt '/'
 
+.add_path:
         cmp     [.split.path], 0
         je      .path_ok
         stdcall StrCat, ebx, [.split.path]

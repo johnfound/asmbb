@@ -126,7 +126,7 @@
 <div class="editor" id="editor-window" onfocus="document.location='#editor-window';">
   <div class="navigation3 btn-bar">
       <input form="editform" type="hidden" name="ticket" value="[Ticket]" >
-      <input form="editform" class="btn" id="preview-btn" formaction="!edit#preview" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
+      <input form="editform" class="btn" id="preview-btn" formaction="[special:cmd]#preview" type="submit" name="preview" onclick="this.form.cmd='preview'" value="[const:btnPreview]" title="[const:hintPreview]">
 
       <button form="editform" class="btn" type="submit" name="submit" onclick="this.form.cmd='submit'" title="[const:hintSubmit]">
         [const:btnSubmit]&nbsp;

@@ -77,8 +77,10 @@ function previewIt(e) {
   if (e.target.cmd === "preview") {
     e.preventDefault();
 
+    var form = document.getElementById("editform");
+
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "!edit?cmd=preview");
+    xhr.open("POST", form.action + "?cmd=preview");
 
     xhr.onload = function(event){
       if (event.target.status === 200) {
@@ -94,7 +96,7 @@ function previewIt(e) {
       document.getElementById("source").focus();
     };
 
-    var formData = new FormData(document.getElementById("editform"));
+    var formData = new FormData(form);
     xhr.send(formData);
     document.getElementById("browse").value = null;
   }

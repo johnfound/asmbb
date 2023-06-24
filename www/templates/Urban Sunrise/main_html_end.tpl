@@ -21,7 +21,7 @@
 
 <div class="attribution">
   [special:version]; [special:sqliteversion];<br>
-  <b>&copy;2016..2020 John Found</b>; Licensed under <b>EUPL</b>. Powered by <b><a href="http://flatassembler.net">Assembly language</a></b> Created with <b><a href="http://fresh.flatassembler.net">Fresh IDE</a></b>
+  <b>&copy;2016..2023 John Found</b>; Licensed under <b>EUPL</b>. Powered by <b><a href="http://flatassembler.net">Assembly language</a></b> Created with <b><a href="http://fresh.flatassembler.net">Fresh IDE</a></b>
 </div>
 [special:environment]
 

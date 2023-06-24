@@ -1,5 +1,5 @@
-C Some\sfixes\sin\sthe\sgerman\slanguage\stranslation,\sthanks\sto\s\\o/.
-D 2023-06-09T07:54:56.542
+C Fixed\sbug\sin\sthe\sunified\seditor\sbreaking\sthe\squoted\sposts.\sBetter\sURL\ssanitizing.
+D 2023-06-24T13:39:03.741
 F License.txt 88666a269af0c927acf094c534256f65e421a8ee
 F README.md 8a6273dcd52346e402d2e3a471b71535526ab41f
 F install/.htaccess 8d39c169460b22e4e592e6689575394a07dbec55
@@ -71,7 +71,7 @@ F source/rebuildTags.sql cb3142cd0676a0b4d05fdb60ce330b4ccbce234d
 F source/rebuildThreadTags.sql a1f42311b7907dc04948607186e1b2dce46af2cc
 F source/rebuild_users.sql a10c443fbd5af4db82ae1ef908b1193644cc98e1
 F source/rebuildtriggers.sql 6f3eeb7c8f703b1beead84c20ed34efeb374ceb1
-F source/render2.asm 7f3e3af8864f0d7e67c5101c8c509d1f4f7f77fd
+F source/render2.asm a0010fecc544da37bff6b0973a3302a0c90c8ad3
 F source/restore.sql 400e4be2b643c14f45841e41dd862e93d079c60e
 F source/search.asm b81a659403bcb55013b7c57fbf9c3c77d792f870
 F source/search.sql b8c4fc139bcb5fedf96268584e916b05d8ae9f18
@@ -482,7 +482,7 @@ F www/templates/Urban\sSunrise/error.less 43f5b23eace778d249411d453321ec6d16d4f3
 F www/templates/Urban\sSunrise/error_html_end.tpl 2c8ed9fde68d59302efcc46919870a7d02d53c92
 F www/templates/Urban\sSunrise/error_html_start.tpl 53ee357916bacab74bb7f9b63dc203d6cf93cde0
 F www/templates/Urban\sSunrise/file-browse.js f24eef322b130b2715410431ea4199679de5f65b
-F www/templates/Urban\sSunrise/form_edit.tpl dc80b6dc2e1bafadd8caaae0d782286060ad630b
+F www/templates/Urban\sSunrise/form_edit.tpl 63167261ce8a99dfabb4cab78c5270fefeaae833
 F www/templates/Urban\sSunrise/form_editinfo.tpl e66590e7fd6b77e4927dd6da0d0d1fc8387c161f
 F www/templates/Urban\sSunrise/form_login.tpl fe8b409f221a5553ee0f40bde655fa3cb276485f
 F www/templates/Urban\sSunrise/form_post_debug.tpl 5f6c4f0b659ac70310a51ef835f09ded1e449922
@@ -497,7 +497,7 @@ F www/templates/Urban\sSunrise/help-minimag.txt df1cafbf3d21a66ad16ee8042f05dd7a
 F www/templates/Urban\sSunrise/highlight.js b4a380fb43186d51a405fb185067120657f243f2
 F www/templates/Urban\sSunrise/highlight.less fba68624d1b34a5543fe0bf4b2af2ac1ddf65e74
 F www/templates/Urban\sSunrise/login.less e2c9b06104a775ae1abcc63bdc69f71b4662b870
-F www/templates/Urban\sSunrise/main_html_end.tpl 05bb25b9490ce93732628c937860db787c516c46
+F www/templates/Urban\sSunrise/main_html_end.tpl 4d2a0bf54027ec564e016991fa72b94961280941
 F www/templates/Urban\sSunrise/main_html_start.tpl b0c03eed544ed154fcb47bd040ae56b0e33abdbb
 F www/templates/Urban\sSunrise/markdown.less 31df770db75abfcc9dbcaadbb1089644238436aa
 F www/templates/Urban\sSunrise/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
@@ -638,7 +638,7 @@ F www/templates/Wasp/form_settings.tpl c9ba18bebb4155ca8ee135f0a99b0fcff4e0bd9f
 F www/templates/Wasp/form_setup.tpl 16dc82fb7a7a29055df5a44656faab93231c38da
 F www/templates/Wasp/form_sqlite_console.tpl 7c492fd0663a1f999e88186f0af74f87bcd04a25
 F www/templates/Wasp/login.less b854c20c711dffeec158f044c59cbcf72a3161d5
-F www/templates/Wasp/main_html_end.tpl 53de7f6314a3460448c7d8988eb132d82b2d763c
+F www/templates/Wasp/main_html_end.tpl 4a00a4c9e7c9fbc90945fb05587d5cc4fbfafb9c
 F www/templates/Wasp/main_html_start.tpl a5474789a3a873a19cbb53196c385f95a23b803f
 F www/templates/Wasp/markdown.less 116cec459477a62df77f656ad8be9e044f661775
 F www/templates/Wasp/minimag_suffix.tpl a632de87926473be9e816e8969992372a1f4e352
@@ -721,7 +721,7 @@ F www/templates/mobile/embeded.js 3a65da8672533e57b3a947062e083471e72c872c l
 F www/templates/mobile/error.less 83cd53cf80eb467b611ebe7865c41c96694c293f l
 F www/templates/mobile/error_html_end.tpl 62173b764a79089fff2cfe7be9428adcd13046da l
 F www/templates/mobile/error_html_start.tpl 0e59043bca2eece87606b5085e216f22a529eb77 l
-F www/templates/mobile/form_edit.tpl d6c5aec39a0473db31d6c8c151271600f6b20565
+F www/templates/mobile/form_edit.tpl 60c7be93321718125201b8ff70dc5747d2f3611b
 F www/templates/mobile/form_editinfo.tpl 91a3644fb4b1021bffa2356f7291f6e457eebe1e l
 F www/templates/mobile/form_login.tpl 1ca5a25baff036f4b5a655b72d25c18c987a8ed7 l
 F www/templates/mobile/form_post_debug.tpl 0a3e574bb2595001a5c1cebbd66c59aefd6aaab7 l
@@ -770,7 +770,7 @@ F www/templates/mobile/userslist.less 1f89c97d65ebd57e345097b487b4fbbe92b62fe8 l
 F www/templates/mobile/userslist_ftr.tpl 20a60058b2a1039e62cc39449f6577071e98f969 l
 F www/templates/mobile/userslist_hdr.tpl 8d96a8dd3b905fc86ab52d79555c1268aafb56c2 l
 F www/templates/untar.sh 99deef0554beffe3e70a628f57f8ea4452579ebd x
-P a316dab8b98d07d949d00dc055ea5cb5295b4622
-R dc05327a0d237bd60ab4cb908f22c2cf
+P d864e8c07a0a8987d768df88f626ecd51724627b
+R 2f02b7e8cb562e997cd3b4d645ba8b0e
 U johnfound
-Z 88421a4ea08b24fcc63d01276373c457
+Z 898997392453f459474afe4e7acf2c98
